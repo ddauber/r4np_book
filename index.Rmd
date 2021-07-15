@@ -1,4 +1,4 @@
---- 
+---
 title: "R for Non-Programmers: A Guide for Social Scientists"
 author: "Daniel Dauber"
 date: "`r Sys.Date()`"
