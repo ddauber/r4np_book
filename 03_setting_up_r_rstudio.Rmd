@@ -1,4 +1,4 @@
-# Setting up R and RStudio
+# Setting up R and RStudio {#setting-up-r-and-rstudio}
 
 Every journey starts with gathering the right equipment. This intellectual journey is not much different. The first step that every '*R* novice has to face is to set everything up to get started. There are essentially two strategies:
 
@@ -10,56 +10,82 @@ or
 
 While installing *R* and Studio requires more time and effort, I strongly recommend it, especially if you want to work offline or make good use of your computer's CPU. However, if you are not sure yet whether you enjoy learning *R*, you might wish to look at RStudio Cloud first. Either way, you can follow the examples of this book no matter which choice you make.
 
-## Installing R
+## Installing R {#installing-r}
 
 The core module of our programming is R itself, and since it is an open-source project, it is available for free on Windows, Mac and Linux computers. Here is what you need to do to install it properly on your computer of choice:
 
-1\. Go to [www.r-project.org](https://www.r-project.org](https://www.r-project.org) "www.r-project.org"){target="_blank"}
+1.  Go to [www.r-project.org](https://www.r-project.org%5D(https://www.r-project.org) "www.r-project.org"){target="_blank"}
 
-2\. Click on 'CRAN' where it says download.
+    ![](images/chapter_03_img/r_project/00_r_project_page.png)
 
-3\. Choose a server in your country (all of them work, but downloads will perform quicker)
+2.  Click on `CRAN` where it says download.
 
-4\. Select the version you want to install (I recommend the latest version)
+3.  Choose a server in your country (all of them work, but downloads will perform quicker).
 
-5\. Open the downloaded file and follow the installation instructions. (I recommend leaving the suggested settings as they are).
+    ![](images/chapter_03_img/r_project/01_r_project_cran_mirror.png)
 
-(INSERT IMAGES ABOUT HERE)
+4.  Select the operating system for your computer.
+
+    ![](images/chapter_03_img/r_project/02_r_project_os_choice.png)
+
+5.  Select the version you want to install (I recommend the latest version)
+
+    ![](images/chapter_03_img/r_project/03_r_project_version_choice.png)
+
+6.  Open the downloaded file and follow the installation instructions. (I recommend leaving the suggested settings as they are).
 
 This was relatively easy. You now have *R* installed. Technically you can start using *R* for your research, but there is one more tool I strongly advise installing: RStudio.
 
-## Installing RStudio
+## Installing RStudio {#installing-rstudio}
 
-*R* by itself is just the \*'beating heart'\* of *R* programming, but it has no particular user interface. If you want buttons to click and actually 'see' what you are doing, there is no better way than RStudio. It will be the primary tool to interact with *R* and the only software you need to do all the fun parts. To install RStudio perform the following steps:
+*R* by itself is just the \*'beating heart'\* of *R* programming, but it has no particular user interface. If you want buttons to click and actually 'see' what you are doing, there is no better way than RStudio. RStudio is an *integrated development environment* (IDE) and will be our primary tool to interact with *R*. It is the only software you need to do all the fun parts and, of course, to follow along with the examples of this book. To install RStudio perform the following steps:
 
-1.  Go to [www.rstudio.com](https://www.rstudio.com](https://www.rstudio.com) "www.rstudio.com"){target="_blank"}.
+1.  Go to [www.rstudio.com](https://www.rstudio.com%5D(https://www.rstudio.com) "www.rstudio.com"){target="_blank"}.
 
-2.  Go to Products \> RStudio
+    ![](images/chapter_03_img/rstudio/01_rstudio_main_page.png)
 
-3.  On this page, select RStudio Desktop
+2.  Go to `Products > RStudio`
 
-4.  Select the \*'free'\* option and begin the download
+    ![](images/chapter_03_img/rstudio/02_rstudio_main_page_menu.png)
 
-5.  Open the downloaded file and follow the installation instructions (again, keep it to the default settings as much as possible)
+3.  On this page, scroll down and select `RStudio Desktop`
 
-Congratulations, you are all set up to learn R.
+    ![](images/chapter_03_img/rstudio/03_rstudio_select_version.png)
 
-## When you first start RStudio
+4.  Select the `'Open Source Edition'` option by clicking on '`Download RStudio Desktop'`
 
-You are all set up to get started, but if you want the best experience, you might want to make some tweaks to your settings. I recommend at least the following two by clicking on \*RStudio \> Preferences \> Code\*:
+    ![](images/chapter_03_img/rstudio/04_rstudio_select_edition.png)
 
-1.  In the \*'Editing'\* tab, make sure to have at least the first four options ticked, especially the 'Auto-indent code after paste'. This setting will save time when trying to format your coding appropriately, making it easier to read.
+5.  As a last step, scroll down where it shows you a download button for your operating system. The website will automatically detect this. You also get a nice reminder to install 'R' first, in case you have not done so yet.
 
-(INSERT IMAGE)
+    ![](images/chapter_03_img/rstudio/05_rstudio_download.png)
 
-2.  In the \*'Display'\* tab, you might want to have the first three options selected. In particular, \*'Highlight selected line'\* is helpful because, in more complicated code, it is helpful to see where your cursor is.
+6.  Open the downloaded file and follow the installation instructions (again, keep it to the default settings as much as possible)
 
-Finally, everything is ready, and we can get to the most exciting part of this post.
+Congratulations, you are all set up to learn *R*. From now on you only need to start RStudio and not *R*. Of course, if you are the curious, nothing shall stop you to try *R* without RStudio.
 
-## Updating R and RStudio: Living at the pulse of innovation 
+## When you first start RStudio {#when-you-first-start-rstudio}
 
-While not strictly something that helps you become a better programmer, this advice might come in handy to avoid becoming a frustrated programmer. When you update your software, you need to update R and RStudio separately from each other. While both R and RStudio work closely with each other, they still constitute separate pieces of software. Thus, it is important to keep in mind that updating RStudio will not automatically update R. This can become problematic if specific packages you installed via RStudio (like a fancy learning algorithm) might not be compatible with earlier versions of R. Also, additional R packages developed by other people are separate pieces and are updated too, independently from R and RStudio.
+Before you start programming away, you might want to make some tweaks to your settings right away to have a better experience (in my humble opinion). I recommend at least the following two changes by clicking on `RStudio > Preferences` or press `⌘/Ctrl + ,`.
 
-I know what you are thinking: This already sounds complicated and cumbersome. However, rest assured, we take a look at how you can easily update all your packages with RStudio itself. Thus, all you need to remember is: *R* needs to be updated separately from everything else. Enough of spoiling future posts, back to *R* and RStudio. It is time to take a closer look at it by finally opening RStudio.
+1.  In the `Code > Editing` tab, make sure to have at least the first five options ticked, especially the `Auto-indent code after paste`. This setting will save time when trying to format your coding appropriately, making it easier to read. Indentation is the primary way of making your code look more readable and less like a series of characters that appear almost random.
 
-## RStudio Cloud
+    ![](images/chapter_03_img/rstudio_preferences/00_rstudio_preferences_editing.png)
+
+2.  In the `Display` tab, you might want to have the first three options selected. In particular, `Highlight selected line` is helpful because, in more complicated code, it is helpful to see where your cursor is.
+
+    ![](images/chapter_03_img/rstudio_preferences/01_rstudio_preferences_display.png)
+
+Of course, if you wish to customise your workspace further, you can do so. The visually most impactful way to alter the default appearance of RStudio is to select Appearance and pick a completely different colour theme. Feel free to browse through various options and see what you prefer. There is no right or wrong here.
+
+![](images/chapter_03_img/rstudio_preferences/02_rstudio_preferences_appearance.png)
+
+## Updating R and RStudio: Living at the pulse of innovation {#updating-r-and-rstudio}
+
+While not strictly something that helps you become a better programmer, this advice might come in handy to avoid turning into a frustrated programmer. When you update your software, you need to update R and RStudio separately from each other. While both R and RStudio work closely with each other, they still constitute separate pieces of software. Thus, it is essential to keep in mind that updating RStudio will not automatically update R. This can become problematic if specific packages you installed via RStudio (like a fancy learning algorithm) might not be compatible with earlier versions of R. Also, additional R packages developed by other people are separate pieces and are updated too, independently from R and RStudio.
+
+I know what you are thinking: This already sounds complicated and cumbersome. However, rest assured, we take a look at how you can easily update all your packages with RStudio. Thus, all you need to remember is: *R* needs to be updated separately from everything else.
+
+## RStudio Cloud {#rstudio-cloud}
+
+`to be completed`

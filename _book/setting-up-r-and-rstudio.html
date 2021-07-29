@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>2 Setting up R and RStudio | R for Non-Programmers: A Guide for Social Scientists</title>
+  <title>3 Setting up R and RStudio | R for Non-Programmers: A Guide for Social Scientists</title>
   <meta name="description" content="This books is intended for Social Scientists. No matter whether you have years of experiences, this book might come in handy if you never use R or any other programming language before." />
   <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="2 Setting up R and RStudio | R for Non-Programmers: A Guide for Social Scientists" />
+  <meta property="og:title" content="3 Setting up R and RStudio | R for Non-Programmers: A Guide for Social Scientists" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="2 Setting up R and RStudio | R for Non-Programmers: A Guide for Social Scientists" />
+  <meta name="twitter:title" content="3 Setting up R and RStudio | R for Non-Programmers: A Guide for Social Scientists" />
   
   <meta name="twitter:description" content="This books is intended for Social Scientists. No matter whether you have years of experiences, this book might come in handy if you never use R or any other programming language before." />
   
@@ -24,7 +24,7 @@
 <meta name="author" content="Daniel Dauber" />
 
 
-<meta name="date" content="2021-07-15" />
+<meta name="date" content="2021-07-28" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -32,7 +32,7 @@
   
   
 <link rel="prev" href="why-learn-a-programming-language-as-a-non-programmer.html"/>
-<link rel="next" href="rstudio-interface.html"/>
+<link rel="next" href="the-rstudio-interface.html"/>
 <script src="libs/header-attrs-2.9/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -55,7 +55,92 @@
 <script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
 
 
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
 
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -73,24 +158,53 @@
 <li><a href="./">R for Non-Programmers</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="" data-path="welcome.html"><a href="welcome.html"><i class="fa fa-check"></i>Welcome 👋</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome 👋</a></li>
 <li class="chapter" data-level="" data-path="acknowledgments.html"><a href="acknowledgments.html"><i class="fa fa-check"></i>Acknowledgments 🙏</a></li>
-<li class="chapter" data-level="1" data-path="why-learn-a-programming-language-as-a-non-programmer.html"><a href="why-learn-a-programming-language-as-a-non-programmer.html"><i class="fa fa-check"></i><b>1</b> Why learn a programming language as a non-programmer?</a>
+<li class="chapter" data-level="1" data-path="readme-before-you-get-started.html"><a href="readme-before-you-get-started.html"><i class="fa fa-check"></i><b>1</b> <code>Readme.</code> Before you get started</a>
 <ul>
-<li class="chapter" data-level="1.1" data-path="why-learn-a-programming-language-as-a-non-programmer.html"><a href="why-learn-a-programming-language-as-a-non-programmer.html#learning-new-tools-to-analyse-your-data-is-always-essential"><i class="fa fa-check"></i><b>1.1</b> Learning new tools to analyse your data is always essential</a></li>
-<li class="chapter" data-level="1.2" data-path="why-learn-a-programming-language-as-a-non-programmer.html"><a href="why-learn-a-programming-language-as-a-non-programmer.html#programming-languages-enhance-your-conceptual-thinking"><i class="fa fa-check"></i><b>1.2</b> Programming languages enhance your conceptual thinking</a></li>
-<li class="chapter" data-level="1.3" data-path="why-learn-a-programming-language-as-a-non-programmer.html"><a href="why-learn-a-programming-language-as-a-non-programmer.html#programming-languages-allow-you-to-look-at-your-data-from-a-different-angle"><i class="fa fa-check"></i><b>1.3</b> Programming languages allow you to look at your data from a different angle</a></li>
-<li class="chapter" data-level="1.4" data-path="why-learn-a-programming-language-as-a-non-programmer.html"><a href="why-learn-a-programming-language-as-a-non-programmer.html#learning-any-programming-language-will-help-you-learn-other-programming-languages."><i class="fa fa-check"></i><b>1.4</b> Learning any programming language will help you learn other programming languages.</a></li>
+<li class="chapter" data-level="1.1" data-path="readme-before-you-get-started.html"><a href="readme-before-you-get-started.html#a-starting-point-and-reference-book"><i class="fa fa-check"></i><b>1.1</b> A starting point and reference book</a></li>
+<li class="chapter" data-level="1.2" data-path="readme-before-you-get-started.html"><a href="readme-before-you-get-started.html#download-the-companion-r-package"><i class="fa fa-check"></i><b>1.2</b> Download the companion R package</a></li>
+<li class="chapter" data-level="1.3" data-path="readme-before-you-get-started.html"><a href="readme-before-you-get-started.html#a-tidyverse-approach-with-some-basic-r"><i class="fa fa-check"></i><b>1.3</b> A ‘tidyverse’ approach with some basic R</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="setting-up-r-and-rstudio.html"><a href="setting-up-r-and-rstudio.html"><i class="fa fa-check"></i><b>2</b> Setting up R and RStudio</a>
+<li class="chapter" data-level="2" data-path="why-learn-a-programming-language-as-a-non-programmer.html"><a href="why-learn-a-programming-language-as-a-non-programmer.html"><i class="fa fa-check"></i><b>2</b> Why learn a programming language as a non-programmer?</a>
 <ul>
-<li class="chapter" data-level="2.1" data-path="setting-up-r-and-rstudio.html"><a href="setting-up-r-and-rstudio.html#installing-r"><i class="fa fa-check"></i><b>2.1</b> Installing R</a></li>
-<li class="chapter" data-level="2.2" data-path="setting-up-r-and-rstudio.html"><a href="setting-up-r-and-rstudio.html#installing-rstudio"><i class="fa fa-check"></i><b>2.2</b> Installing RStudio</a></li>
-<li class="chapter" data-level="2.3" data-path="setting-up-r-and-rstudio.html"><a href="setting-up-r-and-rstudio.html#when-you-first-start-rstudio"><i class="fa fa-check"></i><b>2.3</b> When you first start RStudio</a></li>
-<li class="chapter" data-level="2.4" data-path="setting-up-r-and-rstudio.html"><a href="setting-up-r-and-rstudio.html#updating-r-and-rstudio-living-at-the-pulse-of-innovation"><i class="fa fa-check"></i><b>2.4</b> Updating R and RStudio: Living at the pulse of innovation</a></li>
-<li class="chapter" data-level="2.5" data-path="setting-up-r-and-rstudio.html"><a href="setting-up-r-and-rstudio.html#rstudio-cloud"><i class="fa fa-check"></i><b>2.5</b> RStudio Cloud</a></li>
+<li class="chapter" data-level="2.1" data-path="why-learn-a-programming-language-as-a-non-programmer.html"><a href="why-learn-a-programming-language-as-a-non-programmer.html#learning-new-tools-to-analyse-your-data-is-always-essential"><i class="fa fa-check"></i><b>2.1</b> Learning new tools to analyse your data is always essential</a></li>
+<li class="chapter" data-level="2.2" data-path="why-learn-a-programming-language-as-a-non-programmer.html"><a href="why-learn-a-programming-language-as-a-non-programmer.html#programming-languages-enhance-your-conceptual-thinking"><i class="fa fa-check"></i><b>2.2</b> Programming languages enhance your conceptual thinking</a></li>
+<li class="chapter" data-level="2.3" data-path="why-learn-a-programming-language-as-a-non-programmer.html"><a href="why-learn-a-programming-language-as-a-non-programmer.html#programming-languages-allow-you-to-look-at-your-data-from-a-different-angle"><i class="fa fa-check"></i><b>2.3</b> Programming languages allow you to look at your data from a different angle</a></li>
+<li class="chapter" data-level="2.4" data-path="why-learn-a-programming-language-as-a-non-programmer.html"><a href="why-learn-a-programming-language-as-a-non-programmer.html#learning-any-programming-language-will-help-you-learn-other-programming-languages."><i class="fa fa-check"></i><b>2.4</b> Learning any programming language will help you learn other programming languages.</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="rstudio-interface.html"><a href="rstudio-interface.html"><i class="fa fa-check"></i><b>3</b> RStudio Interface</a></li>
+<li class="chapter" data-level="3" data-path="setting-up-r-and-rstudio.html"><a href="setting-up-r-and-rstudio.html"><i class="fa fa-check"></i><b>3</b> Setting up R and RStudio</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="setting-up-r-and-rstudio.html"><a href="setting-up-r-and-rstudio.html#installing-r"><i class="fa fa-check"></i><b>3.1</b> Installing R</a></li>
+<li class="chapter" data-level="3.2" data-path="setting-up-r-and-rstudio.html"><a href="setting-up-r-and-rstudio.html#installing-rstudio"><i class="fa fa-check"></i><b>3.2</b> Installing RStudio</a></li>
+<li class="chapter" data-level="3.3" data-path="setting-up-r-and-rstudio.html"><a href="setting-up-r-and-rstudio.html#when-you-first-start-rstudio"><i class="fa fa-check"></i><b>3.3</b> When you first start RStudio</a></li>
+<li class="chapter" data-level="3.4" data-path="setting-up-r-and-rstudio.html"><a href="setting-up-r-and-rstudio.html#updating-r-and-rstudio"><i class="fa fa-check"></i><b>3.4</b> Updating R and RStudio: Living at the pulse of innovation</a></li>
+<li class="chapter" data-level="3.5" data-path="setting-up-r-and-rstudio.html"><a href="setting-up-r-and-rstudio.html#rstudio-cloud"><i class="fa fa-check"></i><b>3.5</b> RStudio Cloud</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="the-rstudio-interface.html"><a href="the-rstudio-interface.html"><i class="fa fa-check"></i><b>4</b> The RStudio Interface</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="the-rstudio-interface.html"><a href="the-rstudio-interface.html#the-console-window"><i class="fa fa-check"></i><b>4.1</b> The Console window</a></li>
+<li class="chapter" data-level="4.2" data-path="the-rstudio-interface.html"><a href="the-rstudio-interface.html#the-source-window"><i class="fa fa-check"></i><b>4.2</b> The Source window</a></li>
+<li class="chapter" data-level="4.3" data-path="the-rstudio-interface.html"><a href="the-rstudio-interface.html#the-environment-history-connections-tutorial-window"><i class="fa fa-check"></i><b>4.3</b> The Environment / History / Connections / Tutorial window</a></li>
+<li class="chapter" data-level="4.4" data-path="the-rstudio-interface.html"><a href="the-rstudio-interface.html#the-files-plots-packages-help-viewer-window"><i class="fa fa-check"></i><b>4.4</b> The Files / Plots / Packages / Help / Viewer window</a></li>
+<li class="chapter" data-level="4.5" data-path="the-rstudio-interface.html"><a href="the-rstudio-interface.html#customise-your-user-interface"><i class="fa fa-check"></i><b>4.5</b> Customise your user interface</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="r-basics-the-very-fundamentals.html"><a href="r-basics-the-very-fundamentals.html"><i class="fa fa-check"></i><b>5</b> R Basics: The very fundamentals</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="r-basics-the-very-fundamentals.html"><a href="r-basics-the-very-fundamentals.html#basic-computations-in-r"><i class="fa fa-check"></i><b>5.1</b> Basic computations in R</a></li>
+<li class="chapter" data-level="5.2" data-path="r-basics-the-very-fundamentals.html"><a href="r-basics-the-very-fundamentals.html#assigning-values-to-objects-"><i class="fa fa-check"></i><b>5.2</b> Assigning values to objects: ‘&lt;-’</a></li>
+<li class="chapter" data-level="5.3" data-path="r-basics-the-very-fundamentals.html"><a href="r-basics-the-very-fundamentals.html#functions"><i class="fa fa-check"></i><b>5.3</b> Functions</a></li>
+<li class="chapter" data-level="5.4" data-path="r-basics-the-very-fundamentals.html"><a href="r-basics-the-very-fundamentals.html#r-packages"><i class="fa fa-check"></i><b>5.4</b> R packages</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="r-basics-the-very-fundamentals.html"><a href="r-basics-the-very-fundamentals.html#installing-packages-via-rstudios-package-pane"><i class="fa fa-check"></i><b>5.4.1</b> Installing packages via RStudio’s Package pane</a></li>
+<li class="chapter" data-level="5.4.2" data-path="r-basics-the-very-fundamentals.html"><a href="r-basics-the-very-fundamentals.html#installing-packages-using-a-function"><i class="fa fa-check"></i><b>5.4.2</b> Installing packages using a function</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="r-basics-the-very-fundamentals.html"><a href="r-basics-the-very-fundamentals.html#exercises-chapter-5"><i class="fa fa-check"></i><b>5.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="exercises-solutions.html"><a href="exercises-solutions.html"><i class="fa fa-check"></i><b>6</b> Exercises: Solutions</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="exercises-solutions.html"><a href="exercises-solutions.html#solutions-for-refexercises"><i class="fa fa-check"></i><b>6.1</b> Solutions for @ref(exercises)</a></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://twitter.com/daniel_dauber" target="blank">Find me on twitter!</a></li>
 
@@ -111,8 +225,8 @@
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="setting-up-r-and-rstudio" class="section level1" number="2">
-<h1><span class="header-section-number">2</span> Setting up R and RStudio</h1>
+<div id="setting-up-r-and-rstudio" class="section level1" number="3">
+<h1><span class="header-section-number">3</span> Setting up R and RStudio</h1>
 <p>Every journey starts with gathering the right equipment. This intellectual journey is not much different. The first step that every ’<em>R</em> novice has to face is to set everything up to get started. There are essentially two strategies:</p>
 <ul>
 <li>Install <a href="https://www.r-project.org" target="_blank" title="R"><em>R</em></a>and <a href="https://www.rstudio.com" target="_blank" title="RStudio">RStudio</a></li>
@@ -122,48 +236,61 @@
 <li>Run RStudio in a browser via <a href="https://rstudio.cloud" target="_blank" title="RStudio Cloud">RStudio Cloud</a></li>
 </ul>
 <p>While installing <em>R</em> and Studio requires more time and effort, I strongly recommend it, especially if you want to work offline or make good use of your computer’s CPU. However, if you are not sure yet whether you enjoy learning <em>R</em>, you might wish to look at RStudio Cloud first. Either way, you can follow the examples of this book no matter which choice you make.</p>
-<div id="installing-r" class="section level2" number="2.1">
-<h2><span class="header-section-number">2.1</span> Installing R</h2>
+<div id="installing-r" class="section level2" number="3.1">
+<h2><span class="header-section-number">3.1</span> Installing R</h2>
 <p>The core module of our programming is R itself, and since it is an open-source project, it is available for free on Windows, Mac and Linux computers. Here is what you need to do to install it properly on your computer of choice:</p>
-<p>1. Go to <a href="https://www.r-project.org%5D(https://www.r-project.org)" target="_blank" title="www.r-project.org">www.r-project.org</a></p>
-<p>2. Click on ‘CRAN’ where it says download.</p>
-<p>3. Choose a server in your country (all of them work, but downloads will perform quicker)</p>
-<p>4. Select the version you want to install (I recommend the latest version)</p>
-<p>5. Open the downloaded file and follow the installation instructions. (I recommend leaving the suggested settings as they are).</p>
-<p>(INSERT IMAGES ABOUT HERE)</p>
+<ol style="list-style-type: decimal">
+<li><p>Go to <a href="https://www.r-project.org%5D(https://www.r-project.org)" target="_blank" title="www.r-project.org">www.r-project.org</a></p>
+<p><img src="images/chapter_03_img/r_project/00_r_project_page.png" /></p></li>
+<li><p>Click on <code>CRAN</code> where it says download.</p></li>
+<li><p>Choose a server in your country (all of them work, but downloads will perform quicker).</p>
+<p><img src="images/chapter_03_img/r_project/01_r_project_cran_mirror.png" /></p></li>
+<li><p>Select the operating system for your computer.</p>
+<p><img src="images/chapter_03_img/r_project/02_r_project_os_choice.png" /></p></li>
+<li><p>Select the version you want to install (I recommend the latest version)</p>
+<p><img src="images/chapter_03_img/r_project/03_r_project_version_choice.png" /></p></li>
+<li><p>Open the downloaded file and follow the installation instructions. (I recommend leaving the suggested settings as they are).</p></li>
+</ol>
 <p>This was relatively easy. You now have <em>R</em> installed. Technically you can start using <em>R</em> for your research, but there is one more tool I strongly advise installing: RStudio.</p>
 </div>
-<div id="installing-rstudio" class="section level2" number="2.2">
-<h2><span class="header-section-number">2.2</span> Installing RStudio</h2>
-<p><em>R</em> by itself is just the *‘beating heart’* of <em>R</em> programming, but it has no particular user interface. If you want buttons to click and actually ‘see’ what you are doing, there is no better way than RStudio. It will be the primary tool to interact with <em>R</em> and the only software you need to do all the fun parts. To install RStudio perform the following steps:</p>
+<div id="installing-rstudio" class="section level2" number="3.2">
+<h2><span class="header-section-number">3.2</span> Installing RStudio</h2>
+<p><em>R</em> by itself is just the *‘beating heart’* of <em>R</em> programming, but it has no particular user interface. If you want buttons to click and actually ‘see’ what you are doing, there is no better way than RStudio. RStudio is an <em>integrated development environment</em> (IDE) and will be our primary tool to interact with <em>R</em>. It is the only software you need to do all the fun parts and, of course, to follow along with the examples of this book. To install RStudio perform the following steps:</p>
 <ol style="list-style-type: decimal">
-<li><p>Go to <a href="https://www.rstudio.com%5D(https://www.rstudio.com)" target="_blank" title="www.rstudio.com">www.rstudio.com</a>.</p></li>
-<li><p>Go to Products &gt; RStudio</p></li>
-<li><p>On this page, select RStudio Desktop</p></li>
-<li><p>Select the *‘free’* option and begin the download</p></li>
+<li><p>Go to <a href="https://www.rstudio.com%5D(https://www.rstudio.com)" target="_blank" title="www.rstudio.com">www.rstudio.com</a>.</p>
+<p><img src="images/chapter_03_img/rstudio/01_rstudio_main_page.png" /></p></li>
+<li><p>Go to <code>Products &gt; RStudio</code></p>
+<p><img src="images/chapter_03_img/rstudio/02_rstudio_main_page_menu.png" /></p></li>
+<li><p>On this page, scroll down and select <code>RStudio Desktop</code></p>
+<p><img src="images/chapter_03_img/rstudio/03_rstudio_select_version.png" /></p></li>
+<li><p>Select the <code>'Open Source Edition'</code> option by clicking on ’<code>Download RStudio Desktop'</code></p>
+<p><img src="images/chapter_03_img/rstudio/04_rstudio_select_edition.png" /></p></li>
+<li><p>As a last step, scroll down where it shows you a download button for your operating system. The website will automatically detect this. You also get a nice reminder to install ‘R’ first, in case you have not done so yet.</p>
+<p><img src="images/chapter_03_img/rstudio/05_rstudio_download.png" /></p></li>
 <li><p>Open the downloaded file and follow the installation instructions (again, keep it to the default settings as much as possible)</p></li>
 </ol>
-<p>Congratulations, you are all set up to learn R.</p>
+<p>Congratulations, you are all set up to learn <em>R</em>. From now on you only need to start RStudio and not <em>R</em>. Of course, if you are the curious, nothing shall stop you to try <em>R</em> without RStudio.</p>
 </div>
-<div id="when-you-first-start-rstudio" class="section level2" number="2.3">
-<h2><span class="header-section-number">2.3</span> When you first start RStudio</h2>
-<p>You are all set up to get started, but if you want the best experience, you might want to make some tweaks to your settings. I recommend at least the following two by clicking on *RStudio &gt; Preferences &gt; Code*:</p>
+<div id="when-you-first-start-rstudio" class="section level2" number="3.3">
+<h2><span class="header-section-number">3.3</span> When you first start RStudio</h2>
+<p>Before you start programming away, you might want to make some tweaks to your settings right away to have a better experience (in my humble opinion). I recommend at least the following two changes by clicking on <code>RStudio &gt; Preferences</code> or press <code>⌘/Ctrl + ,</code>.</p>
 <ol style="list-style-type: decimal">
-<li>In the *‘Editing’* tab, make sure to have at least the first four options ticked, especially the ‘Auto-indent code after paste.’ This setting will save time when trying to format your coding appropriately, making it easier to read.</li>
+<li><p>In the <code>Code &gt; Editing</code> tab, make sure to have at least the first five options ticked, especially the <code>Auto-indent code after paste</code>. This setting will save time when trying to format your coding appropriately, making it easier to read. Indentation is the primary way of making your code look more readable and less like a series of characters that appear almost random.</p>
+<p><img src="images/chapter_03_img/rstudio_preferences/00_rstudio_preferences_editing.png" /></p></li>
+<li><p>In the <code>Display</code> tab, you might want to have the first three options selected. In particular, <code>Highlight selected line</code> is helpful because, in more complicated code, it is helpful to see where your cursor is.</p>
+<p><img src="images/chapter_03_img/rstudio_preferences/01_rstudio_preferences_display.png" /></p></li>
 </ol>
-<p>(INSERT IMAGE)</p>
-<ol start="2" style="list-style-type: decimal">
-<li>In the *‘Display’* tab, you might want to have the first three options selected. In particular, *‘Highlight selected line’* is helpful because, in more complicated code, it is helpful to see where your cursor is.</li>
-</ol>
-<p>Finally, everything is ready, and we can get to the most exciting part of this post.</p>
+<p>Of course, if you wish to customise your workspace further, you can do so. The visually most impactful way to alter the default appearance of RStudio is to select Appearance and pick a completely different colour theme. Feel free to browse through various options and see what you prefer. There is no right or wrong here.</p>
+<p><img src="images/chapter_03_img/rstudio_preferences/02_rstudio_preferences_appearance.png" /></p>
 </div>
-<div id="updating-r-and-rstudio-living-at-the-pulse-of-innovation" class="section level2" number="2.4">
-<h2><span class="header-section-number">2.4</span> Updating R and RStudio: Living at the pulse of innovation</h2>
-<p>While not strictly something that helps you become a better programmer, this advice might come in handy to avoid becoming a frustrated programmer. When you update your software, you need to update R and RStudio separately from each other. While both R and RStudio work closely with each other, they still constitute separate pieces of software. Thus, it is important to keep in mind that updating RStudio will not automatically update R. This can become problematic if specific packages you installed via RStudio (like a fancy learning algorithm) might not be compatible with earlier versions of R. Also, additional R packages developed by other people are separate pieces and are updated too, independently from R and RStudio.</p>
-<p>I know what you are thinking: This already sounds complicated and cumbersome. However, rest assured, we take a look at how you can easily update all your packages with RStudio itself. Thus, all you need to remember is: <em>R</em> needs to be updated separately from everything else. Enough of spoiling future posts, back to <em>R</em> and RStudio. It is time to take a closer look at it by finally opening RStudio.</p>
+<div id="updating-r-and-rstudio" class="section level2" number="3.4">
+<h2><span class="header-section-number">3.4</span> Updating R and RStudio: Living at the pulse of innovation</h2>
+<p>While not strictly something that helps you become a better programmer, this advice might come in handy to avoid turning into a frustrated programmer. When you update your software, you need to update R and RStudio separately from each other. While both R and RStudio work closely with each other, they still constitute separate pieces of software. Thus, it is essential to keep in mind that updating RStudio will not automatically update R. This can become problematic if specific packages you installed via RStudio (like a fancy learning algorithm) might not be compatible with earlier versions of R. Also, additional R packages developed by other people are separate pieces and are updated too, independently from R and RStudio.</p>
+<p>I know what you are thinking: This already sounds complicated and cumbersome. However, rest assured, we take a look at how you can easily update all your packages with RStudio. Thus, all you need to remember is: <em>R</em> needs to be updated separately from everything else.</p>
 </div>
-<div id="rstudio-cloud" class="section level2" number="2.5">
-<h2><span class="header-section-number">2.5</span> RStudio Cloud</h2>
+<div id="rstudio-cloud" class="section level2" number="3.5">
+<h2><span class="header-section-number">3.5</span> RStudio Cloud</h2>
+<p><code>to be completed</code></p>
 
 </div>
 </div>
@@ -173,7 +300,7 @@
         </div>
       </div>
 <a href="why-learn-a-programming-language-as-a-non-programmer.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="rstudio-interface.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="the-rstudio-interface.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -224,6 +351,20 @@ gitbook.start({
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>

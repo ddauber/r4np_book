@@ -1,0 +1,341 @@
+# R Basics: The very fundamentals {#r-basics-the-very-fundamentals}
+
+After a likely tedious installation of R and RStudio, as well as a somewhat detailed introduction to the RStudio interface, you are finally ready to 'do' things. By 'doing', I mean coding. The term 'coding' in itself can instil fear in some of you, but you only need one skill to do it: Writing. As mentioned earlier, learning coding or programming means learning a new language. However, once you have the basic grammar down, you already can communicate quite a bit. In this section, we will explore the fundamentals of R. These build the foundation for everything that follows. After that, we dive right into some analysis.
+
+## Basic computations in R {#basic-computations-in-r}
+
+The most basic computation you can do in R is arithmetic operations. In other words, addition, subtraction, multiplication, division, exponentiation and extraction of roots. In other words, R can be used like your pocket calculator, or more likely the one you have on your phone. For example, in Chapter \@ref(the-console-window) we already performed an addition. Thus, it might not come as a surprise how their equivalents work in R. Let's take a look at the following examples:
+
+```{r Arthimetic examples, echo=TRUE, collapse=TRUE}
+# Addition
+10+5
+
+# Subtraction
+10-5
+
+# Multiplication
+10*5
+
+# Division
+10/5
+
+# Exponentiation
+10^2
+
+# Square root
+sqrt(10)
+```
+
+They all look fairly straightforward except for the extraction of roots. As you probably know, extracting the root would typically mean we use the symbol $\sqrt{}$ on your calculator. To compute the square root in R, we have to use a function instead to perform the computation. So we first put the name of the function `sqrt` and then the value `10` within parenthesis `()`. This results in the following code: `sqrt(10)`. If we were to write this down in our report, we would write $\sqrt[2]{10}$.
+
+Functions are an essential part of R and programming in general. You will learn more about them in this chapter.Besides arithmetic operations, there are also logical queries you can perform. Logical queries always return either the value TRUE or FALSE. Here are some examples which make this clearer:
+
+```{r Logical queries, echo=TRUE, collapse=TRUE}
+
+#1 Is it TRUE or FALSE?
+1 == 1
+
+#2 Is 45 bigger than 55?
+45 > 55
+
+#3 Is 1982 bigger or equal to 1982?
+1982 >= 1982
+
+#4 Are these two words NOT the same?
+"Friends" != "friends"
+
+#5 Are these sentences the same?
+"I love statistics" == "I love statistícs"
+
+```
+
+Reflecting on these examples, you might notice three important things:
+
+1.  I used `==` instead of `=`,
+2.  I can compare non-numerical values, i.e. text, which is also known as `character values,` with each other,
+3.  The devil is in the details considering \#5.
+
+One of the most common mistakes of R novices is the confusion around the `==` and `=` notation. While `==` represents `equal to`, `=` is used to assign a value to an object (for more details on assignments see Chapter \@ref(the-files-plots-packages-help-viewer-window)). However, in practice, most R programmers tend to avoid `=` since it can easily lead to confusion with `==`. As such, you can strike this one out of your R vocabulary for now.
+
+There are many different logical operations you can perform. Table \@ref(tab:logical-operators-r) lists the most frequently used logical operators for your reference. These will become important once we select only certain parts of our data for analysis, e.g. only `female` participants.
+
++----------+------------------------+
+| Operator | Description            |
++==========+========================+
+| ==       | is equal to            |
++----------+------------------------+
+| \>=      | is bigger or equal to  |
++----------+------------------------+
+| \<=      | is smaller of equal to |
++----------+------------------------+
+| !=       | is not equal to        |
++----------+------------------------+
+| a \| b   | a or b                 |
++----------+------------------------+
+| a & b    | a and b                |
++----------+------------------------+
+| !a       | is not a               |
++----------+------------------------+
+
+: (\#tab:logical-operators-r) Logical Operators in R
+
+## Assigning values to objects: '\<-' {#assigning-values-to-objects-}
+
+Another common task you will perform is assigning values to an object. An object can be many different things:
+
+-   a dataset,
+
+-   the results of a computation,
+
+-   a plot,
+
+-   a series of numbers,
+
+-   a list of names,
+
+-   a function,
+
+-   etc.
+
+In short, an object is an umbrella term for many different things which form part of your data analysis. For example, objects are handy when storing results that you want to process further in later analytical steps. Let's have a look at an example.
+
+```{r Saving values in objects, echo=TRUE}
+
+# I have a friend called "Fiona"
+friends <- "Fiona"
+```
+
+In this example, I created an object called `friends` and added `"Fiona"` to it. Remember, because `"Fiona"` represents a `string`, we need `""`. So, if you wanted to read this line of code, you would say, '`friends` gets the value `"Fiona"`'. Alternatively, you could also say '`"Fiona"` is assigned to `friends`'.
+
+If you look into your environment pane, you will find the object we just created. You can see it carries the value `"Fiona"`. We can also print values of an object in the console by simply typing the name of the object `friends` and hit `Return ↵`.
+
+```{r Printing objects, echo=TRUE}
+
+# Who are my friends?
+friends
+```
+
+Sadly, it seems I only have one friend. Luckily we can add some more, not the least to make me feel less lonely. To create objects with multiple values, we can use the function `c()`, which stands for 'concatenate'. The @concatenate-2021 define this word as follows:
+
+> '***concatenate***',
+>
+> to put things together as a connected series
+
+Let's concatenate some more friends into our `friends` object.
+
+```{r Concatenate function, echo=TRUE, collapse=TRUE}
+# Adding some more friends to my life
+friends <- c("Fiona", "Ida", "Lukas", "Georg", "Daniel", "Pavel", "Tigger")
+
+# Here are all my friends
+friends
+```
+
+To concatenate values into a single object, we need to use a comma `,` to separate each value. Otherwise, R will report an error back.
+
+```{r Concatenate function error, echo=TRUE, collapse=TRUE, error=TRUE}
+friends <- c("Fiona" "Ida")
+```
+
+R's error messages tend to be very useful and give meaningful clues to what went wrong. In this case, we can see that something 'unexpected' happen, and it shows where our mistake is.
+
+You can also concatenate numbers, and if you add `()` around it, you can automatically print the content of the object to the console. Thus, `(milestones_of_my_life <- c(1982, 2006, 2011, 2018, 2020))` is the same as `milestones_of_my_life <- c(1982, 2006, 2011, 2018, 2020)` followed by `milestones_of_my_life`. The following examples illustrate this.
+
+```{r Concatenating numbers, echo=TRUE, collapse=TRUE}
+# Important years in my life
+milestones_of_my_life <- c(1982, 2006, 2011, 2018, 2020)
+milestones_of_my_life
+
+# The same as above, but we don't need the second line of code
+(milestones_of_my_life <- c(1982, 2006, 2011, 2018, 2020))
+```
+
+Finally, we can also concatenate numbers and character values into one object:
+
+```{r Concatenating numbers and strings, echo=TRUE, collapse=TRUE}
+(names_and_years <- c("Fiona", 1988, "Daniel", 1982))
+```
+
+This last example is not necessarily something I would recommend to do, because it likely leads to undesirable outcomes. If you look into your environment pane you currently have three objects: `friends`, `milestones_of_my_life`, and `names_and_years`.
+
+![](images/chapter_05_img/01_basic_computation_environment_objects.png)
+
+The `friends` object shows that all the values inside the object are classified as `chr`, which denominates `character`. In this case, this is correct because it only includes the names of my friends. On the other hand, the object `milestones_of_my_life` only includes `numeric` values, and therefore it says `num` in the environment pane. However, for the object `names_and_years` we know we want to have `numeric` and `character` values included. Still, R recognises them as `character` values only because values inside objects are meant to be of the same type.
+
+Consequently, mixing different types of data (as explained in Chapter \@ref()) into one object is likely a bad idea. This is especially true if you want to use the numeric values for computation. In short: ensure your objects are all of the same data type.
+
+There is an exception to this rule. 'Of course', you might say. There is one object that can have values of different types: `list`. As the name indicates, a `list` object holds several items. These items are usually other objects. In the spirit of '[Inception](https://www.imdb.com/title/tt1375666/?ref_=ext_shr_lnk)', you can have lists inside lists, which contain more objects.
+
+Let's create a list called `x_files` using the `list` function and place all our objects inside.
+
+```{r Creating a list, echo=TRUE, collapse=TRUE}
+# This creates our list of objects
+x_files <- list(friends,
+               milestones_of_my_life,
+               names_and_years)
+
+# Let's have a look what is hidden inside the x_files
+x_files
+```
+
+You will notice in this example that I do not use `""` for each value in the list. This is because `friends` is not a character I put into the list, but an object. When we refer to objects we do not need the quotation marks.
+
+We will encounter `list` objects quite frequently when we perform our analysis. Some functions return the results in the format of lists. This can be very helpful, because otherwise our environment pane will be littered with objects, but we would not necessarily know how they relate to each other or worse, to which analysis they belong. Looking at the list item in the environment page (Figure \@ref(fig:img-x-files)), you can see that the object `x_files` is classified as a `List of 3` and if you click on the blue icon, you can inspect the different objects inside.
+
+```{r, fig.cap = "The environment pane showing our objects and our list `x_files`", label = "img-x-files", echo=FALSE}
+knitr::include_graphics("images/chapter_05_img/02_basic_computation_environment_lists.png")
+```
+
+In Chapter \@ref(basic-computations-in-r) I mentioned that we should avoid using the `=` operator and explained that it is used to assign values to objects. You can, if you want, use `=` instead of `<-`. They fulfil the same purpose. However, as mentioned before, it is not wise to do so. Here is an example that shows that, in principle, it is possible.
+
+```{r Using the two assign operators, echo=TRUE, collapse=TRUE}
+# DO
+(avengers1 <- c("Iron Man", "Captain America", "Black Widow", "Vision"))
+
+# DON'T
+(avengers2 = c("Iron Man", "Captain America", "Black Widow", "Vision"))
+```
+
+On a final note, naming your objects is limited. Not every name can be chosen. First, every name needs to start with a letter. You also can only use letters, numbers `_` and `.` as valid components of the names of your objects [see also @wickham2016r, Chapter 4.2.].
+
+## Functions {#functions}
+
+I used the term 'function' multiple times already, but I never really fully explained what they are and why we need them. In very simple terms, functions are objects. They contain lines of code that someone has written for us (ro we have written ourselves). One could say they are code snippets ready to use. Someone else might see them as shortcuts for our programming. Functions not only increase the speed with which we perform our analysis and write our computations, but also make our code more readable. Consider computing the `mean` of values stored in the object `pocket_money`.
+
+```{r Mean function example, echo=TRUE, collapse=TRUE}
+# First we create an object that stores our desired values
+pocket_money <- c(0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89)
+
+#1 Manually compute the mean:
+sum <- 0+1+1+2+3+5+8+13+21+34+55+89
+sum/12 # There are 12 items in the object
+
+#2 Use a function to compute the mean:
+mean(pocket_money)
+
+#3 Let's make sure it is actually the same
+sum/12 == mean(pocket_money)
+```
+
+If we manually compute the mean, we first compute the sum of all values in the object `pocket_money`[^r_basics-1], and then we divide it by the number of values in the object, which is `12`. This is the classic way of computing the mean as we know it. However, my simply using the function `mean()`, we not only write considerably less code, it is much easer to understand as well, because the word `mean` does exactly what we would expect. Which one do you find easier?
+
+[^r_basics-1]: If you find the order of numbers suspicious, it is because it represents the famous [Fibonacci sequence](https://en.wikipedia.org/wiki/Fibonacci_number "Fibonacci sequence"){target="blank"}.
+
+All functions in R share the same structure. They have a `name` follow by `()` and within these parentheses we put `arguments`, which have certain `values`. A function would look something like this:
+
+```{r Generic function, eval=FALSE, error=TRUE, results='hide'}
+name_of_function(argument_1 = value_1,
+                 argument_2 = value_2,
+                 argument_3 = value_3)
+```
+
+How many arguments there are and what kind of values you can provide is very much dependent on the function you use. Thus, not every function takes every value. It is fair to make the analogy that function names are similar to vocabulary of a foreign language, while the arguments represent a specific syntax that goes with it. In the case of `mean()`, the function takes an object which holds a sequence of `numeric` values. It would make very little sense to compute the mean of our `friends` object, because it only contains names. R would return an error message:
+
+```{r Mean of an object with characters, echo=TRUE, collapse=TRUE, error=TRUE}
+mean(friends)
+```
+
+`NA` refers to a value that is *'not available'*. In this case, R tries to compute the mean but the result is not available., because the values are not `numeric` but a `character`. In your dataset, you might find cells that are `NA`, which means there is data missing. Remember: If a function attempts a computation that includes even just a single value that is `NA`, R will return `NA`. However, there is a way to fix this. You will learn more about how deal with `NA` values in Chapter \@ref().
+
+Sometimes you will also get a message from R that states `NaN`. This stands for *'not a number'* and is returned when something is not possible to compute, for example:
+
+```{r NaN example: Division by zero, echo=TRUE, collapse=TRUE, error=TRUE}
+
+# Example 1
+0/0
+
+# Example 2
+sqrt(-9)
+```
+
+## R packages {#r-packages}
+
+R has many built-in functions that we can use right away. However, some of the most interesting ones are actually developed by different programmers, data scientists and enthusiasts. To add more functions to your repertoire, you can install R packages. R packages are a collection of functions that you can download and use for your own analysis. Throughout this book you will learn about and use many different R packages to accomplish different tasks.
+
+To give you another analogy,
+
+-   R is like a global supermarket,
+
+-   RStudio is like my shopping cart,
+
+-   and R packages are the products I can pick from the shelves.
+
+Luckily, R packages are free to use, so I do not have to bring my credit card. For me, these additional functions, developed by some of the greatest scientists, is what keeps me addicted to performing my research in R.
+
+R packages do not only include functions, but often include datasets and documentation of what each function does. This way you can easily try every function right away even without your own dataset and read through what each function in the package does. Figure \@ref(fig:img-r-package-documentation)
+
+```{r, fig.cap = "The R package documentation for 'ggplot2'", label = "img-r-package-documentation", echo=FALSE}
+knitr::include_graphics("images/chapter_05_img/r_package_documentation.png")
+```
+
+However, how do you find those R packages? They are right at your fingertips. You have two options:
+
+1.  Use the Packages pane (see Chapter \@ref(the-files-plots-packages-help-viewer-window))
+2.  Or call the function `install.packages()`
+
+### Installing packages via RStudio's Package pane {#installing-packages-via-rstudios-package-pane}
+
+`to be added`
+
+### Installing packages using `install.packages()` {#installing-packages-using-a-function}
+
+The simplest and fastest way to install a package is calling the function `install.packages()`. You can either use it to install a single package or install a series of packages all at once using our trusty `c()` function. All you need to know is the name of the package. This approach works for all packages that are on CRAN.
+
+```{r Installing R packages via functions, eval=FALSE, echo=TRUE, results='hide'}
+# Install a single package
+install.packages("tidyverse")
+
+# Installe multiple packages at once
+install.packages(c("tidyverse", "naniar", "psych"))
+```
+
+If a package is not available from CRAN chances are you can find them on [GitHub](https://github.com "Github"){target="blank"}. Github is probably the world's largest global platform for programmers of all walks of life and many of them develop fantastic R packages that make R programming not just easier, but a lot more fun.
+
+```{r Installing R packages via functions from URL and local files, eval=FALSE, echo=TRUE, results='hide'}
+
+# Install the 'wesanderson' package from GitHub
+devtools::install_github("karthik/wesanderson")
+
+# Install a package from another URL
+install.packages("https://github.com/tidyverse/forcats.git")
+
+# Installe a package from a file on your computer
+install.packages("/Downloads/forcats-master.zip")
+
+
+```
+
+### Using R Packages
+
+Now that you have a nice collection of R Packages the next step would be to use them. While you only have to install R packages once, you have to 'activate' them. This is also called 'loading an R package'. Once an R package is loaded you can use all its functions. To load an R package we have to use the function `library()`.
+
+```{r Loading an R package, echo=TRUE, collapse=TRUE, warning=FALSE}
+library(tidyverse)
+```
+
+The `tidyverse` package is a special kind of package. It contains multiple packages and loads them all at once. Almost all of these packages you will use at some point when working through this book.
+
+I know what you are thinking. Can you use `c()` to load all your packages at once? Unfortunately not. However, there is a way to do this, but it goes beyond the scope of this book to fully explain this (if you are curious you can take a peak [here](https://stackoverflow.com/questions/8175912/load-multiple-packages-at-once "Loading multiple R packages at once"){target="blank"}). Besides, it is not always advisable to load all functions of an entire package. One reason could be that two packages contain a function with the same name, but with a different purpose. This would create a conflict between these two packages and one of the functions would not be usable in this way. Another reason could be that you only need to use the function once and loading the whole package to use only one specific function seems excessive. Instead you can explicitly call functions from packages without loading the package. For example we might want to use the `vismis()` function from the `naniar` package to show were data is missing in our dataset `airquality`. In terms of writing the code, this is also much quicker than loading the package and then call the function.
+
+```{r Explicitly calling functions from R packages, echo=TRUE, collapse=TRUE}
+# Here I use the dataset called 'airquality', which comes with R
+naniar::vis_miss(airquality)
+```
+
+## Exercises {#exercises-chapter-5}
+
+1.  What is the result of $\sqrt[2]{25-16}+2*8-6$?
+
+2.  What does the console return if you execute the following code `"Five" == 5`?
+
+3.  Create a list called `books` and include the folKlowing book titles in it:
+
+    -   "Harry Potter and the Deathly Hallows",
+
+    -   "The Alchemist",
+
+    -   "The Davinci Code",
+
+    -   "R For Dummies"
+
+Check you answers: \@ref(solutions-for-refexercises)

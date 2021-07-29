@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>4 The RStudio Interface | R for Non-Programmers: A Guide for Social Scientists</title>
+  <meta name="description" content="This books is intended for Social Scientists. No matter whether you have years of experiences, this book might come in handy if you never use R or any other programming language before." />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="4 The RStudio Interface | R for Non-Programmers: A Guide for Social Scientists" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This books is intended for Social Scientists. No matter whether you have years of experiences, this book might come in handy if you never use R or any other programming language before." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="4 The RStudio Interface | R for Non-Programmers: A Guide for Social Scientists" />
+  
+  <meta name="twitter:description" content="This books is intended for Social Scientists. No matter whether you have years of experiences, this book might come in handy if you never use R or any other programming language before." />
+  
+
+<meta name="author" content="Daniel Dauber" />
+
+
+<meta name="date" content="2021-07-28" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="setting-up-r-and-rstudio.html"/>
+<link rel="next" href="r-basics-the-very-fundamentals.html"/>
+<script src="libs/header-attrs-2.9/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">R for Non-Programmers</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome 👋</a></li>
+<li class="chapter" data-level="" data-path="acknowledgments.html"><a href="acknowledgments.html"><i class="fa fa-check"></i>Acknowledgments 🙏</a></li>
+<li class="chapter" data-level="1" data-path="readme-before-you-get-started.html"><a href="readme-before-you-get-started.html"><i class="fa fa-check"></i><b>1</b> <code>Readme.</code> Before you get started</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="readme-before-you-get-started.html"><a href="readme-before-you-get-started.html#a-starting-point-and-reference-book"><i class="fa fa-check"></i><b>1.1</b> A starting point and reference book</a></li>
+<li class="chapter" data-level="1.2" data-path="readme-before-you-get-started.html"><a href="readme-before-you-get-started.html#download-the-companion-r-package"><i class="fa fa-check"></i><b>1.2</b> Download the companion R package</a></li>
+<li class="chapter" data-level="1.3" data-path="readme-before-you-get-started.html"><a href="readme-before-you-get-started.html#a-tidyverse-approach-with-some-basic-r"><i class="fa fa-check"></i><b>1.3</b> A ‘tidyverse’ approach with some basic R</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="why-learn-a-programming-language-as-a-non-programmer.html"><a href="why-learn-a-programming-language-as-a-non-programmer.html"><i class="fa fa-check"></i><b>2</b> Why learn a programming language as a non-programmer?</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="why-learn-a-programming-language-as-a-non-programmer.html"><a href="why-learn-a-programming-language-as-a-non-programmer.html#learning-new-tools-to-analyse-your-data-is-always-essential"><i class="fa fa-check"></i><b>2.1</b> Learning new tools to analyse your data is always essential</a></li>
+<li class="chapter" data-level="2.2" data-path="why-learn-a-programming-language-as-a-non-programmer.html"><a href="why-learn-a-programming-language-as-a-non-programmer.html#programming-languages-enhance-your-conceptual-thinking"><i class="fa fa-check"></i><b>2.2</b> Programming languages enhance your conceptual thinking</a></li>
+<li class="chapter" data-level="2.3" data-path="why-learn-a-programming-language-as-a-non-programmer.html"><a href="why-learn-a-programming-language-as-a-non-programmer.html#programming-languages-allow-you-to-look-at-your-data-from-a-different-angle"><i class="fa fa-check"></i><b>2.3</b> Programming languages allow you to look at your data from a different angle</a></li>
+<li class="chapter" data-level="2.4" data-path="why-learn-a-programming-language-as-a-non-programmer.html"><a href="why-learn-a-programming-language-as-a-non-programmer.html#learning-any-programming-language-will-help-you-learn-other-programming-languages."><i class="fa fa-check"></i><b>2.4</b> Learning any programming language will help you learn other programming languages.</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="setting-up-r-and-rstudio.html"><a href="setting-up-r-and-rstudio.html"><i class="fa fa-check"></i><b>3</b> Setting up R and RStudio</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="setting-up-r-and-rstudio.html"><a href="setting-up-r-and-rstudio.html#installing-r"><i class="fa fa-check"></i><b>3.1</b> Installing R</a></li>
+<li class="chapter" data-level="3.2" data-path="setting-up-r-and-rstudio.html"><a href="setting-up-r-and-rstudio.html#installing-rstudio"><i class="fa fa-check"></i><b>3.2</b> Installing RStudio</a></li>
+<li class="chapter" data-level="3.3" data-path="setting-up-r-and-rstudio.html"><a href="setting-up-r-and-rstudio.html#when-you-first-start-rstudio"><i class="fa fa-check"></i><b>3.3</b> When you first start RStudio</a></li>
+<li class="chapter" data-level="3.4" data-path="setting-up-r-and-rstudio.html"><a href="setting-up-r-and-rstudio.html#updating-r-and-rstudio"><i class="fa fa-check"></i><b>3.4</b> Updating R and RStudio: Living at the pulse of innovation</a></li>
+<li class="chapter" data-level="3.5" data-path="setting-up-r-and-rstudio.html"><a href="setting-up-r-and-rstudio.html#rstudio-cloud"><i class="fa fa-check"></i><b>3.5</b> RStudio Cloud</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="the-rstudio-interface.html"><a href="the-rstudio-interface.html"><i class="fa fa-check"></i><b>4</b> The RStudio Interface</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="the-rstudio-interface.html"><a href="the-rstudio-interface.html#the-console-window"><i class="fa fa-check"></i><b>4.1</b> The Console window</a></li>
+<li class="chapter" data-level="4.2" data-path="the-rstudio-interface.html"><a href="the-rstudio-interface.html#the-source-window"><i class="fa fa-check"></i><b>4.2</b> The Source window</a></li>
+<li class="chapter" data-level="4.3" data-path="the-rstudio-interface.html"><a href="the-rstudio-interface.html#the-environment-history-connections-tutorial-window"><i class="fa fa-check"></i><b>4.3</b> The Environment / History / Connections / Tutorial window</a></li>
+<li class="chapter" data-level="4.4" data-path="the-rstudio-interface.html"><a href="the-rstudio-interface.html#the-files-plots-packages-help-viewer-window"><i class="fa fa-check"></i><b>4.4</b> The Files / Plots / Packages / Help / Viewer window</a></li>
+<li class="chapter" data-level="4.5" data-path="the-rstudio-interface.html"><a href="the-rstudio-interface.html#customise-your-user-interface"><i class="fa fa-check"></i><b>4.5</b> Customise your user interface</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="r-basics-the-very-fundamentals.html"><a href="r-basics-the-very-fundamentals.html"><i class="fa fa-check"></i><b>5</b> R Basics: The very fundamentals</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="r-basics-the-very-fundamentals.html"><a href="r-basics-the-very-fundamentals.html#basic-computations-in-r"><i class="fa fa-check"></i><b>5.1</b> Basic computations in R</a></li>
+<li class="chapter" data-level="5.2" data-path="r-basics-the-very-fundamentals.html"><a href="r-basics-the-very-fundamentals.html#assigning-values-to-objects-"><i class="fa fa-check"></i><b>5.2</b> Assigning values to objects: ‘&lt;-’</a></li>
+<li class="chapter" data-level="5.3" data-path="r-basics-the-very-fundamentals.html"><a href="r-basics-the-very-fundamentals.html#functions"><i class="fa fa-check"></i><b>5.3</b> Functions</a></li>
+<li class="chapter" data-level="5.4" data-path="r-basics-the-very-fundamentals.html"><a href="r-basics-the-very-fundamentals.html#r-packages"><i class="fa fa-check"></i><b>5.4</b> R packages</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="r-basics-the-very-fundamentals.html"><a href="r-basics-the-very-fundamentals.html#installing-packages-via-rstudios-package-pane"><i class="fa fa-check"></i><b>5.4.1</b> Installing packages via RStudio’s Package pane</a></li>
+<li class="chapter" data-level="5.4.2" data-path="r-basics-the-very-fundamentals.html"><a href="r-basics-the-very-fundamentals.html#installing-packages-using-a-function"><i class="fa fa-check"></i><b>5.4.2</b> Installing packages using a function</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="r-basics-the-very-fundamentals.html"><a href="r-basics-the-very-fundamentals.html#exercises-chapter-5"><i class="fa fa-check"></i><b>5.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="exercises-solutions.html"><a href="exercises-solutions.html"><i class="fa fa-check"></i><b>6</b> Exercises: Solutions</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="exercises-solutions.html"><a href="exercises-solutions.html#solutions-for-refexercises"><i class="fa fa-check"></i><b>6.1</b> Solutions for @ref(exercises)</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://twitter.com/daniel_dauber" target="blank">Find me on twitter!</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">R for Non-Programmers: A Guide for Social Scientists</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="the-rstudio-interface" class="section level1" number="4">
+<h1><span class="header-section-number">4</span> The RStudio Interface</h1>
+<p>When you open RStudio for the first time, you are presented with four quadrants, each of which fulfils a unique purpose:</p>
+<ul>
+<li><p>The <code>Console</code> window,</p></li>
+<li><p>The <code>Source</code> window,</p></li>
+<li><p>The <code>Environment / History / Connections / Tutorial</code> window, and</p></li>
+<li><p>The <code>Files / Plots / Packages / Help / Viewer</code> window</p></li>
+</ul>
+<p>I will briefly explain the purpose of each window/pane and how they are relevant to your work in <em>R</em>.</p>
+<div id="the-console-window" class="section level2" number="4.1">
+<h2><span class="header-section-number">4.1</span> The Console window</h2>
+<p>The console is located in the bottom-left, and it is where you often will find the output of your coding and computations. It is also possible to write code directly into the console. Let’s try the following example by calculating the sum of <code>10 + 5</code>. Click into the console with your mouse, type the calculation into your console and hit <code>Enter/Return ↵</code> on your keyboard. The result should be pretty obvious:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="the-rstudio-interface.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># We type the below into the console 👇</span></span>
+<span id="cb1-2"><a href="the-rstudio-interface.html#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="dv">10</span><span class="sc">+</span><span class="dv">5</span></span>
+<span id="cb1-3"><a href="the-rstudio-interface.html#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 15</span></span></code></pre></div>
+<p>Here is a screenshot of how it should look like at your end in RStudio:</p>
+<p><img src="images/chapter_04_img/02_console_window/console_algebra.png" /></p>
+<p>You just successfully performed your first successful computation. I know, this is not quite impressive just yet. <em>R</em> is undoubtedly more than just a giant calculator.</p>
+<p>In the top right of the console, you find a symbol that looks like a broom. This one is quite an important one because it clears your console. Sometimes the console can become very cluttered and difficult to read. If you want to remove whatever you computed, you can click the broom icon and clear the console of all text. I use it so frequently that I strongly recommend learning the keyboard shortcut, which is <code>Ctrl+L</code> on PC and Mac.</p>
+</div>
+<div id="the-source-window" class="section level2" number="4.2">
+<h2><span class="header-section-number">4.2</span> The Source window</h2>
+<p>In the top left, you can find the source window. The term ‘source’ can be understood as any type of file, e.g. data, programming code, notes, etc. The source panel can fulfil many functions, such as:</p>
+<ul>
+<li><p>Inspect data in an Excel-like format (LINK TO RELEVANT CHAPTER)</p></li>
+<li><p>Open programming code, e.g. an R Script (LINK TO RELEVANT CHAPTER)</p></li>
+<li><p>Open other text-based file formats, e.g.</p>
+<ul>
+<li><p>Plain text (.txt),</p></li>
+<li><p>Markdown (.md),</p></li>
+<li><p>Websites (.html),</p></li>
+<li><p>LaTeX (.tex),</p></li>
+<li><p>BibTex (.bib),</p></li>
+</ul></li>
+<li><p>Edit scripts with code in it,</p></li>
+<li><p>Run the analysis you have written.</p></li>
+</ul>
+<p><img src="images/chapter_04_img/03_source_window/01_rstudio_source.png" /></p>
+<p>In other words, the source window will show you whatever file you are interested in, as long as RStudio can read it - and no, Microsoft Office Documents are not supported. Another limitation of the source window is that it can only show text-based files. So opening images, etc. would not work.</p>
+</div>
+<div id="the-environment-history-connections-tutorial-window" class="section level2" number="4.3">
+<h2><span class="header-section-number">4.3</span> The Environment / History / Connections / Tutorial window</h2>
+<p>The window in the top right shows multiples panes. The first pane is called <em>Environment</em> and shows you objects which are available for computation. One of the first objects you will create is your dataset because, without data, we cannot perform any analysis. Thus, one object might be your data. Another object could be a plot showing the number of male and female participants in your study. To find out how to create objects yourself, you can take a glimpse at (INSERT CHAPTER X). Besides datasets and plots, you will also find other objects here, e.g. lists, vectors and functions you created yourself. Don’t worry if none of these words makes sense at this point. We will cover each of them in the upcoming chapters. For now, remember this is a place where you can find different objects you created.</p>
+<p><img src="images/chapter_04_img/04_environment_history_etc/01_rstudio_environment.png" /></p>
+<p>The <em>History</em> pane is very easy to understand. Whatever computation you run in the Console will be stored. So you can go back and see what you coded and rerun that code. Remember the example from above where we computed the sum of <code>10+5</code>? This computation is stored in the history of RStudio, and you can rerun it by clicking on <code>10+5</code> in the history pane and then click on <code>To Console</code>. This will insert <code>10+5</code> back into the Console, and we can hit <code>Return ↵</code> to retrieve the result. You also have the option to copy the code into an existing or new R Script by clicking on <code>To Source</code>. By doing this, you can save this computation on your computer and reuse it later. Finally, if you would like to store your history, you can do so by clicking on the <code>floppy disk symbol</code>. There are two more buttons in this pane, one allows you to delete individual entries in the history, and the last one, a <code>broom</code>, clears the entire history (irrevocably).</p>
+<p><img src="images/chapter_04_img/04_environment_history_etc/02_rstudio_history.png" /></p>
+<p>The pane <em>Connections</em> allows you to tab into external databases directly. This can come in handy when you work collaboratively on the same data or want to work with extensive datasets without having to download them. However, for an introduction to R, we will not use this feature of RStudio for now.</p>
+<p><img src="images/chapter_04_img/04_environment_history_etc/03_rstudio_connections.png" /></p>
+<p>The last pane is called <em>Tutorial</em>. Here you can find additional materials to learn <em>R</em> and RStudio. If you search for more great content to learn R, this serves as a great starting point.</p>
+<p><img src="images/chapter_04_img/04_environment_history_etc/04_rstudio_tutorial.png" /></p>
+</div>
+<div id="the-files-plots-packages-help-viewer-window" class="section level2" number="4.4">
+<h2><span class="header-section-number">4.4</span> The Files / Plots / Packages / Help / Viewer window</h2>
+<p>The last window consists of five essential panes. The first one is the <em>Files</em> pane. As the name indicates, it lists all the files and folders in your root directory. A root directory is the default directory where RStudio saves your files, for example, your analysis. However, you can easily change this directory to something else (see also CHAPTER X) or use R Project files (see CHAPTER X) to carry out your research. Thus, the <em>Files</em> pane is an easy way to load data into RStudio and create folders to keep your research project well organised.</p>
+<p><img src="images/chapter_04_img/05_files_plots_etc/01_rstudio_files.png" /></p>
+<p>Since the Console cannot reproduce data visualisations, RStudio offers a way to do this very easily. It is through the Plots pane. This pane is exclusively designed to show you any plots you have created using R. Here is a simple example that you can try. Type into your console <code>boxplot(mtcars$hp)</code>.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="the-rstudio-interface.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Here we create a nice boxplot using a dataset called &#39;mtcars&#39;</span></span>
+<span id="cb2-2"><a href="the-rstudio-interface.html#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(mtcars<span class="sc">$</span>hp)</span></code></pre></div>
+<p><img src="r_for_non_programmers_files/figure-html/Simple%20boxplot-1.png" width="672" /></p>
+<p>Although this is a short piece of coding, it performs quite a lot of steps:</p>
+<ul>
+<li><p>it uses a function called <code>boxplot()</code> to draw a boxplot of</p></li>
+<li><p>a variable called <code>hp</code> (for horsepower), which is located in</p></li>
+<li><p>a dataset named <code>mtcars</code>,</p></li>
+<li><p>and it renders the graph in your <em>Plots</em> pane</p></li>
+</ul>
+<p>This is how the plot should look like in your RStudio <em>Plots</em> pane.</p>
+<p><img src="images/chapter_04_img/05_files_plots_etc/02_rstudio_plots.png" /></p>
+<p>If you wish to delete the plot, you can click on the <code>red circle with a white x</code> symbol. This will delete the currently visible plot. If you wish to remove all plots from this pane, you can use the <code>broom</code>. There is also an option to export your plot and move back and forth between different plots.</p>
+<p>Do not worry about the coding at this point. It will all make sense in the following chapters.</p>
+<p>The next pane is called <em>Packages</em>. Packages are additional tools you can import and use when performing your analysis. A frequent analogy people use to explain packages is your phone and the apps you install. Each package you download is equivalent to an app on your phone. It can enhance different aspects of working in <em>R</em>, such as creating animated plots, using unique machine learning algorithms, or simply making your life easier by doing multiple computations with just one single line of code. You will learn more about <em>R packages</em> in Chapter <a href="r-basics-the-very-fundamentals.html#r-packages">5.4</a>.</p>
+<p><img src="images/chapter_04_img/05_files_plots_etc/03_rstudio_packages.png" /></p>
+<p>If you are in dire need of help, RStudio provides you with a <em>Help</em> pane. You can search for specific topics, for example how certain computations work. The <em>Help</em> pane also has documentation on different datasets that are included in <em>R</em>, RStudio or <em>R packages</em> you have installed.</p>
+<p><img src="images/chapter_04_img/05_files_plots_etc/04_rstudio_help.png" /></p>
+<p>So, for example, if you want to know what the <code>mtcars</code> dataset is, you can either use the search window in the <em>Help</em> pane or, much easier, use a <code>?</code> in the console to search for it:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="the-rstudio-interface.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Type a &#39;?&#39; and immediately add the name to bring up helpful information.</span></span>
+<span id="cb3-2"><a href="the-rstudio-interface.html#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="the-rstudio-interface.html#cb3-3" aria-hidden="true" tabindex="-1"></a>?mtcars</span></code></pre></div>
+<p>This will open the <em>Help</em> pane and give you more information about this dataset:</p>
+<p><img src="images/chapter_04_img/05_files_plots_etc/04_rstudio_help_mtcars.png" /></p>
+<p>Lastly, we have the <em>Viewer</em> pane. Not every data visualisation we create in R is a static image. You can create dynamic data visualisations or even websites with R. This type of content is displayed in the Viewer pane rather than in the Plots pane. Often these visualisations are based on HTML and other web-based programming languages. As such, it is easy to open them in your browser as well. However, in this book, we mainly focus on two-dimensional static plots, which are the ones you likely need most of the time, either for your assignments, thesis, or publication.</p>
+<p><img src="images/chapter_04_img/05_files_plots_etc/05_rstudio_viewer.png" /></p>
+</div>
+<div id="customise-your-user-interface" class="section level2" number="4.5">
+<h2><span class="header-section-number">4.5</span> Customise your user interface</h2>
+<p>As a last remark in this chapter, I would like to make you aware that you can modify each window. There are three basic adjustments you can make:</p>
+<ul>
+<li><p>Hide panes by clicking on the window symbol in the top right corner of each window,</p></li>
+<li><p>Resize panes by dragging the border of a window horizontally or vertically, or</p></li>
+<li><p>Add and remove panes by going to <code>RStudio &gt; Preferences &gt; Pane Layout</code>, or use the keyboard shortcut <code>⌘ + ,</code> if you are on a Mac. There is, unfortunately no default shortcut for PC users.</p></li>
+</ul>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="setting-up-r-and-rstudio.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="r-basics-the-very-fundamentals.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["r_for_non_programmers.pdf", "r_for_non_programmers.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

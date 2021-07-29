@@ -1,0 +1,17 @@
+# `Readme.` Before you get started {#readme-before-you-get-started}
+
+## A starting point and reference book {#a-starting-point-and-reference-book}
+
+`to be added`
+
+## Download the companion R package {#download-the-companion-r-package}
+
+`to be added`
+
+-   Explain where to download
+
+-   Explain how examples are shown in this book (code in the first grey box, console results in the second grey box
+
+## A 'tidyverse' approach with some basic R {#a-tidyverse-approach-with-some-basic-r}
+
+`to be added`

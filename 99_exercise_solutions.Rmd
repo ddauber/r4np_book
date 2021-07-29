@@ -1,0 +1,19 @@
+# Exercises: Solutions
+
+## Solutions for \@ref(exercises)
+
+```{r Solution 4.1, echo=TRUE, collapse=TRUE}
+#1
+sqrt(25-16)+2*8-6
+
+#2
+"Five" == 5
+
+#3 
+books <- list("Harry Potter and the Deathly Hallows",
+              "The Alchemist",
+              "The Davinci Code",
+              "R For Dummies")
+
+books
+```

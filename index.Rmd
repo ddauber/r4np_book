@@ -10,9 +10,17 @@ link-citations: yes
 description: "This books is intended for Social Scientists. No matter whether you have years of experiences, this book might come in handy if you never use R or any other programming language before."
 ---
 
+# Welcome 👋 {#welcome .unnumbered}
+
 ```{r include=FALSE}
 # automatically create a bib database for R packages
 knitr::write_bib(c(
   .packages(), 'bookdown', 'knitr', 'rmarkdown'
 ), 'packages.bib')
 ```
+
+![](images/chapter_00_img/r_for_non_programmers_logo.png)
+
+Welcome to *R for Non-Programmers: A guide for Social Scientists*. This book is intended to be of help to everyone who wishes to enter the world of R Programming, but not necessarily for the purpose to become a programmer. Instead, this book intends to convey key concepts in data analysis, especially quantitative research.
+
+[Add more]
