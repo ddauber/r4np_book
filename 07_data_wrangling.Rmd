@@ -1,0 +1,21 @@
+# Data Wrangling
+
+## Import your data
+
+## Inspecting your raw data
+
+## Data cleaning
+
+## Change data types and explain what they are
+
+## Recoding and rearranging factors (e.g. gender coded as 0 and 1)
+
+## Dealing with missing data
+
+## Latent constructs and their reliability
+
+### Theory
+
+### Visualisation
+
+### Computation

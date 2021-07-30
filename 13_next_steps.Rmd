@@ -1,4 +1,4 @@
-# Next steps on your R journey {#next-steps}
+# Where to go from here: The next steps in your R journey {#next-steps}
 
 ## GitHub: A Gateway to even more ingenious R packages {#next-steps-github}
 

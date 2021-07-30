@@ -1,0 +1,77 @@
+# Starting your R projects {#starting-your-r-projects}
+
+Every project likely fills you with enthusiasm and excitement. And it should. You are about to find answers to your questions and you hopefully come out as more knowledgeable as a result of it. However, there are certainly aspects of data analysis that are less pleasant. I can think of two:
+
+-   Keeping track of all the files my project generates
+
+-   Data wrangling
+
+While we cover data wrangling in great detail later (Chapter \@ref(data-wrangling)), I would like to share some insights from my work that helped me stay organised and, as a consequence, less frustrated. The following applies to small as well as large research projects, which makes it very convenient no matter the situation. Of course, feel free to tweak my approach to whatever suits you. However, consistency is king.
+
+## Creating an R Project file {#creating-an-r-project-file}
+
+When working on a project you likely create many different files for various purposes, especially R Scripts (see Chapter \@ref(creating-an-r-script)). If you are not careful, these file will be stored in your systems default location, which might not be where you want them to be. RStudio allows you to manage your entire project in a very intuitive and convenient way through R Project files. Using R Project files comes with a couple of perks, for example:
+
+-   All the files that you generate are in the same place. Your data, your coding, your exported plots, your reports, etc., all are in one place together without you having to manage the files manually.
+
+-   If you want to share your project you can share the entire folder and others can easily reproduce your research or help fix problems. This is because all file paths are relative and not absolute.
+
+-   You can, more easily, use GitHub for backups and so called 'version control', which allows you to track changes you have made to your code over time (see also Chapter \@ref(next-steps-github)).
+
+For now, the most important reason to use R Project files is the convenience of organisation and the ability to share it easily with co-investigators, your supervisor, or your students.
+
+To create an R Project you need to follow the follow steps:
+
+1.  Select `File > New Project…` from the menu bar.
+
+    ![](images/chapter_06_img/00_r_project/00_r_project_file_menu.png)
+
+2.  Select `New Directory` from the popup window.
+
+    ![](images/chapter_06_img/00_r_project/01_r_project_new_directory.png)
+
+3.  Next, select `New Project`.
+
+    ![](images/chapter_06_img/00_r_project/02_r_project_new_project.png)
+
+4.  Pick a meaningful name for your project folder, i.e. the `Directory Name`. Ensure this project folder is created in the right place. You can change the `subdirectory` by clicking on `Browse…`. Ideally the subdirectory is a place where you usually store your research projects.
+
+    ![](images/chapter_06_img/00_r_project/03_r_project_specs.png)
+
+5.  You have the option to `Create a git repository`. This is only relevant if you already have a GitHub account and wish to use version control. For now, you can happily ignore it.
+
+6.  Lastly, tick `Open in new session`. This will open your R Project in a new RStudio window.
+
+    ![](images/chapter_06_img/00_r_project/04_r_project_directory_name.png)
+
+7.  Once you are happy with your choices, you can click `Create Project`. This will open a new R Session and you can start working on your project.
+
+    ![](images/chapter_06_img/00_r_project/05_r_project_new_session.png)
+
+If you look carefully, you can see that your RStudio is now 'branded' with your project name. At the top of the window you see the project name, the files pane shows the root directory where all your files will be and even the console show on top the file path your project. You could set all this up manually, but I would not recommend it, not the least because it is so easy to work with R Projects.
+
+## Organising your projects {#organising-your-projects}
+
+This section is neither related to RStudio, R or quantitative analysis in general. Instead, I want to convey to you that a good folder structure can go a long way. It is a good habbit to start thinking about folder structures before you start working on your project. Placing your files into dedicated folders rather than everything loosely in one single container will speed up your work and saves you from the frustration of not finding files you need. I have a template that I use regularly. You can either create it from scratch in RStudio or open your file browser and create the folders there. RStudio does not mind which way you do it. If you want to spend less time setting this up, you might want to use the function `create_folder_template()` from the `r4np` package.
+
+To create a folder click on `New Folder` in the Files pane. I usually have at least the following folders for every project I am involved in:
+
+-   A folder for my raw data. I store untouched datasets in it. With 'untouched' I mean they have not been processed in any way and are usually files I downloaded from my data collection tool, e.g. online questionnaire platform.
+
+-   A folder with 'tidy' data. This is usually data I exported from R after cleaning it, i.e. after data wrangling (see Chapter \@ref(data-wrangling)).
+
+-   A folder for my R scripts
+
+-   A folder for my plots
+
+-   A folder for reports
+
+Thus, in RStudio it would look something like this:
+
+![](images/chapter_06_img/01_organising_work/00_organising_work.png)
+
+You probably noticed that my folders have numbers in front of them. I do this to ensure that all folders are in the order I want them to be, which is usually not the alphabetical order my computer suggests. I use two digits, because it can happen that I have more than nine folders for a project and folder 10 would otherwise be listed as the third folder in this list. With this in place it will be easy to find whatever I need. Even others can easily understand what is where. It is simply 'tidy', similar to how we want our data to be.
+
+## Creating an R Script {#creating-an-r-script}
+
+When opening an R script or creating a new one, it will display in the source window (see Chapter \@ref(the-source-window)).

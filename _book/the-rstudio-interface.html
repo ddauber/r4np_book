@@ -24,7 +24,7 @@
 <meta name="author" content="Daniel Dauber" />
 
 
-<meta name="date" content="2021-07-28" />
+<meta name="date" content="2021-07-30" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -59,6 +59,7 @@
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
@@ -119,28 +120,6 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
-<style type="text/css">
-/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-}
-.hanging div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}
-</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -192,18 +171,52 @@ div.csl-indent {
 <li class="chapter" data-level="5" data-path="r-basics-the-very-fundamentals.html"><a href="r-basics-the-very-fundamentals.html"><i class="fa fa-check"></i><b>5</b> R Basics: The very fundamentals</a>
 <ul>
 <li class="chapter" data-level="5.1" data-path="r-basics-the-very-fundamentals.html"><a href="r-basics-the-very-fundamentals.html#basic-computations-in-r"><i class="fa fa-check"></i><b>5.1</b> Basic computations in R</a></li>
-<li class="chapter" data-level="5.2" data-path="r-basics-the-very-fundamentals.html"><a href="r-basics-the-very-fundamentals.html#assigning-values-to-objects-"><i class="fa fa-check"></i><b>5.2</b> Assigning values to objects: ‘&lt;-’</a></li>
+<li class="chapter" data-level="5.2" data-path="r-basics-the-very-fundamentals.html"><a href="r-basics-the-very-fundamentals.html#assigning-values-to-objects"><i class="fa fa-check"></i><b>5.2</b> Assigning values to objects: ‘&lt;-’</a></li>
 <li class="chapter" data-level="5.3" data-path="r-basics-the-very-fundamentals.html"><a href="r-basics-the-very-fundamentals.html#functions"><i class="fa fa-check"></i><b>5.3</b> Functions</a></li>
 <li class="chapter" data-level="5.4" data-path="r-basics-the-very-fundamentals.html"><a href="r-basics-the-very-fundamentals.html#r-packages"><i class="fa fa-check"></i><b>5.4</b> R packages</a>
 <ul>
-<li class="chapter" data-level="5.4.1" data-path="r-basics-the-very-fundamentals.html"><a href="r-basics-the-very-fundamentals.html#installing-packages-via-rstudios-package-pane"><i class="fa fa-check"></i><b>5.4.1</b> Installing packages via RStudio’s Package pane</a></li>
-<li class="chapter" data-level="5.4.2" data-path="r-basics-the-very-fundamentals.html"><a href="r-basics-the-very-fundamentals.html#installing-packages-using-a-function"><i class="fa fa-check"></i><b>5.4.2</b> Installing packages using a function</a></li>
+<li class="chapter" data-level="5.4.1" data-path="r-basics-the-very-fundamentals.html"><a href="r-basics-the-very-fundamentals.html#installing-packages-using-a-function"><i class="fa fa-check"></i><b>5.4.1</b> Installing packages using <code>install.packages()</code></a></li>
+<li class="chapter" data-level="5.4.2" data-path="r-basics-the-very-fundamentals.html"><a href="r-basics-the-very-fundamentals.html#installing-packages-via-rstudio"><i class="fa fa-check"></i><b>5.4.2</b> Installing packages via RStudio’s package pane</a></li>
+<li class="chapter" data-level="5.4.3" data-path="r-basics-the-very-fundamentals.html"><a href="r-basics-the-very-fundamentals.html#using-r-packages"><i class="fa fa-check"></i><b>5.4.3</b> Using R Packages</a></li>
 </ul></li>
-<li class="chapter" data-level="5.5" data-path="r-basics-the-very-fundamentals.html"><a href="r-basics-the-very-fundamentals.html#exercises-chapter-5"><i class="fa fa-check"></i><b>5.5</b> Exercises</a></li>
+<li class="chapter" data-level="5.5" data-path="r-basics-the-very-fundamentals.html"><a href="r-basics-the-very-fundamentals.html#coding-etiquette"><i class="fa fa-check"></i><b>5.5</b> Coding etiquette</a></li>
+<li class="chapter" data-level="5.6" data-path="r-basics-the-very-fundamentals.html"><a href="r-basics-the-very-fundamentals.html#exercises-chapter-5"><i class="fa fa-check"></i><b>5.6</b> Exercises</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="exercises-solutions.html"><a href="exercises-solutions.html"><i class="fa fa-check"></i><b>6</b> Exercises: Solutions</a>
+<li class="chapter" data-level="6" data-path="starting-your-r-projects.html"><a href="starting-your-r-projects.html"><i class="fa fa-check"></i><b>6</b> Starting your R projects</a>
 <ul>
-<li class="chapter" data-level="6.1" data-path="exercises-solutions.html"><a href="exercises-solutions.html#solutions-for-refexercises"><i class="fa fa-check"></i><b>6.1</b> Solutions for @ref(exercises)</a></li>
+<li class="chapter" data-level="6.1" data-path="starting-your-r-projects.html"><a href="starting-your-r-projects.html#creating-an-r-project-file"><i class="fa fa-check"></i><b>6.1</b> Creating an R project file</a></li>
+<li class="chapter" data-level="6.2" data-path="starting-your-r-projects.html"><a href="starting-your-r-projects.html#organising-your-projects"><i class="fa fa-check"></i><b>6.2</b> Organising your projects</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="data-wrangling.html"><a href="data-wrangling.html"><i class="fa fa-check"></i><b>7</b> Data Wrangling</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="data-wrangling.html"><a href="data-wrangling.html#import-your-data"><i class="fa fa-check"></i><b>7.1</b> Import your data</a></li>
+<li class="chapter" data-level="7.2" data-path="data-wrangling.html"><a href="data-wrangling.html#inspecting-your-raw-data"><i class="fa fa-check"></i><b>7.2</b> Inspecting your raw data</a></li>
+<li class="chapter" data-level="7.3" data-path="data-wrangling.html"><a href="data-wrangling.html#data-cleaning"><i class="fa fa-check"></i><b>7.3</b> Data cleaning</a></li>
+<li class="chapter" data-level="7.4" data-path="data-wrangling.html"><a href="data-wrangling.html#change-data-types-and-explain-what-they-are"><i class="fa fa-check"></i><b>7.4</b> Change data types and explain what they are</a></li>
+<li class="chapter" data-level="7.5" data-path="data-wrangling.html"><a href="data-wrangling.html#recoding-and-rearranging-factors-e.g.-gender-coded-as-0-and-1"><i class="fa fa-check"></i><b>7.5</b> Recoding and rearranging factors (e.g. gender coded as 0 and 1)</a></li>
+<li class="chapter" data-level="7.6" data-path="data-wrangling.html"><a href="data-wrangling.html#dealing-with-missing-data"><i class="fa fa-check"></i><b>7.6</b> Dealing with missing data</a></li>
+<li class="chapter" data-level="7.7" data-path="data-wrangling.html"><a href="data-wrangling.html#latent-constructs-and-their-reliability"><i class="fa fa-check"></i><b>7.7</b> Latent constructs and their reliability</a>
+<ul>
+<li class="chapter" data-level="7.7.1" data-path="data-wrangling.html"><a href="data-wrangling.html#theory"><i class="fa fa-check"></i><b>7.7.1</b> Theory</a></li>
+<li class="chapter" data-level="7.7.2" data-path="data-wrangling.html"><a href="data-wrangling.html#visualisation"><i class="fa fa-check"></i><b>7.7.2</b> Visualisation</a></li>
+<li class="chapter" data-level="7.7.3" data-path="data-wrangling.html"><a href="data-wrangling.html#computation"><i class="fa fa-check"></i><b>7.7.3</b> Computation</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html"><i class="fa fa-check"></i><b>8</b> Descriptive Statistics</a></li>
+<li class="chapter" data-level="9" data-path="correlations.html"><a href="correlations.html"><i class="fa fa-check"></i><b>9</b> Correlations</a></li>
+<li class="chapter" data-level="10" data-path="comparing-groups.html"><a href="comparing-groups.html"><i class="fa fa-check"></i><b>10</b> Comparing groups</a></li>
+<li class="chapter" data-level="11" data-path="regression-creating-models-to-predict-future-observations.html"><a href="regression-creating-models-to-predict-future-observations.html"><i class="fa fa-check"></i><b>11</b> Regression: Creating models to predict future observations</a></li>
+<li class="chapter" data-level="12" data-path="mixed-methods-research-analysing-qualitative-in-r.html"><a href="mixed-methods-research-analysing-qualitative-in-r.html"><i class="fa fa-check"></i><b>12</b> Mixed-methods research: Analysing qualitative in R</a></li>
+<li class="chapter" data-level="13" data-path="next-steps.html"><a href="next-steps.html"><i class="fa fa-check"></i><b>13</b> Where to go from here: The next steps in your R journey</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="next-steps.html"><a href="next-steps.html#next-steps-github"><i class="fa fa-check"></i><b>13.1</b> GitHub: A Gateway to even more ingenious R packages</a></li>
+<li class="chapter" data-level="13.2" data-path="next-steps.html"><a href="next-steps.html#next-steps-books"><i class="fa fa-check"></i><b>13.2</b> Books to read and expand your knowledge</a></li>
+<li class="chapter" data-level="13.3" data-path="next-steps.html"><a href="next-steps.html#next-steps-online-readings"><i class="fa fa-check"></i><b>13.3</b> Engage in regular online readings about R</a></li>
+<li class="chapter" data-level="13.4" data-path="next-steps.html"><a href="next-steps.html#next-steps-twitter"><i class="fa fa-check"></i><b>13.4</b> Join the Twitter community and hone your skills</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="exercises-solutions.html"><a href="exercises-solutions.html"><i class="fa fa-check"></i><b>14</b> Exercises: Solutions</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="exercises-solutions.html"><a href="exercises-solutions.html#solutions-for-refexercises"><i class="fa fa-check"></i><b>14.1</b> Solutions for @ref(exercises)</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://twitter.com/daniel_dauber" target="blank">Find me on twitter!</a></li>
@@ -230,7 +243,7 @@ div.csl-indent {
 <p>When you open RStudio for the first time, you are presented with four quadrants, each of which fulfils a unique purpose:</p>
 <ul>
 <li><p>The <code>Console</code> window,</p></li>
-<li><p>The <code>Source</code> window,</p></li>
+<li><p>The <code>Source</code> window<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>,</p></li>
 <li><p>The <code>Environment / History / Connections / Tutorial</code> window, and</p></li>
 <li><p>The <code>Files / Plots / Packages / Help / Viewer</code> window</p></li>
 </ul>
@@ -298,7 +311,7 @@ div.csl-indent {
 <p>Do not worry about the coding at this point. It will all make sense in the following chapters.</p>
 <p>The next pane is called <em>Packages</em>. Packages are additional tools you can import and use when performing your analysis. A frequent analogy people use to explain packages is your phone and the apps you install. Each package you download is equivalent to an app on your phone. It can enhance different aspects of working in <em>R</em>, such as creating animated plots, using unique machine learning algorithms, or simply making your life easier by doing multiple computations with just one single line of code. You will learn more about <em>R packages</em> in Chapter <a href="r-basics-the-very-fundamentals.html#r-packages">5.4</a>.</p>
 <p><img src="images/chapter_04_img/05_files_plots_etc/03_rstudio_packages.png" /></p>
-<p>If you are in dire need of help, RStudio provides you with a <em>Help</em> pane. You can search for specific topics, for example how certain computations work. The <em>Help</em> pane also has documentation on different datasets that are included in <em>R</em>, RStudio or <em>R packages</em> you have installed.</p>
+<p>If you are in dire need of help, RStudio provides you with a <em>Help</em> pane. You can search for specific topics, for example how certain computations work. The <em>Help</em> pane also has documentation on different datasets that are included in <em>R</em>, RStudio or <em>R packages</em> you have installed. If you want a more comprehensive overview of how you can find help, have a look at CRAN’s <a href="https://www.r-project.org/help.html" target="blank" title="&#39;Getting Help with R&#39;">‘Getting Help with R’</a> webpage.</p>
 <p><img src="images/chapter_04_img/05_files_plots_etc/04_rstudio_help.png" /></p>
 <p>So, for example, if you want to know what the <code>mtcars</code> dataset is, you can either use the search window in the <em>Help</em> pane or, much easier, use a <code>?</code> in the console to search for it:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="the-rstudio-interface.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Type a &#39;?&#39; and immediately add the name to bring up helpful information.</span></span>
@@ -306,6 +319,12 @@ div.csl-indent {
 <span id="cb3-3"><a href="the-rstudio-interface.html#cb3-3" aria-hidden="true" tabindex="-1"></a>?mtcars</span></code></pre></div>
 <p>This will open the <em>Help</em> pane and give you more information about this dataset:</p>
 <p><img src="images/chapter_04_img/05_files_plots_etc/04_rstudio_help_mtcars.png" /></p>
+<p>There are many different ways of how you can find help with your coding beyond RStudio and this book. My top three platforms to find solutions to my programming problems are:</p>
+<ul>
+<li><p><a href="https://www.google.com" title="Google">Google</a></p></li>
+<li><p><a href="https://stackoverflow.com" target="blank" title="stackoverflow.com">stackoverflow.com</a></p></li>
+<li><p><a href="https://twitter.com/home" target="blank" title="Twitter">Twitter</a> (with <a href="https://twitter.com/hashtag/rstats" target="blank" title="#RStats">#RStats</a>)</p></li>
+</ul>
 <p>Lastly, we have the <em>Viewer</em> pane. Not every data visualisation we create in R is a static image. You can create dynamic data visualisations or even websites with R. This type of content is displayed in the Viewer pane rather than in the Plots pane. Often these visualisations are based on HTML and other web-based programming languages. As such, it is easy to open them in your browser as well. However, in this book, we mainly focus on two-dimensional static plots, which are the ones you likely need most of the time, either for your assignments, thesis, or publication.</p>
 <p><img src="images/chapter_04_img/05_files_plots_etc/05_rstudio_viewer.png" /></p>
 </div>
@@ -319,6 +338,12 @@ div.csl-indent {
 </ul>
 
 </div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="1">
+<li id="fn1"><p>If you cannot see the Source window when you start R, create a new R Scripts first: <code>File &gt; New File &gt; R Script</code>, or use the keyboard shortcut <code>Ctrl+Shift+N</code> on PC and <code>Cmd+Shift+N</code> on Mac.<a href="the-rstudio-interface.html#fnref1" class="footnote-back">↩︎</a></p></li>
+</ol>
 </div>
             </section>
 
@@ -377,20 +402,6 @@ gitbook.start({
 });
 </script>
 
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:")
-      if (/^https?:/.test(src))
-        src = src.replace(/^https?:/, '');
-    script.src = src;
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script>
 </body>
 
 </html>

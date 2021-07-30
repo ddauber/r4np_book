@@ -1,6 +1,6 @@
 # The RStudio Interface {#the-rstudio-interface}
 
-When you open RStudio for the first time, you are presented with four quadrants, each of which fulfils a unique purpose:
+The RStudio interface is composed of quadrants, each of which fulfils a unique purpose:
 
 -   The `Console` window,
 
@@ -9,6 +9,8 @@ When you open RStudio for the first time, you are presented with four quadrants,
 -   The `Environment / History / Connections / Tutorial` window, and
 
 -   The `Files / Plots / Packages / Help / Viewer` window
+
+You might only see three windows and wonder where the `Source` window has gone in your version of RStudio. In order to use it you have to either open a file or create a new one. You can create a new file by selecting `File > New File > R Script` in the menu bar, or use the keyboard shortcut `Ctrl+Shift+N` on PC and `Cmd+Shift+N` on Mac.
 
 I will briefly explain the purpose of each window/pane and how they are relevant to your work in *R*.
 

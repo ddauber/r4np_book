@@ -109,8 +109,6 @@
 
 -   Reporting
 
-<!-- -->
-
 -   Normality tests and dealing with outliers
 
     -   Theory
