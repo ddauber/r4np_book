@@ -63,15 +63,13 @@
 
 -   Functions ✅
 
--   R packages
+-   R packages ✅
 
-    -   Using RStudio
+    -   Using RStudio ✅
 
-    -   Using functions
+    -   Using functions ✅
 
--   Tidyverse and the tidy workflows
-
--   Coding etiquette
+-   Coding etiquette ✅
 
 # 6. Starting your R project
 

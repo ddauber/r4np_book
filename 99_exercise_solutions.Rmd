@@ -3,17 +3,37 @@
 ## Solutions for \@ref(exercises)
 
 ```{r Solution 4.1, echo=TRUE, collapse=TRUE}
-#1
+#1 ---------------
 sqrt(25-16)+2*8-6
 
-#2
+#2 ---------------
 "Five" == 5
 
-#3 
+#3 ---------------
 books <- list("Harry Potter and the Deathly Hallows",
               "The Alchemist",
               "The Davinci Code",
               "R For Dummies")
 
 books
+
+# 4 ---------------
+x_x <- function(number1, number2){       # Creates a function that takes 2 arguments
+  result1 <- number1*number2             # result1 multiplies the two arguments
+  result2 <- sqrt(number1)               # result2 computes the squareroot of the 1st argument
+  result3 <- number1-number2             # result3 subtracts the 2nd argument from the 1st
+  return(c(result1, result2, result3))   # Prints all three results into the console
+} 
+
+x_x(2,3)
+
+# 5 ---------------
+
+# First, install the package.
+
+# Second, load the package with 'library()'
+#         or use '::' to load only a particular function once.
+
+# Third, call the function you are interested in.
+
 ```

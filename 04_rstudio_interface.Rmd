@@ -110,7 +110,7 @@ The next pane is called *Packages*. Packages are additional tools you can import
 
 ![](images/chapter_04_img/05_files_plots_etc/03_rstudio_packages.png)
 
-If you are in dire need of help, RStudio provides you with a *Help* pane. You can search for specific topics, for example how certain computations work. The *Help* pane also has documentation on different datasets that are included in *R*, RStudio or *R packages* you have installed.
+If you are in dire need of help, RStudio provides you with a *Help* pane. You can search for specific topics, for example how certain computations work. The *Help* pane also has documentation on different datasets that are included in *R*, RStudio or *R packages* you have installed. If you want a more comprehensive overview of how you can find help, have a look at CRAN's ['Getting Help with R'](https://www.r-project.org/help.html "'Getting Help with R'"){target="blank"} webpage.
 
 ![](images/chapter_04_img/05_files_plots_etc/04_rstudio_help.png)
 
@@ -126,6 +126,14 @@ So, for example, if you want to know what the `mtcars` dataset is, you can eithe
 This will open the *Help* pane and give you more information about this dataset:
 
 ![](images/chapter_04_img/05_files_plots_etc/04_rstudio_help_mtcars.png)
+
+There are many different ways of how you can find help with your coding beyond RStudio and this book. My top three platforms to find solutions to my programming problems are:
+
+-   [Google](https://www.google.com "Google")
+
+-   [stackoverflow.com](https://stackoverflow.com "stackoverflow.com"){target="blank"}
+
+-   [Twitter](https://twitter.com/home "Twitter"){target="blank"} (with [\#RStats](https://twitter.com/hashtag/rstats "#RStats"){target="blank"})
 
 Lastly, we have the *Viewer* pane. Not every data visualisation we create in R is a static image. You can create dynamic data visualisations or even websites with R. This type of content is displayed in the Viewer pane rather than in the Plots pane. Often these visualisations are based on HTML and other web-based programming languages. As such, it is easy to open them in your browser as well. However, in this book, we mainly focus on two-dimensional static plots, which are the ones you likely need most of the time, either for your assignments, thesis, or publication.
 

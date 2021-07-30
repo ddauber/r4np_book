@@ -34,3 +34,11 @@ using-r-packages
 fig:example
 fig:img-r-package-documentation
 fig:img-x-files
+next-steps
+next-steps-github
+next-steps-books
+next-steps-online-readings
+next-steps-twitter
+assigning-values-to-objects
+installing-packages-via-rstudio
+coding-etiquette
