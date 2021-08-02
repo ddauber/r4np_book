@@ -24,7 +24,7 @@
 <meta name="author" content="Daniel Dauber" />
 
 
-<meta name="date" content="2021-07-30" />
+<meta name="date" content="2021-08-02" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -120,6 +120,28 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -296,18 +318,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>When opening an R script or creating a new one, it will display in the source window (see Chapter <a href="the-rstudio-interface.html#the-source-window">4.2</a>). Some refer to this window as the ‘script editor.’ An R Script starts as an empty file. Good coding etiquette (see Chapter <a href="r-basics-the-very-fundamentals.html#coding-etiquette">5.5</a> demands that we use the first line to indicate what this file does by using a comment <code>#</code>. Here is an example for our ‘TidyTuesday’ R Project.</p>
 <p><img src="images/chapter_06_img/02_r_script/00_r_script.png" /></p>
 <p>All examples in this book can easily be copied and pasted into your own R Script. Let’s try it with the following code. The plot this code creates reveals which car manufacturer produces the most efficient cars.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="starting-your-r-projects.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-2"><a href="starting-your-r-projects.html#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="starting-your-r-projects.html#cb1-3" aria-hidden="true" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(manufacturer, <span class="fu">desc</span>(hwy), <span class="at">FUN =</span> median),</span>
-<span id="cb1-4"><a href="starting-your-r-projects.html#cb1-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">y =</span> hwy,</span>
-<span id="cb1-5"><a href="starting-your-r-projects.html#cb1-5" aria-hidden="true" tabindex="-1"></a>                   <span class="at">fill =</span> manufacturer)) <span class="sc">+</span></span>
-<span id="cb1-6"><a href="starting-your-r-projects.html#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
-<span id="cb1-7"><a href="starting-your-r-projects.html#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
-<span id="cb1-8"><a href="starting-your-r-projects.html#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb1-9"><a href="starting-your-r-projects.html#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Manufacturer&quot;</span>) <span class="sc">+</span></span>
-<span id="cb1-10"><a href="starting-your-r-projects.html#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Highway miles per gallon&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="starting-your-r-projects.html#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb29-2"><a href="starting-your-r-projects.html#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-3"><a href="starting-your-r-projects.html#cb29-3" aria-hidden="true" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(manufacturer, <span class="fu">desc</span>(hwy), <span class="at">FUN =</span> median),</span>
+<span id="cb29-4"><a href="starting-your-r-projects.html#cb29-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">y =</span> hwy,</span>
+<span id="cb29-5"><a href="starting-your-r-projects.html#cb29-5" aria-hidden="true" tabindex="-1"></a>                   <span class="at">fill =</span> manufacturer)) <span class="sc">+</span></span>
+<span id="cb29-6"><a href="starting-your-r-projects.html#cb29-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb29-7"><a href="starting-your-r-projects.html#cb29-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb29-8"><a href="starting-your-r-projects.html#cb29-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb29-9"><a href="starting-your-r-projects.html#cb29-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Manufacturer&quot;</span>) <span class="sc">+</span></span>
+<span id="cb29-10"><a href="starting-your-r-projects.html#cb29-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Highway miles per gallon&quot;</span>)</span></code></pre></div>
 <p><img src="r_for_non_programmers_files/figure-html/R%20Script%20copy%20and%20paste%20examples-1.png" width="672" /></p>
-<p>You are probably wondering where your plot has gone. Copying the code will not automatically run it in our R Script. However, this is necessary to create the plot. If you tried pressing <code>Return ↵</code>, you would only add a new line. Instead, you need to select the code you want to run and press <code>Ctrl+Return ↵</code> (PC) or <code>Cmd+Return ↵</code> (Mac). You can also use the <code>Run</code> command at the top of your source window, but it is much more efficient to press the keyboard shortcut. Besides, you will remember this shortcut very quickly, because we need to use it very frequently. If all worked out, you should see the following:</p>
+<p>You are probably wondering where your plot has gone. Copying the code will not automatically run it in your R Script. However, this is necessary to create the plot. If you tried pressing <code>Return ↵</code>, you would only add a new line. Instead, you need to select the code you want to run and press <code>Ctrl+Return ↵</code> (PC) or <code>Cmd+Return ↵</code> (Mac). You can also use the <code>Run</code> command at the top of your source window, but it is much more efficient to press the keyboard shortcut. Besides, you will remember this shortcut quickly, because we need to use it very frequently. If all worked out, you should see the following:</p>
 <p><img src="images/chapter_06_img/02_r_script/01_r_script_example_plot.png" /></p>
 <p>As you can see, cars from Honda appear to drive furthest with the same amount of fuel (a gallon) compared to other vehicles. Thus, if you are looking for a very economical car, you now know where to find them.</p>
 <p>The R Script editor has some conveniences for writing your code that are worth pointing out. You probably noticed that some of the code we have pasted is blue, and some other code is in green. These colours help to make your code more readable because they carry a specific meaning. In the default settings, green stands for any values in <code>""</code>, which usually stands for <code>character</code>s. This is also called ‘syntax highlighting.’</p>
@@ -387,6 +409,20 @@ gitbook.start({
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>

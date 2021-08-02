@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2021) (preloaded format=xelatex 2021.7.19)  28 JUL 2021 17:46
+This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2021) (preloaded format=xelatex 2021.7.19)  2 AUG 2021 12:35
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -23,40 +23,6 @@ File: bk10.clo 2021/02/12 v1.4n Standard LaTeX file (size option)
 \abovecaptionskip=\skip47
 \belowcaptionskip=\skip48
 \bibindent=\dimen138
-) (/Users/danieldauber/Library/TinyTeX/texmf-dist/tex/latex/lm/lmodern.sty
-Package: lmodern 2015/05/01 v1.6.1 Latin Modern Fonts
-LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
-(Font)                  OT1/cmr/m/n --> OT1/lmr/m/n on input line 22.
-LaTeX Font Info:    Overwriting symbol font `letters' in version `normal'
-(Font)                  OML/cmm/m/it --> OML/lmm/m/it on input line 23.
-LaTeX Font Info:    Overwriting symbol font `symbols' in version `normal'
-(Font)                  OMS/cmsy/m/n --> OMS/lmsy/m/n on input line 24.
-LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `normal'
-(Font)                  OMX/cmex/m/n --> OMX/lmex/m/n on input line 25.
-LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
-(Font)                  OT1/cmr/bx/n --> OT1/lmr/bx/n on input line 26.
-LaTeX Font Info:    Overwriting symbol font `letters' in version `bold'
-(Font)                  OML/cmm/b/it --> OML/lmm/b/it on input line 27.
-LaTeX Font Info:    Overwriting symbol font `symbols' in version `bold'
-(Font)                  OMS/cmsy/b/n --> OMS/lmsy/b/n on input line 28.
-LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `bold'
-(Font)                  OMX/cmex/m/n --> OMX/lmex/m/n on input line 29.
-LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
-(Font)                  OT1/cmr/bx/n --> OT1/lmr/bx/n on input line 31.
-LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
-(Font)                  OT1/cmss/m/n --> OT1/lmss/m/n on input line 32.
-LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
-(Font)                  OT1/cmr/m/it --> OT1/lmr/m/it on input line 33.
-LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `normal'
-(Font)                  OT1/cmtt/m/n --> OT1/lmtt/m/n on input line 34.
-LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
-(Font)                  OT1/cmr/bx/n --> OT1/lmr/bx/n on input line 35.
-LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  OT1/cmss/bx/n --> OT1/lmss/bx/n on input line 36.
-LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
-(Font)                  OT1/cmr/bx/it --> OT1/lmr/bx/it on input line 37.
-LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
-(Font)                  OT1/cmtt/m/n --> OT1/lmtt/m/n on input line 38.
 ) (/Users/danieldauber/Library/TinyTeX/texmf-dist/tex/latex/amsmath/amsmath.sty
 Package: amsmath 2021/04/20 v2.17j AMS math features
 \@mathmargin=\skip49
@@ -110,6 +76,51 @@ LaTeX Font Info:    Redeclaring font encoding OMS on input line 744.
 \mathdisplay@stack=\toks20
 LaTeX Info: Redefining \[ on input line 2923.
 LaTeX Info: Redefining \] on input line 2924.
+) (/Users/danieldauber/Library/TinyTeX/texmf-dist/tex/latex/amsfonts/amssymb.st
+y
+Package: amssymb 2013/01/14 v3.01 AMS font symbols
+
+(/Users/danieldauber/Library/TinyTeX/texmf-dist/tex/latex/amsfonts/amsfonts.sty
+Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
+\symAMSa=\mathgroup4
+\symAMSb=\mathgroup5
+LaTeX Font Info:    Redeclaring math symbol \hbar on input line 98.
+LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
+(Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
+)) (/Users/danieldauber/Library/TinyTeX/texmf-dist/tex/latex/lm/lmodern.sty
+Package: lmodern 2015/05/01 v1.6.1 Latin Modern Fonts
+LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
+(Font)                  OT1/cmr/m/n --> OT1/lmr/m/n on input line 22.
+LaTeX Font Info:    Overwriting symbol font `letters' in version `normal'
+(Font)                  OML/cmm/m/it --> OML/lmm/m/it on input line 23.
+LaTeX Font Info:    Overwriting symbol font `symbols' in version `normal'
+(Font)                  OMS/cmsy/m/n --> OMS/lmsy/m/n on input line 24.
+LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `normal'
+(Font)                  OMX/cmex/m/n --> OMX/lmex/m/n on input line 25.
+LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
+(Font)                  OT1/cmr/bx/n --> OT1/lmr/bx/n on input line 26.
+LaTeX Font Info:    Overwriting symbol font `letters' in version `bold'
+(Font)                  OML/cmm/b/it --> OML/lmm/b/it on input line 27.
+LaTeX Font Info:    Overwriting symbol font `symbols' in version `bold'
+(Font)                  OMS/cmsy/b/n --> OMS/lmsy/b/n on input line 28.
+LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `bold'
+(Font)                  OMX/cmex/m/n --> OMX/lmex/m/n on input line 29.
+LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
+(Font)                  OT1/cmr/bx/n --> OT1/lmr/bx/n on input line 31.
+LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
+(Font)                  OT1/cmss/m/n --> OT1/lmss/m/n on input line 32.
+LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
+(Font)                  OT1/cmr/m/it --> OT1/lmr/m/it on input line 33.
+LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `normal'
+(Font)                  OT1/cmtt/m/n --> OT1/lmtt/m/n on input line 34.
+LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
+(Font)                  OT1/cmr/bx/n --> OT1/lmr/bx/n on input line 35.
+LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
+(Font)                  OT1/cmss/bx/n --> OT1/lmss/bx/n on input line 36.
+LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
+(Font)                  OT1/cmr/bx/it --> OT1/lmr/bx/it on input line 37.
+LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
+(Font)                  OT1/cmtt/m/n --> OT1/lmtt/m/n on input line 38.
 ) (/Users/danieldauber/Library/TinyTeX/texmf-dist/tex/generic/iftex/ifxetex.sty
 Package: ifxetex 2019/10/25 v0.7 ifxetex legacy package. Use iftex instead.
 (/Users/danieldauber/Library/TinyTeX/texmf-dist/tex/generic/iftex/iftex.sty
@@ -410,18 +421,27 @@ Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
 \@thisruleclass=\count308
 \@lastruleclass=\count309
 \@thisrulewidth=\dimen172
+) (/Users/danieldauber/Library/TinyTeX/texmf-dist/tex/latex/tools/array.sty
+Package: array 2021/04/20 v2.5e Tabular extension package (FMi)
+\col@sep=\dimen173
+\ar@mcellbox=\box60
+\extrarowheight=\dimen174
+\NC@list=\toks23
+\extratabsurround=\skip58
+\backup@length=\skip59
+\ar@cellbox=\box61
 ) (/Users/danieldauber/Library/TinyTeX/texmf-dist/tex/latex/tools/calc.sty
 Package: calc 2017/05/25 v4.3 Infix arithmetic (KKT,FJ)
 \calc@Acount=\count310
 \calc@Bcount=\count311
-\calc@Adimen=\dimen173
-\calc@Bdimen=\dimen174
-\calc@Askip=\skip58
-\calc@Bskip=\skip59
+\calc@Adimen=\dimen175
+\calc@Bdimen=\dimen176
+\calc@Askip=\skip60
+\calc@Bskip=\skip61
 LaTeX Info: Redefining \setlength on input line 80.
 LaTeX Info: Redefining \addtolength on input line 81.
 \calc@Ccount=\count312
-\calc@Cskip=\skip60
+\calc@Cskip=\skip62
 )
 (/Users/danieldauber/Library/TinyTeX/texmf-dist/tex/latex/etoolbox/etoolbox.sty
 Package: etoolbox 2020/10/05 v2.5k e-TeX tools for LaTeX (JAW)
@@ -429,8 +449,8 @@ Package: etoolbox 2020/10/05 v2.5k e-TeX tools for LaTeX (JAW)
 )
 (/Users/danieldauber/Library/TinyTeX/texmf-dist/tex/latex/mdwtools/footnote.sty
 Package: footnote 1997/01/28 1.13 Save footnotes around boxes
-\fn@notes=\box60
-\fn@width=\dimen175
+\fn@notes=\box62
+\fn@width=\dimen177
 )
 (/Users/danieldauber/Library/TinyTeX/texmf-dist/tex/latex/graphics/graphicx.sty
 Package: graphicx 2020/12/05 v1.2c Enhanced LaTeX Graphics (DPC,SPQR)
@@ -446,51 +466,51 @@ File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
 )
 Package graphics Info: Driver file: xetex.def on input line 107.
 )
-\Gin@req@height=\dimen176
-\Gin@req@width=\dimen177
+\Gin@req@height=\dimen178
+\Gin@req@width=\dimen179
 ) (/Users/danieldauber/Library/TinyTeX/texmf-dist/tex/latex/natbib/natbib.sty
 Package: natbib 2010/09/13 8.31b (PWD, AO)
-\bibhang=\skip61
-\bibsep=\skip62
+\bibhang=\skip63
+\bibsep=\skip64
 LaTeX Info: Redefining \cite on input line 694.
 \c@NAT@ctr=\count314
 ) (./r_for_non_programmers.aux)
 \openout1 = `r_for_non_programmers.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 123.
-LaTeX Font Info:    ... okay on input line 123.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 123.
-LaTeX Font Info:    ... okay on input line 123.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 123.
-LaTeX Font Info:    ... okay on input line 123.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 123.
-LaTeX Font Info:    ... okay on input line 123.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 123.
-LaTeX Font Info:    ... okay on input line 123.
-LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 123.
-LaTeX Font Info:    ... okay on input line 123.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 123.
-LaTeX Font Info:    ... okay on input line 123.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 123.
-LaTeX Font Info:    ... okay on input line 123.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 123.
-LaTeX Font Info:    ... okay on input line 123.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 123.
-LaTeX Font Info:    ... okay on input line 123.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 122.
+LaTeX Font Info:    ... okay on input line 122.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 122.
+LaTeX Font Info:    ... okay on input line 122.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 122.
+LaTeX Font Info:    ... okay on input line 122.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 122.
+LaTeX Font Info:    ... okay on input line 122.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 122.
+LaTeX Font Info:    ... okay on input line 122.
+LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 122.
+LaTeX Font Info:    ... okay on input line 122.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 122.
+LaTeX Font Info:    ... okay on input line 122.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 122.
+LaTeX Font Info:    ... okay on input line 122.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 122.
+LaTeX Font Info:    ... okay on input line 122.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 122.
+LaTeX Font Info:    ... okay on input line 122.
 LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `normal'
-(Font)                  OT1/lmr/m/n --> TU/lmr/m/n on input line 123.
+(Font)                  OT1/lmr/m/n --> TU/lmr/m/n on input line 122.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
-(Font)                  OT1/lmr/m/it --> TU/lmr/m/it on input line 123.
+(Font)                  OT1/lmr/m/it --> TU/lmr/m/it on input line 122.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
-(Font)                  OT1/lmr/bx/n --> TU/lmr/bx/n on input line 123.
+(Font)                  OT1/lmr/bx/n --> TU/lmr/bx/n on input line 122.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
-(Font)                  OT1/lmss/m/n --> TU/lmss/m/n on input line 123.
+(Font)                  OT1/lmss/m/n --> TU/lmss/m/n on input line 122.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  OT1/lmss/bx/n --> TU/lmss/bx/n on input line 123.
+(Font)                  OT1/lmss/bx/n --> TU/lmss/bx/n on input line 122.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `normal'
-(Font)                  OT1/lmtt/m/n --> TU/lmtt/m/n on input line 123.
+(Font)                  OT1/lmtt/m/n --> TU/lmtt/m/n on input line 122.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
-(Font)                  OT1/lmtt/m/n --> TU/lmtt/bx/n on input line 123.
+(Font)                  OT1/lmtt/m/n --> TU/lmtt/bx/n on input line 122.
 
 Package fontspec Info: latinmodern-math scale = 0.9999964596882403.
 
@@ -519,7 +539,7 @@ pt=math;language=dflt;"
 (fontspec)             - 'bold small caps'  (b/sc) with NFSS spec.: 
 
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(0)/m/n' will be
-(Font)              scaled to size 10.0pt on input line 123.
+(Font)              scaled to size 10.0pt on input line 122.
 
 Package fontspec Info: latinmodern-math scale = 0.9999964596882403.
 
@@ -558,18 +578,18 @@ pt=math;language=dflt;"
 (fontspec)             - 'bold small caps'  (b/sc) with NFSS spec.: 
 
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 10.0pt on input line 123.
+(Font)              scaled to size 10.0pt on input line 122.
 LaTeX Font Info:    Encoding `OT1' has changed to `TU' for symbol font
-(Font)              `operators' in the math version `normal' on input line 123.
+(Font)              `operators' in the math version `normal' on input line 122.
 
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
 (Font)                  OT1/lmr/m/n --> TU/latinmodern-math.otf(1)/m/n on input
- line 123.
+ line 122.
 LaTeX Font Info:    Encoding `OT1' has changed to `TU' for symbol font
-(Font)              `operators' in the math version `bold' on input line 123.
+(Font)              `operators' in the math version `bold' on input line 122.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
 (Font)                  OT1/lmr/bx/n --> TU/latinmodern-math.otf(1)/b/n on inpu
-t line 123.
+t line 122.
 
 Package fontspec Info: latinmodern-math scale = 0.9999964596882403.
 
@@ -656,15 +676,15 @@ t=math;language=dflt;"
 (fontspec)             \fontdimen 21\font =0pt\relax 
 
 LaTeX Font Info:    Encoding `OMS' has changed to `TU' for symbol font
-(Font)              `symbols' in the math version `normal' on input line 123.
+(Font)              `symbols' in the math version `normal' on input line 122.
 LaTeX Font Info:    Overwriting symbol font `symbols' in version `normal'
 (Font)                  OMS/lmsy/m/n --> TU/latinmodern-math.otf(2)/m/n on inpu
-t line 123.
+t line 122.
 LaTeX Font Info:    Encoding `OMS' has changed to `TU' for symbol font
-(Font)              `symbols' in the math version `bold' on input line 123.
+(Font)              `symbols' in the math version `bold' on input line 122.
 LaTeX Font Info:    Overwriting symbol font `symbols' in version `bold'
 (Font)                  OMS/lmsy/b/n --> TU/latinmodern-math.otf(2)/b/n on inpu
-t line 123.
+t line 122.
 
 Package fontspec Info: latinmodern-math scale = 0.9999964596882403.
 
@@ -734,17 +754,17 @@ pt=math;language=dflt;"
 
 LaTeX Font Info:    Encoding `OMX' has changed to `TU' for symbol font
 (Font)              `largesymbols' in the math version `normal' on input line 1
-23.
+22.
 LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `normal'
 (Font)                  OMX/lmex/m/n --> TU/latinmodern-math.otf(3)/m/n on inpu
-t line 123.
+t line 122.
 LaTeX Font Info:    Encoding `OMX' has changed to `TU' for symbol font
-(Font)              `largesymbols' in the math version `bold' on input line 123
+(Font)              `largesymbols' in the math version `bold' on input line 122
 .
 LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `bold'
 (Font)                  OMX/lmex/m/n --> TU/latinmodern-math.otf(3)/b/n on inpu
-t line 123.
-Package hyperref Info: Link coloring OFF on input line 123.
+t line 122.
+Package hyperref Info: Link coloring OFF on input line 122.
 (/Users/danieldauber/Library/TinyTeX/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2021-04-02 v2.47 Cross-referencing by name of section
 
@@ -757,37 +777,46 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
 \c@section@level=\count315
 )
-LaTeX Info: Redefining \ref on input line 123.
-LaTeX Info: Redefining \pageref on input line 123.
-LaTeX Info: Redefining \nameref on input line 123.
+LaTeX Info: Redefining \ref on input line 122.
+LaTeX Info: Redefining \pageref on input line 122.
+LaTeX Info: Redefining \nameref on input line 122.
 (./r_for_non_programmers.out) (./r_for_non_programmers.out)
 \@outlinefile=\write4
 \openout4 = `r_for_non_programmers.out'.
 
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 12.0pt on input line 125.
+(Font)              scaled to size 12.0pt on input line 124.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 8.0pt on input line 125.
+(Font)              scaled to size 8.0pt on input line 124.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 6.0pt on input line 125.
+(Font)              scaled to size 6.0pt on input line 124.
 LaTeX Font Info:    Trying to load font information for OML+lmm on input line 1
-25.
+24.
 (/Users/danieldauber/Library/TinyTeX/texmf-dist/tex/latex/lm/omllmm.fd
 File: omllmm.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 12.0011pt on input line 125.
+(Font)              scaled to size 12.0011pt on input line 124.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 8.00073pt on input line 125.
+(Font)              scaled to size 8.00073pt on input line 124.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 6.00055pt on input line 125.
+(Font)              scaled to size 6.00055pt on input line 124.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 11.99872pt on input line 125.
+(Font)              scaled to size 11.99872pt on input line 124.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 7.99915pt on input line 125.
+(Font)              scaled to size 7.99915pt on input line 124.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 5.99936pt on input line 125.
-[1
+(Font)              scaled to size 5.99936pt on input line 124.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 124
+.
+(/Users/danieldauber/Library/TinyTeX/texmf-dist/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Trying to load font information for U+msb on input line 124
+.
+(/Users/danieldauber/Library/TinyTeX/texmf-dist/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+) [1
 
 
 ] [2
@@ -815,68 +844,68 @@ LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
 (Font)              scaled to size 6.99925pt on input line 4.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
 (Font)              scaled to size 4.99947pt on input line 4.
-[3]
+[3] [4]
 
-LaTeX Warning: Reference `exercises' on page 4 undefined on input line 33.
+LaTeX Warning: Reference `exercises' on page 5 undefined on input line 61.
 
 )
 \tf@toc=\write5
 \openout5 = `r_for_non_programmers.toc'.
 
-[4]
+[5] [6
+
+]
 Missing character: There is no 👋 (U+1F44B) in font [lmroman12-bold]:mapping=tex
 -text;!
 File: images/chapter_00_img/r_for_non_programmers_logo.png Graphic file (type b
 mp)
 <images/chapter_00_img/r_for_non_programmers_logo.png>
-[5
-
-] [6
+[7] [8
 
 ]
 Missing character: There is no 🙏 (U+1F64F) in font [lmroman12-bold]:mapping=tex
 -text;!
-[7] [8
+[9] [10
 
 ]
 Chapter 1.
 LaTeX Font Info:    Font shape `TU/lmtt/bx/n' in size <24.88> not available
-(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 147.
-[9] [10
+(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 146.
+[11] [12
 
 ]
 Chapter 2.
-[11]
-Overfull \hbox (83.88232pt too wide) has occurred while \output is active
-\TU/lmr/m/n/10 12 \TU/lmr/m/sl/10 CHAPTER 2.  WHY LEARN A PROGRAMMING LANGUAGE 
-AS A NON-PROGRAMMER?
- []
-
-[12]
-Underfull \hbox (badness 1484) in paragraph at lines 220--220
-\TU/lmr/bx/n/14.4 help you learn other programming lan-
- []
-
-
-Overfull \hbox (170.27684pt too wide) has occurred while \output is active
-\TU/lmr/m/sl/10 2.3.  PROGRAMMING LANGUAGES ALLOW YOU TO LOOK AT YOUR DATA FROM
- A DIFFERENT ANGLE \TU/lmr/m/n/10 13
- []
-
 [13]
 Overfull \hbox (83.88232pt too wide) has occurred while \output is active
 \TU/lmr/m/n/10 14 \TU/lmr/m/sl/10 CHAPTER 2.  WHY LEARN A PROGRAMMING LANGUAGE 
 AS A NON-PROGRAMMER?
  []
 
-[14
+[14]
+Underfull \hbox (badness 1484) in paragraph at lines 219--219
+\TU/lmr/bx/n/14.4 help you learn other programming lan-
+ []
+
+
+Overfull \hbox (170.27684pt too wide) has occurred while \output is active
+\TU/lmr/m/sl/10 2.3.  PROGRAMMING LANGUAGES ALLOW YOU TO LOOK AT YOUR DATA FROM
+ A DIFFERENT ANGLE \TU/lmr/m/n/10 15
+ []
+
+[15]
+Overfull \hbox (83.88232pt too wide) has occurred while \output is active
+\TU/lmr/m/n/10 16 \TU/lmr/m/sl/10 CHAPTER 2.  WHY LEARN A PROGRAMMING LANGUAGE 
+AS A NON-PROGRAMMER?
+ []
+
+[16
 
 ]
 Chapter 3.
 File: images/chapter_03_img/r_project/00_r_project_page.png Graphic file (type 
 bmp)
 <images/chapter_03_img/r_project/00_r_project_page.png>
-[15]
+[17]
 File: images/chapter_03_img/r_project/01_r_project_cran_mirror.png Graphic file
  (type bmp)
 <images/chapter_03_img/r_project/01_r_project_cran_mirror.png>
@@ -886,11 +915,11 @@ type bmp)
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[16]
+[18]
 File: images/chapter_03_img/r_project/03_r_project_version_choice.png Graphic f
 ile (type bmp)
 <images/chapter_03_img/r_project/03_r_project_version_choice.png>
-[17]
+[19]
 File: images/chapter_03_img/rstudio/01_rstudio_main_page.png Graphic file (type
  bmp)
 <images/chapter_03_img/rstudio/01_rstudio_main_page.png>
@@ -903,7 +932,7 @@ File: images/chapter_03_img/rstudio/03_rstudio_select_version.png Graphic file
 
 Underfull \vbox (badness 2452) has occurred while \output is active []
 
-[18]
+[20]
 File: images/chapter_03_img/rstudio/04_rstudio_select_edition.png Graphic file 
 (type bmp)
 <images/chapter_03_img/rstudio/04_rstudio_select_edition.png>
@@ -913,7 +942,7 @@ bmp)
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[19]
+[21]
 Missing character: There is no ⌘ (U+2318) in font [lmmono10-regular]:!
 File: images/chapter_03_img/rstudio_preferences/00_rstudio_preferences_editing.
 png Graphic file (type bmp)
@@ -921,7 +950,7 @@ png Graphic file (type bmp)
 
 Underfull \vbox (badness 6445) has occurred while \output is active []
 
-[20]
+[22]
 File: images/chapter_03_img/rstudio_preferences/01_rstudio_preferences_display.
 png Graphic file (type bmp)
 <images/chapter_03_img/rstudio_preferences/01_rstudio_preferences_display.png>
@@ -932,33 +961,34 @@ g>
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[21] [22]
+[23] [24]
 Chapter 4.
 Missing character: There is no ↵ (U+21B5) in font [lmmono10-regular]:!
 Missing character: There is no 👇 (U+1F447) in font [lmmono10-italic]:!
 
 LaTeX Font Warning: Font shape `TU/lmtt/bx/it' in size <10> not available
-(Font)              Font shape `TU/lmtt/b/sl' tried instead on input line 371.
+(Font)              Font shape `TU/lmtt/b/sl' tried instead on input line 372.
 
+[25
+
+]
 File: images/chapter_04_img/02_console_window/console_algebra.png Graphic file 
 (type bmp)
 <images/chapter_04_img/02_console_window/console_algebra.png>
-[23
-
-] [24]
+[26]
 File: images/chapter_04_img/03_source_window/01_rstudio_source.png Graphic file
  (type bmp)
 <images/chapter_04_img/03_source_window/01_rstudio_source.png>
-File: images/chapter_04_img/04_environment_history_etc/01_rstudio_environment.p
-ng Graphic file (type bmp)
-<images/chapter_04_img/04_environment_history_etc/01_rstudio_environment.png>
 
 Overfull \hbox (42.26453pt too wide) has occurred while \output is active
 \TU/lmr/m/sl/10 4.3.  THE ENVIRONMENT / HISTORY / CONNECTIONS / TUTORIAL WINDOW
- \TU/lmr/m/n/10 25
+ \TU/lmr/m/n/10 27
  []
 
-[25]
+[27]
+File: images/chapter_04_img/04_environment_history_etc/01_rstudio_environment.p
+ng Graphic file (type bmp)
+<images/chapter_04_img/04_environment_history_etc/01_rstudio_environment.png>
 Missing character: There is no ↵ (U+21B5) in font [lmmono10-regular]:!
 File: images/chapter_04_img/04_environment_history_etc/02_rstudio_history.png G
 raphic file (type bmp)
@@ -966,7 +996,7 @@ raphic file (type bmp)
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[26]
+[28]
 File: images/chapter_04_img/04_environment_history_etc/03_rstudio_connections.p
 ng Graphic file (type bmp)
 <images/chapter_04_img/04_environment_history_etc/03_rstudio_connections.png>
@@ -979,21 +1009,21 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
 Overfull \hbox (42.26453pt too wide) has occurred while \output is active
 \TU/lmr/m/sl/10 4.3.  THE ENVIRONMENT / HISTORY / CONNECTIONS / TUTORIAL WINDOW
- \TU/lmr/m/n/10 27
+ \TU/lmr/m/n/10 29
  []
 
-[27]
+[29]
 File: images/chapter_04_img/05_files_plots_etc/01_rstudio_files.png Graphic fil
 e (type bmp)
 <images/chapter_04_img/05_files_plots_etc/01_rstudio_files.png>
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[28]
+[30]
 File: r_for_non_programmers_files/figure-latex/Simple boxplot-1.pdf Graphic fil
 e (type pdf)
 <use r_for_non_programmers_files/figure-latex/Simple boxplot-1.pdf>
-[29]
+[31]
 File: images/chapter_04_img/05_files_plots_etc/02_rstudio_plots.png Graphic fil
 e (type bmp)
 <images/chapter_04_img/05_files_plots_etc/02_rstudio_plots.png>
@@ -1003,11 +1033,11 @@ file (type bmp)
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[30]
+[32]
 File: images/chapter_04_img/05_files_plots_etc/04_rstudio_help.png Graphic file
  (type bmp)
 <images/chapter_04_img/05_files_plots_etc/04_rstudio_help.png>
-[31]
+[33]
 File: images/chapter_04_img/05_files_plots_etc/04_rstudio_help_mtcars.png Graph
 ic file (type bmp)
 <images/chapter_04_img/05_files_plots_etc/04_rstudio_help_mtcars.png>
@@ -1015,24 +1045,24 @@ File: images/chapter_04_img/05_files_plots_etc/05_rstudio_viewer.png Graphic fi
 le (type bmp)
 <images/chapter_04_img/05_files_plots_etc/05_rstudio_viewer.png>
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
+Underfull \vbox (badness 1014) has occurred while \output is active []
 
-[32]
+[34]
 Missing character: There is no ⌘ (U+2318) in font [lmmono10-regular]:!
-[33] [34
+[35] [36
 
 ]
 Chapter 5.
-[35] [36] [37]
+[37] [38] [39]
 Missing character: There is no ↵ (U+21B5) in font [lmmono10-regular]:!
-[38]
-Underfull \hbox (badness 6252) in paragraph at lines 736--737
+[40]
+Underfull \hbox (badness 6252) in paragraph at lines 712--713
 \TU/lmtt/m/n/10 (milestones_of_my_life <- c(1982, 2006, 2011, 2018, 2020)) \TU/
 lmr/m/n/10 is the
  []
 
 
-Underfull \hbox (badness 6944) in paragraph at lines 736--737
+Underfull \hbox (badness 6944) in paragraph at lines 712--713
 \TU/lmr/m/n/10 same as \TU/lmtt/m/n/10 milestones_of_my_life <- c(1982, 2006, 2
 011, 2018, 2020)
  []
@@ -1043,33 +1073,202 @@ c file (type bmp)
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[39] [40]
+[41] [42]
 File: images/chapter_05_img/02_basic_computation_environment_lists.png Graphic 
 file (type bmp)
 <images/chapter_05_img/02_basic_computation_environment_lists.png>
-[41] [42] [43] [44] [45] [46
+
+Overfull \hbox (686.98956pt too wide) in paragraph at lines 772--775
+[]\TU/lmr/m/n/10 \begin{figure} []
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[43] [44] [45] [46] [47]
+File: images/chapter_05_img/r_package_documentation.png Graphic file (type bmp)
+
+<images/chapter_05_img/r_package_documentation.png>
+
+Overfull \hbox (357.08545pt too wide) in paragraph at lines 911--911
+[][] 
+ []
+
+
+LaTeX Warning: Float too large for page by 24.06165pt on input line 912.
+
+LaTeX Font Info:    Font shape `TU/lmtt/bx/n' in size <12> not available
+(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 925.
+[48] [49]
+File: images/chapter_05_img/install_r_packages/01_install_r_packages.png Graphi
+c file (type bmp)
+<images/chapter_05_img/install_r_packages/01_install_r_packages.png>
+File: images/chapter_05_img/install_r_packages/02_install_r_packages.png Graphi
+c file (type bmp)
+<images/chapter_05_img/install_r_packages/02_install_r_packages.png>
+
+Underfull \vbox (badness 1590) has occurred while \output is active []
+
+[50]
+File: images/chapter_05_img/install_r_packages/03_install_r_packages.png Graphi
+c file (type bmp)
+<images/chapter_05_img/install_r_packages/03_install_r_packages.png>
+[51]
+File: r_for_non_programmers_files/figure-latex/Explicitly calling functions fro
+m R packages-1.pdf Graphic file (type pdf)
+<use r_for_non_programmers_files/figure-latex/Explicitly calling functions from
+ R packages-1.pdf>
+
+Underfull \vbox (badness 1400) has occurred while \output is active []
+
+[52] [53] [54] [55] [56]
+Chapter 6.
+[57
 
 ]
-Chapter 6.
+File: images/chapter_06_img/00_r_project/00_r_project_file_menu.png Graphic fil
+e (type bmp)
+<images/chapter_06_img/00_r_project/00_r_project_file_menu.png>
+File: images/chapter_06_img/00_r_project/01_r_project_new_directory.png Graphic
+ file (type bmp)
+<images/chapter_06_img/00_r_project/01_r_project_new_directory.png>
 
-LaTeX Warning: Reference `exercises' on page 47 undefined on input line 959.
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
-(./r_for_non_programmers.bbl [47] [48
+[58]
+File: images/chapter_06_img/00_r_project/02_r_project_new_project.png Graphic f
+ile (type bmp)
+<images/chapter_06_img/00_r_project/02_r_project_new_project.png>
+File: images/chapter_06_img/00_r_project/03_r_project_specs.png Graphic file (t
+ype bmp)
+<images/chapter_06_img/00_r_project/03_r_project_specs.png>
 
-]) [49] (./r_for_non_programmers.aux)
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[59]
+File: images/chapter_06_img/00_r_project/04_r_project_directory_name.png Graphi
+c file (type bmp)
+<images/chapter_06_img/00_r_project/04_r_project_directory_name.png>
+File: images/chapter_06_img/00_r_project/05_r_project_new_session.png Graphic f
+ile (type bmp)
+<images/chapter_06_img/00_r_project/05_r_project_new_session.png>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[60] [61]
+File: images/chapter_06_img/01_organising_work/00_organising_work.png Graphic f
+ile (type bmp)
+<images/chapter_06_img/01_organising_work/00_organising_work.png>
+[62]
+File: images/chapter_06_img/02_r_script/00_r_script.png Graphic file (type bmp)
+
+<images/chapter_06_img/02_r_script/00_r_script.png>
+File: r_for_non_programmers_files/figure-latex/R Script copy and paste examples
+-1.pdf Graphic file (type pdf)
+<use r_for_non_programmers_files/figure-latex/R Script copy and paste examples-
+1.pdf>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[63]
+Missing character: There is no ↵ (U+21B5) in font [lmmono10-regular]:!
+Missing character: There is no ↵ (U+21B5) in font [lmmono10-regular]:!
+Missing character: There is no ↵ (U+21B5) in font [lmmono10-regular]:!
+File: images/chapter_06_img/02_r_script/01_r_script_example_plot.png Graphic fi
+le (type bmp)
+<images/chapter_06_img/02_r_script/01_r_script_example_plot.png>
+[64]
+Missing character: There is no ↵ (U+21B5) in font [lmmono10-regular]:!
+File: images/chapter_06_img/02_r_script/02_r script_code_completion.png Graphic
+ file (type bmp)
+<images/chapter_06_img/02_r_script/02_r script_code_completion.png>
+Missing character: There is no ↵ (U+21B5) in font [lmmono10-regular]:!
+
+Underfull \vbox (badness 1163) has occurred while \output is active []
+
+[65]
+File: images/chapter_06_img/03_r_markdown/01_r_markdown_plain.png Graphic file 
+(type bmp)
+<images/chapter_06_img/03_r_markdown/01_r_markdown_plain.png>
+File: images/chapter_06_img/03_r_markdown/02_r_markdown_visual_editor_menu.png 
+Graphic file (type bmp)
+<images/chapter_06_img/03_r_markdown/02_r_markdown_visual_editor_menu.png>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[66]
+File: images/chapter_06_img/03_r_markdown/03_r_markdown_visual_editor.png Graph
+ic file (type bmp)
+<images/chapter_06_img/03_r_markdown/03_r_markdown_visual_editor.png>
+[67] [68
+
+]
+Chapter 7.
+[69] [70
+
+]
+Chapter 8.
+[71] [72
+
+]
+Chapter 9.
+[73] [74
+
+]
+Chapter 10.
+[75] [76
+
+]
+Chapter 11.
+[77]
+Overfull \hbox (99.25455pt too wide) has occurred while \output is active
+\TU/lmr/m/n/10 78 \TU/lmr/m/sl/10 CHAPTER 11.  REGRESSION: CREATING MODELS TO P
+REDICT FUTURE OBSERVATIONS
+ []
+
+[78
+
+]
+Chapter 12.
+[79]
+Overfull \hbox (45.41562pt too wide) has occurred while \output is active
+\TU/lmr/m/n/10 80 \TU/lmr/m/sl/10 CHAPTER 12.  MIXED-METHODS RESEARCH: ANALYSIN
+G QUALITATIVE IN R
+ []
+
+[80
+
+]
+Chapter 13.
+[81]
+Overfull \hbox (73.04903pt too wide) has occurred while \output is active
+\TU/lmr/m/n/10 82 \TU/lmr/m/sl/10 CHAPTER 13.  WHERE TO GO FROM HERE: THE NEXT 
+STEPS IN YOUR R JOURNEY
+ []
+
+[82
+
+]
+Chapter 14.
+
+LaTeX Warning: Reference `exercises' on page 83 undefined on input line 1371.
+
+[83] (./r_for_non_programmers.bbl [84]) [85
+
+] (./r_for_non_programmers.aux)
 
 LaTeX Warning: There were undefined references.
 
 Package rerunfilecheck Info: File `r_for_non_programmers.out' has not changed.
-(rerunfilecheck)             Checksum: 390DE24663F68298FE5441792E673829;6920.
+(rerunfilecheck)             Checksum: 902DAC80D3C21FC9A8C8645D8F0E42A2;12234.
  ) 
 Here is how much of TeX's memory you used:
- 16724 strings out of 478451
- 309173 string characters out of 5857372
- 765240 words of memory out of 5000000
- 36791 multiletter control sequences out of 15000+600000
- 407481 words of font info for 78 fonts, out of 8000000 for 9000
+ 17333 strings out of 478451
+ 326120 string characters out of 5857372
+ 773639 words of memory out of 5000000
+ 37351 multiletter control sequences out of 15000+600000
+ 409969 words of font info for 91 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 87i,8n,120p,1134b,429s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 87i,8n,120p,1134b,457s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on r_for_non_programmers.pdf (49 pages).
+Output written on r_for_non_programmers.pdf (85 pages).

@@ -4,14 +4,13 @@
 %
 \documentclass[
 ]{book}
+\usepackage{amsmath,amssymb}
 \usepackage{lmodern}
-\usepackage{amsmath}
 \usepackage{ifxetex,ifluatex}
 \ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
   \usepackage{textcomp} % provide euro and other symbols
-  \usepackage{amssymb}
 \else % if luatex or xetex
   \usepackage{unicode-math}
   \defaultfontfeatures{Scale=MatchLowercase}
@@ -82,7 +81,7 @@
 \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
 \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
 \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\usepackage{longtable,booktabs}
+\usepackage{longtable,booktabs,array}
 \usepackage{calc} % for calculating minipage widths
 % Correct order of tables after \paragraph or \subparagraph
 \usepackage{etoolbox}
@@ -118,7 +117,7 @@
 
 \title{R for Non-Programmers: A Guide for Social Scientists}
 \author{Daniel Dauber}
-\date{2021-07-28}
+\date{2021-08-02}
 
 \begin{document}
 \maketitle
@@ -344,7 +343,7 @@ I know what you are thinking: This already sounds complicated and cumbersome. Ho
 \hypertarget{the-rstudio-interface}{%
 \chapter{The RStudio Interface}\label{the-rstudio-interface}}
 
-When you open RStudio for the first time, you are presented with four quadrants, each of which fulfils a unique purpose:
+The RStudio interface is composed of quadrants, each of which fulfils a unique purpose:
 
 \begin{itemize}
 \item
@@ -356,6 +355,8 @@ When you open RStudio for the first time, you are presented with four quadrants,
 \item
   The \texttt{Files\ /\ Plots\ /\ Packages\ /\ Help\ /\ Viewer} window
 \end{itemize}
+
+You might only see three windows and wonder where the \texttt{Source} window has gone in your version of RStudio. In order to use it you have to either open a file or create a new one. You can create a new file by selecting \texttt{File\ \textgreater{}\ New\ File\ \textgreater{}\ R\ Script} in the menu bar, or use the keyboard shortcut \texttt{Ctrl+Shift+N} on PC and \texttt{Cmd+Shift+N} on Mac.
 
 I will briefly explain the purpose of each window/pane and how they are relevant to your work in \emph{R}.
 
@@ -477,7 +478,7 @@ The next pane is called \emph{Packages}. Packages are additional tools you can i
 
 \includegraphics{images/chapter_04_img/05_files_plots_etc/03_rstudio_packages.png}
 
-If you are in dire need of help, RStudio provides you with a \emph{Help} pane. You can search for specific topics, for example how certain computations work. The \emph{Help} pane also has documentation on different datasets that are included in \emph{R}, RStudio or \emph{R packages} you have installed.
+If you are in dire need of help, RStudio provides you with a \emph{Help} pane. You can search for specific topics, for example how certain computations work. The \emph{Help} pane also has documentation on different datasets that are included in \emph{R}, RStudio or \emph{R packages} you have installed. If you want a more comprehensive overview of how you can find help, have a look at CRAN's \href{https://www.r-project.org/help.html}{`Getting Help with R'} webpage.
 
 \includegraphics{images/chapter_04_img/05_files_plots_etc/04_rstudio_help.png}
 
@@ -494,6 +495,17 @@ So, for example, if you want to know what the \texttt{mtcars} dataset is, you ca
 This will open the \emph{Help} pane and give you more information about this dataset:
 
 \includegraphics{images/chapter_04_img/05_files_plots_etc/04_rstudio_help_mtcars.png}
+
+There are many different ways of how you can find help with your coding beyond RStudio and this book. My top three platforms to find solutions to my programming problems are:
+
+\begin{itemize}
+\item
+  \href{https://www.google.com}{Google}
+\item
+  \href{https://stackoverflow.com}{stackoverflow.com}
+\item
+  \href{https://twitter.com/home}{Twitter} (with \href{https://twitter.com/hashtag/rstats}{\#RStats})
+\end{itemize}
 
 Lastly, we have the \emph{Viewer} pane. Not every data visualisation we create in R is a static image. You can create dynamic data visualisations or even websites with R. This type of content is displayed in the Viewer pane rather than in the Plots pane. Often these visualisations are based on HTML and other web-based programming languages. As such, it is easy to open them in your browser as well. However, in this book, we mainly focus on two-dimensional static plots, which are the ones you likely need most of the time, either for your assignments, thesis, or publication.
 
@@ -588,9 +600,9 @@ Reflecting on these examples, you might notice three important things:
 \item
   I used \texttt{==} instead of \texttt{=},
 \item
-  I can compare non-numerical values, i.e.~text, which is also known as \texttt{character\ values,} with each other,
+  I can compare non-numerical values, i.e.~text, which is also known as \texttt{character} values, with each other,
 \item
-  The devil is in the details considering \#5.
+  The devil is in the details (considering \#5).
 \end{enumerate}
 
 One of the most common mistakes of R novices is the confusion around the \texttt{==} and \texttt{=} notation. While \texttt{==} represents \texttt{equal\ to}, \texttt{=} is used to assign a value to an object (for more details on assignments see Chapter \ref{the-files-plots-packages-help-viewer-window}). However, in practice, most R programmers tend to avoid \texttt{=} since it can easily lead to confusion with \texttt{==}. As such, you can strike this one out of your R vocabulary for now.
@@ -600,61 +612,25 @@ There are many different logical operations you can perform. Table \ref{tab:logi
 \begin{longtable}[]{@{}ll@{}}
 \caption{\label{tab:logical-operators-r} Logical Operators in R}\tabularnewline
 \toprule
-\begin{minipage}[b]{(\columnwidth - 1\tabcolsep) * \real{0.15}}\raggedright
-Operator\strut
-\end{minipage} & \begin{minipage}[b]{(\columnwidth - 1\tabcolsep) * \real{0.35}}\raggedright
-Description\strut
-\end{minipage}\tabularnewline
+Operator & Description \\
 \midrule
 \endfirsthead
 \toprule
-\begin{minipage}[b]{(\columnwidth - 1\tabcolsep) * \real{0.15}}\raggedright
-Operator\strut
-\end{minipage} & \begin{minipage}[b]{(\columnwidth - 1\tabcolsep) * \real{0.35}}\raggedright
-Description\strut
-\end{minipage}\tabularnewline
+Operator & Description \\
 \midrule
 \endhead
-\begin{minipage}[t]{(\columnwidth - 1\tabcolsep) * \real{0.15}}\raggedright
-==\strut
-\end{minipage} & \begin{minipage}[t]{(\columnwidth - 1\tabcolsep) * \real{0.35}}\raggedright
-is equal to\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{(\columnwidth - 1\tabcolsep) * \real{0.15}}\raggedright
-\textgreater=\strut
-\end{minipage} & \begin{minipage}[t]{(\columnwidth - 1\tabcolsep) * \real{0.35}}\raggedright
-is bigger or equal to\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{(\columnwidth - 1\tabcolsep) * \real{0.15}}\raggedright
-\textless=\strut
-\end{minipage} & \begin{minipage}[t]{(\columnwidth - 1\tabcolsep) * \real{0.35}}\raggedright
-is smaller of equal to\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{(\columnwidth - 1\tabcolsep) * \real{0.15}}\raggedright
-!=\strut
-\end{minipage} & \begin{minipage}[t]{(\columnwidth - 1\tabcolsep) * \real{0.35}}\raggedright
-is not equal to\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{(\columnwidth - 1\tabcolsep) * \real{0.15}}\raggedright
-a \textbar{} b\strut
-\end{minipage} & \begin{minipage}[t]{(\columnwidth - 1\tabcolsep) * \real{0.35}}\raggedright
-a or b\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{(\columnwidth - 1\tabcolsep) * \real{0.15}}\raggedright
-a \& b\strut
-\end{minipage} & \begin{minipage}[t]{(\columnwidth - 1\tabcolsep) * \real{0.35}}\raggedright
-a and b\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{(\columnwidth - 1\tabcolsep) * \real{0.15}}\raggedright
-!a\strut
-\end{minipage} & \begin{minipage}[t]{(\columnwidth - 1\tabcolsep) * \real{0.35}}\raggedright
-is not a\strut
-\end{minipage}\tabularnewline
+== & is equal to \\
+\textgreater= & is bigger or equal to \\
+\textless= & is smaller of equal to \\
+!= & is not equal to \\
+a \textbar{} b & a or b \\
+a \& b & a and b \\
+!a & is not a \\
 \bottomrule
 \end{longtable}
 
-\hypertarget{assigning-values-to-objects-}{%
-\section{Assigning values to objects: `\textless-'}\label{assigning-values-to-objects-}}
+\hypertarget{assigning-values-to-objects}{%
+\section{Assigning values to objects: `\textless-'}\label{assigning-values-to-objects}}
 
 Another common task you will perform is assigning values to an object. An object can be many different things:
 
@@ -765,7 +741,7 @@ The \texttt{friends} object shows that all the values inside the object are clas
 
 Consequently, mixing different types of data (as explained in Chapter @ref()) into one object is likely a bad idea. This is especially true if you want to use the numeric values for computation. In short: ensure your objects are all of the same data type.
 
-There is an exception to this rule. `Of course', you might say. There is one object that can have values of different types: list. As the name indicates, a list object holds several items. These items are usually other objects. In the spirit of `\href{https://www.imdb.com/title/tt1375666/?ref_=ext_shr_lnk}{Inception}', you can have lists inside lists, which contain more objects.
+There is an exception to this rule. `Of course', you might say. There is one object that can have values of different types: \texttt{list}. As the name indicates, a \texttt{list} object holds several items. These items are usually other objects. In the spirit of `\href{https://www.imdb.com/title/tt1375666/?ref_=ext_shr_lnk}{Inception}', you can have lists inside lists, which contain more objects.
 
 Let's create a list called \texttt{x\_files} using the \texttt{list} function and place all our objects inside.
 
@@ -789,13 +765,15 @@ Let's create a list called \texttt{x\_files} using the \texttt{list} function an
 \end{Highlighting}
 \end{Shaded}
 
-You will notice in this example that I do not use \texttt{""} for each value in the list. This is because \texttt{friends} is not a character I put into the list, but an object. When we refer to objects we do not need the quotation marks.
+You will notice in this example that I do not use \texttt{""} for each value in the list. This is because \texttt{friends} is not a character I put into the list, but an object. When we refer to objects, we do not need quotation marks.
 
-We will encounter lists quite frequently when we perform our analysis. Some functions return the results in the format of lists. This can be very helpful, because otherwise our environment pane will be littered with objects, but we would not necessarily know how they relate to each other or worse, to which analysis they belong. Looking at the list item in the environment page, you can see that the object \texttt{x\_files} is classified as a \texttt{List\ of\ 3} and if you click on the blue icon, you can inspect the different objects inside.
+We will encounter \texttt{list} objects quite frequently when we perform our analysis. Some functions return the results in the format of lists. This can be very helpful because otherwise our environment pane will be littered with objects. We would not necessarily know how they relate to each other, or worse, to which analysis they belong. Looking at the list item in the environment page (Figure \ref{fig:img-x-files}), you can see that the object \texttt{x\_files} is classified as a \texttt{List\ of\ 3,} and if you click on the blue icon, you can inspect the different objects inside.
 
-\includegraphics{images/chapter_05_img/02_basic_computation_environment_lists.png}
+\textbackslash begin\{figure\}
+\includegraphics[width=38.67in]{images/chapter_05_img/02_basic_computation_environment_lists} \textbackslash caption\{The environment pane showing our objects and our list \texttt{x\_files}\}\label{fig:img-x-files}
+\textbackslash end\{figure\}
 
-In Chapter \ref{basic-computations-in-r} I mentioned that we should avoid using the \texttt{=} operator and explained that it is used to assign values to objects. You can, if you want, use \texttt{=} instead of \texttt{\textless{}-}. They fulfil the same purpose. However, as mentioned before, it is not wise to do so. Here is an example that shows that, in principle, it is possible.
+In Chapter \ref{basic-computations-in-r}, I mentioned that we should avoid using the \texttt{=} operator and explained that it is used to assign values to objects. You can, if you want, use \texttt{=} instead of \texttt{\textless{}-}. They fulfil the same purpose. However, as mentioned before, it is not wise to do so. Here is an example that shows that, in principle, it is possible.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -809,36 +787,69 @@ In Chapter \ref{basic-computations-in-r} I mentioned that we should avoid using 
 \end{Highlighting}
 \end{Shaded}
 
-On a final note, naming your objects is limited. Not every name can be chosen. First, every name needs to start with a letter. You also can only use letters, numbers \texttt{\_} and \texttt{.} as valid components of the names of your objects \citep[see also][Chapter 4.2.]{wickham2016r}.
+On a final note, naming your objects is limited. You cannot chose any name. First, every name needs to start with a letter. Second, you can only use letters, numbers \texttt{\_} and \texttt{.} as valid components of the names for your objects \citep[see also][Chapter 4.2.]{wickham2016r}. I recommend to establish a naming convention that you adhere to. Personally I prefer to only user lower letters and \texttt{\_} to separate/connect words. You want to keep names informative, succinct and precise. Here are some examples of what I would consider good and bad choices for names.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Good choices}
+\NormalTok{income\_per\_annum}
+\NormalTok{open\_to\_exp          }\CommentTok{\# for \textquotesingle{}openness to new experiences\textquotesingle{}}
+\NormalTok{soc\_int              }\CommentTok{\# for \textquotesingle{}social integration\textquotesingle{}}
+ 
+\CommentTok{\# Bad choices}
+\NormalTok{IncomePerAnnum}
+\NormalTok{measurement\_of\_boredom\_of\_watching\_youtube}
+\NormalTok{Sleep.per\_monthsIn.hours}
+\end{Highlighting}
+\end{Shaded}
+
+Ultimately, you need to be able to effectively work with your data and output. Ideally, this should be true for others as well who want or need to work with your R project as well, e.g.~your co-investigator or supervisor. The same is true for your column names in datasets (see Chapter @ref())
 
 \hypertarget{functions}{%
 \section{Functions}\label{functions}}
 
-I used the term `function' multiple times already, but I never really fully explained what they are and why we need them. In very simple terms, functions are objects. They contain lines of code that someone has written for us (ro we have written ourselves). One could say they are code snippets ready to use. Someone else might see them as shortcuts for our programming. Functions not only increase the speed with which we perform our analysis and write our computations, but also make our code more readable. Consider computing the \texttt{mean} of values stored in the object \texttt{pocket\_money}.
+I used the term `function' multiple times, but I never thoroughly explained what they are and why we need them. In simple terms, functions are objects. They contain lines of code that someone has written for us or we have written ourselves. One could say they are code snippets ready to use. Someone else might see them as shortcuts for our programming. Functions increase the speed with which we perform our analysis and write our computations and make our code more readable. Consider computing the \texttt{mean} of values stored in the object \texttt{pocket\_money}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{\# First we create an object that stores our desired values}
 \NormalTok{pocket\_money }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{8}\NormalTok{, }\DecValTok{13}\NormalTok{, }\DecValTok{21}\NormalTok{, }\DecValTok{34}\NormalTok{, }\DecValTok{55}\NormalTok{, }\DecValTok{89}\NormalTok{)}
 
-\CommentTok{\#1 Manually compute the mean:}
+\CommentTok{\#1 Manually compute the mean}
 \NormalTok{sum }\OtherTok{\textless{}{-}} \DecValTok{0}\SpecialCharTok{+}\DecValTok{1}\SpecialCharTok{+}\DecValTok{1}\SpecialCharTok{+}\DecValTok{2}\SpecialCharTok{+}\DecValTok{3}\SpecialCharTok{+}\DecValTok{5}\SpecialCharTok{+}\DecValTok{8}\SpecialCharTok{+}\DecValTok{13}\SpecialCharTok{+}\DecValTok{21}\SpecialCharTok{+}\DecValTok{34}\SpecialCharTok{+}\DecValTok{55}\SpecialCharTok{+}\DecValTok{89}
 \NormalTok{sum}\SpecialCharTok{/}\DecValTok{12} \CommentTok{\# There are 12 items in the object}
 \DocumentationTok{\#\# [1] 19.33333}
 
-\CommentTok{\#2 Use a function to compute the mean:}
+\CommentTok{\#2 Use a function to compute the mean}
 \FunctionTok{mean}\NormalTok{(pocket\_money)}
 \DocumentationTok{\#\# [1] 19.33333}
 
-\CommentTok{\#3 Let\textquotesingle{}s make sure it is actually the same}
+\CommentTok{\#3 Let\textquotesingle{}s make sure \#1 and \#2 are actually the same}
 \NormalTok{sum}\SpecialCharTok{/}\DecValTok{12} \SpecialCharTok{==} \FunctionTok{mean}\NormalTok{(pocket\_money)}
 \DocumentationTok{\#\# [1] TRUE}
 \end{Highlighting}
 \end{Shaded}
 
-If we manually compute the mean, we first compute the sum of all values in the object \texttt{pocket\_money}\footnote{If you find the order of numbers suspicious, it is because it represents the famous \href{https://en.wikipedia.org/wiki/Fibonacci_number}{Fibonacci sequence}.}, and then we divide it by the number of values in the object, which is \texttt{12}. This is the classic way of computing the mean as we know it. However, my simply using the function \texttt{mean()}, we not only write considerably less code, it is much easer to understand as well, because the word \texttt{mean} does exactly what we would expect. Which one do you find easier?
+If we manually compute the mean, we first calculate the sum of all values in the object \texttt{pocket\_money}\footnote{If you find the order of numbers suspicious, it is because it represents the famous \href{https://en.wikipedia.org/wiki/Fibonacci_number}{Fibonacci sequence}.}. Then we divide it by the number of values in the object, which is \texttt{12}. This is the traditional way of computing the mean as we know it from primary school. However, by simply using the function \texttt{mean()}, we not only write considerably less code, but it is also much easier to understand as well because the word \texttt{mean} does precisely what we would expect. Which one do you find easier?
 
-All functions in R share the same structure. They have a \texttt{name} follow by \texttt{()} and within these parentheses we put \texttt{arguments}, which have certain \texttt{values}. A function would look something like this:
+To further illustrate how functions look like, let's create one ourselves and call it \texttt{my\_mean}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my\_mean }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(numbers)\{}
+\NormalTok{  sum }\OtherTok{\textless{}{-}} \FunctionTok{sum}\NormalTok{(numbers)              }\CommentTok{\# Compute the sum of all values in \textquotesingle{}numbers\textquotesingle{}}
+\NormalTok{  result }\OtherTok{\textless{}{-}}\NormalTok{ sum}\SpecialCharTok{/}\FunctionTok{length}\NormalTok{(numbers)    }\CommentTok{\# Divide the sum by the number of items in \textquotesingle{}numbers\textquotesingle{}}
+  \FunctionTok{return}\NormalTok{(result)                   }\CommentTok{\# Return the result in the console}
+\NormalTok{\}}
+
+\FunctionTok{my\_mean}\NormalTok{(pocket\_money)}
+\DocumentationTok{\#\# [1] 19.33333}
+\end{Highlighting}
+\end{Shaded}
+
+Do not worry if half of this code does not make sense to you. Writing functions is an advanced R skill. However, it is good to know how functions look on the `inside'. You certainly can see the similarities between the code we have written before, but instead of using actual numbers, we work with placeholders like \texttt{numbers}. This way, we can use a function for different data and do not have to rewrite it every time.
+
+All functions in R share the same structure. They have a \texttt{name} followed by \texttt{()}. Within these parentheses, we put \texttt{arguments}, which have specific \texttt{values}. For example, a function would look something like this:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -848,7 +859,7 @@ All functions in R share the same structure. They have a \texttt{name} follow by
 \end{Highlighting}
 \end{Shaded}
 
-How many arguments there are and what kind of values you can provide is very much dependent on the function you use. Thus, not every function takes every value. It is fair to make the analogy that function names are similar to vocabulary of a foreign language, while the arguments represent a specific syntax that goes with it. In the case of \texttt{mean()}, the function takes an object which holds a sequence of \texttt{numeric} values. It would make very little sense to compute the mean of our \texttt{friends} object, because it only contains names. R would return an error message:
+How many arguments there are and what kind of values you can provide is very much dependent on the function you use. Thus, not every function takes every value. In the case of \texttt{mean()}, the function takes an object which holds a sequence of \texttt{numeric} values. It would make very little sense to compute the mean of our \texttt{friends} object, because it only contains names. R would return an error message:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -859,13 +870,12 @@ How many arguments there are and what kind of values you can provide is very muc
 \end{Highlighting}
 \end{Shaded}
 
-\texttt{NA} refers to a value that is \emph{`not available'}. In this case, R tries to compute the mean but the result is not available. However, it can run the function \texttt{mean()}. Therefore, this value is \texttt{NA}. In your dataset, you might find cells that are \texttt{NA}, which means there is data missing. You will learn more about how to deal with this in Chapter @ref().
+\texttt{NA} refers to a value that is \emph{`not available'}. In this case, R tries to compute the mean, but the result is not available, because the values are not \texttt{numeric} but a \texttt{character}. In your dataset, you might find cells that are \texttt{NA}, which means there is data missing. Remember: If a function attempts a computation that includes even just a single value that is \texttt{NA}, R will return \texttt{NA}. However, there is a way to fix this. You will learn more about how to deal with \texttt{NA} values in Chapter @ref().
 
-Sometimes you will also get a message from R that something is \texttt{NaN}. This stands for \emph{`not a number'} and is returned when something is not possible to compute, for example:
+Sometimes you will also get a message from R that states \texttt{NaN}. \texttt{NaN} stands for \emph{`not a number'} and is returned when something is not possible to compute, for example:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-
 \CommentTok{\# Example 1}
 \DecValTok{0}\SpecialCharTok{/}\DecValTok{0}
 \DocumentationTok{\#\# [1] NaN}
@@ -880,7 +890,7 @@ Sometimes you will also get a message from R that something is \texttt{NaN}. Thi
 \hypertarget{r-packages}{%
 \section{R packages}\label{r-packages}}
 
-R has many built-in functions that we can use right away. However, some of the most interesting ones are actually developed by other programmers, data scientists and enthusiasts. To add more functions to your repertoire, you can install R packages. R packages are a collection of functions that you can download and use for your own analysis. Throughout this book you will learn about and use many different R packages to accomplish different tasks.
+R has many built-in functions that we can use right away. However, some of the most interesting ones are developed by different programmers, data scientists and enthusiasts. To add more functions to your repertoire, you can install R packages. R packages are a collection of functions that you can download and use for your own analysis. Throughout this book, you will learn about and use many different R packages to accomplish various tasks.
 
 To give you another analogy,
 
@@ -893,36 +903,189 @@ To give you another analogy,
   and R packages are the products I can pick from the shelves.
 \end{itemize}
 
-Luckily, R packages are free to use, so I do not have to bring my credit card. For me, these additional functions, developed by some of the greatest scientists, is what keeps me addicted to performing my research in R.
+Luckily, R packages are free to use, so I do not have to bring my credit card. For me, these additional functions, developed by some of the most oustanding scientists, is what keeps me addicted to performing my research in R.
 
-However, how do you find those R packages? They are right at your fingertips. You have mainly two options:
+R packages do not only include functions but often include datasets and documentation of what each function does. This way, you can easily try every function right away, even without your own dataset and read through what each function in the package does. Figure \ref{fig:img-r-package-documentation}
+
+\begin{figure}
+\includegraphics[width=28.08in]{images/chapter_05_img/r_package_documentation} \caption{The R package documentation for 'ggplot2'}\label{fig:img-r-package-documentation}
+\end{figure}
+
+However, how do you find those R packages? They are right at your fingertips. You have two options:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
-\tightlist
 \item
-  Use the Packages pane (see Chapter \ref{the-files-plots-packages-help-viewer-window})
+  Use the function \texttt{install.packages()}
 \item
-  Or call a function
+  Use the packages pane in RStudio (see Chapter \ref{the-files-plots-packages-help-viewer-window})
 \end{enumerate}
 
-\hypertarget{installing-packages-via-rstudios-package-pane}{%
-\subsection{Installing packages via RStudio's Package pane}\label{installing-packages-via-rstudios-package-pane}}
-
-\texttt{to\ be\ added}
-
 \hypertarget{installing-packages-using-a-function}{%
-\subsection{Installing packages using a function}\label{installing-packages-using-a-function}}
+\subsection{\texorpdfstring{Installing packages using \texttt{install.packages()}}{Installing packages using install.packages()}}\label{installing-packages-using-a-function}}
 
-The simplest and fastest way to install a package is calling the function \texttt{install.packages()}. You can either use it to install a single package or install a series of packages all at once using our trusty \texttt{c()} function.
+The simplest and fastest way to install a package is calling the function \texttt{install.packages()}. You can either use it to install a single package or install a series of packages all at once using our trusty \texttt{c()} function. All you need to know is the name of the package. This approach works for all packages that are on CRAN (remember CRAN from Chapter \ref{installing-r}?).
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{\# Install a single package}
 \FunctionTok{install.packages}\NormalTok{(}\StringTok{"tidyverse"}\NormalTok{)}
 
-\CommentTok{\# Installe multiple packages at once}
+\CommentTok{\# Install multiple packages at once}
 \FunctionTok{install.packages}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"tidyverse"}\NormalTok{, }\StringTok{"naniar"}\NormalTok{, }\StringTok{"psych"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+If a package is not available from CRAN, chances are you can find them on \href{https://github.com}{GitHub}. Github is probably the world's largest global platform for programmers from all walks of life, and many of them develop fantastic R packages that make R programming not just easier but a lot more fun. As you continue to work in R, you should seriously consider creating your own account to keep backups of your R projects (see also Chapter \ref{next-steps-github}).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Install the \textquotesingle{}wesanderson\textquotesingle{} package from GitHub}
+\NormalTok{devtools}\SpecialCharTok{::}\FunctionTok{install\_github}\NormalTok{(}\StringTok{"karthik/wesanderson"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{installing-packages-via-rstudio}{%
+\subsection{Installing packages via RStudio's package pane}\label{installing-packages-via-rstudio}}
+
+RStudio offers a very convenient way of installing packages. In the packages pane, you cannot only see your installed packages, but you have two more buttons: \texttt{Install} and \texttt{Update}. The names are very self-explanatory. To install an R package you can follow the following steps:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Click on \texttt{Install}.
+\item
+  In most cases, you want to make sure you have \texttt{Repository\ (CRAN)} selected.
+
+  \includegraphics{images/chapter_05_img/install_r_packages/01_install_r_packages.png}
+\item
+  Type in the name of the package you wish to install. RStudio offers an auto-complete feature to make it even easier to find the package you want.
+
+  \includegraphics{images/chapter_05_img/install_r_packages/02_install_r_packages.png}
+\item
+  I recommend NOT to change the option which says \texttt{Install\ to\ library.} The default library settings will suffice.
+\item
+  Finally, I recommend to select \texttt{Install\ dependencies}, because some packages need other packages to function properly. This way, you do not have to do this manually.
+
+  \includegraphics{images/chapter_05_img/install_r_packages/03_install_r_packages.png}
+\end{enumerate}
+
+The only real downside of using the packages pane is that you cannot install packages hosted on GitHub. However, you can download them from there and install them directly from your computer using this option. This is particularly useful if you do not have an internet connection but you already downloaded the required packages onto a hard drive.
+
+\hypertarget{using-r-packages}{%
+\subsection{Using R Packages}\label{using-r-packages}}
+
+Now that you have a nice collection of R packages, the next step would be to use them. While you only have to install R packages once, you have to `activate' them every time you start an new session in RStudio. This process is also called `loading an R package'. Once an R package is loaded, you can use all its functions. To load an R package, we have to use the function \texttt{library()}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(tidyverse)}
+\DocumentationTok{\#\# {-}{-} Attaching packages {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-} tidyverse 1.3.1 {-}{-}}
+\DocumentationTok{\#\# v ggplot2 3.3.5     v purrr   0.3.4}
+\DocumentationTok{\#\# v tibble  3.1.3     v dplyr   1.0.7}
+\DocumentationTok{\#\# v tidyr   1.1.3     v stringr 1.4.0}
+\DocumentationTok{\#\# v readr   2.0.0     v forcats 0.5.1}
+\DocumentationTok{\#\# {-}{-} Conflicts {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-} tidyverse\_conflicts() {-}{-}}
+\DocumentationTok{\#\# x dplyr::filter() masks stats::filter()}
+\DocumentationTok{\#\# x dplyr::lag()    masks stats::lag()}
+\end{Highlighting}
+\end{Shaded}
+
+The \texttt{tidyverse} package is a special kind of package. It contains multiple packages and loads them all at once. Almost all included packages (and more) you will use at some point when working through this book.
+
+I know what you are thinking. Can you use \texttt{c()} to load all your packages at once? Unfortunately not. However, there is a way to do this, but it goes beyond the scope of this book to fully explain this (if you are curious, you can take a peek \href{https://stackoverflow.com/questions/8175912/load-multiple-packages-at-once}{here}).
+
+Besides, it is not always advisable to load all functions of an entire package. One reason could be that two packages contain a function with the same name but with a different purpose. Two functions with the same name create a conflict between these two packages, and one of the functions would not be usable. Another reason could be that you only need to use the function once, and loading the whole package to use only one specific function seems excessive. Instead, you can explicitly call functions from packages without loading the package. For example, we might want to use the \texttt{vismis()} function from the \texttt{naniar} package to show where data is missing in our dataset \texttt{airquality}. Writing the code this way is also much quicker than loading the package and then calling the function if you don't use it repeatedly. Copy the code and try it yourself. Make sure you have \texttt{naniar} installed (see \protect\hyperlink{install-packages-tidyverse-nanair-psych}{above}). We will work with this package when we explore missing data in Chapter @ref().
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Here I use the dataset \textquotesingle{}airquality\textquotesingle{}, which comes with R}
+\NormalTok{naniar}\SpecialCharTok{::}\FunctionTok{vis\_miss}\NormalTok{(airquality)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{r_for_non_programmers_files/figure-latex/Explicitly calling functions from R packages-1.pdf}
+
+\hypertarget{coding-etiquette}{%
+\section{Coding etiquette}\label{coding-etiquette}}
+
+Now you know everything to get started, but before we jump into our first project, I would like to briefly touch upon coding etiquette. This is not something that improves your analytical or coding skills directly, but is essential in building good habbits and making your life and those of others a little easier. Consider writing code like growing plants in your garden. You want to nurture the good plants, remove the weed and add labels that tell you which plant it is that you are growing. At the end of the day, you want your garden to be well-maintained. Treat you programming code the same way.
+
+A script (see Chapter @ref()) with code should always have at least the following qualities:
+
+\begin{itemize}
+\item
+  Only contains code that is necessary,
+\item
+  Is easy to read and understand,
+\item
+  Is self-contained.
+\end{itemize}
+
+With simple code this is easily achieved. However, what about more complex and longer code representing a whole set of analytical steps?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Very messy code}
+
+\FunctionTok{library}\NormalTok{(tidyverse)}
+\FunctionTok{library}\NormalTok{(jtools)}
+\NormalTok{model1 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(covid\_cases\_per\_1m }\SpecialCharTok{\textasciitilde{}}\NormalTok{ idv, }\AttributeTok{data =}\NormalTok{ df)}
+\FunctionTok{summ}\NormalTok{(model1, }\AttributeTok{scale =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{transform.response =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{vifs =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{df }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(covid\_cases\_per\_1m, idv, }\AttributeTok{colour =}\NormalTok{ europe, }\AttributeTok{label =}\NormalTok{ country))}\SpecialCharTok{+}
+\FunctionTok{theme\_minimal}\NormalTok{()}\SpecialCharTok{+} \FunctionTok{geom\_label}\NormalTok{(}\AttributeTok{nudge\_y =} \DecValTok{2}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{geom\_point}\NormalTok{()}
+\NormalTok{mod\_model2 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(cases\_per\_1m }\SpecialCharTok{\textasciitilde{}}\NormalTok{ idv }\SpecialCharTok{+}\NormalTok{ uai }\SpecialCharTok{+}\NormalTok{ idv}\SpecialCharTok{*}\NormalTok{europe }\SpecialCharTok{+}\NormalTok{ uai}\SpecialCharTok{*}\NormalTok{europe, }\AttributeTok{data =}\NormalTok{ df)}
+\FunctionTok{summ}\NormalTok{(mod\_model2, }\AttributeTok{scale =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{transform.response =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{vifs =} \ConstantTok{TRUE}\NormalTok{)}
+\FunctionTok{anova}\NormalTok{(mod\_model1, mod\_model2)}
+\end{Highlighting}
+\end{Shaded}
+
+How about the following in comparison?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Nicely structured code}
+
+\CommentTok{\# Load required R packages}
+\FunctionTok{library}\NormalTok{(tidyverse)}
+\FunctionTok{library}\NormalTok{(jtools)}
+
+\CommentTok{\# {-}{-}{-}{-} Modelling COVID{-}19 cases {-}{-}{-}{-}}
+
+\DocumentationTok{\#\# Specify and run a regression}
+\NormalTok{model1 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(covid\_cases\_per\_1m }\SpecialCharTok{\textasciitilde{}}\NormalTok{ idv, }\AttributeTok{data =}\NormalTok{ df)}
+
+\DocumentationTok{\#\# Retrieve the summary statistics of model1}
+\FunctionTok{summ}\NormalTok{(model1, }\AttributeTok{scale =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{transform.response =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{vifs =} \ConstantTok{TRUE}\NormalTok{)}
+
+\CommentTok{\# Does is matter whether a country lies in Europe?}
+
+\DocumentationTok{\#\# Visualise rel. of covid cases, idv and being a European country}
+\NormalTok{df }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(covid\_cases\_per\_1m, idv, }\AttributeTok{colour =}\NormalTok{ europe, }\AttributeTok{label =}\NormalTok{ country))}\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{()}\SpecialCharTok{+}
+  \FunctionTok{geom\_label}\NormalTok{(}\AttributeTok{nudge\_y =} \DecValTok{2}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{()}
+
+\DocumentationTok{\#\# Specify and run a revised regression}
+\NormalTok{mod\_model2 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(cases\_per\_1m }\SpecialCharTok{\textasciitilde{}}\NormalTok{ idv }\SpecialCharTok{+}\NormalTok{ uai }\SpecialCharTok{+}\NormalTok{ idv}\SpecialCharTok{*}\NormalTok{europe }\SpecialCharTok{+}\NormalTok{ uai}\SpecialCharTok{*}\NormalTok{europe, }\AttributeTok{data =}\NormalTok{ df)}
+
+\DocumentationTok{\#\# Retrieve the summary statistics of model2}
+\FunctionTok{summ}\NormalTok{(mod\_model2, }\AttributeTok{scale =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{transform.response =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{vifs =} \ConstantTok{TRUE}\NormalTok{)}
+
+\DocumentationTok{\#\# Test whether model2 is an improvement over model1}
+\FunctionTok{anova}\NormalTok{(mod\_model1, mod\_model2)}
+\end{Highlighting}
+\end{Shaded}
+
+I hope we can agree that the second example is much easier to read and understand even though you probably do not understand most of it yet. For once, I separated the different analytical steps from each other like paragraphs in a report. Apart from that, I added comments with \texttt{\#} to provide more context to my code for someone else who wants to understand my analysis. Admittedly, this example is a little excessive. Usually, you might have fewer comments. Commenting is an integral part of programming because it allows you to remember what you did. Ideally, you want to strike a good balance between commenting on and writing your code. How many comments you need will likely change throughout your R programming journey. Think of comments as headers for your programming script that give it structure.
+
+We can use \texttt{\#} not only to write comments but also to tell R not to run particular code. This is very helpful if you want to keep some code but do not want to use it yet. There is also a handy keyboard shortcut you can use to `deactivate' multiple lines of code at once. Select whatever you want to `comment out' in your script and press \texttt{Ctrl+Shift+C} (PC) or \texttt{Cmd+Shift+C} (Mac).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# mean(pocket\_money) \# R will not run this code}
+\FunctionTok{mean}\NormalTok{(pocket\_money)   }\CommentTok{\# R will run this code}
 \end{Highlighting}
 \end{Shaded}
 
@@ -936,7 +1099,7 @@ The simplest and fastest way to install a package is calling the function \textt
 \item
   What does the console return if you execute the following code \texttt{"Five"\ ==\ 5}?
 \item
-  Create a list called \texttt{books} and include the folKlowing book titles in it:
+  Create a list called \texttt{books} and include the following book titles in it:
 
   \begin{itemize}
   \item
@@ -948,9 +1111,258 @@ The simplest and fastest way to install a package is calling the function \textt
   \item
     ``R For Dummies''
   \end{itemize}
+\item
+  Copy and paste the function below into your RStudio console and run it. What does the function do when you use it?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x\_x }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(number1, number2)\{}
+\NormalTok{  result1 }\OtherTok{\textless{}{-}}\NormalTok{ number1}\SpecialCharTok{*}\NormalTok{number2}
+\NormalTok{  result2 }\OtherTok{\textless{}{-}} \FunctionTok{sqrt}\NormalTok{(number1)}
+\NormalTok{  result3 }\OtherTok{\textless{}{-}}\NormalTok{ number1}\SpecialCharTok{{-}}\NormalTok{number2}
+  \FunctionTok{return}\NormalTok{(}\FunctionTok{c}\NormalTok{(result1, result2, result3))}
+\NormalTok{\} }
+\end{Highlighting}
+\end{Shaded}
+\item
+  What are the three steps to use a new R package that you found on CRAN?
 \end{enumerate}
 
 Check you answers: \ref{solutions-for-refexercises}
+
+\hypertarget{starting-your-r-projects}{%
+\chapter{Starting your R projects}\label{starting-your-r-projects}}
+
+Every project likely fills you with enthusiasm and excitement. And it should. You are about to find answers to your questions, and you hopefully come out more knowledgeable due to it. However, there are likely certain aspects of data analysis that you find less enjoyable. I can think of two:
+
+\begin{itemize}
+\item
+  Keeping track of all the files my project generates
+\item
+  Data wrangling
+\end{itemize}
+
+While we cover data wrangling in great detail later (Chapter \ref{data-wrangling}), I would like to share some insights from my work that helped me stay organised and, consequently, less frustrated. The following applies to small and large research projects, which makes it very convenient no matter the situation. Of course, feel free to tweak my approach to whatever suits you. However, consistency is king.
+
+\hypertarget{creating-an-r-project-file}{%
+\section{Creating an R Project file}\label{creating-an-r-project-file}}
+
+When working on a project, you likely create many different files for various purposes, especially R Scripts (see Chapter \ref{creating-an-r-script}). If you are not careful, this file is stored in your system's default location, which might not be where you want them to be. RStudio allows you to manage your entire project intuitively and conveniently through R Project files. Using R Project files comes with a couple of perks, for example:
+
+\begin{itemize}
+\item
+  All the files that you generate are in the same place. Your data, your coding, your exported plots, your reports, etc., all are in one place together without you having to manage the files manually.
+\item
+  If you want to share your project, you can share the entire folder, and others can quickly reproduce your research or help fix problems. This is because all file paths are relative and not absolute.
+\item
+  You can, more easily, use GitHub for backups and so-called `version control', which allows you to track changes you have made to your code over time (see also Chapter \ref{next-steps-github}).
+\end{itemize}
+
+For now, the most important reason to use R Project files is the convenience of the organisation of files and the ability to share it easily with co-investigators, your supervisor, or your students.
+
+To create an R Project, you need to perform the following steps:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Select \texttt{File\ \textgreater{}\ New\ Project\ldots{}} from the menu bar.
+
+  \includegraphics{images/chapter_06_img/00_r_project/00_r_project_file_menu.png}
+\item
+  Select \texttt{New\ Directory} from the popup window.
+
+  \includegraphics{images/chapter_06_img/00_r_project/01_r_project_new_directory.png}
+\item
+  Next, select \texttt{New\ Project}.
+
+  \includegraphics{images/chapter_06_img/00_r_project/02_r_project_new_project.png}
+\item
+  Pick a meaningful name for your project folder, i.e.~the \texttt{Directory\ Name}. Ensure this project folder is created in the right place. You can change the \texttt{subdirectory} by clicking on \texttt{Browse\ldots{}}. Ideally the subdirectory is a place where you usually store your research projects.
+
+  \includegraphics{images/chapter_06_img/00_r_project/03_r_project_specs.png}
+\item
+  You have the option to \texttt{Create\ a\ git\ repository}. This is only relevant if you already have a GitHub account and wish to use version control. For now, you can happily ignore it.
+\item
+  Lastly, tick \texttt{Open\ in\ new\ session}. This will open your R Project in a new RStudio window.
+
+  \includegraphics{images/chapter_06_img/00_r_project/04_r_project_directory_name.png}
+\item
+  Once you are happy with your choices, you can click \texttt{Create\ Project}. This will open a new R Session, and you can start working on your project.
+
+  \includegraphics{images/chapter_06_img/00_r_project/05_r_project_new_session.png}
+\end{enumerate}
+
+If you look carefully, you can see that your RStudio is now `branded' with your project name. At the top of the window, you see the project name, the files pane shows the root directory where all your files will be, and even the console shows on top the file path of your project. You could set all this up manually, but I would not recommend it, not the least because it is easy to work with R Projects.
+
+\hypertarget{organising-your-projects}{%
+\section{Organising your projects}\label{organising-your-projects}}
+
+This section is not directly related to RStudio, R or data analysis in general. Instead, I want to convey to you that a good folder structure can go a long way. It is an excellent habit to start thinking about folder structures before you start working on your project. Placing your files into dedicated folders, rather than keeping them loosely in one container, will speed up your work and save you from the frustration of not finding the files you need. I have a template that I use regularly. You can either create it from scratch in RStudio or open your file browser and create the folders there. RStudio does not mind which way you do it. If you want to spend less time setting this up, you might want to use the function create\_folder\_template() from the r4np package.
+
+To create a folder, click on New Folder in the Files pane. I usually have at least the following folders for every project I am involved in:
+
+\begin{itemize}
+\item
+  A folder for my raw data. I store `untouched' datasets in it. With `untouched', I mean they have not been processed in any way and are usually files I downloaded from my data collection tool, e.g.~online questionnaire platform.
+\item
+  A folder with `tidy' data. This is usually data I exported from R after cleaning it, i.e.~after data wrangling (see Chapter \ref{data-wrangling}).
+\item
+  A folder for my R scripts
+\item
+  A folder for my plots
+\item
+  A folder for reports
+\end{itemize}
+
+Thus, in RStudio, it would look something like this:
+
+\includegraphics{images/chapter_06_img/01_organising_work/00_organising_work.png}
+
+You probably noticed that my folders have numbers in front of them. I do this to ensure that all folders are in the order I want them to be, usually not the alphabetical order my computer suggests. I use two digits because I may have more than nine folders for a project, and folder ten would otherwise be listed as the third folder in this list. With this filing strategy in place, it will be easy to find whatever I need. Even others can easily understand what I stored where. It is simply `tidy', similar to how we want our data to be.
+
+\hypertarget{creating-an-r-script}{%
+\section{Creating an R Script}\label{creating-an-r-script}}
+
+Code quickly becomes long and complex. Thus, it is not very convenient to write it in the console. So, instead, we can write code into an R Script. An R Script is a document that RStudio recognises as R programming code. Files that are not R Scripts, like \texttt{.txt}, \texttt{.rtf} or \texttt{.md}, can also be opened in RStudio, but any code written in it will not be automatically recognised.
+
+When opening an R script or creating a new one, it will display in the source window (see Chapter \ref{the-source-window}). Some refer to this window as the `script editor'. An R Script starts as an empty file. Good coding etiquette (see Chapter \ref{coding-etiquette} demands that we use the first line to indicate what this file does by using a comment \texttt{\#}. Here is an example for our `TidyTuesday' R Project.
+
+\includegraphics{images/chapter_06_img/02_r_script/00_r_script.png}
+
+All examples in this book can easily be copied and pasted into your own R Script. Let's try it with the following code. The plot this code creates reveals which car manufacturer produces the most efficient cars.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(tidyverse)}
+
+\NormalTok{mpg }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{reorder}\NormalTok{(manufacturer, }\FunctionTok{desc}\NormalTok{(hwy), }\AttributeTok{FUN =}\NormalTok{ median),}
+                   \AttributeTok{y =}\NormalTok{ hwy,}
+                   \AttributeTok{fill =}\NormalTok{ manufacturer)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_boxplot}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{coord\_flip}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{xlab}\NormalTok{(}\StringTok{"Manufacturer"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{ylab}\NormalTok{(}\StringTok{"Highway miles per gallon"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{r_for_non_programmers_files/figure-latex/R Script copy and paste examples-1.pdf}
+
+You are probably wondering where your plot has gone. Copying the code will not automatically run it in your R Script. However, this is necessary to create the plot. If you tried pressing \texttt{Return\ ↵}, you would only add a new line. Instead, you need to select the code you want to run and press \texttt{Ctrl+Return\ ↵} (PC) or \texttt{Cmd+Return\ ↵} (Mac). You can also use the \texttt{Run} command at the top of your source window, but it is much more efficient to press the keyboard shortcut. Besides, you will remember this shortcut quickly, because we need to use it very frequently. If all worked out, you should see the following:
+
+\includegraphics{images/chapter_06_img/02_r_script/01_r_script_example_plot.png}
+
+As you can see, cars from Honda appear to drive furthest with the same amount of fuel (a gallon) compared to other vehicles. Thus, if you are looking for a very economical car, you now know where to find them.
+
+The R Script editor has some conveniences for writing your code that are worth pointing out. You probably noticed that some of the code we have pasted is blue, and some other code is in green. These colours help to make your code more readable because they carry a specific meaning. In the default settings, green stands for any values in \texttt{""}, which usually stands for \texttt{character}s. This is also called `syntax highlighting'.
+
+Moreover, code in R Scripts will be automatically indented to facilitate reading. If for whatever reason, the indentation does not happen, or you accidentally undo it, you can reindent a line with \texttt{Ctrl+I} (PC) or \texttt{Cmd+I} (Mac).
+
+Lastly, the console and the R Script editor both feature code completion. This means that when you start typing a the name of function, R will provide suggestions. These are extremely helpful and make programming a lot faster. Once you found the function you were looking for, you press \texttt{Return\ ↵} to insert it. Here is an example of what happens when you have the package \texttt{tidyverse} loaded and type \texttt{ggpl}. Only functions that are loaded via packages or any object in your environment pane benefit from code completion.
+
+\includegraphics{images/chapter_06_img/02_r_script/02_r script_code_completion.png}
+
+Not only does RStudio show you all the available options, but it also tells you which package this function is from. In this case, all listed functions are from the \texttt{ggplot2} package. Furthermore, when you select one of the options but have not pressed \texttt{Return\ ↵} yet, you also get to see a yellow box, which provides you with a quick reference of all the arguments that this function accepts. So you do not have to memorise all the functions and their arguments.
+
+\hypertarget{r-markdown-and-r-notebooks}{%
+\section{Using R Markdown}\label{r-markdown-and-r-notebooks}}
+
+There is too much to say about R Markdown, which is why I only will highlight that they exist and point out the one feature that might convince you to choose these formats over plain R Scripts: They look like a Word document (almost).
+
+As the name indicates, R Markdown files are a combination of R Scripts and Markdown. Markdown is a way of writing and formatting text documents without needing software like MS Word. Instead, you write everything in plain text. Such plain text can be converted into many different document types such as HTML websites, PDF or Word documents. If you would like to see how it works, I recommend looking at the~\href{https://www.rstudio.com/resources/cheatsheets/}{R Markdown Cheatsheet}.
+
+An R Markdown file works oppositely to an R Script. By default, an R Script considers everything as code and only through commenting \texttt{\#} we can include text to describe what the code does. This is what you have seen in all the coding examples so far. On the other hand, an R Markdown file considers everything as text, and we have to specify what is code. We can do so by inserting `code chunks'. Therefore, there is less of a need to use comments \texttt{\#} in R Markdown files because you can write about it. Another convenience of R Markdown files is that results from your analysis are immediately shown underneath the code chunk.
+
+\includegraphics{images/chapter_06_img/03_r_markdown/01_r_markdown_plain.png}
+
+If you switch your view to the \texttt{Visual\ Editor}, it almost looks like you are writing a report in MS Word.
+
+\includegraphics{images/chapter_06_img/03_r_markdown/02_r_markdown_visual_editor_menu.png}
+
+\includegraphics{images/chapter_06_img/03_r_markdown/03_r_markdown_visual_editor.png}
+
+So, when should you use an R Script, and when should you use R Markdown. The rule-of-thumb is that if you intend to write a report, thesis or another form of publication, it might be better to work in an R Markdown file. If this does not apply, you might want to write an R Script. As mentioned above, R Markdown files emphasise text, while R Scripts primarily focus on code. In my projects, I often have a mixture of both. I use R Scripts to carry out the primary analysis and then use R Markdown files to present the findings. By the way, this book is written in R Markdown.
+
+No matter your choice, it will neither benefit nor disadvantage you in your R journey or when working through this book. The choice is all yours. You likely will come to appreciate both formats for what they offer.
+
+\hypertarget{data-wrangling}{%
+\chapter{Data Wrangling}\label{data-wrangling}}
+
+\hypertarget{import-your-data}{%
+\section{Import your data}\label{import-your-data}}
+
+\hypertarget{inspecting-your-raw-data}{%
+\section{Inspecting your raw data}\label{inspecting-your-raw-data}}
+
+\hypertarget{data-cleaning}{%
+\section{Data cleaning}\label{data-cleaning}}
+
+\hypertarget{change-data-types-and-explain-what-they-are}{%
+\section{Change data types and explain what they are}\label{change-data-types-and-explain-what-they-are}}
+
+\hypertarget{recoding-and-rearranging-factors-e.g.-gender-coded-as-0-and-1}{%
+\section{Recoding and rearranging factors (e.g.~gender coded as 0 and 1)}\label{recoding-and-rearranging-factors-e.g.-gender-coded-as-0-and-1}}
+
+\hypertarget{dealing-with-missing-data}{%
+\section{Dealing with missing data}\label{dealing-with-missing-data}}
+
+\hypertarget{latent-constructs-and-their-reliability}{%
+\section{Latent constructs and their reliability}\label{latent-constructs-and-their-reliability}}
+
+\hypertarget{theory}{%
+\subsection{Theory}\label{theory}}
+
+\hypertarget{visualisation}{%
+\subsection{Visualisation}\label{visualisation}}
+
+\hypertarget{computation}{%
+\subsection{Computation}\label{computation}}
+
+\hypertarget{descriptive-statistics}{%
+\chapter{Descriptive Statistics}\label{descriptive-statistics}}
+
+\hypertarget{correlations}{%
+\chapter{Correlations}\label{correlations}}
+
+\hypertarget{comparing-groups}{%
+\chapter{Comparing groups}\label{comparing-groups}}
+
+\hypertarget{regression-creating-models-to-predict-future-observations}{%
+\chapter{Regression: Creating models to predict future observations}\label{regression-creating-models-to-predict-future-observations}}
+
+\hypertarget{mixed-methods-research-analysing-qualitative-in-r}{%
+\chapter{Mixed-methods research: Analysing qualitative in R}\label{mixed-methods-research-analysing-qualitative-in-r}}
+
+\hypertarget{next-steps}{%
+\chapter{Where to go from here: The next steps in your R journey}\label{next-steps}}
+
+\hypertarget{next-steps-github}{%
+\section{GitHub: A Gateway to even more ingenious R packages}\label{next-steps-github}}
+
+\hypertarget{next-steps-books}{%
+\section{Books to read and expand your knowledge}\label{next-steps-books}}
+
+\hypertarget{next-steps-online-readings}{%
+\section{Engage in regular online readings about R}\label{next-steps-online-readings}}
+
+\begin{itemize}
+\tightlist
+\item
+  Tidyverse Blog
+\item
+  R-blogger
+\end{itemize}
+
+\hypertarget{next-steps-twitter}{%
+\section{Join the Twitter community and hone your skills}\label{next-steps-twitter}}
+
+\begin{itemize}
+\tightlist
+\item
+  \#RStats
+\item
+  TidyTuesday
+\end{itemize}
 
 \hypertarget{exercises-solutions}{%
 \chapter{Exercises: Solutions}\label{exercises-solutions}}
@@ -960,15 +1372,15 @@ Check you answers: \ref{solutions-for-refexercises}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\#1}
+\CommentTok{\#1 {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
 \FunctionTok{sqrt}\NormalTok{(}\DecValTok{25{-}16}\NormalTok{)}\SpecialCharTok{+}\DecValTok{2}\SpecialCharTok{*}\DecValTok{8{-}6}
 \DocumentationTok{\#\# [1] 13}
 
-\CommentTok{\#2}
+\CommentTok{\#2 {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
 \StringTok{"Five"} \SpecialCharTok{==} \DecValTok{5}
 \DocumentationTok{\#\# [1] FALSE}
 
-\CommentTok{\#3 }
+\CommentTok{\#3 {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
 \NormalTok{books }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{(}\StringTok{"Harry Potter and the Deathly Hallows"}\NormalTok{,}
               \StringTok{"The Alchemist"}\NormalTok{,}
               \StringTok{"The Davinci Code"}\NormalTok{,}
@@ -986,6 +1398,26 @@ Check you answers: \ref{solutions-for-refexercises}
 \DocumentationTok{\#\# }
 \DocumentationTok{\#\# [[4]]}
 \DocumentationTok{\#\# [1] "R For Dummies"}
+
+\CommentTok{\# 4 {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+\NormalTok{x\_x }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(number1, number2)\{       }\CommentTok{\# Creates a function that takes 2 arguments}
+\NormalTok{  result1 }\OtherTok{\textless{}{-}}\NormalTok{ number1}\SpecialCharTok{*}\NormalTok{number2             }\CommentTok{\# result1 multiplies the two arguments}
+\NormalTok{  result2 }\OtherTok{\textless{}{-}} \FunctionTok{sqrt}\NormalTok{(number1)               }\CommentTok{\# result2 computes the squareroot of the 1st argument}
+\NormalTok{  result3 }\OtherTok{\textless{}{-}}\NormalTok{ number1}\SpecialCharTok{{-}}\NormalTok{number2             }\CommentTok{\# result3 subtracts the 2nd argument from the 1st}
+  \FunctionTok{return}\NormalTok{(}\FunctionTok{c}\NormalTok{(result1, result2, result3))   }\CommentTok{\# Prints all three results into the console}
+\NormalTok{\} }
+
+\FunctionTok{x\_x}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{)}
+\DocumentationTok{\#\# [1]  6.000000  1.414214 {-}1.000000}
+
+\CommentTok{\# 5 {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+
+\CommentTok{\# First, install the package.}
+
+\CommentTok{\# Second, load the package with \textquotesingle{}library()\textquotesingle{}}
+\CommentTok{\#         or use \textquotesingle{}::\textquotesingle{} to load only a particular function once.}
+
+\CommentTok{\# Third, call the function you are interested in.}
 \end{Highlighting}
 \end{Shaded}
 

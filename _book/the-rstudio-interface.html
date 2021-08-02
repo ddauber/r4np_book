@@ -24,7 +24,7 @@
 <meta name="author" content="Daniel Dauber" />
 
 
-<meta name="date" content="2021-07-30" />
+<meta name="date" content="2021-08-02" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -120,6 +120,28 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -184,8 +206,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="6" data-path="starting-your-r-projects.html"><a href="starting-your-r-projects.html"><i class="fa fa-check"></i><b>6</b> Starting your R projects</a>
 <ul>
-<li class="chapter" data-level="6.1" data-path="starting-your-r-projects.html"><a href="starting-your-r-projects.html#creating-an-r-project-file"><i class="fa fa-check"></i><b>6.1</b> Creating an R project file</a></li>
+<li class="chapter" data-level="6.1" data-path="starting-your-r-projects.html"><a href="starting-your-r-projects.html#creating-an-r-project-file"><i class="fa fa-check"></i><b>6.1</b> Creating an R Project file</a></li>
 <li class="chapter" data-level="6.2" data-path="starting-your-r-projects.html"><a href="starting-your-r-projects.html#organising-your-projects"><i class="fa fa-check"></i><b>6.2</b> Organising your projects</a></li>
+<li class="chapter" data-level="6.3" data-path="starting-your-r-projects.html"><a href="starting-your-r-projects.html#creating-an-r-script"><i class="fa fa-check"></i><b>6.3</b> Creating an R Script</a></li>
+<li class="chapter" data-level="6.4" data-path="starting-your-r-projects.html"><a href="starting-your-r-projects.html#r-markdown-and-r-notebooks"><i class="fa fa-check"></i><b>6.4</b> Using R Markdown</a></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="data-wrangling.html"><a href="data-wrangling.html"><i class="fa fa-check"></i><b>7</b> Data Wrangling</a>
 <ul>
@@ -240,13 +264,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="the-rstudio-interface" class="section level1" number="4">
 <h1><span class="header-section-number">4</span> The RStudio Interface</h1>
-<p>When you open RStudio for the first time, you are presented with four quadrants, each of which fulfils a unique purpose:</p>
+<p>The RStudio interface is composed of quadrants, each of which fulfils a unique purpose:</p>
 <ul>
 <li><p>The <code>Console</code> window,</p></li>
-<li><p>The <code>Source</code> window<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>,</p></li>
+<li><p>The <code>Source</code> window,</p></li>
 <li><p>The <code>Environment / History / Connections / Tutorial</code> window, and</p></li>
 <li><p>The <code>Files / Plots / Packages / Help / Viewer</code> window</p></li>
 </ul>
+<p>You might only see three windows and wonder where the <code>Source</code> window has gone in your version of RStudio. In order to use it you have to either open a file or create a new one. You can create a new file by selecting <code>File &gt; New File &gt; R Script</code> in the menu bar, or use the keyboard shortcut <code>Ctrl+Shift+N</code> on PC and <code>Cmd+Shift+N</code> on Mac.</p>
 <p>I will briefly explain the purpose of each window/pane and how they are relevant to your work in <em>R</em>.</p>
 <div id="the-console-window" class="section level2" number="4.1">
 <h2><span class="header-section-number">4.1</span> The Console window</h2>
@@ -339,12 +364,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </div>
 </div>
-<div class="footnotes">
-<hr />
-<ol start="1">
-<li id="fn1"><p>If you cannot see the Source window when you start R, create a new R Scripts first: <code>File &gt; New File &gt; R Script</code>, or use the keyboard shortcut <code>Ctrl+Shift+N</code> on PC and <code>Cmd+Shift+N</code> on Mac.<a href="the-rstudio-interface.html#fnref1" class="footnote-back">↩︎</a></p></li>
-</ol>
-</div>
             </section>
 
           </div>
@@ -402,6 +421,20 @@ gitbook.start({
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>
