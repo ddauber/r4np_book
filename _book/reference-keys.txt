@@ -61,3 +61,5 @@ correlations
 comparing-groups
 regression-creating-models-to-predict-future-observations
 mixed-methods-research-analysing-qualitative-in-r
+creating-an-r-script
+r-markdown-and-r-notebooks

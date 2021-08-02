@@ -5,8 +5,12 @@
 # 1. `Readme.` before you get started
 
 -   A starting point and reference book
+
 -   Download the companion R package
--   A 'tidyverse' approach with some basic R
+
+-   How to use this book
+
+    -   how to copy and paste code blocks
 
 # 2. WHY LEARN A PROGRAMMING LANGUAGE AS A NON-PROGRAMMER ✅
 
