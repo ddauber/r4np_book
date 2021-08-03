@@ -903,7 +903,7 @@ To give you another analogy,
   and R packages are the products I can pick from the shelves.
 \end{itemize}
 
-Luckily, R packages are free to use, so I do not have to bring my credit card. For me, these additional functions, developed by some of the most oustanding scientists, is what keeps me addicted to performing my research in R.
+Luckily, R packages are free to use, so I do not have to bring my credit card. For me, these additional functions, developed by some of the most outstanding scientists, is what keeps me addicted to performing my research in R.
 
 R packages do not only include functions but often include datasets and documentation of what each function does. This way, you can easily try every function right away, even without your own dataset and read through what each function in the package does. Figure \ref{fig:img-r-package-documentation}
 
@@ -936,12 +936,14 @@ The simplest and fastest way to install a package is calling the function \textt
 \end{Highlighting}
 \end{Shaded}
 
-If a package is not available from CRAN, chances are you can find them on \href{https://github.com}{GitHub}. Github is probably the world's largest global platform for programmers from all walks of life, and many of them develop fantastic R packages that make R programming not just easier but a lot more fun. As you continue to work in R, you should seriously consider creating your own account to keep backups of your R projects (see also Chapter \ref{next-steps-github}).
+If a package is not available from CRAN, chances are you can find them on \href{https://github.com}{GitHub}. GitHub is probably the world's largest global platform for programmers from all walks of life, and many of them develop fantastic R packages that make R programming not just easier but a lot more fun. As you continue to work in R, you should seriously consider creating your own account to keep backups of your R projects (see also Chapter \ref{next-steps-github}).
+
+An essential companion for this book is \texttt{r4np}, which contains all datasets for this book and some useful functions to get you up and running in no time.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\# Install the \textquotesingle{}wesanderson\textquotesingle{} package from GitHub}
-\NormalTok{devtools}\SpecialCharTok{::}\FunctionTok{install\_github}\NormalTok{(}\StringTok{"karthik/wesanderson"}\NormalTok{)}
+\CommentTok{\# Install the \textquotesingle{}r4np\textquotesingle{} pacakge from GitHub}
+\NormalTok{devtools}\SpecialCharTok{::}\FunctionTok{install\_github}\NormalTok{(}\StringTok{"ddauber/r4np"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -970,7 +972,7 @@ RStudio offers a very convenient way of installing packages. In the packages pan
   \includegraphics{images/chapter_05_img/install_r_packages/03_install_r_packages.png}
 \end{enumerate}
 
-The only real downside of using the packages pane is that you cannot install packages hosted on GitHub. However, you can download them from there and install them directly from your computer using this option. This is particularly useful if you do not have an internet connection but you already downloaded the required packages onto a hard drive.
+The only real downside of using the packages pane is that you cannot install packages hosted on GitHub only. However, you can download them from there and install them directly from your computer using this option. This is particularly useful if you do not have an internet connection but you already downloaded the required packages onto a hard drive.
 
 \hypertarget{using-r-packages}{%
 \subsection{Using R Packages}\label{using-r-packages}}
@@ -1197,7 +1199,7 @@ If you look carefully, you can see that your RStudio is now `branded' with your 
 \hypertarget{organising-your-projects}{%
 \section{Organising your projects}\label{organising-your-projects}}
 
-This section is not directly related to RStudio, R or data analysis in general. Instead, I want to convey to you that a good folder structure can go a long way. It is an excellent habit to start thinking about folder structures before you start working on your project. Placing your files into dedicated folders, rather than keeping them loosely in one container, will speed up your work and save you from the frustration of not finding the files you need. I have a template that I use regularly. You can either create it from scratch in RStudio or open your file browser and create the folders there. RStudio does not mind which way you do it. If you want to spend less time setting this up, you might want to use the function create\_folder\_template() from the r4np package.
+This section is not directly related to RStudio, R or data analysis in general. Instead, I want to convey to you that a good folder structure can go a long way. It is an excellent habit to start thinking about folder structures before you start working on your project. Placing your files into dedicated folders, rather than keeping them loosely in one container, will speed up your work and save you from the frustration of not finding the files you need. I have a template that I use regularly. You can either create it from scratch in RStudio or open your file browser and create the folders there. RStudio does not mind which way you do it. If you want to spend less time setting this up, you might want to use the function create\_dr() from the \texttt{r4np} package. Simply copy the following code
 
 To create a folder, click on New Folder in the Files pane. I usually have at least the following folders for every project I am involved in:
 

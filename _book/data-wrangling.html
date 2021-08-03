@@ -120,28 +120,6 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
-<style type="text/css">
-/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-}
-.hanging div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}
-</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -206,17 +184,20 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="6" data-path="starting-your-r-projects.html"><a href="starting-your-r-projects.html"><i class="fa fa-check"></i><b>6</b> Starting your R projects</a>
 <ul>
-<li class="chapter" data-level="6.1" data-path="starting-your-r-projects.html"><a href="starting-your-r-projects.html#creating-an-r-project-file"><i class="fa fa-check"></i><b>6.1</b> Creating an R Project file</a></li>
+<li class="chapter" data-level="6.1" data-path="starting-your-r-projects.html"><a href="starting-your-r-projects.html#creating-an-r-project"><i class="fa fa-check"></i><b>6.1</b> Creating an R Project file</a></li>
 <li class="chapter" data-level="6.2" data-path="starting-your-r-projects.html"><a href="starting-your-r-projects.html#organising-your-projects"><i class="fa fa-check"></i><b>6.2</b> Organising your projects</a></li>
 <li class="chapter" data-level="6.3" data-path="starting-your-r-projects.html"><a href="starting-your-r-projects.html#creating-an-r-script"><i class="fa fa-check"></i><b>6.3</b> Creating an R Script</a></li>
 <li class="chapter" data-level="6.4" data-path="starting-your-r-projects.html"><a href="starting-your-r-projects.html#r-markdown-and-r-notebooks"><i class="fa fa-check"></i><b>6.4</b> Using R Markdown</a></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="data-wrangling.html"><a href="data-wrangling.html"><i class="fa fa-check"></i><b>7</b> Data Wrangling</a>
 <ul>
-<li class="chapter" data-level="7.1" data-path="data-wrangling.html"><a href="data-wrangling.html#import-your-data"><i class="fa fa-check"></i><b>7.1</b> Import your data</a></li>
-<li class="chapter" data-level="7.2" data-path="data-wrangling.html"><a href="data-wrangling.html#inspecting-your-raw-data"><i class="fa fa-check"></i><b>7.2</b> Inspecting your raw data</a></li>
+<li class="chapter" data-level="7.1" data-path="data-wrangling.html"><a href="data-wrangling.html#import-your-data"><i class="fa fa-check"></i><b>7.1</b> Import your data</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="data-wrangling.html"><a href="data-wrangling.html#import-data-from-the-files-pane"><i class="fa fa-check"></i><b>7.1.1</b> Import data from the Files pane</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="data-wrangling.html"><a href="data-wrangling.html#inspecting-raw-data"><i class="fa fa-check"></i><b>7.2</b> Inspecting your raw data</a></li>
 <li class="chapter" data-level="7.3" data-path="data-wrangling.html"><a href="data-wrangling.html#data-cleaning"><i class="fa fa-check"></i><b>7.3</b> Data cleaning</a></li>
-<li class="chapter" data-level="7.4" data-path="data-wrangling.html"><a href="data-wrangling.html#change-data-types-and-explain-what-they-are"><i class="fa fa-check"></i><b>7.4</b> Change data types and explain what they are</a></li>
+<li class="chapter" data-level="7.4" data-path="data-wrangling.html"><a href="data-wrangling.html#change-data-types"><i class="fa fa-check"></i><b>7.4</b> Change data types and explain what they are</a></li>
 <li class="chapter" data-level="7.5" data-path="data-wrangling.html"><a href="data-wrangling.html#recoding-and-rearranging-factors-e.g.-gender-coded-as-0-and-1"><i class="fa fa-check"></i><b>7.5</b> Recoding and rearranging factors (e.g. gender coded as 0 and 1)</a></li>
 <li class="chapter" data-level="7.6" data-path="data-wrangling.html"><a href="data-wrangling.html#dealing-with-missing-data"><i class="fa fa-check"></i><b>7.6</b> Dealing with missing data</a></li>
 <li class="chapter" data-level="7.7" data-path="data-wrangling.html"><a href="data-wrangling.html#latent-constructs-and-their-reliability"><i class="fa fa-check"></i><b>7.7</b> Latent constructs and their reliability</a>
@@ -264,16 +245,64 @@ div.csl-indent {
             <section class="normal" id="section-">
 <div id="data-wrangling" class="section level1" number="7">
 <h1><span class="header-section-number">7</span> Data Wrangling</h1>
+<p>You collected your data over months (and sometimes years) and all you really want to know is whether your data makes sense and reveals something nobody would have ever expected. However, before we can truly go ahead with our analysis, it is essential to understand whether our data is ‘tidy.’ Very often, data we receive is everything else but clean and we need to not only check whether our data is fit for analysis, but also ensure it is in a format that is easy to handle and work with. For small datasets, this is usually a brief exercise. However, I found myself cleaning data for a month, because the dataset was spread out into multiple spreadsheets (no pun intended) with different numbers of columns and odd column names. Thus, data cleaning or data wrangling is an essential first step in any data analysis. It is a step that cannot be skipped and has to be performed on every new dataset.</p>
+<p>Luckily, R provides many useful functions to make our lives easier. If you are like me and used to do this in Excel, you will be in for a treat. It is a lot simpler using R to do achieve a clean dataset.</p>
 <div id="import-your-data" class="section level2" number="7.1">
 <h2><span class="header-section-number">7.1</span> Import your data</h2>
+<p>The <code>r4np</code> package hosts a number of different datasets to work with, but at some point you might want to apply your R knowledge to your own data. Therefore, an important first step is to import your data into RStudio. There are three different methods all of which are very handy:</p>
+<ol style="list-style-type: decimal">
+<li><p>Click on your data file in the Files pane and choose `Import Dataset’.</p></li>
+<li><p>Use the <code>Import Dataset</code> button in the Environment pane.</p></li>
+<li><p>Import your data calling one of the <code>readr</code> functions in the console or RScript</p></li>
+</ol>
+<div id="import-data-from-the-files-pane" class="section level3" number="7.1.1">
+<h3><span class="header-section-number">7.1.1</span> Import data from the Files pane</h3>
+<p>This approach is by far the easiest. Let’s assume you have a dataset called <code>gender_age.csv</code> in your <code>00_raw_data</code> folder. If you wish to import it, you can do the following:</p>
+<ol style="list-style-type: decimal">
+<li><p>Click on the name of the file</p></li>
+<li><p>Select <code>Import Dataset</code>.</p>
+<p><img src="images/chapter_07_img/01_files_pane_import/01_files_pane_import.png" /></p></li>
+<li><p>A new window will open and you can choose different options. You also see a little preview of how the data looks like. This is great if you are not sure whether you did it correctly.</p>
+<p><img src="images/chapter_07_img/01_files_pane_import/02_files_pane_import.png" /></p></li>
+<li><p>You can make changes to how the data should be imported, but in most cases the default should be fine. Here is quick breakdown of the most important options:</p>
+<ul>
+<li><p><code>Name</code> allows you to change the object name, i.e. the name of the object this data will be assigned to. I tend to use <code>df_raw</code> (<code>df</code> stand for <code>dataframe</code>, which is how R calls such rectangular datasets).</p></li>
+<li><p><code>Skip</code> is useful if your data file starts with a number of empty rows at the top. You can remove them here.</p></li>
+<li><p><code>First Row as Names</code> is ticked by default. In most Social Science projects we tend to have the name of the variables as the first row in your dataset.</p></li>
+<li><p><code>Trim Spaces</code> removes any unnecassry white-space in your dataset. Leave it ticked.</p></li>
+<li><p><code>Open Data Viewer</code> allows you to look at your imported dataset. I use it rarely, but it can be helpful at times.</p></li>
+<li><p><code>Delimiter</code> defines how your columns are separate from each other in your file. If it is a <code>.csv</code> it would imply it is a ‘comma-separated value,’ i.e. <code>,</code>. This can be changed for different files, depending on how your data is delimited. You can even use the option <code>Other…</code> to specify a custom separation option.</p></li>
+<li><p><code>NA</code> specifies how missing values in your data are acknowledged. By default, empty cells in your data will be recognised as missing data.</p></li>
+</ul>
+<p><img src="images/chapter_07_img/01_files_pane_import/03_files_pane_import.png" /></p></li>
+<li><p>Once you are happy with your choices, you can click on <code>Import</code>.</p></li>
+<li><p>You will find your dataset in the Environment pane.</p>
+<p><img src="images/chapter_07_img/01_files_pane_import/04_files_pane_import.png" /></p></li>
+</ol>
+<p>In the console you can see that R also provides the <code>Column specification</code>, which we need later when inspecting ‘data types’ (see Chapter <a href="data-wrangling.html#change-data-types">7.4</a>.</p>
+<p>To achieve this we rely on <code>readr</code> from the <code>tidyverse</code> package. It can install a range of different datatypes, including <code>.csv</code>, <code>.tsv</code>, <code>.txt</code>. If you want to import data from an <code>.xlsx</code> file you have to use another package called <code>readxl</code>.</p>
+<p>Here are some examples of how you can use <code>readr</code> to import your data. The first part is only there to create the two</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="data-wrangling.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load &#39;readr&#39; via &#39;tidyverse&#39; or just &#39;readr</span></span>
+<span id="cb1-2"><a href="data-wrangling.html#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-3"><a href="data-wrangling.html#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="data-wrangling.html#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Import data from &#39;.csv&#39;</span></span>
+<span id="cb1-5"><a href="data-wrangling.html#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(<span class="st">&quot;00_raw_data/gender_age.csv&quot;</span>)</span>
+<span id="cb1-6"><a href="data-wrangling.html#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="data-wrangling.html#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Import data from any file text file by defining the separator yourself</span></span>
+<span id="cb1-8"><a href="data-wrangling.html#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">read_delim</span>(<span class="st">&quot;00_raw_data/gender_age.txt&quot;</span>, <span class="at">delim =</span> <span class="st">&quot;|&quot;</span>)</span></code></pre></div>
 </div>
-<div id="inspecting-your-raw-data" class="section level2" number="7.2">
+</div>
+<div id="inspecting-raw-data" class="section level2" number="7.2">
 <h2><span class="header-section-number">7.2</span> Inspecting your raw data</h2>
+<p><code>glimpse()</code></p>
+<p><code>skim()</code></p>
 </div>
 <div id="data-cleaning" class="section level2" number="7.3">
 <h2><span class="header-section-number">7.3</span> Data cleaning</h2>
+<p>Create consistency in your column naming convention</p>
+<p><code>janitor</code></p>
 </div>
-<div id="change-data-types-and-explain-what-they-are" class="section level2" number="7.4">
+<div id="change-data-types" class="section level2" number="7.4">
 <h2><span class="header-section-number">7.4</span> Change data types and explain what they are</h2>
 </div>
 <div id="recoding-and-rearranging-factors-e.g.-gender-coded-as-0-and-1" class="section level2" number="7.5">
@@ -353,20 +382,6 @@ gitbook.start({
 });
 </script>
 
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:")
-      if (/^https?:/.test(src))
-        src = src.replace(/^https?:/, '');
-    script.src = src;
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script>
 </body>
 
 </html>

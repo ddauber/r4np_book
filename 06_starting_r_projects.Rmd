@@ -8,7 +8,7 @@ Every project likely fills you with enthusiasm and excitement. And it should. Yo
 
 While we cover data wrangling in great detail later (Chapter \@ref(data-wrangling)), I would like to share some insights from my work that helped me stay organised and, consequently, less frustrated. The following applies to small and large research projects, which makes it very convenient no matter the situation. Of course, feel free to tweak my approach to whatever suits you. However, consistency is king.
 
-## Creating an R Project file
+## Creating an R Project file {#creating-an-r-project}
 
 When working on a project, you likely create many different files for various purposes, especially R Scripts (see Chapter \@ref(creating-an-r-script)). If you are not careful, this file is stored in your system's default location, which might not be where you want them to be. RStudio allows you to manage your entire project intuitively and conveniently through R Project files. Using R Project files comes with a couple of perks, for example:
 
@@ -52,9 +52,19 @@ If you look carefully, you can see that your RStudio is now 'branded' with your 
 
 ## Organising your projects {#organising-your-projects}
 
-This section is not directly related to RStudio, R or data analysis in general. Instead, I want to convey to you that a good folder structure can go a long way. It is an excellent habit to start thinking about folder structures before you start working on your project. Placing your files into dedicated folders, rather than keeping them loosely in one container, will speed up your work and save you from the frustration of not finding the files you need. I have a template that I use regularly. You can either create it from scratch in RStudio or open your file browser and create the folders there. RStudio does not mind which way you do it. If you want to spend less time setting this up, you might want to use the function create_folder_template() from the r4np package.
+This section is not directly related to RStudio, R or data analysis in general. Instead, I want to convey to you that a good folder structure can go a long way. It is an excellent habit to start thinking about folder structures before you start working on your project. Placing your files into dedicated folders, rather than keeping them loosely in one container, will speed up your work and save you from the frustration of not finding the files you need. I have a template that I use regularly. You can either create it from scratch in RStudio or open your file browser and create the folders there. RStudio does not mind which way you do it. If you want to spend less time setting this up, you might want to use the function `create_dr()` from the `r4np` package. It creates all the folders as shown in Figure \@ref(fig:folder-structure).
 
-To create a folder, click on New Folder in the Files pane. I usually have at least the following folders for every project I am involved in:
+<a name="install_r4np"></a>
+
+```{r Install and create a folder directory using r4np, echo=TRUE, eval=FALSE}
+# Install 'r4np' from GitHub
+devtools::install_github("ddauber/r4np")
+
+# Create the template structure
+r4np::create_dr()
+```
+
+To create a folder, click on `New Folder` in the Files pane. I usually have at least the following folders for every project I am involved in:
 
 -   A folder for my raw data. I store 'untouched' datasets in it. With 'untouched', I mean they have not been processed in any way and are usually files I downloaded from my data collection tool, e.g. online questionnaire platform.
 
@@ -68,7 +78,9 @@ To create a folder, click on New Folder in the Files pane. I usually have at lea
 
 Thus, in RStudio, it would look something like this:
 
-![](images/chapter_06_img/01_organising_work/00_organising_work.png)
+```{r fig.cap = "An example of a scalable folder structure for your project", label = "folder-structure", echo=FALSE}
+knitr::include_graphics("images/chapter_06_img/01_organising_work/00_organising_work.png")
+```
 
 You probably noticed that my folders have numbers in front of them. I do this to ensure that all folders are in the order I want them to be, usually not the alphabetical order my computer suggests. I use two digits because I may have more than nine folders for a project, and folder ten would otherwise be listed as the third folder in this list. With this filing strategy in place, it will be easy to find whatever I need. Even others can easily understand what I stored where. It is simply 'tidy', similar to how we want our data to be.
 
@@ -80,9 +92,9 @@ When opening an R script or creating a new one, it will display in the source wi
 
 ![](images/chapter_06_img/02_r_script/00_r_script.png)
 
-All examples in this book can easily be copied and pasted into your own R Script. Let's try it with the following code. The plot this code creates reveals which car manufacturer produces the most efficient cars.
+All examples in this book can easily be copied and pasted into your own R Script. However, for some code you will have to install the R package `r4np` (see [above](#install_r4np)). Let's try it with the following code. The plot this code creates reveals which car manufacturer produces the most efficient cars.
 
-```{r R Script copy and paste examples, echo=TRUE, collapse=TRUE, message=FALSE}
+```{r R Script copy and paste examples, echo=TRUE, message=FALSE}
 library(tidyverse)
 
 mpg %>% ggplot(aes(x = reorder(manufacturer, desc(hwy), FUN = median),
@@ -127,6 +139,6 @@ If you switch your view to the `Visual Editor`, it almost looks like you are wri
 
 ![](images/chapter_06_img/03_r_markdown/03_r_markdown_visual_editor.png)
 
-So, when should you use an R Script, and when should you use R Markdown. The rule-of-thumb is that if you intend to write a report, thesis or another form of publication, it might be better to work in an R Markdown file. If this does not apply, you might want to write an R Script. As mentioned above, R Markdown files emphasise text, while R Scripts primarily focus on code. In my projects, I often have a mixture of both. I use R Scripts to carry out the primary analysis and then use R Markdown files to present the findings. By the way, this book is written in R Markdown.
+So, when should you use an R Script, and when should you use R Markdown. The rule-of-thumb is that if you intend to write a report, thesis or another form of publication, it might be better to work in an R Markdown file. If this does not apply, you might want to write an R Script. As mentioned above, R Markdown files emphasise text, while R Scripts primarily focus on code. In my projects, I often have a mixture of both. I use R Scripts to carry out data wrangling and my primary analysis and then use R Markdown files to present the findings, e.g. creating plots, tables, etc. By the way, this book is written in R Markdown using the `bookdown` package.
 
 No matter your choice, it will neither benefit nor disadvantage you in your R journey or when working through this book. The choice is all yours. You likely will come to appreciate both formats for what they offer.

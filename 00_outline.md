@@ -75,11 +75,11 @@
 
 -   Coding etiquette ✅
 
-# 6. Starting your R project
+# 6. Starting your R project ✅
 
--   Create an R project file
+-   Create an R project file ✅
 
--   Organising your work
+-   Organising your work ✅
 
 # 7. Data Wrangling: Or how to prepare your data for analysis
 

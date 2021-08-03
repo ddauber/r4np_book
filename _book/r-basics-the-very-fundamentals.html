@@ -518,7 +518,7 @@ Figure 5.1: The environment pane showing our objects and our list <code>x_files<
 <li><p>RStudio is like my shopping cart,</p></li>
 <li><p>and R packages are the products I can pick from the shelves.</p></li>
 </ul>
-<p>Luckily, R packages are free to use, so I do not have to bring my credit card. For me, these additional functions, developed by some of the most oustanding scientists, is what keeps me addicted to performing my research in R.</p>
+<p>Luckily, R packages are free to use, so I do not have to bring my credit card. For me, these additional functions, developed by some of the most outstanding scientists, is what keeps me addicted to performing my research in R.</p>
 <p>R packages do not only include functions but often include datasets and documentation of what each function does. This way, you can easily try every function right away, even without your own dataset and read through what each function in the package does. Figure <a href="r-basics-the-very-fundamentals.html#fig:img-r-package-documentation">5.2</a></p>
 <div class="figure"><span id="fig:img-r-package-documentation"></span>
 <img src="images/chapter_05_img/r_package_documentation.png" alt="The R package documentation for 'ggplot2'" width="1011" />
@@ -539,9 +539,10 @@ Figure 5.2: The R package documentation for ‘ggplot2’
 <span id="cb21-3"><a href="r-basics-the-very-fundamentals.html#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb21-4"><a href="r-basics-the-very-fundamentals.html#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Install multiple packages at once</span></span>
 <span id="cb21-5"><a href="r-basics-the-very-fundamentals.html#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">&quot;tidyverse&quot;</span>, <span class="st">&quot;naniar&quot;</span>, <span class="st">&quot;psych&quot;</span>))</span></code></pre></div>
-<p>If a package is not available from CRAN, chances are you can find them on <a href="https://github.com" target="blank">GitHub</a>. Github is probably the world’s largest global platform for programmers from all walks of life, and many of them develop fantastic R packages that make R programming not just easier but a lot more fun. As you continue to work in R, you should seriously consider creating your own account to keep backups of your R projects (see also Chapter <a href="next-steps.html#next-steps-github">13.1</a>).</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="r-basics-the-very-fundamentals.html#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Install the &#39;wesanderson&#39; package from GitHub</span></span>
-<span id="cb22-2"><a href="r-basics-the-very-fundamentals.html#cb22-2" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">&quot;karthik/wesanderson&quot;</span>)</span></code></pre></div>
+<p>If a package is not available from CRAN, chances are you can find them on <a href="https://github.com" target="blank">GitHub</a>. GitHub is probably the world’s largest global platform for programmers from all walks of life, and many of them develop fantastic R packages that make R programming not just easier but a lot more fun. As you continue to work in R, you should seriously consider creating your own account to keep backups of your R projects (see also Chapter <a href="next-steps.html#next-steps-github">13.1</a>).</p>
+<p>An essential companion for this book is <code>r4np</code>, which contains all datasets for this book and some useful functions to get you up and running in no time. <a id="install-r4np"></a></p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="r-basics-the-very-fundamentals.html#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Install the &#39;r4np&#39; pacakge from GitHub</span></span>
+<span id="cb22-2"><a href="r-basics-the-very-fundamentals.html#cb22-2" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">&quot;ddauber/r4np&quot;</span>)</span></code></pre></div>
 </div>
 <div id="installing-packages-via-rstudio" class="section level3" number="5.4.2">
 <h3><span class="header-section-number">5.4.2</span> Installing packages via RStudio’s package pane</h3>
@@ -556,7 +557,7 @@ Figure 5.2: The R package documentation for ‘ggplot2’
 <li><p>Finally, I recommend to select <code>Install dependencies</code>, because some packages need other packages to function properly. This way, you do not have to do this manually.</p>
 <p><img src="images/chapter_05_img/install_r_packages/03_install_r_packages.png" /></p></li>
 </ol>
-<p>The only real downside of using the packages pane is that you cannot install packages hosted on GitHub. However, you can download them from there and install them directly from your computer using this option. This is particularly useful if you do not have an internet connection but you already downloaded the required packages onto a hard drive.</p>
+<p>The only real downside of using the packages pane is that you cannot install packages hosted on GitHub only. However, you can download them from there and install them directly from your computer using this option. This is particularly useful if you do not have an internet connection but you already downloaded the required packages onto a hard drive.</p>
 </div>
 <div id="using-r-packages" class="section level3" number="5.4.3">
 <h3><span class="header-section-number">5.4.3</span> Using R Packages</h3>

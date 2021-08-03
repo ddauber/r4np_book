@@ -6,7 +6,7 @@ After a likely tedious installation of R and RStudio, as well as a somewhat deta
 
 The most basic computation you can do in R is arithmetic operations. In other words, addition, subtraction, multiplication, division, exponentiation and extraction of roots. In other words, R can be used like your pocket calculator, or more likely the one you have on your phone. For example, in Chapter \@ref(the-console-window) we already performed an addition. Thus, it might not come as a surprise how their equivalents work in R. Let's take a look at the following examples:
 
-```{r Arthimetic examples, echo=TRUE, collapse=TRUE}
+```{r Arthimetic examples, echo=TRUE}
 # Addition
 10+5
 
@@ -30,7 +30,7 @@ They all look fairly straightforward except for the extraction of roots. As you 
 
 Functions are an essential part of R and programming in general. You will learn more about them in this chapter.Besides arithmetic operations, there are also logical queries you can perform. Logical queries always return either the value TRUE or FALSE. Here are some examples which make this clearer:
 
-```{r Logical queries, echo=TRUE, collapse=TRUE}
+```{r Logical queries, echo=TRUE}
 
 #1 Is it TRUE or FALSE?
 1 == 1
@@ -115,7 +115,7 @@ Sadly, it seems I only have one friend. Luckily we can add some more, not the le
 
 Let's concatenate some more friends into our `friends` object.
 
-```{r Concatenate function, echo=TRUE, collapse=TRUE}
+```{r Concatenate function, echo=TRUE}
 # Adding some more friends to my life
 friends <- c("Fiona", "Ida", "Lukas", "Georg", "Daniel", "Pavel", "Tigger")
 
@@ -125,7 +125,7 @@ friends
 
 To concatenate values into a single object, we need to use a comma `,` to separate each value. Otherwise, R will report an error back.
 
-```{r Concatenate function error, echo=TRUE, collapse=TRUE, error=TRUE}
+```{r Concatenate function error, echo=TRUE, error=TRUE}
 friends <- c("Fiona" "Ida")
 ```
 
@@ -133,7 +133,7 @@ R's error messages tend to be very useful and give meaningful clues to what went
 
 You can also concatenate numbers, and if you add `()` around it, you can automatically print the content of the object to the console. Thus, `(milestones_of_my_life <- c(1982, 2006, 2011, 2018, 2020))` is the same as `milestones_of_my_life <- c(1982, 2006, 2011, 2018, 2020)` followed by `milestones_of_my_life`. The following examples illustrate this.
 
-```{r Concatenating numbers, echo=TRUE, collapse=TRUE}
+```{r Concatenating numbers, echo=TRUE}
 # Important years in my life
 milestones_of_my_life <- c(1982, 2006, 2011, 2018, 2020)
 milestones_of_my_life
@@ -144,7 +144,7 @@ milestones_of_my_life
 
 Finally, we can also concatenate numbers and character values into one object:
 
-```{r Concatenating numbers and strings, echo=TRUE, collapse=TRUE}
+```{r Concatenating numbers and strings, echo=TRUE}
 (names_and_years <- c("Fiona", 1988, "Daniel", 1982))
 ```
 
@@ -160,7 +160,7 @@ There is an exception to this rule. 'Of course', you might say. There is one obj
 
 Let's create a list called `x_files` using the `list` function and place all our objects inside.
 
-```{r Creating a list, echo=TRUE, collapse=TRUE}
+```{r Creating a list, echo=TRUE}
 # This creates our list of objects
 x_files <- list(friends,
                milestones_of_my_life,
@@ -180,7 +180,7 @@ knitr::include_graphics("images/chapter_05_img/02_basic_computation_environment_
 
 In Chapter \@ref(basic-computations-in-r), I mentioned that we should avoid using the `=` operator and explained that it is used to assign values to objects. You can, if you want, use `=` instead of `<-`. They fulfil the same purpose. However, as mentioned before, it is not wise to do so. Here is an example that shows that, in principle, it is possible.
 
-```{r Using the two assign operators, echo=TRUE, collapse=TRUE}
+```{r Using the two assign operators, echo=TRUE}
 # DO
 (avengers1 <- c("Iron Man", "Captain America", "Black Widow", "Vision"))
 
@@ -190,7 +190,7 @@ In Chapter \@ref(basic-computations-in-r), I mentioned that we should avoid usin
 
 On a final note, naming your objects is limited. You cannot chose any name. First, every name needs to start with a letter. Second, you can only use letters, numbers `_` and `.` as valid components of the names for your objects [see also @wickham2016r, Chapter 4.2.]. I recommend to establish a naming convention that you adhere to. Personally I prefer to only user lower letters and `_` to separate/connect words. You want to keep names informative, succinct and precise. Here are some examples of what I would consider good and bad choices for names.
 
-```{r Naming your objects, echo=TRUE, collapse=TRUE, eval=FALSE}
+```{r Naming your objects, echo=TRUE, eval=FALSE}
 # Good choices
 income_per_annum
 open_to_exp          # for 'openness to new experiences'
@@ -208,7 +208,7 @@ Ultimately, you need to be able to effectively work with your data and output. I
 
 I used the term 'function' multiple times, but I never thoroughly explained what they are and why we need them. In simple terms, functions are objects. They contain lines of code that someone has written for us or we have written ourselves. One could say they are code snippets ready to use. Someone else might see them as shortcuts for our programming. Functions increase the speed with which we perform our analysis and write our computations and make our code more readable. Consider computing the `mean` of values stored in the object `pocket_money`.
 
-```{r Mean function example, echo=TRUE, collapse=TRUE, label="mean-function-example"}
+```{r Mean function example, echo=TRUE, label="mean-function-example"}
 # First we create an object that stores our desired values
 pocket_money <- c(0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89)
 
@@ -229,7 +229,7 @@ If we manually compute the mean, we first calculate the sum of all values in the
 
 To further illustrate how functions look like, let's create one ourselves and call it `my_mean`.
 
-```{r Creating our own mean function, echo=TRUE, collapse=TRUE}
+```{r Creating our own mean function, echo=TRUE}
 my_mean <- function(numbers){
   sum <- sum(numbers)              # Compute the sum of all values in 'numbers'
   result <- sum/length(numbers)    # Divide the sum by the number of items in 'numbers'
@@ -251,7 +251,7 @@ name_of_function(argument_1 = value_1,
 
 How many arguments there are and what kind of values you can provide is very much dependent on the function you use. Thus, not every function takes every value. In the case of `mean()`, the function takes an object which holds a sequence of `numeric` values. It would make very little sense to compute the mean of our `friends` object, because it only contains names. R would return an error message:
 
-```{r Mean of an object with characters, echo=TRUE, collapse=TRUE, error=TRUE}
+```{r Mean of an object with characters, echo=TRUE, error=TRUE}
 mean(friends)
 ```
 
@@ -259,7 +259,7 @@ mean(friends)
 
 Sometimes you will also get a message from R that states `NaN`. `NaN` stands for *'not a number'* and is returned when something is not possible to compute, for example:
 
-```{r NaN example: Division by zero, echo=TRUE, collapse=TRUE, error=TRUE}
+```{r NaN example: Division by zero, echo=TRUE, error=TRUE}
 # Example 1
 0/0
 
@@ -279,7 +279,7 @@ To give you another analogy,
 
 -   and R packages are the products I can pick from the shelves.
 
-Luckily, R packages are free to use, so I do not have to bring my credit card. For me, these additional functions, developed by some of the most oustanding scientists, is what keeps me addicted to performing my research in R.
+Luckily, R packages are free to use, so I do not have to bring my credit card. For me, these additional functions, developed by some of the most outstanding scientists, is what keeps me addicted to performing my research in R.
 
 R packages do not only include functions but often include datasets and documentation of what each function does. This way, you can easily try every function right away, even without your own dataset and read through what each function in the package does. Figure \@ref(fig:img-r-package-documentation)
 
@@ -305,11 +305,13 @@ install.packages("tidyverse")
 install.packages(c("tidyverse", "naniar", "psych"))
 ```
 
-If a package is not available from CRAN, chances are you can find them on [GitHub](https://github.com){target="blank"}. Github is probably the world's largest global platform for programmers from all walks of life, and many of them develop fantastic R packages that make R programming not just easier but a lot more fun. As you continue to work in R, you should seriously consider creating your own account to keep backups of your R projects (see also Chapter \@ref(next-steps-github)).
+If a package is not available from CRAN, chances are you can find them on [GitHub](https://github.com){target="blank"}. GitHub is probably the world's largest global platform for programmers from all walks of life, and many of them develop fantastic R packages that make R programming not just easier but a lot more fun. As you continue to work in R, you should seriously consider creating your own account to keep backups of your R projects (see also Chapter \@ref(next-steps-github)).
+
+An essential companion for this book is `r4np`, which contains all datasets for this book and some useful functions to get you up and running in no time. <a id="install-r4np"></a>
 
 ```{r Installing R packages via functions from GitHub, eval=FALSE, echo=TRUE, results='hide'}
-# Install the 'wesanderson' package from GitHub
-devtools::install_github("karthik/wesanderson")
+# Install the 'r4np' pacakge from GitHub
+devtools::install_github("ddauber/r4np")
 ```
 
 ### Installing packages via RStudio's package pane {#installing-packages-via-rstudio}
@@ -332,13 +334,13 @@ RStudio offers a very convenient way of installing packages. In the packages pan
 
     ![](images/chapter_05_img/install_r_packages/03_install_r_packages.png)
 
-The only real downside of using the packages pane is that you cannot install packages hosted on GitHub. However, you can download them from there and install them directly from your computer using this option. This is particularly useful if you do not have an internet connection but you already downloaded the required packages onto a hard drive.
+The only real downside of using the packages pane is that you cannot install packages hosted on GitHub only. However, you can download them from there and install them directly from your computer using this option. This is particularly useful if you do not have an internet connection but you already downloaded the required packages onto a hard drive.
 
 ### Using R Packages
 
 Now that you have a nice collection of R packages, the next step would be to use them. While you only have to install R packages once, you have to 'activate' them every time you start an new session in RStudio. This process is also called 'loading an R package'. Once an R package is loaded, you can use all its functions. To load an R package, we have to use the function `library()`.
 
-```{r Loading an R package, echo=TRUE, collapse=TRUE, warning=FALSE}
+```{r Loading an R package, echo=TRUE, warning=FALSE}
 library(tidyverse)
 ```
 
@@ -348,7 +350,7 @@ I know what you are thinking. Can you use `c()` to load all your packages at onc
 
 Besides, it is not always advisable to load all functions of an entire package. One reason could be that two packages contain a function with the same name but with a different purpose. Two functions with the same name create a conflict between these two packages, and one of the functions would not be usable. Another reason could be that you only need to use the function once, and loading the whole package to use only one specific function seems excessive. Instead, you can explicitly call functions from packages without loading the package. For example, we might want to use the `vismis()` function from the `naniar` package to show where data is missing in our dataset `airquality`. Writing the code this way is also much quicker than loading the package and then calling the function if you don't use it repeatedly. Copy the code and try it yourself. Make sure you have `naniar` installed (see [above](#install-packages-tidyverse-nanair-psych)). We will work with this package when we explore missing data in Chapter \@ref().
 
-```{r Explicitly calling functions from R packages, echo=TRUE, collapse=TRUE}
+```{r Explicitly calling functions from R packages, echo=TRUE}
 # Here I use the dataset 'airquality', which comes with R
 naniar::vis_miss(airquality)
 ```
@@ -367,7 +369,7 @@ A script (see Chapter \@ref()) with code should always have at least the followi
 
 With simple code this is easily achieved. However, what about more complex and longer code representing a whole set of analytical steps?
 
-```{r Messy code, echo=TRUE, eval=FALSE, collapse=TRUE}
+```{r Messy code, echo=TRUE, eval=FALSE}
 # Very messy code
 
 library(tidyverse)
@@ -383,7 +385,7 @@ anova(mod_model1, mod_model2)
 
 How about the following in comparison?
 
-```{r Well-structured code, echo=TRUE, eval=FALSE, collapse=TRUE}
+```{r Well-structured code, echo=TRUE, eval=FALSE}
 # Nicely structured code
 
 # Load required R packages
@@ -421,7 +423,7 @@ I hope we can agree that the second example is much easier to read and understan
 
 We can use `#` not only to write comments but also to tell R not to run particular code. This is very helpful if you want to keep some code but do not want to use it yet. There is also a handy keyboard shortcut you can use to 'deactivate' multiple lines of code at once. Select whatever you want to 'comment out' in your script and press `Ctrl+Shift+C` (PC) or `Cmd+Shift+C` (Mac).
 
-```{r Commenting out code, echo=TRUE, collapse=TRUE, results='hide'}
+```{r Commenting out code, echo=TRUE, results='hide'}
 # mean(pocket_money) # R will not run this code
 mean(pocket_money)   # R will run this code
 ```
@@ -444,7 +446,7 @@ mean(pocket_money)   # R will run this code
 
 4.  Copy and paste the function below into your RStudio console and run it. What does the function do when you use it?
 
-    ```{r Function exercise}
+    ```{r Function exercise, echo=TRUE, results='hide'}
 
     x_x <- function(number1, number2){
       result1 <- number1*number2

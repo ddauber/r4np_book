@@ -120,28 +120,6 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
-<style type="text/css">
-/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-}
-.hanging div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}
-</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -322,7 +300,7 @@ div.csl-indent {
 <p>Since the Console cannot reproduce data visualisations, RStudio offers a way to do this very easily. It is through the Plots pane. This pane is exclusively designed to show you any plots you have created using R. Here is a simple example that you can try. Type into your console <code>boxplot(mtcars$hp)</code>.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="the-rstudio-interface.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Here we create a nice boxplot using a dataset called &#39;mtcars&#39;</span></span>
 <span id="cb2-2"><a href="the-rstudio-interface.html#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(mtcars<span class="sc">$</span>hp)</span></code></pre></div>
-<p><img src="r_for_non_programmers_files/figure-html/Simple%20boxplot-1.png" width="672" /></p>
+<p><img src="r_for_non_programmers_files/figure-html/Simple%20boxplot-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Although this is a short piece of coding, it performs quite a lot of steps:</p>
 <ul>
 <li><p>it uses a function called <code>boxplot()</code> to draw a boxplot of</p></li>
@@ -339,9 +317,10 @@ div.csl-indent {
 <p>If you are in dire need of help, RStudio provides you with a <em>Help</em> pane. You can search for specific topics, for example how certain computations work. The <em>Help</em> pane also has documentation on different datasets that are included in <em>R</em>, RStudio or <em>R packages</em> you have installed. If you want a more comprehensive overview of how you can find help, have a look at CRAN’s <a href="https://www.r-project.org/help.html" target="blank" title="&#39;Getting Help with R&#39;">‘Getting Help with R’</a> webpage.</p>
 <p><img src="images/chapter_04_img/05_files_plots_etc/04_rstudio_help.png" /></p>
 <p>So, for example, if you want to know what the <code>mtcars</code> dataset is, you can either use the search window in the <em>Help</em> pane or, much easier, use a <code>?</code> in the console to search for it:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="the-rstudio-interface.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Type a &#39;?&#39; and immediately add the name to bring up helpful information.</span></span>
-<span id="cb3-2"><a href="the-rstudio-interface.html#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="the-rstudio-interface.html#cb3-3" aria-hidden="true" tabindex="-1"></a>?mtcars</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="the-rstudio-interface.html#cb3-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-2"><a href="the-rstudio-interface.html#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Type a &#39;?&#39; and immediately add the name to bring up helpful information.</span></span>
+<span id="cb3-3"><a href="the-rstudio-interface.html#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="the-rstudio-interface.html#cb3-4" aria-hidden="true" tabindex="-1"></a>?mtcars</span></code></pre></div>
 <p>This will open the <em>Help</em> pane and give you more information about this dataset:</p>
 <p><img src="images/chapter_04_img/05_files_plots_etc/04_rstudio_help_mtcars.png" /></p>
 <p>There are many different ways of how you can find help with your coding beyond RStudio and this book. My top three platforms to find solutions to my programming problems are:</p>
@@ -361,6 +340,7 @@ div.csl-indent {
 <li><p>Resize panes by dragging the border of a window horizontally or vertically, or</p></li>
 <li><p>Add and remove panes by going to <code>RStudio &gt; Preferences &gt; Pane Layout</code>, or use the keyboard shortcut <code>⌘ + ,</code> if you are on a Mac. There is, unfortunately no default shortcut for PC users.</p></li>
 </ul>
+<p>If you want a fully customised experience you can also alter the colour scheme of the RStudio itself (<code>RStudio &gt; Preferences &gt; Appearance</code>) and if the themes offered are not enough for you, you can create a custom theme <a href="https://tmtheme-editor.herokuapp.com/#!/editor/theme/Monokai" target="blank">here</a></p>
 
 </div>
 </div>
@@ -421,20 +401,6 @@ gitbook.start({
 });
 </script>
 
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:")
-      if (/^https?:/.test(src))
-        src = src.replace(/^https?:/, '');
-    script.src = src;
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script>
 </body>
 
 </html>

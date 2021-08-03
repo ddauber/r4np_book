@@ -1,12 +1,102 @@
 # Data Wrangling
 
+You collected your data over months (and sometimes years) and all you really want to know is whether your data makes sense and reveals something nobody would have ever expected. However, before we can truly go ahead with our analysis, it is essential to understand whether our data is 'tidy'. Very often, data we receive is everything else but clean and we need to not only check whether our data is fit for analysis, but also ensure it is in a format that is easy to handle and work with. For small datasets, this is usually a brief exercise. However, I found myself cleaning data for a month, because the dataset was spread out into multiple spreadsheets (no pun intended) with different numbers of columns and odd column names. Thus, data cleaning or data wrangling is an essential first step in any data analysis. It is a step that cannot be skipped and has to be performed on every new dataset.
+
+Luckily, R provides many useful functions to make our lives easier. If you are like me and used to do this in Excel, you will be in for a treat. It is a lot simpler using R to do achieve a clean dataset.
+
+Here is an overview of the different steps we usually work through before we can start with our main analysis. This is list is certainly not exhaustive:
+
+-   Data import
+
+-   Checking data types
+
+-   Recoding and arranging factors, i.e. categorical data.
+
+-   Running missing data diagnostics
+
+-   
+
 ## Import your data
 
-## Inspecting your raw data
+The `r4np` package hosts a number of different datasets to work with, but at some point you might want to apply your R knowledge to your own data. Therefore, an important first step is to import your data into RStudio. There are three different methods all of which are very handy:
 
-## Data cleaning
+1.  Click on your data file in the Files pane and choose \`Import Dataset'.
 
-## Change data types and explain what they are
+2.  Use the `Import Dataset` button in the Environment pane.
+
+3.  Import your data calling one of the `readr` functions in the console or RScript
+
+### Import data from the Files pane
+
+This approach is by far the easiest. Let's assume you have a dataset called `gender_age.csv` in your `00_raw_data` folder. If you wish to import it, you can do the following:
+
+1.  Click on the name of the file
+
+2.  Select `Import Dataset`.
+
+    ![](images/chapter_07_img/01_files_pane_import/01_files_pane_import.png)
+
+3.  A new window will open and you can choose different options. You also see a little preview of how the data looks like. This is great if you are not sure whether you did it correctly.
+
+    ![](images/chapter_07_img/01_files_pane_import/02_files_pane_import.png)
+
+4.  You can make changes to how the data should be imported, but in most cases the default should be fine. Here is quick breakdown of the most important options:
+
+    -   `Name` allows you to change the object name, i.e. the name of the object this data will be assigned to. I tend to use `df_raw` (`df` stand for `dataframe`, which is how R calls such rectangular datasets).
+
+    -   `Skip` is useful if your data file starts with a number of empty rows at the top. You can remove them here.
+
+    -   `First Row as Names` is ticked by default. In most Social Science projects we tend to have the name of the variables as the first row in your dataset.
+
+    -   `Trim Spaces` removes any unnecassry white-space in your dataset. Leave it ticked.
+
+    -   `Open Data Viewer` allows you to look at your imported dataset. I use it rarely, but it can be helpful at times.
+
+    -   `Delimiter` defines how your columns are separate from each other in your file. If it is a `.csv` it would imply it is a 'comma-separated value', i.e. `,`. This can be changed for different files, depending on how your data is delimited. You can even use the option `Other…` to specify a custom separation option.
+
+    -   `NA` specifies how missing values in your data are acknowledged. By default, empty cells in your data will be recognised as missing data.
+
+    ![](images/chapter_07_img/01_files_pane_import/03_files_pane_import.png)
+
+5.  Once you are happy with your choices, you can click on `Import`.
+
+6.  You will find your dataset in the Environment pane.
+
+    ![](images/chapter_07_img/01_files_pane_import/04_files_pane_import.png)
+
+In the console you can see that R also provides the `Column specification`, which we need later when inspecting 'data types'. `readr` automatically imports all text-based columns as `chr`, i.e. `character` values. However, this might not be always true. More on this aspect of data wrangling in Chapter \@ref(change-data-types).
+
+`CONTINUE FROM HERE`
+
+To achieve this we rely on `readr` from the `tidyverse` package. It can install a range of different datatypes, including `.csv`, `.tsv`, `.txt`. If you want to import data from an `.xlsx` file you have to use another package called `readxl`.
+
+Here are some examples of how you can use `readr` to import your data. The first part is only there to create the two
+
+```{r Importing data with readr, echo=TRUE, message=FALSE, eval=FALSE}
+# Load 'readr' via 'tidyverse' or just 'readr
+library(tidyverse)
+
+# Import data from '.csv'
+read_csv("00_raw_data/gender_age.csv")
+
+# Import data from any file text file by defining the separator yourself
+read_delim("00_raw_data/gender_age.txt", delim = "|")
+
+```
+
+## Inspecting your raw data {#inspecting-raw-data}
+
+`glimpse()`
+
+`skim()`
+
+## Data cleaning {#data-cleaning}
+
+Create consistency in your column naming convention
+
+`janitor`
+
+## Change data types and explain what they are {#change-data-types}
 
 ## Recoding and rearranging factors (e.g. gender coded as 0 and 1)
 

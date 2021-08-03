@@ -150,3 +150,5 @@ As a last remark in this chapter, I would like to make you aware that you can mo
 -   Resize panes by dragging the border of a window horizontally or vertically, or
 
 -   Add and remove panes by going to `RStudio > Preferences > Pane Layout`, or use the keyboard shortcut `⌘ + ,` if you are on a Mac. There is, unfortunately no default shortcut for PC users.
+
+If you want a fully customised experience you can also alter the colour scheme of the RStudio itself (`RStudio > Preferences > Appearance`) and if the themes offered are not enough for you, you can create a custom theme [here](https://tmtheme-editor.herokuapp.com/#!/editor/theme/Monokai){target="blank"}

@@ -17,6 +17,9 @@ description: "This books is intended for Social Scientists. No matter whether yo
 knitr::write_bib(c(
   .packages(), 'bookdown', 'knitr', 'rmarkdown'
 ), 'packages.bib')
+
+# set global code chunk options
+knitr::opts_chunk$set(collapse = TRUE , fig.align='center')
 ```
 
 ![](images/chapter_00_img/r_for_non_programmers_logo.png)

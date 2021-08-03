@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2021) (preloaded format=xelatex 2021.7.19)  2 AUG 2021 12:35
+This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2021) (preloaded format=xelatex 2021.7.19)  2 AUG 2021 15:46
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1106,9 +1106,6 @@ c file (type bmp)
 File: images/chapter_05_img/install_r_packages/02_install_r_packages.png Graphi
 c file (type bmp)
 <images/chapter_05_img/install_r_packages/02_install_r_packages.png>
-
-Underfull \vbox (badness 1590) has occurred while \output is active []
-
 [50]
 File: images/chapter_05_img/install_r_packages/03_install_r_packages.png Graphi
 c file (type bmp)
@@ -1251,7 +1248,7 @@ STEPS IN YOUR R JOURNEY
 ]
 Chapter 14.
 
-LaTeX Warning: Reference `exercises' on page 83 undefined on input line 1371.
+LaTeX Warning: Reference `exercises' on page 83 undefined on input line 1373.
 
 [83] (./r_for_non_programmers.bbl [84]) [85
 

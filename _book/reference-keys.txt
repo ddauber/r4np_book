@@ -60,3 +60,8 @@ next-steps-online-readings
 next-steps-twitter
 exercises-solutions
 solutions-for-refexercises
+fig:folder-structure
+creating-an-r-project
+import-data-from-the-files-pane
+inspecting-raw-data
+change-data-types

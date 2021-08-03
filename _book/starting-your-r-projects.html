@@ -120,28 +120,6 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
-<style type="text/css">
-/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-}
-.hanging div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}
-</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -206,7 +184,7 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="6" data-path="starting-your-r-projects.html"><a href="starting-your-r-projects.html"><i class="fa fa-check"></i><b>6</b> Starting your R projects</a>
 <ul>
-<li class="chapter" data-level="6.1" data-path="starting-your-r-projects.html"><a href="starting-your-r-projects.html#creating-an-r-project-file"><i class="fa fa-check"></i><b>6.1</b> Creating an R Project file</a></li>
+<li class="chapter" data-level="6.1" data-path="starting-your-r-projects.html"><a href="starting-your-r-projects.html#creating-an-r-project"><i class="fa fa-check"></i><b>6.1</b> Creating an R Project file</a></li>
 <li class="chapter" data-level="6.2" data-path="starting-your-r-projects.html"><a href="starting-your-r-projects.html#organising-your-projects"><i class="fa fa-check"></i><b>6.2</b> Organising your projects</a></li>
 <li class="chapter" data-level="6.3" data-path="starting-your-r-projects.html"><a href="starting-your-r-projects.html#creating-an-r-script"><i class="fa fa-check"></i><b>6.3</b> Creating an R Script</a></li>
 <li class="chapter" data-level="6.4" data-path="starting-your-r-projects.html"><a href="starting-your-r-projects.html#r-markdown-and-r-notebooks"><i class="fa fa-check"></i><b>6.4</b> Using R Markdown</a></li>
@@ -270,7 +248,7 @@ div.csl-indent {
 <li><p>Data wrangling</p></li>
 </ul>
 <p>While we cover data wrangling in great detail later (Chapter <a href="data-wrangling.html#data-wrangling">7</a>), I would like to share some insights from my work that helped me stay organised and, consequently, less frustrated. The following applies to small and large research projects, which makes it very convenient no matter the situation. Of course, feel free to tweak my approach to whatever suits you. However, consistency is king.</p>
-<div id="creating-an-r-project-file" class="section level2" number="6.1">
+<div id="creating-an-r-project" class="section level2" number="6.1">
 <h2><span class="header-section-number">6.1</span> Creating an R Project file</h2>
 <p>When working on a project, you likely create many different files for various purposes, especially R Scripts (see Chapter <a href="starting-your-r-projects.html#creating-an-r-script">6.3</a>). If you are not careful, this file is stored in your system’s default location, which might not be where you want them to be. RStudio allows you to manage your entire project intuitively and conveniently through R Project files. Using R Project files comes with a couple of perks, for example:</p>
 <ul>
@@ -299,8 +277,14 @@ div.csl-indent {
 </div>
 <div id="organising-your-projects" class="section level2" number="6.2">
 <h2><span class="header-section-number">6.2</span> Organising your projects</h2>
-<p>This section is not directly related to RStudio, R or data analysis in general. Instead, I want to convey to you that a good folder structure can go a long way. It is an excellent habit to start thinking about folder structures before you start working on your project. Placing your files into dedicated folders, rather than keeping them loosely in one container, will speed up your work and save you from the frustration of not finding the files you need. I have a template that I use regularly. You can either create it from scratch in RStudio or open your file browser and create the folders there. RStudio does not mind which way you do it. If you want to spend less time setting this up, you might want to use the function create_folder_template() from the r4np package.</p>
-<p>To create a folder, click on New Folder in the Files pane. I usually have at least the following folders for every project I am involved in:</p>
+<p>This section is not directly related to RStudio, R or data analysis in general. Instead, I want to convey to you that a good folder structure can go a long way. It is an excellent habit to start thinking about folder structures before you start working on your project. Placing your files into dedicated folders, rather than keeping them loosely in one container, will speed up your work and save you from the frustration of not finding the files you need. I have a template that I use regularly. You can either create it from scratch in RStudio or open your file browser and create the folders there. RStudio does not mind which way you do it. If you want to spend less time setting this up, you might want to use the function <code>create_dr()</code> from the <code>r4np</code> package. It creates all the folders as shown in Figure <a href="starting-your-r-projects.html#fig:folder-structure">6.1</a>.</p>
+<p><a name="install_r4np"></a></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="starting-your-r-projects.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Install &#39;r4np&#39; from GitHub</span></span>
+<span id="cb1-2"><a href="starting-your-r-projects.html#cb1-2" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">&quot;ddauber/r4np&quot;</span>)</span>
+<span id="cb1-3"><a href="starting-your-r-projects.html#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="starting-your-r-projects.html#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the template structure</span></span>
+<span id="cb1-5"><a href="starting-your-r-projects.html#cb1-5" aria-hidden="true" tabindex="-1"></a>r4np<span class="sc">::</span><span class="fu">create_dr</span>()</span></code></pre></div>
+<p>To create a folder, click on <code>New Folder</code> in the Files pane. I usually have at least the following folders for every project I am involved in:</p>
 <ul>
 <li><p>A folder for my raw data. I store ‘untouched’ datasets in it. With ‘untouched,’ I mean they have not been processed in any way and are usually files I downloaded from my data collection tool, e.g. online questionnaire platform.</p></li>
 <li><p>A folder with ‘tidy’ data. This is usually data I exported from R after cleaning it, i.e. after data wrangling (see Chapter <a href="data-wrangling.html#data-wrangling">7</a>).</p></li>
@@ -309,7 +293,12 @@ div.csl-indent {
 <li><p>A folder for reports</p></li>
 </ul>
 <p>Thus, in RStudio, it would look something like this:</p>
-<p><img src="images/chapter_06_img/01_organising_work/00_organising_work.png" /></p>
+<div class="figure" style="text-align: center"><span id="fig:folder-structure"></span>
+<img src="images/chapter_06_img/01_organising_work/00_organising_work.png" alt="An example of a scalable folder structure for your project" width="1392" />
+<p class="caption">
+Figure 6.1: An example of a scalable folder structure for your project
+</p>
+</div>
 <p>You probably noticed that my folders have numbers in front of them. I do this to ensure that all folders are in the order I want them to be, usually not the alphabetical order my computer suggests. I use two digits because I may have more than nine folders for a project, and folder ten would otherwise be listed as the third folder in this list. With this filing strategy in place, it will be easy to find whatever I need. Even others can easily understand what I stored where. It is simply ‘tidy,’ similar to how we want our data to be.</p>
 </div>
 <div id="creating-an-r-script" class="section level2" number="6.3">
@@ -317,18 +306,18 @@ div.csl-indent {
 <p>Code quickly becomes long and complex. Thus, it is not very convenient to write it in the console. So, instead, we can write code into an R Script. An R Script is a document that RStudio recognises as R programming code. Files that are not R Scripts, like <code>.txt</code>, <code>.rtf</code> or <code>.md</code>, can also be opened in RStudio, but any code written in it will not be automatically recognised.</p>
 <p>When opening an R script or creating a new one, it will display in the source window (see Chapter <a href="the-rstudio-interface.html#the-source-window">4.2</a>). Some refer to this window as the ‘script editor.’ An R Script starts as an empty file. Good coding etiquette (see Chapter <a href="r-basics-the-very-fundamentals.html#coding-etiquette">5.5</a> demands that we use the first line to indicate what this file does by using a comment <code>#</code>. Here is an example for our ‘TidyTuesday’ R Project.</p>
 <p><img src="images/chapter_06_img/02_r_script/00_r_script.png" /></p>
-<p>All examples in this book can easily be copied and pasted into your own R Script. Let’s try it with the following code. The plot this code creates reveals which car manufacturer produces the most efficient cars.</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="starting-your-r-projects.html#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb29-2"><a href="starting-your-r-projects.html#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-3"><a href="starting-your-r-projects.html#cb29-3" aria-hidden="true" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(manufacturer, <span class="fu">desc</span>(hwy), <span class="at">FUN =</span> median),</span>
-<span id="cb29-4"><a href="starting-your-r-projects.html#cb29-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">y =</span> hwy,</span>
-<span id="cb29-5"><a href="starting-your-r-projects.html#cb29-5" aria-hidden="true" tabindex="-1"></a>                   <span class="at">fill =</span> manufacturer)) <span class="sc">+</span></span>
-<span id="cb29-6"><a href="starting-your-r-projects.html#cb29-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
-<span id="cb29-7"><a href="starting-your-r-projects.html#cb29-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
-<span id="cb29-8"><a href="starting-your-r-projects.html#cb29-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb29-9"><a href="starting-your-r-projects.html#cb29-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Manufacturer&quot;</span>) <span class="sc">+</span></span>
-<span id="cb29-10"><a href="starting-your-r-projects.html#cb29-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Highway miles per gallon&quot;</span>)</span></code></pre></div>
-<p><img src="r_for_non_programmers_files/figure-html/R%20Script%20copy%20and%20paste%20examples-1.png" width="672" /></p>
+<p>All examples in this book can easily be copied and pasted into your own R Script. However, for some code you will have to install the R package <code>r4np</code> (see <a href="#install_r4np">above</a>). Let’s try it with the following code. The plot this code creates reveals which car manufacturer produces the most efficient cars.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="starting-your-r-projects.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb2-2"><a href="starting-your-r-projects.html#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="starting-your-r-projects.html#cb2-3" aria-hidden="true" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(manufacturer, <span class="fu">desc</span>(hwy), <span class="at">FUN =</span> median),</span>
+<span id="cb2-4"><a href="starting-your-r-projects.html#cb2-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">y =</span> hwy,</span>
+<span id="cb2-5"><a href="starting-your-r-projects.html#cb2-5" aria-hidden="true" tabindex="-1"></a>                   <span class="at">fill =</span> manufacturer)) <span class="sc">+</span></span>
+<span id="cb2-6"><a href="starting-your-r-projects.html#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb2-7"><a href="starting-your-r-projects.html#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb2-8"><a href="starting-your-r-projects.html#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb2-9"><a href="starting-your-r-projects.html#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Manufacturer&quot;</span>) <span class="sc">+</span></span>
+<span id="cb2-10"><a href="starting-your-r-projects.html#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Highway miles per gallon&quot;</span>)</span></code></pre></div>
+<p><img src="r_for_non_programmers_files/figure-html/R%20Script%20copy%20and%20paste%20examples-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>You are probably wondering where your plot has gone. Copying the code will not automatically run it in your R Script. However, this is necessary to create the plot. If you tried pressing <code>Return ↵</code>, you would only add a new line. Instead, you need to select the code you want to run and press <code>Ctrl+Return ↵</code> (PC) or <code>Cmd+Return ↵</code> (Mac). You can also use the <code>Run</code> command at the top of your source window, but it is much more efficient to press the keyboard shortcut. Besides, you will remember this shortcut quickly, because we need to use it very frequently. If all worked out, you should see the following:</p>
 <p><img src="images/chapter_06_img/02_r_script/01_r_script_example_plot.png" /></p>
 <p>As you can see, cars from Honda appear to drive furthest with the same amount of fuel (a gallon) compared to other vehicles. Thus, if you are looking for a very economical car, you now know where to find them.</p>
@@ -347,7 +336,7 @@ div.csl-indent {
 <p>If you switch your view to the <code>Visual Editor</code>, it almost looks like you are writing a report in MS Word.</p>
 <p><img src="images/chapter_06_img/03_r_markdown/02_r_markdown_visual_editor_menu.png" /></p>
 <p><img src="images/chapter_06_img/03_r_markdown/03_r_markdown_visual_editor.png" /></p>
-<p>So, when should you use an R Script, and when should you use R Markdown. The rule-of-thumb is that if you intend to write a report, thesis or another form of publication, it might be better to work in an R Markdown file. If this does not apply, you might want to write an R Script. As mentioned above, R Markdown files emphasise text, while R Scripts primarily focus on code. In my projects, I often have a mixture of both. I use R Scripts to carry out the primary analysis and then use R Markdown files to present the findings. By the way, this book is written in R Markdown.</p>
+<p>So, when should you use an R Script, and when should you use R Markdown. The rule-of-thumb is that if you intend to write a report, thesis or another form of publication, it might be better to work in an R Markdown file. If this does not apply, you might want to write an R Script. As mentioned above, R Markdown files emphasise text, while R Scripts primarily focus on code. In my projects, I often have a mixture of both. I use R Scripts to carry out data wrangling and my primary analysis and then use R Markdown files to present the findings, e.g. creating plots, tables, etc. By the way, this book is written in R Markdown using the <code>bookdown</code> package.</p>
 <p>No matter your choice, it will neither benefit nor disadvantage you in your R journey or when working through this book. The choice is all yours. You likely will come to appreciate both formats for what they offer.</p>
 
 </div>
@@ -409,20 +398,6 @@ gitbook.start({
 });
 </script>
 
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:")
-      if (/^https?:/.test(src))
-        src = src.replace(/^https?:/, '');
-    script.src = src;
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script>
 </body>
 
 </html>
