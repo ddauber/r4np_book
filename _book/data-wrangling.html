@@ -24,7 +24,7 @@
 <meta name="author" content="Daniel Dauber" />
 
 
-<meta name="date" content="2021-08-02" />
+<meta name="date" content="2021-08-05" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -120,6 +120,28 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -196,8 +218,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.1.1" data-path="data-wrangling.html"><a href="data-wrangling.html#import-data-from-the-files-pane"><i class="fa fa-check"></i><b>7.1.1</b> Import data from the Files pane</a></li>
 </ul></li>
 <li class="chapter" data-level="7.2" data-path="data-wrangling.html"><a href="data-wrangling.html#inspecting-raw-data"><i class="fa fa-check"></i><b>7.2</b> Inspecting your raw data</a></li>
-<li class="chapter" data-level="7.3" data-path="data-wrangling.html"><a href="data-wrangling.html#data-cleaning"><i class="fa fa-check"></i><b>7.3</b> Data cleaning</a></li>
-<li class="chapter" data-level="7.4" data-path="data-wrangling.html"><a href="data-wrangling.html#change-data-types"><i class="fa fa-check"></i><b>7.4</b> Change data types and explain what they are</a></li>
+<li class="chapter" data-level="7.3" data-path="data-wrangling.html"><a href="data-wrangling.html#colnames-cleaning"><i class="fa fa-check"></i><b>7.3</b> Cleaning your column names: Call the <code>janitor</code></a></li>
+<li class="chapter" data-level="7.4" data-path="data-wrangling.html"><a href="data-wrangling.html#change-data-types"><i class="fa fa-check"></i><b>7.4</b> Data types: What are they and how can you change them</a></li>
 <li class="chapter" data-level="7.5" data-path="data-wrangling.html"><a href="data-wrangling.html#recoding-and-rearranging-factors-e.g.-gender-coded-as-0-and-1"><i class="fa fa-check"></i><b>7.5</b> Recoding and rearranging factors (e.g. gender coded as 0 and 1)</a></li>
 <li class="chapter" data-level="7.6" data-path="data-wrangling.html"><a href="data-wrangling.html#dealing-with-missing-data"><i class="fa fa-check"></i><b>7.6</b> Dealing with missing data</a></li>
 <li class="chapter" data-level="7.7" data-path="data-wrangling.html"><a href="data-wrangling.html#latent-constructs-and-their-reliability"><i class="fa fa-check"></i><b>7.7</b> Latent constructs and their reliability</a>
@@ -221,7 +243,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="14" data-path="exercises-solutions.html"><a href="exercises-solutions.html"><i class="fa fa-check"></i><b>14</b> Exercises: Solutions</a>
 <ul>
-<li class="chapter" data-level="14.1" data-path="exercises-solutions.html"><a href="exercises-solutions.html#solutions-for-refexercises"><i class="fa fa-check"></i><b>14.1</b> Solutions for @ref(exercises)</a></li>
+<li class="chapter" data-level="14.1" data-path="exercises-solutions.html"><a href="exercises-solutions.html#exercises-solutions-5"><i class="fa fa-check"></i><b>14.1</b> Solutions for @ref(exercises-chapter-5)</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://twitter.com/daniel_dauber" target="blank">Find me on twitter!</a></li>
@@ -247,6 +269,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1><span class="header-section-number">7</span> Data Wrangling</h1>
 <p>You collected your data over months (and sometimes years) and all you really want to know is whether your data makes sense and reveals something nobody would have ever expected. However, before we can truly go ahead with our analysis, it is essential to understand whether our data is ‘tidy.’ Very often, data we receive is everything else but clean and we need to not only check whether our data is fit for analysis, but also ensure it is in a format that is easy to handle and work with. For small datasets, this is usually a brief exercise. However, I found myself cleaning data for a month, because the dataset was spread out into multiple spreadsheets (no pun intended) with different numbers of columns and odd column names. Thus, data cleaning or data wrangling is an essential first step in any data analysis. It is a step that cannot be skipped and has to be performed on every new dataset.</p>
 <p>Luckily, R provides many useful functions to make our lives easier. If you are like me and used to do this in Excel, you will be in for a treat. It is a lot simpler using R to do achieve a clean dataset.</p>
+<p>Here is an overview of the different steps we usually work through before we can start with our main analysis. This is list is certainly not exhaustive:</p>
+<ul>
+<li><p>Data import</p></li>
+<li><p>Checking data types</p></li>
+<li><p>Recoding and arranging factors, i.e. categorical data.</p></li>
+<li><p>Running missing data diagnostics</p></li>
+<li><p>and other things</p></li>
+</ul>
 <div id="import-your-data" class="section level2" number="7.1">
 <h2><span class="header-section-number">7.1</span> Import your data</h2>
 <p>The <code>r4np</code> package hosts a number of different datasets to work with, but at some point you might want to apply your R knowledge to your own data. Therefore, an important first step is to import your data into RStudio. There are three different methods all of which are very handy:</p>
@@ -279,34 +309,231 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><p>You will find your dataset in the Environment pane.</p>
 <p><img src="images/chapter_07_img/01_files_pane_import/04_files_pane_import.png" /></p></li>
 </ol>
-<p>In the console you can see that R also provides the <code>Column specification</code>, which we need later when inspecting ‘data types’ (see Chapter <a href="data-wrangling.html#change-data-types">7.4</a>.</p>
+<p>In the console you can see that R also provides the <code>Column specification</code>, which we need later when inspecting ‘data types.’ <code>readr</code> automatically imports all text-based columns as <code>chr</code>, i.e. <code>character</code> values. However, this might not be always true. More on this aspect of data wrangling in Chapter <a href="data-wrangling.html#change-data-types">7.4</a>.</p>
+<p><code>CONTINUE FROM HERE</code></p>
 <p>To achieve this we rely on <code>readr</code> from the <code>tidyverse</code> package. It can install a range of different datatypes, including <code>.csv</code>, <code>.tsv</code>, <code>.txt</code>. If you want to import data from an <code>.xlsx</code> file you have to use another package called <code>readxl</code>.</p>
 <p>Here are some examples of how you can use <code>readr</code> to import your data. The first part is only there to create the two</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="data-wrangling.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load &#39;readr&#39; via &#39;tidyverse&#39; or just &#39;readr</span></span>
-<span id="cb1-2"><a href="data-wrangling.html#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-3"><a href="data-wrangling.html#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="data-wrangling.html#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Import data from &#39;.csv&#39;</span></span>
-<span id="cb1-5"><a href="data-wrangling.html#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(<span class="st">&quot;00_raw_data/gender_age.csv&quot;</span>)</span>
-<span id="cb1-6"><a href="data-wrangling.html#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="data-wrangling.html#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Import data from any file text file by defining the separator yourself</span></span>
-<span id="cb1-8"><a href="data-wrangling.html#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">read_delim</span>(<span class="st">&quot;00_raw_data/gender_age.txt&quot;</span>, <span class="at">delim =</span> <span class="st">&quot;|&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="data-wrangling.html#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load &#39;readr&#39; via &#39;tidyverse&#39; or just &#39;readr</span></span>
+<span id="cb4-2"><a href="data-wrangling.html#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb4-3"><a href="data-wrangling.html#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="data-wrangling.html#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Import data from &#39;.csv&#39;</span></span>
+<span id="cb4-5"><a href="data-wrangling.html#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(<span class="st">&quot;00_raw_data/gender_age.csv&quot;</span>)</span>
+<span id="cb4-6"><a href="data-wrangling.html#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="data-wrangling.html#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Import data from any file text file by defining the separator yourself</span></span>
+<span id="cb4-8"><a href="data-wrangling.html#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="fu">read_delim</span>(<span class="st">&quot;00_raw_data/gender_age.txt&quot;</span>, <span class="at">delim =</span> <span class="st">&quot;|&quot;</span>)</span></code></pre></div>
 </div>
 </div>
 <div id="inspecting-raw-data" class="section level2" number="7.2">
 <h2><span class="header-section-number">7.2</span> Inspecting your raw data</h2>
-<p><code>glimpse()</code></p>
-<p><code>skim()</code></p>
+<p>For the rest of this chapter, we will use the <code>wvs</code> dataset from the <code>r4np</code> package. However, we do not know much about this dataset and therefore we cannot ask any research questions worth investigating. The first method of inspecting the data is to simply type the name of the object, i.e. <code>wvs</code>.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="data-wrangling.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ensure you loaded the &#39;r4np&#39; package first</span></span>
+<span id="cb5-2"><a href="data-wrangling.html#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(r4np)</span>
+<span id="cb5-3"><a href="data-wrangling.html#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="data-wrangling.html#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Show the data in the console</span></span>
+<span id="cb5-5"><a href="data-wrangling.html#cb5-5" aria-hidden="true" tabindex="-1"></a>wvs</span></code></pre></div>
+<pre><code>## # A tibble: 69,578 × 9
+##    `Participant ID` `Country Code` `Country name` Gender YearOfBirth   Age
+##               &lt;dbl&gt; &lt;chr&gt;          &lt;chr&gt;           &lt;dbl&gt;       &lt;dbl&gt; &lt;dbl&gt;
+##  1         20070001 AND            Andorra             1        1958    60
+##  2         20070002 AND            Andorra             0        1971    47
+##  3         20070003 AND            Andorra             0        1969    48
+##  4         20070004 AND            Andorra             1        1956    62
+##  5         20070005 AND            Andorra             0        1969    49
+##  6         20070006 AND            Andorra             1        1967    51
+##  7         20070007 AND            Andorra             1        1985    33
+##  8         20070008 AND            Andorra             0        1963    55
+##  9         20070009 AND            Andorra             1        1978    40
+## 10         20070010 AND            Andorra             1        1979    38
+## # … with 69,568 more rows, and 3 more variables: relationship_status &lt;chr&gt;,
+## #   Freedom.of.Choice &lt;dbl&gt;, Satisfaction-with-life &lt;dbl&gt;</code></pre>
+<p>The result is a series of rows and columns. The first information we receive is: <code>A tibble: 69,578 x 9</code>. This indicates that our dataset has 69,578 observations (i.e. rows) and 9 columns (i.e. variables). This rectangular format is the one we encounter most frequently in Social Sciences (and probably beyond). If you ever worked in Microsoft Excel, this format will look familiar.</p>
+<p>Even though it might be nice to look at this dataset in this way, it is not particularly useful. Depending on your monitor size you might only see a small number of columns and therefore we do not get to see a complete list of variables. All in all, we hardly ever will find much use in inspecting data this way. Luckily there are other functions that can help us.</p>
+<p>If you want to see each variable covered in the dataset and their data types, you can use the function <code>glimpse()</code> from the <code>dplyr</code> package (which is loaded when use load the <code>tidyverse</code> package).</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="data-wrangling.html#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(wvs)</span></code></pre></div>
+<pre><code>## Rows: 69,578
+## Columns: 9
+## $ `Participant ID`         &lt;dbl&gt; 20070001, 20070002, 20070003, 20070004, 20070…
+## $ `Country Code`           &lt;chr&gt; &quot;AND&quot;, &quot;AND&quot;, &quot;AND&quot;, &quot;AND&quot;, &quot;AND&quot;, &quot;AND&quot;, &quot;AN…
+## $ `Country name`           &lt;chr&gt; &quot;Andorra&quot;, &quot;Andorra&quot;, &quot;Andorra&quot;, &quot;Andorra&quot;, &quot;…
+## $ Gender                   &lt;dbl&gt; 1, 0, 0, 1, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1, 1, …
+## $ YearOfBirth              &lt;dbl&gt; 1958, 1971, 1969, 1956, 1969, 1967, 1985, 196…
+## $ Age                      &lt;dbl&gt; 60, 47, 48, 62, 49, 51, 33, 55, 40, 38, 54, 3…
+## $ relationship_status      &lt;chr&gt; &quot;married&quot;, &quot;living together as married&quot;, &quot;sep…
+## $ Freedom.of.Choice        &lt;dbl&gt; 10, 9, 9, 9, 8, 10, 10, 8, 8, 10, 9, 8, 10, 7…
+## $ `Satisfaction-with-life` &lt;dbl&gt; 10, 9, 9, 8, 7, 10, 5, 8, 8, 10, 8, 8, 10, 7,…</code></pre>
+<p>The output of glimpse shows us the name of each column/variable after the <code>$</code>, for example <code>`Participant ID`</code>. The <code>$</code> is used to look up certain variables in our dataset. If we want to inspect the column <code>relationship_status</code> only, we could write the following:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="data-wrangling.html#cb9-1" aria-hidden="true" tabindex="-1"></a>wvs<span class="sc">$</span>relationship_status</span></code></pre></div>
+<pre><code>##     [1] &quot;married&quot;                    &quot;living together as married&quot;
+##     [3] &quot;separated&quot;                  &quot;living together as married&quot;
+##     [5] &quot;living together as married&quot; &quot;married&quot;                   
+##     [7] &quot;married&quot;                    &quot;widowed&quot;                   
+....</code></pre>
+<p>After the variable name we find the recognised datatype for each column in <code>&lt;...&gt;</code>, for example <code>&lt;chr&gt;</code>. We will return to data types in Chapter <a href="data-wrangling.html#change-data-types">7.4</a>. Lastly, we get examples of the data that is included. This output is much more helpful.</p>
+<p>I use <code>glimpse()</code> very frequently for different purposes, for example:</p>
+<ul>
+<li><p>to understand what variables are included in a dataset,</p></li>
+<li><p>to check correctness of data types,</p></li>
+<li><p>to inspect variable names for typos or unconventional names,</p></li>
+<li><p>to look up variable names.</p></li>
+</ul>
+<p>There is one more way to inspect your data and receive a lot more information about it by using a specialised R package. The <code>skimr</code> package is excellent in ‘skimming’ your dataset. It provides not only information about variable names and data types, but also provides some descriptive statistics. If you installed the <code>r4np</code> package and called the function <code>install_r4np()</code>, you will have <code>skimr</code> installed already.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="data-wrangling.html#cb11-1" aria-hidden="true" tabindex="-1"></a>skimr<span class="sc">::</span><span class="fu">skim</span>(wvs)</span></code></pre></div>
+<p>The output in the console should look like this:</p>
+<p><img src="images/chapter_07_img/02_skimr_output/skimr_output.png" /></p>
+<p>As you can tell, there is a lot more information in this output. Many descriptive statistics that could be useful are already displayed. <code>skim()</code> provides a summary of the dataset first and then sorts the variables automatically by data type. Depending on the data type you also receive different descriptive statistics. As an added bonus, the function also provides a histogram for numeric variables. However, there is one main problem: Some of the numeric variables are actually not numeric: <code>Participant ID</code> and <code>Gender</code>. Thus, we will have to correct the data types in a moment.</p>
+<p>Inspecting your data in this way can be helpful to get a better understanding of what your data includes and spot problems with it. If you receive data from someone else, these methods are a good way to familiarise yourself with the dataset relatively quickly. Since this particular dataset was prepared for this book, I also made sure I provide documentation for it. You can access it by using <code>?wvs</code> in the Console. This will open the documentation in the Help pane. Such documentation can be found for every dataset we use in this book.</p>
 </div>
-<div id="data-cleaning" class="section level2" number="7.3">
-<h2><span class="header-section-number">7.3</span> Data cleaning</h2>
-<p>Create consistency in your column naming convention</p>
-<p><code>janitor</code></p>
+<div id="colnames-cleaning" class="section level2" number="7.3">
+<h2><span class="header-section-number">7.3</span> Cleaning your column names: Call the <code>janitor</code></h2>
+<p>If you have an eagle eye, you might have noticed that most of the variable names in <code>wvs</code> are not consistent or easy to read/use.</p>
+<div class="sourceCode" id="messy_column_names"><pre class="sourceCode r"><code class="sourceCode r"><span id="messy_column_names-1"><a href="data-wrangling.html#messy_column_names-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Whitespace and capital letters</span></span>
+<span id="messy_column_names-2"><a href="data-wrangling.html#messy_column_names-2" aria-hidden="true" tabindex="-1"></a>Participant ID        </span>
+<span id="messy_column_names-3"><a href="data-wrangling.html#messy_column_names-3" aria-hidden="true" tabindex="-1"></a>Country Code          </span>
+<span id="messy_column_names-4"><a href="data-wrangling.html#messy_column_names-4" aria-hidden="true" tabindex="-1"></a>Country name          </span>
+<span id="messy_column_names-5"><a href="data-wrangling.html#messy_column_names-5" aria-hidden="true" tabindex="-1"></a>Gender                </span>
+<span id="messy_column_names-6"><a href="data-wrangling.html#messy_column_names-6" aria-hidden="true" tabindex="-1"></a>Age                   </span>
+<span id="messy_column_names-7"><a href="data-wrangling.html#messy_column_names-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="messy_column_names-8"><a href="data-wrangling.html#messy_column_names-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Difficult to read</span></span>
+<span id="messy_column_names-9"><a href="data-wrangling.html#messy_column_names-9" aria-hidden="true" tabindex="-1"></a>YearOfBirth           </span>
+<span id="messy_column_names-10"><a href="data-wrangling.html#messy_column_names-10" aria-hidden="true" tabindex="-1"></a>Freedom.of.Choice     </span>
+<span id="messy_column_names-11"><a href="data-wrangling.html#messy_column_names-11" aria-hidden="true" tabindex="-1"></a>Satisfaction<span class="sc">-</span>with<span class="sc">-</span>life</span></code></pre></div>
+<p>From Chapter <a href="r-basics-the-very-fundamentals.html#coding-etiquette">5.5</a>, you will remember that being consistent in the way your write your code and name your objects is essential. The same applies, of course, to variable names. R will not break using the existing names, but it will save you a lot of frustration if we take a minute to clean the name and make them more consistent.</p>
+<p>You are probably thinking: This is easy, I just open the dataset in Excel and change all the column names. Indeed, it would be a viable and easy option, but it is not very efficient. Instead, we can make use of the <code>janitor</code> package. By definition, <code>janitor</code> is a package that helps to clean up whatever needs cleaning. In our case we want to tidy our column names. We can use the function <code>clean_names()</code> to achieve this. We store the result in a new object called <code>wvs</code> to keep those changes. The object will also show up in our Environment pane.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="data-wrangling.html#cb12-1" aria-hidden="true" tabindex="-1"></a>wvs <span class="ot">&lt;-</span> janitor<span class="sc">::</span><span class="fu">clean_names</span>(wvs)</span>
+<span id="cb12-2"><a href="data-wrangling.html#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(wvs)</span></code></pre></div>
+<pre><code>## Rows: 69,578
+## Columns: 9
+## $ participant_id         &lt;dbl&gt; 20070001, 20070002, 20070003, 20070004, 2007000…
+## $ country_code           &lt;chr&gt; &quot;AND&quot;, &quot;AND&quot;, &quot;AND&quot;, &quot;AND&quot;, &quot;AND&quot;, &quot;AND&quot;, &quot;AND&quot;…
+## $ country_name           &lt;chr&gt; &quot;Andorra&quot;, &quot;Andorra&quot;, &quot;Andorra&quot;, &quot;Andorra&quot;, &quot;An…
+## $ gender                 &lt;dbl&gt; 1, 0, 0, 1, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0,…
+## $ year_of_birth          &lt;dbl&gt; 1958, 1971, 1969, 1956, 1969, 1967, 1985, 1963,…
+## $ age                    &lt;dbl&gt; 60, 47, 48, 62, 49, 51, 33, 55, 40, 38, 54, 39,…
+## $ relationship_status    &lt;chr&gt; &quot;married&quot;, &quot;living together as married&quot;, &quot;separ…
+## $ freedom_of_choice      &lt;dbl&gt; 10, 9, 9, 9, 8, 10, 10, 8, 8, 10, 9, 8, 10, 7, …
+## $ satisfaction_with_life &lt;dbl&gt; 10, 9, 9, 8, 7, 10, 5, 8, 8, 10, 8, 8, 10, 7, 1…</code></pre>
+<p>Now that <code>janitor</code> has done its magic, we suddenly have easy to read variable names that are consistent with the ‘Tidyverse style guide’ <span class="citation">(<a href="#ref-wickham-2021" role="doc-biblioref">Wickham 2021</a>)</span>.</p>
+<p>If, for whatever reason, the variable names are still not looking the way you want, you can use the function <code>rename()</code> from the <code>dplyr</code> package.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="data-wrangling.html#cb14-1" aria-hidden="true" tabindex="-1"></a>wvs <span class="ot">&lt;-</span> wvs <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="at">satisfaction =</span> satisfaction_with_life)</span>
+<span id="cb14-2"><a href="data-wrangling.html#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="data-wrangling.html#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(wvs)</span></code></pre></div>
+<pre><code>## Rows: 69,578
+## Columns: 9
+## $ participant_id      &lt;dbl&gt; 20070001, 20070002, 20070003, 20070004, 20070005, …
+## $ country_code        &lt;chr&gt; &quot;AND&quot;, &quot;AND&quot;, &quot;AND&quot;, &quot;AND&quot;, &quot;AND&quot;, &quot;AND&quot;, &quot;AND&quot;, &quot;…
+## $ country_name        &lt;chr&gt; &quot;Andorra&quot;, &quot;Andorra&quot;, &quot;Andorra&quot;, &quot;Andorra&quot;, &quot;Andor…
+## $ gender              &lt;dbl&gt; 1, 0, 0, 1, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0,…
+## $ year_of_birth       &lt;dbl&gt; 1958, 1971, 1969, 1956, 1969, 1967, 1985, 1963, 19…
+## $ age                 &lt;dbl&gt; 60, 47, 48, 62, 49, 51, 33, 55, 40, 38, 54, 39, 44…
+## $ relationship_status &lt;chr&gt; &quot;married&quot;, &quot;living together as married&quot;, &quot;separate…
+## $ freedom_of_choice   &lt;dbl&gt; 10, 9, 9, 9, 8, 10, 10, 8, 8, 10, 9, 8, 10, 7, 10,…
+## $ satisfaction        &lt;dbl&gt; 10, 9, 9, 8, 7, 10, 5, 8, 8, 10, 8, 8, 10, 7, 10, …</code></pre>
+<p>You are probably wondering what <code>%&gt;%</code> stands for. This symbol is called a <em>‘piping operator’</em> and it allows you to chain multiple functions together by considering the output of the previous function. So, do not confuse <code>&lt;-</code> with <code>%&gt;%</code>. Each serves a different purpose. The <code>%&gt;%</code> has become synonymous with the <code>tidyverse</code> approach to R programming and is the chosen approach for this book. Many functions from the <code>tidyverse</code> are designed to be chained together.</p>
+<p>If we wanted to spell out what we just did we could say:</p>
+<ol style="list-style-type: decimal">
+<li><p><code>wvs &lt;-</code>: We assigned whatever happened to the right of the assign operator to the object <code>wvs</code>.</p></li>
+<li><p><code>wvs %&gt;%</code>: We defined the dataset we want to use with the functions defined after the <code>%&gt;%</code>.</p></li>
+<li><p><code>rename(satisfaction = satisfcation_with_life)</code>: We define a new name <code>satisfaction</code> for the column <code>satisfaction_with_life</code>. Notice that the order is <code>new_name = old_name</code>. Here we also use <code>=</code>. A rare occasion where it makes sense to do so.</p></li>
+</ol>
+<p>Since you will be using the pipe operator very frequently, it is a good idea to remember the keyboard shortcut for it: <code>Ctrl+Shift+M</code> for PC and <code>Cmd+Shift+M</code> for Mac.</p>
 </div>
 <div id="change-data-types" class="section level2" number="7.4">
-<h2><span class="header-section-number">7.4</span> Change data types and explain what they are</h2>
+<h2><span class="header-section-number">7.4</span> Data types: What are they and how can you change them</h2>
+<p>When we inspected our data, I mentioned that some of the variables do not have the correct data type. You might be familiar with different data types by classifying them as:</p>
+<ul>
+<li><p><em>Nominal data</em>, which is categorical data of no particular order,</p></li>
+<li><p><em>Ordinal data</em>, which is categorical data with a defined order, and</p></li>
+<li><p><em>Quantitative data</em>, which is data that usually is represented by numeric values.</p></li>
+</ul>
+<p>In R we have a slightly different distinction:</p>
+<ul>
+<li><p><code>character</code> / <code>&lt;chr&gt;</code>: Textual data, for example the text of a tweet.</p></li>
+<li><p><code>factor</code> / <code>&lt;fct&gt;</code>: Categorical data with a finite number of categories with no particular order.</p></li>
+<li><p><code>ordered</code> / <code>&lt;ord&gt;</code>: Categorical data with a finite number of categories with a particular order.</p></li>
+<li><p><code>double</code> / <code>&lt;dbl&gt;</code>: Numerical data with decimal places.</p></li>
+<li><p><code>integer</code> / <code>&lt;int&gt;</code>: Numerical data with whole numbers only (i.e. no decimals).</p></li>
+<li><p><code>logical</code> / <code>&lt;lgl&gt;</code>: Logical data, which only consists of values ‘TRUE’ and ‘FALSE.’</p></li>
+<li><p><code>date</code> / <code>date</code>: Data which consists dates, e.g. ‘2021-08-05.’</p></li>
+<li><p><code>date-time</code> / <code>dttm</code>: Data which consists dates and times, e.g. ‘2021-08-05 16:29:25 BST.’</p></li>
+</ul>
+<p>For a complete list of data types I recommend to take a look at <a href="https://tibble.tidyverse.org/articles/types.html" target="blank" title="&#39;Column Data Types&#39;">‘Column Data Types’</a> <span class="citation">(<a href="#ref-data-types-2021" role="doc-biblioref">Müller and Wickham 2021</a>)</span>.</p>
+<p>It is obvious that R has a more fine-grained categorisation of data types. The most important distinction, though, lies between <code>&lt;chr&gt;</code>, <code>&lt;fct&gt;</code>/<code>&lt;ord&gt;</code> and <code>&lt;dbl&gt;</code> for most datasets in the Social Sciences. Still, it is good to be aware of what the abbreviations in your <code>tibble</code> mean and how they might affect your analysis.</p>
+<p>Now that we have a solid understanding of different data types, we can have a look at our dataset and see whether <code>readr</code> classified our variables correctly.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="data-wrangling.html#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(wvs)</span></code></pre></div>
+<pre><code>## Rows: 69,578
+## Columns: 9
+## $ participant_id      &lt;dbl&gt; 20070001, 20070002, 20070003, 20070004, 20070005, …
+## $ country_code        &lt;chr&gt; &quot;AND&quot;, &quot;AND&quot;, &quot;AND&quot;, &quot;AND&quot;, &quot;AND&quot;, &quot;AND&quot;, &quot;AND&quot;, &quot;…
+## $ country_name        &lt;chr&gt; &quot;Andorra&quot;, &quot;Andorra&quot;, &quot;Andorra&quot;, &quot;Andorra&quot;, &quot;Andor…
+## $ gender              &lt;dbl&gt; 1, 0, 0, 1, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0,…
+## $ year_of_birth       &lt;dbl&gt; 1958, 1971, 1969, 1956, 1969, 1967, 1985, 1963, 19…
+## $ age                 &lt;dbl&gt; 60, 47, 48, 62, 49, 51, 33, 55, 40, 38, 54, 39, 44…
+## $ relationship_status &lt;chr&gt; &quot;married&quot;, &quot;living together as married&quot;, &quot;separate…
+## $ freedom_of_choice   &lt;dbl&gt; 10, 9, 9, 9, 8, 10, 10, 8, 8, 10, 9, 8, 10, 7, 10,…
+## $ satisfaction        &lt;dbl&gt; 10, 9, 9, 8, 7, 10, 5, 8, 8, 10, 8, 8, 10, 7, 10, …</code></pre>
+<p><code>readr</code> did a great job in identifying all the numeric variables. However, by default, <code>readr</code> imports all variables that include text as <code>&lt;chr&gt;</code>. It appears, in our dataset this is not quite correct. The variables <code>country_code</code>, <code>countr_name</code>, <code>gender</code> and <code>relationship_status</code> specify a finite number of categories. Therefore they should be classified as <code>factor</code>. The variable <code>participant_id</code> is represented by numbers, but its meaning is also rather categorical in nature. We would not use the ID numbers of participants to perform additions or multiplications. This would simply make no sense. Therefore, it might be wise to turn them into a <code>factor</code> as well, even though we likely will not use it in our analysis and would make no difference. However, I am a stickler for those kind of things, so I would include in it.</p>
+<p>In order to perform the conversion we need to use two new functions from <code>dplyr</code>:</p>
+<ul>
+<li><p><code>mutate()</code>: Changes, i.e. ‘mutates,’ a variable.</p></li>
+<li><p><code>as_factor()</code>: Converts data from one type into a <code>factor</code>.</p></li>
+</ul>
+<p>If we want to convert all variables in one go, we can put them all into the same function, separated by a <code>,</code>.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="data-wrangling.html#cb18-1" aria-hidden="true" tabindex="-1"></a>wvs <span class="ot">&lt;-</span> wvs <span class="sc">%&gt;%</span></span>
+<span id="cb18-2"><a href="data-wrangling.html#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">country_code =</span> <span class="fu">as_factor</span>(country_code),</span>
+<span id="cb18-3"><a href="data-wrangling.html#cb18-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">country_name =</span> <span class="fu">as_factor</span>(country_name),</span>
+<span id="cb18-4"><a href="data-wrangling.html#cb18-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">gender =</span> <span class="fu">as_factor</span>(gender),</span>
+<span id="cb18-5"><a href="data-wrangling.html#cb18-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">relationship_status =</span> <span class="fu">as_factor</span>(relationship_status),</span>
+<span id="cb18-6"><a href="data-wrangling.html#cb18-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">participant_id =</span> <span class="fu">as_factor</span>(participant_id)</span>
+<span id="cb18-7"><a href="data-wrangling.html#cb18-7" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb18-8"><a href="data-wrangling.html#cb18-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-9"><a href="data-wrangling.html#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(wvs)</span></code></pre></div>
+<pre><code>## Rows: 69,578
+## Columns: 9
+## $ participant_id      &lt;fct&gt; 20070001, 20070002, 20070003, 20070004, 20070005, …
+## $ country_code        &lt;fct&gt; AND, AND, AND, AND, AND, AND, AND, AND, AND, AND, …
+## $ country_name        &lt;fct&gt; &quot;Andorra&quot;, &quot;Andorra&quot;, &quot;Andorra&quot;, &quot;Andorra&quot;, &quot;Andor…
+## $ gender              &lt;fct&gt; 1, 0, 0, 1, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0,…
+## $ year_of_birth       &lt;dbl&gt; 1958, 1971, 1969, 1956, 1969, 1967, 1985, 1963, 19…
+## $ age                 &lt;dbl&gt; 60, 47, 48, 62, 49, 51, 33, 55, 40, 38, 54, 39, 44…
+## $ relationship_status &lt;fct&gt; married, living together as married, separated, li…
+## $ freedom_of_choice   &lt;dbl&gt; 10, 9, 9, 9, 8, 10, 10, 8, 8, 10, 9, 8, 10, 7, 10,…
+## $ satisfaction        &lt;dbl&gt; 10, 9, 9, 8, 7, 10, 5, 8, 8, 10, 8, 8, 10, 7, 10, …</code></pre>
+<p>The output in the console shows that we successfully performed the transformation and our data types are as we intended them to be. Mission accomplished.</p>
 </div>
 <div id="recoding-and-rearranging-factors-e.g.-gender-coded-as-0-and-1" class="section level2" number="7.5">
 <h2><span class="header-section-number">7.5</span> Recoding and rearranging factors (e.g. gender coded as 0 and 1)</h2>
+<p>Another common problem we have to tackle when working with data is their representation in the dataset. For example, <code>gender</code> could be measured as <code>male</code> and <code>female</code><a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> or as <code>0</code> and <code>1</code>. R does not mind which way you represent your data, but some other software does. The practicality of having your data represented accurately as what they are becomes obvious when you intend to create plots.</p>
+<p>For example, we might be interested to know how many participants in this study were <code>male</code> and how many were <code>female</code>. The function <code>count()</code> from <code>dplyr</code> does exactly that.</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="data-wrangling.html#cb20-1" aria-hidden="true" tabindex="-1"></a>wvs <span class="sc">%&gt;%</span> <span class="fu">count</span>(gender)</span></code></pre></div>
+<pre><code>## # A tibble: 3 × 2
+##   gender     n
+##   &lt;fct&gt;  &lt;int&gt;
+## 1 0      33049
+## 2 1      36478
+## 3 &lt;NA&gt;      51</code></pre>
+<p>Now we know how many people were <code>male</code> and <code>female</code> and how many did not disclose their <code>gender</code>. Or do we? The issue here is that you would have to know what the <code>0</code> and <code>1</code> stands for. Surely you would have a coding manual that gives you the answer, but it seems a bit of a complication. For <code>gender</code>, this might still be easy to remember, but can you recall the numbers for 48 countries?</p>
+<p>It certainly would be easier to replace the <code>0</code>s and <code>1</code>s with their corresponding labels. This can be achieved with a simple function called <code>fct_recode()</code> from <code>forcats</code>. Since we ‘mutate’ a variable into something else, we have to use the <code>mutate()</code> function too.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="data-wrangling.html#cb22-1" aria-hidden="true" tabindex="-1"></a>wvs <span class="ot">&lt;-</span> wvs <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">gender =</span> <span class="fu">fct_recode</span>(gender, <span class="st">&quot;male&quot;</span> <span class="ot">=</span> <span class="st">&quot;0&quot;</span>, <span class="st">&quot;female&quot;</span> <span class="ot">=</span> <span class="st">&quot;1&quot;</span>))</span></code></pre></div>
+<p>If you have been following along very carefully you might spot one oddity in this code: <code>"0"</code> and <code>"1"</code>. You likely recall that in Chapter <a href="r-basics-the-very-fundamentals.html#r-basics-the-very-fundamentals">5</a> I mentioned that we use <code>""</code> for <code>character</code> values but not for numbers. What happens if we run the code and remove <code>""</code>.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="data-wrangling.html#cb23-1" aria-hidden="true" tabindex="-1"></a>wvs <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">gender =</span> <span class="fu">fct_recode</span>(gender, <span class="st">&quot;male&quot;</span> <span class="ot">=</span> <span class="dv">0</span>, <span class="st">&quot;female&quot;</span> <span class="ot">=</span> <span class="dv">1</span>))</span></code></pre></div>
+<pre><code>## Error: Problem with `mutate()` column `gender`.
+## ℹ `gender = fct_recode(gender, male = 0, female = 1)`.
+## x Each input to fct_recode must be a single named string. Problems at positions: 1, 2</code></pre>
+<p>The error message is very easy to understand: <code>fct_recode()</code> only expects <code>strings</code> as input and not numbers. R recognises <code>0</code> and <code>1</code> as numbers, but <code>fct_recode()</code> converts a <code>factor</code> value into another <code>factor</code> value. To refer to a factor level (i.e. one of the categories in our factor), we have to use <code>""</code>. In other words, data types matter and are often a source of problems with your code. Thus, always pay close attention to it.</p>
+<p>If we rerun our analysis from before and generate a frequency table for <code>gender</code>, we now get a much more readable output.</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="data-wrangling.html#cb25-1" aria-hidden="true" tabindex="-1"></a>wvs <span class="sc">%&gt;%</span> <span class="fu">count</span>(gender)</span></code></pre></div>
+<pre><code>## # A tibble: 3 × 2
+##   gender     n
+##   &lt;fct&gt;  &lt;int&gt;
+## 1 male   33049
+## 2 female 36478
+## 3 &lt;NA&gt;      51</code></pre>
+<p>Another benefit of going through the trouble of recoding your factors is the readability of your plots. We could easily generate a bar plot based on the above table and have appropriate labels, instead of <code>0</code> and <code>1</code>.</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="data-wrangling.html#cb27-1" aria-hidden="true" tabindex="-1"></a>wvs <span class="sc">%&gt;%</span> <span class="fu">count</span>(gender) <span class="sc">%&gt;%</span> </span>
+<span id="cb27-2"><a href="data-wrangling.html#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(gender, n)) <span class="sc">+</span> </span>
+<span id="cb27-3"><a href="data-wrangling.html#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>()</span></code></pre></div>
+<p><img src="r_for_non_programmers_files/figure-html/Barplot%20for%20gender-1.png" width="672" /></p>
+<p>Plots are an excellent way to explore your data and understand relationships between variables. More about this when we start to perform analytical steps on our data (see Chapter <a href="descriptive-statistics.html#descriptive-statistics">8</a> and beyond).</p>
 </div>
 <div id="dealing-with-missing-data" class="section level2" number="7.6">
 <h2><span class="header-section-number">7.6</span> Dealing with missing data</h2>
@@ -324,6 +551,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </div>
 </div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-data-types-2021" class="csl-entry">
+Müller, Kirill, and Hadley Wickham. 2021. <span>“Column Data Types.”</span> <a href="https://tibble.tidyverse.org/articles/types.html">https://tibble.tidyverse.org/articles/types.html</a>.
+</div>
+<div id="ref-wickham-2021" class="csl-entry">
+Wickham, Hadley. 2021. <span>“The Tidyverse Style Guide.”</span> <a href="https://style.tidyverse.org">https://style.tidyverse.org</a>.
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="1">
+<li id="fn1"><p>A more sophisticated researcher would likely not rely on a dichotomous approach to gender.<a href="data-wrangling.html#fnref1" class="footnote-back">↩︎</a></p></li>
+</ol>
 </div>
             </section>
 

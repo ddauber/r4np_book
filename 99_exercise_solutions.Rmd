@@ -1,8 +1,8 @@
-# Exercises: Solutions
+# Exercises: Solutions {#exercises-solutions}
 
-## Solutions for \@ref(exercises)
+## Solutions for \@ref(exercises-chapter-5) {#exercises-solutions-5}
 
-```{r Solution 4.1, echo=TRUE, collapse=TRUE}
+```{r Solution for Chapter 5, echo=TRUE, collapse=TRUE}
 #1 ---------------
 sqrt(25-16)+2*8-6
 
@@ -19,9 +19,9 @@ books
 
 # 4 ---------------
 x_x <- function(number1, number2){       # Creates a function that takes 2 arguments
-  result1 <- number1*number2             # result1 multiplies the two arguments
-  result2 <- sqrt(number1)               # result2 computes the squareroot of the 1st argument
-  result3 <- number1-number2             # result3 subtracts the 2nd argument from the 1st
+  result1 <- number1*number2             # Result1 multiplies the two arguments
+  result2 <- sqrt(number1)               # Result2 computes the squareroot of the 1st argument
+  result3 <- number1-number2             # Result3 subtracts the 2nd argument from the 1st
   return(c(result1, result2, result3))   # Prints all three results into the console
 } 
 

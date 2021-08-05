@@ -24,7 +24,7 @@
 <meta name="author" content="Daniel Dauber" />
 
 
-<meta name="date" content="2021-08-02" />
+<meta name="date" content="2021-08-05" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -120,6 +120,28 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -191,10 +213,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="7" data-path="data-wrangling.html"><a href="data-wrangling.html"><i class="fa fa-check"></i><b>7</b> Data Wrangling</a>
 <ul>
-<li class="chapter" data-level="7.1" data-path="data-wrangling.html"><a href="data-wrangling.html#import-your-data"><i class="fa fa-check"></i><b>7.1</b> Import your data</a></li>
-<li class="chapter" data-level="7.2" data-path="data-wrangling.html"><a href="data-wrangling.html#inspecting-your-raw-data"><i class="fa fa-check"></i><b>7.2</b> Inspecting your raw data</a></li>
+<li class="chapter" data-level="7.1" data-path="data-wrangling.html"><a href="data-wrangling.html#import-your-data"><i class="fa fa-check"></i><b>7.1</b> Import your data</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="data-wrangling.html"><a href="data-wrangling.html#import-data-from-the-files-pane"><i class="fa fa-check"></i><b>7.1.1</b> Import data from the Files pane</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="data-wrangling.html"><a href="data-wrangling.html#inspecting-raw-data"><i class="fa fa-check"></i><b>7.2</b> Inspecting your raw data</a></li>
 <li class="chapter" data-level="7.3" data-path="data-wrangling.html"><a href="data-wrangling.html#data-cleaning"><i class="fa fa-check"></i><b>7.3</b> Data cleaning</a></li>
-<li class="chapter" data-level="7.4" data-path="data-wrangling.html"><a href="data-wrangling.html#change-data-types-and-explain-what-they-are"><i class="fa fa-check"></i><b>7.4</b> Change data types and explain what they are</a></li>
+<li class="chapter" data-level="7.4" data-path="data-wrangling.html"><a href="data-wrangling.html#change-data-types"><i class="fa fa-check"></i><b>7.4</b> Change data types and explain what they are</a></li>
 <li class="chapter" data-level="7.5" data-path="data-wrangling.html"><a href="data-wrangling.html#recoding-and-rearranging-factors-e.g.-gender-coded-as-0-and-1"><i class="fa fa-check"></i><b>7.5</b> Recoding and rearranging factors (e.g. gender coded as 0 and 1)</a></li>
 <li class="chapter" data-level="7.6" data-path="data-wrangling.html"><a href="data-wrangling.html#dealing-with-missing-data"><i class="fa fa-check"></i><b>7.6</b> Dealing with missing data</a></li>
 <li class="chapter" data-level="7.7" data-path="data-wrangling.html"><a href="data-wrangling.html#latent-constructs-and-their-reliability"><i class="fa fa-check"></i><b>7.7</b> Latent constructs and their reliability</a>
@@ -218,7 +243,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="14" data-path="exercises-solutions.html"><a href="exercises-solutions.html"><i class="fa fa-check"></i><b>14</b> Exercises: Solutions</a>
 <ul>
-<li class="chapter" data-level="14.1" data-path="exercises-solutions.html"><a href="exercises-solutions.html#solutions-for-refexercises"><i class="fa fa-check"></i><b>14.1</b> Solutions for @ref(exercises)</a></li>
+<li class="chapter" data-level="14.1" data-path="exercises-solutions.html"><a href="exercises-solutions.html#exercises-solutions-5"><i class="fa fa-check"></i><b>14.1</b> Solutions for @ref(exercises-chapter-5)</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://twitter.com/daniel_dauber" target="blank">Find me on twitter!</a></li>
@@ -279,11 +304,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">6.2</span> Organising your projects</h2>
 <p>This section is not directly related to RStudio, R or data analysis in general. Instead, I want to convey to you that a good folder structure can go a long way. It is an excellent habit to start thinking about folder structures before you start working on your project. Placing your files into dedicated folders, rather than keeping them loosely in one container, will speed up your work and save you from the frustration of not finding the files you need. I have a template that I use regularly. You can either create it from scratch in RStudio or open your file browser and create the folders there. RStudio does not mind which way you do it. If you want to spend less time setting this up, you might want to use the function <code>create_dr()</code> from the <code>r4np</code> package. It creates all the folders as shown in Figure <a href="starting-your-r-projects.html#fig:folder-structure">6.1</a>.</p>
 <p><a name="install_r4np"></a></p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="starting-your-r-projects.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Install &#39;r4np&#39; from GitHub</span></span>
-<span id="cb1-2"><a href="starting-your-r-projects.html#cb1-2" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">&quot;ddauber/r4np&quot;</span>)</span>
-<span id="cb1-3"><a href="starting-your-r-projects.html#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="starting-your-r-projects.html#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the template structure</span></span>
-<span id="cb1-5"><a href="starting-your-r-projects.html#cb1-5" aria-hidden="true" tabindex="-1"></a>r4np<span class="sc">::</span><span class="fu">create_dr</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="starting-your-r-projects.html#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Install &#39;r4np&#39; from GitHub</span></span>
+<span id="cb28-2"><a href="starting-your-r-projects.html#cb28-2" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">&quot;ddauber/r4np&quot;</span>)</span>
+<span id="cb28-3"><a href="starting-your-r-projects.html#cb28-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-4"><a href="starting-your-r-projects.html#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the template structure</span></span>
+<span id="cb28-5"><a href="starting-your-r-projects.html#cb28-5" aria-hidden="true" tabindex="-1"></a>r4np<span class="sc">::</span><span class="fu">create_dr</span>()</span></code></pre></div>
 <p>To create a folder, click on <code>New Folder</code> in the Files pane. I usually have at least the following folders for every project I am involved in:</p>
 <ul>
 <li><p>A folder for my raw data. I store ‘untouched’ datasets in it. With ‘untouched,’ I mean they have not been processed in any way and are usually files I downloaded from my data collection tool, e.g. online questionnaire platform.</p></li>
@@ -307,16 +332,16 @@ Figure 6.1: An example of a scalable folder structure for your project
 <p>When opening an R script or creating a new one, it will display in the source window (see Chapter <a href="the-rstudio-interface.html#the-source-window">4.2</a>). Some refer to this window as the ‘script editor.’ An R Script starts as an empty file. Good coding etiquette (see Chapter <a href="r-basics-the-very-fundamentals.html#coding-etiquette">5.5</a> demands that we use the first line to indicate what this file does by using a comment <code>#</code>. Here is an example for our ‘TidyTuesday’ R Project.</p>
 <p><img src="images/chapter_06_img/02_r_script/00_r_script.png" /></p>
 <p>All examples in this book can easily be copied and pasted into your own R Script. However, for some code you will have to install the R package <code>r4np</code> (see <a href="#install_r4np">above</a>). Let’s try it with the following code. The plot this code creates reveals which car manufacturer produces the most efficient cars.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="starting-your-r-projects.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb2-2"><a href="starting-your-r-projects.html#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="starting-your-r-projects.html#cb2-3" aria-hidden="true" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(manufacturer, <span class="fu">desc</span>(hwy), <span class="at">FUN =</span> median),</span>
-<span id="cb2-4"><a href="starting-your-r-projects.html#cb2-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">y =</span> hwy,</span>
-<span id="cb2-5"><a href="starting-your-r-projects.html#cb2-5" aria-hidden="true" tabindex="-1"></a>                   <span class="at">fill =</span> manufacturer)) <span class="sc">+</span></span>
-<span id="cb2-6"><a href="starting-your-r-projects.html#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
-<span id="cb2-7"><a href="starting-your-r-projects.html#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
-<span id="cb2-8"><a href="starting-your-r-projects.html#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb2-9"><a href="starting-your-r-projects.html#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Manufacturer&quot;</span>) <span class="sc">+</span></span>
-<span id="cb2-10"><a href="starting-your-r-projects.html#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Highway miles per gallon&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="starting-your-r-projects.html#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb29-2"><a href="starting-your-r-projects.html#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-3"><a href="starting-your-r-projects.html#cb29-3" aria-hidden="true" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(manufacturer, <span class="fu">desc</span>(hwy), <span class="at">FUN =</span> median),</span>
+<span id="cb29-4"><a href="starting-your-r-projects.html#cb29-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">y =</span> hwy,</span>
+<span id="cb29-5"><a href="starting-your-r-projects.html#cb29-5" aria-hidden="true" tabindex="-1"></a>                   <span class="at">fill =</span> manufacturer)) <span class="sc">+</span></span>
+<span id="cb29-6"><a href="starting-your-r-projects.html#cb29-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb29-7"><a href="starting-your-r-projects.html#cb29-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb29-8"><a href="starting-your-r-projects.html#cb29-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb29-9"><a href="starting-your-r-projects.html#cb29-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Manufacturer&quot;</span>) <span class="sc">+</span></span>
+<span id="cb29-10"><a href="starting-your-r-projects.html#cb29-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Highway miles per gallon&quot;</span>)</span></code></pre></div>
 <p><img src="r_for_non_programmers_files/figure-html/R%20Script%20copy%20and%20paste%20examples-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>You are probably wondering where your plot has gone. Copying the code will not automatically run it in your R Script. However, this is necessary to create the plot. If you tried pressing <code>Return ↵</code>, you would only add a new line. Instead, you need to select the code you want to run and press <code>Ctrl+Return ↵</code> (PC) or <code>Cmd+Return ↵</code> (Mac). You can also use the <code>Run</code> command at the top of your source window, but it is much more efficient to press the keyboard shortcut. Besides, you will remember this shortcut quickly, because we need to use it very frequently. If all worked out, you should see the following:</p>
 <p><img src="images/chapter_06_img/02_r_script/01_r_script_example_plot.png" /></p>
@@ -398,6 +423,20 @@ gitbook.start({
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>

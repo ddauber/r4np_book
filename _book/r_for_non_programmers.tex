@@ -117,7 +117,7 @@
 
 \title{R for Non-Programmers: A Guide for Social Scientists}
 \author{Daniel Dauber}
-\date{2021-08-02}
+\date{2021-08-05}
 
 \begin{document}
 \maketitle
@@ -451,7 +451,7 @@ Since the Console cannot reproduce data visualisations, RStudio offers a way to 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r_for_non_programmers_files/figure-latex/Simple boxplot-1.pdf}
+\begin{center}\includegraphics{r_for_non_programmers_files/figure-latex/Simple boxplot-1} \end{center}
 
 Although this is a short piece of coding, it performs quite a lot of steps:
 
@@ -486,6 +486,7 @@ So, for example, if you want to know what the \texttt{mtcars} dataset is, you ca
 
 \begin{Shaded}
 \begin{Highlighting}[]
+
 \CommentTok{\# Type a \textquotesingle{}?\textquotesingle{} and immediately add the name to bring up helpful information.}
 
 \NormalTok{?mtcars}
@@ -525,6 +526,8 @@ As a last remark in this chapter, I would like to make you aware that you can mo
   Add and remove panes by going to \texttt{RStudio\ \textgreater{}\ Preferences\ \textgreater{}\ Pane\ Layout}, or use the keyboard shortcut \texttt{⌘\ +\ ,} if you are on a Mac. There is, unfortunately no default shortcut for PC users.
 \end{itemize}
 
+If you want a fully customised experience you can also alter the colour scheme of the RStudio itself (\texttt{RStudio\ \textgreater{}\ Preferences\ \textgreater{}\ Appearance}) and if the themes offered are not enough for you, you can create a custom theme \href{https://tmtheme-editor.herokuapp.com/\#!/editor/theme/Monokai}{here}
+
 \hypertarget{r-basics-the-very-fundamentals}{%
 \chapter{R Basics: The very fundamentals}\label{r-basics-the-very-fundamentals}}
 
@@ -538,23 +541,23 @@ The most basic computation you can do in R is arithmetic operations. In other wo
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{\# Addition}
-\DecValTok{10}\SpecialCharTok{+}\DecValTok{5}
+\DecValTok{10} \SpecialCharTok{+} \DecValTok{5}
 \DocumentationTok{\#\# [1] 15}
 
 \CommentTok{\# Subtraction}
-\DecValTok{10{-}5}
+\DecValTok{10} \SpecialCharTok{{-}} \DecValTok{5}
 \DocumentationTok{\#\# [1] 5}
 
 \CommentTok{\# Multiplication}
-\DecValTok{10}\SpecialCharTok{*}\DecValTok{5}
+\DecValTok{10} \SpecialCharTok{*} \DecValTok{5}
 \DocumentationTok{\#\# [1] 50}
 
 \CommentTok{\# Division}
-\DecValTok{10}\SpecialCharTok{/}\DecValTok{5}
+\DecValTok{10} \SpecialCharTok{/} \DecValTok{5}
 \DocumentationTok{\#\# [1] 2}
 
 \CommentTok{\# Exponentiation}
-\DecValTok{10}\SpecialCharTok{\^{}}\DecValTok{2}
+\DecValTok{10} \SpecialCharTok{\^{}} \DecValTok{2}
 \DocumentationTok{\#\# [1] 100}
 
 \CommentTok{\# Square root}
@@ -655,6 +658,7 @@ In short, an object is an umbrella term for many different things which form par
 
 \begin{Shaded}
 \begin{Highlighting}[]
+
 \CommentTok{\# I have a friend called "Fiona"}
 \NormalTok{friends }\OtherTok{\textless{}{-}} \StringTok{"Fiona"}
 \end{Highlighting}
@@ -666,14 +670,12 @@ If you look into your environment pane, you will find the object we just created
 
 \begin{Shaded}
 \begin{Highlighting}[]
+
 \CommentTok{\# Who are my friends?}
 \NormalTok{friends}
+\DocumentationTok{\#\# [1] "Fiona"}
 \end{Highlighting}
 \end{Shaded}
-
-\begin{verbatim}
-## [1] "Fiona"
-\end{verbatim}
 
 Sadly, it seems I only have one friend. Luckily we can add some more, not the least to make me feel less lonely. To create objects with multiple values, we can use the function \texttt{c()}, which stands for `concatenate'. The \citet{concatenate-2021} define this word as follows:
 
@@ -770,7 +772,12 @@ You will notice in this example that I do not use \texttt{""} for each value in 
 We will encounter \texttt{list} objects quite frequently when we perform our analysis. Some functions return the results in the format of lists. This can be very helpful because otherwise our environment pane will be littered with objects. We would not necessarily know how they relate to each other, or worse, to which analysis they belong. Looking at the list item in the environment page (Figure \ref{fig:img-x-files}), you can see that the object \texttt{x\_files} is classified as a \texttt{List\ of\ 3,} and if you click on the blue icon, you can inspect the different objects inside.
 
 \textbackslash begin\{figure\}
-\includegraphics[width=38.67in]{images/chapter_05_img/02_basic_computation_environment_lists} \textbackslash caption\{The environment pane showing our objects and our list \texttt{x\_files}\}\label{fig:img-x-files}
+
+\{\centering \includegraphics[width=38.67in]{images/chapter_05_img/02_basic_computation_environment_lists}
+
+\}
+
+\textbackslash caption\{The environment pane showing our objects and our list \texttt{x\_files}\}\label{fig:img-x-files}
 \textbackslash end\{figure\}
 
 In Chapter \ref{basic-computations-in-r}, I mentioned that we should avoid using the \texttt{=} operator and explained that it is used to assign values to objects. You can, if you want, use \texttt{=} instead of \texttt{\textless{}-}. They fulfil the same purpose. However, as mentioned before, it is not wise to do so. Here is an example that shows that, in principle, it is possible.
@@ -787,7 +794,7 @@ In Chapter \ref{basic-computations-in-r}, I mentioned that we should avoid using
 \end{Highlighting}
 \end{Shaded}
 
-On a final note, naming your objects is limited. You cannot chose any name. First, every name needs to start with a letter. Second, you can only use letters, numbers \texttt{\_} and \texttt{.} as valid components of the names for your objects \citep[see also][Chapter 4.2.]{wickham2016r}. I recommend to establish a naming convention that you adhere to. Personally I prefer to only user lower letters and \texttt{\_} to separate/connect words. You want to keep names informative, succinct and precise. Here are some examples of what I would consider good and bad choices for names.
+On a final note, naming your objects is limited. You cannot chose any name. First, every name needs to start with a letter. Second, you can only use letters, numbers \texttt{\_} and \texttt{.} as valid components of the names for your objects \citep[see also][Chapter 4.2.]{wickham2016r}. I recommend to establish a naming convention that you adhere to. Personally I prefer to only user lower letters and \texttt{\_} to separate/connect words. You want to keep names informative, succinct and precise. Here are some examples of what some might consider good and bad choices for names.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -803,7 +810,7 @@ On a final note, naming your objects is limited. You cannot chose any name. Firs
 \end{Highlighting}
 \end{Shaded}
 
-Ultimately, you need to be able to effectively work with your data and output. Ideally, this should be true for others as well who want or need to work with your R project as well, e.g.~your co-investigator or supervisor. The same is true for your column names in datasets (see Chapter @ref())
+Ultimately, you need to be able to effectively work with your data and output. Ideally, this should be true for others as well who want or need to work with your R project as well, e.g.~your co-investigator or supervisor. The same is true for your column names in datasets (see Chapter @ref()). Some more information about coding style (i.e.~the style of writing coding) can be found in Chapter \ref{coding-etiquette}.
 
 \hypertarget{functions}{%
 \section{Functions}\label{functions}}
@@ -816,8 +823,8 @@ I used the term `function' multiple times, but I never thoroughly explained what
 \NormalTok{pocket\_money }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{8}\NormalTok{, }\DecValTok{13}\NormalTok{, }\DecValTok{21}\NormalTok{, }\DecValTok{34}\NormalTok{, }\DecValTok{55}\NormalTok{, }\DecValTok{89}\NormalTok{)}
 
 \CommentTok{\#1 Manually compute the mean}
-\NormalTok{sum }\OtherTok{\textless{}{-}} \DecValTok{0}\SpecialCharTok{+}\DecValTok{1}\SpecialCharTok{+}\DecValTok{1}\SpecialCharTok{+}\DecValTok{2}\SpecialCharTok{+}\DecValTok{3}\SpecialCharTok{+}\DecValTok{5}\SpecialCharTok{+}\DecValTok{8}\SpecialCharTok{+}\DecValTok{13}\SpecialCharTok{+}\DecValTok{21}\SpecialCharTok{+}\DecValTok{34}\SpecialCharTok{+}\DecValTok{55}\SpecialCharTok{+}\DecValTok{89}
-\NormalTok{sum}\SpecialCharTok{/}\DecValTok{12} \CommentTok{\# There are 12 items in the object}
+\NormalTok{sum }\OtherTok{\textless{}{-}} \DecValTok{0} \SpecialCharTok{+} \DecValTok{1} \SpecialCharTok{+} \DecValTok{1} \SpecialCharTok{+} \DecValTok{2} \SpecialCharTok{+} \DecValTok{3} \SpecialCharTok{+} \DecValTok{5} \SpecialCharTok{+} \DecValTok{8} \SpecialCharTok{+} \DecValTok{13} \SpecialCharTok{+} \DecValTok{21} \SpecialCharTok{+} \DecValTok{34} \SpecialCharTok{+} \DecValTok{55} \SpecialCharTok{+} \DecValTok{89}
+\NormalTok{sum }\SpecialCharTok{/} \DecValTok{12} \CommentTok{\# There are 12 items in the object}
 \DocumentationTok{\#\# [1] 19.33333}
 
 \CommentTok{\#2 Use a function to compute the mean}
@@ -825,7 +832,7 @@ I used the term `function' multiple times, but I never thoroughly explained what
 \DocumentationTok{\#\# [1] 19.33333}
 
 \CommentTok{\#3 Let\textquotesingle{}s make sure \#1 and \#2 are actually the same}
-\NormalTok{sum}\SpecialCharTok{/}\DecValTok{12} \SpecialCharTok{==} \FunctionTok{mean}\NormalTok{(pocket\_money)}
+\NormalTok{sum }\SpecialCharTok{/} \DecValTok{12} \SpecialCharTok{==} \FunctionTok{mean}\NormalTok{(pocket\_money)}
 \DocumentationTok{\#\# [1] TRUE}
 \end{Highlighting}
 \end{Shaded}
@@ -908,7 +915,12 @@ Luckily, R packages are free to use, so I do not have to bring my credit card. F
 R packages do not only include functions but often include datasets and documentation of what each function does. This way, you can easily try every function right away, even without your own dataset and read through what each function in the package does. Figure \ref{fig:img-r-package-documentation}
 
 \begin{figure}
-\includegraphics[width=28.08in]{images/chapter_05_img/r_package_documentation} \caption{The R package documentation for 'ggplot2'}\label{fig:img-r-package-documentation}
+
+{\centering \includegraphics[width=28.08in]{images/chapter_05_img/r_package_documentation} 
+
+}
+
+\caption{The R package documentation for 'ggplot2'}\label{fig:img-r-package-documentation}
 \end{figure}
 
 However, how do you find those R packages? They are right at your fingertips. You have two options:
@@ -982,14 +994,6 @@ Now that you have a nice collection of R packages, the next step would be to use
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{library}\NormalTok{(tidyverse)}
-\DocumentationTok{\#\# {-}{-} Attaching packages {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-} tidyverse 1.3.1 {-}{-}}
-\DocumentationTok{\#\# v ggplot2 3.3.5     v purrr   0.3.4}
-\DocumentationTok{\#\# v tibble  3.1.3     v dplyr   1.0.7}
-\DocumentationTok{\#\# v tidyr   1.1.3     v stringr 1.4.0}
-\DocumentationTok{\#\# v readr   2.0.0     v forcats 0.5.1}
-\DocumentationTok{\#\# {-}{-} Conflicts {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-} tidyverse\_conflicts() {-}{-}}
-\DocumentationTok{\#\# x dplyr::filter() masks stats::filter()}
-\DocumentationTok{\#\# x dplyr::lag()    masks stats::lag()}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1006,7 +1010,7 @@ Besides, it is not always advisable to load all functions of an entire package. 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r_for_non_programmers_files/figure-latex/Explicitly calling functions from R packages-1.pdf}
+\begin{center}\includegraphics{r_for_non_programmers_files/figure-latex/Explicitly calling functions from R packages-1} \end{center}
 
 \hypertarget{coding-etiquette}{%
 \section{Coding etiquette}\label{coding-etiquette}}
@@ -1080,16 +1084,18 @@ How about the following in comparison?
 \end{Highlighting}
 \end{Shaded}
 
-I hope we can agree that the second example is much easier to read and understand even though you probably do not understand most of it yet. For once, I separated the different analytical steps from each other like paragraphs in a report. Apart from that, I added comments with \texttt{\#} to provide more context to my code for someone else who wants to understand my analysis. Admittedly, this example is a little excessive. Usually, you might have fewer comments. Commenting is an integral part of programming because it allows you to remember what you did. Ideally, you want to strike a good balance between commenting on and writing your code. How many comments you need will likely change throughout your R programming journey. Think of comments as headers for your programming script that give it structure.
+I hope we can agree that the second example is much easier to read and understand even though you probably do not understand most of it yet. For once, I separated the different analytical steps from each other like paragraphs in a report. Apart from that, I added comments with \texttt{\#} to provide more context to my code for someone else who wants to understand my analysis. Admittedly, this example is a little excessive. Usually, you might have fewer comments. Commenting is an integral part of programming because it allows you to remember what you did. Ideally, you want to strike a good balance between commenting on and writing your code. How many comments you need will likely change throughout your R programming journey. Think of comments as headers for your programming script that give it structure..
 
 We can use \texttt{\#} not only to write comments but also to tell R not to run particular code. This is very helpful if you want to keep some code but do not want to use it yet. There is also a handy keyboard shortcut you can use to `deactivate' multiple lines of code at once. Select whatever you want to `comment out' in your script and press \texttt{Ctrl+Shift+C} (PC) or \texttt{Cmd+Shift+C} (Mac).
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\# mean(pocket\_money) \# R will not run this code}
+\CommentTok{\# mean(pocket\_money) \# R will NOT run this code}
 \FunctionTok{mean}\NormalTok{(pocket\_money)   }\CommentTok{\# R will run this code}
 \end{Highlighting}
 \end{Shaded}
+
+RStudio helps a lot with keeping your coding tidy and properly formatted. However, there are some additional aspects worth considering. If you want to find out more about coding style, I highly recommend to read through the \href{https://style.tidyverse.org}{\emph{`The tidyverse style guide'}} \citep{wickham-2021}.\\
 
 \hypertarget{exercises-chapter-5}{%
 \section{Exercises}\label{exercises-chapter-5}}
@@ -1118,6 +1124,7 @@ We can use \texttt{\#} not only to write comments but also to tell R not to run 
 
 \begin{Shaded}
 \begin{Highlighting}[]
+
 \NormalTok{x\_x }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(number1, number2)\{}
 \NormalTok{  result1 }\OtherTok{\textless{}{-}}\NormalTok{ number1}\SpecialCharTok{*}\NormalTok{number2}
 \NormalTok{  result2 }\OtherTok{\textless{}{-}} \FunctionTok{sqrt}\NormalTok{(number1)}
@@ -1130,7 +1137,7 @@ We can use \texttt{\#} not only to write comments but also to tell R not to run 
   What are the three steps to use a new R package that you found on CRAN?
 \end{enumerate}
 
-Check you answers: \ref{solutions-for-refexercises}
+Check you answers: Solutions \ref{exercises-solutions-5}
 
 \hypertarget{starting-your-r-projects}{%
 \chapter{Starting your R projects}\label{starting-your-r-projects}}
@@ -1146,8 +1153,8 @@ Every project likely fills you with enthusiasm and excitement. And it should. Yo
 
 While we cover data wrangling in great detail later (Chapter \ref{data-wrangling}), I would like to share some insights from my work that helped me stay organised and, consequently, less frustrated. The following applies to small and large research projects, which makes it very convenient no matter the situation. Of course, feel free to tweak my approach to whatever suits you. However, consistency is king.
 
-\hypertarget{creating-an-r-project-file}{%
-\section{Creating an R Project file}\label{creating-an-r-project-file}}
+\hypertarget{creating-an-r-project}{%
+\section{Creating an R Project file}\label{creating-an-r-project}}
 
 When working on a project, you likely create many different files for various purposes, especially R Scripts (see Chapter \ref{creating-an-r-script}). If you are not careful, this file is stored in your system's default location, which might not be where you want them to be. RStudio allows you to manage your entire project intuitively and conveniently through R Project files. Using R Project files comes with a couple of perks, for example:
 
@@ -1199,9 +1206,19 @@ If you look carefully, you can see that your RStudio is now `branded' with your 
 \hypertarget{organising-your-projects}{%
 \section{Organising your projects}\label{organising-your-projects}}
 
-This section is not directly related to RStudio, R or data analysis in general. Instead, I want to convey to you that a good folder structure can go a long way. It is an excellent habit to start thinking about folder structures before you start working on your project. Placing your files into dedicated folders, rather than keeping them loosely in one container, will speed up your work and save you from the frustration of not finding the files you need. I have a template that I use regularly. You can either create it from scratch in RStudio or open your file browser and create the folders there. RStudio does not mind which way you do it. If you want to spend less time setting this up, you might want to use the function create\_dr() from the \texttt{r4np} package. Simply copy the following code
+This section is not directly related to RStudio, R or data analysis in general. Instead, I want to convey to you that a good folder structure can go a long way. It is an excellent habit to start thinking about folder structures before you start working on your project. Placing your files into dedicated folders, rather than keeping them loosely in one container, will speed up your work and save you from the frustration of not finding the files you need. I have a template that I use regularly. You can either create it from scratch in RStudio or open your file browser and create the folders there. RStudio does not mind which way you do it. If you want to spend less time setting this up, you might want to use the function \texttt{create\_dr()} from the \texttt{r4np} package. It creates all the folders as shown in Figure \ref{fig:folder-structure}.
 
-To create a folder, click on New Folder in the Files pane. I usually have at least the following folders for every project I am involved in:
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Install \textquotesingle{}r4np\textquotesingle{} from GitHub}
+\NormalTok{devtools}\SpecialCharTok{::}\FunctionTok{install\_github}\NormalTok{(}\StringTok{"ddauber/r4np"}\NormalTok{)}
+
+\CommentTok{\# Create the template structure}
+\NormalTok{r4np}\SpecialCharTok{::}\FunctionTok{create\_dr}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+To create a folder, click on \texttt{New\ Folder} in the Files pane. I usually have at least the following folders for every project I am involved in:
 
 \begin{itemize}
 \item
@@ -1218,7 +1235,14 @@ To create a folder, click on New Folder in the Files pane. I usually have at lea
 
 Thus, in RStudio, it would look something like this:
 
-\includegraphics{images/chapter_06_img/01_organising_work/00_organising_work.png}
+\begin{figure}
+
+{\centering \includegraphics[width=38.67in]{images/chapter_06_img/01_organising_work/00_organising_work} 
+
+}
+
+\caption{An example of a scalable folder structure for your project}\label{fig:folder-structure}
+\end{figure}
 
 You probably noticed that my folders have numbers in front of them. I do this to ensure that all folders are in the order I want them to be, usually not the alphabetical order my computer suggests. I use two digits because I may have more than nine folders for a project, and folder ten would otherwise be listed as the third folder in this list. With this filing strategy in place, it will be easy to find whatever I need. Even others can easily understand what I stored where. It is simply `tidy', similar to how we want our data to be.
 
@@ -1231,7 +1255,7 @@ When opening an R script or creating a new one, it will display in the source wi
 
 \includegraphics{images/chapter_06_img/02_r_script/00_r_script.png}
 
-All examples in this book can easily be copied and pasted into your own R Script. Let's try it with the following code. The plot this code creates reveals which car manufacturer produces the most efficient cars.
+All examples in this book can easily be copied and pasted into your own R Script. However, for some code you will have to install the R package \texttt{r4np} (see \protect\hyperlink{install_r4np}{above}). Let's try it with the following code. The plot this code creates reveals which car manufacturer produces the most efficient cars.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1248,7 +1272,7 @@ All examples in this book can easily be copied and pasted into your own R Script
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{r_for_non_programmers_files/figure-latex/R Script copy and paste examples-1.pdf}
+\begin{center}\includegraphics{r_for_non_programmers_files/figure-latex/R Script copy and paste examples-1} \end{center}
 
 You are probably wondering where your plot has gone. Copying the code will not automatically run it in your R Script. However, this is necessary to create the plot. If you tried pressing \texttt{Return\ ↵}, you would only add a new line. Instead, you need to select the code you want to run and press \texttt{Ctrl+Return\ ↵} (PC) or \texttt{Cmd+Return\ ↵} (Mac). You can also use the \texttt{Run} command at the top of your source window, but it is much more efficient to press the keyboard shortcut. Besides, you will remember this shortcut quickly, because we need to use it very frequently. If all worked out, you should see the following:
 
@@ -1283,24 +1307,202 @@ If you switch your view to the \texttt{Visual\ Editor}, it almost looks like you
 
 \includegraphics{images/chapter_06_img/03_r_markdown/03_r_markdown_visual_editor.png}
 
-So, when should you use an R Script, and when should you use R Markdown. The rule-of-thumb is that if you intend to write a report, thesis or another form of publication, it might be better to work in an R Markdown file. If this does not apply, you might want to write an R Script. As mentioned above, R Markdown files emphasise text, while R Scripts primarily focus on code. In my projects, I often have a mixture of both. I use R Scripts to carry out the primary analysis and then use R Markdown files to present the findings. By the way, this book is written in R Markdown.
+So, when should you use an R Script, and when should you use R Markdown. The rule-of-thumb is that if you intend to write a report, thesis or another form of publication, it might be better to work in an R Markdown file. If this does not apply, you might want to write an R Script. As mentioned above, R Markdown files emphasise text, while R Scripts primarily focus on code. In my projects, I often have a mixture of both. I use R Scripts to carry out data wrangling and my primary analysis and then use R Markdown files to present the findings, e.g.~creating plots, tables, etc. By the way, this book is written in R Markdown using the \texttt{bookdown} package.
 
 No matter your choice, it will neither benefit nor disadvantage you in your R journey or when working through this book. The choice is all yours. You likely will come to appreciate both formats for what they offer.
 
 \hypertarget{data-wrangling}{%
 \chapter{Data Wrangling}\label{data-wrangling}}
 
+You collected your data over months (and sometimes years) and all you really want to know is whether your data makes sense and reveals something nobody would have ever expected. However, before we can truly go ahead with our analysis, it is essential to understand whether our data is `tidy'. Very often, data we receive is everything else but clean and we need to not only check whether our data is fit for analysis, but also ensure it is in a format that is easy to handle and work with. For small datasets, this is usually a brief exercise. However, I found myself cleaning data for a month, because the dataset was spread out into multiple spreadsheets (no pun intended) with different numbers of columns and odd column names. Thus, data cleaning or data wrangling is an essential first step in any data analysis. It is a step that cannot be skipped and has to be performed on every new dataset.
+
+Luckily, R provides many useful functions to make our lives easier. If you are like me and used to do this in Excel, you will be in for a treat. It is a lot simpler using R to do achieve a clean dataset.
+
+Here is an overview of the different steps we usually work through before we can start with our main analysis. This is list is certainly not exhaustive:
+
+\begin{itemize}
+\item
+  Data import
+\item
+  Checking data types
+\item
+  Recoding and arranging factors, i.e.~categorical data.
+\item
+  Running missing data diagnostics
+\item
+  and other things
+\end{itemize}
+
 \hypertarget{import-your-data}{%
 \section{Import your data}\label{import-your-data}}
 
-\hypertarget{inspecting-your-raw-data}{%
-\section{Inspecting your raw data}\label{inspecting-your-raw-data}}
+The \texttt{r4np} package hosts a number of different datasets to work with, but at some point you might want to apply your R knowledge to your own data. Therefore, an important first step is to import your data into RStudio. There are three different methods all of which are very handy:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Click on your data file in the Files pane and choose `Import Dataset'.
+\item
+  Use the \texttt{Import\ Dataset} button in the Environment pane.
+\item
+  Import your data calling one of the \texttt{readr} functions in the console or RScript
+\end{enumerate}
+
+\hypertarget{import-data-from-the-files-pane}{%
+\subsection{Import data from the Files pane}\label{import-data-from-the-files-pane}}
+
+This approach is by far the easiest. Let's assume you have a dataset called \texttt{gender\_age.csv} in your \texttt{00\_raw\_data} folder. If you wish to import it, you can do the following:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Click on the name of the file
+\item
+  Select \texttt{Import\ Dataset}.
+
+  \includegraphics{images/chapter_07_img/01_files_pane_import/01_files_pane_import.png}
+\item
+  A new window will open and you can choose different options. You also see a little preview of how the data looks like. This is great if you are not sure whether you did it correctly.
+
+  \includegraphics{images/chapter_07_img/01_files_pane_import/02_files_pane_import.png}
+\item
+  You can make changes to how the data should be imported, but in most cases the default should be fine. Here is quick breakdown of the most important options:
+
+  \begin{itemize}
+  \item
+    \texttt{Name} allows you to change the object name, i.e.~the name of the object this data will be assigned to. I tend to use \texttt{df\_raw} (\texttt{df} stand for \texttt{dataframe}, which is how R calls such rectangular datasets).
+  \item
+    \texttt{Skip} is useful if your data file starts with a number of empty rows at the top. You can remove them here.
+  \item
+    \texttt{First\ Row\ as\ Names} is ticked by default. In most Social Science projects we tend to have the name of the variables as the first row in your dataset.
+  \item
+    \texttt{Trim\ Spaces} removes any unnecassry white-space in your dataset. Leave it ticked.
+  \item
+    \texttt{Open\ Data\ Viewer} allows you to look at your imported dataset. I use it rarely, but it can be helpful at times.
+  \item
+    \texttt{Delimiter} defines how your columns are separate from each other in your file. If it is a \texttt{.csv} it would imply it is a `comma-separated value', i.e.~\texttt{,}. This can be changed for different files, depending on how your data is delimited. You can even use the option \texttt{Other\ldots{}} to specify a custom separation option.
+  \item
+    \texttt{NA} specifies how missing values in your data are acknowledged. By default, empty cells in your data will be recognised as missing data.
+  \end{itemize}
+
+  \includegraphics{images/chapter_07_img/01_files_pane_import/03_files_pane_import.png}
+\item
+  Once you are happy with your choices, you can click on \texttt{Import}.
+\item
+  You will find your dataset in the Environment pane.
+
+  \includegraphics{images/chapter_07_img/01_files_pane_import/04_files_pane_import.png}
+\end{enumerate}
+
+In the console you can see that R also provides the \texttt{Column\ specification}, which we need later when inspecting `data types'. \texttt{readr} automatically imports all text-based columns as \texttt{chr}, i.e.~\texttt{character} values. However, this might not be always true. More on this aspect of data wrangling in Chapter \ref{change-data-types}.
+
+\texttt{CONTINUE\ FROM\ HERE}
+
+To achieve this we rely on \texttt{readr} from the \texttt{tidyverse} package. It can install a range of different datatypes, including \texttt{.csv}, \texttt{.tsv}, \texttt{.txt}. If you want to import data from an \texttt{.xlsx} file you have to use another package called \texttt{readxl}.
+
+Here are some examples of how you can use \texttt{readr} to import your data. The first part is only there to create the two
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Load \textquotesingle{}readr\textquotesingle{} via \textquotesingle{}tidyverse\textquotesingle{} or just \textquotesingle{}readr}
+\FunctionTok{library}\NormalTok{(tidyverse)}
+
+\CommentTok{\# Import data from \textquotesingle{}.csv\textquotesingle{}}
+\FunctionTok{read\_csv}\NormalTok{(}\StringTok{"00\_raw\_data/gender\_age.csv"}\NormalTok{)}
+
+\CommentTok{\# Import data from any file text file by defining the separator yourself}
+\FunctionTok{read\_delim}\NormalTok{(}\StringTok{"00\_raw\_data/gender\_age.txt"}\NormalTok{, }\AttributeTok{delim =} \StringTok{"|"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{inspecting-raw-data}{%
+\section{Inspecting your raw data}\label{inspecting-raw-data}}
+
+For the rest of this chapter, we will use the \texttt{wvs} dataset from the \texttt{r4np} package. However, we do not know much about this dataset. The first way of inspecting the data is to simply type the name of the object, i.e.~\texttt{wvs}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Ensure you loaded the \textquotesingle{}r4np\textquotesingle{} package first}
+\FunctionTok{library}\NormalTok{(r4np)}
+
+\CommentTok{\# Show the data in the console}
+\NormalTok{wvs}
+\DocumentationTok{\#\# \# A tibble: 69,578 x 9}
+\DocumentationTok{\#\#    \textasciigrave{}Participant ID\textasciigrave{} \textasciigrave{}Country Code\textasciigrave{} \textasciigrave{}Country name\textasciigrave{} Gender YearOfBirth   Age}
+\DocumentationTok{\#\#               \textless{}dbl\textgreater{} \textless{}chr\textgreater{}          \textless{}chr\textgreater{}           \textless{}dbl\textgreater{}       \textless{}dbl\textgreater{} \textless{}dbl\textgreater{}}
+\DocumentationTok{\#\#  1         20070001 AND            Andorra             1        1958    60}
+\DocumentationTok{\#\#  2         20070002 AND            Andorra             0        1971    47}
+\DocumentationTok{\#\#  3         20070003 AND            Andorra             0        1969    48}
+\DocumentationTok{\#\#  4         20070004 AND            Andorra             1        1956    62}
+\DocumentationTok{\#\#  5         20070005 AND            Andorra             0        1969    49}
+\DocumentationTok{\#\#  6         20070006 AND            Andorra             1        1967    51}
+\DocumentationTok{\#\#  7         20070007 AND            Andorra             1        1985    33}
+\DocumentationTok{\#\#  8         20070008 AND            Andorra             0        1963    55}
+\DocumentationTok{\#\#  9         20070009 AND            Andorra             1        1978    40}
+\DocumentationTok{\#\# 10         20070010 AND            Andorra             1        1979    38}
+\DocumentationTok{\#\# \# ... with 69,568 more rows, and 3 more variables: relationship\_status \textless{}chr\textgreater{},}
+\DocumentationTok{\#\# \#   Freedom.of.Choice \textless{}dbl\textgreater{}, Satisfaction{-}with{-}life \textless{}dbl\textgreater{}}
+\end{Highlighting}
+\end{Shaded}
+
+The result is a series of rows and columns. The first information we receive is: \texttt{A\ tibble:\ 69,578\ x\ 9}. This indicates that our dataset has 68,578 observations (i.e.~rows) and 9 columns (i.e.~variables). This rectangular format is the one we encounter most frequently in Social Sciences (and probably beyond). If you ever worked in Excel this format might be quite familiar.
+
+Even though it might be nice to look at this dataset in this way, it is not particularly useful. Depending on your monitor size you might only see a small number of columns. All in all, we hardly ever will find much use in inspecting data this way. Luckily there are other functions that can help us.
+
+If you want to see each variable covered in the dataset and their data types, you can use the function \texttt{glimpse()}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{glimpse}\NormalTok{(wvs)}
+\DocumentationTok{\#\# Rows: 69,578}
+\DocumentationTok{\#\# Columns: 9}
+\DocumentationTok{\#\# $ \textasciigrave{}Participant ID\textasciigrave{}         \textless{}dbl\textgreater{} 20070001, 20070002, 20070003, 20070004, 20070\textasciitilde{}}
+\DocumentationTok{\#\# $ \textasciigrave{}Country Code\textasciigrave{}           \textless{}chr\textgreater{} "AND", "AND", "AND", "AND", "AND", "AND", "AN\textasciitilde{}}
+\DocumentationTok{\#\# $ \textasciigrave{}Country name\textasciigrave{}           \textless{}chr\textgreater{} "Andorra", "Andorra", "Andorra", "Andorra", "\textasciitilde{}}
+\DocumentationTok{\#\# $ Gender                   \textless{}dbl\textgreater{} 1, 0, 0, 1, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1, 1, \textasciitilde{}}
+\DocumentationTok{\#\# $ YearOfBirth              \textless{}dbl\textgreater{} 1958, 1971, 1969, 1956, 1969, 1967, 1985, 196\textasciitilde{}}
+\DocumentationTok{\#\# $ Age                      \textless{}dbl\textgreater{} 60, 47, 48, 62, 49, 51, 33, 55, 40, 38, 54, 3\textasciitilde{}}
+\DocumentationTok{\#\# $ relationship\_status      \textless{}chr\textgreater{} "married", "living together as married", "sep\textasciitilde{}}
+\DocumentationTok{\#\# $ Freedom.of.Choice        \textless{}dbl\textgreater{} 10, 9, 9, 9, 8, 10, 10, 8, 8, 10, 9, 8, 10, 7\textasciitilde{}}
+\DocumentationTok{\#\# $ \textasciigrave{}Satisfaction{-}with{-}life\textasciigrave{} \textless{}dbl\textgreater{} 10, 9, 9, 8, 7, 10, 5, 8, 8, 10, 8, 8, 10, 7,\textasciitilde{}}
+\end{Highlighting}
+\end{Shaded}
+
+The output of glimpse shows us the name of each column/variable after the \texttt{\$}, for example \texttt{\textasciigrave{}Participant\ ID\textasciigrave{}}. The \texttt{\$} is used to look up certain variables in our dataset. If we want to inspect only the column `Gender' we could write the following:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{wvs}\SpecialCharTok{$}\NormalTok{Gender}
+\DocumentationTok{\#\#     [1]  1  0  0  1  0  1  1  0  1  1  0  0  1  1  1  0  0  1  1  1  1  1  1  0}
+\DocumentationTok{\#\#    [25]  1  0  1  1  1  0  1  0  0  1  0  0  0  1  0  1  1  1  0  0  0  1  1  1}
+\DocumentationTok{\#\#    [49]  1  1  1  1  1  0  0  1  1  1  1  0  1  0  0  0  0  1  1  1  0  1  0  1}
+\DocumentationTok{\#\#    [73]  1  1  1  1  1  0  1  1  1  1  0  1  1  1  1  1  0  1  1  1  1  1  1  1}
+\NormalTok{....}
+\end{Highlighting}
+\end{Shaded}
+
+I use \texttt{glimpse()} a lot for different purposes, for example:
+
+\begin{itemize}
+\item
+  to check correctness of data types
+\item
+  to inspect column names for errors
+\item
+  to look up column names
+\end{itemize}
+
+\texttt{skim()}
 
 \hypertarget{data-cleaning}{%
 \section{Data cleaning}\label{data-cleaning}}
 
-\hypertarget{change-data-types-and-explain-what-they-are}{%
-\section{Change data types and explain what they are}\label{change-data-types-and-explain-what-they-are}}
+Create consistency in your column naming convention
+
+\texttt{janitor}
+
+\hypertarget{change-data-types}{%
+\section{Change data types and explain what they are}\label{change-data-types}}
 
 \hypertarget{recoding-and-rearranging-factors-e.g.-gender-coded-as-0-and-1}{%
 \section{Recoding and rearranging factors (e.g.~gender coded as 0 and 1)}\label{recoding-and-rearranging-factors-e.g.-gender-coded-as-0-and-1}}
@@ -1369,8 +1571,8 @@ No matter your choice, it will neither benefit nor disadvantage you in your R jo
 \hypertarget{exercises-solutions}{%
 \chapter{Exercises: Solutions}\label{exercises-solutions}}
 
-\hypertarget{solutions-for-refexercises}{%
-\section{Solutions for \ref{exercises}}\label{solutions-for-refexercises}}
+\hypertarget{exercises-solutions-5}{%
+\section{Solutions for \ref{exercises-chapter-5}}\label{exercises-solutions-5}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1403,9 +1605,9 @@ No matter your choice, it will neither benefit nor disadvantage you in your R jo
 
 \CommentTok{\# 4 {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
 \NormalTok{x\_x }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(number1, number2)\{       }\CommentTok{\# Creates a function that takes 2 arguments}
-\NormalTok{  result1 }\OtherTok{\textless{}{-}}\NormalTok{ number1}\SpecialCharTok{*}\NormalTok{number2             }\CommentTok{\# result1 multiplies the two arguments}
-\NormalTok{  result2 }\OtherTok{\textless{}{-}} \FunctionTok{sqrt}\NormalTok{(number1)               }\CommentTok{\# result2 computes the squareroot of the 1st argument}
-\NormalTok{  result3 }\OtherTok{\textless{}{-}}\NormalTok{ number1}\SpecialCharTok{{-}}\NormalTok{number2             }\CommentTok{\# result3 subtracts the 2nd argument from the 1st}
+\NormalTok{  result1 }\OtherTok{\textless{}{-}}\NormalTok{ number1}\SpecialCharTok{*}\NormalTok{number2             }\CommentTok{\# Result1 multiplies the two arguments}
+\NormalTok{  result2 }\OtherTok{\textless{}{-}} \FunctionTok{sqrt}\NormalTok{(number1)               }\CommentTok{\# Result2 computes the squareroot of the 1st argument}
+\NormalTok{  result3 }\OtherTok{\textless{}{-}}\NormalTok{ number1}\SpecialCharTok{{-}}\NormalTok{number2             }\CommentTok{\# Result3 subtracts the 2nd argument from the 1st}
   \FunctionTok{return}\NormalTok{(}\FunctionTok{c}\NormalTok{(result1, result2, result3))   }\CommentTok{\# Prints all three results into the console}
 \NormalTok{\} }
 

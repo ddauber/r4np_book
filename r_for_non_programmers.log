@@ -1,11 +1,11 @@
-This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2021) (preloaded format=xelatex 2021.7.19)  2 AUG 2021 15:46
+This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2021) (preloaded format=xelatex 2021.8.5)  5 AUG 2021 10:57
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
 **r_for_non_programmers.tex
 (./r_for_non_programmers.tex
 LaTeX2e <2021-06-01> patch level 1
-L3 programming layer <2021-06-18> (/Users/danieldauber/Library/TinyTeX/texmf-di
+L3 programming layer <2021-07-12> (/Users/danieldauber/Library/TinyTeX/texmf-di
 st/tex/latex/base/book.cls
 Document Class: book 2021/02/12 v1.4n Standard LaTeX document class
 (/Users/danieldauber/Library/TinyTeX/texmf-dist/tex/latex/base/bk10.clo
@@ -132,11 +132,11 @@ Package: ifluatex 2019/10/25 v1.5 ifluatex legacy package. Use iftex instead.
 (/Users/danieldauber/Library/TinyTeX/texmf-dist/tex/latex/unicode-math/unicode-
 math.sty (/Users/danieldauber/Library/TinyTeX/texmf-dist/tex/latex/l3kernel/exp
 l3.sty
-Package: expl3 2021-06-18 L3 programming layer (loader) 
+Package: expl3 2021-07-12 L3 programming layer (loader) 
 
 (/Users/danieldauber/Library/TinyTeX/texmf-dist/tex/latex/l3backend/l3backend-x
 etex.def
-File: l3backend-xetex.def 2021-05-07 L3 backend support: XeTeX
+File: l3backend-xetex.def 2021-08-04 L3 backend support: XeTeX
 (|extractbb --version)
 \c__kernel_sys_dvipdfmx_version_int=\count199
 \l__color_backend_stack_int=\count266
@@ -156,11 +156,11 @@ TeX
 
 (/Users/danieldauber/Library/TinyTeX/texmf-dist/tex/latex/l3packages/xparse/xpa
 rse.sty
-Package: xparse 2021-06-18 L3 Experimental document command parser
+Package: xparse 2021-08-04 L3 Experimental document command parser
 )
 (/Users/danieldauber/Library/TinyTeX/texmf-dist/tex/latex/l3packages/l3keys2e/l
 3keys2e.sty
-Package: l3keys2e 2021-06-18 LaTeX2e option processing using LaTeX3 keys
+Package: l3keys2e 2021-08-04 LaTeX2e option processing using LaTeX3 keys
 )
 (/Users/danieldauber/Library/TinyTeX/texmf-dist/tex/latex/fontspec/fontspec.sty
 Package: fontspec 2020/02/21 v2.7i Font selection for XeLaTeX and LuaLaTeX
@@ -844,11 +844,7 @@ LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
 (Font)              scaled to size 6.99925pt on input line 4.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
 (Font)              scaled to size 4.99947pt on input line 4.
-[3] [4]
-
-LaTeX Warning: Reference `exercises' on page 5 undefined on input line 61.
-
-)
+[3] [4])
 \tf@toc=\write5
 \openout5 = `r_for_non_programmers.toc'.
 
@@ -1044,9 +1040,6 @@ ic file (type bmp)
 File: images/chapter_04_img/05_files_plots_etc/05_rstudio_viewer.png Graphic fi
 le (type bmp)
 <images/chapter_04_img/05_files_plots_etc/05_rstudio_viewer.png>
-
-Underfull \vbox (badness 1014) has occurred while \output is active []
-
 [34]
 Missing character: There is no ⌘ (U+2318) in font [lmmono10-regular]:!
 [35] [36
@@ -1056,13 +1049,13 @@ Chapter 5.
 [37] [38] [39]
 Missing character: There is no ↵ (U+21B5) in font [lmmono10-regular]:!
 [40]
-Underfull \hbox (badness 6252) in paragraph at lines 712--713
+Underfull \hbox (badness 6252) in paragraph at lines 714--715
 \TU/lmtt/m/n/10 (milestones_of_my_life <- c(1982, 2006, 2011, 2018, 2020)) \TU/
 lmr/m/n/10 is the
  []
 
 
-Underfull \hbox (badness 6944) in paragraph at lines 712--713
+Underfull \hbox (badness 6944) in paragraph at lines 714--715
 \TU/lmr/m/n/10 same as \TU/lmtt/m/n/10 milestones_of_my_life <- c(1982, 2006, 2
 011, 2018, 2020)
  []
@@ -1078,8 +1071,8 @@ File: images/chapter_05_img/02_basic_computation_environment_lists.png Graphic
 file (type bmp)
 <images/chapter_05_img/02_basic_computation_environment_lists.png>
 
-Overfull \hbox (686.98956pt too wide) in paragraph at lines 772--775
-[]\TU/lmr/m/n/10 \begin{figure} []
+Overfull \hbox (626.66956pt too wide) in paragraph at lines 776--777
+ []\TU/lmr/m/n/10 {[] 
  []
 
 
@@ -1090,23 +1083,23 @@ File: images/chapter_05_img/r_package_documentation.png Graphic file (type bmp)
 
 <images/chapter_05_img/r_package_documentation.png>
 
-Overfull \hbox (357.08545pt too wide) in paragraph at lines 911--911
-[][] 
+Overfull \hbox (357.08545pt too wide) in paragraph at lines 919--920
+ [][] 
  []
 
 
-LaTeX Warning: Float too large for page by 24.06165pt on input line 912.
+LaTeX Warning: Float too large for page by 24.06165pt on input line 924.
 
 LaTeX Font Info:    Font shape `TU/lmtt/bx/n' in size <12> not available
-(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 925.
+(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 937.
 [48] [49]
 File: images/chapter_05_img/install_r_packages/01_install_r_packages.png Graphi
 c file (type bmp)
 <images/chapter_05_img/install_r_packages/01_install_r_packages.png>
+[50]
 File: images/chapter_05_img/install_r_packages/02_install_r_packages.png Graphi
 c file (type bmp)
 <images/chapter_05_img/install_r_packages/02_install_r_packages.png>
-[50]
 File: images/chapter_05_img/install_r_packages/03_install_r_packages.png Graphi
 c file (type bmp)
 <images/chapter_05_img/install_r_packages/03_install_r_packages.png>
@@ -1116,7 +1109,7 @@ m R packages-1.pdf Graphic file (type pdf)
 <use r_for_non_programmers_files/figure-latex/Explicitly calling functions from
  R packages-1.pdf>
 
-Underfull \vbox (badness 1400) has occurred while \output is active []
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
 [52] [53] [54] [55] [56]
 Chapter 6.
@@ -1156,10 +1149,18 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 File: images/chapter_06_img/01_organising_work/00_organising_work.png Graphic f
 ile (type bmp)
 <images/chapter_06_img/01_organising_work/00_organising_work.png>
-[62]
+
+Overfull \hbox (621.66956pt too wide) in paragraph at lines 1240--1241
+ [][] 
+ []
+
+
+LaTeX Warning: Float too large for page by 24.06165pt on input line 1245.
+
 File: images/chapter_06_img/02_r_script/00_r_script.png Graphic file (type bmp)
 
 <images/chapter_06_img/02_r_script/00_r_script.png>
+[62] [63]
 File: r_for_non_programmers_files/figure-latex/R Script copy and paste examples
 -1.pdf Graphic file (type pdf)
 <use r_for_non_programmers_files/figure-latex/R Script copy and paste examples-
@@ -1167,105 +1168,120 @@ File: r_for_non_programmers_files/figure-latex/R Script copy and paste examples
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[63]
+[64]
 Missing character: There is no ↵ (U+21B5) in font [lmmono10-regular]:!
 Missing character: There is no ↵ (U+21B5) in font [lmmono10-regular]:!
 Missing character: There is no ↵ (U+21B5) in font [lmmono10-regular]:!
 File: images/chapter_06_img/02_r_script/01_r_script_example_plot.png Graphic fi
 le (type bmp)
 <images/chapter_06_img/02_r_script/01_r_script_example_plot.png>
-[64]
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[65]
 Missing character: There is no ↵ (U+21B5) in font [lmmono10-regular]:!
 File: images/chapter_06_img/02_r_script/02_r script_code_completion.png Graphic
  file (type bmp)
 <images/chapter_06_img/02_r_script/02_r script_code_completion.png>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[66]
 Missing character: There is no ↵ (U+21B5) in font [lmmono10-regular]:!
-
-Underfull \vbox (badness 1163) has occurred while \output is active []
-
-[65]
+[67]
 File: images/chapter_06_img/03_r_markdown/01_r_markdown_plain.png Graphic file 
 (type bmp)
 <images/chapter_06_img/03_r_markdown/01_r_markdown_plain.png>
 File: images/chapter_06_img/03_r_markdown/02_r_markdown_visual_editor_menu.png 
 Graphic file (type bmp)
 <images/chapter_06_img/03_r_markdown/02_r_markdown_visual_editor_menu.png>
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-[66]
 File: images/chapter_06_img/03_r_markdown/03_r_markdown_visual_editor.png Graph
 ic file (type bmp)
 <images/chapter_06_img/03_r_markdown/03_r_markdown_visual_editor.png>
-[67] [68
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[68] [69] [70
 
 ]
 Chapter 7.
-[69] [70
+[71]
+File: images/chapter_07_img/01_files_pane_import/01_files_pane_import.png Graph
+ic file (type bmp)
+<images/chapter_07_img/01_files_pane_import/01_files_pane_import.png>
+File: images/chapter_07_img/01_files_pane_import/02_files_pane_import.png Graph
+ic file (type bmp)
+<images/chapter_07_img/01_files_pane_import/02_files_pane_import.png>
+[72]
+File: images/chapter_07_img/01_files_pane_import/03_files_pane_import.png Graph
+ic file (type bmp)
+<images/chapter_07_img/01_files_pane_import/03_files_pane_import.png>
+
+Underfull \vbox (badness 2564) has occurred while \output is active []
+
+[73]
+File: images/chapter_07_img/01_files_pane_import/04_files_pane_import.png Graph
+ic file (type bmp)
+<images/chapter_07_img/01_files_pane_import/04_files_pane_import.png>
+[74] [75] [76] [77] [78
 
 ]
 Chapter 8.
-[71] [72
+[79] [80
 
 ]
 Chapter 9.
-[73] [74
+[81] [82
 
 ]
 Chapter 10.
-[75] [76
+[83] [84
 
 ]
 Chapter 11.
-[77]
+[85]
 Overfull \hbox (99.25455pt too wide) has occurred while \output is active
-\TU/lmr/m/n/10 78 \TU/lmr/m/sl/10 CHAPTER 11.  REGRESSION: CREATING MODELS TO P
+\TU/lmr/m/n/10 86 \TU/lmr/m/sl/10 CHAPTER 11.  REGRESSION: CREATING MODELS TO P
 REDICT FUTURE OBSERVATIONS
  []
 
-[78
+[86
 
 ]
 Chapter 12.
-[79]
+[87]
 Overfull \hbox (45.41562pt too wide) has occurred while \output is active
-\TU/lmr/m/n/10 80 \TU/lmr/m/sl/10 CHAPTER 12.  MIXED-METHODS RESEARCH: ANALYSIN
+\TU/lmr/m/n/10 88 \TU/lmr/m/sl/10 CHAPTER 12.  MIXED-METHODS RESEARCH: ANALYSIN
 G QUALITATIVE IN R
  []
 
-[80
+[88
 
 ]
 Chapter 13.
-[81]
+[89]
 Overfull \hbox (73.04903pt too wide) has occurred while \output is active
-\TU/lmr/m/n/10 82 \TU/lmr/m/sl/10 CHAPTER 13.  WHERE TO GO FROM HERE: THE NEXT 
+\TU/lmr/m/n/10 90 \TU/lmr/m/sl/10 CHAPTER 13.  WHERE TO GO FROM HERE: THE NEXT 
 STEPS IN YOUR R JOURNEY
  []
 
-[82
+[90
 
 ]
 Chapter 14.
-
-LaTeX Warning: Reference `exercises' on page 83 undefined on input line 1373.
-
-[83] (./r_for_non_programmers.bbl [84]) [85
+[91] (./r_for_non_programmers.bbl [92]) [93
 
 ] (./r_for_non_programmers.aux)
-
-LaTeX Warning: There were undefined references.
-
 Package rerunfilecheck Info: File `r_for_non_programmers.out' has not changed.
-(rerunfilecheck)             Checksum: 902DAC80D3C21FC9A8C8645D8F0E42A2;12234.
+(rerunfilecheck)             Checksum: 69D62A98B0B6EAF6969C7C8E04C2E29B;12239.
  ) 
 Here is how much of TeX's memory you used:
- 17333 strings out of 478451
- 326120 string characters out of 5857372
- 773639 words of memory out of 5000000
- 37351 multiletter control sequences out of 15000+600000
+ 17388 strings out of 478475
+ 329520 string characters out of 5857861
+ 773203 words of memory out of 5000000
+ 37377 multiletter control sequences out of 15000+600000
  409969 words of font info for 91 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  87i,8n,120p,1134b,457s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on r_for_non_programmers.pdf (85 pages).
+Output written on r_for_non_programmers.pdf (93 pages).

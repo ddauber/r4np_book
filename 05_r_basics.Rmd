@@ -6,21 +6,21 @@ After a likely tedious installation of R and RStudio, as well as a somewhat deta
 
 The most basic computation you can do in R is arithmetic operations. In other words, addition, subtraction, multiplication, division, exponentiation and extraction of roots. In other words, R can be used like your pocket calculator, or more likely the one you have on your phone. For example, in Chapter \@ref(the-console-window) we already performed an addition. Thus, it might not come as a surprise how their equivalents work in R. Let's take a look at the following examples:
 
-```{r Arthimetic examples, echo=TRUE}
+```{r Arithmetic examples, echo=TRUE}
 # Addition
-10+5
+10 + 5
 
 # Subtraction
-10-5
+10 - 5
 
 # Multiplication
-10*5
+10 * 5
 
 # Division
-10/5
+10 / 5
 
 # Exponentiation
-10^2
+10 ^ 2
 
 # Square root
 sqrt(10)
@@ -188,7 +188,7 @@ In Chapter \@ref(basic-computations-in-r), I mentioned that we should avoid usin
 (avengers2 = c("Iron Man", "Captain America", "Black Widow", "Vision"))
 ```
 
-On a final note, naming your objects is limited. You cannot chose any name. First, every name needs to start with a letter. Second, you can only use letters, numbers `_` and `.` as valid components of the names for your objects [see also @wickham2016r, Chapter 4.2.]. I recommend to establish a naming convention that you adhere to. Personally I prefer to only user lower letters and `_` to separate/connect words. You want to keep names informative, succinct and precise. Here are some examples of what I would consider good and bad choices for names.
+On a final note, naming your objects is limited. You cannot chose any name. First, every name needs to start with a letter. Second, you can only use letters, numbers `_` and `.` as valid components of the names for your objects [see also @wickham2016r, Chapter 4.2.]. I recommend to establish a naming convention that you adhere to. Personally I prefer to only user lower letters and `_` to separate/connect words. You want to keep names informative, succinct and precise. Here are some examples of what some might consider good and bad choices for names.
 
 ```{r Naming your objects, echo=TRUE, eval=FALSE}
 # Good choices
@@ -202,7 +202,7 @@ measurement_of_boredom_of_watching_youtube
 Sleep.per_monthsIn.hours
 ```
 
-Ultimately, you need to be able to effectively work with your data and output. Ideally, this should be true for others as well who want or need to work with your R project as well, e.g. your co-investigator or supervisor. The same is true for your column names in datasets (see Chapter \@ref())
+Ultimately, you need to be able to effectively work with your data and output. Ideally, this should be true for others as well who want or need to work with your R project as well, e.g. your co-investigator or supervisor. The same is true for your column names in datasets (see Chapter \@ref()). Some more information about coding style (i.e. the style of writing coding) can be found in Chapter \@ref(coding-etiquette).
 
 ## Functions {#functions}
 
@@ -213,14 +213,14 @@ I used the term 'function' multiple times, but I never thoroughly explained what
 pocket_money <- c(0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89)
 
 #1 Manually compute the mean
-sum <- 0+1+1+2+3+5+8+13+21+34+55+89
-sum/12 # There are 12 items in the object
+sum <- 0 + 1 + 1 + 2 + 3 + 5 + 8 + 13 + 21 + 34 + 55 + 89
+sum / 12 # There are 12 items in the object
 
 #2 Use a function to compute the mean
 mean(pocket_money)
 
 #3 Let's make sure #1 and #2 are actually the same
-sum/12 == mean(pocket_money)
+sum / 12 == mean(pocket_money)
 ```
 
 If we manually compute the mean, we first calculate the sum of all values in the object `pocket_money`[^r_basics-1]. Then we divide it by the number of values in the object, which is `12`. This is the traditional way of computing the mean as we know it from primary school. However, by simply using the function `mean()`, we not only write considerably less code, but it is also much easier to understand as well because the word `mean` does precisely what we would expect. Which one do you find easier?
@@ -419,14 +419,16 @@ summ(mod_model2, scale = TRUE, transform.response = TRUE, vifs = TRUE)
 anova(mod_model1, mod_model2)
 ```
 
-I hope we can agree that the second example is much easier to read and understand even though you probably do not understand most of it yet. For once, I separated the different analytical steps from each other like paragraphs in a report. Apart from that, I added comments with `#` to provide more context to my code for someone else who wants to understand my analysis. Admittedly, this example is a little excessive. Usually, you might have fewer comments. Commenting is an integral part of programming because it allows you to remember what you did. Ideally, you want to strike a good balance between commenting on and writing your code. How many comments you need will likely change throughout your R programming journey. Think of comments as headers for your programming script that give it structure.
+I hope we can agree that the second example is much easier to read and understand even though you probably do not understand most of it yet. For once, I separated the different analytical steps from each other like paragraphs in a report. Apart from that, I added comments with `#` to provide more context to my code for someone else who wants to understand my analysis. Admittedly, this example is a little excessive. Usually, you might have fewer comments. Commenting is an integral part of programming because it allows you to remember what you did. Ideally, you want to strike a good balance between commenting on and writing your code. How many comments you need will likely change throughout your R programming journey. Think of comments as headers for your programming script that give it structure..
 
 We can use `#` not only to write comments but also to tell R not to run particular code. This is very helpful if you want to keep some code but do not want to use it yet. There is also a handy keyboard shortcut you can use to 'deactivate' multiple lines of code at once. Select whatever you want to 'comment out' in your script and press `Ctrl+Shift+C` (PC) or `Cmd+Shift+C` (Mac).
 
 ```{r Commenting out code, echo=TRUE, results='hide'}
-# mean(pocket_money) # R will not run this code
+# mean(pocket_money) # R will NOT run this code
 mean(pocket_money)   # R will run this code
 ```
+
+RStudio helps a lot with keeping your coding tidy and properly formatted. However, there are some additional aspects worth considering. If you want to find out more about coding style, I highly recommend to read through the [*'The tidyverse style guide'*](https://style.tidyverse.org "'The tidyverse style guide'"){target="blank"} [@wickham-2021].\
 
 ## Exercises {#exercises-chapter-5}
 
@@ -458,4 +460,4 @@ mean(pocket_money)   # R will run this code
 
 5.  What are the three steps to use a new R package that you found on CRAN?
 
-Check you answers: \@ref(solutions-for-refexercises)
+Check you answers: Solutions \@ref(exercises-solutions-5)
