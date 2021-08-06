@@ -47,6 +47,8 @@ The `r4np` package hosts a number of different datasets to work with, but at som
 
 3.  Import your data calling one of the `readr` functions in the console or RScript
 
+We will use the `readr` package to import our data. Using this package we can import a range of different file formats, including `.csv`, `.tsv`, `.txt`. If you want to import data from an `.xlsx` file you have to use another package called `readxl`. The following sections will primarily focus on how to use `reader` via RStudio or directly in your Console or RScript.
+
 ### Import data from the Files pane
 
 This approach is by far the easiest. Let's assume you have a dataset called `gender_age.csv` in your `00_raw_data` folder. If you wish to import it, you can do the following:
@@ -87,16 +89,17 @@ This approach is by far the easiest. Let's assume you have a dataset called `gen
 
 In the console you can see that R also provides the `Column specification`, which we need later when inspecting 'data types'. `readr` automatically imports all text-based columns as `chr`, i.e. `character` values. However, this might not be always true. More on this aspect of data wrangling in Chapter \@ref(change-data-types).
 
-`CONTINUE FROM HERE`
+### Importing data from the Environment pane
 
-To achieve this we rely on `readr` from the `tidyverse` package. It can install a range of different datatypes, including `.csv`, `.tsv`, `.txt`. If you want to import data from an `.xlsx` file you have to use another package called `readxl`.
+The process of important datasets from the Environment pane follows largely the one from the Files pane. Click on `Import Dataset > From Text (readr)…`. The only main difference lies in having to find the file using the `Browse…` button. The rest of the steps are the same as above.
 
-Here are some examples of how you can use `readr` to import your data. The first part is only there to create the two
+You will have to use the Environment pane for importing data from specific file types, e.g. `.txt`, because using the File pane would only open the file, but not import the data for further processing.
+
+### Importing data using functions directly
+
+If you organised your files well it can be very easy and quick to just use all the functions from `readr` directly. Here are two examples of how you can use `readr` to import your data. Make sure you have the `tidyverse` package loaded.
 
 ```{r Importing data with readr, echo=TRUE, message=FALSE, eval=FALSE}
-# Load 'readr' via 'tidyverse' or just 'readr
-library(tidyverse)
-
 # Import data from '.csv'
 read_csv("00_raw_data/gender_age.csv")
 
@@ -104,9 +107,34 @@ read_csv("00_raw_data/gender_age.csv")
 read_delim("00_raw_data/gender_age.txt", delim = "|")
 ```
 
-## Inspecting your raw data {#inspecting-raw-data}
+You might be wondering, whether you can use `read_delim()` to import `.csv` files too. The answer is 'Yes, you can!'. In contrast to `read_delim()`, `read_csv()` sets the delimiter to `,` by default. This is mainly for convenience, because `.csv` files are one of the most popular file formats that people use for storing their data.
 
-For the rest of this chapter, we will use the `wvs` dataset from the `r4np` package. However, we do not know much about this dataset and therefore we cannot ask any research questions worth investigating. The first method of inspecting the data is to simply type the name of the object, i.e. `wvs`.
+You might be also wondering what actually a 'delimiter' is. When you record data in a plain-text file it is easy to see where a new observation starts and ends, because it is defined by a row in your file. However, we also need to tell our software where a new column starts, i.e. where a cell starts and ends. Consider the following example. We have a file that holds our data which looks like this:
+
+    idagegender
+    124male
+    256female
+    333male
+
+The first row we probably can still decipher as `id`, `age`, `gender`. However, the next row makes it difficult to understand which value represents the `id` of a participant and which value reflects the `age` of that participant. Like us, computer software would find it hard too to make a decision regarding this ambiguous content. Thus, we need to use delimiters to make it very clear which value belongs to which column. In a `.csv` file the data would be separated by a `,`.
+
+    id,age,gender
+    1,24,male
+    2,56,female
+    3,33,male
+
+Considering our example from above, we could also use `|` as a delimiter.
+
+    id|age|gender
+    1|24|male
+    2|56|female
+    3|33|male
+
+There is a lot more to `readr` than could be covered in this book. If you want to know more about this R package, I highly recommend to look at the [readr webpage](https://readr.tidyverse.org "package webpage"){target="blank"}.
+
+## Inspecting your data {#inspecting-raw-data}
+
+For the rest of this chapter, we will use the `wvs` dataset from the `r4np` package. However, we do not know much about this dataset and therefore we cannot ask any research questions worth investigating. Therefore we need to look at what it contains. The first method of inspecting a dataset is to type the name of the object, i.e. `wvs`.
 
 ```{r Open wvs, echo=TRUE, message=FALSE}
 # Ensure you loaded the 'r4np' package first
@@ -118,9 +146,9 @@ wvs
 
 The result is a series of rows and columns. The first information we receive is: `A tibble: 69,578 x 9`. This indicates that our dataset has 69,578 observations (i.e. rows) and 9 columns (i.e. variables). This rectangular format is the one we encounter most frequently in Social Sciences (and probably beyond). If you ever worked in Microsoft Excel, this format will look familiar.
 
-Even though it might be nice to look at this dataset in this way, it is not particularly useful. Depending on your monitor size you might only see a small number of columns and therefore we do not get to see a complete list of variables. All in all, we hardly ever will find much use in inspecting data this way. Luckily there are other functions that can help us.
+Even though it might be nice to look at a dataset in this way, it is not particularly useful. Depending on your monitor size you might only see a small number of columns and therefore we do not get to see a complete list of all variables. In short, we hardly ever will find much use in inspecting data this way. Luckily there are other functions that can help us.
 
-If you want to see each variable covered in the dataset and their data types, you can use the function `glimpse()` from the `dplyr` package (which is loaded when use load the `tidyverse` package).
+If you want to see each variable covered in the dataset and their data types, you can use the function `glimpse()` from the `dplyr` package (which is loaded when load the `tidyverse` package).
 
 ```{r Using the glimpse() function, echo=TRUE}
 glimpse(wvs)
@@ -163,7 +191,7 @@ Inspecting your data in this way can be helpful to get a better understanding of
 If you have an eagle eye, you might have noticed that most of the variable names in `wvs` are not consistent or easy to read/use.
 
 ``` {#messy_column_names .r}
-# Whitespace and capital letters
+# Whitespace and inconsistent capitalisation
 Participant ID        
 Country Code          
 Country name          
@@ -176,9 +204,9 @@ Freedom.of.Choice
 Satisfaction-with-life
 ```
 
-From Chapter \@ref(coding-etiquette), you will remember that being consistent in the way your write your code and name your objects is essential. The same applies, of course, to variable names. R will not break using the existing names, but it will save you a lot of frustration if we take a minute to clean the name and make them more consistent.
+From Chapter \@ref(coding-etiquette), you will remember that being consistent in the way your write your code and name your objects is essential. The same applies, of course, to variable names. R will not break using the existing names, but it will save you a lot of frustration if we take a minute to clean the names and make them more consistent.
 
-You are probably thinking: This is easy, I just open the dataset in Excel and change all the column names. Indeed, it would be a viable and easy option, but it is not very efficient. Instead, we can make use of the `janitor` package. By definition, `janitor` is a package that helps to clean up whatever needs cleaning. In our case we want to tidy our column names. We can use the function `clean_names()` to achieve this. We store the result in a new object called `wvs` to keep those changes. The object will also show up in our Environment pane.
+You are probably thinking: This is easy, I just open the dataset in Excel and change all the column names. Indeed, it would be a viable and easy option, but it is not very efficient, especially with larger datasets that have many more variables. Instead, we can make use of the `janitor` package. By definition, `janitor` is a package that helps to clean up whatever needs cleaning. In our case we want to tidy our column names. We can use the function `clean_names()` to achieve this. We store the result in a new object called `wvs` to keep those changes. The object will also show up in our Environment pane.
 
 ```{r Cleaning column names with janitor, echo=TRUE}
 wvs <- janitor::clean_names(wvs)
@@ -191,11 +219,10 @@ If, for whatever reason, the variable names are still not looking the way you wa
 
 ```{r Use rename() function, echo=TRUE}
 wvs <- wvs %>% rename(satisfaction = satisfaction_with_life)
-
 glimpse(wvs)
 ```
 
-You are probably wondering what `%>%` stands for. This symbol is called a *'piping operator'* and it allows you to chain multiple functions together by considering the output of the previous function. So, do not confuse `<-` with `%>%`. Each serves a different purpose. The `%>%` has become synonymous with the `tidyverse` approach to R programming and is the chosen approach for this book. Many functions from the `tidyverse` are designed to be chained together.
+You are probably wondering what `%>%` stands for. This symbol is called a *'piping operator'* and it allows us to chain multiple functions together by considering the output of the previous function. So, do not confuse `<-` with `%>%`. Each operator serves a different purpose. The `%>%` has become synonymous with the `tidyverse` approach to R programming and is the chosen approach for this book. Many functions from the `tidyverse` are designed to be chained together.
 
 If we wanted to spell out what we just did we could say:
 
@@ -204,6 +231,16 @@ If we wanted to spell out what we just did we could say:
 2.  `wvs %>%`: We defined the dataset we want to use with the functions defined after the `%>%`.
 
 3.  `rename(satisfaction = satisfcation_with_life)`: We define a new name `satisfaction` for the column `satisfaction_with_life`. Notice that the order is `new_name = old_name`. Here we also use `=`. A rare occasion where it makes sense to do so.
+
+Just for clarification, the following two lines of code accomplish the same task. The only difference lies that with `%>%` we could chain another function right after it. You could say, it is a matter of taste which approach you prefer. However, in later chapters it will become obvious why using `%>%` is very advantageous.
+
+```{r Renaming a column with %>% and without %>%, echo=TRUE}
+# Renaming a column using '%>%'
+wvs %>% rename(satisfaction_new = satisfaction)
+
+# Renaming a column without '%>%'
+rename(wvs, satisfaction_new = satisfaction)
+```
 
 Since you will be using the pipe operator very frequently, it is a good idea to remember the keyboard shortcut for it: `Ctrl+Shift+M` for PC and `Cmd+Shift+M` for Mac.
 
@@ -269,7 +306,9 @@ glimpse(wvs)
 
 The output in the console shows that we successfully performed the transformation and our data types are as we intended them to be. Mission accomplished.
 
-## Recoding factors (e.g. gender coded as 0 and 1)
+## Handling factors
+
+### Recoding factors
 
 Another common problem we have to tackle when working with data is their representation in the dataset. For example, `gender` could be measured as `male` and `female`[^data_wrangling-1] or as `0` and `1`. R does not mind which way you represent your data, but some other software does. Therefore, when we import data from somewhere else the values of a variable might not look the way we want. The practicality of having your data represented accurately as what they are becomes obvious when you intend to create tables and plots.
 
@@ -313,7 +352,119 @@ wvs %>% count(gender) %>%
 
 Plots are an excellent way to explore your data and understand relationships between variables. More about this when we start to perform analytical steps on our data (see Chapter \@ref(descriptive-statistics) and beyond).
 
+Another use case for recoding factors could be for purely cosmetic reasons. When looking through our dataset, we might notice that some country names are very long and would not look great in data visualisations or tables. Thus, we could consider shortening them.
+
+First we need to find out which country names are particularly long. There are 48 countries in this dataset, so it could take some time to look through them all. Instead we could use the function`filter()` from `dplyr` to pick only countries with a long name. However, this poses another problem: How can we tell the filter function to pick only country names with a certain length? Ideally, we would want a function that does the counting for us. As you probably anticipated, there is a package, called `stringr`, which also belongs to the `tidyverse,` and has a function which counts the number of characters that represent a value in our dataset: `str_length()`. This function takes any `character` variable and returns the length of it. This also works with `factors`, because this function can 'coerce' it into a `character`, i.e. it just ignores that it is a `factor` and looks at is as if it was a regular `character` variable. Good news for us, because now we can put the puzzle pieces together.
+
+```{r Listing selected country names, echo=TRUE}
+wvs %>%
+  filter(stringr::str_length(country_name) >= 15) %>% 
+  count(country_name)
+```
+
+I use the value `15` arbitrarily - after some trial and error. You can change the value and see which other countries would show up with a lower threshold. However, this number seems to do the trick and returns three countries that seem to have longer labels. All we have to do is to replace these categories with new ones the same way we recoded `gender`. You probably can guess already what we have to do.
+
+```{r Recoding country names, echo=TRUE}
+wvs <- wvs %>%
+  mutate(country_name = fct_recode(country_name,
+                                   "Bolivia" = "Bolivia, Plurinational State of",
+                                   "Iran" = "Iran, Islamic Republic of",
+                                   "Korea" = "Korea, Republic of"))
+```
+
+### Reordering factor levels
+
+`TODO: CONTINUE FROM HERE`
+
+-   Consider whether this should happen here or later. Problably later, actually when we talk about descriptive statistics. This is not really data cleaning at this point. Too much stuff already. Move to descriptive statistics setciont
+
 ## Dealing with missing data
+
+There is hardly any Social Sciences project where researchers do not have to deal with data that is missing. Participants are sometimes not willing to complete a questionnaire or miss a second round of data collection entirely, e.g in longitudinal studies. It is not the purpose of this chapter to delve into all aspects of analysing missing data, but provide a solid starting point. There are mainly three steps involved in dealing with missing data:
+
+1.  Mapping missing data
+
+2.  Identifying patterns of missing data
+
+3.  Replacing or removing missing data
+
+### Mapping missing data
+
+Every study that intends to be rigorous will have to first identify how much data is missing. In R this can be achieved in multiple ways, but using a specialised package like `naniar` does help us to do this very quickly and systematically. First we have to load the `naniar` package and then we use the function `vis_miss()` to visualise how much and where exactly data is missing.
+
+```{r Missing data matrix with naniar, echo=TRUE}
+library(naniar)
+vis_miss(wvs)
+```
+
+`naniar` plays along nicely with the `tidyverse` approach of programming. As such, it would also be possible to write `wvs %>% vis_miss()`.
+
+As we can see, 99,7% of our dataset is complete and we are only missing 0.3%. The dark lines (actually blocks) refer to missing data points. On the x-axis we can see all our variables and on the y-axis we see our observations. This is the same layout as our rectangular dataset: Rows are observations and columns are variables. Overall, this dataset appears relatively complete (luckily).
+
+When working with larger datasets it might be useful to rank variables by their degree of missing data to see where the biggest problems lie.
+
+```{r Amount of missing data by variable, fig.cap="Missing data per variable", label = "missing-data-per-variable", warning=FALSE}
+gg_miss_var(wvs)
+```
+
+It is very noticeable that `freedom_of_choice` has the most missing data points, while `participant_id`, `country_name`, and `country_code` have no missing values. If you prefer to see the actual numbers instead, we can use as series of functions that start with `miss_` (for a complete list of all functions see the [reference page of naniar](https://naniar.njtierney.com/reference/index.html "reference page of naniar"){target="blank"}). In order to retrieve the numeric values which are reflected in the plot above, we can write the following:
+
+```{r Missing data by variable in numbers, echo=TRUE}
+# Summarise the missingness in each variable
+miss_var_summary(wvs)
+```
+
+For mapping missing data, especially in larger datasets with many variables, I tend to prefer data visualisations over numerical results. This also has the benefit that patterns of missing data can be easily identified as well.
+
+### Identifying patterns of missing data
+
+If you find that your data 'suffers' from missing data, it is essential to answer another question: Is data missing systematically? This is quite an important diagnostic step since systematically missing data would imply that if we remove these observations from our dataset as is, we likely produce wrong results.
+
+We can distinguish missing data based on how it is missing, i.e.
+
+-   missing completely at random,
+
+-   missing at random, and
+
+-   missing not at random. [@rubin-1976]
+
+Missing completely at random (MCAR) means that neither observed nor missing data can systematically explain why data is missing. We can assume that data is missing not because of certain variables or conditions in our dataset.
+
+Missing at random (MAR) refers to a situation where the missing data can only be explained by the observed data, but not the missing data. @dong-et-al-2013 (p. 2) provide a good example when this is the case:
+
+> *Let's suppose that students who scored low on the pre-test are more likely to drop out of the course, hence, their scores on the post-test are missing. If we assume that the probability of missing the post-test depends only on scores on the pre-test, then the missing mechanism on the post-test is MAR. In other words, for students who have the same pre-test score, the probability of their missing the post-test is random.*
+
+Lastly, missing not at random (MNAR) simply implies that data is missing systematically and that other variables or reasons exist that explain why data is missing. In questionnaire-based research an easily overlooked reason that can explain missing data is the 'page-drop-off' phenomenon. In such cases, participants stop completing a questionnaire once they advance to another page. Figure \@ref(fig:mnar-example) shows this very clearly for a large scale project where an online questionnaire was used. After almost every page break in the questionnaire, some participants decided to discontinue. Finding these types of patterns is difficult when only working with numeric values. Thus, it is always advisable to visualise your data as well.
+
+```{r fig.cap="MNAR pattern in a dataset due to 'page-drop-offs'", echo=FALSE, label="mnar-example"}
+knitr::include_graphics("images/chapter_07_img/03_missing_data/00_mnar_example.png")
+```
+
+Understanding patterns of missing data also means we have to look at whether there are relationships between missing values, for example the co-occurrence of missing values across different variables. This can be achieved by using upset plots. An upset plot consists of three parts: Set size, intersection size and a venn diagram which defines the intersection.
+
+```{r Upset plot, echo=TRUE}
+# I specified the number of sets to show 6 variables (the only ones with missing values)
+# By default this function only shows the top 5 sets.
+gg_miss_upset(wvs, nsets = 6)
+```
+
+In our dataset, the most frequent combination of missing data occures when only `freedom_of_choice` is missing (the first column), but nothing else. The next frequent combination of missing data is defined by a combination of two variables: `age` and `year_of_birth`. In total 296 participants had `age` and `year_of_birth` missing but nothing else.
+
+The set size shown in the upset plot refers to the number of missing values for each variable in the diagram. This correspondents to what we have found when looking at Figure \@ref(fig:missing-data-per-variable)).
+
+If you are looking for more inspiration of how you could visualise and identify patterns of missingness in your data, you might find the '[Gallery](https://naniar.njtierney.com/articles/naniar-visualisation.html "Gallery of 'naniar' plots"){target="blank"}' of the `naniar` website particularly useful.
+
+After this initial inspection of the data, we might come to the conclusion that there could be sufficient suspicion that our data is not completely randomly missing. However, it would be good to reliably confirm our suspicion by running a statistical test. The `naniar` package comes with the very popular Little's MCAR test, which checks for us whether data is missing completely at random.\
+
+```{r Little-s MCAR test, echo=TRUE}
+wvs %>% mcar_test()
+```
+
+Since the `p.value` of the test is so small that it got rounded down to `0`, i.e. $p<0.0001$, we have to assume that our data is not missing completely at random.
+
+`TODO: CONTINUE FROM HERE`
+
+### Replacing or removing missing data
 
 ## Latent constructs and their reliability
 

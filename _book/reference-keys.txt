@@ -63,3 +63,11 @@ next-steps-twitter
 exercises-solutions
 exercises-solutions-5
 colnames-cleaning
+importing-data-from-the-environment-pane
+importing-data-using-functions-directly
+recoding-factors-e.g.-gender-coded-as-0-and-1
+mapping-missing-data
+identifying-patterns-of-missing-data
+replacing-or-removing-missing-data
+fig:mnar-example
+fig:missing-data-per-variable
