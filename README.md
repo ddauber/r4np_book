@@ -1,4 +1,7 @@
 # Welcome to R For Non-Programmers: A Guide for Social Scientists 👋
+<!-- badges: start -->
+  [![R-CMD-check](https://github.com/ddauber/R-for-Non-Programmers/workflows/R-CMD-check/badge.svg)](https://github.com/ddauber/R-for-Non-Programmers/actions)
+  <!-- badges: end -->
 
 `Short description of what the book intends to achieve`
 
