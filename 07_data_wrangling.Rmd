@@ -193,7 +193,6 @@ If you have an eagle eye, you might have noticed that most of the variable names
 ``` {#messy_column_names .r}
 # Whitespace and inconsistent capitalisation
 Participant ID        
-Country Code          
 Country name          
 Gender                
 Age                   
@@ -215,10 +214,11 @@ glimpse(wvs)
 
 Now that `janitor` has done its magic, we suddenly have easy to read variable names that are consistent with the 'Tidyverse style guide' [@wickham-2021].
 
-If, for whatever reason, the variable names are still not looking the way you want, you can use the function `rename()` from the `dplyr` package.
+If, for whatever reason, the variable names are still not looking the way you want, you can use the function `rename()` from the `dplyr` package to manually assign new variable names.
 
 ```{r Use rename() function, echo=TRUE}
-wvs <- wvs %>% rename(satisfaction = satisfaction_with_life)
+wvs <- wvs %>% rename(satisfaction = satisfaction_with_life,
+                      country = country_name)
 glimpse(wvs)
 ```
 
@@ -234,7 +234,7 @@ If we wanted to spell out what we just did we could say:
 
 Just for clarification, the following two lines of code accomplish the same task. The only difference lies that with `%>%` we could chain another function right after it. You could say, it is a matter of taste which approach you prefer. However, in later chapters it will become obvious why using `%>%` is very advantageous.
 
-```{r Renaming a column with %>% and without %>%, echo=TRUE}
+```{r Renaming a column with %>% and without %>%, echo=TRUE, results='hide'}
 # Renaming a column using '%>%'
 wvs %>% rename(satisfaction_new = satisfaction)
 
@@ -282,7 +282,7 @@ Now that we have a solid understanding of different data types, we can have a lo
 glimpse(wvs)
 ```
 
-`readr` did a great job in identifying all the numeric variables. However, by default, `readr` imports all variables that include text as `<chr>`. It appears, in our dataset this is not quite correct. The variables `country_code`, `countr_name`, `gender` and `relationship_status` specify a finite number of categories. Therefore they should be classified as `factor`. The variable `participant_id` is represented by numbers, but its meaning is also rather categorical in nature. We would not use the ID numbers of participants to perform additions or multiplications. This would simply make no sense. Therefore, it might be wise to turn them into a `factor` as well, even though we likely will not use it in our analysis and would make no difference. However, I am a stickler for those kind of things, so I would include in it.
+`readr` did a great job in identifying all the numeric variables. However, by default, `readr` imports all variables that include text as `<chr>`. It appears, in our dataset this is not quite correct. The variables `countr_name`, `gender` and `relationship_status` specify a finite number of categories. Therefore they should be classified as `factor`. The variable `participant_id` is represented by numbers, but its meaning is also rather categorical in nature. We would not use the ID numbers of participants to perform additions or multiplications. This would simply make no sense. Therefore, it might be wise to turn them into a `factor` as well, even though we likely will not use it in our analysis and would make no difference. However, I am a stickler for those kind of things, so I would include in it.
 
 In order to perform the conversion we need to use two new functions from `dplyr`:
 
@@ -290,12 +290,11 @@ In order to perform the conversion we need to use two new functions from `dplyr`
 
 -   `as_factor()`: Converts data from one type into a `factor`.
 
-If we want to convert all variables in one go, we can put them all into the same function, separated by a `,`.
+If we want to convert all variables in one go, we can put them into the same function, separated by a `,`.
 
 ```{r Convert dataypes, echo=TRUE}
 wvs <- wvs %>%
-  mutate(country_code = as_factor(country_code),
-         country_name = as_factor(country_name),
+  mutate(country = as_factor(country),
          gender = as_factor(gender),
          relationship_status = as_factor(relationship_status),
          participant_id = as_factor(participant_id)
@@ -306,13 +305,13 @@ glimpse(wvs)
 
 The output in the console shows that we successfully performed the transformation and our data types are as we intended them to be. Mission accomplished.
 
-## Handling factors
+## Handling factors {#handling-factors}
 
-### Recoding factors
+### Recoding factors {#recoding-factors}
 
 Another common problem we have to tackle when working with data is their representation in the dataset. For example, `gender` could be measured as `male` and `female`[^data_wrangling-1] or as `0` and `1`. R does not mind which way you represent your data, but some other software does. Therefore, when we import data from somewhere else the values of a variable might not look the way we want. The practicality of having your data represented accurately as what they are becomes obvious when you intend to create tables and plots.
 
-[^data_wrangling-1]: A sophisticated research project would likely not rely on a dichotomous approach to gender, but appreciate the diversity in this regard.
+[^data_wrangling-1]: oA sophisticated research project would likely not rely on a dichotomous approach to gender, but appreciate the diversity in this regard.
 
 For example, we might be interested to know how many participants in the `wvs` were `male` and how many were `female`. The function `count()` from `dplyr` does exactly that.
 
@@ -358,15 +357,15 @@ First we need to find out which country names are particularly long. There are 4
 
 ```{r Listing selected country names, echo=TRUE}
 wvs %>%
-  filter(stringr::str_length(country_name) >= 15) %>% 
-  count(country_name)
+  filter(stringr::str_length(country) >= 15) %>% 
+  count(country)
 ```
 
 I use the value `15` arbitrarily - after some trial and error. You can change the value and see which other countries would show up with a lower threshold. However, this number seems to do the trick and returns three countries that seem to have longer labels. All we have to do is to replace these categories with new ones the same way we recoded `gender`. You probably can guess already what we have to do.
 
 ```{r Recoding country names, echo=TRUE}
 wvs <- wvs %>%
-  mutate(country_name = fct_recode(country_name,
+  mutate(country = fct_recode(country,
                                    "Bolivia" = "Bolivia, Plurinational State of",
                                    "Iran" = "Iran, Islamic Republic of",
                                    "Korea" = "Korea, Republic of"))
@@ -378,7 +377,7 @@ wvs <- wvs %>%
 
 -   Consider whether this should happen here or later. Problably later, actually when we talk about descriptive statistics. This is not really data cleaning at this point. Too much stuff already. Move to descriptive statistics setciont
 
-## Dealing with missing data
+## Dealing with missing data {#dealing-with-missing-data}
 
 There is hardly any Social Sciences project where researchers do not have to deal with data that is missing. Participants are sometimes not willing to complete a questionnaire or miss a second round of data collection entirely, e.g in longitudinal studies. It is not the purpose of this chapter to delve into all aspects of analysing missing data, but provide a solid starting point. There are mainly three steps involved in dealing with missing data:
 
@@ -388,7 +387,7 @@ There is hardly any Social Sciences project where researchers do not have to dea
 
 3.  Replacing or removing missing data
 
-### Mapping missing data
+### Mapping missing data {#mapping-missing-data}
 
 Every study that intends to be rigorous will have to first identify how much data is missing. In R this can be achieved in multiple ways, but using a specialised package like `naniar` does help us to do this very quickly and systematically. First we have to load the `naniar` package and then we use the function `vis_miss()` to visualise how much and where exactly data is missing.
 
@@ -407,7 +406,7 @@ When working with larger datasets it might be useful to rank variables by their 
 gg_miss_var(wvs)
 ```
 
-It is very noticeable that `freedom_of_choice` has the most missing data points, while `participant_id`, `country_name`, and `country_code` have no missing values. If you prefer to see the actual numbers instead, we can use as series of functions that start with `miss_` (for a complete list of all functions see the [reference page of naniar](https://naniar.njtierney.com/reference/index.html "reference page of naniar"){target="blank"}). In order to retrieve the numeric values which are reflected in the plot above, we can write the following:
+It is very noticeable that `freedom_of_choice` has the most missing data points, while `participant_id`, and `country_name` have no missing values. If you prefer to see the actual numbers instead, we can use as series of functions that start with `miss_` (for a complete list of all functions see the [reference page of naniar](https://naniar.njtierney.com/reference/index.html "reference page of naniar"){target="blank"}). In order to retrieve the numeric values which are reflected in the plot above, we can write the following:
 
 ```{r Missing data by variable in numbers, echo=TRUE}
 # Summarise the missingness in each variable
@@ -416,7 +415,7 @@ miss_var_summary(wvs)
 
 For mapping missing data, especially in larger datasets with many variables, I tend to prefer data visualisations over numerical results. This also has the benefit that patterns of missing data can be easily identified as well.
 
-### Identifying patterns of missing data
+### Identifying patterns of missing data {#patterns-of-missing-data}
 
 If you find that your data 'suffers' from missing data, it is essential to answer another question: Is data missing systematically? This is quite an important diagnostic step since systematically missing data would imply that if we remove these observations from our dataset as is, we likely produce wrong results.
 
@@ -428,43 +427,93 @@ We can distinguish missing data based on how it is missing, i.e.
 
 -   missing not at random. [@rubin-1976]
 
-Missing completely at random (MCAR) means that neither observed nor missing data can systematically explain why data is missing. We can assume that data is missing not because of certain variables or conditions in our dataset.
+#### Missing completetly at random (MCAR) {#missing-completetly-at-random-mcar}
 
-Missing at random (MAR) refers to a situation where the missing data can only be explained by the observed data, but not the missing data. @dong-et-al-2013 (p. 2) provide a good example when this is the case:
+Missing completely at random (MCAR) means that neither observed nor missing data can systematically explain why data is missing.
 
-> *Let's suppose that students who scored low on the pre-test are more likely to drop out of the course, hence, their scores on the post-test are missing. If we assume that the probability of missing the post-test depends only on scores on the pre-test, then the missing mechanism on the post-test is MAR. In other words, for students who have the same pre-test score, the probability of their missing the post-test is random.*
+The `naniar` package comes with the very popular Little's MCAR test [@little-1988], which provides insights into whether our data is missing completely at random. Thus, we can call the function `mcar_test()` and inspect the result.
 
-Lastly, missing not at random (MNAR) simply implies that data is missing systematically and that other variables or reasons exist that explain why data is missing. In questionnaire-based research an easily overlooked reason that can explain missing data is the 'page-drop-off' phenomenon. In such cases, participants stop completing a questionnaire once they advance to another page. Figure \@ref(fig:mnar-example) shows this very clearly for a large scale project where an online questionnaire was used. After almost every page break in the questionnaire, some participants decided to discontinue. Finding these types of patterns is difficult when only working with numeric values. Thus, it is always advisable to visualise your data as well.
+```{r Little-s MCAR test, echo=TRUE}
+wvs %>%
+  select(-participant_id) %>% # Remove variables which do not reflect a response
+  mcar_test()
+```
+
+When you run such a test, you have to make sure that variables which are not part of the data collection are removed. In our case, the `participant_id` is generated by the researcher and does not represent an actual response by the participants. As such, we need to remove it using `select()` before we can run the test. A `-` inverts the meaning of `select()`. While `select(participant_id)` would do what it says, i.e. include it as the only variable in the test, `select(-participant_id)` results in selecting everything but this variable in our test. You will find, it is sometimes easier to remove a variable with `select()` rather than listing all the variables you want to keep.
+
+Since the `p.value` of the test is so small that it got rounded down to `0`, i.e. $p<0.0001$, we have to assume that our data is not missing completely at random. If we found that $p>0.05$, we would have confirmation that data is missing completely at random.
+
+#### Missing at random (MAR) {#missing-at-random-mar}
+
+Missing at random (MAR) refers to a situation where missing data can only be explained by the observed data, but not the missing data. @dong-et-al-2013 (p. 2) provide a good example when this is the case:
+
+> *Let's suppose that students who scored low on the pre-test are more likely to drop out of the course, hence, their scores on the post-test are missing. If we assume that the probability of missing the post-test depends only on scores on the pre-test, then the missing mechanism on the post-test is MAR. In other words, for students who have the same pre-test score, the probability of [them] missing the post-test is random.*
+
+Thus, a main difference between MCAR and MAR data lies in the fact that we can observe some patterns of missing data if data is MAR. These patterns are only based on data we actually have, i.e. observed data.
+
+Accordingly, we first look into variables that have no missing data and see whether they can explain our missing data in other variables. For example, we could investigate whether missing data in `freedom_of_choice` is attributed to specific countries. <a id="missing-data-by-country-table"></a>
+
+```{r Check missing data by country, }
+wvs %>% 
+  group_by(country) %>% 
+  filter(is.na(freedom_of_choice)) %>% 
+  count() %>% 
+  arrange(desc(n))                      # Rearranging scores for easy reading
+```
+
+As becomes clear, there are four countries that have particularly high numbers of missing data for `freedom_of_choice`: Japan, Brazil, New Zealand, Russia and Bolivia. Why this is the case lies beyond this dataset and is something only the researchers themselves could possibly explain. Collecting data in different countries is particularly challenging and one is quickly faced with different unfavourable conditions. As such, the missing data is not completely random, as it seems, because we have some first evidence that the location of data collection might have affected the completeness of it.
+
+Another way of understanding patterns of missing data can be achieved by looking at whether there are relationships between missing values, for example the co-occurrence of missing values across different variables. This can be achieved by using upset plots. An upset plot consists of three parts: Set size, intersection size and a Venn diagram which defines the intersections.
+
+```{r Upset plot, echo=TRUE}
+gg_miss_upset(wvs)
+```
+
+In our dataset, the most frequent combination of missing data occurs when only `freedom_of_choice` is missing (the first column), but nothing else. Similar results can be found for `relationships_status` and `age`. The first combination of missing data is defined by a combination of two variables: `satisfaction` and `freedom_of_choice`. In total 107 participants had `age` and `year_of_birth` missing but nothing else.
+
+The 'set size' shown in the upset plot refers to the number of missing values for each variable in the diagram. This correspondents to what we have found when looking at Figure \@ref(fig:missing-data-per-variable)).
+
+This analysis also suggests that data is not completely randomly missing and that we have data to help explain it.
+
+#### Missing not at random (MNAR) {#missing-not-at-random-mnar}
+
+Lastly, missing not at random (MNAR) implies that data is missing systematically and that other variables or reasons exist that explain why data is missing, but they are not fully known to us. In questionnaire-based research an easily overlooked reason that can explain missing data is the 'page-drop-off' phenomenon. In such cases, participants stop completing a questionnaire once they advance to another page. Figure \@ref(fig:mnar-example) shows this very clearly for a large scale project where an online questionnaire was used. After almost every page break in the questionnaire, some participants decided to discontinue. Finding these types of patterns is difficult when only working with numeric values. Thus, it is always advisable to visualise your data as well.
 
 ```{r fig.cap="MNAR pattern in a dataset due to 'page-drop-offs'", echo=FALSE, label="mnar-example"}
 knitr::include_graphics("images/chapter_07_img/03_missing_data/00_mnar_example.png")
 ```
 
-Understanding patterns of missing data also means we have to look at whether there are relationships between missing values, for example the co-occurrence of missing values across different variables. This can be achieved by using upset plots. An upset plot consists of three parts: Set size, intersection size and a venn diagram which defines the intersection.
+Defining whether a dataset is MNAR or not is mainly achieved by ruling out MCAR and MAR assumptions. It is not possible to test a dataset whether missing data is MNAR, unless we have more information about the underlying population available [@van2020rebutting].
 
-```{r Upset plot, echo=TRUE}
-# I specified the number of sets to show 6 variables (the only ones with missing values)
-# By default this function only shows the top 5 sets.
-gg_miss_upset(wvs, nsets = 6)
-```
-
-In our dataset, the most frequent combination of missing data occures when only `freedom_of_choice` is missing (the first column), but nothing else. The next frequent combination of missing data is defined by a combination of two variables: `age` and `year_of_birth`. In total 296 participants had `age` and `year_of_birth` missing but nothing else.
-
-The set size shown in the upset plot refers to the number of missing values for each variable in the diagram. This correspondents to what we have found when looking at Figure \@ref(fig:missing-data-per-variable)).
+We have sufficient evidence that our data is MAR as was shown [above](#missing-at-random-mar), because we managed to identify some relationships between unobserved and observed data. In practice, it is very rare to find datasets that are truly MCAR [@van-buuren-2018]. There we might consider 'imputation' as a possible strategy to solve our missing data problem.
 
 If you are looking for more inspiration of how you could visualise and identify patterns of missingness in your data, you might find the '[Gallery](https://naniar.njtierney.com/articles/naniar-visualisation.html "Gallery of 'naniar' plots"){target="blank"}' of the `naniar` website particularly useful.
 
-After this initial inspection of the data, we might come to the conclusion that there could be sufficient suspicion that our data is not completely randomly missing. However, it would be good to reliably confirm our suspicion by running a statistical test. The `naniar` package comes with the very popular Little's MCAR test, which checks for us whether data is missing completely at random.\
+### Replacing or removing missing data {#replacing-removing-missing-data}
 
-```{r Little-s MCAR test, echo=TRUE}
-wvs %>% mcar_test()
+Once you determined which pattern of missing data applies to your dataset, it is time to evaluate the options of how we want to deal with those missing values. Generally, you can either keep the missing values as they are, replace them or remove them entirely.
+
+@jakobsen-et-al-2017 provide a rule of thumb of 5% where researchers can consider missing data as negligible, i.e. we can ignore the missing values, because they won't affect our analysis substantially. They also argue that if the proportion of missing data exceeds 40%, we should also only work with our observed data. However, with such a large amount of missing data, it is very questionable whether we can rely on our analysis as much as we want to. If the missing data lies somewhere in-between this range, we need to consider the missing data pattern at hand.
+
+If data is MCAR, we could remove missing data. This process is called 'listwise deletion', i.e. you remove all data from a participant with missing data. As just mentioned, removing missing values is only suitable if you have relatively few missing values in your dataset (see also @schafer-1999). There are additional problems with deleting observations listwise, many of which are summarised by @van-buuren-2018 in his [introduction](https://stefvanbuuren.name/fimd/sec-simplesolutions.html "introduction"){target="blank"}. Usually, we try to avoid removing data as much as possible. If you wanted to perform listwise deletion it can be done with a single function call: `na.omit()` from the built-in `stats` package. Here is an example of how we can apply this function.
+
+```{r Example of removing all missing data points, echo=TRUE}
+# No more missing data in this plot
+wvs %>% na.omit() %>% vis_miss()
+
+# How much observations are left after we removed all missing data?
+wvs %>% na.omit() %>% count()
 ```
 
-Since the `p.value` of the test is so small that it got rounded down to `0`, i.e. $p<0.0001$, we have to assume that our data is not missing completely at random.
+If you wanted to remove the missing data without the plot you can just use `wvs_no_na <- na.omit(wvs)`. I always recommend to save the result in a new object to ensure I keep my original data available. This can be helpful when trying to compare how this decision affects my analysis, i.e. I can run the analysis with and without missing data removed. However, for the `wvs` dataset this does not seem to be the best option.
 
-`TODO: CONTINUE FROM HERE`
+Based on our analysis of the `wvs` dataset (by no means complete!), we could assume that data is MAR. In such cases, it is possible to 'impute' the missing values, i.e. we replace the missing data with computed scores. This is possible because we can model the missing data based on variables we have. For obvious reasons, we cannot model missing data based on variables we have not measured in our study.
 
-### Replacing or removing missing data
+You might be thinking: Why would it make data better if we 'make up' numbers? Is this not cheating? Imputation of missing values is a science in itself. There is plenty to read about the process of handling missing data which would reach far beyond the scope of this book. However, the seminal work of @van-buuren-2018, @dong-et-al-2013 and @jakobsen-et-al-2017 are excellent starting points. In short: Simply removing missing data can lead to biases in your data, e.g. if we removed missing data in our dataset, we would mainly exclude participants from Japan, Brazil, New Zealand, Russia and Bolivia (as we found out [earlier](#missing-data-by-country-table)). While imputation is not perfect, scholars have shown that it can produce more reliable results than not using imputation at all (`add some references here`).
+
+Even though our dataset has only a very small amount of missing data (relative to the entire size), we can still make use of imputation if we wanted to run regression (see Chapter \@ref(regression)). There are many different ways of how one can approach this task. For illustration purposes only, I chose the popular `mice` package which uses `Conditional Multiple Imputation`. As highlighted by @van2020rebutting, multiple imputation has not yet reached the same popularity as listwise deletion, despite its benefits. A main reason for this lies in the complexity of using this technique.
+
+`REVISIT THIS CHAPTER`
 
 ## Latent constructs and their reliability
 

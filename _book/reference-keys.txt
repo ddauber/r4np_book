@@ -71,3 +71,13 @@ identifying-patterns-of-missing-data
 replacing-or-removing-missing-data
 fig:mnar-example
 fig:missing-data-per-variable
+handling-factors
+recoding-factors
+reordering-factor-levels
+patterns-of-missing-data
+missing-completetly-at-random-mcar
+missing-at-random-mar
+missing-not-at-random-mnar
+keeping-replacing-removing-missing-data
+replacing-removing-missing-data
+regression
