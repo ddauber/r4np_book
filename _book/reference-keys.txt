@@ -81,3 +81,7 @@ missing-not-at-random-mnar
 keeping-replacing-removing-missing-data
 replacing-removing-missing-data
 regression
+importing-data-using-functions
+latent-constructs
+fig:mapping-missing-data
+main-takeaways-regarding-dealing-with-missing-data

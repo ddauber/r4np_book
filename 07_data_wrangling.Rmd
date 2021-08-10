@@ -1,3 +1,5 @@
+# Data Wrangling {#data-wrangling}
+
 ```{r TEMP, echo=FALSE}
 library(tidyverse)
 
@@ -19,8 +21,6 @@ knitr::knit_hooks$set(output = function(x, options) {
 })
 ```
 
-# Data Wrangling
-
 You collected your data over months (and sometimes years) and all you really want to know is whether your data makes sense and reveals something nobody would have ever expected. However, before we can truly go ahead with our analysis, it is essential to understand whether our data is 'tidy'. Very often, data we receive is everything else but clean and we need to not only check whether our data is fit for analysis, but also ensure it is in a format that is easy to handle and work with. For small datasets, this is usually a brief exercise. However, I found myself cleaning data for a month, because the dataset was spread out into multiple spreadsheets (no pun intended) with different numbers of columns and odd column names. Thus, data cleaning or data wrangling is an essential first step in any data analysis. It is a step that cannot be skipped and has to be performed on every new dataset.
 
 Luckily, R provides many useful functions to make our lives easier. If you are like me and used to do this in Excel, you will be in for a treat. It is a lot simpler using R to do achieve a clean dataset.
@@ -37,7 +37,7 @@ Here is an overview of the different steps we usually work through before we can
 
 -   and other things
 
-## Import your data
+## Import your data {#import-your-data}
 
 The `r4np` package hosts a number of different datasets to work with, but at some point you might want to apply your R knowledge to your own data. Therefore, an important first step is to import your data into RStudio. There are three different methods all of which are very handy:
 
@@ -49,7 +49,7 @@ The `r4np` package hosts a number of different datasets to work with, but at som
 
 We will use the `readr` package to import our data. Using this package we can import a range of different file formats, including `.csv`, `.tsv`, `.txt`. If you want to import data from an `.xlsx` file you have to use another package called `readxl`. The following sections will primarily focus on how to use `reader` via RStudio or directly in your Console or RScript.
 
-### Import data from the Files pane
+### Import data from the Files pane {#import-data-from-the-files-pane}
 
 This approach is by far the easiest. Let's assume you have a dataset called `gender_age.csv` in your `00_raw_data` folder. If you wish to import it, you can do the following:
 
@@ -89,13 +89,13 @@ This approach is by far the easiest. Let's assume you have a dataset called `gen
 
 In the console you can see that R also provides the `Column specification`, which we need later when inspecting 'data types'. `readr` automatically imports all text-based columns as `chr`, i.e. `character` values. However, this might not be always true. More on this aspect of data wrangling in Chapter \@ref(change-data-types).
 
-### Importing data from the Environment pane
+### Importing data from the Environment pane {#importing-data-from-the-environment-pane}
 
 The process of important datasets from the Environment pane follows largely the one from the Files pane. Click on `Import Dataset > From Text (readr)…`. The only main difference lies in having to find the file using the `Browse…` button. The rest of the steps are the same as above.
 
 You will have to use the Environment pane for importing data from specific file types, e.g. `.txt`, because using the File pane would only open the file, but not import the data for further processing.
 
-### Importing data using functions directly
+### Importing data using functions directly {#importing-data-using-functions}
 
 If you organised your files well it can be very easy and quick to just use all the functions from `readr` directly. Here are two examples of how you can use `readr` to import your data. Make sure you have the `tidyverse` package loaded.
 
@@ -311,7 +311,7 @@ The output in the console shows that we successfully performed the transformatio
 
 Another common problem we have to tackle when working with data is their representation in the dataset. For example, `gender` could be measured as `male` and `female`[^data_wrangling-1] or as `0` and `1`. R does not mind which way you represent your data, but some other software does. Therefore, when we import data from somewhere else the values of a variable might not look the way we want. The practicality of having your data represented accurately as what they are becomes obvious when you intend to create tables and plots.
 
-[^data_wrangling-1]: oA sophisticated research project would likely not rely on a dichotomous approach to gender, but appreciate the diversity in this regard.
+[^data_wrangling-1]: A sophisticated research project would likely not rely on a dichotomous approach to gender, but appreciate the diversity in this regard.
 
 For example, we might be interested to know how many participants in the `wvs` were `male` and how many were `female`. The function `count()` from `dplyr` does exactly that.
 
@@ -361,7 +361,7 @@ wvs %>%
   count(country)
 ```
 
-I use the value `15` arbitrarily - after some trial and error. You can change the value and see which other countries would show up with a lower threshold. However, this number seems to do the trick and returns three countries that seem to have longer labels. All we have to do is to replace these categories with new ones the same way we recoded `gender`. You probably can guess already what we have to do.
+I use the value `15` arbitrarily after some trial and error. You can change the value and see which other countries would show up with a lower threshold. However, this number seems to do the trick and returns three countries that seem to have longer labels. All we have to do is to replace these categories with new ones the same way we recoded `gender`. You probably can guess already what we have to do to achieve this.
 
 ```{r Recoding country names, echo=TRUE}
 wvs <- wvs %>%
@@ -371,11 +371,11 @@ wvs <- wvs %>%
                                    "Korea" = "Korea, Republic of"))
 ```
 
-### Reordering factor levels
+### Reordering factor levels {#reordering-factor-levels}
 
 `TODO: CONTINUE FROM HERE`
 
--   Consider whether this should happen here or later. Problably later, actually when we talk about descriptive statistics. This is not really data cleaning at this point. Too much stuff already. Move to descriptive statistics setciont
+-   Consider whether this should happen here or later. Probably later, actually when we talk about descriptive statistics. This is not really data cleaning at this point. Too much stuff already. Move to descriptive statistics section.
 
 ## Dealing with missing data {#dealing-with-missing-data}
 
@@ -391,16 +391,16 @@ There is hardly any Social Sciences project where researchers do not have to dea
 
 Every study that intends to be rigorous will have to first identify how much data is missing. In R this can be achieved in multiple ways, but using a specialised package like `naniar` does help us to do this very quickly and systematically. First we have to load the `naniar` package and then we use the function `vis_miss()` to visualise how much and where exactly data is missing.
 
-```{r Missing data matrix with naniar, echo=TRUE}
+```{r Missing data matrix with naniar, fig.cap="Mapping missing data with naniar", label = "mapping-missing-data", echo=TRUE}
 library(naniar)
 vis_miss(wvs)
 ```
 
 `naniar` plays along nicely with the `tidyverse` approach of programming. As such, it would also be possible to write `wvs %>% vis_miss()`.
 
-As we can see, 99,7% of our dataset is complete and we are only missing 0.3%. The dark lines (actually blocks) refer to missing data points. On the x-axis we can see all our variables and on the y-axis we see our observations. This is the same layout as our rectangular dataset: Rows are observations and columns are variables. Overall, this dataset appears relatively complete (luckily).
+As we can see, 99,7% of our dataset is complete and we are only missing 0.3%. The dark lines (actually blocks) refer to missing data points. On the x-axis we can see all our variables and on the y-axis we see our observations. This is the same layout as our rectangular dataset: Rows are observations and columns are variables. Overall, this dataset appears relatively complete (luckily). In addition, we can see the percentage of missing data per variable. `freedom_of_choice` is clearly the variable with most missing data, i.e. 0.79%. Still, the amount of missing data is not very large.
 
-When working with larger datasets it might be useful to rank variables by their degree of missing data to see where the biggest problems lie.
+When working with larger datasets it might also be useful to rank variables by their degree of missing data to see where the biggest problems lie.
 
 ```{r Amount of missing data by variable, fig.cap="Missing data per variable", label = "missing-data-per-variable", warning=FALSE}
 gg_miss_var(wvs)
@@ -413,7 +413,7 @@ It is very noticeable that `freedom_of_choice` has the most missing data points,
 miss_var_summary(wvs)
 ```
 
-For mapping missing data, especially in larger datasets with many variables, I tend to prefer data visualisations over numerical results. This also has the benefit that patterns of missing data can be easily identified as well.
+For mapping missing data, especially in larger datasets with many variables, I tend to prefer data visualisations over numerical results. This also has the benefit that patterns of missing data can be more easily identified as well.
 
 ### Identifying patterns of missing data {#patterns-of-missing-data}
 
@@ -421,21 +421,21 @@ If you find that your data 'suffers' from missing data, it is essential to answe
 
 We can distinguish missing data based on how it is missing, i.e.
 
--   missing completely at random,
+-   missing completely at random (MCAR),
 
--   missing at random, and
+-   missing at random (MAR), and
 
--   missing not at random. [@rubin-1976]
+-   missing not at random (MNAR). [@rubin-1976]
 
-#### Missing completetly at random (MCAR) {#missing-completetly-at-random-mcar}
+#### Missing completely at random (MCAR) {#missing-completetly-at-random-mcar}
 
-Missing completely at random (MCAR) means that neither observed nor missing data can systematically explain why data is missing.
+Missing completely at random (MCAR) means that neither observed nor missing data can systematically explain why data is missing. It is pure coincidence how data is missing and there is no underlying pattern.
 
 The `naniar` package comes with the very popular Little's MCAR test [@little-1988], which provides insights into whether our data is missing completely at random. Thus, we can call the function `mcar_test()` and inspect the result.
 
 ```{r Little-s MCAR test, echo=TRUE}
 wvs %>%
-  select(-participant_id) %>% # Remove variables which do not reflect a response
+  select(-participant_id) %>%     # Remove variables which do not reflect a response
   mcar_test()
 ```
 
@@ -449,7 +449,7 @@ Missing at random (MAR) refers to a situation where missing data can only be exp
 
 > *Let's suppose that students who scored low on the pre-test are more likely to drop out of the course, hence, their scores on the post-test are missing. If we assume that the probability of missing the post-test depends only on scores on the pre-test, then the missing mechanism on the post-test is MAR. In other words, for students who have the same pre-test score, the probability of [them] missing the post-test is random.*
 
-Thus, a main difference between MCAR and MAR data lies in the fact that we can observe some patterns of missing data if data is MAR. These patterns are only based on data we actually have, i.e. observed data.
+Thus, a main difference between MCAR and MAR data lies in the fact that we can observe some patterns of missing data if data is MAR. These patterns are only based on data we actually have, i.e. observed data. We also assume that no unobserved variables can explain these or other patterns.
 
 Accordingly, we first look into variables that have no missing data and see whether they can explain our missing data in other variables. For example, we could investigate whether missing data in `freedom_of_choice` is attributed to specific countries. <a id="missing-data-by-country-table"></a>
 
@@ -458,10 +458,10 @@ wvs %>%
   group_by(country) %>% 
   filter(is.na(freedom_of_choice)) %>% 
   count() %>% 
-  arrange(desc(n))                      # Rearranging scores for easy reading
+  arrange(desc(n))                      # Rearranging scores for easier reading
 ```
 
-As becomes clear, there are four countries that have particularly high numbers of missing data for `freedom_of_choice`: Japan, Brazil, New Zealand, Russia and Bolivia. Why this is the case lies beyond this dataset and is something only the researchers themselves could possibly explain. Collecting data in different countries is particularly challenging and one is quickly faced with different unfavourable conditions. As such, the missing data is not completely random, as it seems, because we have some first evidence that the location of data collection might have affected the completeness of it.
+As becomes clear, there are four countries that have particularly high numbers of missing data for `freedom_of_choice`: Japan, Brazil, New Zealand, Russia and Bolivia. Why this is the case lies beyond this dataset and is something only the researchers themselves could possibly explain. Collecting data in different countries is particularly challenging and one is quickly faced with different unfavourable conditions. Tthe missing data is not completely random, as it seems, because we have some first evidence that the location of data collection might have affected the completeness of it.
 
 Another way of understanding patterns of missing data can be achieved by looking at whether there are relationships between missing values, for example the co-occurrence of missing values across different variables. This can be achieved by using upset plots. An upset plot consists of three parts: Set size, intersection size and a Venn diagram which defines the intersections.
 
@@ -469,23 +469,23 @@ Another way of understanding patterns of missing data can be achieved by looking
 gg_miss_upset(wvs)
 ```
 
-In our dataset, the most frequent combination of missing data occurs when only `freedom_of_choice` is missing (the first column), but nothing else. Similar results can be found for `relationships_status` and `age`. The first combination of missing data is defined by a combination of two variables: `satisfaction` and `freedom_of_choice`. In total 107 participants had `age` and `year_of_birth` missing but nothing else.
+In our dataset, the most frequent combination of missing data occurs when only `freedom_of_choice` is missing (the first column), but nothing else. Similar results can be found for `relationships_status` and `age`. The first combination of missing data is defined by two variables: `satisfaction` and `freedom_of_choice`. In total 107 participants had `satisfaction` and `freedom_of_choice` missing but nothing else.
 
 The 'set size' shown in the upset plot refers to the number of missing values for each variable in the diagram. This correspondents to what we have found when looking at Figure \@ref(fig:missing-data-per-variable)).
 
-This analysis also suggests that data is not completely randomly missing and that we have data to help explain it.
+Our analysis also suggests that values are not completely randomly missing but that we have data to help explain why they are missing.
 
 #### Missing not at random (MNAR) {#missing-not-at-random-mnar}
 
-Lastly, missing not at random (MNAR) implies that data is missing systematically and that other variables or reasons exist that explain why data is missing, but they are not fully known to us. In questionnaire-based research an easily overlooked reason that can explain missing data is the 'page-drop-off' phenomenon. In such cases, participants stop completing a questionnaire once they advance to another page. Figure \@ref(fig:mnar-example) shows this very clearly for a large scale project where an online questionnaire was used. After almost every page break in the questionnaire, some participants decided to discontinue. Finding these types of patterns is difficult when only working with numeric values. Thus, it is always advisable to visualise your data as well.
+Lastly, missing not at random (MNAR) implies that data is missing systematically and that other variables or reasons exist that explain why data is missing, but they are not fully known to us. In questionnaire-based research an easily overlooked reason that can explain missing data is the 'page-drop-off' phenomenon. In such cases, participants stop completing a questionnaire once they advance to another page. Figure \@ref(fig:mnar-example) shows this very clearly for a large scale project where an online questionnaire was used. After almost every page break in the questionnaire, some participants decided to discontinue. Finding these types of patterns is difficult when only working with numeric values. Thus, it is always advisable to visualise your data as well. Such missing data is linked to the design of the data collection tool.
 
 ```{r fig.cap="MNAR pattern in a dataset due to 'page-drop-offs'", echo=FALSE, label="mnar-example"}
 knitr::include_graphics("images/chapter_07_img/03_missing_data/00_mnar_example.png")
 ```
 
-Defining whether a dataset is MNAR or not is mainly achieved by ruling out MCAR and MAR assumptions. It is not possible to test a dataset whether missing data is MNAR, unless we have more information about the underlying population available [@van2020rebutting].
+Defining whether a dataset is MNAR or not is mainly achieved by ruling out MCAR and MAR assumptions. It is not possible to test whether missing data is MNAR, unless we have more information about the underlying population available [@van2020rebutting].
 
-We have sufficient evidence that our data is MAR as was shown [above](#missing-at-random-mar), because we managed to identify some relationships between unobserved and observed data. In practice, it is very rare to find datasets that are truly MCAR [@van-buuren-2018]. There we might consider 'imputation' as a possible strategy to solve our missing data problem.
+We have sufficient evidence that our data is MAR as was shown [above](#missing-at-random-mar), because we managed to identify some relationships between unobserved and observed data. In practice, it is very rare to find datasets that are truly MCAR [@van-buuren-2018]. Therefore we might consider 'imputation' as a possible strategy to solve our missing data problem. More about imputation in the next Chapter.
 
 If you are looking for more inspiration of how you could visualise and identify patterns of missingness in your data, you might find the '[Gallery](https://naniar.njtierney.com/articles/naniar-visualisation.html "Gallery of 'naniar' plots"){target="blank"}' of the `naniar` website particularly useful.
 
@@ -493,9 +493,9 @@ If you are looking for more inspiration of how you could visualise and identify 
 
 Once you determined which pattern of missing data applies to your dataset, it is time to evaluate the options of how we want to deal with those missing values. Generally, you can either keep the missing values as they are, replace them or remove them entirely.
 
-@jakobsen-et-al-2017 provide a rule of thumb of 5% where researchers can consider missing data as negligible, i.e. we can ignore the missing values, because they won't affect our analysis substantially. They also argue that if the proportion of missing data exceeds 40%, we should also only work with our observed data. However, with such a large amount of missing data, it is very questionable whether we can rely on our analysis as much as we want to. If the missing data lies somewhere in-between this range, we need to consider the missing data pattern at hand.
+@jakobsen-et-al-2017 provide a rule of thumb of 5% where researchers can consider missing data as negligible, i.e. we can ignore the missing values, because they won't affect our analysis in a significant way. They also argue that if the proportion of missing data exceeds 40%, we should also only work with our observed data. However, with such a large amount of missing data, it is very questionable whether we can rely on our analysis as much as we want to. If the missing data lies somewhere in-between this range, we need to consider the missing data pattern at hand.
 
-If data is MCAR, we could remove missing data. This process is called 'listwise deletion', i.e. you remove all data from a participant with missing data. As just mentioned, removing missing values is only suitable if you have relatively few missing values in your dataset (see also @schafer-1999). There are additional problems with deleting observations listwise, many of which are summarised by @van-buuren-2018 in his [introduction](https://stefvanbuuren.name/fimd/sec-simplesolutions.html "introduction"){target="blank"}. Usually, we try to avoid removing data as much as possible. If you wanted to perform listwise deletion it can be done with a single function call: `na.omit()` from the built-in `stats` package. Here is an example of how we can apply this function.
+If data is MCAR, we could remove missing data. This process is called 'listwise deletion', i.e. you remove all data from a participant with missing data. As just mentioned, removing missing values is only suitable if you have relatively few missing values in your dataset (see also @schafer-1999) as is the case with the `wvs` dataset. There are additional problems with deleting observations listwise, many of which are summarised by @van-buuren-2018 in his [introduction](https://stefvanbuuren.name/fimd/sec-simplesolutions.html "introduction"){target="blank"}. Usually, we try to avoid removing data as much as possible. If you wanted to perform listwise deletion it can be done with a single function call: `na.omit()` from the built-in `stats` package. Here is an example of how we can apply this function.
 
 ```{r Example of removing all missing data points, echo=TRUE}
 # No more missing data in this plot
@@ -505,20 +505,194 @@ wvs %>% na.omit() %>% vis_miss()
 wvs %>% na.omit() %>% count()
 ```
 
-If you wanted to remove the missing data without the plot you can just use `wvs_no_na <- na.omit(wvs)`. I always recommend to save the result in a new object to ensure I keep my original data available. This can be helpful when trying to compare how this decision affects my analysis, i.e. I can run the analysis with and without missing data removed. However, for the `wvs` dataset this does not seem to be the best option.
+If you wanted to remove the missing data without the plot you can just use `wvs_no_na <- na.omit(wvs)`. I always recommend to 'save' the result in a new object to ensure I keep my original data available. This can be helpful when trying to compare how this decision affects my analysis, i.e. I can run the analysis with and without missing data removed. However, for the `wvs` dataset this does not seem to be the best option.
 
 Based on our analysis of the `wvs` dataset (by no means complete!), we could assume that data is MAR. In such cases, it is possible to 'impute' the missing values, i.e. we replace the missing data with computed scores. This is possible because we can model the missing data based on variables we have. For obvious reasons, we cannot model missing data based on variables we have not measured in our study.
 
-You might be thinking: Why would it make data better if we 'make up' numbers? Is this not cheating? Imputation of missing values is a science in itself. There is plenty to read about the process of handling missing data which would reach far beyond the scope of this book. However, the seminal work of @van-buuren-2018, @dong-et-al-2013 and @jakobsen-et-al-2017 are excellent starting points. In short: Simply removing missing data can lead to biases in your data, e.g. if we removed missing data in our dataset, we would mainly exclude participants from Japan, Brazil, New Zealand, Russia and Bolivia (as we found out [earlier](#missing-data-by-country-table)). While imputation is not perfect, scholars have shown that it can produce more reliable results than not using imputation at all (`add some references here`).
+You might be thinking: Why would it make data better if we 'make up' numbers? Is this not cheating? Imputation of missing values is a science in itself. There is plenty to read about the process of handling missing data which would reach far beyond the scope of this book. However, the seminal work of @van-buuren-2018, @dong-et-al-2013 and @jakobsen-et-al-2017 are excellent starting points. In short: Simply removing missing data can lead to biases in your data, e.g. if we removed missing data in our dataset, we would mainly exclude participants from Japan, Brazil, New Zealand, Russia and Bolivia (as we found out [earlier](#missing-data-by-country-table)). While imputation is not perfect, scholars have shown that it can produce more reliable results than not using imputation at all (`add some references here`), assuming the data meets the requirements for such imputation.
 
-Even though our dataset has only a very small amount of missing data (relative to the entire size), we can still make use of imputation if we wanted to run regression (see Chapter \@ref(regression)). There are many different ways of how one can approach this task. For illustration purposes only, I chose the popular `mice` package which uses `Conditional Multiple Imputation`. As highlighted by @van2020rebutting, multiple imputation has not yet reached the same popularity as listwise deletion, despite its benefits. A main reason for this lies in the complexity of using this technique.
+Even though our dataset has only a very small amount of missing data (relative to the entire size), we can still make use of imputation. There are many different ways of how one can approach this task, one of which is 'multiple imputation'. As highlighted by @van2020rebutting, multiple imputation has not yet reached the same popularity as listwise deletion, despite its benefits. A main reason for this lies in the complexity of using this technique. Therefore I included an example of how to use multiple imputation separately in Chapter \@ref(). There are many more approaches to imputation and going through them all in detail would be impossible and distract from the main purpose of the book. Still, I would like to share some interesting packages with you that use different imputation methods:
 
-`REVISIT THIS CHAPTER`
+-   [mice](https://cran.r-project.org/web/packages/Amelia/index.html "mice"){target="blank"} (Multivariate Imputation via Chained Equations)
 
-## Latent constructs and their reliability
+-   [Amelia](https://cran.r-project.org/web/packages/Amelia/index.html "Amelia"){target="blank"} (Uses a bootstrapped-based algorithm)
 
-### Theory
+-   [missForest](https://cran.r-project.org/web/packages/missForest/index.html "missForest"){target="blank"} (Uses a random forest algorithm)
 
-### Visualisation
+-   [Hmisc](https://cran.r-project.org/web/packages/Hmisc/index.html "Hmisc"){target="blank"} (Uses Additive Regression, Bootstrapping, and Predictive Mean Matching)
 
-### Computation
+-   [mi](https://cran.r-project.org/web/packages/mi/index.html "mi"){target="blank"} (Uses posterior predictive distribution, predictive mean matching, mean-imputation, median-imputation, or conditional mean-imputation)
+
+Besides multiple imputation, there is also the option for single imputation. The `simputation` package offers a great variety of different imputation functions, one of which also fits our data quite well `impute_knn()`. This function makes use of a clustering technique called 'K-nearest neighbour'. In this case, the function will look for observations that are closest to the one that has missing data and takes the value of that observation. In other words, it looks for similar participants who answered the questionnaire in a very similar way. The great convenience of this approach is that it can handle all kinds of data types at the same time, which is not true for all imputation techniques.
+
+If we apply this function to our own dataset, we have to write the following:
+
+```{r Use KNN imputation via simputation package, echo=TRUE}
+wvs_nona <- wvs %>%
+  select(-participant_id) %>% 
+  as.data.frame() %>%                  # Transforms our tibble into a dataframe
+  simputation::impute_knn(. ~ .)
+```
+
+The function `impute_knn(. ~ .)` might look like a combination of text with an emoji `(. ~ .)`. This imputation function requires us to specify a model to impute the data. Since we want to impute all missing values in the dataset and use all variables available, we put `.` on both sides of the equation, which is separated by a `~`. The `.` reflects that we do not specify a specific variable, but instead tell the function to use all variables that are not mentioned. In our case, we did not mention any variables at all and therefore it chooses all of them. If we wanted to impute only `freedom_of_choice` we would have to put `impute_knn(freedom_of_choice ~ .)`. We will elaborate more on how to specify models when we cover regression models (see Chapter \@ref(regression)).
+
+As you will have noticed, we also had to convert our `tibble` into a `dataframe` using `as.data.frame()`. As mentioned in Chapter \@ref(functions), some functions require a certain data type or format. The `simputation` package works with `dplyr`, but it prefers `dataframe`s. Based on my experiences, the wrong data type or format is one of the most frequent causes of errors that novice R programmers report. So, keep an eye on it and read the documentation carefully.
+
+Be aware that imputation of any kind can take a long time. On my MacBook Pro it took about 4.22 seconds to complete `impute_knn()` with the `wvs` dataset. If we used multiple imputation, this would have taken considerably longer, i.e. several minutes and more.
+
+We now should have a dataset that is free of any missing values. To make sure this is the case we can create the missing data matrix that we created at the very beginning of this chapter (see Figure \@ref(fig:mapping-missing-data)).
+
+```{r Mapping missing data of imputeted dataset, echo=TRUE}
+vis_miss(wvs_nona)
+```
+
+### Main takeaways regarding dealing with missing data
+
+Handling missing data is hardly ever a simple process. Do not feel discouraged if you get lost in the myriad of options. While there is some guidance on how and when to use certain strategies to deal with missing values in your dataset, the most important point to remember is: Be transparent of what you did. As long as you can explain why you did something and how you did it, everyone can follow your thought process and help improve your analysis. However, ignoring the fact that data is missing and not acknowledging it is more than just unwise.
+
+## Latent constructs and their reliability {#latent-constructs}
+
+Social Scientists commonly face the challenge that we want to measure something that cannot be measured directly. For example, 'happiness' is a feeling that does not naturally occur as a number which we can observe and measure. The opposite is true for 'temperature', which is naturally measured in numbers. At the same time, 'happiness' is much more complex of a variable than 'temperature', because 'happiness' can unfold in various ways and be caused by different triggers (e.g. a joke, an unexpected present, tasty food, etc.). In order to account for this we often work with 'latent variables'. These are defined as variables which are not directly measured, but are inferred from other variables. In practice, we often use multiple questions in a questionnaire to measure one latent variable, usually by computing the mean of those questions.
+
+The `gep` dataset from the `r4np` package includes data about students' social integration experience (`si`) and communication skills development (`cs`). Data was obtained using the [Global Education Profiler (GEP)](https://warwick.ac.uk/gep "Global Education Profiler (GEP)"){target="blank"}. I extracted 6 different questions (also called 'items') from the questionnaire which measure `si`, and 6 items which measure `cs`. This dataset only consist of a randomly chosen set of responses, i.e. 300 out of over 12,000.
+
+```{r The structure of the gep dataset, echo=TRUE}
+glimpse(gep)
+```
+
+For example, if we wanted to know how each student scored with regards to social integration (`si`), we have to
+
+-   compute the mean (`mean())` of all related items (i.e. all variables starting with `si_`),
+
+-   for each row (`rowwise()`) because each row presents one participant.
+
+The same is true for communication skills (`cs`). We can compute both variables in one go:
+
+```{r Compute latent variables, echo=TRUE}
+# Compute the scores for the latent variable 'si' and 'cs'
+gep <- gep %>% 
+  rowwise() %>% 
+  mutate(si = mean(c(si_socialise_with_people_exp,
+                     si_supportive_friends_exp,
+                     si_joined_activitiy_group_exp,
+                     si_time_socialising_exp,
+                     si_accommodation_meet_people_exp,
+                     si_take_part_events_exp
+                     )
+                   ),
+         cs = mean(c(cs_learn_different_styles_exp,   
+                     cs_speak_different_context_exp,  
+                     cs_improve_less_fluent_exp,
+                     cs_awareness_own_style_exp,
+                     cs_work_globally_exp,
+                     cs_find_clarification_exp
+                     )
+                   )
+         )
+
+glimpse(gep)
+```
+
+Compared to dealing with missing data, this is a fairly straightforward task. However, there is a caveat. Before we are allowed to compute the mean across all these variables, we need to know and understand whether all these scores reliably contribute to one single latent variable. If not, we would be in trouble and make a significant mistake.
+
+By far the most common approach to assessing reliability (or more accurately 'internal consistency') of latent variables is Cronbach's $\alpha$. This indicator looks at how strongly a set of items (i.e. questions in your questionnaire) are related to each other. Thus, the stronger the relationship of all items starting with `si_` to each other, the more likely we achieve a higher Cronbach's $\alpha$. The `psych` package has a suitable function to compute it for us.
+
+Instead of listing all the items by hand, I use the function `starts_with()` to only pick the variables whose names start with `si_`. It certainly pays off to think about your variable names more thoroughly in advance to benefit from such shortcuts (see also Chapter \@ref(colnames-cleaning).
+
+```{r Compute Cronbachs alpha for si, echo=TRUE}
+gep %>% 
+  select(starts_with("si_")) %>%
+  psych::alpha()
+```
+
+The function `alpha()` returns a lot of information. The most important part, though, is shown at the very beginning:
+
+```{r Output from alpha(), echo=FALSE}
+si_alpha <- gep %>% 
+  select(starts_with("si_")) %>%
+  psych::alpha()
+
+round(si_alpha$total, 2)
+```
+
+In most publications, researchers would primarily report the `raw_alpha` value. This is fine, but it is not a bad idea to also include at least `std.alpha` and `G6(smc)`.
+
+In terms of interpretation, Cronbrach's $\alpha$ scores can range from 0 to 1. The closer the score to 1 the higher we would judge its reliability. @nunally-1967 originally provided the following classification for Cronbach's $\alpha$:
+
+-   between 0.6 and 0.5 can be sufficient during early stages of development,
+
+-   0.8 or higher is sufficient for most basic research,
+
+-   0.9 or higher is suitable for applied research, where the questionnaires is used to make critical decisions, e.g. clinical studies, university admission tests, etc., with a 'desired standard' of 0.95.
+
+However, a few years later @nunally-1978 revisited his original categorisation and also considered 0.7 or higher as a suitable benchmark in case of more exploratory-type research. Needless to say, this gave grounds for researchers to pick and choose the 'right' publication for them [@henson2001understanding]. Consquently, depending on your research field, the expected reliability score might lean more towards 0.7 or 0.8. Still, the higher the score, the better it is.
+
+Our dataset shows that `si` scores a solid $\alpha = 0.87$, which is excellent. We should repeat this step for `cs` as well.
+
+```{r Compute Cronbachs alpha for cs, echo=TRUE}
+gep %>% 
+  select(starts_with("cs_")) %>%
+  psych::alpha()
+```
+
+Similarly, to `si`, `cs` shows a very good internal consistency score of $\alpha = 0.90$. Thus, we can be confident that if we used our latent variables we would could trust that our results are likely reliable.
+
+While Cronbach's $\alpha$ is very popular, due to its simplicity, there is plenty of criticism as well (add references). Therefore, very often it is not enough to just report the Cronbach's $\alpha$, but undertake additional steps. Depending on the stage of development of your measurement instrument (i.e. your questionnaire) you likely have to perform one of the following prior to computing the $\alpha$ scores:
+
+-   Exploratory factor analysis (EFA): Generally used to identify latent variables in a set of questionnaire items.
+
+-   Confirmatory factor analysis (CFA): To confirm whether a set of items truly reflect a latent variable.
+
+An example of exploratory factor analysis is presented in Chapter \@ref(). Since the `gep` data is based on an established measurement tool we will have to perform a CFA. To perform a CFA we use the popular `lavaan` ([La]{.ul}tent [Va]{.ul}riable [An]{.ul}alysis) package. The steps of running a CFA in R include:
+
+1.  Define which variables are supposed to measure a specific latent variable (i.e. creating a model)
+
+2.  Run the CFA to see whether our assumptions are true
+
+3.  Interpret the results based on various indicators.
+
+```{r CFA for gep dataset, echo=TRUE, warning=FALSE}
+library(lavaan)
+
+#1: Define the model which explains how items relate to latent variables
+model <- 'social_integration =~
+  si_socialise_with_people_exp +
+  si_supportive_friends_exp +
+  si_joined_activitiy_group_exp +
+  si_time_socialising_exp +
+  si_accommodation_meet_people_exp +
+  si_take_part_events_exp
+
+communication_skills =~
+  cs_learn_different_styles_exp +
+  cs_speak_different_context_exp +
+  cs_improve_less_fluent_exp +
+  cs_awareness_own_style_exp +
+  cs_work_globally_exp +
+  cs_find_clarification_exp'
+
+#2: Run the CFA to see how well this model fits our data
+fit <- cfa(model, data = gep)
+
+#3a: Extract the performance indicators
+fit_indices <- fitmeasures(fit)
+
+#3b: We tidy the results with the 'broom' package and pick only those indices we are most interested in
+broom::tidy(fit_indices) %>%
+  filter(names == "cfi" | 
+         names == "srmr" |
+         names == "rmsea") %>% 
+  mutate(x = round(x, 3))         # Round the results to 3 decimal places
+```
+
+The `broom` package is useful in cleaning output from all kinds of models, such as a CFA model. It allows us to convert the raw output into a `tibble`, which we can further manipulate using the functions we already know. If you want to know where `names` and `x` came from we have to inspect the output from `broom::tidy(fit_indices)`.
+
+```{r Broom tidy() explained, echo=TRUE, warning=FALSE}
+broom::tidy(fit_indices)
+```
+
+As you can see, these column names were generated when we called the function `tidy()`. I often find myself working through chains of analytical steps in an iterative manner to see what the intermediary steps produce. This also makes it easier to spot any mistake early on. Therefore, I recommend to slowly build up your `dplyr` chains of function calls, especially when you just started to learn R and the `tidyverse` approach of data analysis.
+
+The results of our CFA appear fairly promising, All fit indices are considered as good. In combination with the computed Cronbach's $\alpha$ we can be fairly confident in our latent variables and perform further analytical steps, for example as shown in Chapter \@ref(regression).
+
+[`Revisit GEP dataset. Add cs_imp.`]

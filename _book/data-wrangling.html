@@ -24,7 +24,7 @@
 <meta name="author" content="Daniel Dauber" />
 
 
-<meta name="date" content="2021-08-09" />
+<meta name="date" content="2021-08-10" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -217,7 +217,7 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="7.1.1" data-path="data-wrangling.html"><a href="data-wrangling.html#import-data-from-the-files-pane"><i class="fa fa-check"></i><b>7.1.1</b> Import data from the Files pane</a></li>
 <li class="chapter" data-level="7.1.2" data-path="data-wrangling.html"><a href="data-wrangling.html#importing-data-from-the-environment-pane"><i class="fa fa-check"></i><b>7.1.2</b> Importing data from the Environment pane</a></li>
-<li class="chapter" data-level="7.1.3" data-path="data-wrangling.html"><a href="data-wrangling.html#importing-data-using-functions-directly"><i class="fa fa-check"></i><b>7.1.3</b> Importing data using functions directly</a></li>
+<li class="chapter" data-level="7.1.3" data-path="data-wrangling.html"><a href="data-wrangling.html#importing-data-using-functions"><i class="fa fa-check"></i><b>7.1.3</b> Importing data using functions directly</a></li>
 </ul></li>
 <li class="chapter" data-level="7.2" data-path="data-wrangling.html"><a href="data-wrangling.html#inspecting-raw-data"><i class="fa fa-check"></i><b>7.2</b> Inspecting your data</a></li>
 <li class="chapter" data-level="7.3" data-path="data-wrangling.html"><a href="data-wrangling.html#colnames-cleaning"><i class="fa fa-check"></i><b>7.3</b> Cleaning your column names: Call the <code>janitor</code></a></li>
@@ -232,13 +232,9 @@ div.csl-indent {
 <li class="chapter" data-level="7.6.1" data-path="data-wrangling.html"><a href="data-wrangling.html#mapping-missing-data"><i class="fa fa-check"></i><b>7.6.1</b> Mapping missing data</a></li>
 <li class="chapter" data-level="7.6.2" data-path="data-wrangling.html"><a href="data-wrangling.html#patterns-of-missing-data"><i class="fa fa-check"></i><b>7.6.2</b> Identifying patterns of missing data</a></li>
 <li class="chapter" data-level="7.6.3" data-path="data-wrangling.html"><a href="data-wrangling.html#replacing-removing-missing-data"><i class="fa fa-check"></i><b>7.6.3</b> Replacing or removing missing data</a></li>
+<li class="chapter" data-level="7.6.4" data-path="data-wrangling.html"><a href="data-wrangling.html#main-takeaways-regarding-dealing-with-missing-data"><i class="fa fa-check"></i><b>7.6.4</b> Main takeaways regarding dealing with missing data</a></li>
 </ul></li>
-<li class="chapter" data-level="7.7" data-path="data-wrangling.html"><a href="data-wrangling.html#latent-constructs-and-their-reliability"><i class="fa fa-check"></i><b>7.7</b> Latent constructs and their reliability</a>
-<ul>
-<li class="chapter" data-level="7.7.1" data-path="data-wrangling.html"><a href="data-wrangling.html#theory"><i class="fa fa-check"></i><b>7.7.1</b> Theory</a></li>
-<li class="chapter" data-level="7.7.2" data-path="data-wrangling.html"><a href="data-wrangling.html#visualisation"><i class="fa fa-check"></i><b>7.7.2</b> Visualisation</a></li>
-<li class="chapter" data-level="7.7.3" data-path="data-wrangling.html"><a href="data-wrangling.html#computation"><i class="fa fa-check"></i><b>7.7.3</b> Computation</a></li>
-</ul></li>
+<li class="chapter" data-level="7.7" data-path="data-wrangling.html"><a href="data-wrangling.html#latent-constructs"><i class="fa fa-check"></i><b>7.7</b> Latent constructs and their reliability</a></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html"><i class="fa fa-check"></i><b>8</b> Descriptive Statistics</a></li>
 <li class="chapter" data-level="9" data-path="correlations.html"><a href="correlations.html"><i class="fa fa-check"></i><b>9</b> Correlations</a></li>
@@ -278,6 +274,14 @@ div.csl-indent {
             <section class="normal" id="section-">
 <div id="data-wrangling" class="section level1" number="7">
 <h1><span class="header-section-number">7</span> Data Wrangling</h1>
+<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──</code></pre>
+<pre><code>## ✓ ggplot2 3.3.5     ✓ purrr   0.3.4
+## ✓ tibble  3.1.3     ✓ dplyr   1.0.7
+## ✓ tidyr   1.1.3     ✓ stringr 1.4.0
+## ✓ readr   2.0.0     ✓ forcats 0.5.1</code></pre>
+<pre><code>## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()</code></pre>
 <p>You collected your data over months (and sometimes years) and all you really want to know is whether your data makes sense and reveals something nobody would have ever expected. However, before we can truly go ahead with our analysis, it is essential to understand whether our data is ‘tidy.’ Very often, data we receive is everything else but clean and we need to not only check whether our data is fit for analysis, but also ensure it is in a format that is easy to handle and work with. For small datasets, this is usually a brief exercise. However, I found myself cleaning data for a month, because the dataset was spread out into multiple spreadsheets (no pun intended) with different numbers of columns and odd column names. Thus, data cleaning or data wrangling is an essential first step in any data analysis. It is a step that cannot be skipped and has to be performed on every new dataset.</p>
 <p>Luckily, R provides many useful functions to make our lives easier. If you are like me and used to do this in Excel, you will be in for a treat. It is a lot simpler using R to do achieve a clean dataset.</p>
 <p>Here is an overview of the different steps we usually work through before we can start with our main analysis. This is list is certainly not exhaustive:</p>
@@ -328,7 +332,7 @@ div.csl-indent {
 <p>The process of important datasets from the Environment pane follows largely the one from the Files pane. Click on <code>Import Dataset &gt; From Text (readr)…</code>. The only main difference lies in having to find the file using the <code>Browse…</code> button. The rest of the steps are the same as above.</p>
 <p>You will have to use the Environment pane for importing data from specific file types, e.g. <code>.txt</code>, because using the File pane would only open the file, but not import the data for further processing.</p>
 </div>
-<div id="importing-data-using-functions-directly" class="section level3" number="7.1.3">
+<div id="importing-data-using-functions" class="section level3" number="7.1.3">
 <h3><span class="header-section-number">7.1.3</span> Importing data using functions directly</h3>
 <p>If you organised your files well it can be very easy and quick to just use all the functions from <code>readr</code> directly. Here are two examples of how you can use <code>readr</code> to import your data. Make sure you have the <code>tidyverse</code> package loaded.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="data-wrangling.html#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import data from &#39;.csv&#39;</span></span>
@@ -363,19 +367,19 @@ div.csl-indent {
 <span id="cb8-3"><a href="data-wrangling.html#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-4"><a href="data-wrangling.html#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Show the data in the console</span></span>
 <span id="cb8-5"><a href="data-wrangling.html#cb8-5" aria-hidden="true" tabindex="-1"></a>wvs</span></code></pre></div>
-<pre><code>## # A tibble: 69,578 × 8
-##    `Participant ID` `Country name` Gender YearOfBirth   Age relationship_status 
-##               &lt;dbl&gt; &lt;chr&gt;           &lt;dbl&gt;       &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;               
-##  1         20070001 Andorra             1        1958    60 married             
-##  2         20070002 Andorra             0        1971    47 living together as …
-##  3         20070003 Andorra             0        1969    48 separated           
-##  4         20070004 Andorra             1        1956    62 living together as …
-##  5         20070005 Andorra             0        1969    49 living together as …
-##  6         20070006 Andorra             1        1967    51 married             
-##  7         20070007 Andorra             1        1985    33 married             
-##  8         20070008 Andorra             0        1963    55 widowed             
-##  9         20070009 Andorra             1        1978    40 single              
-## 10         20070010 Andorra             1        1979    38 living together as …
+<pre><code>## # A tibble: 69,578 × 7
+##    `Participant ID` `Country name` Gender   Age relationship_status       
+##               &lt;dbl&gt; &lt;chr&gt;           &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;                     
+##  1         20070001 Andorra             1    60 married                   
+##  2         20070002 Andorra             0    47 living together as married
+##  3         20070003 Andorra             0    48 separated                 
+##  4         20070004 Andorra             1    62 living together as married
+##  5         20070005 Andorra             0    49 living together as married
+##  6         20070006 Andorra             1    51 married                   
+##  7         20070007 Andorra             1    33 married                   
+##  8         20070008 Andorra             0    55 widowed                   
+##  9         20070009 Andorra             1    40 single                    
+## 10         20070010 Andorra             1    38 living together as married
 ## # … with 69,568 more rows, and 2 more variables: Freedom.of.Choice &lt;dbl&gt;,
 ## #   Satisfaction-with-life &lt;dbl&gt;</code></pre>
 <p>The result is a series of rows and columns. The first information we receive is: <code>A tibble: 69,578 x 9</code>. This indicates that our dataset has 69,578 observations (i.e. rows) and 9 columns (i.e. variables). This rectangular format is the one we encounter most frequently in Social Sciences (and probably beyond). If you ever worked in Microsoft Excel, this format will look familiar.</p>
@@ -383,11 +387,10 @@ div.csl-indent {
 <p>If you want to see each variable covered in the dataset and their data types, you can use the function <code>glimpse()</code> from the <code>dplyr</code> package (which is loaded when load the <code>tidyverse</code> package).</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="data-wrangling.html#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(wvs)</span></code></pre></div>
 <pre><code>## Rows: 69,578
-## Columns: 8
+## Columns: 7
 ## $ `Participant ID`         &lt;dbl&gt; 20070001, 20070002, 20070003, 20070004, 20070…
 ## $ `Country name`           &lt;chr&gt; &quot;Andorra&quot;, &quot;Andorra&quot;, &quot;Andorra&quot;, &quot;Andorra&quot;, &quot;…
 ## $ Gender                   &lt;dbl&gt; 1, 0, 0, 1, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1, 1, …
-## $ YearOfBirth              &lt;dbl&gt; 1958, 1971, 1969, 1956, 1969, 1967, 1985, 196…
 ## $ Age                      &lt;dbl&gt; 60, 47, 48, 62, 49, 51, 33, 55, 40, 38, 54, 3…
 ## $ relationship_status      &lt;chr&gt; &quot;married&quot;, &quot;living together as married&quot;, &quot;sep…
 ## $ Freedom.of.Choice        &lt;dbl&gt; 10, 9, 9, 9, 8, 10, 10, 8, 8, 10, 9, 8, 10, 7…
@@ -432,11 +435,10 @@ div.csl-indent {
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="data-wrangling.html#cb15-1" aria-hidden="true" tabindex="-1"></a>wvs <span class="ot">&lt;-</span> janitor<span class="sc">::</span><span class="fu">clean_names</span>(wvs)</span>
 <span id="cb15-2"><a href="data-wrangling.html#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(wvs)</span></code></pre></div>
 <pre><code>## Rows: 69,578
-## Columns: 8
+## Columns: 7
 ## $ participant_id         &lt;dbl&gt; 20070001, 20070002, 20070003, 20070004, 2007000…
 ## $ country_name           &lt;chr&gt; &quot;Andorra&quot;, &quot;Andorra&quot;, &quot;Andorra&quot;, &quot;Andorra&quot;, &quot;An…
 ## $ gender                 &lt;dbl&gt; 1, 0, 0, 1, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0,…
-## $ year_of_birth          &lt;dbl&gt; 1958, 1971, 1969, 1956, 1969, 1967, 1985, 1963,…
 ## $ age                    &lt;dbl&gt; 60, 47, 48, 62, 49, 51, 33, 55, 40, 38, 54, 39,…
 ## $ relationship_status    &lt;chr&gt; &quot;married&quot;, &quot;living together as married&quot;, &quot;separ…
 ## $ freedom_of_choice      &lt;dbl&gt; 10, 9, 9, 9, 8, 10, 10, 8, 8, 10, 9, 8, 10, 7, …
@@ -447,11 +449,10 @@ div.csl-indent {
 <span id="cb17-2"><a href="data-wrangling.html#cb17-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">country =</span> country_name)</span>
 <span id="cb17-3"><a href="data-wrangling.html#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(wvs)</span></code></pre></div>
 <pre><code>## Rows: 69,578
-## Columns: 8
+## Columns: 7
 ## $ participant_id      &lt;dbl&gt; 20070001, 20070002, 20070003, 20070004, 20070005, …
 ## $ country             &lt;chr&gt; &quot;Andorra&quot;, &quot;Andorra&quot;, &quot;Andorra&quot;, &quot;Andorra&quot;, &quot;Andor…
 ## $ gender              &lt;dbl&gt; 1, 0, 0, 1, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0,…
-## $ year_of_birth       &lt;dbl&gt; 1958, 1971, 1969, 1956, 1969, 1967, 1985, 1963, 19…
 ## $ age                 &lt;dbl&gt; 60, 47, 48, 62, 49, 51, 33, 55, 40, 38, 54, 39, 44…
 ## $ relationship_status &lt;chr&gt; &quot;married&quot;, &quot;living together as married&quot;, &quot;separate…
 ## $ freedom_of_choice   &lt;dbl&gt; 10, 9, 9, 9, 8, 10, 10, 8, 8, 10, 9, 8, 10, 7, 10,…
@@ -495,11 +496,10 @@ div.csl-indent {
 <p>Now that we have a solid understanding of different data types, we can have a look at our dataset and see whether <code>readr</code> classified our variables correctly.</p>
 <div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="data-wrangling.html#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(wvs)</span></code></pre></div>
 <pre><code>## Rows: 69,578
-## Columns: 8
+## Columns: 7
 ## $ participant_id      &lt;dbl&gt; 20070001, 20070002, 20070003, 20070004, 20070005, …
 ## $ country             &lt;chr&gt; &quot;Andorra&quot;, &quot;Andorra&quot;, &quot;Andorra&quot;, &quot;Andorra&quot;, &quot;Andor…
 ## $ gender              &lt;dbl&gt; 1, 0, 0, 1, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0,…
-## $ year_of_birth       &lt;dbl&gt; 1958, 1971, 1969, 1956, 1969, 1967, 1985, 1963, 19…
 ## $ age                 &lt;dbl&gt; 60, 47, 48, 62, 49, 51, 33, 55, 40, 38, 54, 39, 44…
 ## $ relationship_status &lt;chr&gt; &quot;married&quot;, &quot;living together as married&quot;, &quot;separate…
 ## $ freedom_of_choice   &lt;dbl&gt; 10, 9, 9, 9, 8, 10, 10, 8, 8, 10, 9, 8, 10, 7, 10,…
@@ -520,11 +520,10 @@ div.csl-indent {
 <span id="cb22-7"><a href="data-wrangling.html#cb22-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb22-8"><a href="data-wrangling.html#cb22-8" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(wvs)</span></code></pre></div>
 <pre><code>## Rows: 69,578
-## Columns: 8
+## Columns: 7
 ## $ participant_id      &lt;fct&gt; 20070001, 20070002, 20070003, 20070004, 20070005, …
 ## $ country             &lt;fct&gt; &quot;Andorra&quot;, &quot;Andorra&quot;, &quot;Andorra&quot;, &quot;Andorra&quot;, &quot;Andor…
 ## $ gender              &lt;fct&gt; 1, 0, 0, 1, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0,…
-## $ year_of_birth       &lt;dbl&gt; 1958, 1971, 1969, 1956, 1969, 1967, 1985, 1963, 19…
 ## $ age                 &lt;dbl&gt; 60, 47, 48, 62, 49, 51, 33, 55, 40, 38, 54, 39, 44…
 ## $ relationship_status &lt;fct&gt; married, living together as married, separated, li…
 ## $ freedom_of_choice   &lt;dbl&gt; 10, 9, 9, 9, 8, 10, 10, 8, 8, 10, 9, 8, 10, 7, 10,…
@@ -578,7 +577,7 @@ div.csl-indent {
 ## 1 Bolivia, Plurinational State of  2067
 ## 2 Iran, Islamic Republic of        1499
 ## 3 Korea, Republic of               1245</code></pre>
-<p>I use the value <code>15</code> arbitrarily - after some trial and error. You can change the value and see which other countries would show up with a lower threshold. However, this number seems to do the trick and returns three countries that seem to have longer labels. All we have to do is to replace these categories with new ones the same way we recoded <code>gender</code>. You probably can guess already what we have to do.</p>
+<p>I use the value <code>15</code> arbitrarily after some trial and error. You can change the value and see which other countries would show up with a lower threshold. However, this number seems to do the trick and returns three countries that seem to have longer labels. All we have to do is to replace these categories with new ones the same way we recoded <code>gender</code>. You probably can guess already what we have to do to achieve this.</p>
 <div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="data-wrangling.html#cb34-1" aria-hidden="true" tabindex="-1"></a>wvs <span class="ot">&lt;-</span> wvs <span class="sc">%&gt;%</span></span>
 <span id="cb34-2"><a href="data-wrangling.html#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">country =</span> <span class="fu">fct_recode</span>(country,</span>
 <span id="cb34-3"><a href="data-wrangling.html#cb34-3" aria-hidden="true" tabindex="-1"></a>                                   <span class="st">&quot;Bolivia&quot;</span> <span class="ot">=</span> <span class="st">&quot;Bolivia, Plurinational State of&quot;</span>,</span>
@@ -589,7 +588,7 @@ div.csl-indent {
 <h3><span class="header-section-number">7.5.2</span> Reordering factor levels</h3>
 <p><code>TODO: CONTINUE FROM HERE</code></p>
 <ul>
-<li>Consider whether this should happen here or later. Problably later, actually when we talk about descriptive statistics. This is not really data cleaning at this point. Too much stuff already. Move to descriptive statistics setciont</li>
+<li>Consider whether this should happen here or later. Probably later, actually when we talk about descriptive statistics. This is not really data cleaning at this point. Too much stuff already. Move to descriptive statistics section.</li>
 </ul>
 </div>
 </div>
@@ -606,53 +605,57 @@ div.csl-indent {
 <p>Every study that intends to be rigorous will have to first identify how much data is missing. In R this can be achieved in multiple ways, but using a specialised package like <code>naniar</code> does help us to do this very quickly and systematically. First we have to load the <code>naniar</code> package and then we use the function <code>vis_miss()</code> to visualise how much and where exactly data is missing.</p>
 <div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="data-wrangling.html#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(naniar)</span>
 <span id="cb35-2"><a href="data-wrangling.html#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fu">vis_miss</span>(wvs)</span></code></pre></div>
-<p><img src="r_for_non_programmers_files/figure-html/Missing%20data%20matrix%20with%20naniar-1.png" width="672" /></p>
+<div class="figure"><span id="fig:mapping-missing-data"></span>
+<img src="r_for_non_programmers_files/figure-html/mapping-missing-data-1.png" alt="Mapping missing data with naniar" width="672" />
+<p class="caption">
+Figure 7.1: Mapping missing data with naniar
+</p>
+</div>
 <p><code>naniar</code> plays along nicely with the <code>tidyverse</code> approach of programming. As such, it would also be possible to write <code>wvs %&gt;% vis_miss()</code>.</p>
-<p>As we can see, 99,7% of our dataset is complete and we are only missing 0.3%. The dark lines (actually blocks) refer to missing data points. On the x-axis we can see all our variables and on the y-axis we see our observations. This is the same layout as our rectangular dataset: Rows are observations and columns are variables. Overall, this dataset appears relatively complete (luckily).</p>
-<p>When working with larger datasets it might be useful to rank variables by their degree of missing data to see where the biggest problems lie.</p>
+<p>As we can see, 99,7% of our dataset is complete and we are only missing 0.3%. The dark lines (actually blocks) refer to missing data points. On the x-axis we can see all our variables and on the y-axis we see our observations. This is the same layout as our rectangular dataset: Rows are observations and columns are variables. Overall, this dataset appears relatively complete (luckily). In addition, we can see the percentage of missing data per variable. <code>freedom_of_choice</code> is clearly the variable with most missing data, i.e. 0.79%. Still, the amount of missing data is not very large.</p>
+<p>When working with larger datasets it might also be useful to rank variables by their degree of missing data to see where the biggest problems lie.</p>
 <div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="data-wrangling.html#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gg_miss_var</span>(wvs)</span></code></pre></div>
 <div class="figure"><span id="fig:missing-data-per-variable"></span>
 <img src="r_for_non_programmers_files/figure-html/missing-data-per-variable-1.png" alt="Missing data per variable" width="672" />
 <p class="caption">
-Figure 7.1: Missing data per variable
+Figure 7.2: Missing data per variable
 </p>
 </div>
 <p>It is very noticeable that <code>freedom_of_choice</code> has the most missing data points, while <code>participant_id</code>, and <code>country_name</code> have no missing values. If you prefer to see the actual numbers instead, we can use as series of functions that start with <code>miss_</code> (for a complete list of all functions see the <a href="https://naniar.njtierney.com/reference/index.html" target="blank" title="reference page of naniar">reference page of naniar</a>). In order to retrieve the numeric values which are reflected in the plot above, we can write the following:</p>
 <div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="data-wrangling.html#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Summarise the missingness in each variable</span></span>
 <span id="cb37-2"><a href="data-wrangling.html#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">miss_var_summary</span>(wvs)</span></code></pre></div>
-<pre><code>## # A tibble: 8 × 3
+<pre><code>## # A tibble: 7 × 3
 ##   variable            n_miss pct_miss
 ##   &lt;chr&gt;                &lt;int&gt;    &lt;dbl&gt;
 ## 1 freedom_of_choice      547   0.786 
 ## 2 relationship_status    335   0.481 
-## 3 year_of_birth          328   0.471 
-## 4 age                    318   0.457 
-## 5 satisfaction           239   0.343 
-## 6 gender                  51   0.0733
-## 7 participant_id           0   0     
-## 8 country                  0   0</code></pre>
-<p>For mapping missing data, especially in larger datasets with many variables, I tend to prefer data visualisations over numerical results. This also has the benefit that patterns of missing data can be easily identified as well.</p>
+## 3 age                    318   0.457 
+## 4 satisfaction           239   0.343 
+## 5 gender                  51   0.0733
+## 6 participant_id           0   0     
+## 7 country                  0   0</code></pre>
+<p>For mapping missing data, especially in larger datasets with many variables, I tend to prefer data visualisations over numerical results. This also has the benefit that patterns of missing data can be more easily identified as well.</p>
 </div>
 <div id="patterns-of-missing-data" class="section level3" number="7.6.2">
 <h3><span class="header-section-number">7.6.2</span> Identifying patterns of missing data</h3>
 <p>If you find that your data ‘suffers’ from missing data, it is essential to answer another question: Is data missing systematically? This is quite an important diagnostic step since systematically missing data would imply that if we remove these observations from our dataset as is, we likely produce wrong results.</p>
 <p>We can distinguish missing data based on how it is missing, i.e.</p>
 <ul>
-<li><p>missing completely at random,</p></li>
-<li><p>missing at random, and</p></li>
-<li><p>missing not at random. <span class="citation">(<a href="#ref-rubin-1976" role="doc-biblioref">Rubin 1976</a>)</span></p></li>
+<li><p>missing completely at random (MCAR),</p></li>
+<li><p>missing at random (MAR), and</p></li>
+<li><p>missing not at random (MNAR). <span class="citation">(<a href="#ref-rubin-1976" role="doc-biblioref">Rubin 1976</a>)</span></p></li>
 </ul>
 <div id="missing-completetly-at-random-mcar" class="section level4" number="7.6.2.1">
-<h4><span class="header-section-number">7.6.2.1</span> Missing completetly at random (MCAR)</h4>
-<p>Missing completely at random (MCAR) means that neither observed nor missing data can systematically explain why data is missing.</p>
+<h4><span class="header-section-number">7.6.2.1</span> Missing completely at random (MCAR)</h4>
+<p>Missing completely at random (MCAR) means that neither observed nor missing data can systematically explain why data is missing. It is pure coincidence how data is missing and there is no underlying pattern.</p>
 <p>The <code>naniar</code> package comes with the very popular Little’s MCAR test <span class="citation">(<a href="#ref-little-1988" role="doc-biblioref">Little 1988</a>)</span>, which provides insights into whether our data is missing completely at random. Thus, we can call the function <code>mcar_test()</code> and inspect the result.</p>
 <div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="data-wrangling.html#cb39-1" aria-hidden="true" tabindex="-1"></a>wvs <span class="sc">%&gt;%</span></span>
-<span id="cb39-2"><a href="data-wrangling.html#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>participant_id) <span class="sc">%&gt;%</span> <span class="co"># Remove variables which do not reflect a response</span></span>
+<span id="cb39-2"><a href="data-wrangling.html#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>participant_id) <span class="sc">%&gt;%</span>     <span class="co"># Remove variables which do not reflect a response</span></span>
 <span id="cb39-3"><a href="data-wrangling.html#cb39-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mcar_test</span>()</span></code></pre></div>
 <pre><code>## # A tibble: 1 × 4
 ##   statistic    df p.value missing.patterns
 ##       &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;            &lt;int&gt;
-## 1      610.    83       0               20</code></pre>
+## 1      411.    67       0               19</code></pre>
 <p>When you run such a test, you have to make sure that variables which are not part of the data collection are removed. In our case, the <code>participant_id</code> is generated by the researcher and does not represent an actual response by the participants. As such, we need to remove it using <code>select()</code> before we can run the test. A <code>-</code> inverts the meaning of <code>select()</code>. While <code>select(participant_id)</code> would do what it says, i.e. include it as the only variable in the test, <code>select(-participant_id)</code> results in selecting everything but this variable in our test. You will find, it is sometimes easier to remove a variable with <code>select()</code> rather than listing all the variables you want to keep.</p>
 <p>Since the <code>p.value</code> of the test is so small that it got rounded down to <code>0</code>, i.e. <span class="math inline">\(p&lt;0.0001\)</span>, we have to assume that our data is not missing completely at random. If we found that <span class="math inline">\(p&gt;0.05\)</span>, we would have confirmation that data is missing completely at random.</p>
 </div>
@@ -662,13 +665,13 @@ Figure 7.1: Missing data per variable
 <blockquote>
 <p><em>Let’s suppose that students who scored low on the pre-test are more likely to drop out of the course, hence, their scores on the post-test are missing. If we assume that the probability of missing the post-test depends only on scores on the pre-test, then the missing mechanism on the post-test is MAR. In other words, for students who have the same pre-test score, the probability of [them] missing the post-test is random.</em></p>
 </blockquote>
-<p>Thus, a main difference between MCAR and MAR data lies in the fact that we can observe some patterns of missing data if data is MAR. These patterns are only based on data we actually have, i.e. observed data.</p>
+<p>Thus, a main difference between MCAR and MAR data lies in the fact that we can observe some patterns of missing data if data is MAR. These patterns are only based on data we actually have, i.e. observed data. We also assume that no unobserved variables can explain these or other patterns.</p>
 <p>Accordingly, we first look into variables that have no missing data and see whether they can explain our missing data in other variables. For example, we could investigate whether missing data in <code>freedom_of_choice</code> is attributed to specific countries. <a id="missing-data-by-country-table"></a></p>
 <div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="data-wrangling.html#cb41-1" aria-hidden="true" tabindex="-1"></a>wvs <span class="sc">%&gt;%</span> </span>
 <span id="cb41-2"><a href="data-wrangling.html#cb41-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(country) <span class="sc">%&gt;%</span> </span>
 <span id="cb41-3"><a href="data-wrangling.html#cb41-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">is.na</span>(freedom_of_choice)) <span class="sc">%&gt;%</span> </span>
 <span id="cb41-4"><a href="data-wrangling.html#cb41-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb41-5"><a href="data-wrangling.html#cb41-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n))                      <span class="co"># Rearranging scores for easy reading</span></span></code></pre></div>
+<span id="cb41-5"><a href="data-wrangling.html#cb41-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n))                      <span class="co"># Rearranging scores for easier reading</span></span></code></pre></div>
 <pre><code>## # A tibble: 32 × 2
 ## # Groups:   country [32]
 ##    country         n
@@ -684,33 +687,33 @@ Figure 7.1: Missing data per variable
 ##  9 Egypt          23
 ## 10 Serbia         20
 ## # … with 22 more rows</code></pre>
-<p>As becomes clear, there are four countries that have particularly high numbers of missing data for <code>freedom_of_choice</code>: Japan, Brazil, New Zealand, Russia and Bolivia. Why this is the case lies beyond this dataset and is something only the researchers themselves could possibly explain. Collecting data in different countries is particularly challenging and one is quickly faced with different unfavourable conditions. As such, the missing data is not completely random, as it seems, because we have some first evidence that the location of data collection might have affected the completeness of it.</p>
+<p>As becomes clear, there are four countries that have particularly high numbers of missing data for <code>freedom_of_choice</code>: Japan, Brazil, New Zealand, Russia and Bolivia. Why this is the case lies beyond this dataset and is something only the researchers themselves could possibly explain. Collecting data in different countries is particularly challenging and one is quickly faced with different unfavourable conditions. Tthe missing data is not completely random, as it seems, because we have some first evidence that the location of data collection might have affected the completeness of it.</p>
 <p>Another way of understanding patterns of missing data can be achieved by looking at whether there are relationships between missing values, for example the co-occurrence of missing values across different variables. This can be achieved by using upset plots. An upset plot consists of three parts: Set size, intersection size and a Venn diagram which defines the intersections.</p>
 <div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="data-wrangling.html#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gg_miss_upset</span>(wvs)</span></code></pre></div>
 <p><img src="r_for_non_programmers_files/figure-html/Upset%20plot-1.png" width="672" /></p>
-<p>In our dataset, the most frequent combination of missing data occurs when only <code>freedom_of_choice</code> is missing (the first column), but nothing else. Similar results can be found for <code>relationships_status</code> and <code>age</code>. The first combination of missing data is defined by a combination of two variables: <code>satisfaction</code> and <code>freedom_of_choice</code>. In total 107 participants had <code>age</code> and <code>year_of_birth</code> missing but nothing else.</p>
-<p>The ‘set size’ shown in the upset plot refers to the number of missing values for each variable in the diagram. This correspondents to what we have found when looking at Figure <a href="data-wrangling.html#fig:missing-data-per-variable">7.1</a>).</p>
-<p>This analysis also suggests that data is not completely randomly missing and that we have data to help explain it.</p>
+<p>In our dataset, the most frequent combination of missing data occurs when only <code>freedom_of_choice</code> is missing (the first column), but nothing else. Similar results can be found for <code>relationships_status</code> and <code>age</code>. The first combination of missing data is defined by two variables: <code>satisfaction</code> and <code>freedom_of_choice</code>. In total 107 participants had <code>satisfaction</code> and <code>freedom_of_choice</code> missing but nothing else.</p>
+<p>The ‘set size’ shown in the upset plot refers to the number of missing values for each variable in the diagram. This correspondents to what we have found when looking at Figure <a href="data-wrangling.html#fig:missing-data-per-variable">7.2</a>).</p>
+<p>Our analysis also suggests that values are not completely randomly missing but that we have data to help explain why they are missing.</p>
 </div>
 <div id="missing-not-at-random-mnar" class="section level4" number="7.6.2.3">
 <h4><span class="header-section-number">7.6.2.3</span> Missing not at random (MNAR)</h4>
-<p>Lastly, missing not at random (MNAR) implies that data is missing systematically and that other variables or reasons exist that explain why data is missing, but they are not fully known to us. In questionnaire-based research an easily overlooked reason that can explain missing data is the ‘page-drop-off’ phenomenon. In such cases, participants stop completing a questionnaire once they advance to another page. Figure <a href="data-wrangling.html#fig:mnar-example">7.2</a> shows this very clearly for a large scale project where an online questionnaire was used. After almost every page break in the questionnaire, some participants decided to discontinue. Finding these types of patterns is difficult when only working with numeric values. Thus, it is always advisable to visualise your data as well.</p>
+<p>Lastly, missing not at random (MNAR) implies that data is missing systematically and that other variables or reasons exist that explain why data is missing, but they are not fully known to us. In questionnaire-based research an easily overlooked reason that can explain missing data is the ‘page-drop-off’ phenomenon. In such cases, participants stop completing a questionnaire once they advance to another page. Figure <a href="data-wrangling.html#fig:mnar-example">7.3</a> shows this very clearly for a large scale project where an online questionnaire was used. After almost every page break in the questionnaire, some participants decided to discontinue. Finding these types of patterns is difficult when only working with numeric values. Thus, it is always advisable to visualise your data as well. Such missing data is linked to the design of the data collection tool.</p>
 <div class="figure"><span id="fig:mnar-example"></span>
 <img src="images/chapter_07_img/03_missing_data/00_mnar_example.png" alt="MNAR pattern in a dataset due to 'page-drop-offs'" width="960" />
 <p class="caption">
-Figure 7.2: MNAR pattern in a dataset due to ‘page-drop-offs’
+Figure 7.3: MNAR pattern in a dataset due to ‘page-drop-offs’
 </p>
 </div>
-<p>Defining whether a dataset is MNAR or not is mainly achieved by ruling out MCAR and MAR assumptions. It is not possible to test a dataset whether missing data is MNAR, unless we have more information about the underlying population available <span class="citation">(<a href="#ref-van2020rebutting" role="doc-biblioref">Ginkel et al. 2020</a>)</span>.</p>
-<p>We have sufficient evidence that our data is MAR as was shown <a href="data-wrangling.html#missing-at-random-mar">above</a>, because we managed to identify some relationships between unobserved and observed data. In practice, it is very rare to find datasets that are truly MCAR <span class="citation">(<a href="#ref-van-buuren-2018" role="doc-biblioref">Buuren 2018</a>)</span>. There we might consider ‘imputation’ as a possible strategy to solve our missing data problem.</p>
+<p>Defining whether a dataset is MNAR or not is mainly achieved by ruling out MCAR and MAR assumptions. It is not possible to test whether missing data is MNAR, unless we have more information about the underlying population available <span class="citation">(<a href="#ref-van2020rebutting" role="doc-biblioref">Ginkel et al. 2020</a>)</span>.</p>
+<p>We have sufficient evidence that our data is MAR as was shown <a href="data-wrangling.html#missing-at-random-mar">above</a>, because we managed to identify some relationships between unobserved and observed data. In practice, it is very rare to find datasets that are truly MCAR <span class="citation">(<a href="#ref-van-buuren-2018" role="doc-biblioref">Buuren 2018</a>)</span>. Therefore we might consider ‘imputation’ as a possible strategy to solve our missing data problem. More about imputation in the next Chapter.</p>
 <p>If you are looking for more inspiration of how you could visualise and identify patterns of missingness in your data, you might find the ‘<a href="https://naniar.njtierney.com/articles/naniar-visualisation.html" target="blank" title="Gallery of &#39;naniar&#39; plots">Gallery</a>’ of the <code>naniar</code> website particularly useful.</p>
 </div>
 </div>
 <div id="replacing-removing-missing-data" class="section level3" number="7.6.3">
 <h3><span class="header-section-number">7.6.3</span> Replacing or removing missing data</h3>
 <p>Once you determined which pattern of missing data applies to your dataset, it is time to evaluate the options of how we want to deal with those missing values. Generally, you can either keep the missing values as they are, replace them or remove them entirely.</p>
-<p><span class="citation"><a href="#ref-jakobsen-et-al-2017" role="doc-biblioref">Jakobsen et al.</a> (<a href="#ref-jakobsen-et-al-2017" role="doc-biblioref">2017</a>)</span> provide a rule of thumb of 5% where researchers can consider missing data as negligible, i.e. we can ignore the missing values, because they won’t affect our analysis substantially. They also argue that if the proportion of missing data exceeds 40%, we should also only work with our observed data. However, with such a large amount of missing data, it is very questionable whether we can rely on our analysis as much as we want to. If the missing data lies somewhere in-between this range, we need to consider the missing data pattern at hand.</p>
-<p>If data is MCAR, we could remove missing data. This process is called ‘listwise deletion,’ i.e. you remove all data from a participant with missing data. As just mentioned, removing missing values is only suitable if you have relatively few missing values in your dataset (see also <span class="citation"><a href="#ref-schafer-1999" role="doc-biblioref">Schafer</a> (<a href="#ref-schafer-1999" role="doc-biblioref">1999</a>)</span>). There are additional problems with deleting observations listwise, many of which are summarised by <span class="citation"><a href="#ref-van-buuren-2018" role="doc-biblioref">Buuren</a> (<a href="#ref-van-buuren-2018" role="doc-biblioref">2018</a>)</span> in his <a href="https://stefvanbuuren.name/fimd/sec-simplesolutions.html" target="blank" title="introduction">introduction</a>. Usually, we try to avoid removing data as much as possible. If you wanted to perform listwise deletion it can be done with a single function call: <code>na.omit()</code> from the built-in <code>stats</code> package. Here is an example of how we can apply this function.</p>
+<p><span class="citation"><a href="#ref-jakobsen-et-al-2017" role="doc-biblioref">Jakobsen et al.</a> (<a href="#ref-jakobsen-et-al-2017" role="doc-biblioref">2017</a>)</span> provide a rule of thumb of 5% where researchers can consider missing data as negligible, i.e. we can ignore the missing values, because they won’t affect our analysis in a significant way. They also argue that if the proportion of missing data exceeds 40%, we should also only work with our observed data. However, with such a large amount of missing data, it is very questionable whether we can rely on our analysis as much as we want to. If the missing data lies somewhere in-between this range, we need to consider the missing data pattern at hand.</p>
+<p>If data is MCAR, we could remove missing data. This process is called ‘listwise deletion,’ i.e. you remove all data from a participant with missing data. As just mentioned, removing missing values is only suitable if you have relatively few missing values in your dataset (see also <span class="citation"><a href="#ref-schafer-1999" role="doc-biblioref">Schafer</a> (<a href="#ref-schafer-1999" role="doc-biblioref">1999</a>)</span>) as is the case with the <code>wvs</code> dataset. There are additional problems with deleting observations listwise, many of which are summarised by <span class="citation"><a href="#ref-van-buuren-2018" role="doc-biblioref">Buuren</a> (<a href="#ref-van-buuren-2018" role="doc-biblioref">2018</a>)</span> in his <a href="https://stefvanbuuren.name/fimd/sec-simplesolutions.html" target="blank" title="introduction">introduction</a>. Usually, we try to avoid removing data as much as possible. If you wanted to perform listwise deletion it can be done with a single function call: <code>na.omit()</code> from the built-in <code>stats</code> package. Here is an example of how we can apply this function.</p>
 <div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="data-wrangling.html#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># No more missing data in this plot</span></span>
 <span id="cb44-2"><a href="data-wrangling.html#cb44-2" aria-hidden="true" tabindex="-1"></a>wvs <span class="sc">%&gt;%</span> <span class="fu">na.omit</span>() <span class="sc">%&gt;%</span> <span class="fu">vis_miss</span>()</span></code></pre></div>
 <p><img src="r_for_non_programmers_files/figure-html/Example%20of%20removing%20all%20missing%20data%20points-1.png" width="672" /></p>
@@ -719,25 +722,264 @@ Figure 7.2: MNAR pattern in a dataset due to ‘page-drop-offs’
 <pre><code>## # A tibble: 1 × 1
 ##       n
 ##   &lt;int&gt;
-## 1 68302</code></pre>
-<p>If you wanted to remove the missing data without the plot you can just use <code>wvs_no_na &lt;- na.omit(wvs)</code>. I always recommend to save the result in a new object to ensure I keep my original data available. This can be helpful when trying to compare how this decision affects my analysis, i.e. I can run the analysis with and without missing data removed. However, for the <code>wvs</code> dataset this does not seem to be the best option.</p>
+## 1 68312</code></pre>
+<p>If you wanted to remove the missing data without the plot you can just use <code>wvs_no_na &lt;- na.omit(wvs)</code>. I always recommend to ‘save’ the result in a new object to ensure I keep my original data available. This can be helpful when trying to compare how this decision affects my analysis, i.e. I can run the analysis with and without missing data removed. However, for the <code>wvs</code> dataset this does not seem to be the best option.</p>
 <p>Based on our analysis of the <code>wvs</code> dataset (by no means complete!), we could assume that data is MAR. In such cases, it is possible to ‘impute’ the missing values, i.e. we replace the missing data with computed scores. This is possible because we can model the missing data based on variables we have. For obvious reasons, we cannot model missing data based on variables we have not measured in our study.</p>
-<p>You might be thinking: Why would it make data better if we ‘make up’ numbers? Is this not cheating? Imputation of missing values is a science in itself. There is plenty to read about the process of handling missing data which would reach far beyond the scope of this book. However, the seminal work of <span class="citation"><a href="#ref-van-buuren-2018" role="doc-biblioref">Buuren</a> (<a href="#ref-van-buuren-2018" role="doc-biblioref">2018</a>)</span>, <span class="citation"><a href="#ref-dong-et-al-2013" role="doc-biblioref">Dong and Peng</a> (<a href="#ref-dong-et-al-2013" role="doc-biblioref">2013</a>)</span> and <span class="citation"><a href="#ref-jakobsen-et-al-2017" role="doc-biblioref">Jakobsen et al.</a> (<a href="#ref-jakobsen-et-al-2017" role="doc-biblioref">2017</a>)</span> are excellent starting points. In short: Simply removing missing data can lead to biases in your data, e.g. if we removed missing data in our dataset, we would mainly exclude participants from Japan, Brazil, New Zealand, Russia and Bolivia (as we found out <a href="data-wrangling.html#missing-data-by-country-table">earlier</a>). While imputation is not perfect, scholars have shown that it can produce more reliable results than not using imputation at all (<code>add some references here</code>).</p>
-<p>Even though our dataset has only a very small amount of missing data (relative to the entire size), we can still make use of imputation if we wanted to run regression (see Chapter <a href="regression.html#regression">11</a>). There are many different ways of how one can approach this task. For illustration purposes only, I chose the popular <code>mice</code> package which uses <code>Conditional Multiple Imputation</code>. As highlighted by <span class="citation"><a href="#ref-van2020rebutting" role="doc-biblioref">Ginkel et al.</a> (<a href="#ref-van2020rebutting" role="doc-biblioref">2020</a>)</span>, multiple imputation has not yet reached the same popularity as listwise deletion, despite its benefits. Therefore, getting to know how different imputation techniques can benefit your analysis is highly recommended and I wanted to feature it in this book as a possible entry point into this fascinating field of research.</p>
+<p>You might be thinking: Why would it make data better if we ‘make up’ numbers? Is this not cheating? Imputation of missing values is a science in itself. There is plenty to read about the process of handling missing data which would reach far beyond the scope of this book. However, the seminal work of <span class="citation"><a href="#ref-van-buuren-2018" role="doc-biblioref">Buuren</a> (<a href="#ref-van-buuren-2018" role="doc-biblioref">2018</a>)</span>, <span class="citation"><a href="#ref-dong-et-al-2013" role="doc-biblioref">Dong and Peng</a> (<a href="#ref-dong-et-al-2013" role="doc-biblioref">2013</a>)</span> and <span class="citation"><a href="#ref-jakobsen-et-al-2017" role="doc-biblioref">Jakobsen et al.</a> (<a href="#ref-jakobsen-et-al-2017" role="doc-biblioref">2017</a>)</span> are excellent starting points. In short: Simply removing missing data can lead to biases in your data, e.g. if we removed missing data in our dataset, we would mainly exclude participants from Japan, Brazil, New Zealand, Russia and Bolivia (as we found out <a href="data-wrangling.html#missing-data-by-country-table">earlier</a>). While imputation is not perfect, scholars have shown that it can produce more reliable results than not using imputation at all (<code>add some references here</code>), assuming the data meets the requirements for such imputation.</p>
+<p>Even though our dataset has only a very small amount of missing data (relative to the entire size), we can still make use of imputation. There are many different ways of how one can approach this task, one of which is ‘multiple imputation.’ As highlighted by <span class="citation"><a href="#ref-van2020rebutting" role="doc-biblioref">Ginkel et al.</a> (<a href="#ref-van2020rebutting" role="doc-biblioref">2020</a>)</span>, multiple imputation has not yet reached the same popularity as listwise deletion, despite its benefits. A main reason for this lies in the complexity of using this technique. Therefore I included an example of how to use multiple imputation separately in Chapter @ref(). There are many more approaches to imputation and going through them all in detail would be impossible and distract from the main purpose of the book. Still, I would like to share some interesting packages with you that use different imputation methods:</p>
+<ul>
+<li><p><a href="https://cran.r-project.org/web/packages/Amelia/index.html" target="blank" title="mice">mice</a> (Multivariate Imputation via Chained Equations)</p></li>
+<li><p><a href="https://cran.r-project.org/web/packages/Amelia/index.html" target="blank" title="Amelia">Amelia</a> (Uses a bootstrapped-based algorithm)</p></li>
+<li><p><a href="https://cran.r-project.org/web/packages/missForest/index.html" target="blank" title="missForest">missForest</a> (Uses a random forest algorithm)</p></li>
+<li><p><a href="https://cran.r-project.org/web/packages/Hmisc/index.html" target="blank" title="Hmisc">Hmisc</a> (Uses Additive Regression, Bootstrapping, and Predictive Mean Matching)</p></li>
+<li><p><a href="https://cran.r-project.org/web/packages/mi/index.html" target="blank" title="mi">mi</a> (Uses posterior predictive distribution, predictive mean matching, mean-imputation, median-imputation, or conditional mean-imputation)</p></li>
+</ul>
+<p>Besides multiple imputation, there is also the option for single imputation. The <code>simputation</code> package offers a great variety of different imputation functions, one of which also fits our data quite well <code>impute_knn()</code>. This function makes use of a clustering technique called ‘K-nearest neighbour.’ In this case, the function will look for observations that are closest to the one that has missing data and takes the value of that observation. In other words, it looks for similar participants who answered the questionnaire in a very similar way. The great convenience of this approach is that it can handle all kinds of data types at the same time, which is not true for all imputation techniques.</p>
+<p>If we apply this function to our own dataset, we have to write the following:</p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="data-wrangling.html#cb47-1" aria-hidden="true" tabindex="-1"></a>wvs_nona <span class="ot">&lt;-</span> wvs <span class="sc">%&gt;%</span></span>
+<span id="cb47-2"><a href="data-wrangling.html#cb47-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>participant_id) <span class="sc">%&gt;%</span> </span>
+<span id="cb47-3"><a href="data-wrangling.html#cb47-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span>                  <span class="co"># Transforms our tibble into a dataframe</span></span>
+<span id="cb47-4"><a href="data-wrangling.html#cb47-4" aria-hidden="true" tabindex="-1"></a>  simputation<span class="sc">::</span><span class="fu">impute_knn</span>(. <span class="sc">~</span> .)</span></code></pre></div>
+<p>The function <code>impute_knn(. ~ .)</code> might look like a combination of text with an emoji <code>(. ~ .)</code>. This imputation function requires us to specify a model to impute the data. Since we want to impute all missing values in the dataset and use all variables available, we put <code>.</code> on both sides of the equation, which is separated by a <code>~</code>. The <code>.</code> reflects that we do not specify a specific variable, but instead tell the function to use all variables that are not mentioned. In our case, we did not mention any variables at all and therefore it chooses all of them. If we wanted to impute only <code>freedom_of_choice</code> we would have to put <code>impute_knn(freedom_of_choice ~ .)</code>. We will elaborate more on how to specify models when we cover regression models (see Chapter <a href="regression.html#regression">11</a>).</p>
+<p>As you will have noticed, we also had to convert our <code>tibble</code> into a <code>dataframe</code> using <code>as.data.frame()</code>. As mentioned in Chapter <a href="r-basics-the-very-fundamentals.html#functions">5.3</a>, some functions require a certain data type or format. The <code>simputation</code> package works with <code>dplyr</code>, but it prefers <code>dataframe</code>s. Based on my experiences, the wrong data type or format is one of the most frequent causes of errors that novice R programmers report. So, keep an eye on it and read the documentation carefully.</p>
+<p>Be aware that imputation of any kind can take a long time. On my MacBook Pro it took about 4.22 seconds to complete <code>impute_knn()</code> with the <code>wvs</code> dataset. If we used multiple imputation, this would have taken considerably longer, i.e. several minutes and more.</p>
+<p>We now should have a dataset that is free of any missing values. To make sure this is the case we can create the missing data matrix that we created at the very beginning of this chapter (see Figure <a href="data-wrangling.html#fig:mapping-missing-data">7.1</a>).</p>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="data-wrangling.html#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vis_miss</span>(wvs_nona)</span></code></pre></div>
+<p><img src="r_for_non_programmers_files/figure-html/Mapping%20missing%20data%20of%20imputeted%20dataset-1.png" width="672" /></p>
+</div>
+<div id="main-takeaways-regarding-dealing-with-missing-data" class="section level3" number="7.6.4">
+<h3><span class="header-section-number">7.6.4</span> Main takeaways regarding dealing with missing data</h3>
+<p>Handling missing data is hardly ever a simple process. Do not feel discouraged if you get lost in the myriad of options. While there is some guidance on how and when to use certain strategies to deal with missing values in your dataset, the most important point to remember is: Be transparent of what you did. As long as you can explain why you did something and how you did it, everyone can follow your thought process and help improve your analysis. However, ignoring the fact that data is missing and not acknowledging it is more than just unwise.</p>
 </div>
 </div>
-<div id="latent-constructs-and-their-reliability" class="section level2" number="7.7">
+<div id="latent-constructs" class="section level2" number="7.7">
 <h2><span class="header-section-number">7.7</span> Latent constructs and their reliability</h2>
-<div id="theory" class="section level3" number="7.7.1">
-<h3><span class="header-section-number">7.7.1</span> Theory</h3>
-</div>
-<div id="visualisation" class="section level3" number="7.7.2">
-<h3><span class="header-section-number">7.7.2</span> Visualisation</h3>
-</div>
-<div id="computation" class="section level3" number="7.7.3">
-<h3><span class="header-section-number">7.7.3</span> Computation</h3>
+<p>A common challenge Social Scientists face is that we want to measure something that cannot be measured directly. For example, ‘happiness’ is a feeling that does not naturally occur as a number which we can observe and measure. The opposite is true for ‘temperature,’ which is naturally measured in numbers. At the same time, ‘happiness’ is much more complex of a variable than ‘temperature.’ In order to account for this we often work with ‘latent variables.’ These are defined as variables which are not directly measured, but are inferred from other variables. In practice, we often use multiple questions in a questionnaire to measure one latent variable, usually by computing the mean of those questions.</p>
+<p>The <code>gep</code> dataset from the <code>r4np</code> package includes data about students’ social integration experience (<code>si</code>) and communication skills development (<code>cs</code>). Data was obtained using the <a href="https://warwick.ac.uk/gep" target="blank" title="Global Education Profiler (GEP)">Global Education Profiler (GEP)</a>. Each of these latent variables is measured by 6 different questions in the questionnaire.</p>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="data-wrangling.html#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(gep)</span></code></pre></div>
+<pre><code>## Rows: 300
+## Columns: 15
+## $ age                              &lt;dbl&gt; 22, 26, 24, 24, 20, 21, 22, 20, 20, 2…
+## $ gender                           &lt;chr&gt; &quot;Male&quot;, &quot;Female&quot;, &quot;Female&quot;, &quot;Female&quot;,…
+## $ level_of_study                   &lt;chr&gt; &quot;UG&quot;, &quot;PGT&quot;, &quot;PGT&quot;, &quot;PGT&quot;, &quot;UG&quot;, &quot;UG&quot;…
+## $ si_socialise_with_people_exp     &lt;dbl&gt; 5, 1, 2, 5, 3, 2, 1, 4, 3, 1, 3, 4, 4…
+## $ si_supportive_friends_exp        &lt;dbl&gt; 5, 1, 5, 5, 4, 2, 1, 4, 3, 1, 4, 4, 4…
+## $ si_joined_activitiy_group_exp    &lt;dbl&gt; 3, 1, 2, 4, 2, 1, 1, 1, 3, 4, 1, 5, 2…
+## $ si_time_socialising_exp          &lt;dbl&gt; 4, 2, 3, 4, 4, 3, 1, 3, 2, 2, 3, 4, 4…
+## $ si_accommodation_meet_people_exp &lt;dbl&gt; 3, 1, 3, 4, 5, 1, 1, 3, 4, 1, 1, 5, 2…
+## $ si_take_part_events_exp          &lt;dbl&gt; 3, 3, 3, 3, 1, 1, 1, 1, 1, 2, 3, 3, 3…
+## $ cs_learn_different_styles_exp    &lt;dbl&gt; 4, 2, 6, 6, 3, 6, 1, 3, 4, 3, 3, 2, 5…
+## $ cs_speak_different_context_exp   &lt;dbl&gt; 5, 4, 5, 6, 4, 4, 1, 2, 3, 6, 4, 3, 3…
+## $ cs_improve_less_fluent_exp       &lt;dbl&gt; 5, 3, 6, 6, 2, 1, 2, 5, 3, 6, 4, 4, 4…
+## $ cs_awareness_own_style_exp       &lt;dbl&gt; 5, 3, 4, 6, 4, 3, 1, 3, 3, 6, 4, 2, 3…
+## $ cs_work_globally_exp             &lt;dbl&gt; 5, 4, 6, 6, 4, 5, 1, 5, 5, 4, 4, 3, 5…
+## $ cs_find_clarification_exp        &lt;dbl&gt; 5, 3, 6, 6, 2, 4, 1, 4, 3, 6, 4, 4, 5…</code></pre>
+<p>For example, if we wanted to know how each student scored with regards to social integration (<code>si</code>), we have to</p>
+<ul>
+<li><p>compute the mean (<code>mean())</code> of all related items (i.e. all variables starting with <code>si_</code>),</p></li>
+<li><p>for each row (<code>rowwise()</code>) because each row presents one participant.</p></li>
+</ul>
+<p>The same is true for communication skills (<code>cs</code>). We can compute both variables in one go:</p>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="data-wrangling.html#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute the scores for the latent variable &#39;si&#39; and &#39;cs&#39;</span></span>
+<span id="cb51-2"><a href="data-wrangling.html#cb51-2" aria-hidden="true" tabindex="-1"></a>gep <span class="ot">&lt;-</span> gep <span class="sc">%&gt;%</span> </span>
+<span id="cb51-3"><a href="data-wrangling.html#cb51-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rowwise</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb51-4"><a href="data-wrangling.html#cb51-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">si =</span> <span class="fu">mean</span>(<span class="fu">c</span>(si_socialise_with_people_exp,</span>
+<span id="cb51-5"><a href="data-wrangling.html#cb51-5" aria-hidden="true" tabindex="-1"></a>                     si_supportive_friends_exp,</span>
+<span id="cb51-6"><a href="data-wrangling.html#cb51-6" aria-hidden="true" tabindex="-1"></a>                     si_joined_activitiy_group_exp,</span>
+<span id="cb51-7"><a href="data-wrangling.html#cb51-7" aria-hidden="true" tabindex="-1"></a>                     si_time_socialising_exp,</span>
+<span id="cb51-8"><a href="data-wrangling.html#cb51-8" aria-hidden="true" tabindex="-1"></a>                     si_accommodation_meet_people_exp,</span>
+<span id="cb51-9"><a href="data-wrangling.html#cb51-9" aria-hidden="true" tabindex="-1"></a>                     si_take_part_events_exp</span>
+<span id="cb51-10"><a href="data-wrangling.html#cb51-10" aria-hidden="true" tabindex="-1"></a>                     )</span>
+<span id="cb51-11"><a href="data-wrangling.html#cb51-11" aria-hidden="true" tabindex="-1"></a>                   ),</span>
+<span id="cb51-12"><a href="data-wrangling.html#cb51-12" aria-hidden="true" tabindex="-1"></a>         <span class="at">cs =</span> <span class="fu">mean</span>(<span class="fu">c</span>(cs_learn_different_styles_exp,   </span>
+<span id="cb51-13"><a href="data-wrangling.html#cb51-13" aria-hidden="true" tabindex="-1"></a>                     cs_speak_different_context_exp,  </span>
+<span id="cb51-14"><a href="data-wrangling.html#cb51-14" aria-hidden="true" tabindex="-1"></a>                     cs_improve_less_fluent_exp,</span>
+<span id="cb51-15"><a href="data-wrangling.html#cb51-15" aria-hidden="true" tabindex="-1"></a>                     cs_awareness_own_style_exp,</span>
+<span id="cb51-16"><a href="data-wrangling.html#cb51-16" aria-hidden="true" tabindex="-1"></a>                     cs_work_globally_exp,</span>
+<span id="cb51-17"><a href="data-wrangling.html#cb51-17" aria-hidden="true" tabindex="-1"></a>                     cs_find_clarification_exp</span>
+<span id="cb51-18"><a href="data-wrangling.html#cb51-18" aria-hidden="true" tabindex="-1"></a>                     )</span>
+<span id="cb51-19"><a href="data-wrangling.html#cb51-19" aria-hidden="true" tabindex="-1"></a>                   )</span>
+<span id="cb51-20"><a href="data-wrangling.html#cb51-20" aria-hidden="true" tabindex="-1"></a>         )</span>
+<span id="cb51-21"><a href="data-wrangling.html#cb51-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-22"><a href="data-wrangling.html#cb51-22" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(gep)</span></code></pre></div>
+<pre><code>## Rows: 300
+## Columns: 17
+## Rowwise: 
+## $ age                              &lt;dbl&gt; 22, 26, 24, 24, 20, 21, 22, 20, 20, 2…
+## $ gender                           &lt;chr&gt; &quot;Male&quot;, &quot;Female&quot;, &quot;Female&quot;, &quot;Female&quot;,…
+## $ level_of_study                   &lt;chr&gt; &quot;UG&quot;, &quot;PGT&quot;, &quot;PGT&quot;, &quot;PGT&quot;, &quot;UG&quot;, &quot;UG&quot;…
+## $ si_socialise_with_people_exp     &lt;dbl&gt; 5, 1, 2, 5, 3, 2, 1, 4, 3, 1, 3, 4, 4…
+## $ si_supportive_friends_exp        &lt;dbl&gt; 5, 1, 5, 5, 4, 2, 1, 4, 3, 1, 4, 4, 4…
+## $ si_joined_activitiy_group_exp    &lt;dbl&gt; 3, 1, 2, 4, 2, 1, 1, 1, 3, 4, 1, 5, 2…
+## $ si_time_socialising_exp          &lt;dbl&gt; 4, 2, 3, 4, 4, 3, 1, 3, 2, 2, 3, 4, 4…
+## $ si_accommodation_meet_people_exp &lt;dbl&gt; 3, 1, 3, 4, 5, 1, 1, 3, 4, 1, 1, 5, 2…
+## $ si_take_part_events_exp          &lt;dbl&gt; 3, 3, 3, 3, 1, 1, 1, 1, 1, 2, 3, 3, 3…
+## $ cs_learn_different_styles_exp    &lt;dbl&gt; 4, 2, 6, 6, 3, 6, 1, 3, 4, 3, 3, 2, 5…
+## $ cs_speak_different_context_exp   &lt;dbl&gt; 5, 4, 5, 6, 4, 4, 1, 2, 3, 6, 4, 3, 3…
+## $ cs_improve_less_fluent_exp       &lt;dbl&gt; 5, 3, 6, 6, 2, 1, 2, 5, 3, 6, 4, 4, 4…
+## $ cs_awareness_own_style_exp       &lt;dbl&gt; 5, 3, 4, 6, 4, 3, 1, 3, 3, 6, 4, 2, 3…
+## $ cs_work_globally_exp             &lt;dbl&gt; 5, 4, 6, 6, 4, 5, 1, 5, 5, 4, 4, 3, 5…
+## $ cs_find_clarification_exp        &lt;dbl&gt; 5, 3, 6, 6, 2, 4, 1, 4, 3, 6, 4, 4, 5…
+## $ si                               &lt;dbl&gt; 3.833333, 1.500000, 3.000000, 4.16666…
+## $ cs                               &lt;dbl&gt; 4.833333, 3.166667, 5.500000, 6.00000…</code></pre>
+<p>Compared to dealing with missing data, this is a fairly straightforward task. However, there is a caveat. Before we are allowed to compute the mean across all these variables, we need to know and understand whether all these scores reliably contribute to one single latent variable. If not, we would be in trouble and make a significant mistake.</p>
+<p>By far the most common approach to assessing reliability (or more accurately ‘internal consistency’) of latent variables is Cronbach’s <span class="math inline">\(\alpha\)</span>. This indicator looks at how strongly a set of items (i.e. questions in your questionnaire) are related to each other. Thus, the stronger the relationship of all items starting with <code>si_</code> to each other, the more likely we achieve a higher Cronbach’s <span class="math inline">\(\alpha\)</span>. The <code>psych</code> package has a suitable function to compute it for us.</p>
+<p>Instead of listing all the items by hand, I use the function <code>starts_with()</code> to only pick the variables whose names start with <code>si_</code>. It certainly pays off to think about your variable names more thoroughly in advance to benefit from such shortcuts (see also Chapter <a href="data-wrangling.html#colnames-cleaning">7.3</a>.</p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="data-wrangling.html#cb53-1" aria-hidden="true" tabindex="-1"></a>gep <span class="sc">%&gt;%</span> </span>
+<span id="cb53-2"><a href="data-wrangling.html#cb53-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">starts_with</span>(<span class="st">&quot;si_&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb53-3"><a href="data-wrangling.html#cb53-3" aria-hidden="true" tabindex="-1"></a>  psych<span class="sc">::</span><span class="fu">alpha</span>()</span></code></pre></div>
+<pre><code>## 
+## Reliability analysis   
+## Call: psych::alpha(x = .)
+## 
+##   raw_alpha std.alpha G6(smc) average_r S/N   ase mean  sd median_r
+##       0.87      0.88    0.87      0.54 7.2 0.011  3.1 1.2     0.53
+## 
+##  lower alpha upper     95% confidence boundaries
+## 0.85 0.87 0.9 
+## 
+##  Reliability if an item is dropped:
+##                                  raw_alpha std.alpha G6(smc) average_r S/N
+## si_socialise_with_people_exp          0.85      0.85    0.84      0.53 5.7
+## si_supportive_friends_exp             0.85      0.85    0.84      0.54 5.9
+## si_joined_activitiy_group_exp         0.85      0.86    0.84      0.55 6.1
+## si_time_socialising_exp               0.83      0.84    0.82      0.51 5.1
+## si_accommodation_meet_people_exp      0.88      0.88    0.87      0.60 7.5
+## si_take_part_events_exp               0.85      0.85    0.84      0.54 5.9
+##                                  alpha se  var.r med.r
+## si_socialise_with_people_exp        0.014 0.0120  0.52
+## si_supportive_friends_exp           0.014 0.0096  0.53
+## si_joined_activitiy_group_exp       0.014 0.0131  0.53
+## si_time_socialising_exp             0.015 0.0083  0.52
+## si_accommodation_meet_people_exp    0.011 0.0055  0.62
+## si_take_part_events_exp             0.014 0.0128  0.52
+## 
+##  Item statistics 
+##                                    n raw.r std.r r.cor r.drop mean  sd
+## si_socialise_with_people_exp     300  0.80  0.81  0.77   0.71  3.6 1.4
+## si_supportive_friends_exp        300  0.79  0.80  0.75   0.69  3.4 1.5
+## si_joined_activitiy_group_exp    300  0.78  0.78  0.72   0.67  2.8 1.6
+## si_time_socialising_exp          300  0.87  0.87  0.86   0.80  3.2 1.5
+## si_accommodation_meet_people_exp 300  0.68  0.67  0.56   0.52  3.0 1.7
+## si_take_part_events_exp          300  0.80  0.80  0.75   0.70  2.6 1.5
+## 
+## Non missing response frequency for each item
+##                                     1    2    3    4    5    6 miss
+## si_socialise_with_people_exp     0.07 0.15 0.25 0.25 0.19 0.09    0
+## si_supportive_friends_exp        0.15 0.15 0.18 0.25 0.18 0.09    0
+## si_joined_activitiy_group_exp    0.27 0.23 0.19 0.12 0.13 0.07    0
+## si_time_socialising_exp          0.14 0.22 0.26 0.17 0.13 0.08    0
+## si_accommodation_meet_people_exp 0.26 0.17 0.20 0.15 0.12 0.10    0
+## si_take_part_events_exp          0.30 0.22 0.21 0.15 0.06 0.05    0</code></pre>
+<p>The function <code>alpha()</code> returns a lot of information. The most important part, though, is shown at the very beginning:</p>
+<pre><code>##  raw_alpha std.alpha G6(smc) average_r  S/N  ase mean   sd median_r
+##       0.87      0.88    0.87      0.54 7.18 0.01 3.11 1.19     0.53</code></pre>
+<p>In most publications, researchers would primarily report the <code>raw_alpha</code> value. This is fine, but it is not a bad idea to also include at least <code>std.alpha</code> and <code>G6(smc)</code>.</p>
+<p>In terms of interpretation, Cronbrach’s <span class="math inline">\(\alpha\)</span> scores can range from 0 to 1. The closer the score to 1 the higher we would judge its reliability. <span class="citation"><a href="#ref-nunally-1967" role="doc-biblioref">Nunally</a> (<a href="#ref-nunally-1967" role="doc-biblioref">1967a</a>)</span> originally provided the following classification for Cronbach’s <span class="math inline">\(\alpha\)</span>:</p>
+<ul>
+<li><p>between 0.6 and 0.5 can be sufficient during early stages of development,</p></li>
+<li><p>0.8 or higher is sufficient for most basic research,</p></li>
+<li><p>0.9 or higher is suitable for applied research, where the questionnaires is used to make critical decisions, e.g. clinical studies, university admission tests, etc., with a ‘desired standard’ of 0.95.</p></li>
+</ul>
+<p>However, a few years later <span class="citation"><a href="#ref-nunally-1978" role="doc-biblioref">Nunally</a> (<a href="#ref-nunally-1978" role="doc-biblioref">1967b</a>)</span> revisited his original categorisation and also considered 0.7 or higher as a suitable benchmark in case of more exploratory-type research. Needless to say, this gave grounds for researchers to pick and choose the ‘right’ publication for them <span class="citation">(<a href="#ref-henson2001understanding" role="doc-biblioref">Henson 2001</a>)</span>. Consquently, depending on your research field, the expected reliability score might lean more towards 0.7 or 0.8. Still, the higher the score, the better it is.</p>
+<p>Our dataset shows that <code>si</code> scores a solid <span class="math inline">\(\alpha = 0.87\)</span>, which is excellent. We should repeat this step for <code>cs</code> as well.</p>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="data-wrangling.html#cb56-1" aria-hidden="true" tabindex="-1"></a>gep <span class="sc">%&gt;%</span> </span>
+<span id="cb56-2"><a href="data-wrangling.html#cb56-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">starts_with</span>(<span class="st">&quot;cs_&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb56-3"><a href="data-wrangling.html#cb56-3" aria-hidden="true" tabindex="-1"></a>  psych<span class="sc">::</span><span class="fu">alpha</span>()</span></code></pre></div>
+<pre><code>## 
+## Reliability analysis   
+## Call: psych::alpha(x = .)
+## 
+##   raw_alpha std.alpha G6(smc) average_r S/N    ase mean  sd median_r
+##        0.9       0.9    0.88      0.59 8.6 0.0092    4 1.1     0.62
+## 
+##  lower alpha upper     95% confidence boundaries
+## 0.88 0.9 0.91 
+## 
+##  Reliability if an item is dropped:
+##                                raw_alpha std.alpha G6(smc) average_r S/N
+## cs_learn_different_styles_exp       0.88      0.88    0.86      0.59 7.2
+## cs_speak_different_context_exp      0.87      0.87    0.85      0.57 6.7
+## cs_improve_less_fluent_exp          0.88      0.88    0.86      0.60 7.4
+## cs_awareness_own_style_exp          0.87      0.87    0.85      0.58 6.9
+## cs_work_globally_exp                0.87      0.87    0.85      0.57 6.7
+## cs_find_clarification_exp           0.89      0.89    0.88      0.63 8.4
+##                                alpha se  var.r med.r
+## cs_learn_different_styles_exp    0.0109 0.0041  0.60
+## cs_speak_different_context_exp   0.0117 0.0042  0.60
+## cs_improve_less_fluent_exp       0.0106 0.0057  0.62
+## cs_awareness_own_style_exp       0.0115 0.0055  0.57
+## cs_work_globally_exp             0.0117 0.0064  0.55
+## cs_find_clarification_exp        0.0098 0.0025  0.63
+## 
+##  Item statistics 
+##                                  n raw.r std.r r.cor r.drop mean  sd
+## cs_learn_different_styles_exp  300  0.81  0.81  0.76   0.72  3.9 1.4
+## cs_speak_different_context_exp 300  0.85  0.85  0.82   0.77  4.0 1.4
+## cs_improve_less_fluent_exp     300  0.80  0.79  0.74   0.70  3.8 1.5
+## cs_awareness_own_style_exp     300  0.84  0.84  0.80   0.75  3.9 1.4
+## cs_work_globally_exp           300  0.85  0.85  0.81   0.77  3.9 1.5
+## cs_find_clarification_exp      300  0.72  0.74  0.65   0.62  4.3 1.2
+## 
+## Non missing response frequency for each item
+##                                   1    2    3    4    5    6 miss
+## cs_learn_different_styles_exp  0.07 0.09 0.24 0.26 0.21 0.14    0
+## cs_speak_different_context_exp 0.05 0.10 0.20 0.27 0.20 0.17    0
+## cs_improve_less_fluent_exp     0.07 0.15 0.20 0.23 0.20 0.15    0
+## cs_awareness_own_style_exp     0.07 0.09 0.18 0.29 0.21 0.15    0
+## cs_work_globally_exp           0.07 0.12 0.20 0.24 0.21 0.16    0
+## cs_find_clarification_exp      0.02 0.06 0.16 0.31 0.24 0.21    0</code></pre>
+<p>Similarly, to <code>si</code>, <code>cs</code> shows a very good internal consistency score of <span class="math inline">\(\alpha = 0.90\)</span>. Thus, we can be confident that if we used our latent variables we would could trust that our results are likely reliable.</p>
+<p>While Cronbach’s <span class="math inline">\(\alpha\)</span> is very popular, due to its simplicity, there is plenty of criticism as well (add references). Therefore, very often it is not enough to just report the Cronbach’s <span class="math inline">\(\alpha\)</span>, but undertake additional steps. Depending on the stage of development of your measurement instrument (i.e. your questionnaire) you likely have to perform one of the following prior to computing the <span class="math inline">\(\alpha\)</span> scores:</p>
+<ul>
+<li><p>Exploratory factor analysis (EFA): Generally used to identify latent variables in a set of questionnaire items.</p></li>
+<li><p>Confirmatory factor analysis (CFA): To confirm whether a set of items truly reflect a latent variable.</p></li>
+</ul>
+<p>An example of exploratory factor analysis is presented in Chapter @ref(). Since the <code>gep</code> data is based on an established measurement tool we will have to perform a CFA. To perform a CFA we use the popular <code>lavaan</code> (<u>La</u>tent <u>Va</u>riable <u>An</u>alysis) package. The steps of running a CFA in R include:</p>
+<ol style="list-style-type: decimal">
+<li><p>Define which variables are supposed to measure a specific latent variable (i.e. creating a model)</p></li>
+<li><p>Run the CFA to see whether our assumptions are true</p></li>
+<li><p>Interpret the results based on various indicators.</p></li>
+</ol>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="data-wrangling.html#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lavaan)</span></code></pre></div>
+<pre><code>## This is lavaan 0.6-9
+## lavaan is FREE software! Please report any bugs.</code></pre>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="data-wrangling.html#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The model which explains how items of the questionnaire relate to a latent variable</span></span>
+<span id="cb60-2"><a href="data-wrangling.html#cb60-2" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="st">&#39;social_integration =~</span></span>
+<span id="cb60-3"><a href="data-wrangling.html#cb60-3" aria-hidden="true" tabindex="-1"></a><span class="st">  si_socialise_with_people_exp +</span></span>
+<span id="cb60-4"><a href="data-wrangling.html#cb60-4" aria-hidden="true" tabindex="-1"></a><span class="st">  si_supportive_friends_exp +</span></span>
+<span id="cb60-5"><a href="data-wrangling.html#cb60-5" aria-hidden="true" tabindex="-1"></a><span class="st">  si_joined_activitiy_group_exp +</span></span>
+<span id="cb60-6"><a href="data-wrangling.html#cb60-6" aria-hidden="true" tabindex="-1"></a><span class="st">  si_time_socialising_exp +</span></span>
+<span id="cb60-7"><a href="data-wrangling.html#cb60-7" aria-hidden="true" tabindex="-1"></a><span class="st">  si_accommodation_meet_people_exp +</span></span>
+<span id="cb60-8"><a href="data-wrangling.html#cb60-8" aria-hidden="true" tabindex="-1"></a><span class="st">  si_take_part_events_exp</span></span>
+<span id="cb60-9"><a href="data-wrangling.html#cb60-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-10"><a href="data-wrangling.html#cb60-10" aria-hidden="true" tabindex="-1"></a><span class="st">communication_skills =~</span></span>
+<span id="cb60-11"><a href="data-wrangling.html#cb60-11" aria-hidden="true" tabindex="-1"></a><span class="st">  cs_learn_different_styles_exp +</span></span>
+<span id="cb60-12"><a href="data-wrangling.html#cb60-12" aria-hidden="true" tabindex="-1"></a><span class="st">  cs_speak_different_context_exp +</span></span>
+<span id="cb60-13"><a href="data-wrangling.html#cb60-13" aria-hidden="true" tabindex="-1"></a><span class="st">  cs_improve_less_fluent_exp +</span></span>
+<span id="cb60-14"><a href="data-wrangling.html#cb60-14" aria-hidden="true" tabindex="-1"></a><span class="st">  cs_awareness_own_style_exp +</span></span>
+<span id="cb60-15"><a href="data-wrangling.html#cb60-15" aria-hidden="true" tabindex="-1"></a><span class="st">  cs_work_globally_exp +</span></span>
+<span id="cb60-16"><a href="data-wrangling.html#cb60-16" aria-hidden="true" tabindex="-1"></a><span class="st">  cs_find_clarification_exp&#39;</span></span>
+<span id="cb60-17"><a href="data-wrangling.html#cb60-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-18"><a href="data-wrangling.html#cb60-18" aria-hidden="true" tabindex="-1"></a><span class="co"># We need to perform the CFA to see how well this model fits out data</span></span>
+<span id="cb60-19"><a href="data-wrangling.html#cb60-19" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">cfa</span>(model, <span class="at">data =</span> gep)</span>
+<span id="cb60-20"><a href="data-wrangling.html#cb60-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-21"><a href="data-wrangling.html#cb60-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract the performance indicators</span></span>
+<span id="cb60-22"><a href="data-wrangling.html#cb60-22" aria-hidden="true" tabindex="-1"></a>fit_indices <span class="ot">&lt;-</span> <span class="fu">fitmeasures</span>(fit)</span>
+<span id="cb60-23"><a href="data-wrangling.html#cb60-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-24"><a href="data-wrangling.html#cb60-24" aria-hidden="true" tabindex="-1"></a><span class="co"># We can use the &#39;broom&#39; package to make the results easier to read and pick only those indices we are most interested in</span></span>
+<span id="cb60-25"><a href="data-wrangling.html#cb60-25" aria-hidden="true" tabindex="-1"></a>broom<span class="sc">::</span><span class="fu">tidy</span>(fit_indices) <span class="sc">%&gt;%</span></span>
+<span id="cb60-26"><a href="data-wrangling.html#cb60-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(names <span class="sc">==</span> <span class="st">&quot;gfi&quot;</span> <span class="sc">|</span></span>
+<span id="cb60-27"><a href="data-wrangling.html#cb60-27" aria-hidden="true" tabindex="-1"></a>         names <span class="sc">==</span> <span class="st">&quot;agfi&quot;</span> <span class="sc">|</span></span>
+<span id="cb60-28"><a href="data-wrangling.html#cb60-28" aria-hidden="true" tabindex="-1"></a>         names <span class="sc">==</span> <span class="st">&quot;rmsea&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb60-29"><a href="data-wrangling.html#cb60-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">x =</span> <span class="fu">round</span>(x, <span class="dv">3</span>))         <span class="co"># Round the results to 3 decimal places</span></span></code></pre></div>
+<pre><code>## # A tibble: 3 × 2
+##   names x         
+##   &lt;chr&gt; &lt;lvn.vctr&gt;
+## 1 rmsea 0.063     
+## 2 gfi   0.937     
+## 3 agfi  0.908</code></pre>
 
-</div>
 </div>
 </div>
 <h3>References</h3>
@@ -751,6 +993,9 @@ Dong, Yiran, and Chao-Ying Joanne Peng. 2013. <span>“Principled Missing Data M
 <div id="ref-van2020rebutting" class="csl-entry">
 Ginkel, Joost R van, Marielle Linting, Ralph CA Rippe, and Anja van der Voort. 2020. <span>“Rebutting Existing Misconceptions about Multiple Imputation as a Method for Handling Missing Data.”</span> <em>Journal of Personality Assessment</em> 102 (3): 297–308.
 </div>
+<div id="ref-henson2001understanding" class="csl-entry">
+Henson, Robin K. 2001. <span>“Understanding Internal Consistency Reliability Estimates: A Conceptual Primer on Coefficient Alpha.”</span> <em>Measurement and Evaluation in Counseling and Development</em> 34 (3): 177–89.
+</div>
 <div id="ref-jakobsen-et-al-2017" class="csl-entry">
 Jakobsen, Janus Christian, Christian Gluud, Jørn Wetterslev, and Per Winkel. 2017. <span>“When and How Should Multiple Imputation Be Used for Handling Missing Data in Randomised Clinical Trials–a Practical Guide with Flowcharts.”</span> <em>BMC Medical Research Methodology</em> 17 (1): 1–10.
 </div>
@@ -759,6 +1004,12 @@ Little, Roderick J. A. 1988. <span>“A Test of Missing Completely at Random for
 </div>
 <div id="ref-data-types-2021" class="csl-entry">
 Müller, Kirill, and Hadley Wickham. 2021. <span>“Column Data Types.”</span> <a href="https://tibble.tidyverse.org/articles/types.html">https://tibble.tidyverse.org/articles/types.html</a>.
+</div>
+<div id="ref-nunally-1967" class="csl-entry">
+Nunally, J. C. 1967a. <em>Psychometric Theory</em>. New york: Mc Graw-Hill.
+</div>
+<div id="ref-nunally-1978" class="csl-entry">
+———. 1967b. <em>Psychometric Theory (2nd Edition)</em>. New york: Mc Graw-Hill.
 </div>
 <div id="ref-rubin-1976" class="csl-entry">
 Rubin, Donald B. 1976. <span>“Inference and Missing Data.”</span> <em>Biometrika</em> 63 (3): 581–92.
@@ -773,7 +1024,7 @@ Wickham, Hadley. 2021. <span>“The Tidyverse Style Guide.”</span> <a href="ht
 <div class="footnotes">
 <hr />
 <ol start="1">
-<li id="fn1"><p>oA sophisticated research project would likely not rely on a dichotomous approach to gender, but appreciate the diversity in this regard.<a href="data-wrangling.html#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn1"><p>A sophisticated research project would likely not rely on a dichotomous approach to gender, but appreciate the diversity in this regard.<a href="data-wrangling.html#fnref1" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>
