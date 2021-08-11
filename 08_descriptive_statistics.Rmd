@@ -1,1 +1,122 @@
-# Descriptive Statistics
+# Descriptive Statistics {#descriptive-statistics}
+
+The best way to understand how participants in your study have responded to various questions or an experimental treatment is to use descriptive statistics. As the name indicates, their main purpose is to 'describe'. Most of the time we want to describe the composition of our sample and likely how the majority (or minority) of participants performed.
+
+In contrast, we use 'inferential' statistics to make predictions about the future. In Social Sciences, we are often interested in predicting how people will behave in certain situations and scenarios. We aim to develop models that help us navigate the complexity of social interactions that we all engage in, but might not fully understand. We cover 'inferential statistics' in later chapters of this book.
+
+In short, descriptive statistics are an essential component to understand your data. To some extend, one could argue that we were already describing our data when we performed various data wrangling tasks (see Chapter \@ref(data-wrangling).
+
+The following chapters focus on the most essential descriptive statistics, i.e. the ones you likely want to investigate in 99 out of 100 research projects.
+
+This book takes a 'visualise first' approach to data analysis. Therefore, each section will start with data visualisations, followed by computing statistical output, and end with how we can report our results in publications of all kind. A key learning outcome of this chapter is to plot your data using the package `ggplot2` and to present characteristics of your data in different ways. Each chapter will ask questions about our dataset that we aim to answer. However, first we need to understand how to create plots in R
+
+## Plotting in R with `ggplot2` {#plotting-in-r-with-ggplot2}
+
+lotting can appear intimidating at first, but is very easy and quick, once you understand the basics. The `ggplot2` package is a very popular package to generate plots and many other packages are built upon it. This makes it a very flexible tool to create almost any data visualisation you could think of. If you want to see what is possible with `ggplot2` you might want to consider looking at [\#tidytuesday](https://twitter.com/search?q=%23tidytuesday "#tidytuesday"){target="blank"} on Twitter where novices and veterans share their data visualisations on a weekly basis.
+
+To generate any plot we need to at least define three components:
+
+-   a dataset,
+
+-   variables we want to plot, and
+
+-   how we want to plot them, e.g. lines, bars, points.
+
+Admittedly, this is a harsh oversimplification, but it will serve as a guide to get us started. The function `ggplot()` is the one responsible to create any type of data visualisation.
+
+The generic structure of a `ggplot()` looks like this:
+
+``` {#basic_ggplot_structure}
+ggplot(data, aes(x = variable_01, y = variable_02))
+```
+
+In other words, we first need to provide the dataset, and then the aesthetics (`aes()`). Think of `aes()` as the place where we define our variables (e.g. `x` and `y`). For example, we might be interested to know which movie genre is the most popular among the top 250 IMDb movies. The dataset `imdb_top_250` from the `r4np` package allows us to find an answer to this question. Therefore we define the components of the plot as follows:
+
+-   our data is `imdb_top_250`, and
+
+-   our variable of interest is `genre_01`
+
+```{r Most popular genre incomplete plot, echo=TRUE}
+ggplot(imdb_top_250, aes(x = genre_01))
+```
+
+Running this line of code will produce an empty plot. We only get labels for our x-axis, since we defined it already. However, we have yet to tell `ggplot()` how we want to represent the data on this canvas that ggplot drew. Your choice for how you want to plot your data is usually informed by the type of data you want to plot and the statistics you want to represent. For example trying to plot the mean of a factor is not useful, e.g. computing the mean of movie genres. On the other hand, we can count how often certain genres appear in our dataset. One way of representing the count (or frequency) of a factor is to use a bar plot.
+
+```{r Most popular genre with barplot, echo=TRUE}
+ggplot(imdb_top_250, aes(x = genre_01)) +
+  geom_bar()
+```
+
+In order to add an element to this block, i.e. bars, we use `+` and append the function `geom_bar()` which draws bars. This already looks great and we can see that `Drama` is by far the most popular genre, followed by `Action` and `Crime`.
+
+We can use `+` to add other elements to our plot. Here are some common functions to further customise your plot:
+
+```{r Most popular genre with barplot and extras, echo=TRUE}
+ggplot(imdb_top_250, aes(x = genre_01)) +
+  geom_bar() +
+  ggtitle("Most popular movie genres") +  # Add a title
+  xlab("movie genre") +                   # Rename x-axis
+  ylab("frequency")                       # Rename y-axis
+```
+
+When working with factors, the category names can be rather long. In this plot, we also have lots of categories and the labels `Adventure`, `Animation` and `Biography` are a bit too close to each other for my taste. This might be a good opportunity to use `coord_flip()`, which rotates the entire plot by 90 degrees, i.e. turning the x-axis into the y-axis and vice versa. THis makes the label much easier to read.
+
+```{r Most popular genre with barplot and extras, echo=TRUE}
+ggplot(imdb_top_250, aes(x = genre_01)) +
+  geom_bar() +
+  ggtitle("Most popular movie genres") +
+  xlab("movie genre") +
+  ylab("frequency") +
+  coord_flip()
+```
+
+Our plot is almost perfect, but there is one more step we should take to make reading and understanding this plot even easier. At the moment, the bars are ordered alphabetically by movie genre. This is hardly ever a useful way to order your data. Instead, we might want to sort the data by the frequency, showing the most popular genre at the top. We could either sort the movies by hand or slightly amend what we have coded so far.
+
+The problem you encounter when trying to arrange a `geom_bar()` that consist only of one variable is that we do not have an explicit value we can use to indicated how we want to sort the bars. Our current code is based on the fact that `ggplot` does the counting for us. So, instead we need to do two things:
+
+-   create a table with all genres and their frequency, and
+
+-   use this table to plot the genres by the frequency we computed
+
+```{r Most popular genre with barplot and extras, echo=TRUE}
+
+# Step 1: The frequency table only
+imdb_top_250 %>% 
+  count(genre_01)
+
+# Step 2: Plotting a barplot based on the frequency table
+imdb_top_250 %>% 
+  count(genre_01) %>% 
+  ggplot(aes(x = genre_01, y = n)) +
+  geom_col() +                             # Use geom_col() instead of geom_bar()
+  ggtitle("Most popular movie genres") +
+  xlab("movie genre") +
+  ylab("frequency") +
+  coord_flip()
+
+#Step 3: Sort the plot by frequency, i.e. by 'n'
+imdb_top_250 %>% 
+  count(genre_01) %>% 
+  ggplot(aes(x = reorder(genre_01, n), y = n)) +    # Use 'reorder()'
+  geom_col() +
+  ggtitle("Most popular movie genres") +
+  xlab("movie genre") +
+  ylab("frequency") +
+  coord_flip()
+```
+
+Step 3 is the only code you need to create the desired plot. The two other steps are a mean to demonstrate how one can slowly built up this plot, step-by-step.
+
+There are two new functions we had to use: `geom_col()` and `reorder()`. The functions `geom_col()` and `geom_bar()` can be confusing. The easiest way to remember how to use them is: If you use a frequency table to create your barplot, use `geom_col`, if not, use `geom_bar()`. The function `geom_col()` requires that we specify a y-axis (our frequency scores), while `geom_bar()` does not.
+
+Now you have learned the fundamentals of plotting in R. Throughout the next chapters we will create a lot more plots. They all share the same basic structure, but we will use different 'geoms' to describe our data.
+
+## The 3 Ms: Mean, Median, Mode {#mean-median-mode}
+
+The mean, median and mode, are all measures of central tendency, i.e. they provide insights into how our data is distributed. All three of these measures summarise our data/variable by a single score which can be helpful, but sometimes also terribly misleading.
+
+### Mean
+
+The mean is likely the most known descriptive statistics and, at the same time, a very powerful and influential one. For example, the averag ratings of restaurants on Google might influence our decision on where to eat out. Similarly, we might consider the average rating of movies to decide which one to watch in cinema with friends. What we sometimes casually refer to as the 'average' is equivalent to the 'mean'.
+
+In R it is simple to compute the mean using the function `mean()`. We used this function in Chapter \@ref(functions) and Chapter \@ref(latent-constructs) already. However, we have not look at how we can plot the mean.
