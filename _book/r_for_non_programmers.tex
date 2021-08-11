@@ -117,7 +117,7 @@
 
 \title{R for Non-Programmers: A Guide for Social Scientists}
 \author{Daniel Dauber}
-\date{2021-08-05}
+\date{2021-08-11}
 
 \begin{document}
 \maketitle
@@ -1314,15 +1314,15 @@ No matter your choice, it will neither benefit nor disadvantage you in your R jo
 \hypertarget{data-wrangling}{%
 \chapter{Data Wrangling}\label{data-wrangling}}
 
-You collected your data over months (and sometimes years) and all you really want to know is whether your data makes sense and reveals something nobody would have ever expected. However, before we can truly go ahead with our analysis, it is essential to understand whether our data is `tidy'. Very often, data we receive is everything else but clean and we need to not only check whether our data is fit for analysis, but also ensure it is in a format that is easy to handle and work with. For small datasets, this is usually a brief exercise. However, I found myself cleaning data for a month, because the dataset was spread out into multiple spreadsheets (no pun intended) with different numbers of columns and odd column names. Thus, data cleaning or data wrangling is an essential first step in any data analysis. It is a step that cannot be skipped and has to be performed on every new dataset.
+You collected your data over months (and sometimes years), and all you want to know is whether your data makes sense and reveals something nobody would have ever expected. However, before we can truly go ahead with our analysis, it is essential to understand whether our data is `tidy'. Very often, the data we receive is everything else but clean, and we need to check whether our data is fit for analysis and ensure it is in a format that is easy to handle. For small datasets, this is usually a brief exercise. However, I found myself cleaning data for a month because the dataset was spread out into multiple spreadsheets (no pun intended) with different numbers of columns and odd column names. Thus, data cleaning or data wrangling is an essential first step in any data analysis. It is a step that cannot be skipped and has to be performed on every new dataset.
 
-Luckily, R provides many useful functions to make our lives easier. If you are like me and used to do this in Excel, you will be in for a treat. It is a lot simpler using R to do achieve a clean dataset.
+Luckily, R provides many useful functions to make our lives easier. You will be in for a treat if you are like me and used to do this in Excel. It is a lot simpler using R to achieve a clean dataset.
 
-Here is an overview of the different steps we usually work through before we can start with our main analysis. This is list is certainly not exhaustive:
+Here is an overview of the different steps we usually work through before starting with our primary analysis. This list is certainly not exhaustive:
 
 \begin{itemize}
 \item
-  Data import
+  Importing data
 \item
   Checking data types
 \item
@@ -1336,22 +1336,24 @@ Here is an overview of the different steps we usually work through before we can
 \hypertarget{import-your-data}{%
 \section{Import your data}\label{import-your-data}}
 
-The \texttt{r4np} package hosts a number of different datasets to work with, but at some point you might want to apply your R knowledge to your own data. Therefore, an important first step is to import your data into RStudio. There are three different methods all of which are very handy:
+The \texttt{r4np} package hosts several different datasets to work with, but at some point, you might want to apply your R knowledge to your own data. Therefore, an essential first step is to import your data into RStudio. There are three different methods, all of which are very handy:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \item
-  Click on your data file in the Files pane and choose `Import Dataset'.
+  Click on your data file in the Files pane and choose \texttt{Import\ Dataset}.
 \item
   Use the \texttt{Import\ Dataset} button in the Environment pane.
 \item
-  Import your data calling one of the \texttt{readr} functions in the console or RScript
+  Import your data calling one of the \texttt{readr} functions in the console or RScript.
 \end{enumerate}
+
+We will use the \texttt{readr} package to import our data. Using this package we can import a range of different file formats, including \texttt{.csv}, \texttt{.tsv}, \texttt{.txt}. If you want to import data from an \texttt{.xlsx} file, you need to use another package called \texttt{readxl}. The following sections will primarily focus on using \texttt{readr} via RStudio or directly in your Console or RScript.
 
 \hypertarget{import-data-from-the-files-pane}{%
 \subsection{Import data from the Files pane}\label{import-data-from-the-files-pane}}
 
-This approach is by far the easiest. Let's assume you have a dataset called \texttt{gender\_age.csv} in your \texttt{00\_raw\_data} folder. If you wish to import it, you can do the following:
+This approach is by far the easiest. Let's assume you have a dataset called \texttt{gender\_age.csv} in your \texttt{00\_raw\_data\ folder}. If you wish to import it, you can do the following:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -1362,25 +1364,25 @@ This approach is by far the easiest. Let's assume you have a dataset called \tex
 
   \includegraphics{images/chapter_07_img/01_files_pane_import/01_files_pane_import.png}
 \item
-  A new window will open and you can choose different options. You also see a little preview of how the data looks like. This is great if you are not sure whether you did it correctly.
+  A new window will open, and you can choose different options. You also see a little preview of how the data looks like. This is great if you are not sure whether you did it correctly.
 
   \includegraphics{images/chapter_07_img/01_files_pane_import/02_files_pane_import.png}
 \item
-  You can make changes to how the data should be imported, but in most cases the default should be fine. Here is quick breakdown of the most important options:
+  You can change how data should be imported, but the default should be fine in most cases. Here is a quick breakdown of the most important options:
 
   \begin{itemize}
   \item
-    \texttt{Name} allows you to change the object name, i.e.~the name of the object this data will be assigned to. I tend to use \texttt{df\_raw} (\texttt{df} stand for \texttt{dataframe}, which is how R calls such rectangular datasets).
+    \texttt{Name} allows you to change the object name, i.e.~the name of the object this data will be assigned to. I often use \texttt{df\_raw} (\texttt{df} stand for \texttt{data\ frame}, which is how R calls such rectangular datasets).
   \item
-    \texttt{Skip} is useful if your data file starts with a number of empty rows at the top. You can remove them here.
+    \texttt{Skip} is helpful if your data file starts with several empty rows at the top. You can remove them here.
   \item
-    \texttt{First\ Row\ as\ Names} is ticked by default. In most Social Science projects we tend to have the name of the variables as the first row in your dataset.
+    \texttt{First\ Row\ as\ Names} is ticked by default. In most Social Science projects, we tend to have the name of the variables as the first row in your dataset.
   \item
-    \texttt{Trim\ Spaces} removes any unnecassry white-space in your dataset. Leave it ticked.
+    \texttt{Trim\ Spaces} removes any unnecessary whitespace in your dataset. Leave it ticked.
   \item
     \texttt{Open\ Data\ Viewer} allows you to look at your imported dataset. I use it rarely, but it can be helpful at times.
   \item
-    \texttt{Delimiter} defines how your columns are separate from each other in your file. If it is a \texttt{.csv} it would imply it is a `comma-separated value', i.e.~\texttt{,}. This can be changed for different files, depending on how your data is delimited. You can even use the option \texttt{Other\ldots{}} to specify a custom separation option.
+    \texttt{Delimiter} defines how your columns are separate from each other in your file. If it is a \texttt{.csv} it would imply it is a `comma-separated value', i.e.~\texttt{,}. This setting can be changed for different files, depending on how your data is delimited. You can even use the option \texttt{Other\ldots{}} to specify a custom separation option.
   \item
     \texttt{NA} specifies how missing values in your data are acknowledged. By default, empty cells in your data will be recognised as missing data.
   \end{itemize}
@@ -1394,19 +1396,22 @@ This approach is by far the easiest. Let's assume you have a dataset called \tex
   \includegraphics{images/chapter_07_img/01_files_pane_import/04_files_pane_import.png}
 \end{enumerate}
 
-In the console you can see that R also provides the \texttt{Column\ specification}, which we need later when inspecting `data types'. \texttt{readr} automatically imports all text-based columns as \texttt{chr}, i.e.~\texttt{character} values. However, this might not be always true. More on this aspect of data wrangling in Chapter \ref{change-data-types}.
+In the Console, you can see that R also provides the \texttt{Column\ specification}, which we need later when inspecting `data types'. \texttt{readr} automatically imports all text-based columns as \texttt{chr}, i.e.~\texttt{character} values. However, this might not always be true. We will cover more of this aspect of data wrangling in Chapter \ref{change-data-types}.
 
-\texttt{CONTINUE\ FROM\ HERE}
+\hypertarget{importing-data-from-the-environment-pane}{%
+\subsection{Importing data from the Environment pane}\label{importing-data-from-the-environment-pane}}
 
-To achieve this we rely on \texttt{readr} from the \texttt{tidyverse} package. It can install a range of different datatypes, including \texttt{.csv}, \texttt{.tsv}, \texttt{.txt}. If you want to import data from an \texttt{.xlsx} file you have to use another package called \texttt{readxl}.
+The process of importing datasets from the Environment pane follows largely the one from the Files pane. Click on \texttt{Import\ Dataset\ \textgreater{}\ From\ Text\ (readr)\ldots{}}. The only main difference lies in having to find the file using the \texttt{Browse\ldots{}} button. The rest of the steps are the same as above.
 
-Here are some examples of how you can use \texttt{readr} to import your data. The first part is only there to create the two
+You will have to use the Environment pane for importing data from specific file types, e.g.~\texttt{.txt}, because using the File pane would only open the file but not import the data for further processing.
+
+\hypertarget{importing-data-using-functions}{%
+\subsection{Importing data using functions directly}\label{importing-data-using-functions}}
+
+If you organised your files well, it could be effortless and quick to use all the functions from \texttt{readr} directly. Here are two examples of how you can use \texttt{readr} to import your data. Make sure you have the \texttt{tidyverse} package loaded.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\# Load \textquotesingle{}readr\textquotesingle{} via \textquotesingle{}tidyverse\textquotesingle{} or just \textquotesingle{}readr}
-\FunctionTok{library}\NormalTok{(tidyverse)}
-
 \CommentTok{\# Import data from \textquotesingle{}.csv\textquotesingle{}}
 \FunctionTok{read\_csv}\NormalTok{(}\StringTok{"00\_raw\_data/gender\_age.csv"}\NormalTok{)}
 
@@ -1415,10 +1420,41 @@ Here are some examples of how you can use \texttt{readr} to import your data. Th
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{inspecting-raw-data}{%
-\section{Inspecting your raw data}\label{inspecting-raw-data}}
+You might be wondering whether you can use \texttt{read\_delim()} to import \texttt{.csv} files too. The answer is `Yes, you can!'. In contrast to \texttt{read\_delim()}, \texttt{read\_csv()} sets the delimiter to \texttt{,} by default. This is mainly for convenience because \texttt{.csv} files are one of the most popular file formats used to store their data.
 
-For the rest of this chapter, we will use the \texttt{wvs} dataset from the \texttt{r4np} package. However, we do not know much about this dataset. The first way of inspecting the data is to simply type the name of the object, i.e.~\texttt{wvs}.
+You might also be wondering what a `delimiter' is. When you record data in a plain-text file, it is easy to see where a new observation starts and ends because it is defined by a row in your file. However, we also need to tell our software where a new column starts, i.e.~where a cell begins and ends. Consider the following example. We have a file that holds our data which looks like this:
+
+\begin{verbatim}
+idagegender
+124male
+256female
+333male
+\end{verbatim}
+
+The first row we probably can still decipher as \texttt{id}, \texttt{age}, \texttt{gender}. However, the next row makes it difficult to understand which value represents the \texttt{id} of a participant and which value reflects the \texttt{age} of that participant. Like us, computer software would find it hard too to decide on this ambiguous content. Thus, we need to use delimiters to make it very clear which value belongs to which column. For example, In a \texttt{.csv} file, the data would be separated by a \texttt{,}.
+
+\begin{verbatim}
+id,age,gender
+1,24,male
+2,56,female
+3,33,male
+\end{verbatim}
+
+Considering our example from above, we could also use \texttt{\textbar{}} as a delimiter.
+
+\begin{verbatim}
+id|age|gender
+1|24|male
+2|56|female
+3|33|male
+\end{verbatim}
+
+There is a lot more to \texttt{readr} than could be covered in this book. If you want to know more about this R package, I highly recommend looking at the \href{https://readr.tidyverse.org}{readr webpage}.
+
+\hypertarget{inspecting-raw-data}{%
+\section{Inspecting your data}\label{inspecting-raw-data}}
+
+For the rest of this chapter, we will use the \texttt{wvs} dataset from the \texttt{r4np} package. However, we do not know much about this dataset, and therefore we cannot ask any research questions worth investigating. Therefore we need to look at what it contains. The first method of inspecting a dataset is to type the name of the object, i.e.~\texttt{wvs}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1427,40 +1463,38 @@ For the rest of this chapter, we will use the \texttt{wvs} dataset from the \tex
 
 \CommentTok{\# Show the data in the console}
 \NormalTok{wvs}
-\DocumentationTok{\#\# \# A tibble: 69,578 x 9}
-\DocumentationTok{\#\#    \textasciigrave{}Participant ID\textasciigrave{} \textasciigrave{}Country Code\textasciigrave{} \textasciigrave{}Country name\textasciigrave{} Gender YearOfBirth   Age}
-\DocumentationTok{\#\#               \textless{}dbl\textgreater{} \textless{}chr\textgreater{}          \textless{}chr\textgreater{}           \textless{}dbl\textgreater{}       \textless{}dbl\textgreater{} \textless{}dbl\textgreater{}}
-\DocumentationTok{\#\#  1         20070001 AND            Andorra             1        1958    60}
-\DocumentationTok{\#\#  2         20070002 AND            Andorra             0        1971    47}
-\DocumentationTok{\#\#  3         20070003 AND            Andorra             0        1969    48}
-\DocumentationTok{\#\#  4         20070004 AND            Andorra             1        1956    62}
-\DocumentationTok{\#\#  5         20070005 AND            Andorra             0        1969    49}
-\DocumentationTok{\#\#  6         20070006 AND            Andorra             1        1967    51}
-\DocumentationTok{\#\#  7         20070007 AND            Andorra             1        1985    33}
-\DocumentationTok{\#\#  8         20070008 AND            Andorra             0        1963    55}
-\DocumentationTok{\#\#  9         20070009 AND            Andorra             1        1978    40}
-\DocumentationTok{\#\# 10         20070010 AND            Andorra             1        1979    38}
-\DocumentationTok{\#\# \# ... with 69,568 more rows, and 3 more variables: relationship\_status \textless{}chr\textgreater{},}
-\DocumentationTok{\#\# \#   Freedom.of.Choice \textless{}dbl\textgreater{}, Satisfaction{-}with{-}life \textless{}dbl\textgreater{}}
+\DocumentationTok{\#\# \# A tibble: 69,578 x 7}
+\DocumentationTok{\#\#    \textasciigrave{}Participant ID\textasciigrave{} \textasciigrave{}Country name\textasciigrave{} Gender   Age relationship\_status       }
+\DocumentationTok{\#\#               \textless{}dbl\textgreater{} \textless{}chr\textgreater{}           \textless{}dbl\textgreater{} \textless{}dbl\textgreater{} \textless{}chr\textgreater{}                     }
+\DocumentationTok{\#\#  1         20070001 Andorra             1    60 married                   }
+\DocumentationTok{\#\#  2         20070002 Andorra             0    47 living together as married}
+\DocumentationTok{\#\#  3         20070003 Andorra             0    48 separated                 }
+\DocumentationTok{\#\#  4         20070004 Andorra             1    62 living together as married}
+\DocumentationTok{\#\#  5         20070005 Andorra             0    49 living together as married}
+\DocumentationTok{\#\#  6         20070006 Andorra             1    51 married                   }
+\DocumentationTok{\#\#  7         20070007 Andorra             1    33 married                   }
+\DocumentationTok{\#\#  8         20070008 Andorra             0    55 widowed                   }
+\DocumentationTok{\#\#  9         20070009 Andorra             1    40 single                    }
+\DocumentationTok{\#\# 10         20070010 Andorra             1    38 living together as married}
+\DocumentationTok{\#\# \# ... with 69,568 more rows, and 2 more variables: Freedom.of.Choice \textless{}dbl\textgreater{},}
+\DocumentationTok{\#\# \#   Satisfaction{-}with{-}life \textless{}dbl\textgreater{}}
 \end{Highlighting}
 \end{Shaded}
 
-The result is a series of rows and columns. The first information we receive is: \texttt{A\ tibble:\ 69,578\ x\ 9}. This indicates that our dataset has 68,578 observations (i.e.~rows) and 9 columns (i.e.~variables). This rectangular format is the one we encounter most frequently in Social Sciences (and probably beyond). If you ever worked in Excel this format might be quite familiar.
+The result is a series of rows and columns. The first information we receive is: \texttt{A\ tibble:\ 69,578\ x\ 9}. This indicates that our dataset has 69,578 observations (i.e.~rows) and 9 columns (i.e.~variables). This rectangular format is the one we encounter most frequently in Social Sciences (and probably beyond). If you ever worked in Microsoft Excel, this format will look familiar.
 
-Even though it might be nice to look at this dataset in this way, it is not particularly useful. Depending on your monitor size you might only see a small number of columns. All in all, we hardly ever will find much use in inspecting data this way. Luckily there are other functions that can help us.
+Even though it might be nice to look at a dataset in this way, it is not particularly useful. Depending on your monitor size, you might only see a small number of columns, and therefore we do not get to see a complete list of all variables. In short, we hardly ever will find much use in inspecting data this way. Luckily other functions can help us.
 
-If you want to see each variable covered in the dataset and their data types, you can use the function \texttt{glimpse()}.
+If you want to see each variable covered in the dataset and their data types, you can use the function \texttt{glimpse()} from the \texttt{dplyr} package (loaded as part of the \texttt{tidyverse} package).
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{glimpse}\NormalTok{(wvs)}
 \DocumentationTok{\#\# Rows: 69,578}
-\DocumentationTok{\#\# Columns: 9}
+\DocumentationTok{\#\# Columns: 7}
 \DocumentationTok{\#\# $ \textasciigrave{}Participant ID\textasciigrave{}         \textless{}dbl\textgreater{} 20070001, 20070002, 20070003, 20070004, 20070\textasciitilde{}}
-\DocumentationTok{\#\# $ \textasciigrave{}Country Code\textasciigrave{}           \textless{}chr\textgreater{} "AND", "AND", "AND", "AND", "AND", "AND", "AN\textasciitilde{}}
 \DocumentationTok{\#\# $ \textasciigrave{}Country name\textasciigrave{}           \textless{}chr\textgreater{} "Andorra", "Andorra", "Andorra", "Andorra", "\textasciitilde{}}
 \DocumentationTok{\#\# $ Gender                   \textless{}dbl\textgreater{} 1, 0, 0, 1, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1, 1, \textasciitilde{}}
-\DocumentationTok{\#\# $ YearOfBirth              \textless{}dbl\textgreater{} 1958, 1971, 1969, 1956, 1969, 1967, 1985, 196\textasciitilde{}}
 \DocumentationTok{\#\# $ Age                      \textless{}dbl\textgreater{} 60, 47, 48, 62, 49, 51, 33, 55, 40, 38, 54, 3\textasciitilde{}}
 \DocumentationTok{\#\# $ relationship\_status      \textless{}chr\textgreater{} "married", "living together as married", "sep\textasciitilde{}}
 \DocumentationTok{\#\# $ Freedom.of.Choice        \textless{}dbl\textgreater{} 10, 9, 9, 9, 8, 10, 10, 8, 8, 10, 9, 8, 10, 7\textasciitilde{}}
@@ -1468,59 +1502,1015 @@ If you want to see each variable covered in the dataset and their data types, yo
 \end{Highlighting}
 \end{Shaded}
 
-The output of glimpse shows us the name of each column/variable after the \texttt{\$}, for example \texttt{\textasciigrave{}Participant\ ID\textasciigrave{}}. The \texttt{\$} is used to look up certain variables in our dataset. If we want to inspect only the column `Gender' we could write the following:
+The output of glimpse shows us the name of each column/variable after the \texttt{\$}, for example, \texttt{\textasciigrave{}Participant\ ID\textasciigrave{}}. The \texttt{\$} is used to lookup certain variables in our dataset. For example, if we want to inspect the column \texttt{relationship\_status} only, we could write the following:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{wvs}\SpecialCharTok{$}\NormalTok{Gender}
-\DocumentationTok{\#\#     [1]  1  0  0  1  0  1  1  0  1  1  0  0  1  1  1  0  0  1  1  1  1  1  1  0}
-\DocumentationTok{\#\#    [25]  1  0  1  1  1  0  1  0  0  1  0  0  0  1  0  1  1  1  0  0  0  1  1  1}
-\DocumentationTok{\#\#    [49]  1  1  1  1  1  0  0  1  1  1  1  0  1  0  0  0  0  1  1  1  0  1  0  1}
-\DocumentationTok{\#\#    [73]  1  1  1  1  1  0  1  1  1  1  0  1  1  1  1  1  0  1  1  1  1  1  1  1}
+\NormalTok{wvs}\SpecialCharTok{$}\NormalTok{relationship\_status}
+\DocumentationTok{\#\#     [1] "married"                    "living together as married"}
+\DocumentationTok{\#\#     [3] "separated"                  "living together as married"}
+\DocumentationTok{\#\#     [5] "living together as married" "married"                   }
+\DocumentationTok{\#\#     [7] "married"                    "widowed"                   }
 \NormalTok{....}
 \end{Highlighting}
 \end{Shaded}
 
-I use \texttt{glimpse()} a lot for different purposes, for example:
+After the variable name, we find the recognised datatype for each column in \texttt{\textless{}...\textgreater{}}, for example \texttt{\textless{}chr\textgreater{}}. We will return to data types in Chapter \ref{change-data-types}. Lastly, we get samples of the data included. This output is much more helpful.
+
+I use \texttt{glimpse()} very frequently for different purposes, for example:
 
 \begin{itemize}
 \item
-  to check correctness of data types
+  to understand what variables are included in a dataset,
 \item
-  to inspect column names for errors
+  to check the correctness of data types,
 \item
-  to look up column names
+  to inspect variable names for typos or unconventional names,
+\item
+  to look up variable names.
 \end{itemize}
 
-\texttt{skim()}
+There is one more way to inspect your data and receive more information about it by using a specialised R package. The \texttt{skimr} package is excellent in `skimming' your dataset. It provides not only information about variable names and data types but also provides some descriptive statistics. If you installed the \texttt{r4np} package and called the function \texttt{install\_r4np()}, you will have \texttt{skimr} installed already.
 
-\hypertarget{data-cleaning}{%
-\section{Data cleaning}\label{data-cleaning}}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{skimr}\SpecialCharTok{::}\FunctionTok{skim}\NormalTok{(wvs)}
+\end{Highlighting}
+\end{Shaded}
 
-Create consistency in your column naming convention
+The output in the Console should look like this:
 
-\texttt{janitor}
+\includegraphics{images/chapter_07_img/02_skimr_output/skimr_output.png}
+
+As you can tell, there is a lot more information in this output. Many descriptive statistics that could be useful are already displayed. \texttt{skim()} provides a summary of the dataset and then automatically sorts the variables by data type. Depending on the data type, you also receive different descriptive statistics. As a bonus, the function also provides a histogram for numeric variables. However, there is one main problem: Some of the numeric variables are not numeric: \texttt{Participant\ ID} and \texttt{Gender}. Thus, we will have to correct the data types in a moment.
+
+Inspecting your data in this way can be helpful to get a better understanding of what your data includes and spot problems with it. In addition, if you receive data from someone else, these methods are an excellent way to familiarise yourself with the dataset relatively quickly. Since I prepared this particular dataset for this book, I also made sure to provide documentation for it. You can access it by using \texttt{?wvs} in the Console. This will open the documentation in the Help pane. Such documentation is available for every dataset we use in this book.
+
+\hypertarget{colnames-cleaning}{%
+\section{\texorpdfstring{Cleaning your column names: Call the \texttt{janitor}}{Cleaning your column names: Call the janitor}}\label{colnames-cleaning}}
+
+If you have an eagle eye, you might have noticed that most of the variable names in \texttt{wvs} are not consistent or easy to read/use.
+
+\hypertarget{messy_column_names}{%
+\label{messy_column_names}}%
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Whitespace and inconsistent capitalisation}
+\NormalTok{Participant ID        }
+\NormalTok{Country name          }
+\NormalTok{Gender                }
+\NormalTok{Age                   }
+
+\CommentTok{\# Difficult to read}
+\NormalTok{YearOfBirth           }
+\NormalTok{Freedom.of.Choice     }
+\NormalTok{Satisfaction}\SpecialCharTok{{-}}\NormalTok{with}\SpecialCharTok{{-}}\NormalTok{life}
+\end{Highlighting}
+\end{Shaded}
+
+From Chapter \ref{coding-etiquette}, you will remember that being consistent in writing your code and naming your objects is essential. The same applies, of course, to variable names. R will not break using the existing names, but it will save you a lot of frustration if we take a minute to clean the names and make them more consistent.
+
+You are probably thinking: ``This is easy. I just open the dataset in Excel and change all the column names.'' Indeed, it would be a viable and easy option, but it is not very efficient, especially with larger datasets with many more variables. Instead, we can make use of the \texttt{janitor} package. By definition, \texttt{janitor} is a package that helps to clean up whatever needs cleaning. In our case, we want to tidy our column names. We can use the function \texttt{clean\_names()} to achieve this. We store the result in a new object called \texttt{wvs} to keep those changes. The object will also show up in our Environment pane.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{wvs }\OtherTok{\textless{}{-}}\NormalTok{ janitor}\SpecialCharTok{::}\FunctionTok{clean\_names}\NormalTok{(wvs)}
+\FunctionTok{glimpse}\NormalTok{(wvs)}
+\DocumentationTok{\#\# Rows: 69,578}
+\DocumentationTok{\#\# Columns: 7}
+\DocumentationTok{\#\# $ participant\_id         \textless{}dbl\textgreater{} 20070001, 20070002, 20070003, 20070004, 2007000\textasciitilde{}}
+\DocumentationTok{\#\# $ country\_name           \textless{}chr\textgreater{} "Andorra", "Andorra", "Andorra", "Andorra", "An\textasciitilde{}}
+\DocumentationTok{\#\# $ gender                 \textless{}dbl\textgreater{} 1, 0, 0, 1, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0,\textasciitilde{}}
+\DocumentationTok{\#\# $ age                    \textless{}dbl\textgreater{} 60, 47, 48, 62, 49, 51, 33, 55, 40, 38, 54, 39,\textasciitilde{}}
+\DocumentationTok{\#\# $ relationship\_status    \textless{}chr\textgreater{} "married", "living together as married", "separ\textasciitilde{}}
+\DocumentationTok{\#\# $ freedom\_of\_choice      \textless{}dbl\textgreater{} 10, 9, 9, 9, 8, 10, 10, 8, 8, 10, 9, 8, 10, 7, \textasciitilde{}}
+\DocumentationTok{\#\# $ satisfaction\_with\_life \textless{}dbl\textgreater{} 10, 9, 9, 8, 7, 10, 5, 8, 8, 10, 8, 8, 10, 7, 1\textasciitilde{}}
+\end{Highlighting}
+\end{Shaded}
+
+Now that \texttt{janitor} has done its magic, we suddenly have easy to read variable names that are consistent with the `Tidyverse style guide' \citep{wickham-2021}.
+
+If for whatever reason, the variable names are still not looking the way you want, you can use the function \texttt{rename()} from the \texttt{dplyr} package to manually assign new variable names.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{wvs }\OtherTok{\textless{}{-}}\NormalTok{ wvs }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{rename}\NormalTok{(}\AttributeTok{satisfaction =}\NormalTok{ satisfaction\_with\_life,}
+                      \AttributeTok{country =}\NormalTok{ country\_name)}
+\FunctionTok{glimpse}\NormalTok{(wvs)}
+\DocumentationTok{\#\# Rows: 69,578}
+\DocumentationTok{\#\# Columns: 7}
+\DocumentationTok{\#\# $ participant\_id      \textless{}dbl\textgreater{} 20070001, 20070002, 20070003, 20070004, 20070005, \textasciitilde{}}
+\DocumentationTok{\#\# $ country             \textless{}chr\textgreater{} "Andorra", "Andorra", "Andorra", "Andorra", "Andor\textasciitilde{}}
+\DocumentationTok{\#\# $ gender              \textless{}dbl\textgreater{} 1, 0, 0, 1, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0,\textasciitilde{}}
+\DocumentationTok{\#\# $ age                 \textless{}dbl\textgreater{} 60, 47, 48, 62, 49, 51, 33, 55, 40, 38, 54, 39, 44\textasciitilde{}}
+\DocumentationTok{\#\# $ relationship\_status \textless{}chr\textgreater{} "married", "living together as married", "separate\textasciitilde{}}
+\DocumentationTok{\#\# $ freedom\_of\_choice   \textless{}dbl\textgreater{} 10, 9, 9, 9, 8, 10, 10, 8, 8, 10, 9, 8, 10, 7, 10,\textasciitilde{}}
+\DocumentationTok{\#\# $ satisfaction        \textless{}dbl\textgreater{} 10, 9, 9, 8, 7, 10, 5, 8, 8, 10, 8, 8, 10, 7, 10, \textasciitilde{}}
+\end{Highlighting}
+\end{Shaded}
+
+You are probably wondering what \texttt{\%\textgreater{}\%} stands for. This symbol is called a \emph{`piping operator'} , and it allows us to chain multiple functions together by considering the output of the previous function. So, do not confuse \texttt{\textless{}-} with \texttt{\%\textgreater{}\%}. Each operator serves a different purpose. The \texttt{\%\textgreater{}\%} has become synonymous with the \texttt{tidyverse} approach to R programming and is the chosen approach for this book. Many functions from the \texttt{tidyverse} are designed to be chained together.
+
+If we wanted to spell out what we just did, we could say:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  \texttt{wvs\ \textless{}-}: We assigned whatever happened to the right of the assignment operator to the object \texttt{wvs}.
+\item
+  \texttt{wvs\ \%\textgreater{}\%}: We defined the dataset we want to use with the functions defined after the \texttt{\%\textgreater{}\%}.
+\item
+  \texttt{rename(satisfaction\ =\ satisfcation\_with\_life)}: We define a new name \texttt{satisfaction} for the column \texttt{satisfaction\_with\_life}. Notice that the order is \texttt{new\_name\ =\ old\_name}. Here we also use \texttt{=}. A rare occasion where it makes sense to do so.
+\end{enumerate}
+
+Just for clarification, the following two lines of code accomplish the same task. The only difference lies that with \texttt{\%\textgreater{}\%} we could chain another function right after it. So, you could say, it is a matter of taste which approach you prefer. However, in later chapters, it will become apparent why using \texttt{\%\textgreater{}\%} is very advantageous.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Renaming a column using \textquotesingle{}\%\textgreater{}\%\textquotesingle{}}
+\NormalTok{wvs }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{rename}\NormalTok{(}\AttributeTok{satisfaction\_new =}\NormalTok{ satisfaction)}
+
+\CommentTok{\# Renaming a column without \textquotesingle{}\%\textgreater{}\%\textquotesingle{}}
+\FunctionTok{rename}\NormalTok{(wvs, }\AttributeTok{satisfaction\_new =}\NormalTok{ satisfaction)}
+\end{Highlighting}
+\end{Shaded}
+
+Since you will be using the pipe operator very frequently, it is a good idea to remember the keyboard shortcut for it: \texttt{Ctrl+Shift+M} for PC and \texttt{Cmd+Shift+M} for Mac.
 
 \hypertarget{change-data-types}{%
-\section{Change data types and explain what they are}\label{change-data-types}}
+\section{Data types: What are they and how can you change them}\label{change-data-types}}
 
-\hypertarget{recoding-and-rearranging-factors-e.g.-gender-coded-as-0-and-1}{%
-\section{Recoding and rearranging factors (e.g.~gender coded as 0 and 1)}\label{recoding-and-rearranging-factors-e.g.-gender-coded-as-0-and-1}}
+When we inspected our data, I mentioned that some variables do not have the correct data type. You might be familiar with different data types by classifying them as:
+
+\begin{itemize}
+\item
+  \emph{Nominal data}, which is categorical data of no particular order,
+\item
+  \emph{Ordinal data}, which is categorical data with a defined order, and
+\item
+  \emph{Quantitative data}, which is data that usually is represented by numeric values.
+\end{itemize}
+
+In R we have a slightly different distinction:
+
+\begin{itemize}
+\item
+  \texttt{character} / \texttt{\textless{}chr\textgreater{}}: Textual data, for example the text of a tweet.
+\item
+  \texttt{factor} / \texttt{\textless{}fct\textgreater{}}: Categorical data with a finite number of categories with no particular order.
+\item
+  \texttt{ordered} / \texttt{\textless{}ord\textgreater{}}: Categorical data with a finite number of categories with a particular order.
+\item
+  \texttt{double} / \texttt{\textless{}dbl\textgreater{}}: Numerical data with decimal places.
+\item
+  \texttt{integer} / \texttt{\textless{}int\textgreater{}}: Numerical data with whole numbers only (i.e.~no decimals).
+\item
+  \texttt{logical} / \texttt{\textless{}lgl\textgreater{}}: Logical data, which only consists of values `TRUE' and `FALSE'.
+\item
+  \texttt{date} / \texttt{date}: Data which consists dates, e.g.~`2021-08-05'.
+\item
+  \texttt{date-time} / \texttt{dttm}: Data which consists dates and times, e.g.~`2021-08-05 16:29:25 BST'.
+\end{itemize}
+
+For a complete list of data types, I recommend looking at \href{https://tibble.tidyverse.org/articles/types.html}{`Column Data Types'} \citep{data-types-2021}.
+
+R has a more fine-grained categorisation of data types. The most important distinction, though, lies between \texttt{\textless{}chr\textgreater{}}, \texttt{\textless{}fct\textgreater{}}/\texttt{\textless{}ord\textgreater{}} and \texttt{\textless{}dbl\textgreater{}} for most datasets in the Social Sciences. Still, it is good to know what the abbreviations in your \texttt{tibble} mean and how they might affect your analysis.
+
+Now that we have a solid understanding of different data types, we can look at our dataset and see whether \texttt{readr} classified our variables correctly.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{glimpse}\NormalTok{(wvs)}
+\DocumentationTok{\#\# Rows: 69,578}
+\DocumentationTok{\#\# Columns: 7}
+\DocumentationTok{\#\# $ participant\_id      \textless{}dbl\textgreater{} 20070001, 20070002, 20070003, 20070004, 20070005, \textasciitilde{}}
+\DocumentationTok{\#\# $ country             \textless{}chr\textgreater{} "Andorra", "Andorra", "Andorra", "Andorra", "Andor\textasciitilde{}}
+\DocumentationTok{\#\# $ gender              \textless{}dbl\textgreater{} 1, 0, 0, 1, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0,\textasciitilde{}}
+\DocumentationTok{\#\# $ age                 \textless{}dbl\textgreater{} 60, 47, 48, 62, 49, 51, 33, 55, 40, 38, 54, 39, 44\textasciitilde{}}
+\DocumentationTok{\#\# $ relationship\_status \textless{}chr\textgreater{} "married", "living together as married", "separate\textasciitilde{}}
+\DocumentationTok{\#\# $ freedom\_of\_choice   \textless{}dbl\textgreater{} 10, 9, 9, 9, 8, 10, 10, 8, 8, 10, 9, 8, 10, 7, 10,\textasciitilde{}}
+\DocumentationTok{\#\# $ satisfaction        \textless{}dbl\textgreater{} 10, 9, 9, 8, 7, 10, 5, 8, 8, 10, 8, 8, 10, 7, 10, \textasciitilde{}}
+\end{Highlighting}
+\end{Shaded}
+
+\texttt{readr} did a great job in identifying all the numeric variables. However, by default, \texttt{readr} imports all variables that include text as \texttt{\textless{}chr\textgreater{}}. It appears, in our dataset, this is not entirely correct. The variables \texttt{countr\_name}, \texttt{gender} and \texttt{relationship\_status} specify a finite number of categories. Therefore they should be classified as a \texttt{factor}. The variable \texttt{participant\_id} is represented by numbers, but its meaning is also rather categorical. We would not use the ID numbers of participants to perform additions or multiplications. This would make no sense. Therefore, it might be wise to turn them into a \texttt{factor}, even though we likely will not use it in our analysis and would make no difference. However, I am a stickler for those kinds of things, and I would include in it.
+
+To perform the conversion, we need to use two new functions from \texttt{dplyr}:
+
+\begin{itemize}
+\item
+  \texttt{mutate()}: Changes, i.e.~`mutates', a variable.
+\item
+  \texttt{as\_factor()}: Converts data from one type into a \texttt{factor}.
+\end{itemize}
+
+If we want to convert all variables in one go, we can put them into the same function, separated by a \texttt{,}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{wvs }\OtherTok{\textless{}{-}}\NormalTok{ wvs }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{country =} \FunctionTok{as\_factor}\NormalTok{(country),}
+         \AttributeTok{gender =} \FunctionTok{as\_factor}\NormalTok{(gender),}
+         \AttributeTok{relationship\_status =} \FunctionTok{as\_factor}\NormalTok{(relationship\_status),}
+         \AttributeTok{participant\_id =} \FunctionTok{as\_factor}\NormalTok{(participant\_id)}
+\NormalTok{  )}
+
+\FunctionTok{glimpse}\NormalTok{(wvs)}
+\DocumentationTok{\#\# Rows: 69,578}
+\DocumentationTok{\#\# Columns: 7}
+\DocumentationTok{\#\# $ participant\_id      \textless{}fct\textgreater{} 20070001, 20070002, 20070003, 20070004, 20070005, \textasciitilde{}}
+\DocumentationTok{\#\# $ country             \textless{}fct\textgreater{} "Andorra", "Andorra", "Andorra", "Andorra", "Andor\textasciitilde{}}
+\DocumentationTok{\#\# $ gender              \textless{}fct\textgreater{} 1, 0, 0, 1, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0,\textasciitilde{}}
+\DocumentationTok{\#\# $ age                 \textless{}dbl\textgreater{} 60, 47, 48, 62, 49, 51, 33, 55, 40, 38, 54, 39, 44\textasciitilde{}}
+\DocumentationTok{\#\# $ relationship\_status \textless{}fct\textgreater{} married, living together as married, separated, li\textasciitilde{}}
+\DocumentationTok{\#\# $ freedom\_of\_choice   \textless{}dbl\textgreater{} 10, 9, 9, 9, 8, 10, 10, 8, 8, 10, 9, 8, 10, 7, 10,\textasciitilde{}}
+\DocumentationTok{\#\# $ satisfaction        \textless{}dbl\textgreater{} 10, 9, 9, 8, 7, 10, 5, 8, 8, 10, 8, 8, 10, 7, 10, \textasciitilde{}}
+\end{Highlighting}
+\end{Shaded}
+
+The output in the console shows that we successfully performed the transformation and our data types are as we intended them to be. Mission accomplished.
+
+\hypertarget{handling-factors}{%
+\section{Handling factors}\label{handling-factors}}
+
+\hypertarget{recoding-factors}{%
+\subsection{Recoding factors}\label{recoding-factors}}
+
+Another common problem we have to tackle when working with data is their representation in the dataset. For example, \texttt{gender} could be measured as \texttt{male} and \texttt{female}\footnote{A sophisticated research project would likely not rely on a dichotomous approach to gender, but appreciate the diversity in this regard.} or as \texttt{0} and \texttt{1}. R does not mind which way you represent your data, but some other software does. Therefore, when we import data from somewhere else, the values of a variable might not look the way we want. The practicality of having your data represented accurately as what they are, becomes apparent when you intend to create tables and plots.
+
+For example, we might be interested in knowing how many participants in the \texttt{wvs} were \texttt{male} and \texttt{female}. The function \texttt{count()} from \texttt{dplyr} does precisely that.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{wvs }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{count}\NormalTok{(gender)}
+\DocumentationTok{\#\# \# A tibble: 3 x 2}
+\DocumentationTok{\#\#   gender     n}
+\DocumentationTok{\#\#   \textless{}fct\textgreater{}  \textless{}int\textgreater{}}
+\DocumentationTok{\#\# 1 0      33049}
+\DocumentationTok{\#\# 2 1      36478}
+\DocumentationTok{\#\# 3 \textless{}NA\textgreater{}      51}
+\end{Highlighting}
+\end{Shaded}
+
+Now we know how many people were \texttt{male} and \texttt{female} and how many did not disclose their \texttt{gender}. Or do we? The issue here is that you would have to know what the \texttt{0} and \texttt{1} stand for. Surely you would have a coding manual that gives you the answer, but it seems a bit of a complication. For \texttt{gender}, this might still be easy to remember, but can you recall the ID numbers for 48 countries?
+
+It certainly would be easier to replace the \texttt{0}s and \texttt{1}s with their corresponding labels. This can be achieved with a simple function called \texttt{fct\_recode()} from \texttt{forcats}. However, since we `mutate' a variable into something else, we also have to use the \texttt{mutate()} function.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{wvs }\OtherTok{\textless{}{-}}\NormalTok{ wvs }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{mutate}\NormalTok{(}\AttributeTok{gender =} \FunctionTok{fct\_recode}\NormalTok{(gender, }\StringTok{"male"} \OtherTok{=} \StringTok{"0"}\NormalTok{, }\StringTok{"female"} \OtherTok{=} \StringTok{"1"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+If you have been following along very carefully, you might spot one oddity in this code: \texttt{"0"} and \texttt{"1"}. You likely recall that in Chapter \ref{r-basics-the-very-fundamentals}, I mentioned that we use \texttt{""} for \texttt{character} values but not for numbers. So what happens if we run the code and remove \texttt{""}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{wvs }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{mutate}\NormalTok{(}\AttributeTok{gender =} \FunctionTok{fct\_recode}\NormalTok{(gender, }\StringTok{"male"} \OtherTok{=} \DecValTok{0}\NormalTok{, }\StringTok{"female"} \OtherTok{=} \DecValTok{1}\NormalTok{))}
+\DocumentationTok{\#\# Error: Problem with \textasciigrave{}mutate()\textasciigrave{} column \textasciigrave{}gender\textasciigrave{}.}
+\DocumentationTok{\#\# i \textasciigrave{}gender = fct\_recode(gender, male = 0, female = 1)\textasciigrave{}.}
+\DocumentationTok{\#\# x Each input to fct\_recode must be a single named string. Problems at positions: 1, 2}
+\end{Highlighting}
+\end{Shaded}
+
+The error message is easy to understand: \texttt{fct\_recode()} only expects \texttt{strings} as input and not numbers. R recognises \texttt{0} and \texttt{1} as numbers, but \texttt{fct\_recode()} converts a \texttt{factor} value into another \texttt{factor} value. To refer to a factor level (i.e.~one of the categories in our factor), we have to use \texttt{""}. In other words, data types matter and are often a source of problems with your code. Thus, always pay close attention to it.
+
+If we rerun our analysis and generate a frequency table for \texttt{gender}, we now get a much more readable output.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{wvs }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{count}\NormalTok{(gender)}
+\DocumentationTok{\#\# \# A tibble: 3 x 2}
+\DocumentationTok{\#\#   gender     n}
+\DocumentationTok{\#\#   \textless{}fct\textgreater{}  \textless{}int\textgreater{}}
+\DocumentationTok{\#\# 1 male   33049}
+\DocumentationTok{\#\# 2 female 36478}
+\DocumentationTok{\#\# 3 \textless{}NA\textgreater{}      51}
+\end{Highlighting}
+\end{Shaded}
+
+Another benefit of going through the trouble of recoding your factors is the readability of your plots. For example, we could quickly generate a bar plot based on the above table and have appropriate labels instead of \texttt{0} and \texttt{1}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{wvs }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{count}\NormalTok{(gender) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(gender, n)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_col}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{r_for_non_programmers_files/figure-latex/Barplot for gender-1} \end{center}
+
+Plots are an excellent way to explore your data and understand relationships between variables. More about this when we start to perform analytical steps on our data (see Chapter \ref{descriptive-statistics} and beyond).
+
+Another use case for recoding factors could be for purely cosmetic reasons. For example, when looking through our dataset, we might notice that some country names are very long and do not look great in data visualisations or tables. Thus, we could consider shortening them.
+
+First, we need to find out which country names are particularly long. There are 48 countries in this dataset, so it could take some time to look through them all. Instead, we could use the function \texttt{filter()} from \texttt{dplyr} to pick only countries with a long name. However, this poses another problem: How can we tell the filter function to pick only country names with a certain length? Ideally, we would want a function that does the counting for us. As you probably anticipated, there is a package called \texttt{stringr}, which also belongs to the \texttt{tidyverse,} and has a function that counts the number of characters that represent a value in our dataset: \texttt{str\_length()}. This function takes any \texttt{character} variable and returns the length of it. This also works with \texttt{factors} because this function can `coerce' it into a \texttt{character}, i.e.~it just ignores that it is a \texttt{factor} and looks at it as if it was a regular \texttt{character} variable. Good news for us, because now we can put the puzzle pieces together.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{wvs }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(stringr}\SpecialCharTok{::}\FunctionTok{str\_length}\NormalTok{(country) }\SpecialCharTok{\textgreater{}=} \DecValTok{15}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{count}\NormalTok{(country)}
+\DocumentationTok{\#\# \# A tibble: 3 x 2}
+\DocumentationTok{\#\#   country                             n}
+\DocumentationTok{\#\#   \textless{}fct\textgreater{}                           \textless{}int\textgreater{}}
+\DocumentationTok{\#\# 1 Bolivia, Plurinational State of  2067}
+\DocumentationTok{\#\# 2 Iran, Islamic Republic of        1499}
+\DocumentationTok{\#\# 3 Korea, Republic of               1245}
+\end{Highlighting}
+\end{Shaded}
+
+I use the value \texttt{15} arbitrarily after some trial and error. You can change the value and see which other countries would show up with a lower threshold. However, this number seems to do the trick and returns three countries that seem to have longer labels. All we have to do is replace these categories with new ones the same way we recoded \texttt{gender}. You probably can guess already what we have to do to achieve this.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{wvs }\OtherTok{\textless{}{-}}\NormalTok{ wvs }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{country =} \FunctionTok{fct\_recode}\NormalTok{(country,}
+                                   \StringTok{"Bolivia"} \OtherTok{=} \StringTok{"Bolivia, Plurinational State of"}\NormalTok{,}
+                                   \StringTok{"Iran"} \OtherTok{=} \StringTok{"Iran, Islamic Republic of"}\NormalTok{,}
+                                   \StringTok{"Korea"} \OtherTok{=} \StringTok{"Korea, Republic of"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{reordering-factor-levels}{%
+\subsection{Reordering factor levels}\label{reordering-factor-levels}}
+
+\texttt{TODO:\ CONTINUE\ FROM\ HERE}
+
+\begin{itemize}
+\tightlist
+\item
+  Consider whether this should happen here or later. Probably later, actually when we talk about descriptive statistics. This is not really data cleaning at this point. Too much stuff already. Move to descriptive statistics section.
+\end{itemize}
 
 \hypertarget{dealing-with-missing-data}{%
 \section{Dealing with missing data}\label{dealing-with-missing-data}}
 
-\hypertarget{latent-constructs-and-their-reliability}{%
-\section{Latent constructs and their reliability}\label{latent-constructs-and-their-reliability}}
+There is hardly any Social Sciences project where researchers do not have to deal with missing data. Participants are sometimes unwilling to complete a questionnaire or miss the second round of data collection entirely, e.g., longitudinal studies. It is not the purpose of this chapter to delve into all aspects of analysing missing data but provide a solid starting point. There are mainly three steps involved in dealing with missing data:
 
-\hypertarget{theory}{%
-\subsection{Theory}\label{theory}}
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Mapping missing data
+\item
+  Identifying patterns of missing data
+\item
+  Replacing or removing missing data
+\end{enumerate}
 
-\hypertarget{visualisation}{%
-\subsection{Visualisation}\label{visualisation}}
+\hypertarget{mapping-missing-data}{%
+\subsection{Mapping missing data}\label{mapping-missing-data}}
 
-\hypertarget{computation}{%
-\subsection{Computation}\label{computation}}
+Every study that intends to be rigorous will have to identify how much data is missing. In R, this can be achieved in multiple ways, but using a specialised package like \texttt{naniar} does help us to do this very quickly and systematically. First, we have to load the \texttt{naniar} package, and then we use the function \texttt{vis\_miss()} to visualise how much and where exactly data is missing.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(naniar)}
+\FunctionTok{vis\_miss}\NormalTok{(wvs)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+
+{\centering \includegraphics{r_for_non_programmers_files/figure-latex/mapping-missing-data-1} 
+
+}
+
+\caption{Mapping missing data with naniar}\label{fig:mapping-missing-data}
+\end{figure}
+
+\texttt{naniar} plays along nicely with the \texttt{tidyverse} approach of programming. As such, it would also be possible to write \texttt{wvs\ \%\textgreater{}\%\ vis\_miss()}.
+
+As we can see, 99,7\% of our dataset is complete, and we are only missing 0.3\%. The dark lines (actually blocks) refer to missing data points. On the x-axis, we can see all our variables, and on the y-axis, we see our observations. This is the same layout as our rectangular dataset: Rows are observations, and columns are variables. Overall, this dataset appears relatively complete (luckily). In addition, we can see the percentage of missing data per variable. \texttt{freedom\_of\_choice} is the variable with the most missing data, i.e.~0.79\%. Still, the amount of missing data is not very large.
+
+When working with larger datasets, it might also be helpful to rank variables by their degree of missing data to see where the most significant problems lie.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{gg\_miss\_var}\NormalTok{(wvs)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+
+{\centering \includegraphics{r_for_non_programmers_files/figure-latex/missing-data-per-variable-1} 
+
+}
+
+\caption{Missing data per variable}\label{fig:missing-data-per-variable}
+\end{figure}
+
+It is noticeable that \texttt{freedom\_of\_choice} has the most missing data points, while \texttt{participant\_id}, and \texttt{country\_name} have no missing values. If you prefer to see the actual numbers instead, we can use a series of functions that start with \texttt{miss\_} (for a complete list of all functions, see the \href{https://naniar.njtierney.com/reference/index.html}{reference page of naniar}). For example, to retrieve the numeric values which are reflected in the plot above, we can write the following:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Summarise the missingness in each variable}
+\FunctionTok{miss\_var\_summary}\NormalTok{(wvs)}
+\DocumentationTok{\#\# \# A tibble: 7 x 3}
+\DocumentationTok{\#\#   variable            n\_miss pct\_miss}
+\DocumentationTok{\#\#   \textless{}chr\textgreater{}                \textless{}int\textgreater{}    \textless{}dbl\textgreater{}}
+\DocumentationTok{\#\# 1 freedom\_of\_choice      547   0.786 }
+\DocumentationTok{\#\# 2 relationship\_status    335   0.481 }
+\DocumentationTok{\#\# 3 age                    318   0.457 }
+\DocumentationTok{\#\# 4 satisfaction           239   0.343 }
+\DocumentationTok{\#\# 5 gender                  51   0.0733}
+\DocumentationTok{\#\# 6 participant\_id           0   0     }
+\DocumentationTok{\#\# 7 country                  0   0}
+\end{Highlighting}
+\end{Shaded}
+
+I tend to prefer data visualisations over numerical results for mapping missing data, especially in larger datasets with many variables. This also has the benefit that patterns of missing data can be more easily identified as well.
+
+\hypertarget{patterns-of-missing-data}{%
+\subsection{Identifying patterns of missing data}\label{patterns-of-missing-data}}
+
+If you find that your data `suffers' from missing data, it is essential to answer another question: Is data missing systematically? This is quite an important diagnostic step since systematically missing data would imply that if we remove these observations from our dataset, we likely produce the wrong results.
+
+We can distinguish missing data based on how it is missing, i.e.
+
+\begin{itemize}
+\item
+  missing completely at random (MCAR),
+\item
+  missing at random (MAR), and
+\item
+  missing not at random (MNAR). \citep{rubin-1976}
+\end{itemize}
+
+\hypertarget{missing-completetly-at-random-mcar}{%
+\subsubsection{Missing completely at random (MCAR)}\label{missing-completetly-at-random-mcar}}
+
+Missing completely at random (MCAR) means that neither observed nor missing data can systematically explain why data is missing. It is a pure coincidence how data is missing, and there is no underlying pattern.
+
+The \texttt{naniar} package comes with the very popular Little's MCAR test \citep{little-1988}, which provides insights into whether our data is missing completely at random. Thus, we can call the function \texttt{mcar\_test()} and inspect the result.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{wvs }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{participant\_id) }\SpecialCharTok{\%\textgreater{}\%}     \CommentTok{\# Remove variables which do not reflect a response}
+  \FunctionTok{mcar\_test}\NormalTok{()}
+\DocumentationTok{\#\# \# A tibble: 1 x 4}
+\DocumentationTok{\#\#   statistic    df p.value missing.patterns}
+\DocumentationTok{\#\#       \textless{}dbl\textgreater{} \textless{}dbl\textgreater{}   \textless{}dbl\textgreater{}            \textless{}int\textgreater{}}
+\DocumentationTok{\#\# 1      411.    67       0               19}
+\end{Highlighting}
+\end{Shaded}
+
+When you run such a test, you have ensure that variables that are not part of the data collection are removed. In our case, the \texttt{participant\_id} is generated by the researcher and does not represent an actual response by the participants. As such, we need to remove it using \texttt{select()} before we can run the test. A \texttt{-} inverts the meaning of \texttt{select()}. While \texttt{select(participant\_id)} would do what it says, i.e.~include it as the only variable in the test, \texttt{select(-participant\_id)} results in selecting everything but this variable in our test. You will find it is sometimes easier to remove a variable with \texttt{select()} rather than listing all the variables you want to keep.
+
+Since the \texttt{p.value} of the test is so small that it got rounded down to \texttt{0}, i.e.~\(p<0.0001\), we have to assume that our data is not missing completely at random. If we found that \(p>0.05\), we would have confirmation that data are missing completely at random.
+
+\hypertarget{missing-at-random-mar}{%
+\subsubsection{Missing at random (MAR)}\label{missing-at-random-mar}}
+
+Missing at random (MAR) refers to a situation where the observed data can explain missing data, but not the missing data. \citet{dong-et-al-2013} (p.~2) provide a good example when this is the case:
+
+\begin{quote}
+\emph{Let's suppose that students who scored low on the pre-test are more likely to drop out of the course, hence, their scores on the post-test are missing. If we assume that the probability of missing the post-test depends only on scores on the pre-test, then the missing mechanism on the post-test is MAR. In other words, for students who have the same pre-test score, the probability of {[}them{]} missing the post-test is random.}
+\end{quote}
+
+Thus,the main difference between MCAR and MAR data lies in the fact that we can observe some patterns of missing data if data is MAR. These patterns are only based on data we have, i.e.~observed data. We also assume that no unobserved variables can explain these or other patterns.
+
+Accordingly, we first look into variables with no missing data and see whether they can explain our missing data in other variables. For example, we could investigate whether missing data in \texttt{freedom\_of\_choice} is attributed to specific countries.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{wvs }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{group\_by}\NormalTok{(country) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(}\FunctionTok{is.na}\NormalTok{(freedom\_of\_choice)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{count}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{arrange}\NormalTok{(}\FunctionTok{desc}\NormalTok{(n))                      }\CommentTok{\# Rearranging scores for easier reading}
+\DocumentationTok{\#\# \# A tibble: 32 x 2}
+\DocumentationTok{\#\# \# Groups:   country [32]}
+\DocumentationTok{\#\#    country         n}
+\DocumentationTok{\#\#    \textless{}fct\textgreater{}       \textless{}int\textgreater{}}
+\DocumentationTok{\#\#  1 Japan          47}
+\DocumentationTok{\#\#  2 Brazil         44}
+\DocumentationTok{\#\#  3 New Zealand    44}
+\DocumentationTok{\#\#  4 Russia         43}
+\DocumentationTok{\#\#  5 Bolivia        40}
+\DocumentationTok{\#\#  6 Romania        29}
+\DocumentationTok{\#\#  7 Kazakhstan     27}
+\DocumentationTok{\#\#  8 Turkey         24}
+\DocumentationTok{\#\#  9 Egypt          23}
+\DocumentationTok{\#\# 10 Serbia         20}
+\DocumentationTok{\#\# \# ... with 22 more rows}
+\end{Highlighting}
+\end{Shaded}
+
+It seems four countries have exceptionally high numbers of missing data for \texttt{freedom\_of\_choice}: Japan, Brazil, New Zealand, Russia and Bolivia. Why this is the case lies beyond this dataset and is something only the researchers themselves could explain. Collecting data in different countries is particularly challenging, and one is quickly faced with different unfavourable conditions. Furthermore, the missing data is not completely random because we have some first evidence that the location of data collection might have affected its completeness.
+
+Another way of understanding patterns of missing data can be achieved by looking at relationships between missing values, for example, the co-occurrence of missing values across different variables. This can be achieved by using upset plots. An upset plot consists of three parts: Set size, intersection size and a Venn diagram which defines the intersections.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{gg\_miss\_upset}\NormalTok{(wvs)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{r_for_non_programmers_files/figure-latex/Upset plot-1} \end{center}
+
+The most frequent combination of missing data in our dataset occurs when only \texttt{freedom\_of\_choice} is missing (the first column), but nothing else. Similar results can be found for \texttt{relationships\_status} and \texttt{age}. The first combination of missing data is defined by two variables: \texttt{satisfaction} and \texttt{freedom\_of\_choice}. In total, 107 participants had \texttt{satisfaction} and \texttt{freedom\_of\_choice} missing but nothing else.
+
+The `set size' shown in the upset plot refers to the number of missing values for each variable in the diagram. This corresponds to what we have found when looking at Figure \ref{fig:missing-data-per-variable}).
+
+Our analysis also suggests that values are not completely randomly missing but that we have data to help explain why they are missing.
+
+\hypertarget{missing-not-at-random-mnar}{%
+\subsubsection{Missing not at random (MNAR)}\label{missing-not-at-random-mnar}}
+
+Lastly, missing not at random (MNAR) implies that data is missing systematically and that other variables or reasons exist that explain why data is missing. Still, they are not fully known to us. In questionnaire-based research, an easily overlooked reason that can explain missing data is the `page-drop-off' phenomenon. In such cases, participants stop completing a questionnaire once they advance to another page. Figure \ref{fig:mnar-example} shows this very clearly for a large scale project where an online questionnaire was used. After almost every page break in the questionnaire, some participants decided to discontinue. Finding these types of patterns is difficult when only working with numeric values. Thus, it is always advisable to visualise your data as well. Such missing data is linked to the design of the data collection tool.
+
+\begin{figure}
+
+{\centering \includegraphics[width=26.67in]{images/chapter_07_img/03_missing_data/00_mnar_example} 
+
+}
+
+\caption{MNAR pattern in a dataset due to 'page-drop-offs'}\label{fig:mnar-example}
+\end{figure}
+
+Defining whether a dataset is MNAR or not is mainly achieved by ruling out MCAR and MAR assumptions. It is not possible to test whether missing data is MNAR, unless we have more information about the underlying population available \citep{van2020rebutting}.
+
+We have sufficient evidence that our data is MAR as was shown \protect\hyperlink{missing-at-random-mar}{above}, because we managed to identify some relationships between unobserved and observed data. In practice, it is very rare to find datasets that are truly MCAR \citep{van-buuren-2018}. Therefore we might consider `imputation' as a possible strategy to solve our missing data problem. More about imputation in the next Chapter.
+
+If you are looking for more inspiration of how you could visualise and identify patterns of missingness in your data, you might find the `\href{https://naniar.njtierney.com/articles/naniar-visualisation.html}{Gallery}' of the \texttt{naniar} website particularly useful.
+
+\hypertarget{replacing-removing-missing-data}{%
+\subsection{Replacing or removing missing data}\label{replacing-removing-missing-data}}
+
+Once you determined which pattern of missing data applies to your dataset, it is time to evaluate how we want to deal with those missing values. Generally, you can either keep the missing values as they are, replace them or remove them entirely.
+
+\citet{jakobsen-et-al-2017} provide a rule of thumb of 5\% where researchers can consider missing data as negligible, i.e.~we can ignore the missing values because they won't affect our analysis in a significant way. They also argue that if the proportion of missing data exceeds 40\%, we should also only work with our observed data. However, with such a large amount of missing data, it is questionable whether we can rely on our analysis as much as we want to. If the missing data lies somewhere in-between this range, we need to consider the missing data pattern at hand.
+
+If data is MCAR, we could remove missing data. This process is called `listwise deletion', i.e.~you remove all data from a participant with missing data. As just mentioned, removing missing values is only suitable if you have relatively few missing values in your dataset (see also \citet{schafer-1999}), as is the case with the \texttt{wvs} dataset. There are additional problems with deleting observations listwise, many of which are summarised by \citet{van-buuren-2018} in his \href{https://stefvanbuuren.name/fimd/sec-simplesolutions.html}{introduction}. Usually, we try to avoid removing data as much as possible. If you wanted to perform listwise deletion, it can be done with a single function call: \texttt{na.omit()} from the built-in \texttt{stats} package. Here is an example of how we can apply this function.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# No more missing data in this plot}
+\NormalTok{wvs }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{na.omit}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{vis\_miss}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{r_for_non_programmers_files/figure-latex/Example of removing all missing data points-1} \end{center}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+
+\CommentTok{\# How much observations are left after we removed all missing data?}
+\NormalTok{wvs }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{na.omit}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{count}\NormalTok{()}
+\DocumentationTok{\#\# \# A tibble: 1 x 1}
+\DocumentationTok{\#\#       n}
+\DocumentationTok{\#\#   \textless{}int\textgreater{}}
+\DocumentationTok{\#\# 1 68312}
+\end{Highlighting}
+\end{Shaded}
+
+If you wanted to remove the missing data without the plot, you could use \texttt{wvs\_no\_na\ \textless{}-\ na.omit(wvs)}. However, I always recommend `saving' the result in a new object to ensure I keep my original data available. This can be helpful when trying to compare how this decision affects my analysis, i.e.~I can run the analysis with and without missing data removed. For the \texttt{wvs} dataset, this does not seem to be the best option.
+
+Based on our analysis of the \texttt{wvs} dataset (by no means complete!), we could assume that data is MAR. In such cases, it is possible to `impute' the missing values, i.e.~replacing the missing data with computed scores. This is possible because we can model the missing data based on variables we have. We cannot model missing data based on variables we have not measured in our study for obvious reasons.
+
+You might be thinking: ``Why would it make data better if we `make up' numbers? Is this not cheating?'' Imputation of missing values is a science in itself. There is plenty to read about the process of handling missing data, which would reach far beyond the scope of this book. However, the seminal work of \citet{van-buuren-2018}, \citet{dong-et-al-2013} and \citet{jakobsen-et-al-2017} are excellent starting points. In short: Simply removing missing data can lead to biases in your data, e.g.~if we removed missing data in our dataset, we would mainly exclude participants from Japan, Brazil, New Zealand, Russia and Bolivia (as we found out \protect\hyperlink{missing-data-by-country-table}{earlier}). While imputation is not perfect, scholars have shown that it can produce more reliable results than not using imputation at all (\texttt{add\ some\ references\ here}), assuming the data meets the requirements for such imputation.
+
+Even though our dataset has only a minimal amount of missing data (relative to the entire size), we can still use imputation. There are many different ways to approach this task, one of which is `multiple imputation'. As highlighted by \citet{van2020rebutting}, multiple imputation has not yet reached the same popularity as listwise deletion, despite its benefits. The main reason for this lies in the complexity of using this technique. Therefore I included an example of how to use multiple imputation separately in Chapter @ref(). There are many more approaches to imputation, and going through them all in detail would be impossible and distract from the book's main purpose. Still, I would like to share some interesting packages with you that use different imputation methods:
+
+\begin{itemize}
+\item
+  \href{https://cran.r-project.org/web/packages/Amelia/index.html}{mice} (Multivariate Imputation via Chained Equations)
+\item
+  \href{https://cran.r-project.org/web/packages/Amelia/index.html}{Amelia} (Uses a bootstrapped-based algorithm)
+\item
+  \href{https://cran.r-project.org/web/packages/missForest/index.html}{missForest} (Uses a random forest algorithm)
+\item
+  \href{https://cran.r-project.org/web/packages/Hmisc/index.html}{Hmisc} (Uses Additive Regression, Bootstrapping, and Predictive Mean Matching)
+\item
+  \href{https://cran.r-project.org/web/packages/mi/index.html}{mi} (Uses posterior predictive distribution, predictive mean matching, mean-imputation, median-imputation, or conditional mean-imputation)
+\end{itemize}
+
+Besides multiple imputation, there is also the option for single imputation. The \texttt{simputation} package offers a great variety of imputation functions, one of which also fits our data quite well \texttt{impute\_knn()}. This function makes use of a clustering technique called `K-nearest neighbour'. In this case, the function will look for observations closest to the one with missing data and take the value of that observation. In other words, it looks for similar participants who answered the questionnaire in a very similar way. The great convenience of this approach is that it can handle all kinds of data types simultaneously, which is not true for all imputation techniques.
+
+If we apply this function to our dataset, we have to write the following:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{wvs\_nona }\OtherTok{\textless{}{-}}\NormalTok{ wvs }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{participant\_id) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{as.data.frame}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}                  \CommentTok{\# Transforms our tibble into a data frame}
+\NormalTok{  simputation}\SpecialCharTok{::}\FunctionTok{impute\_knn}\NormalTok{(. }\SpecialCharTok{\textasciitilde{}}\NormalTok{ .)}
+\end{Highlighting}
+\end{Shaded}
+
+The function \texttt{impute\_knn(.\ \textasciitilde{}\ .)} might look like a combination of text with an emoji \texttt{(.\ \textasciitilde{}\ .)}. This imputation function requires us to specify a model to impute the data. Since we want to impute all missing values in the dataset and use all variables available, we put \texttt{.} on both sides of the equation, separated by a \texttt{\textasciitilde{}}. The \texttt{.} reflects that we do not specify a specific variable but instead tell the function to use all variables that are not mentioned. In our case, we did not mention any variables at all, and therefore it chooses all of them. For example, if we wanted to impute only \texttt{freedom\_of\_choice}, we would have to put \texttt{impute\_knn(freedom\_of\_choice\ \textasciitilde{}\ .)}. We will elaborate more on how to specify models when we cover regression models (see Chapter \ref{regression}).
+
+As you will have noticed, we also had to convert our \texttt{tibble} into a \texttt{data\ frame} using \texttt{as.data.frame()}. As mentioned in Chapter \ref{functions}, some functions require a specific data type or format. The \texttt{simputation} package works with \texttt{dplyr}, but it prefers \texttt{data\ frame}s. Based on my experiences, the wrong data type or format is one of the most frequent causes of errors that novice R programmers report. So, keep an eye on it and read the documentation carefully.
+
+Be aware that imputation of any kind can take a long time. For example, my MacBook Pro took about 4.22 seconds to complete \texttt{impute\_knn()} with the \texttt{wvs} dataset. If we used multiple imputation, this would have taken considerably longer, i.e.~several minutes and more.
+
+We now should have a dataset that is free of any missing values. To ensure this is the case we can create the missing data matrix that we made at the beginning of this chapter (see Figure \ref{fig:mapping-missing-data}).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{vis\_miss}\NormalTok{(wvs\_nona)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{r_for_non_programmers_files/figure-latex/Mapping missing data of imputeted dataset-1} \end{center}
+
+\hypertarget{main-takeaways-regarding-dealing-with-missing-data}{%
+\subsection{Main takeaways regarding dealing with missing data}\label{main-takeaways-regarding-dealing-with-missing-data}}
+
+Handling missing data is hardly ever a simple process. Do not feel discouraged if you get lost in the myriad of options. While there is some guidance on how and when to use specific strategies to deal with missing values in your dataset, the most crucial point to remember is: Be transparent about what you did. As long as you can explain why you did something and how you did it, everyone can follow your thought process and help improve your analysis. However, ignoring the fact that data is missing and not acknowledging it is more than just unwise.
+
+\hypertarget{latent-constructs}{%
+\section{Latent constructs and their reliability}\label{latent-constructs}}
+
+Social Scientists commonly face the challenge that we want to measure something that cannot be measured directly. For example, `happiness' is a feeling that does not naturally occur as a number we can observe and measure. The opposite is true for `temperature' which is naturally measured in numbers. At the same time, `happiness' is much more complex of a variable than `temperature', because `happiness' can unfold in various ways and be caused by different triggers (e.g.~a joke, an unexpected present, tasty food, etc.). To account for this, we often work with `latent variables'. These are defined as variables that are not directly measured but are inferred from other variables. In practice, we often use multiple questions in a questionnaire to measure one latent variable, usually by computing the mean of those questions.
+
+The \texttt{gep} dataset from the \texttt{r4np} package includes data about students' social integration experience (\texttt{si}) and communication skills development (\texttt{cs}). Data were obtained using the \href{https://warwick.ac.uk/gep}{Global Education Profiler (GEP)}. I extracted 6 different questions (also called `items') from the questionnaire, which measure \texttt{si}, and 6 items that measure \texttt{cs}. This dataset only consists of a randomly chosen set of responses, i.e.~300 out of over 12,000.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{glimpse}\NormalTok{(gep)}
+\DocumentationTok{\#\# Rows: 300}
+\DocumentationTok{\#\# Columns: 12}
+\DocumentationTok{\#\# $ age                           \textless{}dbl\textgreater{} 22, 26, 21, 23, 25, 27, 24, 23, 21, 24, \textasciitilde{}}
+\DocumentationTok{\#\# $ gender                        \textless{}chr\textgreater{} "Female", "Female", "Female", "Female", \textasciitilde{}}
+\DocumentationTok{\#\# $ level\_of\_study                \textless{}chr\textgreater{} "UG", "PGT", "UG", "UG", "PGT", "PGT", "\textasciitilde{}}
+\DocumentationTok{\#\# $ si\_socialise\_with\_people\_exp  \textless{}dbl\textgreater{} 6, 3, 4, 3, 4, 2, 5, 1, 6, 6, 3, 3, 4, 5\textasciitilde{}}
+\DocumentationTok{\#\# $ si\_supportive\_friends\_exp     \textless{}dbl\textgreater{} 4, 4, 5, 4, 4, 2, 5, 1, 6, 6, 3, 3, 4, 6\textasciitilde{}}
+\DocumentationTok{\#\# $ si\_time\_socialising\_exp       \textless{}dbl\textgreater{} 5, 2, 4, 4, 3, 2, 6, 3, 6, 6, 3, 2, 4, 6\textasciitilde{}}
+\DocumentationTok{\#\# $ cs\_explain\_ideas\_imp          \textless{}dbl\textgreater{} 6, 5, 5, 5, 5, 5, 4, 5, 6, 6, 5, 5, 4, 6\textasciitilde{}}
+\DocumentationTok{\#\# $ cs\_find\_clarification\_imp     \textless{}dbl\textgreater{} 4, 5, 5, 6, 6, 5, 4, 6, 6, 6, 5, 5, 4, 5\textasciitilde{}}
+\DocumentationTok{\#\# $ cs\_learn\_different\_styles\_imp \textless{}dbl\textgreater{} 6, 5, 6, 4, 4, 4, 4, 6, 6, 6, 4, 5, 5, 5\textasciitilde{}}
+\DocumentationTok{\#\# $ cs\_explain\_ideas\_exp          \textless{}dbl\textgreater{} 6, 5, 2, 5, 6, 5, 6, 6, 6, 6, 4, 4, 3, 6\textasciitilde{}}
+\DocumentationTok{\#\# $ cs\_find\_clarification\_exp     \textless{}dbl\textgreater{} 6, 5, 4, 6, 6, 5, 6, 6, 6, 6, 2, 5, 4, 5\textasciitilde{}}
+\DocumentationTok{\#\# $ cs\_learn\_different\_styles\_exp \textless{}dbl\textgreater{} 6, 4, 5, 4, 6, 3, 5, 6, 6, 6, 2, 4, 2, 5\textasciitilde{}}
+\end{Highlighting}
+\end{Shaded}
+
+For example, if we wanted to know how each student scored with regards to social integration (\texttt{si}), we have to
+
+\begin{itemize}
+\item
+  compute the mean (\texttt{mean())} of all related items (i.e.~all variables starting with \texttt{si\_}),
+\item
+  for each row (\texttt{rowwise()}) because each row presents one participant.
+\end{itemize}
+
+The same is true for communication skills (\texttt{cs\_imp} and \texttt{cs\_exp}). We can compute all three variables in one go. For each variable, we compute \texttt{mean()} and use \texttt{c()} to list all the variables that we want to include in the mean:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Compute the scores for the latent variable \textquotesingle{}si\textquotesingle{} and \textquotesingle{}cs\textquotesingle{}}
+\NormalTok{gep }\OtherTok{\textless{}{-}}\NormalTok{ gep }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{rowwise}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{si =} \FunctionTok{mean}\NormalTok{(}\FunctionTok{c}\NormalTok{(si\_socialise\_with\_people\_exp,}
+\NormalTok{                     si\_supportive\_friends\_exp,}
+\NormalTok{                     si\_time\_socialising\_exp}
+\NormalTok{                     )}
+\NormalTok{                   ),}
+         \AttributeTok{cs\_imp =} \FunctionTok{mean}\NormalTok{(}\FunctionTok{c}\NormalTok{(cs\_explain\_ideas\_imp,}
+\NormalTok{                         cs\_find\_clarification\_imp,}
+\NormalTok{                         cs\_learn\_different\_styles\_imp}
+\NormalTok{                         )}
+\NormalTok{                       ),}
+         \AttributeTok{cs\_exp =} \FunctionTok{mean}\NormalTok{(}\FunctionTok{c}\NormalTok{(cs\_explain\_ideas\_exp,}
+\NormalTok{                         cs\_find\_clarification\_exp,}
+\NormalTok{                         cs\_learn\_different\_styles\_exp}
+\NormalTok{                         )}
+\NormalTok{                       )}
+\NormalTok{         )}
+
+\FunctionTok{glimpse}\NormalTok{(gep)}
+\DocumentationTok{\#\# Rows: 300}
+\DocumentationTok{\#\# Columns: 15}
+\DocumentationTok{\#\# Rowwise: }
+\DocumentationTok{\#\# $ age                           \textless{}dbl\textgreater{} 22, 26, 21, 23, 25, 27, 24, 23, 21, 24, \textasciitilde{}}
+\DocumentationTok{\#\# $ gender                        \textless{}chr\textgreater{} "Female", "Female", "Female", "Female", \textasciitilde{}}
+\DocumentationTok{\#\# $ level\_of\_study                \textless{}chr\textgreater{} "UG", "PGT", "UG", "UG", "PGT", "PGT", "\textasciitilde{}}
+\DocumentationTok{\#\# $ si\_socialise\_with\_people\_exp  \textless{}dbl\textgreater{} 6, 3, 4, 3, 4, 2, 5, 1, 6, 6, 3, 3, 4, 5\textasciitilde{}}
+\DocumentationTok{\#\# $ si\_supportive\_friends\_exp     \textless{}dbl\textgreater{} 4, 4, 5, 4, 4, 2, 5, 1, 6, 6, 3, 3, 4, 6\textasciitilde{}}
+\DocumentationTok{\#\# $ si\_time\_socialising\_exp       \textless{}dbl\textgreater{} 5, 2, 4, 4, 3, 2, 6, 3, 6, 6, 3, 2, 4, 6\textasciitilde{}}
+\DocumentationTok{\#\# $ cs\_explain\_ideas\_imp          \textless{}dbl\textgreater{} 6, 5, 5, 5, 5, 5, 4, 5, 6, 6, 5, 5, 4, 6\textasciitilde{}}
+\DocumentationTok{\#\# $ cs\_find\_clarification\_imp     \textless{}dbl\textgreater{} 4, 5, 5, 6, 6, 5, 4, 6, 6, 6, 5, 5, 4, 5\textasciitilde{}}
+\DocumentationTok{\#\# $ cs\_learn\_different\_styles\_imp \textless{}dbl\textgreater{} 6, 5, 6, 4, 4, 4, 4, 6, 6, 6, 4, 5, 5, 5\textasciitilde{}}
+\DocumentationTok{\#\# $ cs\_explain\_ideas\_exp          \textless{}dbl\textgreater{} 6, 5, 2, 5, 6, 5, 6, 6, 6, 6, 4, 4, 3, 6\textasciitilde{}}
+\DocumentationTok{\#\# $ cs\_find\_clarification\_exp     \textless{}dbl\textgreater{} 6, 5, 4, 6, 6, 5, 6, 6, 6, 6, 2, 5, 4, 5\textasciitilde{}}
+\DocumentationTok{\#\# $ cs\_learn\_different\_styles\_exp \textless{}dbl\textgreater{} 6, 4, 5, 4, 6, 3, 5, 6, 6, 6, 2, 4, 2, 5\textasciitilde{}}
+\DocumentationTok{\#\# $ si                            \textless{}dbl\textgreater{} 5.000000, 3.000000, 4.333333, 3.666667, \textasciitilde{}}
+\DocumentationTok{\#\# $ cs\_imp                        \textless{}dbl\textgreater{} 5.333333, 5.000000, 5.333333, 5.000000, \textasciitilde{}}
+\DocumentationTok{\#\# $ cs\_exp                        \textless{}dbl\textgreater{} 6.000000, 4.666667, 3.666667, 5.000000, \textasciitilde{}}
+\end{Highlighting}
+\end{Shaded}
+
+Compared to dealing with missing data, this is a fairly straightforward task. However, there is a caveat. Before we can compute the mean across all these variables, we need to know and understand whether all these scores reliably contribute to one single latent variable. If not, we would be in trouble and make a significant mistake.
+
+By far, the most common approach to assessing reliability (or more accurately `internal consistency') of latent variables is Cronbach's \(\alpha\). This indicator looks at how strongly a set of items (i.e.~questions in your questionnaire) are related to each other. For example, the stronger the relationship of all items starting with \texttt{si\_} to each other, the more likely we achieve a higher Cronbach's \(\alpha\). The psych package has a suitable function to compute it for us.
+
+Instead of listing all the items by hand, I use the function \texttt{starts\_with()} to pick only the variables whose names start with \texttt{si\_}. It certainly pays off to think about your variable names more thoroughly in advance to benefit from such shortcuts (see also Chapter \ref{colnames-cleaning}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{gep }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{select}\NormalTok{(}\FunctionTok{starts\_with}\NormalTok{(}\StringTok{"si\_"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  psych}\SpecialCharTok{::}\FunctionTok{alpha}\NormalTok{()}
+\DocumentationTok{\#\# }
+\DocumentationTok{\#\# Reliability analysis   }
+\DocumentationTok{\#\# Call: psych::alpha(x = .)}
+\DocumentationTok{\#\# }
+\DocumentationTok{\#\#   raw\_alpha std.alpha G6(smc) average\_r S/N   ase mean  sd median\_r}
+\DocumentationTok{\#\#       0.85      0.85     0.8      0.66 5.8 0.015  3.5 1.3     0.65}
+\DocumentationTok{\#\# }
+\DocumentationTok{\#\#  lower alpha upper     95\% confidence boundaries}
+\DocumentationTok{\#\# 0.82 0.85 0.88 }
+\DocumentationTok{\#\# }
+\DocumentationTok{\#\#  Reliability if an item is dropped:}
+\DocumentationTok{\#\#                              raw\_alpha std.alpha G6(smc) average\_r S/N alpha se}
+\DocumentationTok{\#\# si\_socialise\_with\_people\_exp      0.82      0.82    0.70      0.70 4.6    0.021}
+\DocumentationTok{\#\# si\_supportive\_friends\_exp         0.77      0.77    0.63      0.63 3.4    0.027}
+\DocumentationTok{\#\# si\_time\_socialising\_exp           0.79      0.79    0.65      0.65 3.7    0.025}
+\DocumentationTok{\#\#                              var.r med.r}
+\DocumentationTok{\#\# si\_socialise\_with\_people\_exp    NA  0.70}
+\DocumentationTok{\#\# si\_supportive\_friends\_exp       NA  0.63}
+\DocumentationTok{\#\# si\_time\_socialising\_exp         NA  0.65}
+\DocumentationTok{\#\# }
+\DocumentationTok{\#\#  Item statistics }
+\DocumentationTok{\#\#                                n raw.r std.r r.cor r.drop mean  sd}
+\DocumentationTok{\#\# si\_socialise\_with\_people\_exp 300  0.86  0.86  0.75   0.69  3.7 1.4}
+\DocumentationTok{\#\# si\_supportive\_friends\_exp    300  0.90  0.89  0.81   0.75  3.5 1.6}
+\DocumentationTok{\#\# si\_time\_socialising\_exp      300  0.88  0.88  0.79   0.73  3.2 1.5}
+\DocumentationTok{\#\# }
+\DocumentationTok{\#\# Non missing response frequency for each item}
+\DocumentationTok{\#\#                                 1    2    3    4    5    6 miss}
+\DocumentationTok{\#\# si\_socialise\_with\_people\_exp 0.06 0.17 0.22 0.24 0.19 0.12    0}
+\DocumentationTok{\#\# si\_supportive\_friends\_exp    0.13 0.18 0.20 0.18 0.18 0.13    0}
+\DocumentationTok{\#\# si\_time\_socialising\_exp      0.15 0.21 0.22 0.20 0.12 0.10    0}
+\end{Highlighting}
+\end{Shaded}
+
+The function \texttt{alpha()} returns a lot of information. The most important part, though, is shown at the very beginning:
+
+\begin{verbatim}
+##  raw_alpha std.alpha G6(smc) average_r  S/N  ase mean   sd median_r
+##       0.85      0.85     0.8      0.66 5.76 0.01 3.46 1.33     0.65
+\end{verbatim}
+
+In most publications, researchers would primarily report the \texttt{raw\_alpha} value. This is fine, but it is not a bad idea to include at least \texttt{std.alpha} and \texttt{G6(smc)}.
+
+In terms of interpretation, Cronbrach's \(\alpha\) scores can range from 0 to 1. The closer the score to 1, the higher we would judge its reliability. \citet{nunally-1967} originally provided the following classification for Cronbach's \(\alpha\):
+
+\begin{itemize}
+\item
+  between 0.6 and 0.5 can be sufficient during the early stages of development,
+\item
+  0.8 or higher is sufficient for most basic research,
+\item
+  0.9 or higher is suitable for applied research, where the questionnaires are used to make critical decisions, e.g.~clinical studies, university admission tests, etc., with a `desired standard' of 0.95.
+\end{itemize}
+
+However, a few years later, \citet{nunally-1978} revisited his original categorisation and considered 0.7 or higher as a suitable benchmark in more exploratory-type research. This gave grounds for researchers to pick and choose the `right' publication for them \citep{henson2001understanding}. Consequently, depending on your research field, the expected reliability score might lean more towards 0.7 or 0.8. Still, the higher the score, the better it is.
+
+Our dataset shows that \texttt{si} scores a solid \(\alpha = 0.85\), which is excellent. We should repeat this step for \texttt{cs\_imp} and \texttt{cs\_exp} as well. However, we have to adjust \texttt{select()}, because we only want variables included that start with \texttt{cs\_} and end with the facet of the respective variable, i.e.~\texttt{\_imp} or \texttt{\_exp}. We also created two variables that start with \texttt{cs\_}, which we also have to remove. Let me demonstrate the `evolution' of how the \texttt{select()} function works to achieve what we want.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Select only variables which start with \textquotesingle{}cs\_\textquotesingle{}}
+\NormalTok{gep }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(}\FunctionTok{starts\_with}\NormalTok{(}\StringTok{"cs\_"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{glimpse}\NormalTok{()}
+\DocumentationTok{\#\# Rows: 300}
+\DocumentationTok{\#\# Columns: 8}
+\DocumentationTok{\#\# Rowwise: }
+\DocumentationTok{\#\# $ cs\_explain\_ideas\_imp          \textless{}dbl\textgreater{} 6, 5, 5, 5, 5, 5, 4, 5, 6, 6, 5, 5, 4, 6\textasciitilde{}}
+\DocumentationTok{\#\# $ cs\_find\_clarification\_imp     \textless{}dbl\textgreater{} 4, 5, 5, 6, 6, 5, 4, 6, 6, 6, 5, 5, 4, 5\textasciitilde{}}
+\DocumentationTok{\#\# $ cs\_learn\_different\_styles\_imp \textless{}dbl\textgreater{} 6, 5, 6, 4, 4, 4, 4, 6, 6, 6, 4, 5, 5, 5\textasciitilde{}}
+\DocumentationTok{\#\# $ cs\_explain\_ideas\_exp          \textless{}dbl\textgreater{} 6, 5, 2, 5, 6, 5, 6, 6, 6, 6, 4, 4, 3, 6\textasciitilde{}}
+\DocumentationTok{\#\# $ cs\_find\_clarification\_exp     \textless{}dbl\textgreater{} 6, 5, 4, 6, 6, 5, 6, 6, 6, 6, 2, 5, 4, 5\textasciitilde{}}
+\DocumentationTok{\#\# $ cs\_learn\_different\_styles\_exp \textless{}dbl\textgreater{} 6, 4, 5, 4, 6, 3, 5, 6, 6, 6, 2, 4, 2, 5\textasciitilde{}}
+\DocumentationTok{\#\# $ cs\_imp                        \textless{}dbl\textgreater{} 5.333333, 5.000000, 5.333333, 5.000000, \textasciitilde{}}
+\DocumentationTok{\#\# $ cs\_exp                        \textless{}dbl\textgreater{} 6.000000, 4.666667, 3.666667, 5.000000, \textasciitilde{}}
+
+\CommentTok{\# Do the above but include only variables that also end with \textquotesingle{}\_imp\textquotesingle{}}
+\NormalTok{gep }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(}\FunctionTok{starts\_with}\NormalTok{(}\StringTok{"cs\_"}\NormalTok{) }\SpecialCharTok{\&} \FunctionTok{ends\_with}\NormalTok{(}\StringTok{"\_imp"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{glimpse}\NormalTok{()}
+\DocumentationTok{\#\# Rows: 300}
+\DocumentationTok{\#\# Columns: 4}
+\DocumentationTok{\#\# Rowwise: }
+\DocumentationTok{\#\# $ cs\_explain\_ideas\_imp          \textless{}dbl\textgreater{} 6, 5, 5, 5, 5, 5, 4, 5, 6, 6, 5, 5, 4, 6\textasciitilde{}}
+\DocumentationTok{\#\# $ cs\_find\_clarification\_imp     \textless{}dbl\textgreater{} 4, 5, 5, 6, 6, 5, 4, 6, 6, 6, 5, 5, 4, 5\textasciitilde{}}
+\DocumentationTok{\#\# $ cs\_learn\_different\_styles\_imp \textless{}dbl\textgreater{} 6, 5, 6, 4, 4, 4, 4, 6, 6, 6, 4, 5, 5, 5\textasciitilde{}}
+\DocumentationTok{\#\# $ cs\_imp                        \textless{}dbl\textgreater{} 5.333333, 5.000000, 5.333333, 5.000000, \textasciitilde{}}
+
+\CommentTok{\# Remove \textquotesingle{}cs\_imp\textquotesingle{}, because it is the computed latent variable}
+\NormalTok{gep }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(}\FunctionTok{starts\_with}\NormalTok{(}\StringTok{"cs\_"}\NormalTok{) }\SpecialCharTok{\&} \FunctionTok{ends\_with}\NormalTok{(}\StringTok{"\_imp"}\NormalTok{), }\SpecialCharTok{{-}}\NormalTok{cs\_imp) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{glimpse}\NormalTok{()}
+\DocumentationTok{\#\# Rows: 300}
+\DocumentationTok{\#\# Columns: 3}
+\DocumentationTok{\#\# Rowwise: }
+\DocumentationTok{\#\# $ cs\_explain\_ideas\_imp          \textless{}dbl\textgreater{} 6, 5, 5, 5, 5, 5, 4, 5, 6, 6, 5, 5, 4, 6\textasciitilde{}}
+\DocumentationTok{\#\# $ cs\_find\_clarification\_imp     \textless{}dbl\textgreater{} 4, 5, 5, 6, 6, 5, 4, 6, 6, 6, 5, 5, 4, 5\textasciitilde{}}
+\DocumentationTok{\#\# $ cs\_learn\_different\_styles\_imp \textless{}dbl\textgreater{} 6, 5, 6, 4, 4, 4, 4, 6, 6, 6, 4, 5, 5, 5\textasciitilde{}}
+\end{Highlighting}
+\end{Shaded}
+
+Since we want to compute the Cronbach's \(\alpha\) for both variables, we write the following:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{gep }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{select}\NormalTok{(}\FunctionTok{starts\_with}\NormalTok{(}\StringTok{"cs\_"}\NormalTok{) }\SpecialCharTok{\&} \FunctionTok{ends\_with}\NormalTok{(}\StringTok{"\_imp"}\NormalTok{), }\SpecialCharTok{{-}}\NormalTok{cs\_imp) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  psych}\SpecialCharTok{::}\FunctionTok{alpha}\NormalTok{()}
+\DocumentationTok{\#\# }
+\DocumentationTok{\#\# Reliability analysis   }
+\DocumentationTok{\#\# Call: psych::alpha(x = .)}
+\DocumentationTok{\#\# }
+\DocumentationTok{\#\#   raw\_alpha std.alpha G6(smc) average\_r S/N   ase mean   sd median\_r}
+\DocumentationTok{\#\#       0.86      0.87    0.82      0.68 6.5 0.014    5 0.98     0.65}
+\DocumentationTok{\#\# }
+\DocumentationTok{\#\#  lower alpha upper     95\% confidence boundaries}
+\DocumentationTok{\#\# 0.84 0.86 0.89 }
+\DocumentationTok{\#\# }
+\DocumentationTok{\#\#  Reliability if an item is dropped:}
+\DocumentationTok{\#\#                               raw\_alpha std.alpha G6(smc) average\_r S/N}
+\DocumentationTok{\#\# cs\_explain\_ideas\_imp               0.78      0.78    0.65      0.65 3.6}
+\DocumentationTok{\#\# cs\_find\_clarification\_imp          0.76      0.76    0.62      0.62 3.2}
+\DocumentationTok{\#\# cs\_learn\_different\_styles\_imp      0.88      0.88    0.79      0.79 7.4}
+\DocumentationTok{\#\#                               alpha se var.r med.r}
+\DocumentationTok{\#\# cs\_explain\_ideas\_imp             0.025    NA  0.65}
+\DocumentationTok{\#\# cs\_find\_clarification\_imp        0.028    NA  0.62}
+\DocumentationTok{\#\# cs\_learn\_different\_styles\_imp    0.014    NA  0.79}
+\DocumentationTok{\#\# }
+\DocumentationTok{\#\#  Item statistics }
+\DocumentationTok{\#\#                                 n raw.r std.r r.cor r.drop mean  sd}
+\DocumentationTok{\#\# cs\_explain\_ideas\_imp          300  0.90  0.90  0.85   0.77  5.2 1.0}
+\DocumentationTok{\#\# cs\_find\_clarification\_imp     300  0.91  0.91  0.87   0.79  5.1 1.1}
+\DocumentationTok{\#\# cs\_learn\_different\_styles\_imp 300  0.86  0.85  0.71   0.67  4.8 1.2}
+\DocumentationTok{\#\# }
+\DocumentationTok{\#\# Non missing response frequency for each item}
+\DocumentationTok{\#\#                                  1    2    3    4    5    6 miss}
+\DocumentationTok{\#\# cs\_explain\_ideas\_imp          0.01 0.01 0.06 0.14 0.27 0.51    0}
+\DocumentationTok{\#\# cs\_find\_clarification\_imp     0.01 0.02 0.05 0.14 0.30 0.47    0}
+\DocumentationTok{\#\# cs\_learn\_different\_styles\_imp 0.01 0.03 0.09 0.19 0.31 0.36    0}
+
+\NormalTok{gep }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{select}\NormalTok{(}\FunctionTok{starts\_with}\NormalTok{(}\StringTok{"cs\_"}\NormalTok{) }\SpecialCharTok{\&} \FunctionTok{ends\_with}\NormalTok{(}\StringTok{"\_exp"}\NormalTok{), }\SpecialCharTok{{-}}\NormalTok{cs\_exp) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  psych}\SpecialCharTok{::}\FunctionTok{alpha}\NormalTok{()}
+\DocumentationTok{\#\# }
+\DocumentationTok{\#\# Reliability analysis   }
+\DocumentationTok{\#\# Call: psych::alpha(x = .)}
+\DocumentationTok{\#\# }
+\DocumentationTok{\#\#   raw\_alpha std.alpha G6(smc) average\_r S/N   ase mean  sd median\_r}
+\DocumentationTok{\#\#       0.81      0.82    0.76       0.6 4.4 0.019  4.2 1.1     0.58}
+\DocumentationTok{\#\# }
+\DocumentationTok{\#\#  lower alpha upper     95\% confidence boundaries}
+\DocumentationTok{\#\# 0.78 0.81 0.85 }
+\DocumentationTok{\#\# }
+\DocumentationTok{\#\#  Reliability if an item is dropped:}
+\DocumentationTok{\#\#                               raw\_alpha std.alpha G6(smc) average\_r S/N}
+\DocumentationTok{\#\# cs\_explain\_ideas\_exp               0.69      0.69    0.53      0.53 2.3}
+\DocumentationTok{\#\# cs\_find\_clarification\_exp          0.73      0.74    0.58      0.58 2.8}
+\DocumentationTok{\#\# cs\_learn\_different\_styles\_exp      0.81      0.81    0.68      0.68 4.2}
+\DocumentationTok{\#\#                               alpha se var.r med.r}
+\DocumentationTok{\#\# cs\_explain\_ideas\_exp             0.035    NA  0.53}
+\DocumentationTok{\#\# cs\_find\_clarification\_exp        0.031    NA  0.58}
+\DocumentationTok{\#\# cs\_learn\_different\_styles\_exp    0.022    NA  0.68}
+\DocumentationTok{\#\# }
+\DocumentationTok{\#\#  Item statistics }
+\DocumentationTok{\#\#                                 n raw.r std.r r.cor r.drop mean  sd}
+\DocumentationTok{\#\# cs\_explain\_ideas\_exp          300  0.88  0.88  0.80   0.71  4.2 1.3}
+\DocumentationTok{\#\# cs\_find\_clarification\_exp     300  0.85  0.86  0.76   0.68  4.5 1.2}
+\DocumentationTok{\#\# cs\_learn\_different\_styles\_exp 300  0.84  0.82  0.67   0.61  4.0 1.4}
+\DocumentationTok{\#\# }
+\DocumentationTok{\#\# Non missing response frequency for each item}
+\DocumentationTok{\#\#                                  1    2    3    4    5    6 miss}
+\DocumentationTok{\#\# cs\_explain\_ideas\_exp          0.04 0.09 0.11 0.33 0.26 0.17    0}
+\DocumentationTok{\#\# cs\_find\_clarification\_exp     0.02 0.05 0.13 0.27 0.32 0.21    0}
+\DocumentationTok{\#\# cs\_learn\_different\_styles\_exp 0.06 0.09 0.21 0.24 0.22 0.17    0}
+\end{Highlighting}
+\end{Shaded}
+
+Similarly, to \texttt{si}, \texttt{cs\_imp} and \texttt{cs\_exp} show very good internal consistency scores too: \(\alpha_{cs\_imp} = 0.86\) and \(\alpha_{cs\_exp} = 0.81\). Based on these results we could be confident to use our latent variables for further analysis.
+
+However, while Cronbach's \(\alpha\) is very popular due to its simplicity, there is plenty of criticism (add references). Therefore, it is often not enough to report the Cronbach's \(\alpha\), but undertake additional steps. Depending on the stage of development of your measurement instrument (i.e.~your questionnaire), you likely have to perform one of the following before computing the \(\alpha\) scores:
+
+\begin{itemize}
+\item
+  Exploratory factor analysis (EFA): Generally used to identify latent variables in a set of questionnaire items.
+\item
+  Confirmatory factor analysis (CFA): To confirm whether a set of items truly reflect a latent variable.
+\end{itemize}
+
+An example of exploratory factor analysis is presented in Chapter @ref(). Since the \texttt{gep} data is based on an established measurement tool, we perform a CFA. To perform a CFA, we use the popular \texttt{lavaan} (\underline{La}tent \underline{Va}riable \underline{An}alysis) package. The steps of running a CFA in R include:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Define which variables are supposed to measure a specific latent variable (i.e.~creating a model)
+\item
+  Run the CFA to see whether our model fits the data we collected
+\item
+  Interpret the results based on various indicators.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(lavaan)}
+\DocumentationTok{\#\# This is lavaan 0.6{-}9}
+\DocumentationTok{\#\# lavaan is FREE software! Please report any bugs.}
+
+\CommentTok{\#1: Define the model which explains how items relate to latent variables}
+\NormalTok{model }\OtherTok{\textless{}{-}} \StringTok{\textquotesingle{}}
+\StringTok{social\_integration =\textasciitilde{}}
+\StringTok{si\_socialise\_with\_people\_exp +}
+\StringTok{si\_supportive\_friends\_exp +}
+\StringTok{si\_time\_socialising\_exp}
+
+\StringTok{comm\_skills\_imp =\textasciitilde{}}
+\StringTok{cs\_explain\_ideas\_imp +}
+\StringTok{cs\_find\_clarification\_imp +}
+\StringTok{cs\_learn\_different\_styles\_imp}
+
+\StringTok{comm\_skills\_exp =\textasciitilde{}}
+\StringTok{cs\_explain\_ideas\_exp +}
+\StringTok{cs\_find\_clarification\_exp +}
+\StringTok{cs\_learn\_different\_styles\_exp}
+\StringTok{\textquotesingle{}}
+
+\CommentTok{\#2: Run the CFA to see how well this model fits our data}
+\NormalTok{fit }\OtherTok{\textless{}{-}} \FunctionTok{cfa}\NormalTok{(model, }\AttributeTok{data =}\NormalTok{ gep)}
+
+\CommentTok{\#3a: Extract the performance indicators}
+\NormalTok{fit\_indices }\OtherTok{\textless{}{-}} \FunctionTok{fitmeasures}\NormalTok{(fit)}
+
+\CommentTok{\#3b: We tidy the results with the \textquotesingle{}broom\textquotesingle{} package and pick only those indices we are most interested in}
+\NormalTok{broom}\SpecialCharTok{::}\FunctionTok{tidy}\NormalTok{(fit\_indices) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(names }\SpecialCharTok{==} \StringTok{"cfi"} \SpecialCharTok{|} 
+\NormalTok{         names }\SpecialCharTok{==} \StringTok{"srmr"} \SpecialCharTok{|}
+\NormalTok{         names }\SpecialCharTok{==} \StringTok{"rmsea"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{x =} \FunctionTok{round}\NormalTok{(x, }\DecValTok{3}\NormalTok{))         }\CommentTok{\# Round the results to 3 decimal places}
+\DocumentationTok{\#\# \# A tibble: 3 x 2}
+\DocumentationTok{\#\#   names x         }
+\DocumentationTok{\#\#   \textless{}chr\textgreater{} \textless{}lvn.vctr\textgreater{}}
+\DocumentationTok{\#\# 1 cfi   0.967     }
+\DocumentationTok{\#\# 2 rmsea 0.081     }
+\DocumentationTok{\#\# 3 srmr  0.037}
+\end{Highlighting}
+\end{Shaded}
+
+The \texttt{broom} package is useful to clean output from all kinds of models, such as a CFA model. It allows us to convert the raw output into a \texttt{tibble}, which we can further manipulate using the functions we already know. If you want to know where \texttt{names} and \texttt{x} came from we have to inspect the output from \texttt{broom::tidy(fit\_indices)}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{broom}\SpecialCharTok{::}\FunctionTok{tidy}\NormalTok{(fit\_indices)}
+\DocumentationTok{\#\# \# A tibble: 42 x 2}
+\DocumentationTok{\#\#    names           x           }
+\DocumentationTok{\#\#    \textless{}chr\textgreater{}           \textless{}lvn.vctr\textgreater{}  }
+\DocumentationTok{\#\#  1 npar            2.100000e+01}
+\DocumentationTok{\#\#  2 fmin            1.177732e{-}01}
+\DocumentationTok{\#\#  3 chisq           7.066390e+01}
+\DocumentationTok{\#\#  4 df              2.400000e+01}
+\DocumentationTok{\#\#  5 pvalue          1.733810e{-}06}
+\DocumentationTok{\#\#  6 baseline.chisq  1.429729e+03}
+\DocumentationTok{\#\#  7 baseline.df     3.600000e+01}
+\DocumentationTok{\#\#  8 baseline.pvalue 0.000000e+00}
+\DocumentationTok{\#\#  9 cfi             9.665187e{-}01}
+\DocumentationTok{\#\# 10 tli             9.497780e{-}01}
+\DocumentationTok{\#\# \# ... with 32 more rows}
+\end{Highlighting}
+\end{Shaded}
+
+These column names were generated when we called the function \texttt{tidy()}. I often find myself working through chains of analytical steps iteratively to see what the intermediary steps produce. This also makes it easier to spot any mistake early on. Therefore, I recommend slowly building up your \texttt{dplyr} chains of function calls, especially when you just started learning R and the \texttt{tidyverse} approach of data analysis.
+
+The results of our CFA appear fairly promising:
+
+\begin{itemize}
+\item
+  The \texttt{cfi} (Comparative Fit Index) lies above 0.95 and
+\item
+  the \texttt{srmr} (Standardised, Root Mean Square Residual) lies well below 0.08.
+\item
+  The \texttt{rmsea} (Root Mean Square Error of Approximation) appears slightly higher than desirable, i.e.~below 0.6. \citep{hu-bentler-1999cutoff}
+\end{itemize}
+
+Overall, however, the model seems to suggest a good fit with our data. Combined with the computed Cronbach's \(\alpha\), we can be reasonably confident in our latent variables and perform further analytical steps, for example, as shown in Chapter \ref{regression}.
+
+\hypertarget{conclusion-data-wrangling}{%
+\section{Once you finished with data wrangling}\label{conclusion-data-wrangling}}
+
+Once you finished your data cleaning, I recommend writing (i.e.~exporting) your cleaned data out of R into your `01\_tidy\_data' folder. You can then use this dataset to continue with your analysis. This way, you do not have to run all your data wrangling code every time you open your R project. To write your tidy dataset onto your hard drive of choice, we can use \texttt{readr} in the same as we did at the \protect\hyperlink{importing-data-using-functions}{beginning}. However, instead of \texttt{read\_csv()} we have to use another function that writes the file into a folder. The function \texttt{write\_csv()} first takes the object we want to save and then the folder and file name. We only made changes to the \texttt{wvs} dataset, so we should save it to our hard drive.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{write\_csv}\NormalTok{(wvs, }\StringTok{"01\_tidy\_data/wvs\_tidy.csv"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+This chapter has been a reasonably long one. Nonetheless, it only covered the basics of what can and should be done when preparing data for analysis. These steps should not be rushed or even skipped. It is essential to have the data cleaned appropriately. This process helps you familiarise yourself with the dataset in great depth, and it makes you aware of limitations or even problems of your data. In the spirit of \href{https://osf.io}{Open Science}, using R also helps to document the steps you undertook to get from a raw dataset to a tidy one. This is also beneficial if you intend to publish your work later. Reproducibility has become an essential aspect of transparent and impactful research and should be a guiding principle of any empirical research.
+
+Now that we have learned the basics of data wrangling (and there might be more waiting for you in the coming chapters), we can finally start our data analysis.
 
 \hypertarget{descriptive-statistics}{%
 \chapter{Descriptive Statistics}\label{descriptive-statistics}}
@@ -1531,8 +2521,8 @@ Create consistency in your column naming convention
 \hypertarget{comparing-groups}{%
 \chapter{Comparing groups}\label{comparing-groups}}
 
-\hypertarget{regression-creating-models-to-predict-future-observations}{%
-\chapter{Regression: Creating models to predict future observations}\label{regression-creating-models-to-predict-future-observations}}
+\hypertarget{regression}{%
+\chapter{Regression: Creating models to predict future observations}\label{regression}}
 
 \hypertarget{mixed-methods-research-analysing-qualitative-in-r}{%
 \chapter{Mixed-methods research: Analysing qualitative in R}\label{mixed-methods-research-analysing-qualitative-in-r}}

@@ -14,11 +14,11 @@ You might only see three windows and wonder where the `Source` window has gone i
 
 I will briefly explain the purpose of each window/pane and how they are relevant to your work in *R*.
 
-## The Console window
+## The Console window {#the-console-window}
 
 The console is located in the bottom-left, and it is where you often will find the output of your coding and computations. It is also possible to write code directly into the console. Let's try the following example by calculating the sum of `10 + 5`. Click into the console with your mouse, type the calculation into your console and hit `Enter/Return ↵` on your keyboard. The result should be pretty obvious:
 
-```{r Algebra in the Console, echo=TRUE, collapse=TRUE}
+```{r Algebra in the Console, echo=TRUE}
 # We type the below into the console 👇
 10+5
 ```
@@ -85,7 +85,7 @@ The last window consists of five essential panes. The first one is the *Files* p
 
 Since the Console cannot reproduce data visualisations, RStudio offers a way to do this very easily. It is through the Plots pane. This pane is exclusively designed to show you any plots you have created using R. Here is a simple example that you can try. Type into your console `boxplot(mtcars$hp)`.
 
-```{r Simple boxplot, echo=TRUE, collapse=TRUE}
+```{r Simple boxplot, echo=TRUE}
 # Here we create a nice boxplot using a dataset called 'mtcars'
 boxplot(mtcars$hp)
 ```

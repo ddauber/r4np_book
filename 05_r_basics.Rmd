@@ -125,7 +125,7 @@ friends
 
 To concatenate values into a single object, we need to use a comma `,` to separate each value. Otherwise, R will report an error back.
 
-```{r Concatenate function error, echo=TRUE, error=TRUE}
+```{r Concatenate function error, echo=TRUE, error=TRUE, purl=FALSE}
 friends <- c("Fiona" "Ida")
 ```
 
@@ -243,7 +243,7 @@ Do not worry if half of this code does not make sense to you. Writing functions 
 
 All functions in R share the same structure. They have a `name` followed by `()`. Within these parentheses, we put `arguments`, which have specific `values`. For example, a function would look something like this:
 
-```{r Generic function, eval=FALSE, error=TRUE, results='hide'}
+```{r Generic function, eval=FALSE, error=TRUE, purl=FALSE, results='hide'}
 name_of_function(argument_1 = value_1,
                  argument_2 = value_2,
                  argument_3 = value_3)
@@ -251,7 +251,7 @@ name_of_function(argument_1 = value_1,
 
 How many arguments there are and what kind of values you can provide is very much dependent on the function you use. Thus, not every function takes every value. In the case of `mean()`, the function takes an object which holds a sequence of `numeric` values. It would make very little sense to compute the mean of our `friends` object, because it only contains names. R would return an error message:
 
-```{r Mean of an object with characters, echo=TRUE, error=TRUE}
+```{r Mean of an object with characters, echo=TRUE, error=TRUE, purl=FALSE}
 mean(friends)
 ```
 
@@ -259,7 +259,7 @@ mean(friends)
 
 Sometimes you will also get a message from R that states `NaN`. `NaN` stands for *'not a number'* and is returned when something is not possible to compute, for example:
 
-```{r NaN example: Division by zero, echo=TRUE, error=TRUE}
+```{r NaN example: Division by zero, echo=TRUE, error=TRUE, purl=FALSE}
 # Example 1
 0/0
 
@@ -336,7 +336,7 @@ RStudio offers a very convenient way of installing packages. In the packages pan
 
 The only real downside of using the packages pane is that you cannot install packages hosted on GitHub only. However, you can download them from there and install them directly from your computer using this option. This is particularly useful if you do not have an internet connection but you already downloaded the required packages onto a hard drive.
 
-### Using R Packages
+### Using R Packages {#using-r-packages}
 
 Now that you have a nice collection of R packages, the next step would be to use them. While you only have to install R packages once, you have to 'activate' them every time you start an new session in RStudio. This process is also called 'loading an R package'. Once an R package is loaded, you can use all its functions. To load an R package, we have to use the function `library()`.
 
