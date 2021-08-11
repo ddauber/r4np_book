@@ -22,15 +22,13 @@ To generate any plot we need to at least define three components:
 
 -   how we want to plot them, e.g. lines, bars, points.
 
-Admittedly, this is a harsh oversimplification, but it will serve as a guide to get us started. The function `ggplot()` is the one responsible to create any type of data visualisation.
-
-The generic structure of a `ggplot()` looks like this:
+Admittedly, this is a harsh oversimplification, but it will serve as a guide to get us started. The function `ggplot()` is the one responsible to create any type of data visualisation. The generic structure of a `ggplot()` looks like this:
 
 ``` {#basic_ggplot_structure}
 ggplot(data, aes(x = variable_01, y = variable_02))
 ```
 
-In other words, we first need to provide the dataset, and then the aesthetics (`aes()`). Think of `aes()` as the place where we define our variables (e.g. `x` and `y`). For example, we might be interested to know which movie genre is the most popular among the top 250 IMDb movies. The dataset `imdb_top_250` from the `r4np` package allows us to find an answer to this question. Therefore we define the components of the plot as follows:
+In other words, we first need to provide the dataset `data`, and then the aesthetics (`aes()`). Think of `aes()` as the place where we define our variables (i.e. `x` and `y`). For example, we might be interested to know which movie genre is the most popular among the top 250 IMDb movies. The dataset `imdb_top_250` from the `r4np` package allows us to find an answer to this question. Therefore we define the components of the plot as follows:
 
 -   our data is `imdb_top_250`, and
 
@@ -40,16 +38,16 @@ In other words, we first need to provide the dataset, and then the aesthetics (`
 ggplot(imdb_top_250, aes(x = genre_01))
 ```
 
-Running this line of code will produce an empty plot. We only get labels for our x-axis, since we defined it already. However, we have yet to tell `ggplot()` how we want to represent the data on this canvas that ggplot drew. Your choice for how you want to plot your data is usually informed by the type of data you want to plot and the statistics you want to represent. For example trying to plot the mean of a factor is not useful, e.g. computing the mean of movie genres. On the other hand, we can count how often certain genres appear in our dataset. One way of representing the count (or frequency) of a factor is to use a bar plot.
+Running this line of code will produce an empty plot. We only get labels for our x-axis, since we defined it already. However, we have yet to tell `ggplot()` how we want to represent the data on this canvas. Your choice for how you want to plot your data is usually informed by the type of data you want to plot and the statistics you want to represent. For example trying to plot the mean of a factor is not useful, e.g. computing the mean of movie genres. On the other hand, we can count how often certain genres appear in our dataset. One way of representing the count (or frequency) of a factor is to use a bar plot. In order to add an element to `ggplot()`, i.e. bars, we use `+` and append the function `geom_bar()` which draws bars. The `+` operator works similar to `%>%` and allows to chain multiple functions one after the other.
 
 ```{r Most popular genre with barplot, echo=TRUE}
 ggplot(imdb_top_250, aes(x = genre_01)) +
   geom_bar()
 ```
 
-In order to add an element to this block, i.e. bars, we use `+` and append the function `geom_bar()` which draws bars. This already looks great and we can see that `Drama` is by far the most popular genre, followed by `Action` and `Crime`.
+This already looks great and we can see that `Drama` is by far the most popular genre, followed by `Action` and `Crime`. Thus, we successfully found an answer to our question. Still, there are more improvements necessary to use it in a publication.
 
-We can use `+` to add other elements to our plot. Here are some common functions to further customise your plot:
+We can use `+` to add other elements to our plot, such as a title and proper axes labels. Here are some common functions to further customise our plot:
 
 ```{r Most popular genre with barplot and extras, echo=TRUE}
 ggplot(imdb_top_250, aes(x = genre_01)) +
@@ -105,9 +103,9 @@ imdb_top_250 %>%
   coord_flip()
 ```
 
-Step 3 is the only code you need to create the desired plot. The two other steps are a mean to demonstrate how one can slowly built up this plot, step-by-step.
+Step 3 is the only code you need to create the desired plot. The two other steps are a mean to demonstrate how one can slowly built up this plot, step-by-step. You might have noticed that I used `dplyr` to chain all these functions together and therefore it was not necessary to specify the dataset in `ggplot()`.
 
-There are two new functions we had to use: `geom_col()` and `reorder()`. The functions `geom_col()` and `geom_bar()` can be confusing. The easiest way to remember how to use them is: If you use a frequency table to create your barplot, use `geom_col`, if not, use `geom_bar()`. The function `geom_col()` requires that we specify a y-axis (our frequency scores), while `geom_bar()` does not.
+There are also two new functions we had to use: `geom_col()` and `reorder()`. The functions `geom_col()` and `geom_bar()` can be confusing. The easiest way to remember how to use them is: If you use a frequency table to create your barplot, use `geom_col`, if not, use `geom_bar()`. The function `geom_col()` requires that we specify a y-axis (our frequency scores), while `geom_bar()` does not.
 
 Now you have learned the fundamentals of plotting in R. Throughout the next chapters we will create a lot more plots. They all share the same basic structure, but we will use different 'geoms' to describe our data.
 
@@ -117,6 +115,68 @@ The mean, median and mode, are all measures of central tendency, i.e. they provi
 
 ### Mean
 
-The mean is likely the most known descriptive statistics and, at the same time, a very powerful and influential one. For example, the averag ratings of restaurants on Google might influence our decision on where to eat out. Similarly, we might consider the average rating of movies to decide which one to watch in cinema with friends. What we sometimes casually refer to as the 'average' is equivalent to the 'mean'.
+The mean is likely the most known descriptive statistics and, at the same time, a very powerful and influential one. For example, the average ratings of restaurants on Google might influence our decision on where to eat out. Similarly, we might consider the average rating of movies to decide which one to watch in cinema with friends. What we casually refer to as the 'average' is equivalent to the 'mean'.
 
-In R it is simple to compute the mean using the function `mean()`. We used this function in Chapter \@ref(functions) and Chapter \@ref(latent-constructs) already. However, we have not look at how we can plot the mean.
+In R it is simple to compute the mean using the function `mean()`. We used this function in Chapter \@ref(functions) and Chapter \@ref(latent-constructs) already. However, we have not looked at how we can plot the mean.
+
+Assume, we are curious to know how much, on 'average' movies earn in each of the genres. The simplest to achieve this is to use a bar plot, like in Chapter \@ref(plotting-in-r-with-ggplot2).
+
+```{r Point plot for mean, echo=TRUE}
+imdb_top_250 %>% 
+  ggplot(aes(x = genre_01, y = gross_in_m)) +
+  geom_col()
+```
+
+You might notice two things that are odd: First, we get a warning that 35 rows were remove because of missing data. Second, this plot has some irregular grey lines in each of the bars.
+
+The warning is nothing we have to be particularly worried about. It just tells us that for 35 movies, we do not have data regarding earnings, i.e. `gross_in_m`.
+
+The grey lines in our plot exist because we stacked the earnings from each movie (as a bar) on top of each other for each genre. To demonstrate this even more clearly, we can change the `fill` colour of each of the bars. Consequently, each colour represents a different movie and we can assign the variable `title` to it, because it is unique for each movie. The `fill` attribute is a way to group data. Every time we group data in our plot, `ggplot` will automatically generate a legend to show which colour belongs to which value. However, with 250 movies, this plot would look terrible. If we want to avoid that a legend is created, we remove it with `guides(fill=FALSE)`. Of course, if you are of the adventures type or simply curious, feel free to try the following lines of code without removing the 'guides'. Later on, the guides will become very important to read our plot.
+
+```{r}
+imdb_top_250 %>% 
+  ggplot(aes(x = genre_01, y = gross_in_m, fill = title)) +
+  geom_col() +
+  guides(fill=FALSE)
+```
+
+This is quite a colourful visualisation of our data, but does not really add much new information for us. If we want to keep one colour, but without stacking the bars on top of each other, we have to first create a frequency table. This is exactly what we did in Chapter \@ref(plotting-in-r-with-ggplot2). We use `dplyr` functions we are already familiar with from Chapter \@ref(missing-at-random-mar), were we created a table of missing data based on each country. This time we want to sum up the earnings for each genre and create our plot. However, we first have to remove any missing data.
+
+```{r Earning by genre with dplyr, echo=TRUE}
+# Step 1: Create the summary table with total earning per genre
+imdb_top_250 %>%
+  filter(!is.na(gross_in_m)) %>% 
+  group_by(genre_01) %>% 
+  summarise(total = sum(gross_in_m))
+
+# Step 2: Create the plot
+imdb_top_250 %>%
+  filter(!is.na(gross_in_m)) %>% 
+  group_by(genre_01) %>% 
+  summarise(gross_in_m = sum(gross_in_m)) %>% 
+  ggplot(aes(x = genre_01, y = gross_in_m)) +
+  geom_col() +
+  
+# Step 3: Fine tune our plot
+  coord_flip() + 
+  ggtitle("Earnings by genre") +
+  xlab("Genre") +
+  ylab("Gross earning in millions")
+```
+
+If we wanted the bars sorted by `gross_in_m`, we can reorder the factors accordingly using the `reorder()` function as before.
+
+```{r Earning by genre with dplyr rordered, echo=TRUE}
+imdb_top_250 %>%
+  filter(!is.na(gross_in_m)) %>% 
+  group_by(genre_01) %>% 
+  summarise(gross_in_m = sum(gross_in_m)) %>% 
+  ggplot(aes(x = reorder(genre_01, gross_in_m), y = gross_in_m)) +   # We reorder() here
+  geom_col() +
+  coord_flip() + 
+  ggtitle("Earnings by genre") +
+  xlab("Genre") +
+  ylab("Gross earning in millions")
+```
+
+Without a doubt, action movies make the most money.
