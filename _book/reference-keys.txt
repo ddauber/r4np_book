@@ -1,10 +1,3 @@
-tab:logical-operators-r
-fig:img-x-files
-fig:img-r-package-documentation
-fig:folder-structure
-fig:mapping-missing-data
-fig:missing-data-per-variable
-fig:mnar-example
 readme-before-you-get-started
 a-starting-point-and-reference-book
 download-the-companion-r-package
@@ -63,6 +56,12 @@ main-takeaways-regarding-dealing-with-missing-data
 latent-constructs
 conclusion-data-wrangling
 descriptive-statistics
+plotting-in-r-with-ggplot2
+central-tendency
+mean
+median
+mode
+indicators-of-spread-of-data
 correlations
 comparing-groups
 regression
@@ -74,3 +73,8 @@ next-steps-online-readings
 next-steps-twitter
 exercises-solutions
 exercises-solutions-5
+tab:histogram-vs-bar-plot
+fig:normal-distribution
+spread-of-data
+boxplot-so-much-information-in-just-one-box
+histogram-do-not-mistake-it-as-a-bar-plot

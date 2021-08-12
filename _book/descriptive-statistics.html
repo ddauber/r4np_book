@@ -24,7 +24,7 @@
 <meta name="author" content="Daniel Dauber" />
 
 
-<meta name="date" content="2021-08-11" />
+<meta name="date" content="2021-08-12" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -120,28 +120,6 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
-<style type="text/css">
-/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-}
-.hanging div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}
-</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -237,7 +215,17 @@ div.csl-indent {
 <li class="chapter" data-level="7.7" data-path="data-wrangling.html"><a href="data-wrangling.html#latent-constructs"><i class="fa fa-check"></i><b>7.7</b> Latent constructs and their reliability</a></li>
 <li class="chapter" data-level="7.8" data-path="data-wrangling.html"><a href="data-wrangling.html#conclusion-data-wrangling"><i class="fa fa-check"></i><b>7.8</b> Once you finished with data wrangling</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html"><i class="fa fa-check"></i><b>8</b> Descriptive Statistics</a></li>
+<li class="chapter" data-level="8" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html"><i class="fa fa-check"></i><b>8</b> Descriptive Statistics</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#plotting-in-r-with-ggplot2"><i class="fa fa-check"></i><b>8.1</b> Plotting in R with <code>ggplot2</code></a></li>
+<li class="chapter" data-level="8.2" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#central-tendency"><i class="fa fa-check"></i><b>8.2</b> Central tendency measures: Mean, Median, Mode</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#mean"><i class="fa fa-check"></i><b>8.2.1</b> Mean</a></li>
+<li class="chapter" data-level="8.2.2" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#median"><i class="fa fa-check"></i><b>8.2.2</b> Median</a></li>
+<li class="chapter" data-level="8.2.3" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#mode"><i class="fa fa-check"></i><b>8.2.3</b> Mode</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#spread-of-data"><i class="fa fa-check"></i><b>8.3</b> Indicators and visualisation to examine the spread of data</a></li>
+</ul></li>
 <li class="chapter" data-level="9" data-path="correlations.html"><a href="correlations.html"><i class="fa fa-check"></i><b>9</b> Correlations</a></li>
 <li class="chapter" data-level="10" data-path="comparing-groups.html"><a href="comparing-groups.html"><i class="fa fa-check"></i><b>10</b> Comparing groups</a></li>
 <li class="chapter" data-level="11" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>11</b> Regression: Creating models to predict future observations</a></li>
@@ -275,7 +263,383 @@ div.csl-indent {
             <section class="normal" id="section-">
 <div id="descriptive-statistics" class="section level1" number="8">
 <h1><span class="header-section-number">8</span> Descriptive Statistics</h1>
+<p>The best way to understand how participants in your study have responded to various questions or an experimental treatment is to use descriptive statistics. As the name indicates, their main purpose is to ‘describe.’ Most of the time we want to describe the composition of our sample and likely how the majority (or minority) of participants performed.</p>
+<p>In contrast, we use ‘inferential’ statistics to make predictions about the future. In Social Sciences, we are often interested in predicting how people will behave in certain situations and scenarios. We aim to develop models that help us navigate the complexity of social interactions that we all engage in, but might not fully understand. We cover ‘inferential statistics’ in later chapters of this book.</p>
+<p>In short, descriptive statistics are an essential component to understand your data. To some extend, one could argue that we were already describing our data when we performed various data wrangling tasks (see Chapter <a href="data-wrangling.html#data-wrangling">7</a>.</p>
+<p>The following chapters focus on the most essential descriptive statistics, i.e. the ones you likely want to investigate in 99 out of 100 research projects.</p>
+<p>This book takes a ‘visualise first’ approach to data analysis. Therefore, each section will start with data visualisations, followed by computing statistical output, and end with how we can report our results in publications of all kind. A key learning outcome of this chapter is to plot your data using the package <code>ggplot2</code> and to present characteristics of your data in different ways. Each chapter will ask questions about our dataset that we aim to answer. However, first we need to understand how to create plots in R.</p>
+<div id="plotting-in-r-with-ggplot2" class="section level2" number="8.1">
+<h2><span class="header-section-number">8.1</span> Plotting in R with <code>ggplot2</code></h2>
+<p>Plotting can appear intimidating at first, but is very easy and quick, once you understand the basics. The <code>ggplot2</code> package is a very popular package to generate plots in R and many other packages are built upon it. This makes it a very flexible tool to create almost any data visualisation you could think of. If you want to see what is possible with <code>ggplot2</code> you might want to consider looking at <a href="https://twitter.com/search?q=%23tidytuesday" target="blank" title="#tidytuesday">#tidytuesday</a> on Twitter where novices and veterans share their data visualisations on a weekly basis.</p>
+<p>To generate any plot we need to at least define three components:</p>
+<ul>
+<li><p>a dataset,</p></li>
+<li><p>variables we want to plot, and</p></li>
+<li><p>how we want to plot them, e.g. as lines, bars, points, etc.</p></li>
+</ul>
+<p>Admittedly, this is a harsh oversimplification, but it will serve as a useful guide to get us started. The function <code>ggplot()</code> is the one responsible to create any type of data visualisation. The generic structure of a <code>ggplot()</code> looks like this:</p>
+<pre id="basic_ggplot_structure"><code>ggplot(data, aes(x = variable_01, y = variable_02))</code></pre>
+<p>In other words, we first need to provide the dataset <code>data</code>, and then the aesthetics (<code>aes()</code>). Think of <code>aes()</code> as the place where we define our variables (i.e. <code>x</code> and <code>y</code>). For example, we might be interested to know which movie genre is the most popular among the top 250 IMDb movies. The dataset <code>imdb_top_250</code> from the <code>r4np</code> package allows us to find an answer to this question. Therefore we define the components of the plot as follows:</p>
+<ul>
+<li><p>our data is <code>imdb_top_250</code>, and</p></li>
+<li><p>our variable of interest is <code>genre_01</code></p></li>
+</ul>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="descriptive-statistics.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(imdb_top_250, <span class="fu">aes</span>(<span class="at">x =</span> genre_01))</span></code></pre></div>
+<p><img src="r_for_non_programmers_files/figure-html/Most%20popular%20genre%20incomplete%20plot-1.png" width="672" /></p>
+<p>Running this line of code will produce an empty plot. We only get labels for our x-axis, since we defined it already. However, we have yet to tell <code>ggplot()</code> how we want to represent the data on this canvas. Your choice for how you want to plot your data is usually informed by the type of data you want to plot and the statistics you want to represent. For example trying to plot the mean of a factor is not useful, e.g. computing the mean of movie genres. On the other hand, we can count how often certain genres appear in our dataset. One way of representing the count (or frequency) of a factor is to use a bar plot. In order to add an element to <code>ggplot()</code>, i.e. bars, we use <code>+</code> and append the function <code>geom_bar()</code> which draws bars. The <code>+</code> operator works similar to <code>%&gt;%</code> and allows to chain multiple functions one after the other.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="descriptive-statistics.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(imdb_top_250, <span class="fu">aes</span>(<span class="at">x =</span> genre_01)) <span class="sc">+</span></span>
+<span id="cb2-2"><a href="descriptive-statistics.html#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>()</span></code></pre></div>
+<p><img src="r_for_non_programmers_files/figure-html/Most%20popular%20genre%20with%20barplot-1.png" width="672" /></p>
+<p>This already looks great and we can see that <code>Drama</code> is by far the most popular genre, followed by <code>Action</code> and <code>Crime</code>. Thus, we successfully found an answer to our question. Still, there are more improvements necessary to use it in a publication.</p>
+<p>We can use <code>+</code> to add other elements to our plot, such as a title and proper axes labels. Here are some common functions to further customise our plot:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="descriptive-statistics.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(imdb_top_250, <span class="fu">aes</span>(<span class="at">x =</span> genre_01)) <span class="sc">+</span></span>
+<span id="cb3-2"><a href="descriptive-statistics.html#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
+<span id="cb3-3"><a href="descriptive-statistics.html#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Most popular movie genres&quot;</span>) <span class="sc">+</span>  <span class="co"># Add a title</span></span>
+<span id="cb3-4"><a href="descriptive-statistics.html#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;movie genre&quot;</span>) <span class="sc">+</span>                   <span class="co"># Rename x-axis</span></span>
+<span id="cb3-5"><a href="descriptive-statistics.html#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;frequency&quot;</span>)                       <span class="co"># Rename y-axis</span></span></code></pre></div>
+<p><img src="r_for_non_programmers_files/figure-html/Most%20popular%20genre%20with%20barplot%20and%20extras-1.png" width="672" /></p>
+<p>When working with factors, the category names can be rather long. In this plot, we also have lots of categories and the labels <code>Adventure</code>, <code>Animation</code> and <code>Biography</code> are a bit too close to each other for my taste. This might be a good opportunity to use <code>coord_flip()</code>, which rotates the entire plot by 90 degrees, i.e. turning the x-axis into the y-axis and vice versa. This makes the label much easier to read.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="descriptive-statistics.html#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(imdb_top_250, <span class="fu">aes</span>(<span class="at">x =</span> genre_01)) <span class="sc">+</span></span>
+<span id="cb4-2"><a href="descriptive-statistics.html#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
+<span id="cb4-3"><a href="descriptive-statistics.html#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Most popular movie genres&quot;</span>) <span class="sc">+</span></span>
+<span id="cb4-4"><a href="descriptive-statistics.html#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;movie genre&quot;</span>) <span class="sc">+</span></span>
+<span id="cb4-5"><a href="descriptive-statistics.html#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;frequency&quot;</span>) <span class="sc">+</span></span>
+<span id="cb4-6"><a href="descriptive-statistics.html#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>()</span></code></pre></div>
+<p><img src="r_for_non_programmers_files/figure-html/Most%20popular%20genre%20with%20barplot%20and%20extras%20and%20formatting-1.png" width="672" /></p>
+<p>Our plot is almost perfect, but there is one more step we should take to make reading and understanding this plot even easier. At the moment, the bars are ordered alphabetically by movie genre. This is hardly ever a useful way to order your data. Instead, we might want to sort the data by the frequency, showing the most popular genre at the top. We could either sort the movies by hand or slightly amend what we have coded so far.</p>
+<p>The problem you encounter when rearranging a <code>geom_bar()</code> with only one variable is that we do not have an explicit value we can use to indicate how we want to sort the bars. Our current code is based on the fact that <code>ggplot</code> does the counting for us. So, instead we need to do two things:</p>
+<ul>
+<li><p>create a table with all genres and their frequency, and</p></li>
+<li><p>use this table to plot the genres by the frequency we computed</p></li>
+</ul>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="descriptive-statistics.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 1: The frequency table only</span></span>
+<span id="cb5-2"><a href="descriptive-statistics.html#cb5-2" aria-hidden="true" tabindex="-1"></a>imdb_top_250 <span class="sc">%&gt;%</span> </span>
+<span id="cb5-3"><a href="descriptive-statistics.html#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(genre_01)</span></code></pre></div>
+<pre><code>## # A tibble: 11 × 2
+##    genre_01      n
+##    &lt;fct&gt;     &lt;int&gt;
+##  1 Action       40
+##  2 Adventure    20
+##  3 Animation    24
+##  4 Biography    22
+##  5 Comedy       23
+##  6 Crime        38
+##  7 Drama        72
+##  8 Film-Noir     1
+##  9 Horror        3
+## 10 Mystery       4
+## 11 Western       3</code></pre>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="descriptive-statistics.html#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 2: Plotting a barplot based on the frequency table</span></span>
+<span id="cb7-2"><a href="descriptive-statistics.html#cb7-2" aria-hidden="true" tabindex="-1"></a>imdb_top_250 <span class="sc">%&gt;%</span> </span>
+<span id="cb7-3"><a href="descriptive-statistics.html#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(genre_01) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-4"><a href="descriptive-statistics.html#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> genre_01, <span class="at">y =</span> n)) <span class="sc">+</span></span>
+<span id="cb7-5"><a href="descriptive-statistics.html#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span>                             <span class="co"># Use geom_col() instead of geom_bar()</span></span>
+<span id="cb7-6"><a href="descriptive-statistics.html#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Most popular movie genres&quot;</span>) <span class="sc">+</span></span>
+<span id="cb7-7"><a href="descriptive-statistics.html#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;movie genre&quot;</span>) <span class="sc">+</span></span>
+<span id="cb7-8"><a href="descriptive-statistics.html#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;frequency&quot;</span>) <span class="sc">+</span></span>
+<span id="cb7-9"><a href="descriptive-statistics.html#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>()</span></code></pre></div>
+<p><img src="r_for_non_programmers_files/figure-html/Most%20popular%20genre%20with%20barplot%20and%20extras%20step-by-step-1.png" width="672" /></p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="descriptive-statistics.html#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Step 3: Sort the plot by frequency, i.e. by &#39;n&#39;</span></span>
+<span id="cb8-2"><a href="descriptive-statistics.html#cb8-2" aria-hidden="true" tabindex="-1"></a>imdb_top_250 <span class="sc">%&gt;%</span> </span>
+<span id="cb8-3"><a href="descriptive-statistics.html#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(genre_01) <span class="sc">%&gt;%</span> </span>
+<span id="cb8-4"><a href="descriptive-statistics.html#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(genre_01, n), <span class="at">y =</span> n)) <span class="sc">+</span>    <span class="co"># Use &#39;reorder()&#39;</span></span>
+<span id="cb8-5"><a href="descriptive-statistics.html#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb8-6"><a href="descriptive-statistics.html#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Most popular movie genres&quot;</span>) <span class="sc">+</span></span>
+<span id="cb8-7"><a href="descriptive-statistics.html#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;movie genre&quot;</span>) <span class="sc">+</span></span>
+<span id="cb8-8"><a href="descriptive-statistics.html#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;frequency&quot;</span>) <span class="sc">+</span></span>
+<span id="cb8-9"><a href="descriptive-statistics.html#cb8-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>()</span></code></pre></div>
+<p><img src="r_for_non_programmers_files/figure-html/Most%20popular%20genre%20with%20barplot%20and%20extras%20step-by-step-2.png" width="672" /></p>
+<p>Step 3 is the only code you need to create the desired plot. The two other steps are a mean to demonstrate how one can slowly built up this plot, step-by-step. You might have noticed that I used <code>dplyr</code> to chain all these functions together and therefore it was not necessary to specify the dataset in <code>ggplot()</code>.</p>
+<p>There are also two new functions we had to use: <code>geom_col()</code> and <code>reorder()</code>. The functions <code>geom_col()</code> and <code>geom_bar()</code> can be confusing. The easiest way to remember how to use them is: If you use a frequency table to create your barplot, use <code>geom_col</code>, if not, use <code>geom_bar()</code>. The function <code>geom_col()</code> requires that we specify a y-axis (our frequency scores), while <code>geom_bar()</code> does not.</p>
+<p>In many cases, when creating plots you have to perform two steps:</p>
+<ul>
+<li><p>generate the statistics you want to plot, e.g. a frequency table, and</p></li>
+<li><p>plot the data via <code>ggplot()</code></p></li>
+</ul>
+<p>Now you have learned the fundamentals of plotting in R. Throughout the next chapters we will create a lot more plots. They all share the same basic structure, but we will use different ‘geoms’ to describe our data. By the end of this book, you will have accrued enough experience in plotting in R that it will feel like second nature. If you want to deepen your knowledge of <code>ggplot</code>, you should take a look at the book <a href="https://ggplot2-book.org" target="blank" title="&#39;ggplot: Elegant Graphics for Data Analysis&#39;">‘ggplot: Elegant Graphics for Data Analysis’</a> or ‘R Graphics Cookbook’ which moves beyond ggplots.</p>
+</div>
+<div id="central-tendency" class="section level2" number="8.2">
+<h2><span class="header-section-number">8.2</span> Central tendency measures: Mean, Median, Mode</h2>
+<p>The mean, median and mode (the 3 Ms), are all measures of central tendency, i.e. they provide insights into how our data is distributed. All three of these measures summarise our data/variable by a single score which can be helpful, but sometimes also terribly misleading.</p>
+<div id="mean" class="section level3" number="8.2.1">
+<h3><span class="header-section-number">8.2.1</span> Mean</h3>
+<p>The mean is likely the most known descriptive statistics and, at the same time, a very powerful and influential one. For example, the average ratings of restaurants on Google might influence our decision on where to eat out. Similarly, we might consider the average rating of movies to decide which one to watch in cinema with friends. What we casually refer to as the ‘average’ is equivalent to the ‘mean.’</p>
+<p>In R it is simple to compute the mean using the function <code>mean()</code>. We used this function in Chapter <a href="r-basics-the-very-fundamentals.html#functions">5.3</a> and Chapter <a href="data-wrangling.html#latent-constructs">7.7</a> already. However, we have not looked at how we can plot the mean.</p>
+<p>Assume, we are curious to know how successful movies are in each of the genres. The mean could be a good starting point to answer this question, because it provides the ‘average’ success of movies in a genre. The simplest approach to investigate this is to use a bar plot, like in Chapter <a href="descriptive-statistics.html#plotting-in-r-with-ggplot2">8.1</a>. We first create a tibble that contains the means of <code>gross_in_m</code> for each genre in <code>genre_01</code>. Then we use this table to plot a bar plot with <code>geom_col()</code>.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="descriptive-statistics.html#cb9-1" aria-hidden="true" tabindex="-1"></a>imdb_top_250 <span class="sc">%&gt;%</span> </span>
+<span id="cb9-2"><a href="descriptive-statistics.html#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Group data by genre</span></span>
+<span id="cb9-3"><a href="descriptive-statistics.html#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(genre_01) <span class="sc">%&gt;%</span> </span>
+<span id="cb9-4"><a href="descriptive-statistics.html#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Compute the mean for each group (remove NAs via na.rm = TRUE)</span></span>
+<span id="cb9-5"><a href="descriptive-statistics.html#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean_earnings_in_m =</span> <span class="fu">mean</span>(gross_in_m, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb9-6"><a href="descriptive-statistics.html#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the plot</span></span>
+<span id="cb9-7"><a href="descriptive-statistics.html#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> genre_01, <span class="at">y =</span> mean_earnings_in_m)) <span class="sc">+</span></span>
+<span id="cb9-8"><a href="descriptive-statistics.html#cb9-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb9-9"><a href="descriptive-statistics.html#cb9-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>()</span></code></pre></div>
+<p><img src="r_for_non_programmers_files/figure-html/Plotting%20the%20mean%20of%20movie%20genre%20earnings-1.png" width="672" /></p>
+<p>It appears as if <code>Action</code> and <code>Animation</code> are far ahead of the rest. On average, both make around 200 million per movie. <code>Adventure</code> ranks third with only around 70 million. We can retrieve the exact earnings by removing the plot from the above code.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="descriptive-statistics.html#cb10-1" aria-hidden="true" tabindex="-1"></a>imdb_top_250 <span class="sc">%&gt;%</span> </span>
+<span id="cb10-2"><a href="descriptive-statistics.html#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(genre_01) <span class="sc">%&gt;%</span></span>
+<span id="cb10-3"><a href="descriptive-statistics.html#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean_earnings_in_m =</span> <span class="fu">mean</span>(gross_in_m, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb10-4"><a href="descriptive-statistics.html#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(mean_earnings_in_m))</span></code></pre></div>
+<pre><code>## # A tibble: 11 × 2
+##    genre_01  mean_earnings_in_m
+##    &lt;fct&gt;                  &lt;dbl&gt;
+##  1 Action                203.  
+##  2 Animation             189.  
+##  3 Adventure              73.9 
+##  4 Biography              57.9 
+##  5 Drama                  52.9 
+##  6 Crime                  49.6 
+##  7 Mystery                48.4 
+##  8 Horror                 41.6 
+##  9 Comedy                 33.2 
+## 10 Western                 8.81
+## 11 Film-Noir               0.45</code></pre>
+<p>In the last line I used a new function called <code>arrange()</code>. It allows us to sort rows in our dataset by a specified variable (i.e. a column). By default, <code>arrange()</code> sorts values in ascending order, which would put the top genre last. Therefore, we have to use another function to change the order to descending with <code>desc()</code>. Now the top genre is listed at the top.</p>
+<p>Based on this result we might believe that <code>Action</code> and <code>Animation</code> movies are the most successful genres. However, we have not taken into account how many movies there are in each genre. Consider the following example:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="descriptive-statistics.html#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Assume there are 2 Action movies in the top 250</span></span>
+<span id="cb12-2"><a href="descriptive-statistics.html#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="sc">*</span> <span class="dv">203</span></span></code></pre></div>
+<pre><code>## [1] 406</code></pre>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="descriptive-statistics.html#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Assume there are 10 Drama movies in the top 250</span></span>
+<span id="cb14-2"><a href="descriptive-statistics.html#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="dv">10</span> <span class="sc">*</span> <span class="dv">53</span></span></code></pre></div>
+<pre><code>## [1] 530</code></pre>
+<p>Thus, the ‘mean’ alone might not be a sufficient indicator. It can tells us which genre is most successful based on a single movie, but we also should consider how many movies there are in each genre.</p>
+<p>Let’s add the number of movies (<code>n)</code> in each genre to our table.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="descriptive-statistics.html#cb16-1" aria-hidden="true" tabindex="-1"></a>imdb_top_250 <span class="sc">%&gt;%</span> </span>
+<span id="cb16-2"><a href="descriptive-statistics.html#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(genre_01) <span class="sc">%&gt;%</span></span>
+<span id="cb16-3"><a href="descriptive-statistics.html#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean_earnings_in_m =</span> <span class="fu">mean</span>(gross_in_m, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb16-4"><a href="descriptive-statistics.html#cb16-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">n =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb16-5"><a href="descriptive-statistics.html#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(mean_earnings_in_m))</span></code></pre></div>
+<pre><code>## # A tibble: 11 × 3
+##    genre_01  mean_earnings_in_m     n
+##    &lt;fct&gt;                  &lt;dbl&gt; &lt;int&gt;
+##  1 Action                203.      40
+##  2 Animation             189.      24
+##  3 Adventure              73.9     20
+##  4 Biography              57.9     22
+##  5 Drama                  52.9     72
+##  6 Crime                  49.6     38
+##  7 Mystery                48.4      4
+##  8 Horror                 41.6      3
+##  9 Comedy                 33.2     23
+## 10 Western                 8.81     3
+## 11 Film-Noir               0.45     1</code></pre>
+<p>Our interpretation might slighlty change based on these findings. There are considerably more movies in the genre <code>Drama</code> then in <code>Action</code> or <code>Animation</code>. We already plotted the frequency of movies per genre in Chapter <a href="descriptive-statistics.html#plotting-in-r-with-ggplot2">8.1</a>. Accordingly, we would have to think that <code>Drama</code> turns out to be the most successful genre.</p>
+<p>As a final step, we can plot the sum of all earnings per genre as yet another indicator for the ‘most successful genre.’</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="descriptive-statistics.html#cb18-1" aria-hidden="true" tabindex="-1"></a>imdb_top_250 <span class="sc">%&gt;%</span></span>
+<span id="cb18-2"><a href="descriptive-statistics.html#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(gross_in_m)) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-3"><a href="descriptive-statistics.html#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(genre_01) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-4"><a href="descriptive-statistics.html#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">sum_gross_in_m =</span> <span class="fu">sum</span>(gross_in_m)) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-5"><a href="descriptive-statistics.html#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> genre_01, <span class="at">y =</span> sum_gross_in_m)) <span class="sc">+</span></span>
+<span id="cb18-6"><a href="descriptive-statistics.html#cb18-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb18-7"><a href="descriptive-statistics.html#cb18-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>()</span></code></pre></div>
+<p><img src="r_for_non_programmers_files/figure-html/Compute%20sum%20of%20earnings%20per%20genre-1.png" width="672" /></p>
+<p>Theses results confirm that the <code>Action</code> genre made the most money out of all genres covered by the top 250 IMDb movies. I am sure you are curious to know which action movie contributed the most to this result. We can achieve this easily by using functions we already know.</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="descriptive-statistics.html#cb19-1" aria-hidden="true" tabindex="-1"></a>imdb_top_250 <span class="sc">%&gt;%</span> </span>
+<span id="cb19-2"><a href="descriptive-statistics.html#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(title, genre_01, gross_in_m) <span class="sc">%&gt;%</span> </span>
+<span id="cb19-3"><a href="descriptive-statistics.html#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(genre_01 <span class="sc">==</span> <span class="st">&quot;Action&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb19-4"><a href="descriptive-statistics.html#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(gross_in_m)) <span class="sc">%&gt;%</span> </span>
+<span id="cb19-5"><a href="descriptive-statistics.html#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">top_n</span>(<span class="dv">5</span>)</span></code></pre></div>
+<pre><code>## Selecting by gross_in_m</code></pre>
+<pre><code>## # A tibble: 5 × 3
+##   title                  genre_01 gross_in_m
+##   &lt;chr&gt;                  &lt;fct&gt;         &lt;dbl&gt;
+## 1 Avengers: Endgame      Action         858.
+## 2 Avengers: Infinity War Action         679.
+## 3 The Dark Knight        Action         535.
+## 4 The Dark Knight Rises  Action         448.
+## 5 Jurassic Park          Action         402.</code></pre>
+<p><code>Avengers: Endgame</code> and <code>Avengers: Infinity</code> war rank the highest out of all Action movies. Two amazing movies if you are into Marvel comics.</p>
+<p>In the last line I sneaked in another new function from <code>dplyr</code> called <code>top_n()</code>. This function allows us to pick any given number of rows from the top. If you have many rows in your dataset (remember there are 40 action movies), you might want to be ‘picky’ and report only the top 3, 4 or 5.</p>
+<p>In conclusion, the mean is helpful in understanding how each individual movie on average performed across different genres. However, the mean alone provides a rather incomplete picture. Thus, we need always look at means in context of other information we have to gain a more comprehensive insight into our data.</p>
+</div>
+<div id="median" class="section level3" number="8.2.2">
+<h3><span class="header-section-number">8.2.2</span> Median</h3>
+<p>The ‘median’ is the little, lesser known and used brother of the ‘mean.’ However, it can be a very powerful indicator for central tendency, because it is not so much affected by outliers. With outliers I mean observations that lie way beyond or below the average observation in our dataset. Let’s inspect the <code>Action</code> genre more closely and see how each movie in this category performed relative to each other. We first <code>filter()</code> our dataset to only show movies in the genre <code>Action</code> and also remove responses that have no value for <code>gross_in_m</code>.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="descriptive-statistics.html#cb22-1" aria-hidden="true" tabindex="-1"></a>imdb_top_250 <span class="sc">%&gt;%</span> </span>
+<span id="cb22-2"><a href="descriptive-statistics.html#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(genre_01 <span class="sc">==</span> <span class="st">&quot;Action&quot;</span> <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">is.na</span>(gross_in_m)) <span class="sc">%&gt;%</span> </span>
+<span id="cb22-3"><a href="descriptive-statistics.html#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(title, gross_in_m), <span class="at">y =</span> gross_in_m)) <span class="sc">+</span> </span>
+<span id="cb22-4"><a href="descriptive-statistics.html#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb22-5"><a href="descriptive-statistics.html#cb22-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>()</span></code></pre></div>
+<p><img src="r_for_non_programmers_files/figure-html/Earnings%20of%20action%20movies%20barplot-1.png" width="672" /></p>
+<p><code>Avengers: Endgame</code> and <code>Avengers: Infinity War</code> are far ahead of any other movie. We can compute the mean with and without these two movies.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="descriptive-statistics.html#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Mean earnings for Action genre with Avengers movies</span></span>
+<span id="cb23-2"><a href="descriptive-statistics.html#cb23-2" aria-hidden="true" tabindex="-1"></a>imdb_top_250 <span class="sc">%&gt;%</span> </span>
+<span id="cb23-3"><a href="descriptive-statistics.html#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(genre_01 <span class="sc">==</span> <span class="st">&quot;Action&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb23-4"><a href="descriptive-statistics.html#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean =</span> <span class="fu">mean</span>(gross_in_m, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code></pre></div>
+<pre><code>## # A tibble: 1 × 1
+##    mean
+##   &lt;dbl&gt;
+## 1  203.</code></pre>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="descriptive-statistics.html#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Mean earnings for Action genre with Avengers movies</span></span>
+<span id="cb25-2"><a href="descriptive-statistics.html#cb25-2" aria-hidden="true" tabindex="-1"></a>imdb_top_250 <span class="sc">%&gt;%</span> </span>
+<span id="cb25-3"><a href="descriptive-statistics.html#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(genre_01 <span class="sc">==</span> <span class="st">&quot;Action&quot;</span> <span class="sc">&amp;</span></span>
+<span id="cb25-4"><a href="descriptive-statistics.html#cb25-4" aria-hidden="true" tabindex="-1"></a>           title <span class="sc">!=</span> <span class="st">&quot;Avengers: Endgame&quot;</span> <span class="sc">&amp;</span></span>
+<span id="cb25-5"><a href="descriptive-statistics.html#cb25-5" aria-hidden="true" tabindex="-1"></a>           title <span class="sc">!=</span> <span class="st">&quot;Avengers: Infinity War&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb25-6"><a href="descriptive-statistics.html#cb25-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean =</span> <span class="fu">mean</span>(gross_in_m, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code></pre></div>
+<pre><code>## # A tibble: 1 × 1
+##    mean
+##   &lt;dbl&gt;
+## 1  170.</code></pre>
+<p>The result is striking. Without these two movies, the <code>Action</code> genre would have less earning per movie than the <code>Animiation</code> genre. However, if we computed the median instead, we would not notice such a huge difference in results. This is due to the fact that the median sorts a dataset, e.g. by <code>gross_in_m</code> and then picks the value that would cut the data into two equally large halves. It does not matter which value is the highest or lowest in our dataset, what matters is the value that is ranked right in the middle of all values.</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="descriptive-statistics.html#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Median earnings for Action genre with Avengers movies</span></span>
+<span id="cb27-2"><a href="descriptive-statistics.html#cb27-2" aria-hidden="true" tabindex="-1"></a>imdb_top_250 <span class="sc">%&gt;%</span> </span>
+<span id="cb27-3"><a href="descriptive-statistics.html#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(genre_01 <span class="sc">==</span> <span class="st">&quot;Action&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb27-4"><a href="descriptive-statistics.html#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">median =</span> <span class="fu">median</span>(gross_in_m, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code></pre></div>
+<pre><code>## # A tibble: 1 × 1
+##   median
+##    &lt;dbl&gt;
+## 1   180.</code></pre>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="descriptive-statistics.html#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Median earnings for Action genre with Avengers movies</span></span>
+<span id="cb29-2"><a href="descriptive-statistics.html#cb29-2" aria-hidden="true" tabindex="-1"></a>imdb_top_250 <span class="sc">%&gt;%</span> </span>
+<span id="cb29-3"><a href="descriptive-statistics.html#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(genre_01 <span class="sc">==</span> <span class="st">&quot;Action&quot;</span> <span class="sc">&amp;</span></span>
+<span id="cb29-4"><a href="descriptive-statistics.html#cb29-4" aria-hidden="true" tabindex="-1"></a>           title <span class="sc">!=</span> <span class="st">&quot;Avengers: Endgame&quot;</span> <span class="sc">&amp;</span></span>
+<span id="cb29-5"><a href="descriptive-statistics.html#cb29-5" aria-hidden="true" tabindex="-1"></a>           title <span class="sc">!=</span> <span class="st">&quot;Avengers: Infinity War&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb29-6"><a href="descriptive-statistics.html#cb29-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">median =</span> <span class="fu">median</span>(gross_in_m, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code></pre></div>
+<pre><code>## # A tibble: 1 × 1
+##   median
+##    &lt;dbl&gt;
+## 1   163.</code></pre>
+<p>Both medians are much closer to each other, showing how much better suited the median is in our case. In general, when we report means, it is advisable to report the median as well. If a mean and median differ substantially, it could mean your data ‘suffers’ from outliers. So we have to detect them and think about whether we should remove them for further analysis.</p>
+<p>We can visualise medians using boxplots. Boxplots are a very effective tool to show how your data is distributed in one single data visualisation and it shows more than just the mean. It also shows the spread of your data (see Chapter @ref()).</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="descriptive-statistics.html#cb31-1" aria-hidden="true" tabindex="-1"></a>imdb_top_250 <span class="sc">%&gt;%</span> </span>
+<span id="cb31-2"><a href="descriptive-statistics.html#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(genre_01 <span class="sc">==</span> <span class="st">&quot;Action&quot;</span> <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">is.na</span>(gross_in_m)) <span class="sc">%&gt;%</span></span>
+<span id="cb31-3"><a href="descriptive-statistics.html#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(gross_in_m)) <span class="sc">+</span> </span>
+<span id="cb31-4"><a href="descriptive-statistics.html#cb31-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code></pre></div>
+<p><img src="r_for_non_programmers_files/figure-html/Boxplot%20for%20action%20movies-1.png" width="672" /></p>
+<p>To interpret this boxplot consider the Figure <a href="#fig:"><strong>??</strong></a>.</p>
+<p><code>[insert boxplot explanation figure here]</code></p>
+<p>The boxplot shows that we have apparently one observation that is an outlier, which is likely <code>Avengers: Endgame</code>, but what happened to the over Avengers movie? Is it no an outlier too? It seems we need some more information. We can overlay another <code>geom_</code> on top to visualise where exactly each movie lies on this boxplot. We can represent each movie as a point by using <code>geom_point()</code>. This function requires us to define the values for the x and y axis. Here it makes sense to set <code>y = 0</code> which aligns all the dots in the middle of the boxplot.</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="descriptive-statistics.html#cb32-1" aria-hidden="true" tabindex="-1"></a>imdb_top_250 <span class="sc">%&gt;%</span> </span>
+<span id="cb32-2"><a href="descriptive-statistics.html#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(genre_01 <span class="sc">==</span> <span class="st">&quot;Action&quot;</span> <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">is.na</span>(gross_in_m)) <span class="sc">%&gt;%</span></span>
+<span id="cb32-3"><a href="descriptive-statistics.html#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(gross_in_m)) <span class="sc">+</span> </span>
+<span id="cb32-4"><a href="descriptive-statistics.html#cb32-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb32-5"><a href="descriptive-statistics.html#cb32-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y =</span> <span class="dv">0</span>, <span class="at">colour =</span> <span class="st">&quot;red&quot;</span>), <span class="at">show.legend =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<p><img src="r_for_non_programmers_files/figure-html/Boxplot%20plus%20geom_point%20for%20action%20movies-1.png" width="672" /></p>
+<p>To make the dots stand out more I changed the colour to <code>"red"</code>. By adding the <code>colour</code> (<code>color</code> also works) attribute ggplot would automatically generate a legend. Since we do not need it we can specify it directly in the <code>geom_point()</code> function. If you prefer the legend, just remove <code>show.legend = FALSE</code>.</p>
+<p>The two dots on the right are the two Avengers movies. This plot also nicely demonstrates why boxplots are so popular and helpful: They provide so many insights, not only into the central tendency of a variable, but also highlights outliers and, more generally, gives a sense of the spread of our data (more about this in Chapter @ref()).</p>
+<p>The median is an important descriptive and diagnostic statistic and should be included in most empirical quantitative studies.</p>
+</div>
+<div id="mode" class="section level3" number="8.2.3">
+<h3><span class="header-section-number">8.2.3</span> Mode</h3>
+<p>Finally, the ‘mode,’ indicates which value is the most frequently occurring value for a certain variable. For example, we might be interested in knowing which IMDb rating was most frequently awarded to the top 250 movies.</p>
+<p>When trying to compute the mode in R, we quickly run into a problem, because there is no function available to do this straight away unless you search for a package that does it for you. However, before you start searching, let’s reflect on what the mode does and why we can find out the mode without additional packages or functions. The mode is based on the frequency of the occurrence of a value. Thus, the most frequently occurring value would be the one that is listed at the top of a frequency table. We have already created several frequency tables in this book and we can create another one to find the answer to our question.</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="descriptive-statistics.html#cb33-1" aria-hidden="true" tabindex="-1"></a>imdb_top_250 <span class="sc">%&gt;%</span> <span class="fu">count</span>(imdb_rating)</span></code></pre></div>
+<pre><code>## # A tibble: 12 × 2
+##    imdb_rating     n
+##          &lt;dbl&gt; &lt;int&gt;
+##  1         8.1    80
+##  2         8.2    45
+##  3         8.3    42
+##  4         8.4    29
+##  5         8.5    22
+##  6         8.6    14
+##  7         8.7     5
+##  8         8.8     5
+##  9         8.9     3
+## 10         9       3
+## 11         9.2     1
+## 12         9.3     1</code></pre>
+<p>We can also easily visualise this frequency table in the same way as before. In order to make the plot a bit more ‘fancy,’ we can add labels to the bar which reflect the frequency of the rating. We need to add the attribute <code>label</code> and also add a <code>geom_text()</code> layer to display them. Because the numbers would overlap with the bars, I ‘nudge’ the labels up by <code>4</code> units on the y axis.</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="descriptive-statistics.html#cb35-1" aria-hidden="true" tabindex="-1"></a>imdb_top_250 <span class="sc">%&gt;%</span> </span>
+<span id="cb35-2"><a href="descriptive-statistics.html#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(imdb_rating) <span class="sc">%&gt;%</span> </span>
+<span id="cb35-3"><a href="descriptive-statistics.html#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(imdb_rating, n, <span class="at">label =</span> n)) <span class="sc">+</span></span>
+<span id="cb35-4"><a href="descriptive-statistics.html#cb35-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb35-5"><a href="descriptive-statistics.html#cb35-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">nudge_y =</span> <span class="dv">4</span>)</span></code></pre></div>
+<p><img src="r_for_non_programmers_files/figure-html/The%20mode%20visualised%20as%20a%20frequency%20table-1.png" width="672" /></p>
+<p>The frequency table and the plot reveal that the mode for <code>imdb_rating</code> is <code>8.1</code>. In addition, we also get to know how often this rating was applied, i.e. <code>80</code> times. This provides much more information then receiving a single score and helps to better interpret the importance of the mode as an indicator for central tendency. Consequently, there is generally no need to compute the mode if you can have a frequency table instead. Still, if you are keen to have a function that computes the mode, you will have to write your own function, e.g. as shown in this post on <a href="https://stackoverflow.com/questions/2547402/how-to-find-the-statistical-mode" target="blank" title="stackeroverflow.com">stackeroverflow.com</a> or search for a package that coded one already.</p>
+<p>As a final remark, it is also possible that you can find two or more modes in your data. For example, if the rating <code>8.1</code> appears <code>80</code> times and the rating <code>9.0</code> appears <code>80</code> times, both would be considered to a mode.</p>
+</div>
+</div>
+<div id="spread-of-data" class="section level2" number="8.3">
+<h2><span class="header-section-number">8.3</span> Indicators and visualisation to examine the spread of data</h2>
+<p>Understanding how your data is spread out is important to get a better sense of what your data is composed of. We already touched upon the notion of spread in Chapter <a href="descriptive-statistics.html#median">8.2.2</a> through plotting a boxplot. The spread of data provides insights into how homogeneous or heterogeneous the responses of our participants are. In the following we will cover some essential techniques to investigate the spread of your data.</p>
+<div id="boxplot-so-much-information-in-just-one-box" class="section level4" number="8.3.0.1">
+<h4><span class="header-section-number">8.3.0.1</span> Boxplot: So much information in just one box</h4>
+<p>For example, we might be interested to know how long most movies run. One approach could be to use the boxplot from before.</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="descriptive-statistics.html#cb36-1" aria-hidden="true" tabindex="-1"></a>imdb_top_250 <span class="sc">%&gt;%</span></span>
+<span id="cb36-2"><a href="descriptive-statistics.html#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(runtime_min)) <span class="sc">+</span></span>
+<span id="cb36-3"><a href="descriptive-statistics.html#cb36-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb36-4"><a href="descriptive-statistics.html#cb36-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">&quot;text&quot;</span>,</span>
+<span id="cb36-5"><a href="descriptive-statistics.html#cb36-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">label =</span> <span class="st">&quot;Gangs of Wasseypur </span><span class="sc">\n</span><span class="st"> (321 min)&quot;</span>,</span>
+<span id="cb36-6"><a href="descriptive-statistics.html#cb36-6" aria-hidden="true" tabindex="-1"></a>           <span class="at">x =</span> <span class="dv">310</span>,</span>
+<span id="cb36-7"><a href="descriptive-statistics.html#cb36-7" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> <span class="fl">0.05</span>,</span>
+<span id="cb36-8"><a href="descriptive-statistics.html#cb36-8" aria-hidden="true" tabindex="-1"></a>           <span class="at">size =</span> <span class="fl">2.5</span>)</span></code></pre></div>
+<p><img src="r_for_non_programmers_files/figure-html/Historgram-1.png" width="672" /></p>
+<p>We find that most movies are between 100 to 150 minutes long. One movie is even over 300 minutes long: Gangs of Wasseypur. I added an annotation using <code>annotate()</code> to highlight this movie.</p>
+</div>
+<div id="histogram-do-not-mistake-it-as-a-bar-plot" class="section level4" number="8.3.0.2">
+<h4><span class="header-section-number">8.3.0.2</span> Histogram: Do not mistake it as a bar plot</h4>
+<p>Another frequently used approach to show the spread (or distribution) of data is the histogram. The histogram easily gets confused with bar plots. However, you would be very mistaken to assume that they are the same. Some key differences between these two types of plots is summarised in Table <a href="descriptive-statistics.html#tab:histogram-vs-bar-plot">8.1</a>.</p>
+<table>
+<caption><span id="tab:histogram-vs-bar-plot">Table 8.1: </span> Histogram vs bar plot</caption>
+<colgroup>
+<col width="49%" />
+<col width="50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Histogram</th>
+<th>Bar plot</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Used to show the distribution of non-categorical data</td>
+<td>Used for showing the frequency of categorical data, i.e. <code>factor</code>s</td>
+</tr>
+<tr class="even">
+<td>Each bar (also called ‘bin’) represents a group of observations.</td>
+<td>Each bar represents one category (or level) in our <code>factor</code>.</td>
+</tr>
+<tr class="odd">
+<td>The order of the bars is important and cannot be change.</td>
+<td>The order of bars is arbitrary and can be reordered if meaningful.</td>
+</tr>
+</tbody>
+</table>
+<p>To make this difference even clearer, let’s overlap a bar plot with a histogram for the same variable.</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="descriptive-statistics.html#cb37-1" aria-hidden="true" tabindex="-1"></a>imdb_top_250 <span class="sc">%&gt;%</span> </span>
+<span id="cb37-2"><a href="descriptive-statistics.html#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(runtime_min)) <span class="sc">+</span></span>
+<span id="cb37-3"><a href="descriptive-statistics.html#cb37-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>() <span class="sc">+</span></span>
+<span id="cb37-4"><a href="descriptive-statistics.html#cb37-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">fill =</span> <span class="st">&quot;red&quot;</span>), <span class="at">show.legend =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="r_for_non_programmers_files/figure-html/Compare%20histogram%20with%20bar%20plot-1.png" width="672" /></p>
+<p>There are a couple of important observations to be made:</p>
+<ul>
+<li><p>The bar plot has much shorter bars, because each bar represents the frequency of a single unique score. Thus, the runtime of 151 is represented as a bar as is the runtime of 152. Only identical observations are grouped together. As such, the bar plot is based on the frequency tables we know already.</p></li>
+<li><p>In contrast, the histogram’s ‘bars’ are higher because they group together individual observations based on a specified range, e.g. one bar might represent movies that have a runtime between 150-170 minutes.</p></li>
+</ul>
+<p>We can control the number of bars in histogram using the <code>bins</code> attribute. <code>ggplot</code> even reminds us that we should adjust it to represent more details in the histogram. Let’s experimnt with this setting to see how it would look like with different numbers of <code>bins</code>.</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="descriptive-statistics.html#cb39-1" aria-hidden="true" tabindex="-1"></a>imdb_top_250 <span class="sc">%&gt;%</span> </span>
+<span id="cb39-2"><a href="descriptive-statistics.html#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(runtime_min)) <span class="sc">+</span></span>
+<span id="cb39-3"><a href="descriptive-statistics.html#cb39-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">5</span>) <span class="sc">+</span></span>
+<span id="cb39-4"><a href="descriptive-statistics.html#cb39-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">fill =</span> <span class="st">&quot;red&quot;</span>), <span class="at">show.legend =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="descriptive-statistics.html#cb40-1" aria-hidden="true" tabindex="-1"></a>imdb_top_250 <span class="sc">%&gt;%</span> </span>
+<span id="cb40-2"><a href="descriptive-statistics.html#cb40-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(runtime_min)) <span class="sc">+</span></span>
+<span id="cb40-3"><a href="descriptive-statistics.html#cb40-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">20</span>) <span class="sc">+</span></span>
+<span id="cb40-4"><a href="descriptive-statistics.html#cb40-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">fill =</span> <span class="st">&quot;red&quot;</span>), <span class="at">show.legend =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="descriptive-statistics.html#cb41-1" aria-hidden="true" tabindex="-1"></a>imdb_top_250 <span class="sc">%&gt;%</span> </span>
+<span id="cb41-2"><a href="descriptive-statistics.html#cb41-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(runtime_min)) <span class="sc">+</span></span>
+<span id="cb41-3"><a href="descriptive-statistics.html#cb41-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">60</span>) <span class="sc">+</span></span>
+<span id="cb41-4"><a href="descriptive-statistics.html#cb41-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">fill =</span> <span class="st">&quot;red&quot;</span>), <span class="at">show.legend =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="descriptive-statistics.html#cb42-1" aria-hidden="true" tabindex="-1"></a>imdb_top_250 <span class="sc">%&gt;%</span> </span>
+<span id="cb42-2"><a href="descriptive-statistics.html#cb42-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(runtime_min)) <span class="sc">+</span></span>
+<span id="cb42-3"><a href="descriptive-statistics.html#cb42-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">300</span>) <span class="sc">+</span></span>
+<span id="cb42-4"><a href="descriptive-statistics.html#cb42-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">fill =</span> <span class="st">&quot;red&quot;</span>), <span class="at">show.legend =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<p><img src="r_for_non_programmers_files/figure-html/Histogram%20with%20different%20bins%20output-1.png" width="672" /></p>
+<p>As becomes obvious, if we select a large enough number of bins, we can achieve the same result as a barplot. This is the closest a bar plot can be to a histogram, when you define the number of bars in such a way that each observations is capture by one of them. While theoretically possible, practically this does not make much sense.</p>
+<p>We use histograms to judge whether our data is normally distributed. A normal distribution is often a requirement for assessing whether we can run certain types of analyses or not. In short: It is very important to know about it in advance. The shape of a normal distribution looks like a bell (see Figure <a href="descriptive-statistics.html#fig:normal-distribution">8.1</a>)</p>
+<div class="figure"><span id="fig:normal-distribution"></span>
+<img src="r_for_non_programmers_files/figure-html/normal-distribution-1.png" alt="A normal distribution" width="672" />
+<p class="caption">
+Figure 8.1: A normal distribution
+</p>
+</div>
+<p>Let’s see whether our data is normally distributed using the histogram we already plotted and overlay a normal distribution. The coding of the normal distribution is a little more advanced. Thus, do not worry if you cannot fully decipher its meaning. It is more important to understand what we try to achieve here.</p>
 
+</div>
+</div>
 </div>
             </section>
 
@@ -334,20 +698,6 @@ gitbook.start({
 });
 </script>
 
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:")
-      if (/^https?:/.test(src))
-        src = src.replace(/^https?:/, '');
-    script.src = src;
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script>
 </body>
 
 </html>
