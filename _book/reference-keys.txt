@@ -78,3 +78,14 @@ fig:normal-distribution
 spread-of-data
 boxplot-so-much-information-in-just-one-box
 histogram-do-not-mistake-it-as-a-bar-plot
+fig:density-vs-normal
+density-plots-your-smooth-histograms
+violin-plot
+qq-plot
+standard-deviation
+dealing-with-outliers
+ouliers-standard_deviation
+outliers-iqr
+fig:a-boxplot
+fig:MAD2-outlier-detection
+removing-or-replacing-outliers

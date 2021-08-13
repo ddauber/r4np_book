@@ -24,7 +24,7 @@
 <meta name="author" content="Daniel Dauber" />
 
 
-<meta name="date" content="2021-08-12" />
+<meta name="date" content="2021-08-13" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -120,6 +120,28 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -224,7 +246,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8.2.2" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#median"><i class="fa fa-check"></i><b>8.2.2</b> Median</a></li>
 <li class="chapter" data-level="8.2.3" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#mode"><i class="fa fa-check"></i><b>8.2.3</b> Mode</a></li>
 </ul></li>
-<li class="chapter" data-level="8.3" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#spread-of-data"><i class="fa fa-check"></i><b>8.3</b> Indicators and visualisation to examine the spread of data</a></li>
+<li class="chapter" data-level="8.3" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#spread-of-data"><i class="fa fa-check"></i><b>8.3</b> Indicators and visualisations to examine the spread of data</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#qq-plot"><i class="fa fa-check"></i><b>8.3.1</b> QQ plot: A ‘cute’ plot to check for normality in your data</a></li>
+<li class="chapter" data-level="8.3.2" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#standard-deviation"><i class="fa fa-check"></i><b>8.3.2</b> Standard deviation: Your average deviation from the mean</a></li>
+<li class="chapter" data-level="8.3.3" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#dealing-with-outliers"><i class="fa fa-check"></i><b>8.3.3</b> Dealing with outliers</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="9" data-path="correlations.html"><a href="correlations.html"><i class="fa fa-check"></i><b>9</b> Correlations</a></li>
 <li class="chapter" data-level="10" data-path="comparing-groups.html"><a href="comparing-groups.html"><i class="fa fa-check"></i><b>10</b> Comparing groups</a></li>
@@ -552,11 +579,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 <div id="spread-of-data" class="section level2" number="8.3">
-<h2><span class="header-section-number">8.3</span> Indicators and visualisation to examine the spread of data</h2>
-<p>Understanding how your data is spread out is important to get a better sense of what your data is composed of. We already touched upon the notion of spread in Chapter <a href="descriptive-statistics.html#median">8.2.2</a> through plotting a boxplot. The spread of data provides insights into how homogeneous or heterogeneous the responses of our participants are. In the following we will cover some essential techniques to investigate the spread of your data.</p>
+<h2><span class="header-section-number">8.3</span> Indicators and visualisations to examine the spread of data</h2>
+<p>Understanding how your data is spread out is important to get a better sense of what your data is composed of. We already touched upon the notion of spread in Chapter <a href="descriptive-statistics.html#median">8.2.2</a> through plotting a boxplot. The spread of data provides insights into how homogeneous or heterogeneous the responses of our participants are. In the following we will cover some essential techniques to investigate the spread of your data and investigate whether our variables are normally distributed, which is often an important assumption for certain analytical techniques. In addition, we will aim to identify outliers which could be detrimental to subsequent analysis and significantly affect our modelling and testing in later stages.</p>
 <div id="boxplot-so-much-information-in-just-one-box" class="section level4" number="8.3.0.1">
 <h4><span class="header-section-number">8.3.0.1</span> Boxplot: So much information in just one box</h4>
-<p>For example, we might be interested to know how long most movies run. One approach could be to use the boxplot from before.</p>
+<p>The boxplot is a staple in visualising descriptive statistics. If offers so much information in just a single plot that it might not take much to convince you that it has become a very popular way to show the spread of data.</p>
+<p>For example, we might be interested to know how long most movies run. Our gut feeling might tell us that most movies are probably around 2 hours long. One approach to find out is a boxplot, which we used before.</p>
 <div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="descriptive-statistics.html#cb36-1" aria-hidden="true" tabindex="-1"></a>imdb_top_250 <span class="sc">%&gt;%</span></span>
 <span id="cb36-2"><a href="descriptive-statistics.html#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(runtime_min)) <span class="sc">+</span></span>
 <span id="cb36-3"><a href="descriptive-statistics.html#cb36-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
@@ -564,17 +592,27 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb36-5"><a href="descriptive-statistics.html#cb36-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">label =</span> <span class="st">&quot;Gangs of Wasseypur </span><span class="sc">\n</span><span class="st"> (321 min)&quot;</span>,</span>
 <span id="cb36-6"><a href="descriptive-statistics.html#cb36-6" aria-hidden="true" tabindex="-1"></a>           <span class="at">x =</span> <span class="dv">310</span>,</span>
 <span id="cb36-7"><a href="descriptive-statistics.html#cb36-7" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> <span class="fl">0.05</span>,</span>
-<span id="cb36-8"><a href="descriptive-statistics.html#cb36-8" aria-hidden="true" tabindex="-1"></a>           <span class="at">size =</span> <span class="fl">2.5</span>)</span></code></pre></div>
-<p><img src="r_for_non_programmers_files/figure-html/Historgram-1.png" width="672" /></p>
-<p>We find that most movies are between 100 to 150 minutes long. One movie is even over 300 minutes long: Gangs of Wasseypur. I added an annotation using <code>annotate()</code> to highlight this movie.</p>
+<span id="cb36-8"><a href="descriptive-statistics.html#cb36-8" aria-hidden="true" tabindex="-1"></a>           <span class="at">size =</span> <span class="fl">2.5</span>) <span class="sc">+</span></span>
+<span id="cb36-9"><a href="descriptive-statistics.html#cb36-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">&quot;text&quot;</span>,</span>
+<span id="cb36-10"><a href="descriptive-statistics.html#cb36-10" aria-hidden="true" tabindex="-1"></a>           <span class="at">label =</span> <span class="st">&quot;Sherlock Jr. </span><span class="sc">\n</span><span class="st"> (45 min)&quot;</span>,</span>
+<span id="cb36-11"><a href="descriptive-statistics.html#cb36-11" aria-hidden="true" tabindex="-1"></a>           <span class="at">x =</span> <span class="dv">45</span>,</span>
+<span id="cb36-12"><a href="descriptive-statistics.html#cb36-12" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> <span class="fl">0.05</span>,</span>
+<span id="cb36-13"><a href="descriptive-statistics.html#cb36-13" aria-hidden="true" tabindex="-1"></a>           <span class="at">size =</span> <span class="fl">2.5</span>)</span></code></pre></div>
+<div class="figure"><span id="fig:a-boxplot"></span>
+<img src="r_for_non_programmers_files/figure-html/a-boxplot-1.png" alt="A boxplot" width="672" />
+<p class="caption">
+Figure 8.1: A boxplot
+</p>
+</div>
+<p>The results indicate that most movies are between 100 to 150 minutes long. Our intuition was right. We find that one movie is even over 300 minutes long, i.e. over 5 hours: ‘Gangs of Wasseypur.’ In contrast, the shortest movie only lasts 45 minutes and is called ‘Sherlock Jr.’ I added annotations using <code>annotate()</code> to highlight these two movies in the plot. Both movies would also count as outliers in our dataset (see Chapter <a href="descriptive-statistics.html#outliers-iqr">8.3.3.2</a>.</p>
 </div>
 <div id="histogram-do-not-mistake-it-as-a-bar-plot" class="section level4" number="8.3.0.2">
 <h4><span class="header-section-number">8.3.0.2</span> Histogram: Do not mistake it as a bar plot</h4>
-<p>Another frequently used approach to show the spread (or distribution) of data is the histogram. The histogram easily gets confused with bar plots. However, you would be very mistaken to assume that they are the same. Some key differences between these two types of plots is summarised in Table <a href="descriptive-statistics.html#tab:histogram-vs-bar-plot">8.1</a>.</p>
+<p>Another frequently used approach to show the spread (or distribution) of data is the histogram. The histogram easily gets confused with a bar plot. However, you would be very mistaken to assume that they are the same. Some key differences between these two types of plots is summarised in Table <a href="descriptive-statistics.html#tab:histogram-vs-bar-plot">8.1</a>.</p>
 <table>
 <caption><span id="tab:histogram-vs-bar-plot">Table 8.1: </span> Histogram vs bar plot</caption>
 <colgroup>
-<col width="49%" />
+<col width="50%" />
 <col width="50%" />
 </colgroup>
 <thead>
@@ -593,7 +631,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <td>Each bar represents one category (or level) in our <code>factor</code>.</td>
 </tr>
 <tr class="odd">
-<td>The order of the bars is important and cannot be change.</td>
+<td>The order of the bars is important and cannot/should not be changed.</td>
 <td>The order of bars is arbitrary and can be reordered if meaningful.</td>
 </tr>
 </tbody>
@@ -607,10 +645,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><img src="r_for_non_programmers_files/figure-html/Compare%20histogram%20with%20bar%20plot-1.png" width="672" /></p>
 <p>There are a couple of important observations to be made:</p>
 <ul>
-<li><p>The bar plot has much shorter bars, because each bar represents the frequency of a single unique score. Thus, the runtime of 151 is represented as a bar as is the runtime of 152. Only identical observations are grouped together. As such, the bar plot is based on the frequency tables we know already.</p></li>
-<li><p>In contrast, the histogram’s ‘bars’ are higher because they group together individual observations based on a specified range, e.g. one bar might represent movies that have a runtime between 150-170 minutes.</p></li>
+<li><p>The bar plot has much shorter bars, because each bar represents the frequency of a single unique score. Thus, the runtime of 151 is represented as a bar as is the runtime of 152. Only identical observations are grouped together. As such, the bar plot is based on a frequency table, similar to what we computed before.</p></li>
+<li><p>In contrast, the histogram’s ‘bars’ are higher because they group together individual observations based on a specified range, e.g. one bar might represent movies that have a runtime between 150-170 minutes. These ranges are commonly called <code>bins</code>.</p></li>
 </ul>
-<p>We can control the number of bars in histogram using the <code>bins</code> attribute. <code>ggplot</code> even reminds us that we should adjust it to represent more details in the histogram. Let’s experimnt with this setting to see how it would look like with different numbers of <code>bins</code>.</p>
+<p>We can control the number of bars in our histogram using the <code>bins</code> attribute. <code>ggplot</code> even reminds us in a warning that we should adjust it to represent more details in the plot. Let’s experiment with this setting to see how it would look like with different numbers of <code>bins</code>.</p>
 <div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="descriptive-statistics.html#cb39-1" aria-hidden="true" tabindex="-1"></a>imdb_top_250 <span class="sc">%&gt;%</span> </span>
 <span id="cb39-2"><a href="descriptive-statistics.html#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(runtime_min)) <span class="sc">+</span></span>
 <span id="cb39-3"><a href="descriptive-statistics.html#cb39-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">5</span>) <span class="sc">+</span></span>
@@ -628,17 +666,412 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb42-3"><a href="descriptive-statistics.html#cb42-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">300</span>) <span class="sc">+</span></span>
 <span id="cb42-4"><a href="descriptive-statistics.html#cb42-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">fill =</span> <span class="st">&quot;red&quot;</span>), <span class="at">show.legend =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 <p><img src="r_for_non_programmers_files/figure-html/Histogram%20with%20different%20bins%20output-1.png" width="672" /></p>
-<p>As becomes obvious, if we select a large enough number of bins, we can achieve the same result as a barplot. This is the closest a bar plot can be to a histogram, when you define the number of bars in such a way that each observations is capture by one of them. While theoretically possible, practically this does not make much sense.</p>
-<p>We use histograms to judge whether our data is normally distributed. A normal distribution is often a requirement for assessing whether we can run certain types of analyses or not. In short: It is very important to know about it in advance. The shape of a normal distribution looks like a bell (see Figure <a href="descriptive-statistics.html#fig:normal-distribution">8.1</a>)</p>
+<p>As becomes obvious, if we select a large enough number of bins, we can achieve the same result as a bar plot. This is the closest a bar plot can become to a histogram, i.e. if you define the number of <code>bins</code> in such a way that each observation is captured by one <code>bin</code>. While theoretically possible, practically this rarely makes much sense.</p>
+<p>We use histograms to judge whether our data is normally distributed. A normal distribution is often a requirement for assessing whether we can run certain types of analyses or not. In short: It is very important to know about it in advance. The shape of a normal distribution looks like a bell (see Figure <a href="descriptive-statistics.html#fig:normal-distribution">8.2</a>). If our data is equal to a normal distribution we find that</p>
+<ul>
+<li><p>the mean and the median are the same value, and can conclude that</p></li>
+<li><p>the mean is a good representation for our data/variable.</p></li>
+</ul>
 <div class="figure"><span id="fig:normal-distribution"></span>
 <img src="r_for_non_programmers_files/figure-html/normal-distribution-1.png" alt="A normal distribution" width="672" />
 <p class="caption">
-Figure 8.1: A normal distribution
+Figure 8.2: A normal distribution
 </p>
 </div>
-<p>Let’s see whether our data is normally distributed using the histogram we already plotted and overlay a normal distribution. The coding of the normal distribution is a little more advanced. Thus, do not worry if you cannot fully decipher its meaning. It is more important to understand what we try to achieve here.</p>
+<p>Let’s see whether our data is normally distributed using the histogram we already plotted and overlay a normal distribution. The coding for the normal distribution is a little more advanced. Do not worry if you cannot fully decipher its meaning just yet. To draw such a reference plot we need to:</p>
+<ul>
+<li><p>compute the <code>mean()</code> of our variable,</p></li>
+<li><p>compute the standard deviation <code>sd()</code> of our variable (see Chapter <a href="descriptive-statistics.html#standard-deviation">8.3.2</a>,</p></li>
+<li><p>use the function <code>geom_func()</code> to plot it and,</p></li>
+<li><p>define the function <code>fun</code> as <code>dnorm</code>, which stands for ‘normal distribution.’</p></li>
+</ul>
+<p>More important than understanding how the computational side works, is the aim of this task: we try to compare our distribution with a normal one.</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="descriptive-statistics.html#cb43-1" aria-hidden="true" tabindex="-1"></a>imdb_top_250 <span class="sc">%&gt;%</span> </span>
+<span id="cb43-2"><a href="descriptive-statistics.html#cb43-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(runtime_min)) <span class="sc">+</span></span>
+<span id="cb43-3"><a href="descriptive-statistics.html#cb43-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y =</span> ..density..), <span class="at">bins =</span> <span class="dv">30</span>) <span class="sc">+</span></span>
+<span id="cb43-4"><a href="descriptive-statistics.html#cb43-4" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb43-5"><a href="descriptive-statistics.html#cb43-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># This part creates a normal curve based on the mean</span></span>
+<span id="cb43-6"><a href="descriptive-statistics.html#cb43-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># and standard deviation of our data</span></span>
+<span id="cb43-7"><a href="descriptive-statistics.html#cb43-7" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb43-8"><a href="descriptive-statistics.html#cb43-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_function</span>(<span class="at">fun =</span> dnorm,</span>
+<span id="cb43-9"><a href="descriptive-statistics.html#cb43-9" aria-hidden="true" tabindex="-1"></a>                <span class="at">n =</span> <span class="dv">103</span>,</span>
+<span id="cb43-10"><a href="descriptive-statistics.html#cb43-10" aria-hidden="true" tabindex="-1"></a>                <span class="at">args =</span> <span class="fu">list</span>(<span class="at">mean =</span> <span class="fu">mean</span>(imdb_top_250<span class="sc">$</span>runtime_min),</span>
+<span id="cb43-11"><a href="descriptive-statistics.html#cb43-11" aria-hidden="true" tabindex="-1"></a>                            <span class="at">sd =</span> <span class="fu">sd</span>(imdb_top_250<span class="sc">$</span>runtime_min)),</span>
+<span id="cb43-12"><a href="descriptive-statistics.html#cb43-12" aria-hidden="true" tabindex="-1"></a>                <span class="at">colour =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<p><img src="r_for_non_programmers_files/figure-html/Compare%20normal%20distribution%20to%20our%20distribution-1.png" width="672" /></p>
+<p>However, there are two problems if we use histograms in combination with a normal distribution reference plot: First, the y axis needs to be transformed to fit the normal distribution (which is a density plot and not a histogram). Second, the shape of our histogram is affected by the number of <code>bins</code> we have chosen, which is an arbitrary choice we make. Besides, the lines of code might be tough to understand, because we have to ‘hack’ the visualisation to make it work. There is, however, a better way to do this: Density plots.</p>
+</div>
+<div id="density-plots-your-smooth-histograms" class="section level4" number="8.3.0.3">
+<h4><span class="header-section-number">8.3.0.3</span> Density plots: Your smooth histograms</h4>
+<p>Density plots are a special form of the histogram. It uses ‘kernel smoothing,’ which turns our blocks into a smoother shape. Better than trying to explain what it does, it might help to see it. We use the same data but replace <code>geom_histogram()</code> with <code>geom_density()</code>.</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="descriptive-statistics.html#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ingredients for our normality reference plot</span></span>
+<span id="cb44-2"><a href="descriptive-statistics.html#cb44-2" aria-hidden="true" tabindex="-1"></a>mean_ref <span class="ot">&lt;-</span> <span class="fu">mean</span>(imdb_top_250<span class="sc">$</span>runtime_min)</span>
+<span id="cb44-3"><a href="descriptive-statistics.html#cb44-3" aria-hidden="true" tabindex="-1"></a>sd_ref <span class="ot">&lt;-</span> <span class="fu">sd</span>(imdb_top_250<span class="sc">$</span>runtime_min)</span>
+<span id="cb44-4"><a href="descriptive-statistics.html#cb44-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-5"><a href="descriptive-statistics.html#cb44-5" aria-hidden="true" tabindex="-1"></a>imdb_top_250 <span class="sc">%&gt;%</span> </span>
+<span id="cb44-6"><a href="descriptive-statistics.html#cb44-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(runtime_min)) <span class="sc">+</span></span>
+<span id="cb44-7"><a href="descriptive-statistics.html#cb44-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>() <span class="sc">+</span></span>
+<span id="cb44-8"><a href="descriptive-statistics.html#cb44-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_function</span>(<span class="at">fun =</span> dnorm,</span>
+<span id="cb44-9"><a href="descriptive-statistics.html#cb44-9" aria-hidden="true" tabindex="-1"></a>                <span class="at">n =</span> <span class="dv">103</span>,</span>
+<span id="cb44-10"><a href="descriptive-statistics.html#cb44-10" aria-hidden="true" tabindex="-1"></a>                <span class="at">args =</span> <span class="fu">list</span>(<span class="at">mean =</span> mean_ref,</span>
+<span id="cb44-11"><a href="descriptive-statistics.html#cb44-11" aria-hidden="true" tabindex="-1"></a>                            <span class="at">sd =</span> sd_ref),</span>
+<span id="cb44-12"><a href="descriptive-statistics.html#cb44-12" aria-hidden="true" tabindex="-1"></a>                <span class="at">colour =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<div class="figure"><span id="fig:density-vs-normal"></span>
+<img src="r_for_non_programmers_files/figure-html/density-vs-normal-1.png" alt="Density plot vs normal distribution" width="672" />
+<p class="caption">
+Figure 8.3: Density plot vs normal distribution
+</p>
+</div>
+<p>For density plots we can aslo define how big the <code>bins</code> are which make the plot more or less smooth. After all, the density plot is a histogram, but the transitions from one bin to the next are ‘smoothed.’ Here is an example of how different <code>bw</code> settings affect the plot.</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="descriptive-statistics.html#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ingredients for our normality reference plot</span></span>
+<span id="cb45-2"><a href="descriptive-statistics.html#cb45-2" aria-hidden="true" tabindex="-1"></a>mean_ref <span class="ot">&lt;-</span> <span class="fu">mean</span>(imdb_top_250<span class="sc">$</span>runtime_min)</span>
+<span id="cb45-3"><a href="descriptive-statistics.html#cb45-3" aria-hidden="true" tabindex="-1"></a>sd_ref <span class="ot">&lt;-</span> <span class="fu">sd</span>(imdb_top_250<span class="sc">$</span>runtime_min)</span>
+<span id="cb45-4"><a href="descriptive-statistics.html#cb45-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-5"><a href="descriptive-statistics.html#cb45-5" aria-hidden="true" tabindex="-1"></a><span class="co"># bw = 18</span></span>
+<span id="cb45-6"><a href="descriptive-statistics.html#cb45-6" aria-hidden="true" tabindex="-1"></a>imdb_top_250 <span class="sc">%&gt;%</span> </span>
+<span id="cb45-7"><a href="descriptive-statistics.html#cb45-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(runtime_min)) <span class="sc">+</span></span>
+<span id="cb45-8"><a href="descriptive-statistics.html#cb45-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">bw=</span><span class="dv">18</span>) <span class="sc">+</span></span>
+<span id="cb45-9"><a href="descriptive-statistics.html#cb45-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_function</span>(<span class="at">fun =</span> dnorm,</span>
+<span id="cb45-10"><a href="descriptive-statistics.html#cb45-10" aria-hidden="true" tabindex="-1"></a>                <span class="at">n =</span> <span class="dv">103</span>,</span>
+<span id="cb45-11"><a href="descriptive-statistics.html#cb45-11" aria-hidden="true" tabindex="-1"></a>                <span class="at">args =</span> <span class="fu">list</span>(<span class="at">mean =</span> mean_ref,</span>
+<span id="cb45-12"><a href="descriptive-statistics.html#cb45-12" aria-hidden="true" tabindex="-1"></a>                            <span class="at">sd =</span> sd_ref),</span>
+<span id="cb45-13"><a href="descriptive-statistics.html#cb45-13" aria-hidden="true" tabindex="-1"></a>                <span class="at">colour =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
+<span id="cb45-14"><a href="descriptive-statistics.html#cb45-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;bw = 18&quot;</span>)</span></code></pre></div>
+<p><img src="r_for_non_programmers_files/figure-html/Density%20plot%20vs%20normal%20distribution%20with%20different%20bw%20settings-1.png" width="672" /></p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="descriptive-statistics.html#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># bw = 3</span></span>
+<span id="cb46-2"><a href="descriptive-statistics.html#cb46-2" aria-hidden="true" tabindex="-1"></a>imdb_top_250 <span class="sc">%&gt;%</span> </span>
+<span id="cb46-3"><a href="descriptive-statistics.html#cb46-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(runtime_min)) <span class="sc">+</span></span>
+<span id="cb46-4"><a href="descriptive-statistics.html#cb46-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">bw=</span><span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb46-5"><a href="descriptive-statistics.html#cb46-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_function</span>(<span class="at">fun =</span> dnorm,</span>
+<span id="cb46-6"><a href="descriptive-statistics.html#cb46-6" aria-hidden="true" tabindex="-1"></a>                <span class="at">n =</span> <span class="dv">103</span>,</span>
+<span id="cb46-7"><a href="descriptive-statistics.html#cb46-7" aria-hidden="true" tabindex="-1"></a>                <span class="at">args =</span> <span class="fu">list</span>(<span class="at">mean =</span> mean_ref,</span>
+<span id="cb46-8"><a href="descriptive-statistics.html#cb46-8" aria-hidden="true" tabindex="-1"></a>                            <span class="at">sd =</span> sd_ref),</span>
+<span id="cb46-9"><a href="descriptive-statistics.html#cb46-9" aria-hidden="true" tabindex="-1"></a>                <span class="at">colour =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
+<span id="cb46-10"><a href="descriptive-statistics.html#cb46-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggtitle</span>(<span class="st">&quot;bw = 18&quot;</span>)</span></code></pre></div>
+<p><img src="r_for_non_programmers_files/figure-html/Density%20plot%20vs%20normal%20distribution%20with%20different%20bw%20settings-2.png" width="672" /></p>
+<p><img src="r_for_non_programmers_files/figure-html/Illustration%20of%20different%20bw%20settings%20using%20patchwork%20to%20stich%20together-1.png" width="672" /></p>
+<p>The benefits of the density plot in this situation are obvious: It is much easier to see whether our data is normally distributed or not when compared to a reference plot. However, we still might struggle to determine normality just by these plots, because it depends on how high or low we set <code>bw</code>.</p>
+<p>Luckily, there is also a statistical method to test whether our data is normally distributed: The Shapiro-Wilk test. This test compares our distribution with a normal distribution (like in our plot) and tells us whether our distribution is <strong>significantly different</strong> from it. Thus, if the test is not significant the distribution of our data is not significantly different from a normal distribution, or in simple terms: It is normally distributed. We can run the test in R as follows:</p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="descriptive-statistics.html#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(imdb_top_250<span class="sc">$</span>runtime_min)</span></code></pre></div>
+<pre><code>## 
+##  Shapiro-Wilk normality test
+## 
+## data:  imdb_top_250$runtime_min
+## W = 0.92436, p-value = 5.544e-10</code></pre>
+<p>According to this result, we have to accept that our data is not normally distributed, because it is significantly different from it (p&lt;0.05). We look at significance and its meaning more thoroughly in the next chapter (Chapter <a href="correlations.html#correlations">9</a>).</p>
+</div>
+<div id="violin-plot" class="section level4" number="8.3.0.4">
+<h4><span class="header-section-number">8.3.0.4</span> Violin plot: Your smooth boxplot</h4>
+<p>If a density plot is the sibling of a histogram, the violin plot would be the sibling of a boxplot, but the twin of a density plot. Confused? If so, then let’s use the function <code>geom_volin()</code> to create one.</p>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="descriptive-statistics.html#cb49-1" aria-hidden="true" tabindex="-1"></a>imdb_top_250 <span class="sc">%&gt;%</span></span>
+<span id="cb49-2"><a href="descriptive-statistics.html#cb49-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> runtime_min, <span class="at">y =</span> <span class="dv">0</span>)) <span class="sc">+</span></span>
+<span id="cb49-3"><a href="descriptive-statistics.html#cb49-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_violin</span>()</span></code></pre></div>
+<p><img src="r_for_non_programmers_files/figure-html/Violin%20plot-1.png" width="672" /></p>
+<p>Looking at our plot it becomes evident where the violin plot got its name from, i.e. its shape. The reason why it also a twin of the density plot becomes clear when we only plot half of the violin.</p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="descriptive-statistics.html#cb50-1" aria-hidden="true" tabindex="-1"></a>imdb_top_250 <span class="sc">%&gt;%</span></span>
+<span id="cb50-2"><a href="descriptive-statistics.html#cb50-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">0</span>, <span class="at">y =</span> runtime_min)) <span class="sc">+</span></span>
+<span id="cb50-3"><a href="descriptive-statistics.html#cb50-3" aria-hidden="true" tabindex="-1"></a>  see<span class="sc">::</span><span class="fu">geom_violinhalf</span>()<span class="sc">+</span></span>
+<span id="cb50-4"><a href="descriptive-statistics.html#cb50-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>()</span></code></pre></div>
+<pre><code>## Registered S3 methods overwritten by &#39;parameters&#39;:
+##   method                           from      
+##   as.double.parameters_kurtosis    datawizard
+##   as.double.parameters_skewness    datawizard
+##   as.double.parameters_smoothness  datawizard
+##   as.numeric.parameters_kurtosis   datawizard
+##   as.numeric.parameters_skewness   datawizard
+##   as.numeric.parameters_smoothness datawizard
+##   print.parameters_distribution    datawizard
+##   print.parameters_kurtosis        datawizard
+##   print.parameters_skewness        datawizard
+##   summary.parameters_kurtosis      datawizard
+##   summary.parameters_skewness      datawizard</code></pre>
+<p><img src="r_for_non_programmers_files/figure-html/Half%20violin%20plot-1.png" width="672" /></p>
+<p>It looks exactly like the density plot we plotted earlier (see Figure <a href="descriptive-statistics.html#fig:density-vs-normal">8.3</a>. The interpretation largely remains the same to a density plot as well. The relationship between the boxplot and the violin plot lies in the symmetry of the violin plot.</p>
+<p>At this point, it is fair to say that we enter ‘fashion’ territory. It is really up to your taste which visualisation you prefer, because they are largely similar, but offer nuances that some data sets might require.</p>
+<p>Lastly, I cannot finish this chapter without sharing with you one of the most popular uses of half-violin plots: The rain cloud plot. It is a combination of a dot plot with a density plot. Each dot represents a movie in our dataset. This creates the appearance of a cloud with rain drops. There are several packages available that can create such a plot. Here I used the <code>see</code> package.</p>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="descriptive-statistics.html#cb52-1" aria-hidden="true" tabindex="-1"></a>imdb_top_250 <span class="sc">%&gt;%</span></span>
+<span id="cb52-2"><a href="descriptive-statistics.html#cb52-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(genre_01 <span class="sc">==</span> <span class="st">&quot;Action&quot;</span> <span class="sc">|</span> genre_01 <span class="sc">==</span> <span class="st">&quot;Drama&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb52-3"><a href="descriptive-statistics.html#cb52-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> genre_01, <span class="at">y =</span> imdb_rating, <span class="at">fill =</span> genre_01)) <span class="sc">+</span> </span>
+<span id="cb52-4"><a href="descriptive-statistics.html#cb52-4" aria-hidden="true" tabindex="-1"></a>  see<span class="sc">::</span><span class="fu">geom_violindot</span>(<span class="at">fill_dots =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">size_dots =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
+<span id="cb52-5"><a href="descriptive-statistics.html#cb52-5" aria-hidden="true" tabindex="-1"></a>  see<span class="sc">::</span><span class="fu">theme_modern</span>() <span class="sc">+</span></span>
+<span id="cb52-6"><a href="descriptive-statistics.html#cb52-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>()</span></code></pre></div>
+<p><img src="r_for_non_programmers_files/figure-html/Rain%20cloud%20plot-1.png" width="672" /></p>
+</div>
+<div id="qq-plot" class="section level3" number="8.3.1">
+<h3><span class="header-section-number">8.3.1</span> QQ plot: A ‘cute’ plot to check for normality in your data</h3>
+<p>The QQ plot is an alternative to comparing distributions to a normality curve. Instead of a curve, we plot a line which represents the quantiles of our data against the quantiles of a normal distribution. The term ‘quantile’ can be somewhat confusing, especially after learning about the boxplot, which shows quartiles. There is a relationship between these terms. Consider the following comparison:</p>
+<ul>
+<li><p><span class="math inline">\(1^{st}\)</span> Quartile = <span class="math inline">\(25^{th}\)</span> percentile = 0.25 quantile</p></li>
+<li><p><span class="math inline">\(2^{nd}\)</span> Quartile = <span class="math inline">\(50^{th}\)</span> percentile = 0.50 quantile = median</p></li>
+<li><p><span class="math inline">\(3^{rd}\)</span> Quartile = <span class="math inline">\(75^{th}\)</span> percentile = 0.75 quantile</p></li>
+</ul>
+<p>With these definitions out of the way, let’s plot some quantiles against each other.</p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="descriptive-statistics.html#cb53-1" aria-hidden="true" tabindex="-1"></a>imdb_top_250 <span class="sc">%&gt;%</span></span>
+<span id="cb53-2"><a href="descriptive-statistics.html#cb53-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">sample =</span> runtime_min)) <span class="sc">+</span></span>
+<span id="cb53-3"><a href="descriptive-statistics.html#cb53-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_qq</span>() <span class="sc">+</span></span>
+<span id="cb53-4"><a href="descriptive-statistics.html#cb53-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_qq_line</span>(<span class="at">colour =</span> <span class="st">&quot;red&quot;</span>)<span class="sc">+</span></span>
+<span id="cb53-5"><a href="descriptive-statistics.html#cb53-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">&quot;text&quot;</span>,</span>
+<span id="cb53-6"><a href="descriptive-statistics.html#cb53-6" aria-hidden="true" tabindex="-1"></a>           <span class="at">label =</span> <span class="st">&quot;The 5h long movie&quot;</span>,</span>
+<span id="cb53-7"><a href="descriptive-statistics.html#cb53-7" aria-hidden="true" tabindex="-1"></a>           <span class="at">x =</span> <span class="fl">2.5</span>,</span>
+<span id="cb53-8"><a href="descriptive-statistics.html#cb53-8" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> <span class="dv">308</span>,</span>
+<span id="cb53-9"><a href="descriptive-statistics.html#cb53-9" aria-hidden="true" tabindex="-1"></a>           <span class="at">size =</span> <span class="dv">3</span>)</span></code></pre></div>
+<p><img src="r_for_non_programmers_files/figure-html/QQ%20plot-1.png" width="672" /></p>
+<p>The function <code>geom_qq()</code> is responsible for creating the dots, while <code>geom_qq_line</code> creates a reference for a normal distribution. The reference line is drawn in such a way that it touches the quartiles of our distribution. Ideally, we would want that all dotes are firmly aligned with each other. Unfortunately, this is not the case in our dataset. At the top and at the bottom we have points that deviate quite far from a normal distribution. Remember the five hour long movie? It is very far away from the rest of the other movies in our dataset.</p>
+</div>
+<div id="standard-deviation" class="section level3" number="8.3.2">
+<h3><span class="header-section-number">8.3.2</span> Standard deviation: Your average deviation from the mean</h3>
+<p>I left the most commonly reported statistics for the spread of data last. The main reasons for this lies in the fact that one easily jumps ahead to look at the standard deviation without ever considering plotting the distribution in the first place. Similar to the mean and other numeric indicators, they could potentially convey the wrong impression. Nevertheless, the standard deviation is an import measure.</p>
+<p>To understand what the standard deviation is, we can consider the following visualisation:</p>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="descriptive-statistics.html#cb54-1" aria-hidden="true" tabindex="-1"></a>runtime_mean <span class="ot">&lt;-</span> <span class="fu">mean</span>(imdb_top_250<span class="sc">$</span>runtime_min)</span>
+<span id="cb54-2"><a href="descriptive-statistics.html#cb54-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-3"><a href="descriptive-statistics.html#cb54-3" aria-hidden="true" tabindex="-1"></a>imdb_top_250 <span class="sc">%&gt;%</span> </span>
+<span id="cb54-4"><a href="descriptive-statistics.html#cb54-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(title, runtime_min) <span class="sc">%&gt;%</span> </span>
+<span id="cb54-5"><a href="descriptive-statistics.html#cb54-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> title, <span class="at">y =</span> runtime_min)) <span class="sc">+</span></span>
+<span id="cb54-6"><a href="descriptive-statistics.html#cb54-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb54-7"><a href="descriptive-statistics.html#cb54-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="fu">aes</span>(<span class="at">yintercept =</span> runtime_mean, <span class="at">colour =</span> <span class="st">&quot;red&quot;</span>), <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb54-8"><a href="descriptive-statistics.html#cb54-8" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb54-9"><a href="descriptive-statistics.html#cb54-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Making the plot a bit more pretty</span></span>
+<span id="cb54-10"><a href="descriptive-statistics.html#cb54-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_blank</span>(),         <span class="co"># Removes movie titles</span></span>
+<span id="cb54-11"><a href="descriptive-statistics.html#cb54-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.grid.major =</span> <span class="fu">element_blank</span>(),    <span class="co"># Removes grid lines</span></span>
+<span id="cb54-12"><a href="descriptive-statistics.html#cb54-12" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.background =</span> <span class="fu">element_blank</span>()     <span class="co"># Turns background white</span></span>
+<span id="cb54-13"><a href="descriptive-statistics.html#cb54-13" aria-hidden="true" tabindex="-1"></a>        ) <span class="sc">+</span></span>
+<span id="cb54-14"><a href="descriptive-statistics.html#cb54-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;run time&quot;</span>) <span class="sc">+</span></span>
+<span id="cb54-15"><a href="descriptive-statistics.html#cb54-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;movies&quot;</span>)</span></code></pre></div>
+<p><img src="r_for_non_programmers_files/figure-html/Standard%20deviation%20visualised%20p1-1.png" width="672" /></p>
+<p>The red line represent the mean runtime for all movies in the dataset, which is 129 minutes. We notice that the points are falling around the mean, but not really directly on it. In other words, there are not many movies that are about 129 minutes long. We make this visualisation even more meaningful if we sorted the movies by their runtime. We can also change the shape of the dots (see also Chapter <a href="correlations.html#correlations">9</a> by using the attribute <code>shape</code>. This helps to plot many dots without having them overlap.</p>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="descriptive-statistics.html#cb55-1" aria-hidden="true" tabindex="-1"></a>imdb_top_250 <span class="sc">%&gt;%</span> </span>
+<span id="cb55-2"><a href="descriptive-statistics.html#cb55-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(title, runtime_min) <span class="sc">%&gt;%</span> </span>
+<span id="cb55-3"><a href="descriptive-statistics.html#cb55-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(title, runtime_min), <span class="at">y =</span> runtime_min)) <span class="sc">+</span></span>
+<span id="cb55-4"><a href="descriptive-statistics.html#cb55-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">124</span>) <span class="sc">+</span></span>
+<span id="cb55-5"><a href="descriptive-statistics.html#cb55-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="fu">aes</span>(<span class="at">yintercept =</span> runtime_mean, <span class="at">colour =</span> <span class="st">&quot;red&quot;</span>), <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb55-6"><a href="descriptive-statistics.html#cb55-6" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb55-7"><a href="descriptive-statistics.html#cb55-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_blank</span>(),    </span>
+<span id="cb55-8"><a href="descriptive-statistics.html#cb55-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.grid.major =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb55-9"><a href="descriptive-statistics.html#cb55-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.background =</span> <span class="fu">element_blank</span>()</span>
+<span id="cb55-10"><a href="descriptive-statistics.html#cb55-10" aria-hidden="true" tabindex="-1"></a>        ) <span class="sc">+</span></span>
+<span id="cb55-11"><a href="descriptive-statistics.html#cb55-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;run time&quot;</span>) <span class="sc">+</span></span>
+<span id="cb55-12"><a href="descriptive-statistics.html#cb55-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;movies&quot;</span>)</span></code></pre></div>
+<p><img src="r_for_non_programmers_files/figure-html/Standard%20deviation%20visualised%20p2-1.png" width="672" /></p>
+<p>As we can see, there is only a small fraction of movies that are close to the mean. If we now consider the distance of each dot from the red line, we know how much each dot, i.e. each movie, deviates from the mean. The standard deviation tells us how much the runtime deviates on average. To be more specific, to compute the standard deviation by hand you would:</p>
+<ul>
+<li><p>subtract the mean runtime from the runtime of each movie and square it, i.e. <span class="math inline">\(deviations = (runtime\_min - mean_{all\ movies})^2\)</span>,</p></li>
+<li><p>then we take the sum of all deviations and divide it by the number of movies minus 1, i.e. <span class="math inline">\(\frac{\sum(deviations)}{250-1}\)</span>, and because we squared the deviations,</p></li>
+<li><p>we take the square root of this score, i.e. <span class="math inline">\(\sqrt{\frac{\sum(deviations)}{250-1}}\)</span>.</p></li>
+</ul>
+<p>We could compute this by hand if we wanted, but it is much simpler to use the function<code>sd()</code> to achieve the same. The result shows that movies tend to be about 32 minutes longer or shorter than the average movie. This seems quite long.</p>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="descriptive-statistics.html#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(imdb_top_250<span class="sc">$</span>runtime_min)</span></code></pre></div>
+<pre><code>## [1] 32.63701</code></pre>
+<p>However, we have to be aware that this score is also influenced by the outliers we detected before. As such, if standard deviations in your data appear quite large, it likely is due to outliers and you should investigate further. Needless to say, plotting your data will undoubtedly help to diagnose any outliers.</p>
+</div>
+<div id="dealing-with-outliers" class="section level3" number="8.3.3">
+<h3><span class="header-section-number">8.3.3</span> Dealing with outliers</h3>
+<p>In this Chapter, I referred to outliers many times but never eluded to the aspects of handling them. Dealing with outliers is similar to dealing with missing data. It is not quite as straightforward as one might think.</p>
+<p>In a first step, we need to determine which values count as an outlier. <span class="citation"><a href="#ref-aguinis2013best" role="doc-biblioref">Aguinis, Gottfredson, and Joo</a> (<a href="#ref-aguinis2013best" role="doc-biblioref">2013</a>)</span> reviewed 232 journal articles and found that scholars had defined outliers in 14 different ways, used 39 different techniques to detect them and applied 20 different strategies to handle them. It would be impossible to work through all different options in this book. However, I want to offer two options that have been frequently considered in publications in the field of Social Sciences:</p>
+<ul>
+<li><p>the standard deviation</p></li>
+<li><p>the inter-quartile range</p></li>
+</ul>
+<div id="ouliers-standard_deviation" class="section level4" number="8.3.3.1">
+<h4><span class="header-section-number">8.3.3.1</span> Detecting outliers using the standard deviation</h4>
+<p>A very frequently used approach to detecting outliers is the use of the standard deviation. Usually, scholars use multiples of the standard deviation to determine thresholds. For example, a value that lies 3 standard deviations above or below the mean could be categorised as an outlier. Unfortunately, there is quite some variability regarding how many multiples of the standard deviation counts as an outlier. Some authors might use 3, others might settle for 2 (see also <span class="citation"><a href="#ref-leys2013detecting" role="doc-biblioref">Leys et al.</a> (<a href="#ref-leys2013detecting" role="doc-biblioref">2013</a>)</span>). Let’s stick with the definition of 3 standard deviations to begin with. We can revisit our previous plot and add lines which show the thresholds above and below the mean.</p>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="descriptive-statistics.html#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute the mean and standard deviation</span></span>
+<span id="cb58-2"><a href="descriptive-statistics.html#cb58-2" aria-hidden="true" tabindex="-1"></a>runtime_mean <span class="ot">&lt;-</span> <span class="fu">mean</span>(imdb_top_250<span class="sc">$</span>runtime_min)</span>
+<span id="cb58-3"><a href="descriptive-statistics.html#cb58-3" aria-hidden="true" tabindex="-1"></a>sd_upper <span class="ot">&lt;-</span> runtime_mean <span class="sc">+</span> <span class="dv">3</span> <span class="sc">*</span> <span class="fu">sd</span>(imdb_top_250<span class="sc">$</span>runtime_min)</span>
+<span id="cb58-4"><a href="descriptive-statistics.html#cb58-4" aria-hidden="true" tabindex="-1"></a>sd_lower <span class="ot">&lt;-</span> runtime_mean <span class="sc">-</span> <span class="dv">3</span> <span class="sc">*</span> <span class="fu">sd</span>(imdb_top_250<span class="sc">$</span>runtime_min)</span>
+<span id="cb58-5"><a href="descriptive-statistics.html#cb58-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-6"><a href="descriptive-statistics.html#cb58-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Create our plot</span></span>
+<span id="cb58-7"><a href="descriptive-statistics.html#cb58-7" aria-hidden="true" tabindex="-1"></a>imdb_top_250 <span class="sc">%&gt;%</span> </span>
+<span id="cb58-8"><a href="descriptive-statistics.html#cb58-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(title, runtime_min) <span class="sc">%&gt;%</span> </span>
+<span id="cb58-9"><a href="descriptive-statistics.html#cb58-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(title, runtime_min), <span class="at">y =</span> runtime_min)) <span class="sc">+</span></span>
+<span id="cb58-10"><a href="descriptive-statistics.html#cb58-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">124</span>) <span class="sc">+</span></span>
+<span id="cb58-11"><a href="descriptive-statistics.html#cb58-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="fu">aes</span>(<span class="at">yintercept =</span> runtime_mean, <span class="at">colour =</span> <span class="st">&quot;red&quot;</span>), <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb58-12"><a href="descriptive-statistics.html#cb58-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="fu">aes</span>(<span class="at">yintercept =</span> sd_upper, <span class="at">color =</span> <span class="st">&quot;blue&quot;</span>), <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb58-13"><a href="descriptive-statistics.html#cb58-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="fu">aes</span>(<span class="at">yintercept =</span> sd_lower, <span class="at">color =</span> <span class="st">&quot;blue&quot;</span>), <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb58-14"><a href="descriptive-statistics.html#cb58-14" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb58-15"><a href="descriptive-statistics.html#cb58-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_blank</span>(),    </span>
+<span id="cb58-16"><a href="descriptive-statistics.html#cb58-16" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.grid.major =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb58-17"><a href="descriptive-statistics.html#cb58-17" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.background =</span> <span class="fu">element_blank</span>()</span>
+<span id="cb58-18"><a href="descriptive-statistics.html#cb58-18" aria-hidden="true" tabindex="-1"></a>        ) <span class="sc">+</span></span>
+<span id="cb58-19"><a href="descriptive-statistics.html#cb58-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;run time&quot;</span>) <span class="sc">+</span></span>
+<span id="cb58-20"><a href="descriptive-statistics.html#cb58-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;movies&quot;</span>)</span></code></pre></div>
+<p><img src="r_for_non_programmers_files/figure-html/Outlier%20detection%20usind%203%20sd-1.png" width="672" /></p>
+<p>The results suggests that only very few outliers would be detected if we chose these thresholds. Especially ‘Sherlock Jr.’ the shortest movie in our dataset would not classify as an outlier. How about we choosen two standard deviations instead?</p>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="descriptive-statistics.html#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute the mean and standard deviation</span></span>
+<span id="cb59-2"><a href="descriptive-statistics.html#cb59-2" aria-hidden="true" tabindex="-1"></a>runtime_mean <span class="ot">&lt;-</span> <span class="fu">mean</span>(imdb_top_250<span class="sc">$</span>runtime_min)</span>
+<span id="cb59-3"><a href="descriptive-statistics.html#cb59-3" aria-hidden="true" tabindex="-1"></a>sd_upper <span class="ot">&lt;-</span> runtime_mean <span class="sc">+</span> <span class="dv">2</span> <span class="sc">*</span> <span class="fu">sd</span>(imdb_top_250<span class="sc">$</span>runtime_min)</span>
+<span id="cb59-4"><a href="descriptive-statistics.html#cb59-4" aria-hidden="true" tabindex="-1"></a>d_lower <span class="ot">&lt;-</span> runtime_mean <span class="sc">-</span> <span class="dv">2</span> <span class="sc">*</span> <span class="fu">sd</span>(imdb_top_250<span class="sc">$</span>runtime_min)</span>
+<span id="cb59-5"><a href="descriptive-statistics.html#cb59-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-6"><a href="descriptive-statistics.html#cb59-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Create our plot</span></span>
+<span id="cb59-7"><a href="descriptive-statistics.html#cb59-7" aria-hidden="true" tabindex="-1"></a>imdb_top_250 <span class="sc">%&gt;%</span> </span>
+<span id="cb59-8"><a href="descriptive-statistics.html#cb59-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(title, runtime_min) <span class="sc">%&gt;%</span> </span>
+<span id="cb59-9"><a href="descriptive-statistics.html#cb59-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(title, runtime_min), <span class="at">y =</span> runtime_min)) <span class="sc">+</span></span>
+<span id="cb59-10"><a href="descriptive-statistics.html#cb59-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">124</span>) <span class="sc">+</span></span>
+<span id="cb59-11"><a href="descriptive-statistics.html#cb59-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="fu">aes</span>(<span class="at">yintercept =</span> runtime_mean, <span class="at">colour =</span> <span class="st">&quot;red&quot;</span>), <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb59-12"><a href="descriptive-statistics.html#cb59-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="fu">aes</span>(<span class="at">yintercept =</span> sd_upper, <span class="at">color =</span> <span class="st">&quot;blue&quot;</span>), <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb59-13"><a href="descriptive-statistics.html#cb59-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="fu">aes</span>(<span class="at">yintercept =</span> sd_lower, <span class="at">color =</span> <span class="st">&quot;blue&quot;</span>), <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb59-14"><a href="descriptive-statistics.html#cb59-14" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb59-15"><a href="descriptive-statistics.html#cb59-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_blank</span>(),    </span>
+<span id="cb59-16"><a href="descriptive-statistics.html#cb59-16" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.grid.major =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb59-17"><a href="descriptive-statistics.html#cb59-17" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.background =</span> <span class="fu">element_blank</span>()</span>
+<span id="cb59-18"><a href="descriptive-statistics.html#cb59-18" aria-hidden="true" tabindex="-1"></a>        ) <span class="sc">+</span></span>
+<span id="cb59-19"><a href="descriptive-statistics.html#cb59-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;run time&quot;</span>) <span class="sc">+</span></span>
+<span id="cb59-20"><a href="descriptive-statistics.html#cb59-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;movies&quot;</span>)</span></code></pre></div>
+<p><img src="r_for_non_programmers_files/figure-html/Outlier%20detection%20usind%202%20sd-1.png" width="672" /></p>
+<p>As we would expect, we identify some more movies as being outliers. Still, it feels rather arbitrary to choose a threshold of our liking. Despite its popularity, there are additional problems with this approach:</p>
+<ul>
+<li><p>outliers affect our mean and standard deviation too,</p></li>
+<li><p>since we use the mean, we assume that our data is normally distributed, and</p></li>
+<li><p>in smaller samples, this approach might result in not identifying outliers at all (despite their presence) (<span class="citation"><a href="#ref-leys2013detecting" role="doc-biblioref">Leys et al.</a> (<a href="#ref-leys2013detecting" role="doc-biblioref">2013</a>)</span>, p. 764)</p></li>
+</ul>
+<p><span class="citation"><a href="#ref-leys2013detecting" role="doc-biblioref">Leys et al.</a> (<a href="#ref-leys2013detecting" role="doc-biblioref">2013</a>)</span> propose an alternative approach, based on the fact that medians are much less vulnerable to outliers than the mean. Similarly to the standard deviation, it is possible to calculate thresholds using the ‘median absolute deviation’ (MAD). Best of all, the function <code>mad()</code> in R does this automatically for us. <span class="citation"><a href="#ref-leys2013detecting" role="doc-biblioref">Leys et al.</a> (<a href="#ref-leys2013detecting" role="doc-biblioref">2013</a>)</span> suggest to use 2.5 times the MAD as a threshold. However, if we want to compare directly how well this option does against the standard deviation, we should <code>3</code> again.</p>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="descriptive-statistics.html#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute the median and thresholds</span></span>
+<span id="cb60-2"><a href="descriptive-statistics.html#cb60-2" aria-hidden="true" tabindex="-1"></a>runtime_median <span class="ot">&lt;-</span> <span class="fu">median</span>(imdb_top_250<span class="sc">$</span>runtime_min)</span>
+<span id="cb60-3"><a href="descriptive-statistics.html#cb60-3" aria-hidden="true" tabindex="-1"></a>mad_upper <span class="ot">&lt;-</span> runtime_median <span class="sc">+</span> <span class="dv">3</span> <span class="sc">*</span> <span class="fu">mad</span>(imdb_top_250<span class="sc">$</span>runtime_min)</span>
+<span id="cb60-4"><a href="descriptive-statistics.html#cb60-4" aria-hidden="true" tabindex="-1"></a>mad_lower <span class="ot">&lt;-</span> runtime_median <span class="sc">-</span> <span class="dv">3</span> <span class="sc">*</span> <span class="fu">mad</span>(imdb_top_250<span class="sc">$</span>runtime_min)</span>
+<span id="cb60-5"><a href="descriptive-statistics.html#cb60-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-6"><a href="descriptive-statistics.html#cb60-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Create our plot</span></span>
+<span id="cb60-7"><a href="descriptive-statistics.html#cb60-7" aria-hidden="true" tabindex="-1"></a>imdb_top_250 <span class="sc">%&gt;%</span> </span>
+<span id="cb60-8"><a href="descriptive-statistics.html#cb60-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(title, runtime_min) <span class="sc">%&gt;%</span> </span>
+<span id="cb60-9"><a href="descriptive-statistics.html#cb60-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(title, runtime_min), <span class="at">y =</span> runtime_min)) <span class="sc">+</span></span>
+<span id="cb60-10"><a href="descriptive-statistics.html#cb60-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">124</span>) <span class="sc">+</span></span>
+<span id="cb60-11"><a href="descriptive-statistics.html#cb60-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="fu">aes</span>(<span class="at">yintercept =</span> runtime_median, <span class="at">colour =</span> <span class="st">&quot;red&quot;</span>), <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb60-12"><a href="descriptive-statistics.html#cb60-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="fu">aes</span>(<span class="at">yintercept =</span> mad_upper, <span class="at">color =</span> <span class="st">&quot;blue&quot;</span>), <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb60-13"><a href="descriptive-statistics.html#cb60-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="fu">aes</span>(<span class="at">yintercept =</span> mad_lower, <span class="at">color =</span> <span class="st">&quot;blue&quot;</span>), <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb60-14"><a href="descriptive-statistics.html#cb60-14" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb60-15"><a href="descriptive-statistics.html#cb60-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_blank</span>(),    </span>
+<span id="cb60-16"><a href="descriptive-statistics.html#cb60-16" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.grid.major =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb60-17"><a href="descriptive-statistics.html#cb60-17" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.background =</span> <span class="fu">element_blank</span>()</span>
+<span id="cb60-18"><a href="descriptive-statistics.html#cb60-18" aria-hidden="true" tabindex="-1"></a>        ) <span class="sc">+</span></span>
+<span id="cb60-19"><a href="descriptive-statistics.html#cb60-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;run time&quot;</span>) <span class="sc">+</span></span>
+<span id="cb60-20"><a href="descriptive-statistics.html#cb60-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;movies&quot;</span>)</span></code></pre></div>
+<p><img src="r_for_non_programmers_files/figure-html/Outlier%20detection%20via%20median%20MAD3-1.png" width="672" /></p>
+<p>Compared to our previous results, we notice that the median approach was much better in detecting outliers at the upper range of <code>runtim_min</code>. Because the median is not affected so much by the five hour-long movie, the results have improved. Still, we would not classify the outlier at the bottom for the shortest movie in the data. If we chose the criterion of 2.5*MAD, we would also get this outlier (see Figure <a href="descriptive-statistics.html#fig:MAD2-outlier-detection">8.4</a>).</p>
+<div class="figure"><span id="fig:MAD2-outlier-detection"></span>
+<img src="r_for_non_programmers_files/figure-html/MAD2-outlier-detection-1.png" alt="Outlier detection via MAD using `2.5 * MAD` as a threshold" width="672" />
+<p class="caption">
+Figure 8.4: Outlier detection via MAD using <code>2.5 * MAD</code> as a threshold
+</p>
+</div>
+<p>Which approach to choose can be informed by the normality of your data. If your data is normally distributed, the mean and median would be very close to each other and the results from both approach would return very similar results. However, if your data is not normally distributed, it might be better to classify outliers using the median.</p>
+</div>
+<div id="outliers-iqr" class="section level4" number="8.3.3.2">
+<h4><span class="header-section-number">8.3.3.2</span> Detecting outliers using the interquartile range</h4>
+<p>Another approach to classify outliers is the use of the interquartile range (IQR). This one is used in boxplots and creates the dots at its ends to indicate any outliers. This approach is very easy to implement because the computation of the IQR is simple:</p>
+<div id="iqr-formula" align="center">
+<p><span class="math inline">\(IQR = Q_{3}-Q_{1}\)</span></p>
+</div>
+<p>Therefore, we can create new thresholds for the detection of outliers. For IQR it is common to use ‘1.5 * IQR’ as the lower and upper thresholds.</p>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="descriptive-statistics.html#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute the median and thresholds</span></span>
+<span id="cb61-2"><a href="descriptive-statistics.html#cb61-2" aria-hidden="true" tabindex="-1"></a>runtime_median <span class="ot">&lt;-</span> <span class="fu">median</span>(imdb_top_250<span class="sc">$</span>runtime_min)</span>
+<span id="cb61-3"><a href="descriptive-statistics.html#cb61-3" aria-hidden="true" tabindex="-1"></a>iqr_upper <span class="ot">&lt;-</span> runtime_median <span class="sc">+</span> <span class="fl">1.5</span> <span class="sc">*</span> <span class="fu">IQR</span>(imdb_top_250<span class="sc">$</span>runtime_min)</span>
+<span id="cb61-4"><a href="descriptive-statistics.html#cb61-4" aria-hidden="true" tabindex="-1"></a>iqr_lower <span class="ot">&lt;-</span> runtime_median <span class="sc">-</span> <span class="fl">1.5</span> <span class="sc">*</span> <span class="fu">IQR</span>(imdb_top_250<span class="sc">$</span>runtime_min)</span>
+<span id="cb61-5"><a href="descriptive-statistics.html#cb61-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb61-6"><a href="descriptive-statistics.html#cb61-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Create our plot</span></span>
+<span id="cb61-7"><a href="descriptive-statistics.html#cb61-7" aria-hidden="true" tabindex="-1"></a>imdb_top_250 <span class="sc">%&gt;%</span> </span>
+<span id="cb61-8"><a href="descriptive-statistics.html#cb61-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(title, runtime_min) <span class="sc">%&gt;%</span> </span>
+<span id="cb61-9"><a href="descriptive-statistics.html#cb61-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(title, runtime_min), <span class="at">y =</span> runtime_min)) <span class="sc">+</span></span>
+<span id="cb61-10"><a href="descriptive-statistics.html#cb61-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">124</span>) <span class="sc">+</span></span>
+<span id="cb61-11"><a href="descriptive-statistics.html#cb61-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="fu">aes</span>(<span class="at">yintercept =</span> runtime_median, <span class="at">colour =</span> <span class="st">&quot;red&quot;</span>), <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb61-12"><a href="descriptive-statistics.html#cb61-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="fu">aes</span>(<span class="at">yintercept =</span> iqr_upper, <span class="at">color =</span> <span class="st">&quot;blue&quot;</span>), <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb61-13"><a href="descriptive-statistics.html#cb61-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="fu">aes</span>(<span class="at">yintercept =</span> iqr_lower, <span class="at">color =</span> <span class="st">&quot;blue&quot;</span>), <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb61-14"><a href="descriptive-statistics.html#cb61-14" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb61-15"><a href="descriptive-statistics.html#cb61-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_blank</span>(),    </span>
+<span id="cb61-16"><a href="descriptive-statistics.html#cb61-16" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.grid.major =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb61-17"><a href="descriptive-statistics.html#cb61-17" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.background =</span> <span class="fu">element_blank</span>()</span>
+<span id="cb61-18"><a href="descriptive-statistics.html#cb61-18" aria-hidden="true" tabindex="-1"></a>        ) <span class="sc">+</span></span>
+<span id="cb61-19"><a href="descriptive-statistics.html#cb61-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;run time&quot;</span>) <span class="sc">+</span></span>
+<span id="cb61-20"><a href="descriptive-statistics.html#cb61-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;movies&quot;</span>)</span></code></pre></div>
+<p><img src="r_for_non_programmers_files/figure-html/IQR%20as%20a%20threshold%20for%20outliers-1.png" width="672" /></p>
+<p>As we can tell, the IQR detects much more outliers for our data than any of the previous methods. The outliers we find here are the same as shown in Figure <a href="descriptive-statistics.html#fig:a-boxplot">8.1</a>.</p>
+<p>For our data it seems that the MAD by <span class="citation"><a href="#ref-leys2013detecting" role="doc-biblioref">Leys et al.</a> (<a href="#ref-leys2013detecting" role="doc-biblioref">2013</a>)</span> produced the ‘best’ selection. However, we have to acknowledge that these classifications will always be subjective, because the decision of how we position the thresholds is still depending on the researcher’s choice.</p>
+</div>
+<div id="removing-or-replacing-outliers" class="section level4" number="8.3.3.3">
+<h4><span class="header-section-number">8.3.3.3</span> Removing or replacing outliers</h4>
+<p>Now that we have identified our outliers we are confronted with the question what we should do with them. Similar to missing data (see Chapter <a href="data-wrangling.html#dealing-with-missing-data">7.6</a>) we can either remove them or replace them with other values. While removal is a fairly simple task, replacing it with other ‘reasonable’ values implies that we need to find techniques to create such values. As you may remember, we were confronted with a similar problem before when we looked into missing data (Chapter <a href="data-wrangling.html#dealing-with-missing-data">7.6</a>. The same techniques, especially multiple imputation <span class="citation">(see <a href="#ref-cousineau2010outliers" role="doc-biblioref">Cousineau and Chartier 2010</a>)</span>, can be used for such scenarios as well.</p>
+<p>Irrespective of whether we remove or replace outliers, we somehow need to single them out of the crowd. Since the MAD strategy worked well for our data, we can use the thresholds we defined before, i.e. <code>mad_upper</code> and <code>mad_lower</code>. Therefore, an observation (i.e. a movie) is considered as an outlier if:</p>
+<ul>
+<li><p>its value lies above <code>mad_upper</code>, or</p></li>
+<li><p>its value lies below <code>mad_lower</code></p></li>
+</ul>
+<p>It becomes clear that we somehow need to define a condition, because if it is an outlier, it should be labelled as one, if not then it should not be labelled as one. Ideally we want a new column in our dataset which indicates whether a movie is an outlier (i.e. outlier = TRUE) or not (outlier = FALSE). R offers a way for us to express such conditions with the function <code>ifelse()</code>. It has the following structure:</p>
+<div id="ifelse-function" align="center">
+<p><code>ifelse(condition, TRUE, FALSE)</code></p>
+</div>
+<p>Let’s formulate a sentence that describes our scenario as an <code>ifelse()</code> function:</p>
+<ul>
+<li><p>If a movie’s <code>runtime_min</code> is longer than <code>mad_upper</code>, <u>or</u></p></li>
+<li><p>if a movie’s <code>runtime_min</code> is lower than <code>mad_lower</code>,</p></li>
+<li><p>classify this movie as an outlier (i.e. <code>TRUE</code>),</p></li>
+<li><p>otherwise classify this movie as not being an outlier (i.e. <code>FALSE</code>).</p></li>
+</ul>
+<p>We already know from Chapter <a href="r-basics-the-very-fundamentals.html#basic-computations-in-r">5.1</a> how to use logical and arithmetic operators. All we have to do is put them together in one function call.</p>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="descriptive-statistics.html#cb62-1" aria-hidden="true" tabindex="-1"></a>imdb_top_250 <span class="ot">&lt;-</span> imdb_top_250 <span class="sc">%&gt;%</span> </span>
+<span id="cb62-2"><a href="descriptive-statistics.html#cb62-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">outlier =</span> <span class="fu">ifelse</span>(runtime_min <span class="sc">&gt;</span> mad_upper <span class="sc">|</span> runtime_min <span class="sc">&lt;</span> mad_lower,</span>
+<span id="cb62-3"><a href="descriptive-statistics.html#cb62-3" aria-hidden="true" tabindex="-1"></a>                          <span class="cn">TRUE</span>, <span class="cn">FALSE</span>))</span></code></pre></div>
+<p>Since we have a classification we can more thoroughly inspect our outliers and see which movies are the ones that are lying outside our defined norm. We can <code>arrange()</code> them by <code>runtime_min</code>.</p>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="descriptive-statistics.html#cb63-1" aria-hidden="true" tabindex="-1"></a>imdb_top_250 <span class="sc">%&gt;%</span> </span>
+<span id="cb63-2"><a href="descriptive-statistics.html#cb63-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(outlier <span class="sc">==</span> <span class="st">&quot;TRUE&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb63-3"><a href="descriptive-statistics.html#cb63-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(title, runtime_min, outlier) <span class="sc">%&gt;%</span> </span>
+<span id="cb63-4"><a href="descriptive-statistics.html#cb63-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(runtime_min)</span></code></pre></div>
+<pre><code>## # A tibble: 10 × 3
+##    title                                         runtime_min outlier
+##    &lt;chr&gt;                                               &lt;dbl&gt; &lt;lgl&gt;  
+##  1 Sherlock Jr.                                           45 TRUE   
+##  2 The Lord of the Rings: The Return of the King         201 TRUE   
+##  3 The Godfather: Part II                                202 TRUE   
+##  4 Andrei Rublev                                         205 TRUE   
+##  5 Seven Samurai                                         207 TRUE   
+##  6 Ben-Hur                                               212 TRUE   
+##  7 Lawrence of Arabia                                    228 TRUE   
+##  8 Once Upon a Time in America                           229 TRUE   
+##  9 Gone with the Wind                                    238 TRUE   
+## 10 Gangs of Wasseypur                                    321 TRUE</code></pre>
+<p>The list of movies contains some of the most iconic Hollywood films ever shown on screen. I think we can agree that most of them are truly outside the norm of regular movies, not just in terms of runtime.</p>
+<p>From here it is simple to remove these movies (i.e. keep the movies that are not outliers) or set their values to <code>NA</code> by writing the following lines of code. We replace the values with <code>NA</code> we can the continue with one of the techniques demonstrated for missing values (Chapter <a href="data-wrangling.html#dealing-with-missing-data">7.6</a>.</p>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="descriptive-statistics.html#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Keep all movies that are not outliers</span></span>
+<span id="cb65-2"><a href="descriptive-statistics.html#cb65-2" aria-hidden="true" tabindex="-1"></a>imdb_top_250 <span class="sc">%&gt;%</span> </span>
+<span id="cb65-3"><a href="descriptive-statistics.html#cb65-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(outlier <span class="sc">==</span> <span class="st">&quot;FALSE&quot;</span>)</span>
+<span id="cb65-4"><a href="descriptive-statistics.html#cb65-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb65-5"><a href="descriptive-statistics.html#cb65-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Replace values with NA</span></span>
+<span id="cb65-6"><a href="descriptive-statistics.html#cb65-6" aria-hidden="true" tabindex="-1"></a>imdb_top_250 <span class="sc">%&gt;%</span> </span>
+<span id="cb65-7"><a href="descriptive-statistics.html#cb65-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">runtime_min =</span> <span class="fu">replace</span>(runtime_min, outlier <span class="sc">==</span> <span class="st">&quot;TRUE&quot;</span>, <span class="cn">NA</span>))</span></code></pre></div>
+<p>The <code>replace()</code> function is very intuitive to use. It first needs to know where you want to replace a value (<code>runtime_min</code>), then what the condition for replacing is (<code>outlier == "TRUE"</code>), and lastly, which value should be put instead of the original one (<code>NA</code>).</p>
+<p>As you hopefully noticed, understanding your data requires some effort, but it is important to know your data well before proceeding to any further analysis. You can experiment with different data visualisations and design them in a way that best reflect the message you want to get across. For example, because we have now a separate variable which classifies outliers we can do more with our data visualisation than before and dress it up a bit more nicely.</p>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="descriptive-statistics.html#cb66-1" aria-hidden="true" tabindex="-1"></a>colour_pal <span class="ot">&lt;-</span> wesanderson<span class="sc">::</span><span class="fu">wes_palette</span>(<span class="st">&quot;Darjeeling1&quot;</span>, <span class="dv">11</span>, <span class="at">type =</span> <span class="st">&quot;continuous&quot;</span>)</span>
+<span id="cb66-2"><a href="descriptive-statistics.html#cb66-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb66-3"><a href="descriptive-statistics.html#cb66-3" aria-hidden="true" tabindex="-1"></a>imdb_top_250 <span class="sc">%&gt;%</span> </span>
+<span id="cb66-4"><a href="descriptive-statistics.html#cb66-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(genre_01, runtime_min),</span>
+<span id="cb66-5"><a href="descriptive-statistics.html#cb66-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> runtime_min,</span>
+<span id="cb66-6"><a href="descriptive-statistics.html#cb66-6" aria-hidden="true" tabindex="-1"></a>             <span class="at">colour =</span> genre_01)</span>
+<span id="cb66-7"><a href="descriptive-statistics.html#cb66-7" aria-hidden="true" tabindex="-1"></a>         ) <span class="sc">+</span></span>
+<span id="cb66-8"><a href="descriptive-statistics.html#cb66-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">alpha =</span> <span class="dv">0</span>,</span>
+<span id="cb66-9"><a href="descriptive-statistics.html#cb66-9" aria-hidden="true" tabindex="-1"></a>               <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb66-10"><a href="descriptive-statistics.html#cb66-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width =</span> <span class="fl">0.1</span>,</span>
+<span id="cb66-11"><a href="descriptive-statistics.html#cb66-11" aria-hidden="true" tabindex="-1"></a>              <span class="at">size =</span> <span class="fl">0.5</span>,</span>
+<span id="cb66-12"><a href="descriptive-statistics.html#cb66-12" aria-hidden="true" tabindex="-1"></a>              <span class="at">alpha =</span> <span class="fl">0.5</span>,</span>
+<span id="cb66-13"><a href="descriptive-statistics.html#cb66-13" aria-hidden="true" tabindex="-1"></a>              <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb66-14"><a href="descriptive-statistics.html#cb66-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> colour_pal) <span class="sc">+</span></span>
+<span id="cb66-15"><a href="descriptive-statistics.html#cb66-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb66-16"><a href="descriptive-statistics.html#cb66-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.background =</span> <span class="fu">element_blank</span>())<span class="sc">+</span></span>
+<span id="cb66-17"><a href="descriptive-statistics.html#cb66-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;runtime&quot;</span>) <span class="sc">+</span></span>
+<span id="cb66-18"><a href="descriptive-statistics.html#cb66-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Genre&quot;</span>) <span class="sc">+</span></span>
+<span id="cb66-19"><a href="descriptive-statistics.html#cb66-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Distribution of movie runtimes by genre&quot;</span>)</span></code></pre></div>
+<p><img src="r_for_non_programmers_files/figure-html/Final%20plot%20to%20show%20outliers-1.png" width="672" /></p>
 
 </div>
+</div>
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-aguinis2013best" class="csl-entry">
+Aguinis, Herman, Ryan K Gottfredson, and Harry Joo. 2013. <span>“Best-Practice Recommendations for Defining, Identifying, and Handling Outliers.”</span> <em>Organizational Research Methods</em> 16 (2): 270–301.
+</div>
+<div id="ref-cousineau2010outliers" class="csl-entry">
+Cousineau, Denis, and Sylvain Chartier. 2010. <span>“Outliers Detection and Treatment: A Review.”</span> <em>International Journal of Psychological Research</em> 3 (1): 58–67.
+</div>
+<div id="ref-leys2013detecting" class="csl-entry">
+Leys, Christophe, Christophe Ley, Olivier Klein, Philippe Bernard, and Laurent Licata. 2013. <span>“Detecting Outliers: Do Not Use Standard Deviation Around the Mean, Use Absolute Deviation Around the Median.”</span> <em>Journal of Experimental Social Psychology</em> 49 (4): 764–66.
 </div>
 </div>
             </section>
@@ -698,6 +1131,20 @@ gitbook.start({
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>

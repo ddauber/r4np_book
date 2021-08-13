@@ -1,10 +1,5 @@
 # Descriptive Statistics {#descriptive-statistics}
 
-```{r echo=FALSE, message=FALSE}
-library(tidyverse)
-library(r4np)
-```
-
 The best way to understand how participants in your study have responded to various questions or an experimental treatment is to use descriptive statistics. As the name indicates, their main purpose is to 'describe'. Most of the time we want to describe the composition of our sample and likely how the majority (or minority) of participants performed.
 
 In contrast, we use 'inferential' statistics to make predictions about the future. In Social Sciences, we are often interested in predicting how people will behave in certain situations and scenarios. We aim to develop models that help us navigate the complexity of social interactions that we all engage in, but might not fully understand. We cover 'inferential statistics' in later chapters of this book.
@@ -307,15 +302,17 @@ The frequency table and the plot reveal that the mode for `imdb_rating` is `8.1`
 
 As a final remark, it is also possible that you can find two or more modes in your data. For example, if the rating `8.1` appears `80` times and the rating `9.0` appears `80` times, both would be considered to a mode.
 
-## Indicators and visualisation to examine the spread of data {#spread-of-data}
+## Indicators and visualisations to examine the spread of data {#spread-of-data}
 
-Understanding how your data is spread out is important to get a better sense of what your data is composed of. We already touched upon the notion of spread in Chapter \@ref(median) through plotting a boxplot. The spread of data provides insights into how homogeneous or heterogeneous the responses of our participants are. In the following we will cover some essential techniques to investigate the spread of your data.
+Understanding how your data is spread out is important to get a better sense of what your data is composed of. We already touched upon the notion of spread in Chapter \@ref(median) through plotting a boxplot. The spread of data provides insights into how homogeneous or heterogeneous the responses of our participants are. In the following we will cover some essential techniques to investigate the spread of your data and investigate whether our variables are normally distributed, which is often an important assumption for certain analytical techniques. In addition, we will aim to identify outliers which could be detrimental to subsequent analysis and significantly affect our modelling and testing in later stages.
 
 #### Boxplot: So much information in just one box
 
-For example, we might be interested to know how long most movies run. One approach could be to use the boxplot from before.
+The boxplot is a staple in visualising descriptive statistics. If offers so much information in just a single plot that it might not take much to convince you that it has become a very popular way to show the spread of data.
 
-```{r Historgram, echo=TRUE}
+For example, we might be interested to know how long most movies run. Our gut feeling might tell us that most movies are probably around 2 hours long. One approach to find out is a boxplot, which we used before.
+
+```{r Box plot, fig.cap="A boxplot", label="a-boxplot", echo=TRUE}
 imdb_top_250 %>%
   ggplot(aes(runtime_min)) +
   geom_boxplot() +
@@ -323,20 +320,29 @@ imdb_top_250 %>%
            label = "Gangs of Wasseypur \n (321 min)",
            x = 310,
            y = 0.05,
+           size = 2.5) +
+  annotate("text",
+           label = "Sherlock Jr. \n (45 min)",
+           x = 45,
+           y = 0.05,
            size = 2.5)
 ```
 
-We find that most movies are between 100 to 150 minutes long. One movie is even over 300 minutes long: Gangs of Wasseypur. I added an annotation using `annotate()` to highlight this movie.
+The results indicate that most movies are between 100 to 150 minutes long. Our intuition was right. We find that one movie is even over 300 minutes long, i.e. over 5 hours: 'Gangs of Wasseypur'. In contrast, the shortest movie only lasts 45 minutes and is called 'Sherlock Jr.'. I added annotations using `annotate()` to highlight these two movies in the plot. Both movies would also count as outliers in our dataset (see Chapter \@ref(outliers-iqr).
 
 #### Histogram: Do not mistake it as a bar plot
 
-Another frequently used approach to show the spread (or distribution) of data is the histogram. The histogram easily gets confused with bar plots. However, you would be very mistaken to assume that they are the same. Some key differences between these two types of plots is summarised in Table \@ref(tab:histogram-vs-bar-plot).
+Another frequently used approach to show the spread (or distribution) of data is the histogram. The histogram easily gets confused with a bar plot. However, you would be very mistaken to assume that they are the same. Some key differences between these two types of plots is summarised in Table \@ref(tab:histogram-vs-bar-plot).
 
-| Histogram                                                        | Bar plot                                                           |
-|------------------------------------------------------------------|--------------------------------------------------------------------|
-| Used to show the distribution of non-categorical data            | Used for showing the frequency of categorical data, i.e. `factor`s |
-| Each bar (also called 'bin') represents a group of observations. | Each bar represents one category (or level) in our `factor`.       |
-| The order of the bars is important and cannot be change.         | The order of bars is arbitrary and can be reordered if meaningful. |
++----------------------------------------------------------------------+--------------------------------------------------------------------+
+| Histogram                                                            | Bar plot                                                           |
++======================================================================+====================================================================+
+| Used to show the distribution of non-categorical data                | Used for showing the frequency of categorical data, i.e. `factor`s |
++----------------------------------------------------------------------+--------------------------------------------------------------------+
+| Each bar (also called 'bin') represents a group of observations.     | Each bar represents one category (or level) in our `factor`.       |
++----------------------------------------------------------------------+--------------------------------------------------------------------+
+| The order of the bars is important and cannot/should not be changed. | The order of bars is arbitrary and can be reordered if meaningful. |
++----------------------------------------------------------------------+--------------------------------------------------------------------+
 
 : (\#tab:histogram-vs-bar-plot) Histogram vs bar plot
 
@@ -351,11 +357,11 @@ imdb_top_250 %>%
 
 There are a couple of important observations to be made:
 
--   The bar plot has much shorter bars, because each bar represents the frequency of a single unique score. Thus, the runtime of 151 is represented as a bar as is the runtime of 152. Only identical observations are grouped together. As such, the bar plot is based on the frequency tables we know already.
+-   The bar plot has much shorter bars, because each bar represents the frequency of a single unique score. Thus, the runtime of 151 is represented as a bar as is the runtime of 152. Only identical observations are grouped together. As such, the bar plot is based on a frequency table, similar to what we computed before.
 
--   In contrast, the histogram's 'bars' are higher because they group together individual observations based on a specified range, e.g. one bar might represent movies that have a runtime between 150-170 minutes.
+-   In contrast, the histogram's 'bars' are higher because they group together individual observations based on a specified range, e.g. one bar might represent movies that have a runtime between 150-170 minutes. These ranges are commonly called `bins`.
 
-We can control the number of bars in histogram using the `bins` attribute. `ggplot` even reminds us that we should adjust it to represent more details in the histogram. Let's experimnt with this setting to see how it would look like with different numbers of `bins`.
+We can control the number of bars in our histogram using the `bins` attribute. `ggplot` even reminds us in a warning that we should adjust it to represent more details in the plot. Let's experiment with this setting to see how it would look like with different numbers of `bins`.
 
 ```{r Histogram with different bins, echo=TRUE, fig.show='hide'}
 imdb_top_250 %>% 
@@ -411,13 +417,13 @@ library(patchwork)
 p1 +p2 + p3 + p4
 ```
 
-As becomes obvious, if we select a large enough number of bins, we can achieve the same result as a barplot. This is the closest a bar plot can be to a histogram, when you define the number of bars in such a way that each observations is capture by one of them. While theoretically possible, practically this does not make much sense.
+As becomes obvious, if we select a large enough number of bins, we can achieve the same result as a bar plot. This is the closest a bar plot can become to a histogram, i.e. if you define the number of `bins` in such a way that each observation is captured by one `bin`. While theoretically possible, practically this rarely makes much sense.
 
-We use histograms to judge whether our data is normally distributed. A normal distribution is often a requirement for assessing whether we can run certain types of analyses or not. In short: It is very important to know about it in advance. The shape of a normal distribution looks like a bell (see Figure \@ref(fig:normal-distribution)). If our data is close to a normal distribution we find that
+We use histograms to judge whether our data is normally distributed. A normal distribution is often a requirement for assessing whether we can run certain types of analyses or not. In short: It is very important to know about it in advance. The shape of a normal distribution looks like a bell (see Figure \@ref(fig:normal-distribution)). If our data is equal to a normal distribution we find that
 
--   the mean and the median are the same value
+-   the mean and the median are the same value, and can conclude that
 
--   the mean is a good representation for our data/variable
+-   the mean is a good representation for our data/variable.
 
 ```{r Normal distribution, fig.cap="A normal distribution", echo=FALSE, label="normal-distribution"}
 
@@ -433,7 +439,17 @@ data %>% ggplot(aes(x)) +
   ylab("")
 ```
 
-Let's see whether our data is normally distributed using the histogram we already plotted and overlay a normal distribution. The coding for the normal distribution is a little more advanced. So, do not worry if you cannot fully decipher its meaning. It is more important to understand what we try to achieve here, i.e. comparing our distribution with a normal one.
+Let's see whether our data is normally distributed using the histogram we already plotted and overlay a normal distribution. The coding for the normal distribution is a little more advanced. Do not worry if you cannot fully decipher its meaning just yet. To draw such a reference plot we need to:
+
+-   compute the `mean()` of our variable,
+
+-   compute the standard deviation `sd()` of our variable (see Chapter \@ref(standard-deviation),
+
+-   use the function `geom_func()` to plot it and,
+
+-   define the function `fun` as `dnorm`, which stands for 'normal distribution'.
+
+More important than understanding how the computational side works, is the aim of this task: we try to compare our distribution with a normal one.
 
 ```{r Compare normal distribution to our distribution, echo=TRUE, warning=FALSE}
 imdb_top_250 %>% 
@@ -450,36 +466,95 @@ imdb_top_250 %>%
                 colour = "red")
 ```
 
-However, there is two problems if we use histograms in combination with a normal distribution reference plot: First, the y axis needs to be transformed to fit the normal distribution (which is a density plot and not a histogram). Second, they shape of our histogram is affected by the number of `bins` we have chosen, which is an arbitrary choice we make. Besides, the lines of code are tough to understand, because we have to 'hack' the visualisation to make it work. There is, however, a better way to do this: Density plots.
+However, there are two problems if we use histograms in combination with a normal distribution reference plot: First, the y axis needs to be transformed to fit the normal distribution (which is a density plot and not a histogram). Second, the shape of our histogram is affected by the number of `bins` we have chosen, which is an arbitrary choice we make. Besides, the lines of code might be tough to understand, because we have to 'hack' the visualisation to make it work. There is, however, a better way to do this: Density plots.
 
 #### Density plots: Your smooth histograms
 
-Density plots are a special form of the histogram. It uses 'kernel smoothing', which turns our blocks into a smoother shape. Better than trying to explain what it does, it might help to see it.
+Density plots are a special form of the histogram. It uses 'kernel smoothing', which turns our blocks into a smoother shape. Better than trying to explain what it does, it might help to see it. We use the same data but replace `geom_histogram()` with `geom_density()`.
 
 ```{r Density plot vs normal distribution, fig.cap="Density plot vs normal distribution", label="density-vs-normal", echo=TRUE}
+
+# Ingredients for our normality reference plot
+mean_ref <- mean(imdb_top_250$runtime_min)
+sd_ref <- sd(imdb_top_250$runtime_min)
+
 imdb_top_250 %>% 
   ggplot(aes(runtime_min)) +
   geom_density() +
   geom_function(fun = dnorm,
                 n = 103,
-                args = list(mean = mean(imdb_top_250$runtime_min),
-                            sd = sd(imdb_top_250$runtime_min)),
+                args = list(mean = mean_ref,
+                            sd = sd_ref),
                 colour = "red")
 ```
 
-The benefits of the density plot in this situation are obvious:
+For density plots we can aslo define how big the `bins` are which make the plot more or less smooth. After all, the density plot is a histogram, but the transitions from one bin to the next are 'smoothed'. Here is an example of how different `bw` settings affect the plot.
 
--   we do not have to worry about bins anymore, and
+```{r Density plot vs normal distribution with different bw settings, echo=TRUE, results='hide'}
+# Ingredients for our normality reference plot
+mean_ref <- mean(imdb_top_250$runtime_min)
+sd_ref <- sd(imdb_top_250$runtime_min)
 
--   it is much easier to see whether our data is normally distributed or not.
+# bw = 18
+imdb_top_250 %>% 
+  ggplot(aes(runtime_min)) +
+  geom_density(bw=18) +
+  geom_function(fun = dnorm,
+                n = 103,
+                args = list(mean = mean_ref,
+                            sd = sd_ref),
+                colour = "red") +
+  ggtitle("bw = 18")
 
-Considering `runtime_min` we can conclude that the spread of our data mimics is not quite following a normal distribution, because it leans slightly to the left. Judging through a plot might sometimes be difficult. Luckily, there is also a statistical method to test whether our data is normally distributed: The Shapiro-Wilk test. This test compares our distribution with a normal distribution (like in our plot) and tells us whether our distribution is **significantly different** from it. Thus, if the test is not significant it is not significantly different from a normal distribution, or in simple terms: It is normally distributed. We can run the test in R as follows:
+# bw = 3
+imdb_top_250 %>% 
+  ggplot(aes(runtime_min)) +
+  geom_density(bw=3) +
+  geom_function(fun = dnorm,
+                n = 103,
+                args = list(mean = mean_ref,
+                            sd = sd_ref),
+                colour = "red") +
+    ggtitle("bw = 18")
+
+```
+
+```{r Illustration of different bw settings using patchwork to stich together, echo=FALSE}
+# bw = 18
+p1 <- imdb_top_250 %>% 
+  ggplot(aes(runtime_min)) +
+  geom_density(bw=18) +
+  geom_function(fun = dnorm,
+                n = 103,
+                args = list(mean = mean_ref,
+                            sd = sd_ref),
+                colour = "red") +
+  ggtitle("bw = 18")
+
+
+# bw = 3
+p2 <- imdb_top_250 %>% 
+  ggplot(aes(runtime_min)) +
+  geom_density(bw=3) +
+  geom_function(fun = dnorm,
+                n = 103,
+                args = list(mean = mean_ref,
+                            sd = sd_ref),
+                colour = "red") +
+  ggtitle("bw = 3")
+
+p1 / p2
+```
+
+The benefits of the density plot in this situation are obvious: It is much easier to see whether our data is normally distributed or not when compared to a reference plot. However, we still might struggle to determine normality just by these plots, because it depends on how high or low we set `bw`.
+
+Luckily, there is also a statistical method to test whether our data is normally distributed: The Shapiro-Wilk test. This test compares our distribution with a normal distribution (like in our plot) and tells us whether our distribution is **significantly different** from it. Thus, if the test is not significant the distribution of our data is not significantly different from a normal distribution, or in simple terms: It is normally distributed. We can run the test in R as follows:
 
 ```{r Shapiro Wilk test, echo=TRUE}
 shapiro.test(imdb_top_250$runtime_min)
 ```
 
-According to this result, we have to accept that our data is not normally distributed, because it is significantly different from it (p\<0.05). We look at significance and its meaning more thoroughly in the next chapter (Chapter \@ref(correlations).
+According to this result, we have to accept that our data is not normally distributed, because it is significantly different from it (p\<0.05). We look at significance and its meaning more thoroughly in the next chapter (Chapter \@ref(correlations)).
 
 #### Violin plot: Your smooth boxplot {#violin-plot}
 
@@ -500,9 +575,11 @@ imdb_top_250 %>%
   coord_flip()
 ```
 
-It looks exactly like the density plot we plotted earlier (see Figure \@ref(fig:density-vs-normal). The interpretation largely remains the same to a density plot. At this point, it is fair to say that we enter 'fashion' territory. It is really up to your taste which visualisation you prefer, because they are largely similar, but offer nuances that some data sets might require.
+It looks exactly like the density plot we plotted earlier (see Figure \@ref(fig:density-vs-normal). The interpretation largely remains the same to a density plot as well. The relationship between the boxplot and the violin plot lies in the symmetry of the violin plot.
 
-I cannot finish this chapter without sharing with you one of the most popular uses of half-violin plots: The rain cloud plot. It is a combination of a dot plot with a density plot, but the dots are based on a frequency table like a bar plot.
+At this point, it is fair to say that we enter 'fashion' territory. It is really up to your taste which visualisation you prefer, because they are largely similar, but offer nuances that some data sets might require.
+
+Lastly, I cannot finish this chapter without sharing with you one of the most popular uses of half-violin plots: The rain cloud plot. It is a combination of a dot plot with a density plot. Each dot represents a movie in our dataset. This creates the appearance of a cloud with rain drops. There are several packages available that can create such a plot. Here I used the `see` package.
 
 ```{r Rain cloud plot, echo=TRUE}
 imdb_top_250 %>%
@@ -513,4 +590,328 @@ imdb_top_250 %>%
   coord_flip()
 ```
 
-`CONTINUE FROM HERE AND REVISIT LAST SENTENCE`
+### QQ plot: A 'cute' plot to check for normality in your data {#qq-plot}
+
+The QQ plot is an alternative to comparing distributions to a normality curve. Instead of a curve, we plot a line which represents the quantiles of our data against the quantiles of a normal distribution. The term 'quantile' can be somewhat confusing, especially after learning about the boxplot, which shows quartiles. There is a relationship between these terms. Consider the following comparison:
+
+-   $1^{st}$ Quartile = $25^{th}$ percentile = 0.25 quantile
+
+-   $2^{nd}$ Quartile = $50^{th}$ percentile = 0.50 quantile = median
+
+-   $3^{rd}$ Quartile = $75^{th}$ percentile = 0.75 quantile
+
+With these definitions out of the way, let's plot some quantiles against each other.
+
+```{r QQ plot, echo=TRUE}
+imdb_top_250 %>%
+  ggplot(aes(sample = runtime_min)) +
+  geom_qq() +
+  geom_qq_line(colour = "red")+
+  annotate("text",
+           label = "The 5h long movie",
+           x = 2.5,
+           y = 308,
+           size = 3)
+```
+
+The function `geom_qq()` is responsible for creating the dots, while `geom_qq_line` creates a reference for a normal distribution. The reference line is drawn in such a way that it touches the quartiles of our distribution. Ideally, we would want that all dotes are firmly aligned with each other. Unfortunately, this is not the case in our dataset. At the top and at the bottom we have points that deviate quite far from a normal distribution. Remember the five hour long movie? It is very far away from the rest of the other movies in our dataset.
+
+### Standard deviation: Your average deviation from the mean {#standard-deviation}
+
+I left the most commonly reported statistics for the spread of data last. The main reasons for this lies in the fact that one easily jumps ahead to look at the standard deviation without ever considering plotting the distribution in the first place. Similar to the mean and other numeric indicators, they could potentially convey the wrong impression. Nevertheless, the standard deviation is an import measure.
+
+To understand what the standard deviation is, we can consider the following visualisation:
+
+```{r Standard deviation visualised p1, echo=TRUE}
+runtime_mean <- mean(imdb_top_250$runtime_min)
+
+imdb_top_250 %>% 
+  select(title, runtime_min) %>% 
+  ggplot(aes(x = title, y = runtime_min)) +
+  geom_point() +
+  geom_hline(aes(yintercept = runtime_mean, colour = "red"), show.legend = FALSE) +
+  
+  # Making the plot a bit more pretty
+  theme(axis.text.x = element_blank(),         # Removes movie titles
+        panel.grid.major = element_blank(),    # Removes grid lines
+        panel.background = element_blank()     # Turns background white
+        ) +
+  ylab("run time") +
+  xlab("movies")
+```
+
+The red line represent the mean runtime for all movies in the dataset, which is 129 minutes. We notice that the points are falling around the mean, but not really directly on it. In other words, there are not many movies that are about 129 minutes long. We make this visualisation even more meaningful if we sorted the movies by their runtime. We can also change the shape of the dots (see also Chapter \@ref(correlations) by using the attribute `shape`. This helps to plot many dots without having them overlap.
+
+```{r Standard deviation visualised p2, echo=TRUE}
+imdb_top_250 %>% 
+  select(title, runtime_min) %>% 
+  ggplot(aes(x = reorder(title, runtime_min), y = runtime_min)) +
+  geom_point(shape = 124) +
+  geom_hline(aes(yintercept = runtime_mean, colour = "red"), show.legend = FALSE) +
+  
+  theme(axis.text.x = element_blank(),    
+        panel.grid.major = element_blank(),
+        panel.background = element_blank()
+        ) +
+  ylab("run time") +
+  xlab("movies")
+```
+
+As we can see, there is only a small fraction of movies that are close to the mean. If we now consider the distance of each dot from the red line, we know how much each dot, i.e. each movie, deviates from the mean. The standard deviation tells us how much the runtime deviates on average. To be more specific, to compute the standard deviation by hand you would:
+
+-   subtract the mean runtime from the runtime of each movie and square it, i.e. $deviations = (runtime\_min - mean_{all\ movies})^2$,
+
+-   then we take the sum of all deviations and divide it by the number of movies minus 1, i.e. $\frac{\sum(deviations)}{250-1}$, and because we squared the deviations,
+
+-   we take the square root of this score, i.e. $\sqrt{\frac{\sum(deviations)}{250-1}}$.
+
+We could compute this by hand if we wanted, but it is much simpler to use the function`sd()` to achieve the same. The result shows that movies tend to be about 32 minutes longer or shorter than the average movie. This seems quite long.
+
+```{r Computed SD}
+sd(imdb_top_250$runtime_min)
+```
+
+However, we have to be aware that this score is also influenced by the outliers we detected before. As such, if standard deviations in your data appear quite large, it likely is due to outliers and you should investigate further. Needless to say, plotting your data will undoubtedly help to diagnose any outliers.
+
+### Dealing with outliers {#dealing-with-outliers}
+
+In this Chapter, I referred to outliers many times but never eluded to the aspects of handling them. Dealing with outliers is similar to dealing with missing data. It is not quite as straightforward as one might think.
+
+In a first step, we need to determine which values count as an outlier. @aguinis2013best reviewed 232 journal articles and found that scholars had defined outliers in 14 different ways, used 39 different techniques to detect them and applied 20 different strategies to handle them. It would be impossible to work through all different options in this book. However, I want to offer two options that have been frequently considered in publications in the field of Social Sciences:
+
+-   the standard deviation
+
+-   the inter-quartile range
+
+#### Detecting outliers using the standard deviation {#ouliers-standard_deviation}
+
+A very frequently used approach to detecting outliers is the use of the standard deviation. Usually, scholars use multiples of the standard deviation to determine thresholds. For example, a value that lies 3 standard deviations above or below the mean could be categorised as an outlier. Unfortunately, there is quite some variability regarding how many multiples of the standard deviation counts as an outlier. Some authors might use 3, others might settle for 2 (see also @leys2013detecting). Let's stick with the definition of 3 standard deviations to begin with. We can revisit our previous plot and add lines which show the thresholds above and below the mean.
+
+```{r Outlier detection usind 3 sd, echo=TRUE}
+# Compute the mean and standard deviation
+runtime_mean <- mean(imdb_top_250$runtime_min)
+sd_upper <- runtime_mean + 3 * sd(imdb_top_250$runtime_min)
+sd_lower <- runtime_mean - 3 * sd(imdb_top_250$runtime_min)
+
+# Create our plot
+imdb_top_250 %>% 
+  select(title, runtime_min) %>% 
+  ggplot(aes(x = reorder(title, runtime_min), y = runtime_min)) +
+  geom_point(shape = 124) +
+  geom_hline(aes(yintercept = runtime_mean, colour = "red"), show.legend = FALSE) +
+  geom_hline(aes(yintercept = sd_upper, color = "blue"), show.legend = FALSE) +
+  geom_hline(aes(yintercept = sd_lower, color = "blue"), show.legend = FALSE) +
+  
+  theme(axis.text.x = element_blank(),    
+        panel.grid.major = element_blank(),
+        panel.background = element_blank()
+        ) +
+  ylab("run time") +
+  xlab("movies")
+```
+
+The results suggests that only very few outliers would be detected if we chose these thresholds. Especially 'Sherlock Jr.', the shortest movie in our dataset would not classify as an outlier. How about we choosen two standard deviations instead?
+
+```{r Outlier detection usind 2 sd, echo=TRUE}
+# Compute the mean and standard deviation
+runtime_mean <- mean(imdb_top_250$runtime_min)
+sd_upper <- runtime_mean + 2 * sd(imdb_top_250$runtime_min)
+d_lower <- runtime_mean - 2 * sd(imdb_top_250$runtime_min)
+
+# Create our plot
+imdb_top_250 %>% 
+  select(title, runtime_min) %>% 
+  ggplot(aes(x = reorder(title, runtime_min), y = runtime_min)) +
+  geom_point(shape = 124) +
+  geom_hline(aes(yintercept = runtime_mean, colour = "red"), show.legend = FALSE) +
+  geom_hline(aes(yintercept = sd_upper, color = "blue"), show.legend = FALSE) +
+  geom_hline(aes(yintercept = sd_lower, color = "blue"), show.legend = FALSE) +
+  
+  theme(axis.text.x = element_blank(),    
+        panel.grid.major = element_blank(),
+        panel.background = element_blank()
+        ) +
+  ylab("run time") +
+  xlab("movies")
+
+```
+
+As we would expect, we identify some more movies as being outliers. Still, it feels rather arbitrary to choose a threshold of our liking. Despite its popularity, there are additional problems with this approach:
+
+-   outliers affect our mean and standard deviation too,
+
+-   since we use the mean, we assume that our data is normally distributed, and
+
+-   in smaller samples, this approach might result in not identifying outliers at all (despite their presence) (@leys2013detecting, p. 764)
+
+@leys2013detecting propose an alternative approach, based on the fact that medians are much less vulnerable to outliers than the mean. Similarly to the standard deviation, it is possible to calculate thresholds using the 'median absolute deviation' (MAD). Best of all, the function `mad()` in R does this automatically for us. @leys2013detecting suggest to use 2.5 times the MAD as a threshold. However, if we want to compare directly how well this option does against the standard deviation, we should `3` again.
+
+```{r Outlier detection via median MAD3, echo=TRUE}
+# Compute the median and thresholds
+runtime_median <- median(imdb_top_250$runtime_min)
+mad_upper <- runtime_median + 3 * mad(imdb_top_250$runtime_min)
+mad_lower <- runtime_median - 3 * mad(imdb_top_250$runtime_min)
+
+# Create our plot
+imdb_top_250 %>% 
+  select(title, runtime_min) %>% 
+  ggplot(aes(x = reorder(title, runtime_min), y = runtime_min)) +
+  geom_point(shape = 124) +
+  geom_hline(aes(yintercept = runtime_median, colour = "red"), show.legend = FALSE) +
+  geom_hline(aes(yintercept = mad_upper, color = "blue"), show.legend = FALSE) +
+  geom_hline(aes(yintercept = mad_lower, color = "blue"), show.legend = FALSE) +
+  
+  theme(axis.text.x = element_blank(),    
+        panel.grid.major = element_blank(),
+        panel.background = element_blank()
+        ) +
+  ylab("run time") +
+  xlab("movies")
+```
+
+Compared to our previous results, we notice that the median approach was much better in detecting outliers at the upper range of `runtim_min`. Because the median is not affected so much by the five hour-long movie, the results have improved. Still, we would not classify the outlier at the bottom for the shortest movie in the data. If we chose the criterion of 2.5\*MAD, we would also get this outlier (see Figure \@ref(fig:MAD2-outlier-detection)).
+
+```{r Outlier detection via median MAD2, echo=FALSE, fig.cap="Outlier detection via MAD using `2.5 * MAD` as a threshold", label = "MAD2-outlier-detection"}
+# Compute the median and thresholds
+runtime_median <- median(imdb_top_250$runtime_min)
+mad_upper <- runtime_median + 2.5 * mad(imdb_top_250$runtime_min)
+mad_lower <- runtime_median - 2.5 * mad(imdb_top_250$runtime_min)
+
+# Create our plot
+imdb_top_250 %>% 
+  select(title, runtime_min) %>% 
+  ggplot(aes(x = reorder(title, runtime_min), y = runtime_min)) +
+  geom_point(shape = 124) +
+  geom_hline(aes(yintercept = runtime_median, colour = "red"), show.legend = FALSE) +
+  geom_hline(aes(yintercept = mad_upper, color = "blue"), show.legend = FALSE) +
+  geom_hline(aes(yintercept = mad_lower, color = "blue"), show.legend = FALSE) +
+  
+  theme(axis.text.x = element_blank(),    
+        panel.grid.major = element_blank(),
+        panel.background = element_blank()
+        ) +
+  ylab("run time") +
+  xlab("movies")
+```
+
+Which approach to choose can be informed by the normality of your data. If your data is normally distributed, the mean and median would be very close to each other and the results from both approach would return very similar results. However, if your data is not normally distributed, it might be better to classify outliers using the median.
+
+#### Detecting outliers using the interquartile range {#outliers-iqr}
+
+Another approach to classify outliers is the use of the interquartile range (IQR). This one is used in boxplots and creates the dots at its ends to indicate any outliers. This approach is very easy to implement because the computation of the IQR is simple:
+
+::: {#iqr-formula align="center"}
+$IQR = Q_{3}-Q_{1}$
+:::
+
+Therefore, we can create new thresholds for the detection of outliers. For IQR it is common to use '1.5 \* IQR' as the lower and upper thresholds.
+
+```{r IQR as a threshold for outliers, echo=TRUE}
+# Compute the median and thresholds
+runtime_median <- median(imdb_top_250$runtime_min)
+iqr_upper <- runtime_median + 1.5 * IQR(imdb_top_250$runtime_min)
+iqr_lower <- runtime_median - 1.5 * IQR(imdb_top_250$runtime_min)
+
+# Create our plot
+imdb_top_250 %>% 
+  select(title, runtime_min) %>% 
+  ggplot(aes(x = reorder(title, runtime_min), y = runtime_min)) +
+  geom_point(shape = 124) +
+  geom_hline(aes(yintercept = runtime_median, colour = "red"), show.legend = FALSE) +
+  geom_hline(aes(yintercept = iqr_upper, color = "blue"), show.legend = FALSE) +
+  geom_hline(aes(yintercept = iqr_lower, color = "blue"), show.legend = FALSE) +
+  
+  theme(axis.text.x = element_blank(),    
+        panel.grid.major = element_blank(),
+        panel.background = element_blank()
+        ) +
+  ylab("run time") +
+  xlab("movies")
+```
+
+As we can tell, the IQR detects much more outliers for our data than any of the previous methods. The outliers we find here are the same as shown in Figure \@ref(fig:a-boxplot).
+
+For our data it seems that the MAD by @leys2013detecting produced the 'best' selection. However, we have to acknowledge that these classifications will always be subjective, because the decision of how we position the thresholds is still depending on the researcher's choice.
+
+#### Removing or replacing outliers {#removing-or-replacing-outliers}
+
+Now that we have identified our outliers we are confronted with the question what we should do with them. Similar to missing data (see Chapter \@ref(dealing-with-missing-data)) we can either remove them or replace them with other values. While removal is a fairly simple task, replacing it with other 'reasonable' values implies that we need to find techniques to create such values. As you may remember, we were confronted with a similar problem before when we looked into missing data (Chapter \@ref(dealing-with-missing-data). The same techniques, especially multiple imputation [see @cousineau2010outliers], can be used for such scenarios as well.
+
+Irrespective of whether we remove or replace outliers, we somehow need to single them out of the crowd. Since the MAD strategy worked well for our data, we can use the thresholds we defined before, i.e. `mad_upper` and `mad_lower`. Therefore, an observation (i.e. a movie) is considered as an outlier if:
+
+-   its value lies above `mad_upper`, or
+
+-   its value lies below `mad_lower`
+
+It becomes clear that we somehow need to define a condition, because if it is an outlier, it should be labelled as one, if not then it should not be labelled as one. Ideally we want a new column in our dataset which indicates whether a movie is an outlier (i.e. outlier = TRUE) or not (outlier = FALSE). R offers a way for us to express such conditions with the function `ifelse()`. It has the following structure:
+
+::: {#ifelse-function align="center"}
+`ifelse(condition, TRUE, FALSE)`
+:::
+
+Let's formulate a sentence that describes our scenario as an `ifelse()` function:
+
+-   If a movie's `runtime_min` is longer than `mad_upper`, [or]{.ul}
+
+-   if a movie's `runtime_min` is lower than `mad_lower`,
+
+-   classify this movie as an outlier (i.e. `TRUE`),
+
+-   otherwise classify this movie as not being an outlier (i.e. `FALSE`).
+
+We already know from Chapter \@ref(basic-computations-in-r) how to use logical and arithmetic operators. All we have to do is put them together in one function call.
+
+```{r Classifying outliers with MAD, echo=TRUE}
+imdb_top_250 <- imdb_top_250 %>% 
+  mutate(outlier = ifelse(runtime_min > mad_upper | runtime_min < mad_lower,
+                          TRUE, FALSE))
+```
+
+Since we have a classification we can more thoroughly inspect our outliers and see which movies are the ones that are lying outside our defined norm. We can `arrange()` them by `runtime_min`.
+
+```{r List the outliers, echo=TRUE}
+imdb_top_250 %>% 
+  filter(outlier == "TRUE") %>% 
+  select(title, runtime_min, outlier) %>% 
+  arrange(runtime_min)
+```
+
+The list of movies contains some of the most iconic Hollywood films ever shown on screen. I think we can agree that most of them are truly outside the norm of regular movies, not just in terms of runtime.
+
+From here it is simple to remove these movies (i.e. keep the movies that are not outliers) or set their values to `NA` by writing the following lines of code. We replace the values with `NA` we can the continue with one of the techniques demonstrated for missing values (Chapter \@ref(dealing-with-missing-data).
+
+```{r Remove and replacing outliers, echo=TRUE, results='hide'}
+# Keep all movies that are not outliers
+imdb_top_250 %>% 
+  filter(outlier == "FALSE")
+
+# Replace values with NA
+imdb_top_250 %>% 
+  mutate(runtime_min = replace(runtime_min, outlier == "TRUE", NA))
+```
+
+The `replace()` function is very intuitive to use. It first needs to know where you want to replace a value (`runtime_min`), then what the condition for replacing is (`outlier == "TRUE"`), and lastly, which value should be put instead of the original one (`NA`).
+
+As you hopefully noticed, understanding your data requires some effort, but it is important to know your data well before proceeding to any further analysis. You can experiment with different data visualisations and design them in a way that best reflect the message you want to get across. For example, because we have now a separate variable which classifies outliers we can do more with our data visualisation than before and dress it up a bit more nicely.
+
+```{r Final plot to show outliers, echo=TRUE, warning=FALSE}
+colour_pal <- wesanderson::wes_palette("Darjeeling1", 11, type = "continuous")
+
+imdb_top_250 %>% 
+  ggplot(aes(x = reorder(genre_01, runtime_min),
+             y = runtime_min,
+             colour = genre_01)
+         ) +
+  geom_boxplot(alpha = 0,
+               show.legend = FALSE) +
+  geom_jitter(width = 0.1,
+              size = 0.5,
+              alpha = 0.5,
+              show.legend = FALSE) +
+  scale_color_manual(values = colour_pal) +
+  coord_flip() +
+  theme(panel.background = element_blank())+
+  xlab("runtime") +
+  ylab("Genre") +
+  ggtitle("Distribution of movie runtimes by genre")
+```
