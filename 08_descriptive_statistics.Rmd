@@ -313,32 +313,50 @@ The boxplot is a staple in visualising descriptive statistics. If offers so much
 For example, we might be interested to know how long most movies run. Our gut feeling might tell us that most movies are probably around 2 hours long. One approach to find out is a boxplot, which we used before.
 
 ```{r Box plot, fig.cap="A boxplot", label="a-boxplot", echo=TRUE}
+# Text for annotations
+longest_movie <- imdb_top_250 %>%
+  filter(runtime_min == max(runtime_min)) %>%
+  select(title)
+
+shortest_movie <- imdb_top_250 %>%
+  filter(runtime_min == min(runtime_min)) %>%
+  select(title)
+
+# Create the pot
 imdb_top_250 %>%
   ggplot(aes(runtime_min)) +
   geom_boxplot() +
   annotate("text",
-           label = "Gangs of Wasseypur \n (321 min)",
+           label = glue::glue("{longest_movie}
+                              ({max(imdb_top_250$runtime_min)} min)"),
            x = 310,
            y = 0.05,
            size = 2.5) +
   annotate("text",
-           label = "Sherlock Jr. \n (45 min)",
+           label = glue::glue("{shortest_movie}
+                              ({min(imdb_top_250$runtime_min)} min)"),
            x = 45,
            y = 0.05,
            size = 2.5)
 ```
 
-The results indicate that most movies are between 100 to 150 minutes long. Our intuition was right. We find that one movie is even over 300 minutes long, i.e. over 5 hours: 'Gangs of Wasseypur'. In contrast, the shortest movie only lasts 45 minutes and is called 'Sherlock Jr.'. I added annotations using `annotate()` to highlight these two movies in the plot. Both movies would also count as outliers in our dataset (see Chapter \@ref(outliers-iqr).
+The results indicate that most movies are between 100 to 150 minutes long. Our intuition was right. We find that one movie is even over 300 minutes long, i.e. over 5 hours: 'Gangs of Wasseypur'. In contrast, the shortest movie only lasts 45 minutes and is called 'Sherlock Jr.'. I added annotations using `annotate()` to highlight these two movies in the plot. A very useful package for annotations is `glue`, which allows to combine text with data. So, instead of looking up the titles of the longest and shortest movie, I used the `filter()` and `select()` functions to find them automatically. This has the great advantage that if I wanted to update my data, the name of the longest movie might change. However, I do not have to look it up again by hand.
+
+As we can see from our visualisation, both movies would also count as outliers in our dataset (see Chapter \@ref(outliers-iqr).
 
 #### Histogram: Do not mistake it as a bar plot
 
 Another frequently used approach to show the spread (or distribution) of data is the histogram. The histogram easily gets confused with a bar plot. However, you would be very mistaken to assume that they are the same. Some key differences between these two types of plots is summarised in Table \@ref(tab:histogram-vs-bar-plot).
 
++----------------------------------------------------------------------+--------------------------------------------------------------------+
 | Histogram                                                            | Bar plot                                                           |
-|----------------------------------------------------------------------|--------------------------------------------------------------------|
++======================================================================+====================================================================+
 | Used to show the distribution of non-categorical data                | Used for showing the frequency of categorical data, i.e. `factor`s |
++----------------------------------------------------------------------+--------------------------------------------------------------------+
 | Each bar (also called 'bin') represents a group of observations.     | Each bar represents one category (or level) in our `factor`.       |
++----------------------------------------------------------------------+--------------------------------------------------------------------+
 | The order of the bars is important and cannot/should not be changed. | The order of bars is arbitrary and can be reordered if meaningful. |
++----------------------------------------------------------------------+--------------------------------------------------------------------+
 
 : (\#tab:histogram-vs-bar-plot) Histogram vs bar plot
 
@@ -626,7 +644,7 @@ imdb_top_250 %>%
   ggplot(aes(x = title, y = runtime_min)) +
   geom_point() +
   geom_hline(aes(yintercept = runtime_mean, colour = "red"), show.legend = FALSE) +
-  
+
   # Making the plot a bit more pretty
   theme(axis.text.x = element_blank(),         # Removes movie titles
         panel.grid.major = element_blank(),    # Removes grid lines

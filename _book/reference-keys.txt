@@ -92,3 +92,9 @@ removing-or-replacing-outliers
 tab:different-correlations
 plotting-correlations
 simpsons-paradox
+tab:effect-size-cohen
+limitations-of-correlations
+fig:illustration-spurious-correlation
+significance
+correlations-are-not-causal-relationships
+correlations-can-be-spurious
