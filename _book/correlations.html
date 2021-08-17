@@ -24,7 +24,7 @@
 <meta name="author" content="Daniel Dauber" />
 
 
-<meta name="date" content="2021-08-13" />
+<meta name="date" content="2021-08-16" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -53,6 +53,10 @@
 
 <link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
+<script src="libs/viz-1.8.2/viz.js"></script>
+<link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+<script src="libs/grViz-binding-1.0.6.1/grViz.js"></script>
 
 
 <style type="text/css">
@@ -120,6 +124,28 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -234,7 +260,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="9" data-path="correlations.html"><a href="correlations.html"><i class="fa fa-check"></i><b>9</b> Correlations</a>
 <ul>
 <li class="chapter" data-level="9.1" data-path="correlations.html"><a href="correlations.html#plotting-correlations"><i class="fa fa-check"></i><b>9.1</b> Plotting correlations</a></li>
-<li class="chapter" data-level="9.2" data-path="correlations.html"><a href="correlations.html#simpsons-paradox"><i class="fa fa-check"></i><b>9.2</b> Simpson’s Paradox: The limitations of correlations</a></li>
+<li class="chapter" data-level="9.2" data-path="correlations.html"><a href="correlations.html#significance"><i class="fa fa-check"></i><b>9.2</b> Significance: A way to help you judge your findings</a></li>
+<li class="chapter" data-level="9.3" data-path="correlations.html"><a href="correlations.html#limitations-of-correlations"><i class="fa fa-check"></i><b>9.3</b> Limitations of correlations</a>
+<ul>
+<li class="chapter" data-level="9.3.1" data-path="correlations.html"><a href="correlations.html#correlations-are-not-causal-relationships"><i class="fa fa-check"></i><b>9.3.1</b> Correlations are not causal relationships</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="correlations.html"><a href="correlations.html#correlations-can-be-spurious"><i class="fa fa-check"></i><b>9.4</b> Correlations can be spurious</a></li>
+<li class="chapter" data-level="9.5" data-path="correlations.html"><a href="correlations.html#simpsons-paradox"><i class="fa fa-check"></i><b>9.5</b> Simpson’s Paradox: When correlations betray you</a></li>
 </ul></li>
 <li class="chapter" data-level="10" data-path="comparing-groups.html"><a href="comparing-groups.html"><i class="fa fa-check"></i><b>10</b> Comparing groups</a></li>
 <li class="chapter" data-level="11" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>11</b> Regression: Creating models to predict future observations</a></li>
@@ -297,11 +329,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##   summary.parameters_kurtosis      datawizard
 ##   summary.parameters_skewness      datawizard</code></pre>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="correlations.html#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span></code></pre></div>
-<p>Sometimes counting and measuring means, medians and standard deviations is not enough, because they are all based on a single variable. Instead, we might have questions related to the relationship of two or more variables. In this section we will explore how correlations can (and kind of cannot - see Chapter <a href="correlations.html#simpsons-paradox">9.2</a>) provide insights into the following questions:</p>
+<p>Sometimes counting and measuring means, medians and standard deviations is not enough, because they are all based on a single variable. Instead, we might have questions related to the relationship of two or more variables. In this section we will explore how correlations can (and kind of cannot - see Chapter <a href="correlations.html#simpsons-paradox">9.5</a>) provide insights into the following questions:</p>
 <ul>
 <li><p>Do movie watchers agree with critics regarding the rating of movies?</p></li>
-<li><p>Are newer movies more popular than older ones?</p></li>
-<li><p>Have movies become longer over the past years?</p></li>
+<li><p>Do popular movies receive more votes from users than less popular movies?</p></li>
+<li><p>Do movies with more votes also make more money?</p></li>
 </ul>
 <p>There are many different ways of how one can compute the correlation and it partially depends on the type of data you want to relate. The ‘Pearson’s correlation’ is by far the most frequently used correlation technique for data that is normally distributed. On the other hand, if data is not normally distributed, we can opt for the ‘Spearman’s rank’ correlation. One could argue that the relationship between these two correlations is like the mean (Pearson) to the median (Spearman). Both approaches require numeric values to be computed properly. If our data is ordinal, or worse dichotomous (like a logical variables), we have to opt for different options.</p>
 <table>
@@ -338,7 +370,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>There are many more variations of correlations, which you can explore on the <a href="https://easystats.github.io/correlation/articles/types.html" target="blank" title="website of the package">website of the package</a> we will use in this chapter: <code>correlation</code>. We will primarily focus on Pearson and Spearman as the most commonly used correlation types in academic publications to understand the relationship between two variables. In addition, we also look at ‘partial correlations,’ which allow us to introduce a third variable into this mix.</p>
 <div id="plotting-correlations" class="section level2" number="9.1">
 <h2><span class="header-section-number">9.1</span> Plotting correlations</h2>
-<p>Since correlations only show the relationship between two variables, we can easily put one variable onto the x axis and one variable onto the y axis using a point cloud. We already used the function before, i.e. <code>geom_point()</code> and <code>geom_jitter</code>. Let’s try to answer our first research question, i.e. whether regular movie watchers and critics (people who review movies as a profession) rate the top 250 in the same way. One assumption could be that it does not matter whether you are a regular movie watcher or someone who does it professionally. After all, we are just human beings. A counter thesis could be that critics have a different perspective on movies and might use different evaluation criteria. Either way, we first need to identify the two variables of interest:</p>
+<p>Since correlations only show the relationship between two variables, we can easily put one variable onto the x axis and one variable onto the y axis creating a so-called ‘scatterplot.’ We used the functions to create scatterplots before, i.e. <code>geom_point()</code> and <code>geom_jitter</code>. Let’s try to answer our first research question, i.e. whether regular movie watchers and critics (people who review movies as a profession) rate the top 250 in the same way. One assumption could be that it does not matter whether you are a regular movie watcher or someone who does it professionally. After all, we are just human beings. A counter thesis could be that critics have a different perspective on movies and might use different evaluation criteria. Either way, we first need to identify the two variables of interest:</p>
 <ul>
 <li><p><code>imdb_rating</code> is based on IMDb users</p></li>
 <li><p><code>metascore</code> is based on movie critics</p></li>
@@ -346,78 +378,259 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="correlations.html#cb8-1" aria-hidden="true" tabindex="-1"></a>imdb_top_250 <span class="sc">%&gt;%</span></span>
 <span id="cb8-2"><a href="correlations.html#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(metascore)) <span class="sc">%&gt;%</span> </span>
 <span id="cb8-3"><a href="correlations.html#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(imdb_rating, metascore)) <span class="sc">+</span></span>
-<span id="cb8-4"><a href="correlations.html#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>()</span></code></pre></div>
+<span id="cb8-4"><a href="correlations.html#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>() <span class="sc">+</span></span>
+<span id="cb8-5"><a href="correlations.html#cb8-5" aria-hidden="true" tabindex="-1"></a>  see<span class="sc">::</span><span class="fu">theme_modern</span>()</span></code></pre></div>
 <p><img src="r_for_non_programmers_files/figure-html/Correlation%20between%20imdb_rating%20and%20metascore-1.png" width="672" /></p>
-<p>The results are, well, surprising. Some movies with low <code>imdb_ratings</code> received very high <code>metascore</code>s from the critics. Thus, we cannot see a clear relationship between user ratings and those of critics. The problematic question associated with this outcome is: Whom should I trust when renting the next movie?</p>
+<p>The results from our scatterplot are, well, somewhat random. We can see that some movies receive high <code>imdb_rating</code>s as well as high <code>metascore</code>s. However, there are also some movies that receive high <code>imdb_rating</code>s, but low <code>metascore</code>s. Overall, the points look like they are randomly scattered all over our canvas. The only visible pattern we can notice is that there are more movies at the lower end of the rating system relative to all the movies in the top 250. In fact, ther are only 2 movies which actually received an IMDb rating of over 9. Be aware, <code>geom_jitter()</code> makes it look like there were more than 9!).</p>
 <p>Since correlations only explain linear relationships, a perfect correlation would be represented by a straight line. Consider the following examples of correlations:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="correlations.html#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
-<span id="cb9-2"><a href="correlations.html#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-3"><a href="correlations.html#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Positive correlation of 0.89</span></span>
-<span id="cb9-4"><a href="correlations.html#cb9-4" aria-hidden="true" tabindex="-1"></a>cm <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
-<span id="cb9-5"><a href="correlations.html#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="sc">~</span>a,    <span class="sc">~</span>b,</span>
-<span id="cb9-6"><a href="correlations.html#cb9-6" aria-hidden="true" tabindex="-1"></a>     <span class="dv">1</span>,   <span class="fl">0.9</span>, </span>
-<span id="cb9-7"><a href="correlations.html#cb9-7" aria-hidden="true" tabindex="-1"></a>   <span class="fl">0.9</span>,     <span class="dv">1</span>)</span>
-<span id="cb9-8"><a href="correlations.html#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-9"><a href="correlations.html#cb9-9" aria-hidden="true" tabindex="-1"></a>means <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">4</span>)</span>
-<span id="cb9-10"><a href="correlations.html#cb9-10" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(MASS<span class="sc">::</span><span class="fu">mvrnorm</span>(<span class="at">n =</span> <span class="dv">100</span>, <span class="at">mu =</span> means, <span class="at">Sigma =</span> cm)) <span class="sc">%&gt;%</span> </span>
-<span id="cb9-11"><a href="correlations.html#cb9-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="st">&quot;x&quot;</span> <span class="ot">=</span> <span class="st">`</span><span class="at">1</span><span class="st">`</span>,</span>
-<span id="cb9-12"><a href="correlations.html#cb9-12" aria-hidden="true" tabindex="-1"></a>         <span class="st">&quot;y&quot;</span> <span class="ot">=</span> <span class="st">`</span><span class="at">2</span><span class="st">`</span>)</span>
-<span id="cb9-13"><a href="correlations.html#cb9-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-14"><a href="correlations.html#cb9-14" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(x, y)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">&quot;r = 0.89&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb9-15"><a href="correlations.html#cb9-15" aria-hidden="true" tabindex="-1"></a>  see<span class="sc">::</span><span class="fu">theme_modern</span>()</span>
-<span id="cb9-16"><a href="correlations.html#cb9-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-17"><a href="correlations.html#cb9-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Positive correlation of 0.30</span></span>
-<span id="cb9-18"><a href="correlations.html#cb9-18" aria-hidden="true" tabindex="-1"></a>cm <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
-<span id="cb9-19"><a href="correlations.html#cb9-19" aria-hidden="true" tabindex="-1"></a>    <span class="sc">~</span>a,   <span class="sc">~</span>b,</span>
-<span id="cb9-20"><a href="correlations.html#cb9-20" aria-hidden="true" tabindex="-1"></a>     <span class="dv">1</span>,  <span class="fl">0.3</span>,</span>
-<span id="cb9-21"><a href="correlations.html#cb9-21" aria-hidden="true" tabindex="-1"></a>   <span class="fl">0.3</span>,    <span class="dv">1</span></span>
-<span id="cb9-22"><a href="correlations.html#cb9-22" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb9-23"><a href="correlations.html#cb9-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-24"><a href="correlations.html#cb9-24" aria-hidden="true" tabindex="-1"></a>means <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">4</span>)</span>
-<span id="cb9-25"><a href="correlations.html#cb9-25" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(MASS<span class="sc">::</span><span class="fu">mvrnorm</span>(<span class="at">n =</span> <span class="dv">100</span>, <span class="at">mu =</span> means, <span class="at">Sigma =</span> cm)) <span class="sc">%&gt;%</span> </span>
-<span id="cb9-26"><a href="correlations.html#cb9-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="st">&quot;x&quot;</span> <span class="ot">=</span> <span class="st">`</span><span class="at">1</span><span class="st">`</span>,</span>
-<span id="cb9-27"><a href="correlations.html#cb9-27" aria-hidden="true" tabindex="-1"></a>         <span class="st">&quot;y&quot;</span> <span class="ot">=</span> <span class="st">`</span><span class="at">2</span><span class="st">`</span>)</span>
-<span id="cb9-28"><a href="correlations.html#cb9-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-29"><a href="correlations.html#cb9-29" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(x, y)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">&quot;r = 0.30&quot;</span>) <span class="sc">+</span></span>
-<span id="cb9-30"><a href="correlations.html#cb9-30" aria-hidden="true" tabindex="-1"></a>    see<span class="sc">::</span><span class="fu">theme_modern</span>()</span>
-<span id="cb9-31"><a href="correlations.html#cb9-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-32"><a href="correlations.html#cb9-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Negative correlation of -0.75</span></span>
-<span id="cb9-33"><a href="correlations.html#cb9-33" aria-hidden="true" tabindex="-1"></a>cm <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
-<span id="cb9-34"><a href="correlations.html#cb9-34" aria-hidden="true" tabindex="-1"></a>    <span class="sc">~</span>a,   <span class="sc">~</span>b,</span>
-<span id="cb9-35"><a href="correlations.html#cb9-35" aria-hidden="true" tabindex="-1"></a>     <span class="dv">1</span>,  <span class="sc">-</span><span class="fl">0.8</span>,</span>
-<span id="cb9-36"><a href="correlations.html#cb9-36" aria-hidden="true" tabindex="-1"></a>   <span class="sc">-</span><span class="fl">0.8</span>,    <span class="dv">1</span></span>
-<span id="cb9-37"><a href="correlations.html#cb9-37" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb9-38"><a href="correlations.html#cb9-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-39"><a href="correlations.html#cb9-39" aria-hidden="true" tabindex="-1"></a>means <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">4</span>)</span>
-<span id="cb9-40"><a href="correlations.html#cb9-40" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(MASS<span class="sc">::</span><span class="fu">mvrnorm</span>(<span class="at">n =</span> <span class="dv">100</span>, <span class="at">mu =</span> means, <span class="at">Sigma =</span> cm)) <span class="sc">%&gt;%</span> </span>
-<span id="cb9-41"><a href="correlations.html#cb9-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="st">&quot;x&quot;</span> <span class="ot">=</span> <span class="st">`</span><span class="at">1</span><span class="st">`</span>,</span>
-<span id="cb9-42"><a href="correlations.html#cb9-42" aria-hidden="true" tabindex="-1"></a>         <span class="st">&quot;y&quot;</span> <span class="ot">=</span> <span class="st">`</span><span class="at">2</span><span class="st">`</span>)</span>
-<span id="cb9-43"><a href="correlations.html#cb9-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-44"><a href="correlations.html#cb9-44" aria-hidden="true" tabindex="-1"></a>p3 <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(x, y)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">&quot;r = -0.75&quot;</span>) <span class="sc">+</span></span>
-<span id="cb9-45"><a href="correlations.html#cb9-45" aria-hidden="true" tabindex="-1"></a>    see<span class="sc">::</span><span class="fu">theme_modern</span>()</span>
-<span id="cb9-46"><a href="correlations.html#cb9-46" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-47"><a href="correlations.html#cb9-47" aria-hidden="true" tabindex="-1"></a><span class="co"># Negative correlation of -0.42</span></span>
-<span id="cb9-48"><a href="correlations.html#cb9-48" aria-hidden="true" tabindex="-1"></a>cm <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
-<span id="cb9-49"><a href="correlations.html#cb9-49" aria-hidden="true" tabindex="-1"></a>    <span class="sc">~</span>a,   <span class="sc">~</span>b,</span>
-<span id="cb9-50"><a href="correlations.html#cb9-50" aria-hidden="true" tabindex="-1"></a>     <span class="dv">1</span>,  <span class="sc">-</span><span class="fl">0.5</span>,</span>
-<span id="cb9-51"><a href="correlations.html#cb9-51" aria-hidden="true" tabindex="-1"></a>   <span class="sc">-</span><span class="fl">0.5</span>,    <span class="dv">1</span></span>
-<span id="cb9-52"><a href="correlations.html#cb9-52" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb9-53"><a href="correlations.html#cb9-53" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-54"><a href="correlations.html#cb9-54" aria-hidden="true" tabindex="-1"></a>means <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">4</span>)</span>
-<span id="cb9-55"><a href="correlations.html#cb9-55" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(MASS<span class="sc">::</span><span class="fu">mvrnorm</span>(<span class="at">n =</span> <span class="dv">100</span>, <span class="at">mu =</span> means, <span class="at">Sigma =</span> cm)) <span class="sc">%&gt;%</span> </span>
-<span id="cb9-56"><a href="correlations.html#cb9-56" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="st">&quot;x&quot;</span> <span class="ot">=</span> <span class="st">`</span><span class="at">1</span><span class="st">`</span>,</span>
-<span id="cb9-57"><a href="correlations.html#cb9-57" aria-hidden="true" tabindex="-1"></a>         <span class="st">&quot;y&quot;</span> <span class="ot">=</span> <span class="st">`</span><span class="at">2</span><span class="st">`</span>)</span>
-<span id="cb9-58"><a href="correlations.html#cb9-58" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-59"><a href="correlations.html#cb9-59" aria-hidden="true" tabindex="-1"></a>p4 <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(x, y)) <span class="sc">+</span> <span class="fu">geom_point</span>()  <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">&quot;r = -0.42&quot;</span>) <span class="sc">+</span></span>
-<span id="cb9-60"><a href="correlations.html#cb9-60" aria-hidden="true" tabindex="-1"></a>  see<span class="sc">::</span><span class="fu">theme_modern</span>()</span>
-<span id="cb9-61"><a href="correlations.html#cb9-61" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-62"><a href="correlations.html#cb9-62" aria-hidden="true" tabindex="-1"></a>p1 <span class="sc">+</span> p2 <span class="sc">+</span> p3 <span class="sc">+</span> p4</span></code></pre></div>
 <p><img src="r_for_non_programmers_files/figure-html/Examples%20of%20correlations-1.png" width="672" /></p>
-<p>A correlation can be either positive or negative and its score (i.e. <code>r</code>)</p>
+<p>A correlation can be either positive or negative and its score (i.e. <code>r</code> in case of Pearson) can range from -1 to 1:</p>
+<ul>
+<li><p>-1 defines a perfectly negative correlation,</p></li>
+<li><p>0 defines no correlation (completely random), and</p></li>
+<li><p>1 defines a perfectly positive correlation.</p></li>
+</ul>
+<p>In other words, the further the score is away from zero, the stronger is the relationship between variables. We also have benchmarks which we can use to asses the strength of a relationship, for example the one by <span class="citation"><a href="#ref-cohen1988statistical" role="doc-biblioref">Cohen</a> (<a href="#ref-cohen1988statistical" role="doc-biblioref">1988</a>)</span>. The strength of the relationship is also called ‘effect size.’ Table <a href="correlations.html#tab:effect-size-cohen">9.2</a> shows the relevant benchmarks. Note that effect sizes are always provided as absolute figures. Therefore, -0.4 would also count as a moderate relationship.</p>
+<table>
+<caption><span id="tab:effect-size-cohen">Table 9.2: </span> Assessing effect size of relationships according to Cohen (1988)</caption>
+<thead>
+<tr class="header">
+<th>effect size</th>
+<th>interpretation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>r &lt; 0.1</td>
+<td>very small</td>
+</tr>
+<tr class="even">
+<td>0.1 <span class="math inline">\(\leq\)</span> r &lt; 0.3</td>
+<td>small</td>
+</tr>
+<tr class="odd">
+<td>0.3 <span class="math inline">\(\leq\)</span> r &lt; 0.5</td>
+<td>moderate</td>
+</tr>
+<tr class="even">
+<td>r <span class="math inline">\(\geq\)</span> 0.5</td>
+<td>large</td>
+</tr>
+</tbody>
+</table>
+<p>If we compare the plot from our data with the sample plots, we would come to the conclusion that the relationship is weak, and therefore the <code>r</code> must be close to zero as well. We can test this with the Pearson correlation.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="correlations.html#cb9-1" aria-hidden="true" tabindex="-1"></a>imdb_top_250 <span class="sc">%&gt;%</span> </span>
+<span id="cb9-2"><a href="correlations.html#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(imdb_rating, metascore) <span class="sc">%&gt;%</span> </span>
+<span id="cb9-3"><a href="correlations.html#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">correlation</span>()</span></code></pre></div>
+<pre><code>## # Correlation Matrix (pearson-method)
+## 
+## Parameter1  | Parameter2 |    r |        95% CI | t(214) |     p
+## ----------------------------------------------------------------
+## imdb_rating |  metascore | 0.08 | [-0.06, 0.21] |   1.11 | 0.270
+## 
+## p-value adjustment method: Holm (1979)
+## Observations: 216</code></pre>
+<p>Indeed, our analysis reveals that the effect size is very small (r = 0.08 &lt; 0.1). Therefore, critics appear to rate movies differently than regular movie watchers. This triggers an interesting follow-up question: Which movie is the most controversial, i.e. where is the difference between <code>imdb_rating</code> and <code>metascore</code> the highest?</p>
+<p>We can answer this question with the tools we already know. We create a new variable to subtract the <code>metascore</code> from the <code>imdb_rating</code> and plot it. We have to make sure both scales are the same length. The variable <code>imdb_rating</code> ranges from 0-10, but the <code>metascore</code> ranges from 0-100. As such, I used the percentile score instead by dividing the scores by 10 and 100 respectively. Since plotting 250 movies would have been too much and would also not help us find the answer to our question, I chose arbitrary values to pick only those movies with the highest differences in scores. Feel free to adjust the filter to your liking to see more or less movies.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="correlations.html#cb11-1" aria-hidden="true" tabindex="-1"></a>plot <span class="ot">&lt;-</span> imdb_top_250 <span class="sc">%&gt;%</span></span>
+<span id="cb11-2"><a href="correlations.html#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">r_diff =</span> imdb_rating<span class="sc">/</span><span class="dv">10</span> <span class="sc">-</span> metascore<span class="sc">/</span><span class="dv">100</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb11-3"><a href="correlations.html#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(r_diff) <span class="sc">&amp;</span> r_diff <span class="sc">&gt;=</span> <span class="fl">0.25</span> <span class="sc">|</span> r_diff <span class="sc">&lt;=</span> <span class="sc">-</span><span class="fl">0.165</span>)</span>
+<span id="cb11-4"><a href="correlations.html#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="correlations.html#cb11-5" aria-hidden="true" tabindex="-1"></a>plot <span class="sc">%&gt;%</span></span>
+<span id="cb11-6"><a href="correlations.html#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(title, r_diff), <span class="at">y =</span> r_diff, <span class="at">label =</span> title)) <span class="sc">+</span> </span>
+<span id="cb11-7"><a href="correlations.html#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="fu">aes</span>(<span class="at">fill =</span> <span class="fu">ifelse</span>(r_diff <span class="sc">&gt;</span> <span class="dv">0</span>, <span class="st">&quot;Viewers&quot;</span>, <span class="st">&quot;Critics&quot;</span>))) <span class="sc">+</span> </span>
+<span id="cb11-8"><a href="correlations.html#cb11-8" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb11-9"><a href="correlations.html#cb11-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">x =</span> title, <span class="at">y =</span> <span class="dv">0</span>,</span>
+<span id="cb11-10"><a href="correlations.html#cb11-10" aria-hidden="true" tabindex="-1"></a>            <span class="at">label =</span> title),</span>
+<span id="cb11-11"><a href="correlations.html#cb11-11" aria-hidden="true" tabindex="-1"></a>            <span class="at">size =</span> <span class="fl">2.5</span>,</span>
+<span id="cb11-12"><a href="correlations.html#cb11-12" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb11-13"><a href="correlations.html#cb11-13" aria-hidden="true" tabindex="-1"></a>            <span class="co"># to adjust the labels of the plot</span></span>
+<span id="cb11-14"><a href="correlations.html#cb11-14" aria-hidden="true" tabindex="-1"></a>            <span class="at">vjust =</span> <span class="fu">ifelse</span>(plot<span class="sc">$</span>r_diff <span class="sc">&gt;=</span> <span class="dv">0</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span>),</span>
+<span id="cb11-15"><a href="correlations.html#cb11-15" aria-hidden="true" tabindex="-1"></a>            <span class="at">hjust =</span> <span class="fu">ifelse</span>(plot<span class="sc">$</span>r_diff <span class="sc">&gt;=</span> <span class="dv">0</span>, <span class="fl">1.05</span>, <span class="sc">-</span><span class="fl">0.05</span>)</span>
+<span id="cb11-16"><a href="correlations.html#cb11-16" aria-hidden="true" tabindex="-1"></a>            ) <span class="sc">+</span></span>
+<span id="cb11-17"><a href="correlations.html#cb11-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb11-18"><a href="correlations.html#cb11-18" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb11-19"><a href="correlations.html#cb11-19" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Cleaning up the plot to make it look more readable and colourful</span></span>
+<span id="cb11-20"><a href="correlations.html#cb11-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;#FFCE7D&quot;</span>, <span class="st">&quot;#7DC0FF&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb11-21"><a href="correlations.html#cb11-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.title =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb11-22"><a href="correlations.html#cb11-22" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.background =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb11-23"><a href="correlations.html#cb11-23" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.background =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb11-24"><a href="correlations.html#cb11-24" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb11-25"><a href="correlations.html#cb11-25" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.ticks =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb11-26"><a href="correlations.html#cb11-26" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.title =</span> <span class="fu">element_blank</span>()</span>
+<span id="cb11-27"><a href="correlations.html#cb11-27" aria-hidden="true" tabindex="-1"></a>        )</span></code></pre></div>
+<p><img src="r_for_non_programmers_files/figure-html/Biggest%20discrepancy%20in%20movie%20ratings-1.png" width="672" /></p>
+<p>Another question we posed at the beginning was: Do popular movies receive more votes from users than less popular movies? Our intuition might say ‘yes.’ More popular movies are likely seen by more people, which makes them more popular. Consequently, the more people have seen a movie, the more likely they might vote for this movie. For less popular movies, the oppposite should be true. Let’s create another scatterplot.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="correlations.html#cb12-1" aria-hidden="true" tabindex="-1"></a>imdb_top_250 <span class="sc">%&gt;%</span></span>
+<span id="cb12-2"><a href="correlations.html#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> imdb_rating, <span class="at">y =</span> votes)) <span class="sc">+</span> </span>
+<span id="cb12-3"><a href="correlations.html#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>()</span></code></pre></div>
+<p><img src="r_for_non_programmers_files/figure-html/Ratings%20vs%20votes-1.png" width="672" /></p>
+<p>The scatterplot shows some positive trend. Often, it can be touch to see the trend clearly. In order to impove our plot we can make use of the function <code>geom_smooth()</code>, which can help us draw a straight line that fits our data points the best. We need to set the <code>method</code> for drawing the line to <code>lm</code>, which stands for linear model. Remember, correlations assume a linear relationship between two variables.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="correlations.html#cb13-1" aria-hidden="true" tabindex="-1"></a>imdb_top_250 <span class="sc">%&gt;%</span></span>
+<span id="cb13-2"><a href="correlations.html#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> imdb_rating, <span class="at">y =</span> votes)) <span class="sc">+</span> </span>
+<span id="cb13-3"><a href="correlations.html#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>() <span class="sc">+</span></span>
+<span id="cb13-4"><a href="correlations.html#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>,</span>
+<span id="cb13-5"><a href="correlations.html#cb13-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">formula =</span> y <span class="sc">~</span> x,</span>
+<span id="cb13-6"><a href="correlations.html#cb13-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">se =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb13-7"><a href="correlations.html#cb13-7" aria-hidden="true" tabindex="-1"></a>              <span class="at">colour =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<p><img src="r_for_non_programmers_files/figure-html/Ratings%20vs%20votes%20plus%20regression%20line-1.png" width="672" /></p>
+<p>Another problem we face with this plot (and correlations) are extreme values, i.e. outliers. We already know that outliers tend to cause trouble for our analysis (see Chapter <a href="descriptive-statistics.html#dealing-with-outliers">8.3.3</a> and in correlations they can affect the strength of relationships. If we compute the the Pearson correlation with and without some of the outliers, the differences are very significant. Be aware, since we work with two variables at the same time, we should consider outliers on both. There our <code>filter()</code> will have to include two conditions.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="correlations.html#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The correlation with outliers</span></span>
+<span id="cb14-2"><a href="correlations.html#cb14-2" aria-hidden="true" tabindex="-1"></a>imdb_top_250 <span class="sc">%&gt;%</span></span>
+<span id="cb14-3"><a href="correlations.html#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(imdb_rating, votes) <span class="sc">%&gt;%</span></span>
+<span id="cb14-4"><a href="correlations.html#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">correlation</span>()</span></code></pre></div>
+<pre><code>## # Correlation Matrix (pearson-method)
+## 
+## Parameter1  | Parameter2 |    r |       95% CI | t(248) |         p
+## -------------------------------------------------------------------
+## imdb_rating |      votes | 0.59 | [0.51, 0.67] |  11.57 | &lt; .001***
+## 
+## p-value adjustment method: Holm (1979)
+## Observations: 250</code></pre>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="correlations.html#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define outliers</span></span>
+<span id="cb16-2"><a href="correlations.html#cb16-2" aria-hidden="true" tabindex="-1"></a>votes_out <span class="ot">&lt;-</span> <span class="fl">1.5</span><span class="sc">*</span><span class="fu">IQR</span>(imdb_top_250<span class="sc">$</span>votes) <span class="sc">+</span> <span class="fu">median</span>(imdb_top_250<span class="sc">$</span>votes)</span>
+<span id="cb16-3"><a href="correlations.html#cb16-3" aria-hidden="true" tabindex="-1"></a>imdb_r_out <span class="ot">&lt;-</span> <span class="fl">1.5</span><span class="sc">*</span><span class="fu">IQR</span>(imdb_top_250<span class="sc">$</span>imdb_rating) <span class="sc">+</span> <span class="fu">median</span>(imdb_top_250<span class="sc">$</span>imdb_rating)</span>
+<span id="cb16-4"><a href="correlations.html#cb16-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-5"><a href="correlations.html#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="co"># The correlation with outliers (based on 1.5 * IQR)</span></span>
+<span id="cb16-6"><a href="correlations.html#cb16-6" aria-hidden="true" tabindex="-1"></a>imdb_top_250 <span class="sc">%&gt;%</span></span>
+<span id="cb16-7"><a href="correlations.html#cb16-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(votes <span class="sc">&lt;</span>  votes_out <span class="sc">&amp;</span> imdb_rating <span class="sc">&lt;</span> imdb_r_out) <span class="sc">%&gt;%</span></span>
+<span id="cb16-8"><a href="correlations.html#cb16-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(imdb_rating, votes) <span class="sc">%&gt;%</span> </span>
+<span id="cb16-9"><a href="correlations.html#cb16-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">correlation</span>()</span></code></pre></div>
+<pre><code>## # Correlation Matrix (pearson-method)
+## 
+## Parameter1  | Parameter2 |    r |       95% CI | t(230) |         p
+## -------------------------------------------------------------------
+## imdb_rating |      votes | 0.31 | [0.19, 0.42] |   4.94 | &lt; .001***
+## 
+## p-value adjustment method: Holm (1979)
+## Observations: 232</code></pre>
+<p>While both correlations are highly significant (p &lt; 0.01), the drop in <code>r</code> from 0.59 to 0.31 is substantial. When we plot the data again, we can see that the dots are fairly randomly distributed across the plotting area. Thanks to <code>geom_smooth</code> we get an idea of a slight positive relationship between these two variables.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="correlations.html#cb18-1" aria-hidden="true" tabindex="-1"></a>imdb_top_250 <span class="sc">%&gt;%</span></span>
+<span id="cb18-2"><a href="correlations.html#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(votes <span class="sc">&lt;</span>  votes_out <span class="sc">&amp;</span> imdb_rating <span class="sc">&lt;</span> imdb_r_out) <span class="sc">%&gt;%</span></span>
+<span id="cb18-3"><a href="correlations.html#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> imdb_rating, <span class="at">y =</span> votes)) <span class="sc">+</span> </span>
+<span id="cb18-4"><a href="correlations.html#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>() <span class="sc">+</span></span>
+<span id="cb18-5"><a href="correlations.html#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>,</span>
+<span id="cb18-6"><a href="correlations.html#cb18-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">formula =</span> y <span class="sc">~</span> x,</span>
+<span id="cb18-7"><a href="correlations.html#cb18-7" aria-hidden="true" tabindex="-1"></a>              <span class="at">se =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb18-8"><a href="correlations.html#cb18-8" aria-hidden="true" tabindex="-1"></a>              <span class="at">colour =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<p><img src="r_for_non_programmers_files/figure-html/Scatterplot%20without%20outliers-1.png" width="672" /></p>
+<p>In conclusion, while there is some relationship between the rating and the number of votes, it is by far not as strong as we might have thought, especially after removing outliers, which had a considerable effect on the effect size.</p>
 </div>
-<div id="simpsons-paradox" class="section level2" number="9.2">
-<h2><span class="header-section-number">9.2</span> Simpson’s Paradox: The limitations of correlations</h2>
+<div id="significance" class="section level2" number="9.2">
+<h2><span class="header-section-number">9.2</span> Significance: A way to help you judge your findings</h2>
+<p>One of the most common pitfalls of novice statisticans is related to the interpretation of what counts as significant and not significant. Most basic tests offer a ‘p value,’ which stands for ‘probability value.’ The <code>p</code> value can range from 1 (for 100%) to 0 (for 0%) and implies:</p>
+<ul>
+<li><p>p = 1, there is a 100% chance that the result is a pure coincidence</p></li>
+<li><p>p = 0, there is a 0% chance that the results is a pure coincidence, i.e. we can be certain this is not just luck.</p></li>
+</ul>
+<p>Technically, we would not find that <code>p</code> is ever truly zero, and instead denote very small <code>p</code> values with <code>p &lt; 0.01</code> or even <code>p&lt; 0.001</code>.</p>
+<p>There are also commonly considered thresholds for the <code>p</code> value:</p>
+<ul>
+<li><p><span class="math inline">\(p &gt; 0.05\)</span>, the result is not significant. There is chance of 5% that our finding is a pure coincidence.</p></li>
+<li><p>p <span class="math inline">\(\leq 0.05\)</span> , the result is significant.</p></li>
+<li><p>p <span class="math inline">\(\leq 0.01\)</span>, the result is highly significant.</p></li>
+</ul>
+<p>We will cover more about the <code>p</code> value in Chapter <a href="comparing-groups.html#comparing-groups">10</a> and Chapter <a href="regression.html#regression">11</a>. For now, it is important to know that a significant correlation is one that we should look at more closely. Usually, correlations that nor significant suffer from low effect sizes. However, different samples can lead to different effect sizes and different significant levels. Consider the following examples:</p>
+<pre><code>## # Correlation Matrix (pearson-method)
+## 
+## Parameter1 | Parameter2 |    r |        95% CI | t(2) |     p
+## -------------------------------------------------------------
+## x          |          y | 0.77 | [-0.73, 0.99] | 1.73 | 0.225
+## 
+## p-value adjustment method: Holm (1979)
+## Observations: 4</code></pre>
+<pre><code>## # Correlation Matrix (pearson-method)
+## 
+## Parameter1 | Parameter2 |    r |       95% CI | t(10) |       p
+## ---------------------------------------------------------------
+## x          |          y | 0.77 | [0.36, 0.93] |  3.87 | 0.003**
+## 
+## p-value adjustment method: Holm (1979)
+## Observations: 12</code></pre>
+<p>In both examples <span class="math inline">\(r = 0.77\)</span>, but the sample sizes are different (4 vs 12) and the <code>p</code> values differ as well. In the first example <span class="math inline">\(p = 0.225\)</span>, which means the relationship is not significant, while in the second example, we find that <span class="math inline">\(p &lt; 0.01\)</span> and is therefore highly significant. As a general rule, we find that the bigger the sample, the more likely we find significant results, even though the effect size is small. Therefore, it is important to interpret correlations base on at least three factors:</p>
+<ul>
+<li><p>the <code>p</code> value, i.e. significance level</p></li>
+<li><p>the <code>r</code> value, i.e. the effect size, and</p></li>
+<li><p>the sample size.</p></li>
+</ul>
+<p>The interplay of all three can help determine whether a relationship is truly important. Therefore, when we include correlation tables in publications, we have to make sure we provide information about all three.</p>
+<p>It is common that we do not only compute correlations for two variables at a time, instead, we can do this for multiple variables simultaneously.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="correlations.html#cb21-1" aria-hidden="true" tabindex="-1"></a>imdb_top_250 <span class="sc">%&gt;%</span> </span>
+<span id="cb21-2"><a href="correlations.html#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(imdb_rating, metascore, year, votes, gross_in_m) <span class="sc">%&gt;%</span> </span>
+<span id="cb21-3"><a href="correlations.html#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">correlation</span>()</span></code></pre></div>
+<pre><code>## # Correlation Matrix (pearson-method)
+## 
+## Parameter1  | Parameter2 |     r |         95% CI |     t |  df |         p
+## ---------------------------------------------------------------------------
+## imdb_rating |  metascore |  0.08 | [-0.06,  0.21] |  1.11 | 214 | 0.539    
+## imdb_rating |       year |  0.03 | [-0.10,  0.15] |  0.42 | 248 | 0.678    
+## imdb_rating |      votes |  0.59 | [ 0.51,  0.67] | 11.57 | 248 | &lt; .001***
+## imdb_rating | gross_in_m |  0.21 | [ 0.07,  0.33] |  3.07 | 213 | 0.010**  
+## metascore   |       year | -0.41 | [-0.52, -0.30] | -6.63 | 214 | &lt; .001***
+## metascore   |      votes | -0.25 | [-0.37, -0.12] | -3.76 | 214 | 0.001**  
+## metascore   | gross_in_m | -0.13 | [-0.27,  0.01] | -1.83 | 193 | 0.207    
+## year        |      votes |  0.37 | [ 0.26,  0.47] |  6.29 | 248 | &lt; .001***
+## year        | gross_in_m |  0.36 | [ 0.23,  0.47] |  5.58 | 213 | &lt; .001***
+## votes       | gross_in_m |  0.56 | [ 0.46,  0.64] |  9.79 | 213 | &lt; .001***
+## 
+## p-value adjustment method: Holm (1979)
+## Observations: 195-250</code></pre>
+<p>If you have seen correlation tables before, you might find that <code>correlation()</code> does not produce the classic table by default. If you want it to look like the tables in publications, which are more compact but offers less information, you can use the function <code>summary()</code>.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="correlations.html#cb23-1" aria-hidden="true" tabindex="-1"></a>imdb_top_250 <span class="sc">%&gt;%</span> </span>
+<span id="cb23-2"><a href="correlations.html#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(imdb_rating, metascore, year, votes, gross_in_m) <span class="sc">%&gt;%</span> </span>
+<span id="cb23-3"><a href="correlations.html#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">correlation</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb23-4"><a href="correlations.html#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>()</span></code></pre></div>
+<pre><code>## # Correlation Matrix (pearson-method)
+## 
+## Parameter   | gross_in_m |   votes |     year | metascore
+## ---------------------------------------------------------
+## imdb_rating |     0.21** | 0.59*** |     0.03 |      0.08
+## metascore   |      -0.13 | -0.25** | -0.41*** |          
+## year        |    0.36*** | 0.37*** |          |          
+## votes       |    0.56*** |         |          |          
+## 
+## p-value adjustment method: Holm (1979)</code></pre>
+<p>This table also provides an answer to our final question, i.e. do movies with more votes earn more money. It appears as if this is true, because <span class="math inline">\(r = 0.56\)</span> and <span class="math inline">\(p &lt; 0.001\)</span>. In the classic correlation table you also see <code>*</code>. These stand for the difference significant levels:</p>
+<ul>
+<li><p><code>*</code>, i.e. <span class="math inline">\(p &lt; 0.05\)</span></p></li>
+<li><p><code>**</code>, i.e. <span class="math inline">\(p &lt; 0.01\)</span></p></li>
+<li><p><code>***</code>, i.e. <span class="math inline">\(p &lt; 0.001\)</span> (although you might find some do not use this as a separate level)</p></li>
+</ul>
+<p>In short, the more <code>*</code> there are attached to each value, the more significant a result. In other words, relationships with many <code>*</code> likely repeat if we collect data again.</p>
+</div>
+<div id="limitations-of-correlations" class="section level2" number="9.3">
+<h2><span class="header-section-number">9.3</span> Limitations of correlations</h2>
+<p>Correlations are useful, but only to some extend. The three most common limitations you should be aware of are:</p>
+<ul>
+<li><p>Correlations are not causal relationships</p></li>
+<li><p>Correlations can be spurious</p></li>
+<li><p>Correlations might only appear in sub-samples of your data</p></li>
+</ul>
+<div id="correlations-are-not-causal-relationships" class="section level3" number="9.3.1">
+<h3><span class="header-section-number">9.3.1</span> Correlations are not causal relationships</h3>
+<p>Correlations do not offer insights into causality, i.e. whether change in one variable causes change in the other variable. Correlations only provide insights into whether these two variables tend to change when one of them changes. Still, sometimes we can infer such causality by the nature of the variables. For example, in countries with heavy rain, more umbrellas are sold. It is apparent that buying more umbrellas will not cause more rain, but if there is more rain in a country, we rightly assume that there is a higher demand for umbrellas. If we can theorise the relationship between variables we would rather opt for a regression model instead of a correlation (see Chapter <a href="regression.html#regression">11</a>.</p>
+</div>
+</div>
+<div id="correlations-can-be-spurious" class="section level2" number="9.4">
+<h2><span class="header-section-number">9.4</span> Correlations can be spurious</h2>
+<p>Just because we find a relationship between two variables does not necessarily mean that are truly related to each other. Instead, it might be possible that a third variable is the reason for the relationship. We call relationships between variables that are cause by a third variable ‘spurious correlations.’ This third variable can either be part of our dataset or even something we have not measured at all. The latter case would make it impossible to investigate the relationship further. However, we can always test whether some of our variables affect the relationship between the two variables of interest. This can be done by using partial correlations. A partial correlation returns the relationship between two variables minus the relationship two a third variable.</p>
+<div class="figure"><span id="fig:illustration-spurious-correlation"></span>
+<div id="htmlwidget-f3d9213e1994eb53b4cc" style="width:672px;height:480px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-f3d9213e1994eb53b4cc">{"x":{"diagram":"\n      digraph boxes_and_circles {\n      graph [layout = circo]\n      \n      node [shape = circle,\n            style = filled]\n      \n      node [fillcolor = Salmon]\n      x\n\n      node [fillcolor = AliceBlue]\n      a b\n      \n      # edges\n      x -> {a b} [arrowsize = 0.5,\n                  dir = both]\n\n      a -> b [style = dashed, arrowsize = 0.5, dir = both,\n              fontsize = 8]\n              }\n      ","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<p class="caption">
+Figure 9.1: Illustration of a spurious correlation
+</p>
+</div>
+</div>
+<div id="simpsons-paradox" class="section level2" number="9.5">
+<h2><span class="header-section-number">9.5</span> Simpson’s Paradox: When correlations betray you</h2>
 
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-cohen1988statistical" class="csl-entry">
+Cohen, Jacob. 1988. <span>“Statistical Power Analysis for the Behavioral Sciences New York.”</span> <em>NY: Academic</em>, 54.
 </div>
 </div>
             </section>
@@ -477,6 +690,20 @@ gitbook.start({
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>
