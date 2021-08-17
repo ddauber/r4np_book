@@ -511,11 +511,20 @@ wvs_nona <- wvs %>%
   select(-participant_id) %>% 
   as.data.frame() %>%                  # Transforms our tibble into a data frame
   simputation::impute_knn(. ~ .)
+
+# Be aware that our new dataframe has different datatypes
+glimpse(wvs_nona)
+
+# Let's fix this
+wvs_nona <- wvs_nona %>% 
+  mutate(age = as.numeric(age),
+         freedom_of_choice = as.numeric(freedom_of_choice),
+         satisfaction = as.numeric(satisfaction))
 ```
 
 The function `impute_knn(. ~ .)` might look like a combination of text with an emoji `(. ~ .)`. This imputation function requires us to specify a model to impute the data. Since we want to impute all missing values in the dataset and use all variables available, we put `.` on both sides of the equation, separated by a `~`. The `.` reflects that we do not specify a specific variable but instead tell the function to use all variables that are not mentioned. In our case, we did not mention any variables at all, and therefore it chooses all of them. For example, if we wanted to impute only `freedom_of_choice`, we would have to put `impute_knn(freedom_of_choice ~ .)`. We will elaborate more on how to specify models when we cover regression models (see Chapter \@ref(regression)).
 
-As you will have noticed, we also had to convert our `tibble` into a `data frame` using `as.data.frame()`. As mentioned in Chapter \@ref(functions), some functions require a specific data type or format. The `simputation` package works with `dplyr`, but it prefers `data frame`s. Based on my experiences, the wrong data type or format is one of the most frequent causes of errors that novice R programmers report. So, keep an eye on it and read the documentation carefully.
+As you will have noticed, we also had to convert our `tibble` into a `data frame` using `as.data.frame()`. As mentioned in Chapter \@ref(functions), some functions require a specific data type or format. The `simputation` package works with `dplyr`, but it prefers `data frame`s. Based on my experiences, the wrong data type or format is one of the most frequent causes of errors that novice R programmers report. So, keep an eye on it and read the documentation carefully. Also, once you inspect the new data frame, you will notice that some of our double variables have now turned into character values. Therefore, I strongly recommend checking your newly created data frames to avoid any surprises further down the line of your analysis.
 
 Be aware that imputation of any kind can take a long time. For example, my MacBook Pro took about 4.22 seconds to complete `impute_knn()` with the `wvs` dataset. If we used multiple imputation, this would have taken considerably longer, i.e. several minutes and more.
 

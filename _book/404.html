@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>10 Comparing groups | R for Non-Programmers: A Guide for Social Scientists</title>
+  <title>Page not found | R for Non-Programmers: A Guide for Social Scientists</title>
   <meta name="description" content="This books is intended for Social Scientists. No matter whether you have years of experiences, this book might come in handy if you never use R or any other programming language before." />
   <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="10 Comparing groups | R for Non-Programmers: A Guide for Social Scientists" />
+  <meta property="og:title" content="Page not found | R for Non-Programmers: A Guide for Social Scientists" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="10 Comparing groups | R for Non-Programmers: A Guide for Social Scientists" />
+  <meta name="twitter:title" content="Page not found | R for Non-Programmers: A Guide for Social Scientists" />
   
   <meta name="twitter:description" content="This books is intended for Social Scientists. No matter whether you have years of experiences, this book might come in handy if you never use R or any other programming language before." />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="correlations.html"/>
-<link rel="next" href="regression.html"/>
+
+
 <script src="libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -294,260 +294,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="comparing-groups" class="section level1" number="10">
-<h1><span class="header-section-number">10</span> Comparing groups</h1>
-<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──</code></pre>
-<pre><code>## ✓ ggplot2 3.3.5     ✓ purrr   0.3.4
-## ✓ tibble  3.1.3     ✓ dplyr   1.0.7
-## ✓ tidyr   1.1.3     ✓ stringr 1.4.0
-## ✓ readr   2.0.1     ✓ forcats 0.5.1</code></pre>
-<pre><code>## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-## x dplyr::filter() masks stats::filter()
-## x dplyr::lag()    masks stats::lag()</code></pre>
-<pre><code>## Rows: 69578 Columns: 6</code></pre>
-<pre><code>## ── Column specification ────────────────────────────────────────────────────────
-## Delimiter: &quot;,&quot;
-## chr (3): country, gender, relationship_status
-## dbl (3): age, freedom_of_choice, satisfaction</code></pre>
-<pre><code>## 
-## ℹ Use `spec()` to retrieve the full column specification for this data.
-## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-<p>Social Sciences is about the study of human beings and their interactions. As such, we frequently want to compare two or more groups of human beings, organisations, teams, countries, etc., with each other to see whether they are similar or different from each other. Sometimes we also want to track individuals over time and see how they may have changed in some way or other. In short, comparing groups is an essential technique to make inferences and helps us better understand the diversity that surrounds us.</p>
-<p>If we want to perform a group comparison we have to consider which technique is most appropriate for the data we have. Some of it might be related to the type of data we have collected, other aspects might be linked to the distribution of the data. More specifically, before we apply any statistical technique we have to consider at least the following:</p>
-<ul>
-<li><p>missing data (see Chapter <a href="data-wrangling.html#dealing-with-missing-data">7.6</a>),</p></li>
-<li><p>outliers (see Chapter <a href="descriptive-statistics.html#dealing-with-outliers">8.3.3</a>, and</p></li>
-<li><p>the assumptions made by analytical techniques about our data</p></li>
-</ul>
-<p>While we covered missing data and outliers in previous chapters, we have yet to discuss assumptions. For group comparisons there are three questions we need to answer:</p>
-<ul>
-<li><p>Is my data parametric or non-parametric? (see Chapter <a href="correlations.html#parametric-or-non-parametric">9.1</a>)</p></li>
-<li><p>How many groups do I wish to compare?</p></li>
-<li><p>Are these groups paired or unpaired?</p></li>
-</ul>
-<p>In the following we will look at group comparisons for parametric and non-parametric data in each category and use the <code>wvs_nona</code> dataset, i.e. the <code>wvs</code> dataframe after we performed imputation (see also Chapter <a href="data-wrangling.html#replacing-removing-missing-data">7.6.3</a>). Since we already covered how to test whether data is parametric or non-parametric we will forgo this step out of pure convenience and to remain succinct. We also ignore any potential outliers or missing data. The case studies at the end of the book provide realistic examples of how to perform groups comparisons with a new set of data (see Chapter @ref()). Thus, parametric and non-parametric tests will be demonstrated with the same dataset and the same variables.</p>
-<div id="comparing-two-groups" class="section level2" number="10.1">
-<h2><span class="header-section-number">10.1</span> Comparing two groups</h2>
-<p>The simplest of comparisons is the one where you only have two groups. In our case, we are interested in whether participants perceive <code>freedom_of_choice</code> in the same way across different genders and across different countries.</p>
-<div id="two-unpaired-groups" class="section level3" number="10.1.1">
-<h3><span class="header-section-number">10.1.1</span> Two Unpaired groups</h3>
-<p>An unpaired group test assumes that the observations in each group are not related to each other, for example that the participants in each group are different individuals.</p>
-<p>Our first comparison will be participants from <code>Egypt</code> and we want to understand whether male and female citizens in this country perceive that they have <code>freedom_of_choice</code>.</p>
-<p>We first can compare these two groups using our trusty <code>geom_boxplot</code> (or any variation of it).</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="comparing-groups.html#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Only select participants from &#39;Egypt&#39;</span></span>
-<span id="cb7-2"><a href="comparing-groups.html#cb7-2" aria-hidden="true" tabindex="-1"></a>comp <span class="ot">&lt;-</span> wvs_nona <span class="sc">%&gt;%</span></span>
-<span id="cb7-3"><a href="comparing-groups.html#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(country <span class="sc">==</span> <span class="st">&quot;Egypt&quot;</span>)</span>
-<span id="cb7-4"><a href="comparing-groups.html#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-5"><a href="comparing-groups.html#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute the mean for each group</span></span>
-<span id="cb7-6"><a href="comparing-groups.html#cb7-6" aria-hidden="true" tabindex="-1"></a>group_means <span class="ot">&lt;-</span> comp <span class="sc">%&gt;%</span> </span>
-<span id="cb7-7"><a href="comparing-groups.html#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(gender) <span class="sc">%&gt;%</span> </span>
-<span id="cb7-8"><a href="comparing-groups.html#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">g_mean =</span> <span class="fu">mean</span>(freedom_of_choice))</span>
-<span id="cb7-9"><a href="comparing-groups.html#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-10"><a href="comparing-groups.html#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Create our data visualisation</span></span>
-<span id="cb7-11"><a href="comparing-groups.html#cb7-11" aria-hidden="true" tabindex="-1"></a>comp <span class="sc">%&gt;%</span> </span>
-<span id="cb7-12"><a href="comparing-groups.html#cb7-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> gender, <span class="at">y =</span> freedom_of_choice, <span class="at">fill =</span> gender)) <span class="sc">+</span></span>
-<span id="cb7-13"><a href="comparing-groups.html#cb7-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
-<span id="cb7-14"><a href="comparing-groups.html#cb7-14" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb7-15"><a href="comparing-groups.html#cb7-15" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add the mean for each group</span></span>
-<span id="cb7-16"><a href="comparing-groups.html#cb7-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> group_means,</span>
-<span id="cb7-17"><a href="comparing-groups.html#cb7-17" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x =</span> gender, <span class="at">y =</span> g_mean),</span>
-<span id="cb7-18"><a href="comparing-groups.html#cb7-18" aria-hidden="true" tabindex="-1"></a>             <span class="at">shape =</span> <span class="dv">3</span>,</span>
-<span id="cb7-19"><a href="comparing-groups.html#cb7-19" aria-hidden="true" tabindex="-1"></a>             <span class="at">size =</span> <span class="dv">2</span></span>
-<span id="cb7-20"><a href="comparing-groups.html#cb7-20" aria-hidden="true" tabindex="-1"></a>             )</span></code></pre></div>
-<p><img src="r_for_non_programmers_files/figure-html/Two%20unpaired%20groups%20visualisation-1.png" width="672" /></p>
-<p>While the distribution looks similar, we can notice that the median and the mean (marked by the cross inside the boxplot) are slighter higher for <code>male</code> participants. Thus, we could can suspect slight differences between these two groups, but we do not know whether these differences are significant or not. To consider the significance (remember Chapter <a href="correlations.html#significance">9.3</a>) and the effect size (see Table <a href="#tab:effect-size-cohen"><strong>??</strong></a>) we have to perform statistical tests.</p>
-<p>Table <a href="comparing-groups.html#tab:comparing-two-groups">10.1</a> summarises the different tests and functions to perform the group comparison computationally. It is important to note that the parametric test compares the means of two groups, while the non-parametric test compares ranks, especially the median. All tests turn significant if the differences between groups is large enough. Thus, significant results can be read as ‘these groups are significantly different from each other.’ Of course, if the difference is not significant, the groups are considered to be not different from each other.</p>
-<table>
-<caption><span id="tab:comparing-two-groups">Table 10.1: </span> Comparing two unpaired groups (effect size functions from package <code>effectsize</code></caption>
-<colgroup>
-<col width="17%" />
-<col width="17%" />
-<col width="20%" />
-<col width="18%" />
-<col width="27%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>Assumption</th>
-<th>Test</th>
-<th>Function for test</th>
-<th>Effect size</th>
-<th>Function for effect size</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Parametric</td>
-<td>T-Test</td>
-<td><code>t.test()</code></td>
-<td>Cohen’s d</td>
-<td><code>cohens_d()</code></td>
-</tr>
-<tr class="even">
-<td>Non-parametric</td>
-<td>Mann-Whitney U</td>
-<td><code>wilcox.test()</code></td>
-<td>Rank biserial r</td>
-<td><code>rank_biserial()</code></td>
-</tr>
-</tbody>
-</table>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="comparing-groups.html#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># PARAMETRIC COMPARISON</span></span>
-<span id="cb8-2"><a href="comparing-groups.html#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Perform the comparison</span></span>
-<span id="cb8-3"><a href="comparing-groups.html#cb8-3" aria-hidden="true" tabindex="-1"></a>(gcomp <span class="ot">&lt;-</span> <span class="fu">t.test</span>(freedom_of_choice <span class="sc">~</span> gender, <span class="at">data =</span> comp))</span></code></pre></div>
-<pre><code>## 
-##  Welch Two Sample t-test
-## 
-## data:  freedom_of_choice by gender
-## t = -4.7563, df = 1193.2, p-value = 2.212e-06
-## alternative hypothesis: true difference in means between group female and group male is not equal to 0
-## 95 percent confidence interval:
-##  -0.8645067 -0.3595762
-## sample estimates:
-## mean in group female   mean in group male 
-##             6.212435             6.824477</code></pre>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="comparing-groups.html#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Determine the effect size</span></span>
-<span id="cb10-2"><a href="comparing-groups.html#cb10-2" aria-hidden="true" tabindex="-1"></a>(d <span class="ot">&lt;-</span> <span class="fu">cohens_d</span>(freedom_of_choice <span class="sc">~</span> gender, <span class="at">data =</span> comp))</span></code></pre></div>
-<pre><code>## Cohen&#39;s d |         95% CI
-## --------------------------
-## -0.27     | [-0.39, -0.16]
-## 
-## - Estimated using pooled SD.</code></pre>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="comparing-groups.html#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Interpret the effect size</span></span>
-<span id="cb12-2"><a href="comparing-groups.html#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">interpret_d</span>(d<span class="sc">$</span>Cohens_d)</span></code></pre></div>
-<pre><code>## [1] &quot;small&quot;
-## (Rules: cohen1988)</code></pre>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="comparing-groups.html#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># NON-PARAMETRIC COMPARISON</span></span>
-<span id="cb14-2"><a href="comparing-groups.html#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Perform the comparison</span></span>
-<span id="cb14-3"><a href="comparing-groups.html#cb14-3" aria-hidden="true" tabindex="-1"></a>(gcomp <span class="ot">&lt;-</span> <span class="fu">wilcox.test</span>(freedom_of_choice <span class="sc">~</span> gender, <span class="at">data =</span> comp))</span></code></pre></div>
-<pre><code>## 
-##  Wilcoxon rank sum test with continuity correction
-## 
-## data:  freedom_of_choice by gender
-## W = 149938, p-value = 4.967e-07
-## alternative hypothesis: true location shift is not equal to 0</code></pre>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="comparing-groups.html#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Determine the effect size via rank biserial correlation</span></span>
-<span id="cb16-2"><a href="comparing-groups.html#cb16-2" aria-hidden="true" tabindex="-1"></a>(d <span class="ot">&lt;-</span> <span class="fu">rank_biserial</span>(freedom_of_choice <span class="sc">~</span> gender, <span class="at">data =</span> comp))</span></code></pre></div>
-<pre><code>## r (rank biserial) |         95% CI
-## ----------------------------------
-## -0.17             | [-0.23, -0.10]</code></pre>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="comparing-groups.html#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Interpret the effect size</span></span>
-<span id="cb18-2"><a href="comparing-groups.html#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">interpret_rank_biserial</span>(d<span class="sc">$</span>r_rank_biserial, <span class="at">rules =</span> <span class="st">&quot;cohen1988&quot;</span>)</span></code></pre></div>
-<pre><code>## [1] &quot;small&quot;
-## (Rules: cohen1988)</code></pre>
-</div>
-<div id="two-paired-groups" class="section level3" number="10.1.2">
-<h3><span class="header-section-number">10.1.2</span> Two Paired groups</h3>
-<p>Paired sample test:</p>
-<ul>
-<li><p>use in longitudinal studies</p></li>
-<li><p>used in experimental studies (pre-test vs post-test)</p></li>
-</ul>
-<table style="width:100%;">
-<caption><span id="tab:comparing-two-groups">Table 10.1: </span> Comparing two unpaired groups (effect size functions from package <code>effectsize</code></caption>
-<colgroup>
-<col width="14%" />
-<col width="23%" />
-<col width="25%" />
-<col width="14%" />
-<col width="22%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>Assumption</th>
-<th>Test</th>
-<th>Function for test</th>
-<th>Effect size</th>
-<th>Function for effect size</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Parametric</td>
-<td>T-Test</td>
-<td><code>t.test(paired = TRUE)</code></td>
-<td>Cohen’s d</td>
-<td><code>cohens_d()</code></td>
-</tr>
-<tr class="even">
-<td>Non-parametric</td>
-<td>Wilcoxon Signed Rank Test</td>
-<td><code>wilcox.test(paired = TRUE)</code></td>
-<td>Rank biserial r</td>
-<td><code>rank_biserial()</code></td>
-</tr>
-</tbody>
-</table>
-<p>We want to know whether their earlier movies have been significantly more successful than others. We use the data frame <code>dir_mov</code> which only contains movies of directors who have two or more movies listen in the IMDb Top 250s.</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="comparing-groups.html#cb20-1" aria-hidden="true" tabindex="-1"></a>dir_mov <span class="sc">%&gt;%</span> </span>
-<span id="cb20-2"><a href="comparing-groups.html#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> movie, <span class="at">y =</span> imdb_rating)) <span class="sc">+</span></span>
-<span id="cb20-3"><a href="comparing-groups.html#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code></pre></div>
-<p><img src="r_for_non_programmers_files/figure-html/Comparing%20two%20paired%20groups%20data%20visualisation-1.png" width="672" /></p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="comparing-groups.html#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># PARAMETRIC COMPARISON</span></span>
-<span id="cb21-2"><a href="comparing-groups.html#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Perform the comparison</span></span>
-<span id="cb21-3"><a href="comparing-groups.html#cb21-3" aria-hidden="true" tabindex="-1"></a>(gcomp <span class="ot">&lt;-</span> <span class="fu">t.test</span>(imdb_rating <span class="sc">~</span> movie, <span class="at">data =</span> dir_mov, <span class="at">paired =</span> <span class="cn">TRUE</span>))</span></code></pre></div>
-<pre><code>## 
-##  Paired t-test
-## 
-## data:  imdb_rating by movie
-## t = 0.87171, df = 42, p-value = 0.3883
-## alternative hypothesis: true difference in means is not equal to 0
-## 95 percent confidence interval:
-##  -0.05504967  0.13877060
-## sample estimates:
-## mean of the differences 
-##              0.04186047</code></pre>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="comparing-groups.html#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Determine the effect size</span></span>
-<span id="cb23-2"><a href="comparing-groups.html#cb23-2" aria-hidden="true" tabindex="-1"></a>(d <span class="ot">&lt;-</span> <span class="fu">cohens_d</span>(imdb_rating <span class="sc">~</span> movie, <span class="at">data =</span> dir_mov))</span></code></pre></div>
-<pre><code>## Cohen&#39;s d |        95% CI
-## -------------------------
-## 0.16      | [-0.26, 0.58]
-## 
-## - Estimated using pooled SD.</code></pre>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="comparing-groups.html#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Interpret the effect size</span></span>
-<span id="cb25-2"><a href="comparing-groups.html#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">interpret_d</span>(d<span class="sc">$</span>Cohens_d)</span></code></pre></div>
-<pre><code>## [1] &quot;very small&quot;
-## (Rules: cohen1988)</code></pre>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="comparing-groups.html#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># NON-PARAMETRIC COMPARISON</span></span>
-<span id="cb27-2"><a href="comparing-groups.html#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Perform the comparison</span></span>
-<span id="cb27-3"><a href="comparing-groups.html#cb27-3" aria-hidden="true" tabindex="-1"></a>(gcomp <span class="ot">&lt;-</span> <span class="fu">wilcox.test</span>(imdb_rating <span class="sc">~</span> movie, <span class="at">data =</span> dir_mov, <span class="at">paired =</span> <span class="cn">TRUE</span>))</span></code></pre></div>
-<pre><code>## 
-##  Wilcoxon signed rank test with continuity correction
-## 
-## data:  imdb_rating by movie
-## V = 278, p-value = 0.5622
-## alternative hypothesis: true location shift is not equal to 0</code></pre>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="comparing-groups.html#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Determine the effect size via rank biserial correlation</span></span>
-<span id="cb29-2"><a href="comparing-groups.html#cb29-2" aria-hidden="true" tabindex="-1"></a>(d <span class="ot">&lt;-</span> <span class="fu">rank_biserial</span>(imdb_rating <span class="sc">~</span> movie, <span class="at">data =</span> dir_mov))</span></code></pre></div>
-<pre><code>## r (rank biserial) |        95% CI
-## ---------------------------------
-## 0.04              | [-0.20, 0.28]</code></pre>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="comparing-groups.html#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Interpret the effect size</span></span>
-<span id="cb31-2"><a href="comparing-groups.html#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">interpret_rank_biserial</span>(d<span class="sc">$</span>r_rank_biserial, <span class="at">rules =</span> <span class="st">&quot;cohen1988&quot;</span>)</span></code></pre></div>
-<pre><code>## [1] &quot;very small&quot;
-## (Rules: cohen1988)</code></pre>
-</div>
-</div>
-<div id="comparing-more-than-two-groups" class="section level2" number="10.2">
-<h2><span class="header-section-number">10.2</span> Comparing more than two groups</h2>
-<p>anova()</p>
-<p>kruskal.test()</p>
-</div>
-<div id="a-cheatsheet-to-guide-your-own-group-comparisons" class="section level2" number="10.3">
-<h2><span class="header-section-number">10.3</span> A cheatsheet to guide your own group comparisons</h2>
-<p>To summarise what we have covered in this section, we can consider</p>
-<div id="htmlwidget-eeefa15e15541e2fada3" style="width:672px;height:480px;" class="DiagrammeR html-widget"></div>
-<script type="application/json" data-for="htmlwidget-eeefa15e15541e2fada3">{"x":{"diagram":"\n        graph TB\n\n        data(my data)\n        datatype{type of data}\n        quan[quantitative]\n        qual[qualitative]\n        paracheck{<center>check for <br> assumptions<\/center>}\n        addlin[additivity and linerarity]\n        normal[normality]\n        homvar[homogeneity of variance]\n        indep[independence]\n        para[parametric]\n        npara[non-parametric]\n        \n        data --> datatype\n        \n        subgraph \n        datatype --> quan\n        datatype --> qual\n        end\n        \n        \n        quan --> paracheck\n        qual --> npara\n        \n        paracheck --> addlin\n        \n        subgraph \n        addlin -- yes --> indep\n        indep -- yes --> normal\n        normal -- yes --> homvar\n        end\n\n        addlin -- no --> npara\n        indep -- no --> npara\n        normal -- no --> npara\n        homvar -- no --> npara\n\n        homvar -- yes --> para\n        \n        # hwg[How many groups?]\n        "},"evals":[],"jsHooks":[]}</script>
-
-</div>
+<div id="page-not-found" class="section level1">
+<h1>Page not found</h1>
+<p>The page you requested cannot be found (perhaps it was moved or renamed).</p>
+<p>You may want to try searching to find the page's new location, or use
+the table of contents to find the page you are looking for.</p>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="correlations.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="regression.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
