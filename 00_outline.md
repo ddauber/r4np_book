@@ -24,7 +24,7 @@
 -   Installing R ✅
 -   Installing RStudio ✅
 -   When you first start RStudio ✅
--   Updating R and RStudio: Living at the pulse of innovation
+-   Updating R and RStudio: Living at the pulse of innovation ✅
 -   RStudio Cloud
 
 # 4. THE RSTUDIO INTERFACE ✅
@@ -81,27 +81,21 @@
 
 -   Organising your work ✅
 
-# 7. Data Wrangling: Or how to prepare your data for analysis
+# 7. Data Wrangling: Or how to prepare your data for analysis ✅
 
--   Import your data
+-   Import your data ✅
 
--   Inspecting your raw data
+-   Inspecting your raw data ✅
 
--   Data cleaning
+-   Data cleaning ✅
 
-    -   Change data types and explain what they are
+    -   Change data types and explain what they are ✅
 
-    -   Recoding and rearranging factors (e.g. gender coded as 0 and 1)
+    -   Recoding and rearranging factors (e.g. gender coded as 0 and 1) ✅
 
-    -   Dealing with missing data
+    -   Dealing with missing data ✅
 
--   Latent construct reliability
-
-    -   Theory
-
-    -   Visualisation
-
-    -   Computation
+-   Latent construct reliability ✅
 
 # 8. Descriptive statistics
 

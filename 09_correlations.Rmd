@@ -1,1 +1,153 @@
-# Correlations
+# Correlations {#correlations}
+
+```{r}
+library(tidyverse)
+library(r4np)
+library(correlation)
+library(patchwork)
+```
+
+Sometimes counting and measuring means, medians and standard deviations is not enough, because they are all based on a single variable. Instead, we might have questions related to the relationship of two or more variables. In this section we will explore how correlations can (and kind of cannot - see Chapter \@ref(simpsons-paradox)) provide insights into the following questions:
+
+-   Do movie watchers agree with critics regarding the rating of movies?
+
+-   Are newer movies more popular than older ones?
+
+-   Have movies become longer over the past years?
+
+There are many different ways of how one can compute the correlation and it partially depends on the type of data you want to relate. The 'Pearson's correlation' is by far the most frequently used correlation technique for data that is normally distributed. On the other hand, if data is not normally distributed, we can opt for the 'Spearman's rank' correlation. One could argue that the relationship between these two correlations is like the mean (Pearson) to the median (Spearman). Both approaches require numeric values to be computed properly. If our data is ordinal, or worse dichotomous (like a logical variables), we have to opt for different options.
+
++---------------+-----------------------------------------------------------------------+
+| Correlation   | Used                                                                  |
++===============+=======================================================================+
+| *Pearson*     | Requires variables to be parametric and therefore numeric             |
++---------------+-----------------------------------------------------------------------+
+| *Spearman*    | Used when data is non-parametric and requires numeric variables       |
++---------------+-----------------------------------------------------------------------+
+| *Polychoric*  | Used when investigating two ordinal variables                         |
++---------------+-----------------------------------------------------------------------+
+| *Tetrachoric* | Use when both variables are dichotomous, e.g. 'yes/no', 'True/False'. |
++---------------+-----------------------------------------------------------------------+
+
+: (\#tab:different-correlations) Different ways of computing correlations
+
+There are many more variations of correlations, which you can explore on the [website of the package](https://easystats.github.io/correlation/articles/types.html "website of the package"){target="blank"} we will use in this chapter: `correlation`. We will primarily focus on Pearson and Spearman as the most commonly used correlation types in academic publications to understand the relationship between two variables. In addition, we also look at 'partial correlations', which allow us to introduce a third variable into this mix.
+
+## Plotting correlations {#plotting-correlations}
+
+Since correlations only show the relationship between two variables, we can easily put one variable onto the x axis and one variable onto the y axis using a point cloud. We already used the function before, i.e. `geom_point()` and `geom_jitter`. Let's try to answer our first research question, i.e. whether regular movie watchers and critics (people who review movies as a profession) rate the top 250 in the same way. One assumption could be that it does not matter whether you are a regular movie watcher or someone who does it professionally. After all, we are just human beings. A counter thesis could be that critics have a different perspective on movies and might use different evaluation criteria. Either way, we first need to identify the two variables of interest:
+
+-   `imdb_rating` is based on IMDb users
+
+-   `metascore` is based on movie critics
+
+```{r Correlation between imdb_rating and metascore, echo=TRUE}
+imdb_top_250 %>%
+  filter(!is.na(metascore)) %>% 
+  ggplot(aes(imdb_rating, metascore)) +
+  geom_jitter()
+```
+
+The results are, well, surprising. Some movies with low `imdb_ratings` received very high `metascore`s from the critics. Thus, we cannot see a clear relationship between user ratings and those of critics. The problematic question associated with this outcome is: Whom should I trust when renting the next movie?
+
+Since correlations only explain linear relationships, a perfect correlation would be represented by a straight line. Consider the following examples of correlations:
+
+```{r Examples of correlations, echo=TRUE}
+set.seed(1234)
+
+# Positive correlation of 0.89
+cm <- tribble(
+    ~a,    ~b,
+     1,   0.9, 
+   0.9,     1)
+
+means <- c(2, 4)
+data <- as_tibble(MASS::mvrnorm(n = 100, mu = means, Sigma = cm)) %>% 
+  rename("x" = `1`,
+         "y" = `2`)
+
+p1 <- data %>% ggplot(aes(x, y)) + geom_point() + ggtitle("r = 0.89") + 
+  see::theme_modern()
+
+# Positive correlation of 0.30
+cm <- tribble(
+    ~a,   ~b,
+     1,  0.3,
+   0.3,    1
+)
+
+means <- c(10, 4)
+data <- as_tibble(MASS::mvrnorm(n = 100, mu = means, Sigma = cm)) %>% 
+  rename("x" = `1`,
+         "y" = `2`)
+
+p2 <- data %>% ggplot(aes(x, y)) + geom_point() + ggtitle("r = 0.30") +
+    see::theme_modern()
+
+# Negative correlation of -0.75
+cm <- tribble(
+    ~a,   ~b,
+     1,  -0.8,
+   -0.8,    1
+)
+
+means <- c(10, 4)
+data <- as_tibble(MASS::mvrnorm(n = 100, mu = means, Sigma = cm)) %>% 
+  rename("x" = `1`,
+         "y" = `2`)
+
+p3 <- data %>% ggplot(aes(x, y)) + geom_point() + ggtitle("r = -0.75") +
+    see::theme_modern()
+
+# Negative correlation of -0.42
+cm <- tribble(
+    ~a,   ~b,
+     1,  -0.5,
+   -0.5,    1
+)
+
+means <- c(10, 4)
+data <- as_tibble(MASS::mvrnorm(n = 100, mu = means, Sigma = cm)) %>% 
+  rename("x" = `1`,
+         "y" = `2`)
+
+p4 <- data %>% ggplot(aes(x, y)) + geom_point()  + ggtitle("r = -0.42") +
+  see::theme_modern()
+
+p1 + p2 + p3 + p4
+```
+
+A correlation can be either positive or negative and its score (i.e. `r` in case of Pearson) can range from -1 to 1:
+
+-   -1 defines a perfectly negative correlation
+
+-   0 defines no correlation
+
+-   1 defines a perfectly positive correlation
+
+In other words, the further the score is away from zero, the stronger is the relationship between variables. We also have benchmarks which we can use to asses the strength of a relationship, for example the one by @cohen1988statistical. The strength of the relationship is also called 'effect size'. Table \@ref(tab:effect-size-cohen) shows the relevant benchmarks. Note that effect sizes are always provided as absolute figures. Therefore, -0.4 would also count as a moderate relationship.
+
+| effect size         | interpretation |
+|---------------------|----------------|
+| r \< 0.1            | very small     |
+| 0.1 $\leq$ r \< 0.3 | small          |
+| 0.3 $\leq$ r \< 0.5 | moderate       |
+| r $\geq$ 0.5        | large          |
+
+: (\#tab:effect-size-cohen) Assessing effect size of relationships according to Cohen (1988)
+
+If we compare the plot from our data with the sample plots, we would come to the conclusion that the relationship is weak, and therefore the `r` must be close to zero as well. We can test this with the Pearson correlation.
+
+```{r Pearson correlation for ratings, echo=TRUE}
+imdb_top_250 %>% 
+  select(imdb_rating, metascore) %>% 
+  correlation()
+```
+
+Indeed, our analysis reveals that the effect size is very small (r \<0.1).
+
+`CONTINUE FROM HERE`
+
+## Limitations of correlations
+
+## Simpson's Paradox: When correlations betray you {#simpsons-paradox}

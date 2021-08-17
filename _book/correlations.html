@@ -24,7 +24,7 @@
 <meta name="author" content="Daniel Dauber" />
 
 
-<meta name="date" content="2021-08-11" />
+<meta name="date" content="2021-08-13" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -120,28 +120,6 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
-<style type="text/css">
-/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-}
-.hanging div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}
-</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -237,8 +215,27 @@ div.csl-indent {
 <li class="chapter" data-level="7.7" data-path="data-wrangling.html"><a href="data-wrangling.html#latent-constructs"><i class="fa fa-check"></i><b>7.7</b> Latent constructs and their reliability</a></li>
 <li class="chapter" data-level="7.8" data-path="data-wrangling.html"><a href="data-wrangling.html#conclusion-data-wrangling"><i class="fa fa-check"></i><b>7.8</b> Once you finished with data wrangling</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html"><i class="fa fa-check"></i><b>8</b> Descriptive Statistics</a></li>
-<li class="chapter" data-level="9" data-path="correlations.html"><a href="correlations.html"><i class="fa fa-check"></i><b>9</b> Correlations</a></li>
+<li class="chapter" data-level="8" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html"><i class="fa fa-check"></i><b>8</b> Descriptive Statistics</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#plotting-in-r-with-ggplot2"><i class="fa fa-check"></i><b>8.1</b> Plotting in R with <code>ggplot2</code></a></li>
+<li class="chapter" data-level="8.2" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#central-tendency"><i class="fa fa-check"></i><b>8.2</b> Central tendency measures: Mean, Median, Mode</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#mean"><i class="fa fa-check"></i><b>8.2.1</b> Mean</a></li>
+<li class="chapter" data-level="8.2.2" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#median"><i class="fa fa-check"></i><b>8.2.2</b> Median</a></li>
+<li class="chapter" data-level="8.2.3" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#mode"><i class="fa fa-check"></i><b>8.2.3</b> Mode</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#spread-of-data"><i class="fa fa-check"></i><b>8.3</b> Indicators and visualisations to examine the spread of data</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#qq-plot"><i class="fa fa-check"></i><b>8.3.1</b> QQ plot: A ‘cute’ plot to check for normality in your data</a></li>
+<li class="chapter" data-level="8.3.2" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#standard-deviation"><i class="fa fa-check"></i><b>8.3.2</b> Standard deviation: Your average deviation from the mean</a></li>
+<li class="chapter" data-level="8.3.3" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#dealing-with-outliers"><i class="fa fa-check"></i><b>8.3.3</b> Dealing with outliers</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="correlations.html"><a href="correlations.html"><i class="fa fa-check"></i><b>9</b> Correlations</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="correlations.html"><a href="correlations.html#plotting-correlations"><i class="fa fa-check"></i><b>9.1</b> Plotting correlations</a></li>
+<li class="chapter" data-level="9.2" data-path="correlations.html"><a href="correlations.html#simpsons-paradox"><i class="fa fa-check"></i><b>9.2</b> Simpson’s Paradox: The limitations of correlations</a></li>
+</ul></li>
 <li class="chapter" data-level="10" data-path="comparing-groups.html"><a href="comparing-groups.html"><i class="fa fa-check"></i><b>10</b> Comparing groups</a></li>
 <li class="chapter" data-level="11" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>11</b> Regression: Creating models to predict future observations</a></li>
 <li class="chapter" data-level="12" data-path="mixed-methods-research-analysing-qualitative-in-r.html"><a href="mixed-methods-research-analysing-qualitative-in-r.html"><i class="fa fa-check"></i><b>12</b> Mixed-methods research: Analysing qualitative in R</a></li>
@@ -275,7 +272,153 @@ div.csl-indent {
             <section class="normal" id="section-">
 <div id="correlations" class="section level1" number="9">
 <h1><span class="header-section-number">9</span> Correlations</h1>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="correlations.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──</code></pre>
+<pre><code>## ✓ ggplot2 3.3.5     ✓ purrr   0.3.4
+## ✓ tibble  3.1.3     ✓ dplyr   1.0.7
+## ✓ tidyr   1.1.3     ✓ stringr 1.4.0
+## ✓ readr   2.0.0     ✓ forcats 0.5.1</code></pre>
+<pre><code>## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()</code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="correlations.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(r4np)</span>
+<span id="cb5-2"><a href="correlations.html#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(correlation)</span></code></pre></div>
+<pre><code>## Registered S3 methods overwritten by &#39;parameters&#39;:
+##   method                           from      
+##   as.double.parameters_kurtosis    datawizard
+##   as.double.parameters_skewness    datawizard
+##   as.double.parameters_smoothness  datawizard
+##   as.numeric.parameters_kurtosis   datawizard
+##   as.numeric.parameters_skewness   datawizard
+##   as.numeric.parameters_smoothness datawizard
+##   print.parameters_distribution    datawizard
+##   print.parameters_kurtosis        datawizard
+##   print.parameters_skewness        datawizard
+##   summary.parameters_kurtosis      datawizard
+##   summary.parameters_skewness      datawizard</code></pre>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="correlations.html#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span></code></pre></div>
+<p>Sometimes counting and measuring means, medians and standard deviations is not enough, because they are all based on a single variable. Instead, we might have questions related to the relationship of two or more variables. In this section we will explore how correlations can (and kind of cannot - see Chapter <a href="correlations.html#simpsons-paradox">9.2</a>) provide insights into the following questions:</p>
+<ul>
+<li><p>Do movie watchers agree with critics regarding the rating of movies?</p></li>
+<li><p>Are newer movies more popular than older ones?</p></li>
+<li><p>Have movies become longer over the past years?</p></li>
+</ul>
+<p>There are many different ways of how one can compute the correlation and it partially depends on the type of data you want to relate. The ‘Pearson’s correlation’ is by far the most frequently used correlation technique for data that is normally distributed. On the other hand, if data is not normally distributed, we can opt for the ‘Spearman’s rank’ correlation. One could argue that the relationship between these two correlations is like the mean (Pearson) to the median (Spearman). Both approaches require numeric values to be computed properly. If our data is ordinal, or worse dichotomous (like a logical variables), we have to opt for different options.</p>
+<table>
+<caption><span id="tab:different-correlations">Table 9.1: </span> Different ways of computing correlations</caption>
+<colgroup>
+<col width="18%" />
+<col width="81%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Correlation</th>
+<th>Used</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><em>Pearson</em></td>
+<td>Requires variables to be parametric and therefore numeric</td>
+</tr>
+<tr class="even">
+<td><em>Spearman</em></td>
+<td>Used when data is non-parametric and requires numeric variables</td>
+</tr>
+<tr class="odd">
+<td><em>Polychoric</em></td>
+<td>Used when investigating two ordinal variables</td>
+</tr>
+<tr class="even">
+<td><em>Tetrachoric</em></td>
+<td>Use when both variables are dichotomous, e.g. ‘yes/no,’ ‘True/False.’</td>
+</tr>
+</tbody>
+</table>
+<p>There are many more variations of correlations, which you can explore on the <a href="https://easystats.github.io/correlation/articles/types.html" target="blank" title="website of the package">website of the package</a> we will use in this chapter: <code>correlation</code>. We will primarily focus on Pearson and Spearman as the most commonly used correlation types in academic publications to understand the relationship between two variables. In addition, we also look at ‘partial correlations,’ which allow us to introduce a third variable into this mix.</p>
+<div id="plotting-correlations" class="section level2" number="9.1">
+<h2><span class="header-section-number">9.1</span> Plotting correlations</h2>
+<p>Since correlations only show the relationship between two variables, we can easily put one variable onto the x axis and one variable onto the y axis using a point cloud. We already used the function before, i.e. <code>geom_point()</code> and <code>geom_jitter</code>. Let’s try to answer our first research question, i.e. whether regular movie watchers and critics (people who review movies as a profession) rate the top 250 in the same way. One assumption could be that it does not matter whether you are a regular movie watcher or someone who does it professionally. After all, we are just human beings. A counter thesis could be that critics have a different perspective on movies and might use different evaluation criteria. Either way, we first need to identify the two variables of interest:</p>
+<ul>
+<li><p><code>imdb_rating</code> is based on IMDb users</p></li>
+<li><p><code>metascore</code> is based on movie critics</p></li>
+</ul>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="correlations.html#cb8-1" aria-hidden="true" tabindex="-1"></a>imdb_top_250 <span class="sc">%&gt;%</span></span>
+<span id="cb8-2"><a href="correlations.html#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(metascore)) <span class="sc">%&gt;%</span> </span>
+<span id="cb8-3"><a href="correlations.html#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(imdb_rating, metascore)) <span class="sc">+</span></span>
+<span id="cb8-4"><a href="correlations.html#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>()</span></code></pre></div>
+<p><img src="r_for_non_programmers_files/figure-html/Correlation%20between%20imdb_rating%20and%20metascore-1.png" width="672" /></p>
+<p>The results are, well, surprising. Some movies with low <code>imdb_ratings</code> received very high <code>metascore</code>s from the critics. Thus, we cannot see a clear relationship between user ratings and those of critics. The problematic question associated with this outcome is: Whom should I trust when renting the next movie?</p>
+<p>Since correlations only explain linear relationships, a perfect correlation would be represented by a straight line. Consider the following examples of correlations:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="correlations.html#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
+<span id="cb9-2"><a href="correlations.html#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="correlations.html#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Positive correlation of 0.89</span></span>
+<span id="cb9-4"><a href="correlations.html#cb9-4" aria-hidden="true" tabindex="-1"></a>cm <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb9-5"><a href="correlations.html#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="sc">~</span>a,    <span class="sc">~</span>b,</span>
+<span id="cb9-6"><a href="correlations.html#cb9-6" aria-hidden="true" tabindex="-1"></a>     <span class="dv">1</span>,   <span class="fl">0.9</span>, </span>
+<span id="cb9-7"><a href="correlations.html#cb9-7" aria-hidden="true" tabindex="-1"></a>   <span class="fl">0.9</span>,     <span class="dv">1</span>)</span>
+<span id="cb9-8"><a href="correlations.html#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-9"><a href="correlations.html#cb9-9" aria-hidden="true" tabindex="-1"></a>means <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">4</span>)</span>
+<span id="cb9-10"><a href="correlations.html#cb9-10" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(MASS<span class="sc">::</span><span class="fu">mvrnorm</span>(<span class="at">n =</span> <span class="dv">100</span>, <span class="at">mu =</span> means, <span class="at">Sigma =</span> cm)) <span class="sc">%&gt;%</span> </span>
+<span id="cb9-11"><a href="correlations.html#cb9-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="st">&quot;x&quot;</span> <span class="ot">=</span> <span class="st">`</span><span class="at">1</span><span class="st">`</span>,</span>
+<span id="cb9-12"><a href="correlations.html#cb9-12" aria-hidden="true" tabindex="-1"></a>         <span class="st">&quot;y&quot;</span> <span class="ot">=</span> <span class="st">`</span><span class="at">2</span><span class="st">`</span>)</span>
+<span id="cb9-13"><a href="correlations.html#cb9-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-14"><a href="correlations.html#cb9-14" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(x, y)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">&quot;r = 0.89&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb9-15"><a href="correlations.html#cb9-15" aria-hidden="true" tabindex="-1"></a>  see<span class="sc">::</span><span class="fu">theme_modern</span>()</span>
+<span id="cb9-16"><a href="correlations.html#cb9-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-17"><a href="correlations.html#cb9-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Positive correlation of 0.30</span></span>
+<span id="cb9-18"><a href="correlations.html#cb9-18" aria-hidden="true" tabindex="-1"></a>cm <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb9-19"><a href="correlations.html#cb9-19" aria-hidden="true" tabindex="-1"></a>    <span class="sc">~</span>a,   <span class="sc">~</span>b,</span>
+<span id="cb9-20"><a href="correlations.html#cb9-20" aria-hidden="true" tabindex="-1"></a>     <span class="dv">1</span>,  <span class="fl">0.3</span>,</span>
+<span id="cb9-21"><a href="correlations.html#cb9-21" aria-hidden="true" tabindex="-1"></a>   <span class="fl">0.3</span>,    <span class="dv">1</span></span>
+<span id="cb9-22"><a href="correlations.html#cb9-22" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb9-23"><a href="correlations.html#cb9-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-24"><a href="correlations.html#cb9-24" aria-hidden="true" tabindex="-1"></a>means <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">4</span>)</span>
+<span id="cb9-25"><a href="correlations.html#cb9-25" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(MASS<span class="sc">::</span><span class="fu">mvrnorm</span>(<span class="at">n =</span> <span class="dv">100</span>, <span class="at">mu =</span> means, <span class="at">Sigma =</span> cm)) <span class="sc">%&gt;%</span> </span>
+<span id="cb9-26"><a href="correlations.html#cb9-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="st">&quot;x&quot;</span> <span class="ot">=</span> <span class="st">`</span><span class="at">1</span><span class="st">`</span>,</span>
+<span id="cb9-27"><a href="correlations.html#cb9-27" aria-hidden="true" tabindex="-1"></a>         <span class="st">&quot;y&quot;</span> <span class="ot">=</span> <span class="st">`</span><span class="at">2</span><span class="st">`</span>)</span>
+<span id="cb9-28"><a href="correlations.html#cb9-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-29"><a href="correlations.html#cb9-29" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(x, y)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">&quot;r = 0.30&quot;</span>) <span class="sc">+</span></span>
+<span id="cb9-30"><a href="correlations.html#cb9-30" aria-hidden="true" tabindex="-1"></a>    see<span class="sc">::</span><span class="fu">theme_modern</span>()</span>
+<span id="cb9-31"><a href="correlations.html#cb9-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-32"><a href="correlations.html#cb9-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Negative correlation of -0.75</span></span>
+<span id="cb9-33"><a href="correlations.html#cb9-33" aria-hidden="true" tabindex="-1"></a>cm <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb9-34"><a href="correlations.html#cb9-34" aria-hidden="true" tabindex="-1"></a>    <span class="sc">~</span>a,   <span class="sc">~</span>b,</span>
+<span id="cb9-35"><a href="correlations.html#cb9-35" aria-hidden="true" tabindex="-1"></a>     <span class="dv">1</span>,  <span class="sc">-</span><span class="fl">0.8</span>,</span>
+<span id="cb9-36"><a href="correlations.html#cb9-36" aria-hidden="true" tabindex="-1"></a>   <span class="sc">-</span><span class="fl">0.8</span>,    <span class="dv">1</span></span>
+<span id="cb9-37"><a href="correlations.html#cb9-37" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb9-38"><a href="correlations.html#cb9-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-39"><a href="correlations.html#cb9-39" aria-hidden="true" tabindex="-1"></a>means <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">4</span>)</span>
+<span id="cb9-40"><a href="correlations.html#cb9-40" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(MASS<span class="sc">::</span><span class="fu">mvrnorm</span>(<span class="at">n =</span> <span class="dv">100</span>, <span class="at">mu =</span> means, <span class="at">Sigma =</span> cm)) <span class="sc">%&gt;%</span> </span>
+<span id="cb9-41"><a href="correlations.html#cb9-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="st">&quot;x&quot;</span> <span class="ot">=</span> <span class="st">`</span><span class="at">1</span><span class="st">`</span>,</span>
+<span id="cb9-42"><a href="correlations.html#cb9-42" aria-hidden="true" tabindex="-1"></a>         <span class="st">&quot;y&quot;</span> <span class="ot">=</span> <span class="st">`</span><span class="at">2</span><span class="st">`</span>)</span>
+<span id="cb9-43"><a href="correlations.html#cb9-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-44"><a href="correlations.html#cb9-44" aria-hidden="true" tabindex="-1"></a>p3 <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(x, y)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">&quot;r = -0.75&quot;</span>) <span class="sc">+</span></span>
+<span id="cb9-45"><a href="correlations.html#cb9-45" aria-hidden="true" tabindex="-1"></a>    see<span class="sc">::</span><span class="fu">theme_modern</span>()</span>
+<span id="cb9-46"><a href="correlations.html#cb9-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-47"><a href="correlations.html#cb9-47" aria-hidden="true" tabindex="-1"></a><span class="co"># Negative correlation of -0.42</span></span>
+<span id="cb9-48"><a href="correlations.html#cb9-48" aria-hidden="true" tabindex="-1"></a>cm <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb9-49"><a href="correlations.html#cb9-49" aria-hidden="true" tabindex="-1"></a>    <span class="sc">~</span>a,   <span class="sc">~</span>b,</span>
+<span id="cb9-50"><a href="correlations.html#cb9-50" aria-hidden="true" tabindex="-1"></a>     <span class="dv">1</span>,  <span class="sc">-</span><span class="fl">0.5</span>,</span>
+<span id="cb9-51"><a href="correlations.html#cb9-51" aria-hidden="true" tabindex="-1"></a>   <span class="sc">-</span><span class="fl">0.5</span>,    <span class="dv">1</span></span>
+<span id="cb9-52"><a href="correlations.html#cb9-52" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb9-53"><a href="correlations.html#cb9-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-54"><a href="correlations.html#cb9-54" aria-hidden="true" tabindex="-1"></a>means <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">4</span>)</span>
+<span id="cb9-55"><a href="correlations.html#cb9-55" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(MASS<span class="sc">::</span><span class="fu">mvrnorm</span>(<span class="at">n =</span> <span class="dv">100</span>, <span class="at">mu =</span> means, <span class="at">Sigma =</span> cm)) <span class="sc">%&gt;%</span> </span>
+<span id="cb9-56"><a href="correlations.html#cb9-56" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="st">&quot;x&quot;</span> <span class="ot">=</span> <span class="st">`</span><span class="at">1</span><span class="st">`</span>,</span>
+<span id="cb9-57"><a href="correlations.html#cb9-57" aria-hidden="true" tabindex="-1"></a>         <span class="st">&quot;y&quot;</span> <span class="ot">=</span> <span class="st">`</span><span class="at">2</span><span class="st">`</span>)</span>
+<span id="cb9-58"><a href="correlations.html#cb9-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-59"><a href="correlations.html#cb9-59" aria-hidden="true" tabindex="-1"></a>p4 <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(x, y)) <span class="sc">+</span> <span class="fu">geom_point</span>()  <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">&quot;r = -0.42&quot;</span>) <span class="sc">+</span></span>
+<span id="cb9-60"><a href="correlations.html#cb9-60" aria-hidden="true" tabindex="-1"></a>  see<span class="sc">::</span><span class="fu">theme_modern</span>()</span>
+<span id="cb9-61"><a href="correlations.html#cb9-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-62"><a href="correlations.html#cb9-62" aria-hidden="true" tabindex="-1"></a>p1 <span class="sc">+</span> p2 <span class="sc">+</span> p3 <span class="sc">+</span> p4</span></code></pre></div>
+<p><img src="r_for_non_programmers_files/figure-html/Examples%20of%20correlations-1.png" width="672" /></p>
+<p>A correlation can be either positive or negative and its score (i.e. <code>r</code>)</p>
+</div>
+<div id="simpsons-paradox" class="section level2" number="9.2">
+<h2><span class="header-section-number">9.2</span> Simpson’s Paradox: The limitations of correlations</h2>
 
+</div>
 </div>
             </section>
 
@@ -334,20 +477,6 @@ gitbook.start({
 });
 </script>
 
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:")
-      if (/^https?:/.test(src))
-        src = src.replace(/^https?:/, '');
-    script.src = src;
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script>
 </body>
 
 </html>
