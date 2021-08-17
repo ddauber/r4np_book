@@ -68,13 +68,10 @@ While the distribution looks similar, we can notice that the median and the mean
 
 Table \@ref(tab:comparing-two-groups-unpaired) summarises the different tests and functions to perform the group comparison computationally. It is important to note that the parametric test compares the means of two groups, while the non-parametric test compares ranks, especially the median. All tests turn significant if the differences between groups is large enough. Thus, significant results can be read as 'these groups are significantly different from each other'. Of course, if the difference is not significant, the groups are considered to be not different from each other.
 
-+----------------+----------------+-------------------+-----------------+--------------------------+
 | Assumption     | Test           | Function for test | Effect size     | Function for effect size |
-+================+================+===================+=================+==========================+
+|----------------|----------------|-------------------|-----------------|--------------------------|
 | Parametric     | T-Test         | `t.test()`        | Cohen's d       | `cohens_d()`             |
-+----------------+----------------+-------------------+-----------------+--------------------------+
 | Non-parametric | Mann-Whitney U | `wilcox.test()`   | Rank biserial r | `rank_biserial()`        |
-+----------------+----------------+-------------------+-----------------+--------------------------+
 
 : (\#tab:comparing-two-groups-unpaired) Comparing two unpaired groups (effect size functions from package `effectsize`
 
@@ -142,13 +139,10 @@ dir_mov %>%
 
 Considering this last plot, we likely can predict what the statistical test will show. Table \@ref(tab:comparing-two-groups-paired) summarises which tests and functions need to be performed if our data is parametric or non-parametric. In both cases, the functions are the same, but we need to add the attribute `paired = TRUE`. The interpretations between the unpaired and paired tests remain the same.
 
-+----------------+---------------------------+------------------------------+-----------------+--------------------------+
 | Assumption     | Test                      | Function for test            | Effect size     | Function for effect size |
-+================+===========================+==============================+=================+==========================+
+|----------------|---------------------------|------------------------------|-----------------|--------------------------|
 | Parametric     | T-Test                    | `t.test(paired = TRUE)`      | Cohen's d       | `cohens_d()`             |
-+----------------+---------------------------+------------------------------+-----------------+--------------------------+
 | Non-parametric | Wilcoxon Signed Rank Test | `wilcox.test(paired = TRUE)` | Rank biserial r | `rank_biserial()`        |
-+----------------+---------------------------+------------------------------+-----------------+--------------------------+
 
 : (\#tab:comparing-two-groups-paired) Comparing two unpaired groups (effect size functions from package `effectsize`
 
