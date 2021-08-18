@@ -99,3 +99,5 @@ two-unpaired-groups
 two-paired-groups
 multiple-unpaired-groups
 multiple-paired-groups
+chi-squared-test
+cheatsheet-group-comparisons
