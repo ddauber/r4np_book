@@ -103,7 +103,7 @@ imdb_top_250 %>%
   coord_flip()
 ```
 
-Step 3 is the only code you need to create the desired plot. The two other steps are a mean to demonstrate how one can slowly built up this plot, step-by-step. You might have noticed that I used `dplyr` to chain all these functions together and therefore it was not necessary to specify the dataset in `ggplot()`.
+Step 3 is the only code you need to create the desired plot. The other two steps are a mean to demonstrate how one can slowly built up this plot, step-by-step. You might have noticed that I used `dplyr` to chain all these functions together and therefore it was not necessary to specify the dataset in `ggplot()`.
 
 There are also two new functions we had to use: `geom_col()` and `reorder()`. The functions `geom_col()` and `geom_bar()` can be confusing. The easiest way to remember how to use them is: If you use a frequency table to create your barplot, use `geom_col`, if not, use `geom_bar()`. The function `geom_col()` requires that we specify a y-axis (our frequency scores), while `geom_bar()` does not.
 
@@ -306,7 +306,7 @@ As a final remark, it is also possible that you can find two or more modes in yo
 
 Understanding how your data is spread out is important to get a better sense of what your data is composed of. We already touched upon the notion of spread in Chapter \@ref(median) through plotting a boxplot. The spread of data provides insights into how homogeneous or heterogeneous the responses of our participants are. In the following we will cover some essential techniques to investigate the spread of your data and investigate whether our variables are normally distributed, which is often an important assumption for certain analytical techniques. In addition, we will aim to identify outliers which could be detrimental to subsequent analysis and significantly affect our modelling and testing in later stages.
 
-#### Boxplot: So much information in just one box
+### Boxplot: So much information in just one box
 
 The boxplot is a staple in visualising descriptive statistics. If offers so much information in just a single plot that it might not take much to convince you that it has become a very popular way to show the spread of data.
 
@@ -344,15 +344,19 @@ The results indicate that most movies are between 100 to 150 minutes long. Our i
 
 As we can see from our visualisation, both movies would also count as outliers in our dataset (see Chapter \@ref(outliers-iqr).
 
-#### Histogram: Do not mistake it as a bar plot
+### Histogram: Do not mistake it as a bar plot
 
 Another frequently used approach to show the spread (or distribution) of data is the histogram. The histogram easily gets confused with a bar plot. However, you would be very mistaken to assume that they are the same. Some key differences between these two types of plots is summarised in Table \@ref(tab:histogram-vs-bar-plot).
 
++----------------------------------------------------------------------+--------------------------------------------------------------------+
 | Histogram                                                            | Bar plot                                                           |
-|----------------------------------------------------------------------|--------------------------------------------------------------------|
++======================================================================+====================================================================+
 | Used to show the distribution of non-categorical data                | Used for showing the frequency of categorical data, i.e. `factor`s |
++----------------------------------------------------------------------+--------------------------------------------------------------------+
 | Each bar (also called 'bin') represents a group of observations.     | Each bar represents one category (or level) in our `factor`.       |
++----------------------------------------------------------------------+--------------------------------------------------------------------+
 | The order of the bars is important and cannot/should not be changed. | The order of bars is arbitrary and can be reordered if meaningful. |
++----------------------------------------------------------------------+--------------------------------------------------------------------+
 
 : (\#tab:histogram-vs-bar-plot) Histogram vs bar plot
 
@@ -478,7 +482,7 @@ imdb_top_250 %>%
 
 However, there are two problems if we use histograms in combination with a normal distribution reference plot: First, the y axis needs to be transformed to fit the normal distribution (which is a density plot and not a histogram). Second, the shape of our histogram is affected by the number of `bins` we have chosen, which is an arbitrary choice we make. Besides, the lines of code might be tough to understand, because we have to 'hack' the visualisation to make it work. There is, however, a better way to do this: Density plots.
 
-#### Density plots: Your smooth histograms
+### Density plots: Your smooth histograms
 
 Density plots are a special form of the histogram. It uses 'kernel smoothing', which turns our blocks into a smoother shape. Better than trying to explain what it does, it might help to see it. We use the same data but replace `geom_histogram()` with `geom_density()`.
 
@@ -566,7 +570,7 @@ shapiro.test(imdb_top_250$runtime_min)
 
 According to this result, we have to accept that our data is not normally distributed, because it is significantly different from it (p\<0.05). We look at significance and its meaning more thoroughly in the next chapter (Chapter \@ref(correlations)).
 
-#### Violin plot: Your smooth boxplot {#violin-plot}
+### Violin plot: Your smooth boxplot
 
 If a density plot is the sibling of a histogram, the violin plot would be the sibling of a boxplot, but the twin of a density plot. Confused? If so, then let's use the function `geom_volin()` to create one.
 
