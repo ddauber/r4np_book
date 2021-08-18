@@ -113,7 +113,7 @@ In many cases, when creating plots you have to perform two steps:
 
 -   plot the data via `ggplot()`
 
-Now you have learned the fundamentals of plotting in R. Throughout the next chapters we will create a lot more plots. They all share the same basic structure, but we will use different 'geoms' to describe our data. By the end of this book, you will have accrued enough experience in plotting in R that it will feel like second nature. If you want to deepen your knowledge of `ggplot`, you should take a look at the book ['ggplot: Elegant Graphics for Data Analysis'](https://ggplot2-book.org "'ggplot: Elegant Graphics for Data Analysis'"){target="blank"} or 'R Graphics Cookbook' which moves beyond ggplots.
+Now you have learned the fundamentals of plotting in R. Throughout the next chapters we will create a lot more plots. They all share the same basic structure, but we will use different 'geoms' to describe our data. By the end of this book, you will have accrued enough experience in plotting in R that it will feel like second nature. If you want to deepen your knowledge of `ggplot`, you should take a look at the book ['ggplot: Elegant Graphics for Data Analysis'](https://ggplot2-book.org "'ggplot: Elegant Graphics for Data Analysis'"){target="blank"} or ['R Graphics Cookbook'](https://r-graphics.org "'R Graphics Cookbook'"){target="blank"}which moves beyond ggplots. Apart from that, you can also find fantastic packages which extend the range of 'geoms' you can use in the ['ggplot2 extensions gallery'](https://exts.ggplot2.tidyverse.org/gallery/ "'ggplot2 extensions gallery'"){target="blank"}.
 
 ## Central tendency measures: Mean, Median, Mode {#central-tendency}
 
