@@ -1,0 +1,508 @@
+# Sources of bias: Outliers, normality and other 'conundrums' {#sources-of-bias}
+```{r}
+library(tidyverse)
+library(r4np)
+library(patchwork)
+```
+
+'Bias' in your analysis is hardly ever a good thing (unless you are qualitative researcher). No matter whether you consider it as something positive or negative, we certainly have to be aware of issues that could hinder us of performing a certain type of analysis. All of the statistical computation that we discuss in the following chapters can easily be affected by different sources of bias. The lack of certain biases can be even an assumption of particular statistical tests. Thus, violating these assumptions would imply that the analytical technique we use will produce wrong results, i.e. biased results. @field2013discovering summarises them as follows:
+
+-   Linearity and additivity,
+
+-   Normality, and
+
+-   Homogeneity of variance, i.e. homoscedasticity.
+
+Most parametric tests require that all assumptions are met. If this is not the case we have to use alternative approaches, i.e. non-parametric tests. The distinction is of importance, since parametric and non-parametric tests are based on different computational methods and can lead to vastly different results.
+
+Lastly, we will also cover outliers as an important source of bias. Irrespective of whether your data fullfills the assumptions for parametric tests, outliers tend to be a major problem, which usually lead to misinterpretations of your findings.
+
+## Linearity and additivity {#additivity-and-linearity}
+
+The assumption of linearity postulates that the relationship of variables represents a straight line and not a curve or any other shape. Figure \@ref(fig:linear-nonlinear-relationship) depicts examples of how two variables could be related to each other. Only the first one demonstrates a linear relationship and all other plots would represent a violation for parametric tests.
+
+```{r Linearity visualised, fig.cap="Examples of linear and non-linear relationship of two variables", label = "linear-nonlinear-relationships", echo=FALSE}
+data <- tribble(
+  ~x,
+   1,
+   2,
+   3,
+   4, 
+   5,
+   6,
+   7,
+   8,
+   9,
+  10,
+  -1,
+  -2,
+  -3,
+  -4,
+  -5,
+  -6,
+  -7,
+  -8,
+  -9,
+  -10
+)
+
+p1 <- data %>% 
+  ggplot(aes(x = x, y = x)) +
+  geom_point() +
+  geom_smooth(method = "lm",
+              formula = y ~ x,
+              se = FALSE,
+              colour = "red") +
+  see::theme_modern() +
+  theme(axis.title.x = element_blank(),
+        axis.title.y = element_blank()) +
+  ggtitle("y = x")
+
+p2 <- data %>% 
+  mutate(zz = x^2) %>%
+  ggplot(aes(x = x, y = zz)) +
+  geom_point() +
+  geom_smooth(method = "lm",
+              formula = y ~ poly(x, 5),
+              se = FALSE,
+              colour = "red") +
+  see::theme_modern() +
+  theme(axis.title.x = element_blank(),
+        axis.title.y = element_blank()) +
+  ggtitle("y = x^2")
+
+
+p3 <- data %>% 
+  mutate(zz = x^3) %>%
+  ggplot(aes(x = x, y = zz)) +
+  geom_point() +
+  geom_smooth(method = "lm",
+              formula = y ~ poly(x, 5),
+              se = FALSE,
+              colour = "red") +
+  see::theme_modern() +
+  theme(axis.title.x = element_blank(),
+        axis.title.y = element_blank()) +
+  ggtitle("y = x^3")
+
+p4 <- data %>% 
+  mutate(zz = x^4) %>%
+  ggplot(aes(x = x, y = zz)) +
+  geom_point() +
+  geom_smooth(method = "lm",
+              formula = y ~ poly(x, 5),
+              se = FALSE,
+              colour = "red") +
+  see::theme_modern() +
+  theme(axis.title.x = element_blank(),
+        axis.title.y = element_blank()) +
+  ggtitle("y = x^4")
+
+# Put plots together
+p1 + p2 + p3 + p4
+```
+
+Data visualisation are particularly useful to identify whether that is linear or not. The examples above were all created with `geom_point()`, which creates a dot plot that maps the relationship between two variables. In the Chapter \@ref(correlations) we will look more closely at the relationship of two variables in the form of correlations, which measure the strength of a linear relationship between variables.
+
+Additivity is given when the effects of all independent variables can be added up to obtain the total effect they have on a dependent variable. In other words, the effects that multiple variables have on another variable can be added up to reflect the total effect they have on another variable.
+
+If we assume that we have a dependent variable $Y$ which is affected by other (independent) variables $X$, we could summarise additivity and linearity as a formula:
+
+::: {#linearity_additivity-formula align="center"}
+$Y = \beta_{1} * X_1 + \beta_{2} * X_{2} + ... + \beta_{n} * X_{n}$
+:::
+
+The $\beta$ stands for the degree of change a variable $X$ causes in $Y$. Or, in simpler terms, $\beta$ reflects the impact a independent variable has on the dependent variable. We will return to this euqation in Chapter \@ref(regression), were we try to create an equation that reflects our data the best, i.e. creating a linear model via regression.
+
+## Normality {#normality}
+
+We already covered the notion of 'normality' and 'normal distributions' in Chapter \@ref(spread-of-data), because it refers to the spread of our data. Figure \@ref(fig:normal-distribution2) should look familiar by now.
+
+```{r Normal distribution 2, fig.cap="A normal distribution", echo=FALSE, label="normal-distribution2"}
+
+data <- tribble(~x, -5, 5)
+
+data %>% ggplot(aes(x)) +
+  geom_hline(yintercept = 0) +
+  geom_vline(xintercept = c(0), colour = "red") +
+  stat_function(fun = dnorm, n = 200, args = list(mean = 0, sd = 1.5)) +
+  scale_y_continuous(breaks = NULL) +
+  scale_x_continuous(breaks = NULL) +
+  theme_minimal() +
+  xlab("mean/mode of \n x") +
+  ylab("")
+```
+
+However, we have yet to understand why it is important that our data follows a normal distribution. Most parametric tests are based on means. For example, if we want to compare two groups with each other, we would compute the mean for each of them and then see whether their means differ from each other in a significant way. Of course, if our data is not very normally distributed, means are a poor reference point for the majority of the observations in this group. We already know that means are heavily affected by outliers, but even without outliers, the mean could be a poor choice.
+
+```{r Comparing two distributions and their means, echo=FALSE}
+data <- tribble(
+  ~income,
+  1400,
+  1500,
+  1600,
+  1650,
+  1678,
+  1685,
+  1689,
+  1700,
+  1715,
+  1800,
+  1950
+  )
+
+p1 <- data %>%
+  ggplot(aes(income)) +
+  geom_density(bw = 80) +
+  geom_vline(aes(xintercept = mean(income), color = "red")) +
+  geom_text(aes(x = mean(income)-15,
+                y = 0.0002,
+                label = "mean",
+                angle = 90,
+                color = "red"
+                )) +
+  geom_vline(aes(xintercept = median(income), color = "blue")) +
+  geom_text(aes(x = median(income)+15,
+                y = 0.00024,
+                label = "median",
+                angle = 90,
+                color = "blue"
+                )) +
+  ggtitle("Fig A: normal distribution") +
+  theme(legend.position = "none",
+        plot.title = element_text(size = 12))
+
+
+data2 <- tribble(
+  ~income,
+  1500,
+  1550,
+  1600,
+  1650,
+  1678,
+  1685,
+  1689,
+  1700,
+  1715,
+  1800,
+  1950,
+  2500,
+  3500
+  )
+
+p2 <- data2 %>%
+  ggplot(aes(income)) +
+  geom_density(bw = 80) +
+  geom_vline(aes(xintercept = mean(income), color = "red")) +
+  geom_text(aes(x = mean(income)-15,
+                y = 0.0002,
+                label = "mean",
+                angle = 90,
+                color = "red"
+                )) +
+  geom_vline(aes(xintercept = median(income), color = "blue")) +
+  geom_text(aes(x = median(income)+15,
+                y = 0.00024,
+                label = "median",
+                angle = 90,
+                color = "blue"
+                )) +
+  ggtitle("Fig B: No normal distribution") +
+  theme(legend.position = "none",
+        plot.title = element_text(size = 12))
+
+data3 <- tribble(
+  ~income,
+  1100,
+  1200,
+  1150,
+  1278,
+  1300,
+  1300,
+  1695,
+  1699,
+  1715,
+  1950,
+  1700,
+  1950
+  )
+
+p3 <- data3 %>%
+  ggplot(aes(income)) +
+  geom_density(bw = 80) +
+  geom_vline(aes(xintercept = mean(income), color = "red")) +
+  geom_text(aes(x = mean(income)-15,
+                y = 0.0002,
+                label = "mean",
+                angle = 90,
+                color = "red"
+                )) +
+  geom_vline(aes(xintercept = median(income), color = "blue")) +
+  geom_text(aes(x = median(income)+15,
+                y = 0.00024,
+                label = "median",
+                angle = 90,
+                color = "blue"
+                )) +
+  ggtitle("Fig C: No normal distribution") +
+  theme(legend.position = "none",
+        plot.title = element_text(size = 12))
+
+p1 + p2 + p3 + plot_spacer()
+```
+
+Considering all three plots, we notice that neither the median nor the mean by themselves are a reliable indicator for normality. Fig A and Fig C both show that the median and mean are almost identical, but only Fig A shows a normal distribution. In fact, the median and mean in Fig C are not reflective for the average observation in this dataset. Most scores lie below and above the mean/median. This type of distribution hints at two sub-groups in our dataset, for example male versus female participants. Therefore, when we analyse the normality of our data, we usually are not interested in the normality of a single variable, but the normality of the sampling distribution, which unfortunately often remains unknown, because it is linked to the distribution of the population.
+
+
+Determining whether data is normally distributed can very challenging when only inspecting plots, e.g. historgrams, density plots or QQ plots. Luckily, there is also a statistical method to test whether our data is normally distributed: The Shapiro-Wilk test. This test compares our distribution with a normal distribution (like in our plot) and tells us whether our distribution is **significantly different** from it. Thus, if the test is not significant the distribution of our data is not significantly different from a normal distribution, or in simple terms: It is normally distributed. We can run the test in R as follows:
+
+```{r Shapiro Wilk test, echo=TRUE}
+shapiro.test(data$income)
+```
+
+According to this result, we have to accept that our data is not normally distributed, because it is significantly different from it (p\<0.05). We look at significance and its meaning more thoroughly in the next chapter (Chapter \@ref(correlations)).
+
+## Homogeneity of variance (homoscedasticity) {#homogeneity-of-variance}
+
+## Outliers and how to deal with them {#dealing-with-outliers}
+
+In Chapter \@ref(descriptive-statistics), I referred to outliers many times but never eluded to the aspects of handling them. Dealing with outliers is similar to dealing with missing data. It is not quite as straightforward as one might think.
+
+In a first step, we need to determine which values count as an outlier. @aguinis2013best reviewed 232 journal articles and found that scholars had defined outliers in 14 different ways, used 39 different techniques to detect them and applied 20 different strategies to handle them. It would be impossible to work through all different options in this book. However, I want to offer two options that have been frequently considered in publications in the field of Social Sciences:
+
+-   The standard deviation, and
+
+-   The inter-quartile range.
+
+### Detecting outliers using the standard deviation {#ouliers-standard_deviation}
+
+A very frequently used approach to detecting outliers is the use of the standard deviation. Usually, scholars use multiples of the standard deviation to determine thresholds. For example, a value that lies 3 standard deviations above or below the mean could be categorised as an outlier. Unfortunately, there is quite some variability regarding how many multiples of the standard deviation counts as an outlier. Some authors might use 3, others might settle for 2 (see also @leys2013detecting). Let's stick with the definition of 3 standard deviations to begin with. We can revisit our previous plot and add lines which show the thresholds above and below the mean.
+
+```{r Outlier detection usind 3 sd, echo=TRUE}
+# Compute the mean and standard deviation
+runtime_mean <- mean(imdb_top_250$runtime_min)
+sd_upper <- runtime_mean + 3 * sd(imdb_top_250$runtime_min)
+sd_lower <- runtime_mean - 3 * sd(imdb_top_250$runtime_min)
+
+# Create our plot
+imdb_top_250 %>% 
+  select(title, runtime_min) %>% 
+  ggplot(aes(x = reorder(title, runtime_min), y = runtime_min)) +
+  geom_point(shape = 124) +
+  geom_hline(aes(yintercept = runtime_mean, colour = "red"), show.legend = FALSE) +
+  geom_hline(aes(yintercept = sd_upper, color = "blue"), show.legend = FALSE) +
+  geom_hline(aes(yintercept = sd_lower, color = "blue"), show.legend = FALSE) +
+  
+  theme(axis.text.x = element_blank(),    
+        panel.grid.major = element_blank(),
+        panel.background = element_blank()
+        ) +
+  ylab("run time") +
+  xlab("movies")
+```
+
+The results suggests that only very few outliers would be detected if we chose these thresholds. Especially 'Sherlock Jr.', the shortest movie in our dataset would not classify as an outlier. How about we choosen two standard deviations instead?
+
+```{r Outlier detection usind 2 sd, echo=TRUE}
+# Compute the mean and standard deviation
+runtime_mean <- mean(imdb_top_250$runtime_min)
+sd_upper <- runtime_mean + 2 * sd(imdb_top_250$runtime_min)
+d_lower <- runtime_mean - 2 * sd(imdb_top_250$runtime_min)
+
+# Create our plot
+imdb_top_250 %>% 
+  select(title, runtime_min) %>% 
+  ggplot(aes(x = reorder(title, runtime_min), y = runtime_min)) +
+  geom_point(shape = 124) +
+  geom_hline(aes(yintercept = runtime_mean, colour = "red"), show.legend = FALSE) +
+  geom_hline(aes(yintercept = sd_upper, color = "blue"), show.legend = FALSE) +
+  geom_hline(aes(yintercept = sd_lower, color = "blue"), show.legend = FALSE) +
+  
+  theme(axis.text.x = element_blank(),    
+        panel.grid.major = element_blank(),
+        panel.background = element_blank()
+        ) +
+  ylab("run time") +
+  xlab("movies")
+
+```
+
+As we would expect, we identify some more movies as being outliers. Still, it feels rather arbitrary to choose a threshold of our liking. Despite its popularity, there are additional problems with this approach:
+
+-   outliers affect our mean and standard deviation too,
+
+-   since we use the mean, we assume that our data is normally distributed, and
+
+-   in smaller samples, this approach might result in not identifying outliers at all (despite their presence) (@leys2013detecting, p. 764)
+
+@leys2013detecting propose an alternative approach, based on the fact that medians are much less vulnerable to outliers than the mean. Similarly to the standard deviation, it is possible to calculate thresholds using the 'median absolute deviation' (MAD). Best of all, the function `mad()` in R does this automatically for us. @leys2013detecting suggest to use 2.5 times the MAD as a threshold. However, if we want to compare directly how well this option does against the standard deviation, we should `3` again.
+
+```{r Outlier detection via median MAD3, echo=TRUE}
+# Compute the median and thresholds
+runtime_median <- median(imdb_top_250$runtime_min)
+mad_upper <- runtime_median + 3 * mad(imdb_top_250$runtime_min)
+mad_lower <- runtime_median - 3 * mad(imdb_top_250$runtime_min)
+
+# Create our plot
+imdb_top_250 %>% 
+  select(title, runtime_min) %>% 
+  ggplot(aes(x = reorder(title, runtime_min), y = runtime_min)) +
+  geom_point(shape = 124) +
+  geom_hline(aes(yintercept = runtime_median, colour = "red"), show.legend = FALSE) +
+  geom_hline(aes(yintercept = mad_upper, color = "blue"), show.legend = FALSE) +
+  geom_hline(aes(yintercept = mad_lower, color = "blue"), show.legend = FALSE) +
+  
+  theme(axis.text.x = element_blank(),    
+        panel.grid.major = element_blank(),
+        panel.background = element_blank()
+        ) +
+  ylab("run time") +
+  xlab("movies")
+```
+
+Compared to our previous results, we notice that the median approach was much better in detecting outliers at the upper range of `runtim_min`. Because the median is not affected so much by the five hour-long movie, the results have improved. Still, we would not classify the outlier at the bottom for the shortest movie in the data. If we chose the criterion of 2.5\*MAD, we would also get this outlier (see Figure \@ref(fig:MAD2-outlier-detection)).
+
+```{r Outlier detection via median MAD2, echo=FALSE, fig.cap="Outlier detection via MAD using `2.5 * MAD` as a threshold", label = "MAD2-outlier-detection"}
+# Compute the median and thresholds
+runtime_median <- median(imdb_top_250$runtime_min)
+mad_upper <- runtime_median + 2.5 * mad(imdb_top_250$runtime_min)
+mad_lower <- runtime_median - 2.5 * mad(imdb_top_250$runtime_min)
+
+# Create our plot
+imdb_top_250 %>% 
+  select(title, runtime_min) %>% 
+  ggplot(aes(x = reorder(title, runtime_min), y = runtime_min)) +
+  geom_point(shape = 124) +
+  geom_hline(aes(yintercept = runtime_median, colour = "red"), show.legend = FALSE) +
+  geom_hline(aes(yintercept = mad_upper, color = "blue"), show.legend = FALSE) +
+  geom_hline(aes(yintercept = mad_lower, color = "blue"), show.legend = FALSE) +
+  
+  theme(axis.text.x = element_blank(),    
+        panel.grid.major = element_blank(),
+        panel.background = element_blank()
+        ) +
+  ylab("run time") +
+  xlab("movies")
+```
+
+Which approach to choose can be informed by the normality of your data. If your data is normally distributed, the mean and median would be very close to each other and the results from both approach would return very similar results. However, if your data is not normally distributed, it might be better to classify outliers using the median.
+
+### Detecting outliers using the interquartile range {#outliers-iqr}
+
+Another approach to classify outliers is the use of the interquartile range (IQR). This one is used in boxplots and creates the dots at its ends to indicate any outliers. This approach is very easy to implement because the computation of the IQR is simple:
+
+::: {#iqr-formula align="center"}
+$IQR = Q_{3}-Q_{1}$
+:::
+
+Therefore, we can create new thresholds for the detection of outliers. For IQR it is common to use '1.5 \* IQR' as the lower and upper thresholds.
+
+```{r IQR as a threshold for outliers, echo=TRUE}
+# Compute the median and thresholds
+runtime_median <- median(imdb_top_250$runtime_min)
+iqr_upper <- runtime_median + 1.5 * IQR(imdb_top_250$runtime_min)
+iqr_lower <- runtime_median - 1.5 * IQR(imdb_top_250$runtime_min)
+
+# Create our plot
+imdb_top_250 %>% 
+  select(title, runtime_min) %>% 
+  ggplot(aes(x = reorder(title, runtime_min), y = runtime_min)) +
+  geom_point(shape = 124) +
+  geom_hline(aes(yintercept = runtime_median, colour = "red"), show.legend = FALSE) +
+  geom_hline(aes(yintercept = iqr_upper, color = "blue"), show.legend = FALSE) +
+  geom_hline(aes(yintercept = iqr_lower, color = "blue"), show.legend = FALSE) +
+  
+  theme(axis.text.x = element_blank(),    
+        panel.grid.major = element_blank(),
+        panel.background = element_blank()
+        ) +
+  ylab("run time") +
+  xlab("movies")
+```
+
+As we can tell, the IQR detects much more outliers for our data than any of the previous methods. The outliers we find here are the same as shown in Figure \@ref(fig:a-boxplot).
+
+For our data it seems that the MAD by @leys2013detecting produced the 'best' selection. However, we have to acknowledge that these classifications will always be subjective, because the decision of how we position the thresholds is still depending on the researcher's choice.
+
+### Removing or replacing outliers {#removing-or-replacing-outliers}
+
+Now that we have identified our outliers we are confronted with the question what we should do with them. Similar to missing data (see Chapter \@ref(dealing-with-missing-data)) we can either remove them or replace them with other values. While removal is a fairly simple task, replacing it with other 'reasonable' values implies that we need to find techniques to create such values. As you may remember, we were confronted with a similar problem before when we looked into missing data (Chapter \@ref(dealing-with-missing-data). The same techniques, especially multiple imputation [see @cousineau2010outliers], can be used for such scenarios as well.
+
+Irrespective of whether we remove or replace outliers, we somehow need to single them out of the crowd. Since the MAD strategy worked well for our data, we can use the thresholds we defined before, i.e. `mad_upper` and `mad_lower`. Therefore, an observation (i.e. a movie) is considered as an outlier if:
+
+-   its value lies above `mad_upper`, or
+
+-   its value lies below `mad_lower`
+
+It becomes clear that we somehow need to define a condition, because if it is an outlier, it should be labelled as one, if not then it should not be labelled as one. Ideally we want a new column in our dataset which indicates whether a movie is an outlier (i.e. outlier = TRUE) or not (outlier = FALSE). R offers a way for us to express such conditions with the function `ifelse()`. It has the following structure:
+
+::: {#ifelse-function align="center"}
+`ifelse(condition, TRUE, FALSE)`
+:::
+
+Let's formulate a sentence that describes our scenario as an `ifelse()` function:
+
+-   If a movie's `runtime_min` is longer than `mad_upper`, [or]{.ul}
+
+-   if a movie's `runtime_min` is lower than `mad_lower`,
+
+-   classify this movie as an outlier (i.e. `TRUE`),
+
+-   otherwise classify this movie as not being an outlier (i.e. `FALSE`).
+
+We already know from Chapter \@ref(basic-computations-in-r) how to use logical and arithmetic operators. All we have to do is put them together in one function call.
+
+```{r Classifying outliers with MAD, echo=TRUE}
+imdb_top_250 <- imdb_top_250 %>% 
+  mutate(outlier = ifelse(runtime_min > mad_upper | runtime_min < mad_lower,
+                          TRUE, FALSE))
+```
+
+Since we have a classification we can more thoroughly inspect our outliers and see which movies are the ones that are lying outside our defined norm. We can `arrange()` them by `runtime_min`.
+
+```{r List the outliers, echo=TRUE}
+imdb_top_250 %>% 
+  filter(outlier == "TRUE") %>% 
+  select(title, runtime_min, outlier) %>% 
+  arrange(runtime_min)
+```
+
+The list of movies contains some of the most iconic Hollywood films ever shown on screen. I think we can agree that most of them are truly outside the norm of regular movies, not just in terms of runtime.
+
+From here it is simple to remove these movies (i.e. keep the movies that are not outliers) or set their values to `NA` by writing the following lines of code. We replace the values with `NA` we can the continue with one of the techniques demonstrated for missing values (Chapter \@ref(dealing-with-missing-data).
+
+```{r Remove and replacing outliers, echo=TRUE, results='hide'}
+# Keep all movies that are not outliers
+imdb_top_250 %>% 
+  filter(outlier == "FALSE")
+
+# Replace values with NA
+imdb_top_250 %>% 
+  mutate(runtime_min = replace(runtime_min, outlier == "TRUE", NA))
+```
+
+The `replace()` function is very intuitive to use. It first needs to know where you want to replace a value (`runtime_min`), then what the condition for replacing is (`outlier == "TRUE"`), and lastly, which value should be put instead of the original one (`NA`).
+
+As you hopefully noticed, understanding your data requires some effort, but it is important to know your data well before proceeding to any further analysis. You can experiment with different data visualisations and design them in a way that best reflect the message you want to get across. For example, because we have now a separate variable which classifies outliers we can do more with our data visualisation than before and dress it up a bit more nicely.
+
+```{r Final plot to show outliers, echo=TRUE, warning=FALSE}
+colour_pal <- wesanderson::wes_palette("Darjeeling1", 11, type = "continuous")
+
+imdb_top_250 %>% 
+  ggplot(aes(x = reorder(genre_01, runtime_min),
+             y = runtime_min,
+             colour = genre_01)
+         ) +
+  geom_boxplot(alpha = 0,
+               show.legend = FALSE) +
+  geom_jitter(width = 0.1,
+              size = 0.5,
+              alpha = 0.5,
+              show.legend = FALSE) +
+  scale_color_manual(values = colour_pal) +
+  coord_flip() +
+  theme(panel.background = element_blank())+
+  xlab("runtime") +
+  ylab("Genre") +
+  ggtitle("Distribution of movie runtimes by genre")
+```

@@ -102,3 +102,11 @@ multiple-paired-groups
 chi-squared-test
 cheatsheet-group-comparisons
 fig:folder-structure
+fig:linear-nonlinear-relationships
+fig:normal-distribution2
+fig:MAD2-outlier-detection
+violin-plot-your-smooth-boxplot
+sources-of-bias
+additivity-and-linearity
+normality
+homogeneity-of-variance
