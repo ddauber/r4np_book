@@ -10,13 +10,19 @@ Sometimes counting and measuring means, medians and standard deviations is not e
 
 There are many different ways of how one can compute the correlation and it partially depends on the type of data you want to relate. The 'Pearson's correlation' is by far the most frequently used correlation technique for data that is normally distributed. On the other hand, if data is not normally distributed, we can opt for the 'Spearman's rank' correlation. One could argue that the relationship between these two correlations is like the mean (Pearson) to the median (Spearman). Both approaches require numeric values to be computed properly. If our data is ordinal, or worse dichotomous (like a logical variables), we have to opt for different options.
 
++-----------------+-------------------------------------------------------------------------+
 | Correlation     | Used                                                                    |
-|-----------------|-------------------------------------------------------------------------|
++=================+=========================================================================+
 | *Pearson*       | Requires variables to be parametric and therefore numeric               |
++-----------------+-------------------------------------------------------------------------+
 | *Spearman*      | Used when data is non-parametric and requires numeric variables         |
++-----------------+-------------------------------------------------------------------------+
 | *Polychoric*    | Used when investigating two ordinal variables                           |
++-----------------+-------------------------------------------------------------------------+
 | *Tetrachoric*   | Used when both variables are dichotomous, e.g. 'yes/no', 'True/False'.  |
++-----------------+-------------------------------------------------------------------------+
 | *Rank-biserial* | Used when one variable is dichotomous and the other variable is ordinal |
++-----------------+-------------------------------------------------------------------------+
 
 : (\#tab:different-correlations) Different ways of computing correlations
 
@@ -204,15 +210,18 @@ plot %>%
         )
 ```
 
-Another question we posed at the beginning was: Do popular movies receive more votes from users than less popular movies? Our intuition might say 'yes'. More popular movies are likely seen by more people, which makes them more popular. Consequently, the more people have seen a movie, the more likely they might vote for this movie. For less popular movies, the oppposite should be true. Let's create another scatterplot.
+Another question we posed at the beginning was: Do popular movies receive more votes from users than less popular movies? Our intuition might say 'yes'. More popular movies are likely seen by more people, which makes them more popular. Consequently, the more people have seen a movie, the more likely they might vote for this movie. For less popular movies, the opposite should be true. Let's create another scatterplot to find out.
 
 ```{r Ratings vs votes, echo=TRUE}
 imdb_top_250 %>%
   ggplot(aes(x = imdb_rating, y = votes)) + 
-  geom_jitter()
+  geom_jitter() +
+  scale_y_continuous(labels = scales::label_number(big.mark = ","))
 ```
 
-The scatterplot shows some positive trend. Often, it can be touch to see the trend clearly. In order to impove our plot we can make use of the function `geom_smooth()`, which can help us draw a straight line that fits our data points the best. We need to set the `method` for drawing the line to `lm`, which stands for linear model. Remember, correlations assume a linear relationship between two variables.
+The last line of code helps to make the labels on the y axis more readable. The numbers are in the millions and it helps to have the indicators present using `label_number()` from the `scales` package.
+
+The scatterplot shows a somewhat positive trend. Often, it can be tough to see the trend clearly. In order to improve our plot we can make use of the function `geom_smooth()`, which can help us draw a straight line that fits our data points the best. We need to set the `method` for drawing the line to `lm`, which stands for linear model. Remember, correlations assume a linear relationship between two variables.
 
 ```{r Ratings vs votes plus regression line, echo=TRUE}
 imdb_top_250 %>%

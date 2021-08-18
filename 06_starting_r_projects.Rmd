@@ -125,7 +125,7 @@ Not only does RStudio show you all the available options, but it also tells you 
 
 ## Using R Markdown {#r-markdown-and-r-notebooks}
 
-There is too much to say about R Markdown, which is why I only will highlight that they exist and point out the one feature that might convince you to choose these formats over plain R Scripts: They look like a Word document (almost).
+There is too much to say about R Markdown, which is why I only will highlight that it exists and point out the one feature that might convince you to choose this format over plain R Scripts: They look like a Word document (almost).
 
 As the name indicates, R Markdown files are a combination of R Scripts and Markdown. Markdown is a way of writing and formatting text documents without needing software like MS Word. Instead, you write everything in plain text. Such plain text can be converted into many different document types such as HTML websites, PDF or Word documents. If you would like to see how it works, I recommend looking at the [R Markdown Cheatsheet](https://www.rstudio.com/resources/cheatsheets/).
 
@@ -141,4 +141,4 @@ If you switch your view to the `Visual Editor`, it almost looks like you are wri
 
 So, when should you use an R Script, and when should you use R Markdown. The rule-of-thumb is that if you intend to write a report, thesis or another form of publication, it might be better to work in an R Markdown file. If this does not apply, you might want to write an R Script. As mentioned above, R Markdown files emphasise text, while R Scripts primarily focus on code. In my projects, I often have a mixture of both. I use R Scripts to carry out data wrangling and my primary analysis and then use R Markdown files to present the findings, e.g. creating plots, tables, etc. By the way, this book is written in R Markdown using the `bookdown` package.
 
-No matter your choice, it will neither benefit nor disadvantage you in your R journey or when working through this book. The choice is all yours. You likely will come to appreciate both formats for what they offer.
+No matter your choice, it will neither benefit nor disadvantage you in your R journey or when working through this book. The choice is all yours. You likely will come to appreciate both formats for what they offer. If you want to find out more about R Markdown and how to use it, I highly recommend taking a look at ['R Markdown: The Definitive Guide'](https://bookdown.org/yihui/rmarkdown/ "'R Markdown: The Definitive Guide'"){target="blank"} [@rmarkdown2018].

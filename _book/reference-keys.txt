@@ -101,3 +101,4 @@ multiple-unpaired-groups
 multiple-paired-groups
 chi-squared-test
 cheatsheet-group-comparisons
+fig:folder-structure
