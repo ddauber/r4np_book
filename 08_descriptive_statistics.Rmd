@@ -665,11 +665,15 @@ imdb_top_250 %>%
 
 As we can see, there is only a small fraction of movies that are close to the mean. If we now consider the distance of each dot from the red line, we know how much each dot, i.e. each movie, deviates from the mean. The standard deviation tells us how much the runtime deviates on average. To be more specific, to compute the standard deviation by hand you would:
 
--   subtract the mean runtime from the runtime of each movie and square it, i.e. $deviations = (runtime\_min - mean_{all\ movies})^2$,
+-   compute the difference between each observed value of `runtime_min` and the mean of `runtime_min` in your dataset, which is also called 'deviance', i.e. $deviance = runtime\_min - mean_{all\ movies}$
 
--   then we take the sum of all deviations and divide it by the number of movies minus 1, i.e. $\frac{\sum(deviations)}{250-1}$, and because we squared the deviations,
+-   square the deviance to turns all scores into positive ones, i.e. $deviance_{squared} = (deviance)^2$,
 
--   we take the square root of this score, i.e. $\sqrt{\frac{\sum(deviations)}{250-1}}$.
+-   then we take the sum of all deviations (also known as 'sum of squared errors') and divide it by the number of movies minus 1, which results in the 'variance', i.e. i.e. $variance = \frac{\sum(deviations_{squared})}{250-1}$. The variance reflects the average dispersion of our data.
+
+-   Lastly, we take the square root of this score to obtain the standard deviation, i.e. $sd = \sqrt{variance}$.
+
+While the deviation and variance are interesting to look at, the standard deviation has the advantage that it provides us with the average deviation (often also called error) based on the units of measurement of our variable. Thus, it is much easier to interpret its size.
 
 We could compute this by hand if we wanted, but it is much simpler to use the function`sd()` to achieve the same. The result shows that movies tend to be about 32 minutes longer or shorter than the average movie. This seems quite long.
 
