@@ -6,7 +6,8 @@ library(r4np)
 library(broom)
 library(effectsize)
 
-wvs_nona <- read_csv("wvs_nona.csv")
+wvs_nona <- read_csv("wvs_nona.csv") %>% 
+  mutate_if(is.character, as_factor)
 ```
 
 Social Sciences is about the study of human beings and their interactions. As such, we frequently want to compare two or more groups of human beings, organisations, teams, countries, etc., with each other to see whether they are similar or different from each other. Sometimes we also want to track individuals over time and see how they may have changed in some way or other. In short, comparing groups is an essential technique to make inferences and helps us better understand the diversity that surrounds us.
@@ -17,7 +18,7 @@ If we want to perform a group comparison we have to consider which technique is 
 
 -   outliers (see Chapter \@ref(dealing-with-outliers), and
 
--   the assumptions made by analytical techniques about our data
+-   the assumptions made by analytical techniques about our data.
 
 While we covered missing data and outliers in previous chapters, we have yet to discuss assumptions. For group comparisons there are three main questions we need to answer:
 
@@ -48,15 +49,18 @@ In order to inspect characteristics of groups we wish to compare, we can use des
 For example, we might wish to compare female and male Egyptians (see Chapter \@ref(two-unpaired-groups)). If we wanted to make sure these two groups can be compared we might have to check (among other characteristics) whether their age is distributed similarly. We can use the functions we already know to create a plot to investigate this matter. We could either use a boxplot, or, a bit more accurate, a density plot using the `ggridges` package.
 
 ```{r Comparability of Egyptians, echo=TRUE, message=FALSE}
-wvs_nona %>%
-  filter(country == "Egypt") %>%
+# Only select participants from 'Egypt'
+comp <- wvs_nona %>%
+  filter(country == "Egypt")
+
+comp %>%
   ggplot(aes(x = age,
              y = gender,
              fill = gender)) +
   ggridges::geom_density_ridges(bandwidth = 4)
 ```
 
-As we can see, the distribution of `age` across both `gender` groups is fairly similar and likely not different between groups. Of course, we could also statistically test this using a group comparison test before performing the main group comparison. However, we first have to understand how we can perform them. Unfortunately, there is yet no unified way of computing all these statistics in a more `tidyverse` approach. The package `rstatix` has several meaningful ways of conducting group comparisons using pipe friendly functions. However, they do not play well along with the package `effectsize`. Thus, it very much depends on what you prefer. I opted to use as much basic R functions as possible for the computation. Still, the lack of a uniform notation can be a bit frustrating. Thus, be aware of how functions are constructed in this section.
+As we can see, the distribution of `age` across both `gender` groups is fairly similar and likely not different between groups. Of course, we could also statistically test this using a group comparison test before performing the main group comparison. However, we first have to understand how we can perform them. The package `statsExpressions` has several meaningful ways of conducting group comparisons using pipe friendly functions which can be found on the package's [website](https://indrajeetpatil.github.io/statsExpressions/index.html "website of statsExpressions"){target="blank"}. These will be used throughout this chapter, because they are in line with a `tidyverse` approach to data analysis and also provide effect sizes for our tests. However, I provided the underlying functions related to each test in Chapter \@ref() opted to use as much basic R functions as possible for the computation in this chapter, because (1) it helps you better understand which functions are used in the `statsExpressions` package, and (2) they integrate well with so-called 'post-hoc' tests, which we have to perform for multiple group comparisons. Nevertheless, I highly recommend to take a look at the `statsExpressions` package, which is not only hugely popular, but is helpful in standardising how we write our tests in R and also switching between different methods very quickly without rewriting an entire set of code.
 
 ## Comparing two groups {#comparing-two-groups}
 
@@ -71,14 +75,13 @@ Our first comparison will be participants from `Egypt` and we want to understand
 We first can compare these two groups using our trusty `geom_boxplot` (or any variation of it).
 
 ```{r Two unpaired groups visualisation, echo=TRUE}
-# Only select participants from 'Egypt'
-comp <- wvs_nona %>%
-  filter(country == "Egypt")
-
-# Compute the mean for each group
+# Compute the mean for and size of each group 
 group_means <- comp %>% 
   group_by(gender) %>% 
-  summarise(g_mean = mean(freedom_of_choice))
+  summarise(g_mean = mean(freedom_of_choice),
+            n = n())
+
+group_means
 
 # Create our data visualisation
 comp %>% 
@@ -93,16 +96,16 @@ comp %>%
              )
 ```
 
-While the distribution looks similar, we can notice that the median and the mean (marked by the cross inside the boxplot) are slighter higher for `male` participants. Thus, we could can suspect slight differences between these two groups, but we do not know whether these differences are significant or not. To consider the significance (remember Chapter \@ref(significance)) and the effect size (see Table \@ref(tab:effect-size-cohen)) we have to perform statistical tests.
+While the distribution looks similar, we can notice that the median and the mean (marked by the cross inside the boxplot) are slighter higher for `male` participants. Thus, we can suspect slight differences between these two groups, but we do not know whether these differences are significant or not. To consider the significance (remember Chapter \@ref(significance)) and the effect size (see Table \@ref(tab:effect-size-cohen)) we have to perform statistical tests.
 
-Table \@ref(tab:comparing-two-groups-unpaired) summarises the different tests and functions to perform the group comparison computationally. It is important to note that the parametric test compares the means of two groups, while the non-parametric test compares ranks. All of these tests turn significant if the differences between groups is large enough. Thus, significant results can be read as 'these groups are significantly different from each other'. Of course, if the difference is not significant, the groups are considered to be not different from each other. For parametric tests, i.e. `t.test()` it is also important to indicate whether the variances between these two groups are equal or not. Remember this was one of the assumptions for parametric tests. The Welch t-test can be used if the variances are not equal, but all other criteria for normality are met. By setting `var.equal = TRUE`, a regular T-Test would be performed. By defaulty, `t.test` assumes that variances are not equal. Make sure you test for homogeneity of variance before making your decision (see Chapter \@ref(homogeneity-of-variance).
+Table \@ref(tab:comparing-two-groups-unpaired) summarises the different tests and functions to perform the group comparison computationally. It is important to note that the parametric test compares the means of two groups, while the non-parametric test compares medians. All of these tests turn significant if the differences between groups is large enough. Thus, significant results can be read as 'these groups are significantly different from each other'. Of course, if the difference is not significant, the groups are considered to be not different from each other. For parametric tests, i.e. `t.test(),` it is also important to indicate whether the variances between these two groups are equal or not. Remember this was one of the assumptions for parametric tests. The Welch t-test can be used if the variances are not equal, but all other criteria for normality are met. By setting `var.equal = TRUE`, a regular T-Test would be performed. By defaulty, `t.test` assumes that variances are not equal. Make sure you test for homogeneity of variance before making your decision (see Chapter \@ref(homogeneity-of-variance).
 
 +----------------+----------------+----------------------------------+-----------------+--------------------------+
 | Assumption     | Test           | Function for test                | Effect size     | Function for effect size |
 +================+================+==================================+=================+==========================+
 | Parametric     | T-Test         | `t.test(var.equal = TRUE/FALSE)` | Cohen's d       | `cohens_d()`             |
 +----------------+----------------+----------------------------------+-----------------+--------------------------+
-| Non-parametric | Mann-Whitney U | `wilcox.test()`                  | Rank-biserial r | `rank_biserial()`        |
+| Non-parametric | Mann-Whitney U | `wilcox.test(paired = FALSE)`    | Rank-biserial r | `rank_biserial()`        |
 |                |                |                                  |                 |                          |
 |                |                |                                  | or              | or                       |
 |                |                |                                  |                 |                          |
@@ -111,7 +114,7 @@ Table \@ref(tab:comparing-two-groups-unpaired) summarises the different tests an
 
 : (\#tab:comparing-two-groups-unpaired)Comparing two unpaired groups (effect size functions from package `effectsize`, except for `wilcoxonR()` from `rcompanion`
 
-If we find a significant difference between two groups, we have to ask ourselves: How big is the difference? The answer to this is provided by the effect size. The interpretation of what the effect size is, follows largely the explanations in Chapter \@ref(correlations), where we look at the strength of the correlation of two variables. However, different effect size measures imply that we have to use different benchmarks. To help us a bit with the interpretation we can use the `correlation` package and their set of `interpret_...()` functions (see also [Indices of Effect Size](https://easystats.github.io/effectsize/articles/interpret.html "Indices of Effect Size"){target="blank"}). Sometimes, there are more than one way of computing the effect size. For example for the Mann-Whitney test we can choose between the classic Wilcoxon R, computed as $\frac{Z}{\sqrt{n}}$ or the rank-biserial correlation coefficient. In practice, you have to be explicit about how you computed the effect size. The differences between the two measures are often marginal and a matter of taste (or what your reviewers prefer).
+If we find a significant difference between two groups, we have to ask ourselves: How big is the difference? The answer to this is provided by the effect size. The interpretation of what the effect size is, follows largely the explanations in Chapter \@ref(correlations), where we looked at the strength of the correlation of two variables. However, different effect size measures imply that we have to use different benchmarks. To help us a bit with the interpretation we can use the `correlation` package and their set of `interpret_...()` functions (see also [Indices of Effect Size](https://easystats.github.io/effectsize/articles/interpret.html "Indices of Effect Size"){target="blank"}). Sometimes, there are more than one way of computing the effect size. For example for the Mann-Whitney test we can choose between the classic Wilcoxon R, computed as $\frac{Z}{\sqrt{n}}$ or the rank-biserial correlation coefficient. In practice, you have to be explicit about how you computed the effect size. The differences between the two measures are often marginal and a matter of taste (or should I say: Your reviewers' taste).
 
 With this information in hand, we can start comparing the female Egyptians with the male Egyptians using the parametric and the non-parametric test for illustration purposes only.
 
@@ -124,6 +127,15 @@ t.test(freedom_of_choice ~ gender,
        var.equal = TRUE
        )
 
+test <- comp %>%
+  statsExpressions::two_sample_test(x = gender,
+                                    y = freedom_of_choice,
+                                    type = "nonparametric",
+                                    paired = FALSE,
+                                    var.equal = TRUE)
+
+glimpse(test)
+
 ## Determine the effect size
 (d <- cohens_d(freedom_of_choice ~ gender,
                data = comp,
@@ -131,20 +143,21 @@ t.test(freedom_of_choice ~ gender,
                var.equal = TRUE))
 
 ## Interpret the effect size
-interpret_d(d$Cohens_d)
+interpret_d(test$estimate)
 
 # NON-PARAMETRIC COMPARISON
 
 ## Perform the comparison
 wilcox.test(freedom_of_choice ~ gender, data = comp)
 
-## Determine the effect size via rank biserial correlation
+## Determine the effect size
 (rb <- rank_biserial(freedom_of_choice ~ gender, data = comp))
 # or
-rcompanion::wilcoxonR(comp$freedom_of_choice, comp$gender)
+(wr <- rcompanion::wilcoxonR(comp$freedom_of_choice, comp$gender))
 
 ## Interpret the effect size
 interpret_rank_biserial(rb$r_rank_biserial, rules = "cohen1988")
+interpret_r(wr)
 ```
 
 First, you might notice that the notation within the functions for group tests looks somewhat different to what we are used to, i.e. we use the `~` ('tilde') symbol. Some functions take a formula as their attribute and to distinguish the dependent and independent variable from each other we use `~`. A more generic notation of how formulas in functions work is shown below, where `DV` stands for dependent variable and `IV` stands for independent variable:
@@ -264,7 +277,7 @@ As expected, the paired tests reveal that the differences in rating between the 
 
 ## Comparing more than two groups {#comparing-more-than-two-groups}
 
-Often we find ourselves in situations were comparing two groups is not enough. Instead, we might be faced with three or more groups fairly quickly. For example, the `wvs` dataset let's us look at 48 different countries, all of which we could compare very quickly with just a few lines of code. In the following chapters we look at how we can perform the same type of analysis for multiple unpaired and paired groups using R. SImilary to the two-samples group comparison, we cover the parametric and non-parametric approaches.
+Often we find ourselves in situations were comparing two groups is not enough. Instead, we might be faced with three or more groups fairly quickly. For example, the `wvs` dataset let's us look at 48 different countries, all of which we could compare very quickly with just a few lines of code. In the following chapters we look at how we can perform the same type of analysis for multiple unpaired and paired groups using R. Similarly to the two-samples group comparison, we cover the parametric and non-parametric approaches.
 
 ### Multiple unpaired groups {#multiple-unpaired-groups}
 
@@ -304,10 +317,6 @@ Table \@ref(tab:comparing-multiple-groups-unpaired) summarises which test needs 
 | Assumption     | Test                 | Function for test                         | Effect size            | Function for effect size |
 +================+======================+===========================================+========================+==========================+
 | Parametric     | ANOVA                | -   `aov()` (assumes equal variances)     | Cohen's d              | `eta_squared()`          |
-|                |                      |                                           |                        |                          |
-|                |                      | ```{=html}                                |                        |                          |
-|                |                      | <!-- -->                                  |                        |                          |
-|                |                      | ```                                       |                        |                          |
 |                |                      | -   `oneway.test(var.equal = TRUE/FALSE)` |                        |                          |
 +----------------+----------------------+-------------------------------------------+------------------------+--------------------------+
 | Non-parametric | Kruskall-Wallis test | `kruskal.test()`                          | Epsilon squared (rank) | `rank_epsilon_squared()` |
@@ -319,17 +328,19 @@ Table \@ref(tab:comparing-multiple-groups-unpaired) summarises which test needs 
 # PARAMETRIC COMPARISON
 
 ## Perform comparison
-## Equal variances assumed
+### Equal variances assumed
 results_aov <- aov(satisfaction ~ country, data = mcomp)
 
-## Equal variances not assumed
+### Equal variances not assumed
 oneway.test(satisfaction ~ country,
             data = mcomp,
             var.equal = FALSE)
 
 
 ## Determine the effect size
-(eta <- eta_squared(t))
+(eta <- eta_squared(results_aov))
+
+eta_squared(aov(satisfaction ~ country, data = mcomp))
 
 ## Interpret the effect size
 interpret_eta_squared(eta$Eta2)
@@ -373,10 +384,6 @@ You might be surprised to see that there are also post-hoc tests for parametric 
 If we want to follow up the Kruskall-Wallis test, we can make use of two post-hoc tests:
 
 -   Dunn Test: `dunn.test::dunn.test()` [@dinno2015nonparametric]
-
-```{=html}
-<!-- -->
-```
 -   Pairwise comparison with Bonferroni (and other) correction: `pairwise.wilcox.test()`.
 
 Below are some examples of how you would use these functions in your project. However, be aware that some of the post-hoc tests are not or not well implemented yet in R. Here I show the most important ones which likely serve you in 90% of the cases.

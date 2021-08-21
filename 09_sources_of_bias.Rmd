@@ -339,7 +339,7 @@ In conclusion, normality of data is an important pre-test for any of your studie
 
 The Central Limit Theorem postulates that as our sample becomes larger, our sampling distribution becomes more and more normal around the mean of the underlying population. @field2013discovering (p.54) refers to a sample of 30 as a common rule of thumb. As such, it is possible to assume normality for larger datasets even though our visualisation and Shapiro-Wilk test tell us otherwise.
 
-Admittedly, this raises the question: Can I simply ignore normality and move on with my analysis if my sample is large enough? In short: Yes. This probably also explains why we hardly ever find results from normality tests in journal publications since most Social Science research involves more than 30 participants. However, if you find yourself in a situation where the sample size is smaller, all of the above needs to be check and thoroughly considered.
+Admittedly, this raises the question: Can I simply ignore normality and move on with my analysis if my sample is large enough? In short: Yes. This probably also explains why we hardly ever find results from normality tests in journal publications since most Social Science research involves more than 30 participants. However, if you find yourself in a situation where the sample size is smaller, all of the above needs to be check and thoroughly considered. The sample size, however, also has implications with regards to the power of your test/findings (for more details see Chapter \@ref()).
 
 ## Homogeneity of variance (homoscedasticity) {#homogeneity-of-variance}
 

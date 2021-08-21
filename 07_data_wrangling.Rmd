@@ -284,6 +284,8 @@ glimpse(wvs)
 
 The output in the console shows that we successfully performed the transformation and our data types are as we intended them to be. Mission accomplished.
 
+If you need to convert all `<chr>` columns you can use `mutate_if(is.character, as.factor)` instead. This function will look at each column and if it is a `character` type variable, it will convert it into a `factor`. However, use this function only if you are certain that all `character` columns need converting.
+
 ## Handling factors {#handling-factors}
 
 ### Recoding factors {#recoding-factors}
