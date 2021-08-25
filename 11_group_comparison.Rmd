@@ -3,9 +3,7 @@
 ```{r echo=FALSE}
 library(tidyverse)
 library(r4np)
-library(broom)
-library(effectsize)
-
+library(rstatix)
 
 wvs_nona <- read_csv("wvs_nona.csv") %>% 
   mutate_if(is.character, as_factor)
@@ -95,77 +93,70 @@ comp %>%
   geom_point(data = group_means,
              aes(x = gender, y = g_mean),
              shape = 3,
-             size = 2
-             )
+             size = 2)
 ```
 
 While the distribution looks similar, we can notice that the median and the mean (marked by the cross inside the boxplot) are slighter higher for `male` participants. Thus, we can suspect slight differences between these two groups, but we do not know whether these differences are significant or not. To consider the significance (remember Chapter \@ref(significance)) and the effect size (see Table \@ref(tab:effect-size-cohen)) we have to perform statistical tests.
 
 Table \@ref(tab:comparing-two-groups-unpaired) summarises the different tests and functions to perform the group comparison computationally. It is important to note that the parametric test compares the means of two groups, while the non-parametric test compares medians. All of these tests turn significant if the differences between groups is large enough. Thus, significant results can be read as 'these groups are significantly different from each other'. Of course, if the difference is not significant, the groups are considered to be not different from each other. For parametric tests, i.e. `t.test(),` it is also important to indicate whether the variances between these two groups are equal or not. Remember this was one of the assumptions for parametric tests. The Welch t-test can be used if the variances are not equal, but all other criteria for normality are met. By setting `var.equal = TRUE`, a regular T-Test would be performed. By defaulty, `t.test` assumes that variances are not equal. Make sure you test for homogeneity of variance before making your decision (see Chapter \@ref(homogeneity-of-variance).
 
-+----------------+----------------+-------------------------------+-----------------+-------------------------+
-| Assumption     | Test           | Function (**`rstatix`**)      | Effect size     | Function (`effectsize`) |
-+================+================+===============================+=================+=========================+
-| Parametric     | T-Test         | `t_test(var.equal = TRUE)`    | Cohen's d       | `cohens_d()`            |
-|                |                |                               |                 |                         |
-|                | Welch T-Test   | `t_test(var.equal = FALSE)`   |                 |                         |
-+----------------+----------------+-------------------------------+-----------------+-------------------------+
-| Non-parametric | Mann-Whitney U | `wilcox_test(paired = FALSE)` | Rank-biserial r | `rank_biserial()`       |
-|                |                |                               |                 |                         |
-|                |                |                               | or              | or                      |
-|                |                |                               |                 |                         |
-|                |                |                               | Wilcoxon R      | `wilcoxonR()`           |
-+----------------+----------------+-------------------------------+-----------------+-------------------------+
++----------------+----------------+-------------------------------+-------------+---------------+
+| Assumption     | Test           | Function                      | Effect size | Function      |
++================+================+===============================+=============+===============+
+| Parametric     | T-Test         | `t_test(var.equal = TRUE)`    | Cohen's d   | `cohens_d()`  |
+|                |                |                               |             |               |
+|                | Welch T-Test   | `t_test(var.equal = FALSE)`   |             |               |
++----------------+----------------+-------------------------------+-------------+---------------+
+| Non-parametric | Mann-Whitney U | `wilcox_test(paired = FALSE)` | Wilcoxon R  | `wilcoxonR()` |
++----------------+----------------+-------------------------------+-------------+---------------+
 
 : (\#tab:comparing-two-groups-unpaired)Comparing two unpaired groups (effect size functions from package `effectsize`, except for `wilcoxonR()` from `rcompanion`
 
-With this information in hand, we can start comparing the female Egyptians with the male Egyptians using the parametric and the non-parametric test for illustration purposes only.
+With this information in hand, we can start comparing the female Egyptians with the male Egyptians using the parametric and the non-parametric test for illustration purposes only. By setting `detailed = TRUE` we can obtain the maximum amount for certain comparisons information. In such cases it is advisable to use `glimpse()`. This will make the output easier to read because each row presents one piece of information, rather than having one row with many columns.
 
 ```{r Computation two unpaired groups, echo=TRUE}
 # T-Test
-test <- comp %>% t_test(freedom_of_choice ~ gender,
-                var.equal = TRUE)
+comp %>% t_test(freedom_of_choice ~ gender,
+                var.equal = TRUE,
+                detailed = TRUE) %>% 
+  glimpse()
 
 # Welch t-test (var.equal = FALSE by default)
-comp %>% t_test(freedom_of_choice ~ gender)
+comp %>% t_test(freedom_of_choice ~ gender,
+                var.equal = FALSE,
+                detailed = TRUE) %>% 
+  glimpse()
 
 # Mann-Withney U test
-comp %>% wilcox_test(freedom_of_choice ~ gender)
+comp %>%
+  wilcox_test(freedom_of_choice ~ gender,
+              detailed = TRUE) %>%
+  glimpse()
 ```
 
 You might notice that the notation within the functions for group tests looks somewhat different to what we are used to, i.e. we use the `~` ('tilde') symbol. Some functions take a formula as their attribute and to distinguish the dependent and independent variable from each other we use `~`. A more generic notation of how formulas in functions work is shown below, where `DV` stands for dependent variable and `IV` stands for independent variable:
 
 ::: {#formulas-in-functions align="center"}
-function(formula = DV \~ IV_01 + IV_02, data = your_data)
+function(formula = DV \~ IV)
 :::
 
 Group comparisons, even for multiple groups, we usually only have one independent variable, i.e. the grouping variable. Grouping variables are usually of the type `factor`. In case of two groups, we have two levels present in this factor, e.g. `gender`. If there are multiple groups, the factor contains multiple levels, e.g. `country`.
 
-No matter which test we run, it appears as if the difference is significant. However, how big is the difference? The answer to this is provided by the effect size. The interpretation of what the effect size is, follows the explanations in Chapter \@ref(correlations), where we looked at the strength of the correlation of two variables. However, different effect size measures imply that we have to use different benchmarks. To help us a bit with the interpretation we can use the `correlation` package and their set of `interpret_...()` functions (see also [Indices of Effect Size](https://easystats.github.io/effectsize/articles/interpret.html "Indices of Effect Size"){target="blank"}). Sometimes, there are even more than one way of computing the effect size. For example for the Mann-Whitney test we can choose between the classic Wilcoxon R, computed as $\frac{Z}{\sqrt{n}}$ or the rank-biserial correlation coefficient. In practice, you have to be explicit about how you computed the effect size. The differences between the two measures are often marginal and a matter of taste (or should I say: Your reviewers' taste). Throughout this chapter I will rely on the effect sizes most commonly found in Social Sciences publications. However, feel free to explore other indices as well.
+No matter which test we run, it appears as if the difference is significant. However, how big is the difference? The answer to this is provided by the effect size. The interpretation of what the effect size is, follows the explanations in Chapter \@ref(correlations), where we looked at the strength of the correlation of two variables. However, different effect size measures imply that we have to use different benchmarks. To help us a bit with the interpretation we can use the `effectsize` package and their set of `interpret_...()` functions (see also [Indices of Effect Size](https://easystats.github.io/effectsize/articles/interpret.html "Indices of Effect Size"){target="blank"}). Sometimes, there are even more than one way of computing the effect size. For example for the Mann-Whitney test we can choose between the classic Wilcoxon R or the rank-biserial correlation coefficient. In practice, you have to be explicit about how you computed the effect size. The differences between the two measures are often marginal and a matter of taste (or should I say: Your reviewers' taste). Throughout this chapter I will rely on the effect sizes most commonly found in Social Sciences publications. However, feel free to explore other indices as well, especially those offered in the `effectsize` package as well.
 
 ```{r Computation of effect size of two unpaired groups, echo=TRUE}
 # After parametric test
-effectsize::cohens_d(freedom_of_choice ~ gender,
-         data = comp,
-         paired = FALSE,
-         var.equal = TRUE) %>% 
-  interpret_d()
-
-comp %>% cohens_d(freedom_of_choice ~ gender,
+d <- comp %>% cohens_d(freedom_of_choice ~ gender,
+                  var.equal = TRUE,
                   ci = TRUE)
 
-# After non-parametric test
-rank_biserial(freedom_of_choice ~ gender,
-              data = comp) %>%
-  interpret_rank_biserial()
+effectsize::interpret_d(d$effsize)
 
-## or
-comp %>% wilcox_effsize(freedom_of_choice ~ gender,
+# After non-parametric test
+wr <- comp %>% wilcox_effsize(freedom_of_choice ~ gender,
                         ci = TRUE)
 
-(wr <- rcompanion::wilcoxonR(comp$freedom_of_choice, comp$gender))
-interpret_r(wr, rule = "cohen1988")
-
+effectsize::interpret_r(wr$effsize)
 ```
 
 Looking at our test results, the female Egyptians perceive `freedom_of_choice` differently from their male counterparts. This is in line with our boxplots. However, the effect sizes tend to be small, which means the differences between the two groups is marginal. Similar to correlations, group comparisons need to be analysed in two stages answering two questions:
@@ -223,17 +214,13 @@ dir_mov %>%
 
 Considering the revised plot, we likely can predict what the statistical test will show. Table \@ref(tab:comparing-two-groups-paired) summarises which tests and functions need to be performed if our data is parametric or non-parametric. In both cases, the functions are the same to those of the unpaired group comparisons, but we need to add the attribute `paired = TRUE`. Still, the interpretations between the unpaired and paired tests remain the same. Also, be aware that some tests have changed in name, e.g. the Mann-Whitney U test has become the Wilcoxon Signed Rank Test. even though we use the same functions as before, by changing the attributed of `paired` we also change the computational technique to obtain the results. Thus, be aware that the same function can perform different computations.
 
-+----------------+---------------------------+------------------------------+-----------------+--------------------------+
-| Assumption     | Test                      | Function for test            | Effect size     | Function for effect size |
-+================+===========================+==============================+=================+==========================+
-| Parametric     | T-Test                    | `t.test(paired = TRUE)`      | Cohen's d       | `cohens_d()`             |
-+----------------+---------------------------+------------------------------+-----------------+--------------------------+
-| Non-parametric | Wilcoxon Signed Rank Test | `wilcox.test(paired = TRUE)` | Rank biserial r | `rank_biserial()`        |
-|                |                           |                              |                 |                          |
-|                |                           |                              | or              | or                       |
-|                |                           |                              |                 |                          |
-|                |                           |                              | Wilcoxon r      | `wilcoxonPairedR()`      |
-+----------------+---------------------------+------------------------------+-----------------+--------------------------+
++----------------+---------------------------+------------------------------+-------------+---------------------+
+| Assumption     | Test                      | Function                     | Effect size | Function            |
++================+===========================+==============================+=============+=====================+
+| Parametric     | T-Test                    | `t_test(paired = TRUE)`      | Cohen's d   | `cohens_d()`        |
++----------------+---------------------------+------------------------------+-------------+---------------------+
+| Non-parametric | Wilcoxon Signed Rank Test | `wilcox_test(paired = TRUE)` | Wilcoxon r  | `wilcoxonPairedR()` |
++----------------+---------------------------+------------------------------+-------------+---------------------+
 
 : (\#tab:comparing-two-groups-paired)Comparing two unpaired groups (effect size functions from package `effectsize`, except for `wilcoxonPairedR()` from `rcompanion`)
 
@@ -241,37 +228,33 @@ Let's apply the functions to find out whether the differences we can see in our 
 
 ```{r Comparing two paired groups data computation, echo=TRUE, warning=FALSE}
 # Paired T-Test
-t.test(imdb_rating ~ movie,
-       data = dir_mov,
-       paired = TRUE,
-       var.equal = TRUE
-       )
+dir_mov %>% t_test(imdb_rating ~ movie,
+                   paired = TRUE,
+                   var.equal = TRUE,
+                   detailed = TRUE) %>% 
+  glimpse()
 
-dir_mov %>% rstatix::wilcox_test(imdb_rating ~ movie,
-                            paired = TRUE) %>% glimpse()
-
-## Perform the comparison
-wilcox.test(imdb_rating ~ movie,
-            data = dir_mov,
-            paired = TRUE)
+## Wilcoxon Signed Rank Test
+dir_mov %>% wilcox_test(imdb_rating ~ movie,
+                         paired = TRUE)
 ```
 
 As expected, the paired tests reveal that the differences in rating between the first movie and the second movie are not significant. Usually, there would be no reason to follow this up with the computation of effect sizes, because we only need to do this if the differences are statistically significant. However, nothing can stop us from still doing so.
 
-```{r}
+```{r Comparing two paired groups data effec sizes, echo=TRUE}
 ## After T-Test
-cohens_d(imdb_rating ~ movie,
+d <- cohens_d(imdb_rating ~ movie,
                data = dir_mov,
                paired = TRUE,
-               var.equal = TRUE) %>%
-  interpret_d()
+               var.equal = TRUE)
+
+effectsize::interpret_d(d$effsize)
 
 # After Wilcoxon Signed Rank Test
-rank_biserial(imdb_rating ~ movie, data = dir_mov) %>%
-    interpret_rank_biserial(rules = "cohen1988")
-## or
-wpr <- rcompanion::wilcoxonPairedR(dir_mov$imdb_rating, dir_mov$movie)
-interpret_r(wpr, rules = "cohen1988")
+wr <- dir_mov %>% wilcox_effsize(imdb_rating ~ movie,
+                              paired = TRUE, ci = TRUE)
+
+effectsize::interpret_r(wr$effsize, rules = "cohen1988")
 ```
 
 As we would expect, the effect sizes are very small too, irrespective of whether we treat our data as parametric or non-parametric. After all, being a successful director ranked in the IMDb top 250 seems to imply that other movies are equally successful, but remember the limitations of our dataset before drawing your final conclusions.
@@ -316,41 +299,50 @@ The plot shows us that `Japan` and `Korea` appear to be very similar if not iden
 
 Table \@ref(tab:comparing-multiple-groups-unpaired) summarises which test needs to be chosen to compare multiple unpaired groups and their corresponding effect size measures.
 
-+----------------+----------------------+-------------------------------------------+------------------------+--------------------------+
-| Assumption     | Test                 | Function for test                         | Effect size            | Function for effect size |
-+================+======================+===========================================+========================+==========================+
-| Parametric     | ANOVA                | -   `aov()` (assumes equal variances)     | Epsilon squared        | `eta_squared()`          |
-|                |                      | -   `oneway.test(var.equal = TRUE/FALSE)` |                        |                          |
-+----------------+----------------------+-------------------------------------------+------------------------+--------------------------+
-| Non-parametric | Kruskall-Wallis test | `kruskal.test()`                          | Epsilon squared (rank) | `rank_epsilon_squared()` |
-+----------------+----------------------+-------------------------------------------+------------------------+--------------------------+
++----------------+----------------------+--------------------------------------------+------------------------+-----------------------------------------------+
+| Assumption     | Test                 | Function for test                          | Effect size            | Function for effect size[^group_comparison-1] |
++================+======================+============================================+========================+===============================================+
+| Parametric     | ANOVA                | -   `anova_test` (assumes equal variances) | Eta squared            | `eta_squared()`                               |
+|                |                      | -   `oneway.test(var.equal = TRUE/FALSE)`  |                        |                                               |
++----------------+----------------------+--------------------------------------------+------------------------+-----------------------------------------------+
+| Non-parametric | Kruskall-Wallis test | `kruskal_test()`                           | Epsilon squared (rank) | `rank_epsilon_squared()`                      |
++----------------+----------------------+--------------------------------------------+------------------------+-----------------------------------------------+
 
 : (\#tab:comparing-multiple-groups-unpaired)Comparing multiple unpaired groups (effect size functions from package `effectsize`)
 
-Let's begin by conducting the group comparison. Be aware that the function `aov()` requires us to use `summary()` to obtain the most important statistics. However, it is also possible to use `oneway.test(var.equal = TRUE)`.
+[^group_comparison-1]: These functions are taken from the `effectsize` package.
+
+Let's begin by conducting the group comparison. As you will notice, `rstatix` currently does not support a parametric test where `var.equal = FALSE`. Therefore we need to fall back to the underlying function `oneway.test(var.equal = FALSE)`
 
 ```{r Multiple unpaired groups computation, echo=TRUE, message=FALSE}
 # ANOVA
 ## equal variances assumed
-results_aov <- aov(satisfaction ~ country, data = mcomp)
-summary(results_aov)
+mcomp %>%
+  anova_test(satisfaction ~ country,
+              detailed = TRUE)
 
 ## Equal variances not assumed
-oneway.test(satisfaction ~ country,
+(test <- oneway.test(satisfaction ~ country,
             data = mcomp,
-            var.equal = FALSE)
-
-## Determine the effect size
-(eta <- eta_squared(results_aov)) %>%
-  interpret_eta_squared()
+            var.equal = FALSE))
 
 # Kruskall-Wallis test
 ## Perform comparison
-(kk <- kruskal.test(mcomp$satisfaction, mcomp$country))
+(test <- mcomp %>%
+  kruskal_test(satisfaction ~ country))
+```
 
-## Determine the effect size
-rank_epsilon_squared(kk) %>%
-  interpret_epsilon_squared()
+While `anova_test()` does provide the effect size automatically, i.e. generalised eta squared (`ges`), this is not the case for the other two approaches. Therefore, we have to use the `effectsize` package to help us out. Packages often can get you a long way and make your life easier, but it is good to know alternatives in case a single package does not give you what you need.
+
+```{r Multiple unpaired groups effect sizes, echo=TRUE, message=FALSE}
+# After ANOVA with var.equal = FALSE
+effectsize::eta_squared(test)
+
+# effect size rank epsilon squared
+effectsize::rank_epsilon_squared(mcomp$satisfaction ~ mcomp$gender)
+
+# effect size eta squared (an alternative to epsilon squared)
+mcomp %>% kruskal_effsize(satisfaction ~ country)
 ```
 
 The results show that there is a significant and large difference between these groups. You might argue that this is actually not quite true. Considering our plot, we know that Japan and Korea do not look like as if they are significantly different. Multiple group comparisons only consider differences across all three groups. Therefore, if one group lies far away from the other groups, the test will turn significant and even provide a large enough effect size to consider it important. However, these tests do not provide information which differences between groups are significant. To gain more clarification about this, we need to incorporate another step, so called 'post-hoc tests'. These tests compare two groups at a time, which is why they are also known as 'pairwise comparisons'. Compared to regular two-sample tests, these perform corrections of the `p`values for mulitple testing, which is necessary. However, there are many different 'post-hoc' tests one can choose from. @field2013discovering (p.459) nicely outlines the different scenarios and provides recommends to navigate this slightly complex field of post-hoc tests to follow-up a one-way ANOVA. Table \@ref(tab:post-hoc-tests) provides an overview of his suggestions.
@@ -358,9 +350,9 @@ The results show that there is a significant and large difference between these 
 +----------------------------------+-----------------+--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | Equal sample size                | Equal variances | Post-hot tests     | Functions in R                                                                                                                                                                                   |
 +==================================+=================+====================+==================================================================================================================================================================================================+
-| YES                              | YES             | -   REGWQ,         | -   `mutoss::regwq()`[^group_comparison-1]                                                                                                                                                       |
+| YES                              | YES             | -   REGWQ,         | -   `mutoss::regwq()`[^group_comparison-2]                                                                                                                                                       |
 |                                  |                 |                    |                                                                                                                                                                                                  |
-|                                  |                 | -   Tukey,         | -   `TukeyHSD()` or `rstatix::tukey_hsd()`                                                                                                                                                       |
+|                                  |                 | -   Tukey,         | -   `rstatix::tukey_hsd()`                                                                                                                                                                       |
 |                                  |                 |                    |                                                                                                                                                                                                  |
 |                                  |                 | -   Bonferroni     | -   `pairwise.t.test(p.adjust.method = "bonferroni")`                                                                                                                                            |
 +----------------------------------+-----------------+--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -371,15 +363,15 @@ The results show that there is a significant and large difference between these 
 | NO (not ideal for small samples) | NO              | -   Games-Howell   | -   `rstatix::games_howell_test()`                                                                                                                                                               |
 +----------------------------------+-----------------+--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
-: (\#tab:post-hoc-tests) Different post-hoc tests for different scenarios
+: (\#tab:post-hoc-tests) Different post-hoc tests for different scenarios (parametric)
 
-[^group_comparison-1]: In order to use this package, it is necessary to install a series of other packages found on [bioconductor.org](https://www.bioconductor.org "bioconductor.org"){target="blank"}
+[^group_comparison-2]: In order to use this package, it is necessary to install a series of other packages found on [bioconductor.org](https://www.bioconductor.org "bioconductor.org"){target="blank"}
 
-You might be surprised to see that there are also post-hoc tests for parametric group comparisons when the assumption of equal variances is not assumed. Would we not have to use a non-parametric test for our group comparison instead? Well, empirical studies have demonstrated that ANOVAs tend to produce robust results, even if the assumption of normality (e.g. @blanca2017non) is not given, or there are some degree of heterogeneity of variance between groups [@tomarken1986comparison]. In other words, there can be some leniancy (or flexibility?) when it comes to the violation of parametric assumptions. If you want to reside on the save side, you should ensure you know your data and its properties. If in doubt, non-parametric tests are also available.
+You might be surprised to see that there are also post-hoc tests for parametric group comparisons when the assumption of equal variances is not assumed. Would we not have to use a non-parametric test for our group comparison instead? Well, empirical studies have demonstrated that ANOVAs tend to produce robust results, even if the assumption of normality (e.g. @blanca2017non) is not given, or there is some degree of heterogeneity of variance between groups [@tomarken1986comparison]. In other words, there can be some leniancy (or flexibility?) when it comes to the violation of parametric assumptions. If you want to reside on the save side, you should ensure you know your data and its properties. If in doubt, non-parametric tests are also available.
 
-If we want to follow up the Kruskall-Wallis test, we can make use of two post-hoc tests:
+If we want to follow up the Kruskall-Wallis test, i.e. the non-parametric equivalent to the one-way ANOVA, we can make use of two post-hoc tests:
 
--   Dunn Test: `dunn.test::dunn.test()` [@dinno2015nonparametric]
+-   Dunn Test: `rstatix::dunn_test()` [@dinno2015nonparametric]
 -   Pairwise comparison with Bonferroni (and other) correction: `pairwise.wilcox.test()`.
 
 Below are some examples of how you would use these functions in your project. However, be aware that some of the post-hoc tests are not or not well implemented yet in R. Here I show the most important ones which likely serve you in 90% of the cases.
@@ -390,16 +382,15 @@ Below are some examples of how you would use these functions in your project. Ho
 pairwise.t.test(mcomp$satisfaction, mcomp$country, p.adjust.method = "bonferroni")
 
 # Tukey
-mcomp %>% rstatix::tukey_hsd(satisfaction ~ country) # <- check!
+mcomp %>% tukey_hsd(satisfaction ~ country)
 
 # Games-Howell
-rstatix::games_howell_test(satisfaction ~ country,
-                           data = mcomp)
+mcomp %>% games_howell_test(satisfaction ~ country)
 
 # POST-HOC TEST FOR NON-PARAMETRIC DATA
-pairwise.wilcox.test(mcomp$satisfaction, mcomp$country, p.adjust.method = "holm")
+mcomp %>% dunn_test(satisfaction ~ country)
 # or
-dunn.test::dunn.test(mcomp$satisfaction, mcomp$country)
+pairwise.wilcox.test(mcomp$satisfaction, mcomp$country, p.adjust.method = "holm")
 ```
 
 As we can see, no matter which function we use, the interpretation of the results remain the same on this occasion.
@@ -413,7 +404,7 @@ Is an extension of the linear model - so why not simply use a regression instead
 repeated measures ANOVA (find dataset)
 
 ```{r Repeated measures ANOVA, echo=TRUE}
-rstatix::anova_test()
+anova_test()
 
 eta_squared()
 omega_squared()
@@ -423,7 +414,7 @@ Friedman Test (find dataset)
 
 ```{r Friedman test, echo=TRUE}
 # NON=PARAMETRIC COMPARISON
-friedman.test()
+friedman_test()
 
 # Effect size
 kendalls_w()
@@ -438,7 +429,8 @@ A useful overview of all the possible options of comparing groups and how to obt
 Unpaired
 
 ```{r Contigency tables unpaired computation, echo=TRUE}
-chisq.test()
+wvs_nona %>% infer::chisq_test(relationship_status ~ gender)
+
 cramers_v()
 ```
 
