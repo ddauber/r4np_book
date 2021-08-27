@@ -150,4 +150,12 @@ broom::tidy(m0)
 
 ## Multiple regression
 
+```{r Multiple regression, echo=TRUE}
+
+```
+
 ## Hierarchical regression
+
+```{r Hierarchical regression, echo=TRUE}
+
+```
