@@ -1,1 +1,153 @@
 # Regression: Creating models to predict future observations {#regression}
+
+```{r}
+library(tidyverse)
+library(r4np)
+```
+
+Regressions are an interesting area of data analysis since it enables us to make very specific predictions about the future incorporating different variables at the same time. As the name implies, regressions 'regress', i.e. they draw on past observations to make predictions about future observations. Thus, any analysis incorporating a regression makes the implicit assumption that the future can be best explained by the past.
+
+I once heard someone refer to regressions as driving a car by looking at the rearview mirror. As long as the road is straight, we will be able to successfully navigate the car. However, if there is a sudden turn, we might drive into the abyss. This makes it very clear when and how regressions are can be helpful.
+
+Regressions are also a machine learning method, which falls under models with supervised learning. If you find machine learning fascinating, you might find the book "Hands-on Machine Learning with R" [@boehmke2019hands] very insightful and interesting.
+
+In the following chapters we will cover three common types of regressions:
+
+-   Single linear regression
+
+-   Multiple regression
+
+-   Hierarchical regression
+
+These three types will allow you to perform any other type of linear regression you could think of. We can further distinguish two approaches to modelling via regressions:
+
+-   *hypothesis testing*: A regression model is defined ex-ante
+
+-   *machine learning*: A model is developed based on empirical data
+
+In the following chapters we will slightly blur the lines between both approaches.
+
+All our regressions will be performed using the `covid` dataset of the `r4np` package to investigate whether certain factors can predict COVID numbers in different countries. I felt, this book would not have been complete without covering this topic. After all, I wrote this book during the pandemic and it likely will mark a dark chapter in human history.
+
+## Single linear regression
+
+A single linear regression looks very similar to a correlation (see Chapter \@ref(correlations), but it is different in that it defines which variable affects another variable, i.e. a single direction relationship. I used the terms dependent variable (DV) and independent variable (IV) previously when comparing groups (see Chapter \@ref(comparing-groups), and we will use them here again. In group comparisons, the independent variable was usually a `factor`, but in regressions we can use data that is not a categorical variable, i.e. `integer`, `double`, etc.
+
+While I understand that mathematical equations can be confusing, with regressions, they are fairly simple to understand. Also, when writing our models in R, we will continuously use a `formula` to specify our regression. A single linear regression consists of one independent variable and one dependent variable:
+
+::: {#single-linear-regression align="center"}
+$$
+DV = \beta_{0} + IV * \beta_{1} + error
+$$
+:::
+
+Beta ($\beta$) represents the coefficient of the independent variable, i.e. how much a change in IV causes a change in DV. For example, a one unit change in the IV might mean that the DV changes by two units of IV:
+
+::: {#single-linear-regression-example align="center"}
+$$
+DV = \beta_0 + 2 * IV + error
+$$
+:::
+
+If we ignore $\beta_0$ and $error$ for a moment, we find that that if $IV = 3$, our $DV = 2*3 = 6$. Therefore, if $IV = 5$, we find that $DV = 10$, and so on. According to this model, DV will always be twice as large as IV.
+
+You might be wondering what $\beta_0$ stands for. It indicates an offset for each value, also called the intercept. Thus, no matter which value we choose for IV, DV will always be $\beta_0$ different from IV. It is a constant in our model. This can be best explained by visualising a regression line. Pay particular attention to the to the expressions after `function(x)`
+
+```{r beta zero and beta one explained, echo=TRUE}
+# A: Two models with different beta(0)
+ggplot() +
+  geom_function(fun = function(x) 2 * x, colour = "red") +
+  geom_function(fun = function(x) 1 + 2 * x, colour = "blue") +
+  see::theme_modern()
+
+# B: Two models with the same beta(0), but different beta(1)
+ggplot() +
+  geom_function(fun = function(x) 2 * x, colour = "red") +
+  geom_function(fun = function(x) 3 * x, colour = "blue") +
+  see::theme_modern()
+```
+
+Plot B also shows what happens if we change $\beta_1$, i.e. the slope. The two models both have the same intercept (and therefore the same origin), but the blue line ascends quicker than the red one, because its $\beta_1$ is higher than the one for the red model.
+
+Lastly, the $error$ component in the regression model refers to the deviation of data from this regression lines. Ideally, we want this value to be as small as possible.
+
+### Fitting a regression model by hand, i.e. trial and error
+
+If this sounds all awfully theoretical, let's try to fit a regression model by hand. First we need to consider what our model should be able to predict. Let's say that the number of COVID-19 cases predicts the number of deaths due to COVID-19. Intuitively we would assume this should be a linear relationship, because the more cases there are, the more likely we find more deaths caused by it.
+
+```{r Finding a regression equation by hand p1, echo=TRUE}
+# We only select most recent numbers, i.e. "2021-08-26"
+# and countries which have COVID cases
+
+covid %>%
+  filter(date_reported == "2021-08-26" &
+           cumulative_cases != 0) %>%
+  ggplot(aes(x = cumulative_cases,
+             y = cumulative_deaths)) +
+  geom_point()
+```
+
+This data visualisation shows us not much. We can see that there are three countries, which appear to have considerably more cases than most other countries. Thus, all other countries are crammed together in the bottom left corner. To improve this visualisation without removing the outliers, we can rescale the x and y axis using the function `scale_x_continuous()` and `scale_y_continuous()`.
+
+```{r Finding a regression equation by hand p2, echo=TRUE, warning=FALSE}
+covid %>%
+  filter(date_reported == "2021-08-26" &
+           cumulative_cases != 0) %>%
+  ggplot(aes(x = cumulative_cases,
+             y = cumulative_deaths)) +
+  geom_point() +
+  scale_x_continuous(trans = "log") +
+  scale_y_continuous(trans = "log")
+```
+
+As we can see, the scatterplot is now easier to read and the dots are more spread out. This reveals that there is quite a strong relationship between `cumulative_cases` and `cumulative_deaths`. However, similar to before, we should avoid outliers when performing our analysis. For the sake of simplicity, in this section I will limit the number of countries included in our analysis, which also removes the requirement of using `scale_x_continuous()` and `scale_y_continuous()`.
+
+```{r Finding a regression equation by hand p3, echo=TRUE, warning=FALSE}
+covid_sample <- covid %>%
+  filter(date_reported == "2021-08-26" &
+           cumulative_cases >= 2500 &
+           cumulative_cases <= 150000 &
+           cumulative_deaths <= 3000)
+
+plot <- covid_sample %>%
+  ggplot(aes(x = cumulative_cases,
+             y = cumulative_deaths)) +
+  geom_point()
+
+plot
+```
+
+Through trial and error we can try to fit a linear line on top. The line will be slightly curve at the bottom end, because we applied `trans = "log"`, which also affect our reference line. Let's start with the basic assumption of $y = x$ without specific $\beta$s.
+
+```{r Finding a regression equation by hand p4, echo=TRUE, warning=FALSE}
+plot +
+  geom_function(fun = function(x) x, colour = "red")
+```
+
+What we try to achieve is that the red line fits nicely inside the cloud of dots. Our very simple model provides a very poor fit to our data points, because all the dots are way below it. This makes sense, because $y = x$ would imply that every COVID-19 case lead to a death, i.e. everyone with COVID did not survive. Ideally we want the line to be less steep, because our first model does not make much sense. We can do this by adding a $\beta_1$ to our equation. Maybe only 2% of people who got COVID-19 might not have recovered, i.e. $\beta_1 = 0.02$.
+
+```{r Finding a regression equation by hand p5, echo=TRUE, warning=FALSE}
+plot +
+  geom_function(fun = function(x) 0.02*x, colour = "red")
+```
+
+This time the line looks much more aligned with our observations. One could argue that it might have to move a little to the right as well, to cover the observations at the bottom a bit better. Therefore, we should add a $\beta_0$ to our equation, e.g. `-50`.
+
+```{r Finding a regression equation by hand p6, echo=TRUE, warning=FALSE}
+plot +
+  geom_function(fun = function(x) -50 + 0.015*x, colour = "red")
+```
+
+We finished creating our regression model. If we wanted to express it as a formula we would write $DV = -5 + 0.015 * IV$. We could now use this model to predict how high COVID cases likely will be in other countries.
+
+Estimating a regression model in this way is not ideal and far from accurate. Instead, we would compute the $\beta$s based on our observed data, i.e. `cumulative_cases` and `cumulative_deaths`. We can use the
+
+```{r Computing a regression, echo=TRUE}
+# classic r
+m0 <- lm(cumulative_deaths ~ cumulative_cases, data = covid)
+broom::tidy(m0)
+```
+
+## Multiple regression
+
+## Hierarchical regression
