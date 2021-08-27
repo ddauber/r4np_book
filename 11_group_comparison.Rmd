@@ -214,13 +214,10 @@ dir_mov %>%
 
 Considering the revised plot, we likely can predict what the statistical test will show. Table \@ref(tab:comparing-two-groups-paired) summarises which tests and functions need to be performed if our data is parametric or non-parametric. In both cases, the functions are the same to those of the unpaired group comparisons, but we need to add the attribute `paired = TRUE`. Still, the interpretations between the unpaired and paired tests remain the same. Also, be aware that some tests have changed in name, e.g. the Mann-Whitney U test has become the Wilcoxon Signed Rank Test. even though we use the same functions as before, by changing the attributed of `paired` we also change the computational technique to obtain the results. Thus, be aware that the same function can perform different computations.
 
-+----------------+---------------------------+------------------------------+-------------+---------------------+
 | Assumption     | Test                      | Function                     | Effect size | Function            |
-+================+===========================+==============================+=============+=====================+
+|----------------|---------------------------|------------------------------|-------------|---------------------|
 | Parametric     | T-Test                    | `t_test(paired = TRUE)`      | Cohen's d   | `cohens_d()`        |
-+----------------+---------------------------+------------------------------+-------------+---------------------+
 | Non-parametric | Wilcoxon Signed Rank Test | `wilcox_test(paired = TRUE)` | Wilcoxon r  | `wilcoxonPairedR()` |
-+----------------+---------------------------+------------------------------+-------------+---------------------+
 
 : (\#tab:comparing-two-groups-paired)Comparing two unpaired groups (effect size functions from package `effectsize`, except for `wilcoxonPairedR()` from `rcompanion`)
 
