@@ -1,6 +1,8 @@
 # Exercises: Solutions {#exercises-solutions}
 
-## Solutions for \@ref(exercises-chapter-5) {#exercises-solutions-5}
+## Solutions for 5.6 {#exercises-solutions-5}
+
+Return to Chapter \@ref(exercises-chapter-5)
 
 ```{r Solution for Chapter 5, echo=TRUE, collapse=TRUE}
 #1 ---------------

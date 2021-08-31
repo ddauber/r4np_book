@@ -261,7 +261,7 @@ Now that we have a solid understanding of different data types, we can look at o
 glimpse(wvs)
 ```
 
-`readr` did a great job in identifying all the numeric variables. However, by default, `readr` imports all variables that include text as `<chr>`. It appears, in our dataset, this is not entirely correct. The variables `countr_name`, `gender` and `relationship_status` specify a finite number of categories. Therefore they should be classified as a `factor`. The variable `participant_id` is represented by numbers, but its meaning is also rather categorical. We would not use the ID numbers of participants to perform additions or multiplications. This would make no sense. Therefore, it might be wise to turn them into a `factor`, even though we likely will not use it in our analysis and would make no difference. However, I am a stickler for those kinds of things, and I would include in it.
+`readr` did a great job in identifying all the numeric variables. However, by default, `readr` imports all variables that include text as `<chr>`. It appears, in our dataset, this is not entirely correct. The variables `country`, `gender` and `relationship_status` specify a finite number of categories. Therefore they should be classified as a `factor`. The variable `participant_id` is represented by numbers, but its meaning is also rather categorical. We would not use the ID numbers of participants to perform additions or multiplications. This would make no sense. Therefore, it might be wise to turn them into a `factor`, even though we likely will not use it in our analysis and would make no difference. However, I am a stickler for those kinds of things, and I would include in it.
 
 To perform the conversion, we need to use two new functions from `dplyr`:
 
@@ -283,6 +283,8 @@ glimpse(wvs)
 ```
 
 The output in the console shows that we successfully performed the transformation and our data types are as we intended them to be. Mission accomplished.
+
+If you need to convert all `<chr>` columns you can use `mutate_if(is.character, as.factor)` instead. This function will look at each column and if it is a `character` type variable, it will convert it into a `factor`. However, use this function only if you are certain that all `character` columns need converting.
 
 ## Handling factors {#handling-factors}
 
