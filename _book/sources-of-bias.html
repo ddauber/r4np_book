@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>9 Sources of bias: Outliers, normality and other ‘conundrums’ | R for Non-Programmers: A Guide for Social Scientists</title>
+  <meta name="description" content="This books is intended for Social Scientists. No matter whether you have years of experiences, this book might come in handy if you never use R or any other programming language before." />
+  <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="9 Sources of bias: Outliers, normality and other ‘conundrums’ | R for Non-Programmers: A Guide for Social Scientists" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This books is intended for Social Scientists. No matter whether you have years of experiences, this book might come in handy if you never use R or any other programming language before." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="9 Sources of bias: Outliers, normality and other ‘conundrums’ | R for Non-Programmers: A Guide for Social Scientists" />
+  
+  <meta name="twitter:description" content="This books is intended for Social Scientists. No matter whether you have years of experiences, this book might come in handy if you never use R or any other programming language before." />
+  
+
+<meta name="author" content="Daniel Dauber" />
+
+
+<meta name="date" content="2021-08-31" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="descriptive-statistics.html"/>
+<link rel="next" href="correlations.html"/>
+<script src="libs/header-attrs-2.10/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
+<script src="libs/viz-1.8.2/viz.js"></script>
+<link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+<script src="libs/grViz-binding-1.0.6.1/grViz.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">R for Non-Programmers</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome 👋</a></li>
+<li class="chapter" data-level="" data-path="acknowledgments.html"><a href="acknowledgments.html"><i class="fa fa-check"></i>Acknowledgments 🙏</a></li>
+<li class="chapter" data-level="1" data-path="readme-before-you-get-started.html"><a href="readme-before-you-get-started.html"><i class="fa fa-check"></i><b>1</b> <code>Readme.</code> Before you get started</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="readme-before-you-get-started.html"><a href="readme-before-you-get-started.html#a-starting-point-and-reference-book"><i class="fa fa-check"></i><b>1.1</b> A starting point and reference book</a></li>
+<li class="chapter" data-level="1.2" data-path="readme-before-you-get-started.html"><a href="readme-before-you-get-started.html#download-the-companion-r-package"><i class="fa fa-check"></i><b>1.2</b> Download the companion R package</a></li>
+<li class="chapter" data-level="1.3" data-path="readme-before-you-get-started.html"><a href="readme-before-you-get-started.html#a-tidyverse-approach-with-some-basic-r"><i class="fa fa-check"></i><b>1.3</b> A ‘tidyverse’ approach with some basic R</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="why-learn-a-programming-language-as-a-non-programmer.html"><a href="why-learn-a-programming-language-as-a-non-programmer.html"><i class="fa fa-check"></i><b>2</b> Why learn a programming language as a non-programmer?</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="why-learn-a-programming-language-as-a-non-programmer.html"><a href="why-learn-a-programming-language-as-a-non-programmer.html#learning-new-tools-to-analyse-your-data-is-always-essential"><i class="fa fa-check"></i><b>2.1</b> Learning new tools to analyse your data is always essential</a></li>
+<li class="chapter" data-level="2.2" data-path="why-learn-a-programming-language-as-a-non-programmer.html"><a href="why-learn-a-programming-language-as-a-non-programmer.html#programming-languages-enhance-your-conceptual-thinking"><i class="fa fa-check"></i><b>2.2</b> Programming languages enhance your conceptual thinking</a></li>
+<li class="chapter" data-level="2.3" data-path="why-learn-a-programming-language-as-a-non-programmer.html"><a href="why-learn-a-programming-language-as-a-non-programmer.html#programming-languages-allow-you-to-look-at-your-data-from-a-different-angle"><i class="fa fa-check"></i><b>2.3</b> Programming languages allow you to look at your data from a different angle</a></li>
+<li class="chapter" data-level="2.4" data-path="why-learn-a-programming-language-as-a-non-programmer.html"><a href="why-learn-a-programming-language-as-a-non-programmer.html#learning-any-programming-language-will-help-you-learn-other-programming-languages."><i class="fa fa-check"></i><b>2.4</b> Learning any programming language will help you learn other programming languages.</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="setting-up-r-and-rstudio.html"><a href="setting-up-r-and-rstudio.html"><i class="fa fa-check"></i><b>3</b> Setting up R and RStudio</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="setting-up-r-and-rstudio.html"><a href="setting-up-r-and-rstudio.html#installing-r"><i class="fa fa-check"></i><b>3.1</b> Installing R</a></li>
+<li class="chapter" data-level="3.2" data-path="setting-up-r-and-rstudio.html"><a href="setting-up-r-and-rstudio.html#installing-rstudio"><i class="fa fa-check"></i><b>3.2</b> Installing RStudio</a></li>
+<li class="chapter" data-level="3.3" data-path="setting-up-r-and-rstudio.html"><a href="setting-up-r-and-rstudio.html#when-you-first-start-rstudio"><i class="fa fa-check"></i><b>3.3</b> When you first start RStudio</a></li>
+<li class="chapter" data-level="3.4" data-path="setting-up-r-and-rstudio.html"><a href="setting-up-r-and-rstudio.html#updating-r-and-rstudio"><i class="fa fa-check"></i><b>3.4</b> Updating R and RStudio: Living at the pulse of innovation</a></li>
+<li class="chapter" data-level="3.5" data-path="setting-up-r-and-rstudio.html"><a href="setting-up-r-and-rstudio.html#rstudio-cloud"><i class="fa fa-check"></i><b>3.5</b> RStudio Cloud</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="the-rstudio-interface.html"><a href="the-rstudio-interface.html"><i class="fa fa-check"></i><b>4</b> The RStudio Interface</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="the-rstudio-interface.html"><a href="the-rstudio-interface.html#the-console-window"><i class="fa fa-check"></i><b>4.1</b> The Console window</a></li>
+<li class="chapter" data-level="4.2" data-path="the-rstudio-interface.html"><a href="the-rstudio-interface.html#the-source-window"><i class="fa fa-check"></i><b>4.2</b> The Source window</a></li>
+<li class="chapter" data-level="4.3" data-path="the-rstudio-interface.html"><a href="the-rstudio-interface.html#the-environment-history-connections-tutorial-window"><i class="fa fa-check"></i><b>4.3</b> The Environment / History / Connections / Tutorial window</a></li>
+<li class="chapter" data-level="4.4" data-path="the-rstudio-interface.html"><a href="the-rstudio-interface.html#the-files-plots-packages-help-viewer-window"><i class="fa fa-check"></i><b>4.4</b> The Files / Plots / Packages / Help / Viewer window</a></li>
+<li class="chapter" data-level="4.5" data-path="the-rstudio-interface.html"><a href="the-rstudio-interface.html#customise-your-user-interface"><i class="fa fa-check"></i><b>4.5</b> Customise your user interface</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="r-basics-the-very-fundamentals.html"><a href="r-basics-the-very-fundamentals.html"><i class="fa fa-check"></i><b>5</b> R Basics: The very fundamentals</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="r-basics-the-very-fundamentals.html"><a href="r-basics-the-very-fundamentals.html#basic-computations-in-r"><i class="fa fa-check"></i><b>5.1</b> Basic computations in R</a></li>
+<li class="chapter" data-level="5.2" data-path="r-basics-the-very-fundamentals.html"><a href="r-basics-the-very-fundamentals.html#assigning-values-to-objects"><i class="fa fa-check"></i><b>5.2</b> Assigning values to objects: ‘&lt;-’</a></li>
+<li class="chapter" data-level="5.3" data-path="r-basics-the-very-fundamentals.html"><a href="r-basics-the-very-fundamentals.html#functions"><i class="fa fa-check"></i><b>5.3</b> Functions</a></li>
+<li class="chapter" data-level="5.4" data-path="r-basics-the-very-fundamentals.html"><a href="r-basics-the-very-fundamentals.html#r-packages"><i class="fa fa-check"></i><b>5.4</b> R packages</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="r-basics-the-very-fundamentals.html"><a href="r-basics-the-very-fundamentals.html#installing-packages-using-a-function"><i class="fa fa-check"></i><b>5.4.1</b> Installing packages using <code>install.packages()</code></a></li>
+<li class="chapter" data-level="5.4.2" data-path="r-basics-the-very-fundamentals.html"><a href="r-basics-the-very-fundamentals.html#installing-packages-via-rstudio"><i class="fa fa-check"></i><b>5.4.2</b> Installing packages via RStudio’s package pane</a></li>
+<li class="chapter" data-level="5.4.3" data-path="r-basics-the-very-fundamentals.html"><a href="r-basics-the-very-fundamentals.html#using-r-packages"><i class="fa fa-check"></i><b>5.4.3</b> Using R Packages</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="r-basics-the-very-fundamentals.html"><a href="r-basics-the-very-fundamentals.html#coding-etiquette"><i class="fa fa-check"></i><b>5.5</b> Coding etiquette</a></li>
+<li class="chapter" data-level="5.6" data-path="r-basics-the-very-fundamentals.html"><a href="r-basics-the-very-fundamentals.html#exercises-chapter-5"><i class="fa fa-check"></i><b>5.6</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="starting-your-r-projects.html"><a href="starting-your-r-projects.html"><i class="fa fa-check"></i><b>6</b> Starting your R projects</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="starting-your-r-projects.html"><a href="starting-your-r-projects.html#creating-an-r-project"><i class="fa fa-check"></i><b>6.1</b> Creating an R Project file</a></li>
+<li class="chapter" data-level="6.2" data-path="starting-your-r-projects.html"><a href="starting-your-r-projects.html#organising-your-projects"><i class="fa fa-check"></i><b>6.2</b> Organising your projects</a></li>
+<li class="chapter" data-level="6.3" data-path="starting-your-r-projects.html"><a href="starting-your-r-projects.html#creating-an-r-script"><i class="fa fa-check"></i><b>6.3</b> Creating an R Script</a></li>
+<li class="chapter" data-level="6.4" data-path="starting-your-r-projects.html"><a href="starting-your-r-projects.html#r-markdown-and-r-notebooks"><i class="fa fa-check"></i><b>6.4</b> Using R Markdown</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="data-wrangling.html"><a href="data-wrangling.html"><i class="fa fa-check"></i><b>7</b> Data Wrangling</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="data-wrangling.html"><a href="data-wrangling.html#import-your-data"><i class="fa fa-check"></i><b>7.1</b> Import your data</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="data-wrangling.html"><a href="data-wrangling.html#import-data-from-the-files-pane"><i class="fa fa-check"></i><b>7.1.1</b> Import data from the Files pane</a></li>
+<li class="chapter" data-level="7.1.2" data-path="data-wrangling.html"><a href="data-wrangling.html#importing-data-from-the-environment-pane"><i class="fa fa-check"></i><b>7.1.2</b> Importing data from the Environment pane</a></li>
+<li class="chapter" data-level="7.1.3" data-path="data-wrangling.html"><a href="data-wrangling.html#importing-data-using-functions"><i class="fa fa-check"></i><b>7.1.3</b> Importing data using functions directly</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="data-wrangling.html"><a href="data-wrangling.html#inspecting-raw-data"><i class="fa fa-check"></i><b>7.2</b> Inspecting your data</a></li>
+<li class="chapter" data-level="7.3" data-path="data-wrangling.html"><a href="data-wrangling.html#colnames-cleaning"><i class="fa fa-check"></i><b>7.3</b> Cleaning your column names: Call the <code>janitor</code></a></li>
+<li class="chapter" data-level="7.4" data-path="data-wrangling.html"><a href="data-wrangling.html#change-data-types"><i class="fa fa-check"></i><b>7.4</b> Data types: What are they and how can you change them</a></li>
+<li class="chapter" data-level="7.5" data-path="data-wrangling.html"><a href="data-wrangling.html#handling-factors"><i class="fa fa-check"></i><b>7.5</b> Handling factors</a>
+<ul>
+<li class="chapter" data-level="7.5.1" data-path="data-wrangling.html"><a href="data-wrangling.html#recoding-factors"><i class="fa fa-check"></i><b>7.5.1</b> Recoding factors</a></li>
+<li class="chapter" data-level="7.5.2" data-path="data-wrangling.html"><a href="data-wrangling.html#reordering-factor-levels"><i class="fa fa-check"></i><b>7.5.2</b> Reordering factor levels</a></li>
+</ul></li>
+<li class="chapter" data-level="7.6" data-path="data-wrangling.html"><a href="data-wrangling.html#dealing-with-missing-data"><i class="fa fa-check"></i><b>7.6</b> Dealing with missing data</a>
+<ul>
+<li class="chapter" data-level="7.6.1" data-path="data-wrangling.html"><a href="data-wrangling.html#mapping-missing-data"><i class="fa fa-check"></i><b>7.6.1</b> Mapping missing data</a></li>
+<li class="chapter" data-level="7.6.2" data-path="data-wrangling.html"><a href="data-wrangling.html#patterns-of-missing-data"><i class="fa fa-check"></i><b>7.6.2</b> Identifying patterns of missing data</a></li>
+<li class="chapter" data-level="7.6.3" data-path="data-wrangling.html"><a href="data-wrangling.html#replacing-removing-missing-data"><i class="fa fa-check"></i><b>7.6.3</b> Replacing or removing missing data</a></li>
+<li class="chapter" data-level="7.6.4" data-path="data-wrangling.html"><a href="data-wrangling.html#main-takeaways-regarding-dealing-with-missing-data"><i class="fa fa-check"></i><b>7.6.4</b> Main takeaways regarding dealing with missing data</a></li>
+</ul></li>
+<li class="chapter" data-level="7.7" data-path="data-wrangling.html"><a href="data-wrangling.html#latent-constructs"><i class="fa fa-check"></i><b>7.7</b> Latent constructs and their reliability</a></li>
+<li class="chapter" data-level="7.8" data-path="data-wrangling.html"><a href="data-wrangling.html#conclusion-data-wrangling"><i class="fa fa-check"></i><b>7.8</b> Once you finished with data wrangling</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html"><i class="fa fa-check"></i><b>8</b> Descriptive Statistics</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#plotting-in-r-with-ggplot2"><i class="fa fa-check"></i><b>8.1</b> Plotting in R with <code>ggplot2</code></a></li>
+<li class="chapter" data-level="8.2" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#central-tendency"><i class="fa fa-check"></i><b>8.2</b> Central tendency measures: Mean, Median, Mode</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#mean"><i class="fa fa-check"></i><b>8.2.1</b> Mean</a></li>
+<li class="chapter" data-level="8.2.2" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#median"><i class="fa fa-check"></i><b>8.2.2</b> Median</a></li>
+<li class="chapter" data-level="8.2.3" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#mode"><i class="fa fa-check"></i><b>8.2.3</b> Mode</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#spread-of-data"><i class="fa fa-check"></i><b>8.3</b> Indicators and visualisations to examine the spread of data</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#boxplot-so-much-information-in-just-one-box"><i class="fa fa-check"></i><b>8.3.1</b> Boxplot: So much information in just one box</a></li>
+<li class="chapter" data-level="8.3.2" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#histogram-do-not-mistake-it-as-a-bar-plot"><i class="fa fa-check"></i><b>8.3.2</b> Histogram: Do not mistake it as a bar plot</a></li>
+<li class="chapter" data-level="8.3.3" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#density-plots-your-smooth-histograms"><i class="fa fa-check"></i><b>8.3.3</b> Density plots: Your smooth histograms</a></li>
+<li class="chapter" data-level="8.3.4" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#violin-plot-your-smooth-boxplot"><i class="fa fa-check"></i><b>8.3.4</b> Violin plot: Your smooth boxplot</a></li>
+<li class="chapter" data-level="8.3.5" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#qq-plot"><i class="fa fa-check"></i><b>8.3.5</b> QQ plot: A ‘cute’ plot to check for normality in your data</a></li>
+<li class="chapter" data-level="8.3.6" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#standard-deviation"><i class="fa fa-check"></i><b>8.3.6</b> Standard deviation: Your average deviation from the mean</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="sources-of-bias.html"><a href="sources-of-bias.html"><i class="fa fa-check"></i><b>9</b> Sources of bias: Outliers, normality and other ‘conundrums’</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="sources-of-bias.html"><a href="sources-of-bias.html#additivity-and-linearity"><i class="fa fa-check"></i><b>9.1</b> Linearity and additivity</a></li>
+<li class="chapter" data-level="9.2" data-path="sources-of-bias.html"><a href="sources-of-bias.html#independence"><i class="fa fa-check"></i><b>9.2</b> Independence</a></li>
+<li class="chapter" data-level="9.3" data-path="sources-of-bias.html"><a href="sources-of-bias.html#normality"><i class="fa fa-check"></i><b>9.3</b> Normality</a></li>
+<li class="chapter" data-level="9.4" data-path="sources-of-bias.html"><a href="sources-of-bias.html#homogeneity-of-variance"><i class="fa fa-check"></i><b>9.4</b> Homogeneity of variance (homoscedasticity)</a></li>
+<li class="chapter" data-level="9.5" data-path="sources-of-bias.html"><a href="sources-of-bias.html#dealing-with-outliers"><i class="fa fa-check"></i><b>9.5</b> Outliers and how to deal with them</a>
+<ul>
+<li class="chapter" data-level="9.5.1" data-path="sources-of-bias.html"><a href="sources-of-bias.html#ouliers-standard_deviation"><i class="fa fa-check"></i><b>9.5.1</b> Detecting outliers using the standard deviation</a></li>
+<li class="chapter" data-level="9.5.2" data-path="sources-of-bias.html"><a href="sources-of-bias.html#outliers-iqr"><i class="fa fa-check"></i><b>9.5.2</b> Detecting outliers using the interquartile range</a></li>
+<li class="chapter" data-level="9.5.3" data-path="sources-of-bias.html"><a href="sources-of-bias.html#removing-or-replacing-outliers"><i class="fa fa-check"></i><b>9.5.3</b> Removing or replacing outliers</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="correlations.html"><a href="correlations.html"><i class="fa fa-check"></i><b>10</b> Correlations</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="correlations.html"><a href="correlations.html#parametric-or-non-parametric"><i class="fa fa-check"></i><b>10.1</b> Parametric or non-parametric: That is the question</a></li>
+<li class="chapter" data-level="10.2" data-path="correlations.html"><a href="correlations.html#plotting-correlations"><i class="fa fa-check"></i><b>10.2</b> Plotting correlations</a></li>
+<li class="chapter" data-level="10.3" data-path="correlations.html"><a href="correlations.html#significance"><i class="fa fa-check"></i><b>10.3</b> Significance: A way to help you judge your findings</a></li>
+<li class="chapter" data-level="10.4" data-path="correlations.html"><a href="correlations.html#limitations-of-correlations"><i class="fa fa-check"></i><b>10.4</b> Limitations of correlations</a>
+<ul>
+<li class="chapter" data-level="10.4.1" data-path="correlations.html"><a href="correlations.html#correlations-are-not-causal-relationships"><i class="fa fa-check"></i><b>10.4.1</b> Correlations are not causal relationships</a></li>
+<li class="chapter" data-level="10.4.2" data-path="correlations.html"><a href="correlations.html#correlations-can-be-spurious"><i class="fa fa-check"></i><b>10.4.2</b> Correlations can be spurious</a></li>
+<li class="chapter" data-level="10.4.3" data-path="correlations.html"><a href="correlations.html#simpsons-paradox"><i class="fa fa-check"></i><b>10.4.3</b> Simpson’s Paradox: When correlations betray you</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="comparing-groups.html"><a href="comparing-groups.html"><i class="fa fa-check"></i><b>11</b> Comparing groups</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="comparing-groups.html"><a href="comparing-groups.html#comparability-apples-vs-oranges"><i class="fa fa-check"></i><b>11.1</b> Comparability: Apples vs Oranges</a></li>
+<li class="chapter" data-level="11.2" data-path="comparing-groups.html"><a href="comparing-groups.html#comparing-two-groups"><i class="fa fa-check"></i><b>11.2</b> Comparing two groups</a>
+<ul>
+<li class="chapter" data-level="11.2.1" data-path="comparing-groups.html"><a href="comparing-groups.html#two-unpaired-groups"><i class="fa fa-check"></i><b>11.2.1</b> Two Unpaired groups</a></li>
+<li class="chapter" data-level="11.2.2" data-path="comparing-groups.html"><a href="comparing-groups.html#two-paired-groups"><i class="fa fa-check"></i><b>11.2.2</b> Two Paired groups</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="comparing-groups.html"><a href="comparing-groups.html#comparing-more-than-two-groups"><i class="fa fa-check"></i><b>11.3</b> Comparing more than two groups</a>
+<ul>
+<li class="chapter" data-level="11.3.1" data-path="comparing-groups.html"><a href="comparing-groups.html#multiple-unpaired-groups"><i class="fa fa-check"></i><b>11.3.1</b> Multiple unpaired groups</a></li>
+<li class="chapter" data-level="11.3.2" data-path="comparing-groups.html"><a href="comparing-groups.html#multiple-paired-groups"><i class="fa fa-check"></i><b>11.3.2</b> Multiple paired groups</a></li>
+</ul></li>
+<li class="chapter" data-level="11.4" data-path="comparing-groups.html"><a href="comparing-groups.html#chi-squared-test"><i class="fa fa-check"></i><b>11.4</b> Comparing groups based on factors: Contingency tables</a></li>
+<li class="chapter" data-level="11.5" data-path="comparing-groups.html"><a href="comparing-groups.html#cheatsheet-group-comparisons"><i class="fa fa-check"></i><b>11.5</b> A cheatsheet to guide your own group comparisons</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>12</b> Regression: Creating models to predict future observations</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="regression.html"><a href="regression.html#single-linear-regression"><i class="fa fa-check"></i><b>12.1</b> Single linear regression</a>
+<ul>
+<li class="chapter" data-level="12.1.1" data-path="regression.html"><a href="regression.html#fitting-a-regression-model-by-hand-i.e.-trial-and-error"><i class="fa fa-check"></i><b>12.1.1</b> Fitting a regression model by hand, i.e. trial and error</a></li>
+</ul></li>
+<li class="chapter" data-level="12.2" data-path="regression.html"><a href="regression.html#multiple-regression"><i class="fa fa-check"></i><b>12.2</b> Multiple regression</a></li>
+<li class="chapter" data-level="12.3" data-path="regression.html"><a href="regression.html#hierarchical-regression"><i class="fa fa-check"></i><b>12.3</b> Hierarchical regression</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="mixed-methods-research-analysing-qualitative-in-r.html"><a href="mixed-methods-research-analysing-qualitative-in-r.html"><i class="fa fa-check"></i><b>13</b> Mixed-methods research: Analysing qualitative in R</a></li>
+<li class="chapter" data-level="14" data-path="next-steps.html"><a href="next-steps.html"><i class="fa fa-check"></i><b>14</b> Where to go from here: The next steps in your R journey</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="next-steps.html"><a href="next-steps.html#next-steps-github"><i class="fa fa-check"></i><b>14.1</b> GitHub: A Gateway to even more ingenious R packages</a></li>
+<li class="chapter" data-level="14.2" data-path="next-steps.html"><a href="next-steps.html#next-steps-books"><i class="fa fa-check"></i><b>14.2</b> Books to read and expand your knowledge</a></li>
+<li class="chapter" data-level="14.3" data-path="next-steps.html"><a href="next-steps.html#next-steps-online-readings"><i class="fa fa-check"></i><b>14.3</b> Engage in regular online readings about R</a></li>
+<li class="chapter" data-level="14.4" data-path="next-steps.html"><a href="next-steps.html#next-steps-twitter"><i class="fa fa-check"></i><b>14.4</b> Join the Twitter community and hone your skills</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="appendix.html"><a href="appendix.html"><i class="fa fa-check"></i>Appendix</a>
+<ul>
+<li class="chapter" data-level="14.5" data-path="appendix.html"><a href="appendix.html#comparing-two-unpaired-groups"><i class="fa fa-check"></i><b>14.5</b> Comparing two unpaired groups</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="exercises-solutions.html"><a href="exercises-solutions.html"><i class="fa fa-check"></i><b>15</b> Exercises: Solutions</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="exercises-solutions.html"><a href="exercises-solutions.html#exercises-solutions-5"><i class="fa fa-check"></i><b>15.1</b> Solutions for 5.6</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://twitter.com/daniel_dauber" target="blank">Find me on twitter!</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">R for Non-Programmers: A Guide for Social Scientists</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="sources-of-bias" class="section level1" number="9">
+<h1><span class="header-section-number">9</span> Sources of bias: Outliers, normality and other ‘conundrums’</h1>
+<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="sources-of-bias.html#cb102-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb102-2"><a href="sources-of-bias.html#cb102-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(r4np)</span>
+<span id="cb102-3"><a href="sources-of-bias.html#cb102-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span></code></pre></div>
+<p>‘Bias’ in your analysis is hardly ever a good thing, unless you are qualitative researcher. No matter whether you consider it as something positive or negative, we certainly have to be aware of issues that could hinder us of performing a certain type of analysis. All of the statistical computations that we discuss in the following chapters can easily be affected by different sources of bias. The lack of certain biases can be even an assumption of particular statistical tests. Thus, violating these assumptions would imply that the analytical technique we use will produce wrong results, i.e. biased results. <span class="citation"><a href="#ref-field2013discovering" role="doc-biblioref">Field</a> (<a href="#ref-field2013discovering" role="doc-biblioref">2013</a>)</span> summarises three main assumptions we have to consider:</p>
+<ul>
+<li><p>Linearity and additivity,</p></li>
+<li><p>Independence,</p></li>
+<li><p>Normality</p></li>
+<li><p>Homogeneity of variance, i.e. homoscedasticity,</p></li>
+</ul>
+<p>Most parametric tests require that all assumptions are met. If this is not the case we have to use alternative approaches, i.e. non-parametric tests. The distinction is of importance, since parametric and non-parametric tests are based on different computational methods and can lead to vastly different results.</p>
+<p>Lastly, <span class="citation"><a href="#ref-field2013discovering" role="doc-biblioref">Field</a> (<a href="#ref-field2013discovering" role="doc-biblioref">2013</a>)</span> also mentions outliers as an important source of bias. Irrespective of whether your data fulfils the assumptions for parametric tests, outliers tend to be a major problem. They usually lead to misinterpretations of our findings. We will also cover how we can identify and handle such outliers in our data at the end of this chapter.</p>
+<div id="additivity-and-linearity" class="section level2" number="9.1">
+<h2><span class="header-section-number">9.1</span> Linearity and additivity</h2>
+<p>The assumption of linearity postulates that the relationship of variables represents a straight line and not a curve or any other shape. Figure <a href="#fig:linear-nonlinear-relationship"><strong>??</strong></a> depicts examples of how two variables could be related to each other. Only the first one demonstrates a linear relationship and all other plots would represent a violation for parametric tests.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:linear-nonlinear-relationships"></span>
+<img src="r_for_non_programmers_files/figure-html/linear-nonlinear-relationships-1.png" alt="Examples of linear and non-linear relationship of two variables" width="672" />
+<p class="caption">
+Figure 9.1: Examples of linear and non-linear relationship of two variables
+</p>
+</div>
+<p>Data visualisations are particularly useful to identify whether variables are related to each other in a linear fashion. The examples above were all created with <code>geom_point()</code>, which creates a dot plot that maps the relationship between two variables. In the Chapter <a href="correlations.html#correlations">10</a> we will look more closely at the relationship of two variables in the form of correlations, which measure the strength of a linear relationship between variables.</p>
+<p>Additivity is given when the effects of all independent variables can be added up to obtain the total effect they have on a dependent variable. In other words, the effect that multiple variables have on another variable can be added up to reflect their total effect.</p>
+<p>If we assume that we have a dependent variable <span class="math inline">\(Y\)</span> which is affected by other (independent) variables <span class="math inline">\(X\)</span>, we could summarise additivity and linearity as a formula:</p>
+<div id="linearity_additivity-formula" align="center">
+<p><span class="math inline">\(Y = \beta_{1} * X_1 + \beta_{2} * X_{2} + ... + \beta_{n} * X_{n}\)</span></p>
+</div>
+<p>The <span class="math inline">\(\beta\)</span> stands for the degree of change a variable <span class="math inline">\(X\)</span> causes in <span class="math inline">\(Y\)</span>. Or, in simpler terms, <span class="math inline">\(\beta\)</span> reflects the impact a independent variable has on the dependent variable. We will return to this equation in Chapter <a href="regression.html#regression">12</a>, were we try to create a linear model via regression.</p>
+</div>
+<div id="independence" class="section level2" number="9.2">
+<h2><span class="header-section-number">9.2</span> Independence</h2>
+<p>The notion of independence is an important one. It assumes that the each observation in our dataset is independent from other observations. For example, imagine my wife Fiona and I take part in a survey which asks us to rank movies by how much we like them. Each of us has to complete the ranking by themselves, but since we both sit in the same living room, we start chatting about these movies. By doing so, we influence each others rankings and might even agree on the same ranking. Thus, our scores are not independent from each other. If we were both sitting in our respective offices and rank these movies independently from each other, the rankings could potentially still be very similar to each other, but this time the observations are independent from each other.</p>
+<p>There is no statistical measurement or plot that can tell us whether observations are independent or not. Ensuring independence is a matter of data collection and not data analysis. Thus, it depends on how you designed your experiment, when and where you ask participants to complete a survey, etc. Still, this criterion should not be downplayed as being a ‘soft’ one, just because there is no statistical test, but should remain on your radar throughout the planning and data collection stage of your research.</p>
+</div>
+<div id="normality" class="section level2" number="9.3">
+<h2><span class="header-section-number">9.3</span> Normality</h2>
+<p>We already touched upon the notion of ‘normality’ and ‘normal distributions’ in Chapter <a href="descriptive-statistics.html#spread-of-data">8.3</a>, because it refers to the spread of our data. Figure <a href="sources-of-bias.html#fig:normal-distribution2">9.2</a> should look familiar by now.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:normal-distribution2"></span>
+<img src="r_for_non_programmers_files/figure-html/normal-distribution2-1.png" alt="A normal distribution" width="672" />
+<p class="caption">
+Figure 9.2: A normal distribution
+</p>
+</div>
+<p>However, we have yet to understand why it is important that our data follows a normal distribution. Most parametric tests are based on means. For example, if we want to compare two groups with each other, we would compute the mean for each of them and then see whether their means differ from each other in a significant way. Of course, if our data is not very normally distributed, means are a poor reference point for the majority of the observations in this group. We already know that means are heavily affected by outliers, but even without outliers, the mean could be a poor choice.</p>
+<p><img src="r_for_non_programmers_files/figure-html/Comparing%20two%20distributions%20and%20their%20means-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Considering all three plots, we notice that neither the median nor the mean by themselves are a reliable indicator for normality. Fig A and Fig C both show that the median and mean are almost identical, but only Fig A shows a normal distribution. In fact, the median and mean in Fig C are not reflective for the average observation in this dataset. Most scores lie below and above the mean/median. This type of distribution hints at two sub-groups in our dataset, for example male versus female participants. Therefore, when we analyse the normality of our data, we usually are not interested in the normality of a single variable, but the normality of the sampling distribution. However, we cannot directly assess the sampling distribution in most cases. As such, we often revert to testing the normality of our data. There also instances were we would not expect a normal distribution to begin with. Consider the following plots:</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:two-normalities-groups"></span>
+<img src="r_for_non_programmers_files/figure-html/two-normalities-groups-1.png" alt="Two normal distributions in one dataset" width="672" />
+<p class="caption">
+Figure 9.3: Two normal distributions in one dataset
+</p>
+</div>
+<p>The first plot clearly shows that data is not normally distributed. If anything, it looks more like the back of a camel. If we identify distributions that look remotely like this, we can assume that there must be another variable that helps explain why there are two peaks in our distribution. The plot below reveals that gender appears to play an important role. Drawing the distribution for each subset of our data reveals that <code>income</code> is now normally distributed for each group and that these groups have two different means. Thus, solely focusing on normal distributions for a single variable would not be meaningful if you do not consider the impact of other variables.</p>
+<p>Determining whether data is normally distributed can be very challenging when only inspecting plots, e.g. historgrams, density plots or QQ plots. Luckily, there is also a statistical method to test whether our data is normally distributed: The Shapiro-Wilk test. This test compares our distribution with a normal distribution (like in our plot) and tells us whether our distribution is <strong>significantly different</strong> from it. Thus, if the test is not significant the distribution of our data is not significantly different from a normal distribution, or in simple terms: It is normally distributed. We can run the test in R as follows for the dataset that underpins Fig A above</p>
+<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="sources-of-bias.html#cb103-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(data<span class="sc">$</span>income)</span>
+<span id="cb103-2"><a href="sources-of-bias.html#cb103-2" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb103-3"><a href="sources-of-bias.html#cb103-3" aria-hidden="true" tabindex="-1"></a><span class="do">##  Shapiro-Wilk normality test</span></span>
+<span id="cb103-4"><a href="sources-of-bias.html#cb103-4" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb103-5"><a href="sources-of-bias.html#cb103-5" aria-hidden="true" tabindex="-1"></a><span class="do">## data:  data$income</span></span>
+<span id="cb103-6"><a href="sources-of-bias.html#cb103-6" aria-hidden="true" tabindex="-1"></a><span class="do">## W = 0.94586, p-value = 0.5916</span></span></code></pre></div>
+<p>According to this result, we can confirm that the data is normally distributed, because it is not significantly different from it (<span class="math inline">\(p &gt; 0.05\)</span>). We look at significance and its meaning more thoroughly in the chapter on correlations (Chapter <a href="correlations.html#correlations">10</a>).</p>
+<p>In conclusion, normality of data is an important pre-test for any of your studies. If we violate the assumption of normality, we will have to fall back to non-parametric tests. However, there is one exception to this rule: The Central Limit Theorem.</p>
+<p>The Central Limit Theorem postulates that as our sample becomes larger, our sampling distribution becomes more and more normal around the mean of the underlying population. <span class="citation"><a href="#ref-field2013discovering" role="doc-biblioref">Field</a> (<a href="#ref-field2013discovering" role="doc-biblioref">2013</a>)</span> (p.54) refers to a sample of 30 as a common rule of thumb. As such, it is possible to assume normality for larger datasets even though our visualisation and Shapiro-Wilk test tell us otherwise.</p>
+<p>Admittedly, this raises the question: Can I simply ignore normality and move on with my analysis if my sample is large enough? In short: Yes. This probably also explains why we hardly ever find results from normality tests in journal publications since most Social Science research involves more than 30 participants. However, if you find yourself in a situation where the sample size is smaller, all of the above needs to be check and thoroughly considered. The sample size, however, also has implications with regards to the power of your test/findings (for more details see Chapter @ref()).</p>
+</div>
+<div id="homogeneity-of-variance" class="section level2" number="9.4">
+<h2><span class="header-section-number">9.4</span> Homogeneity of variance (homoscedasticity)</h2>
+<p>The term ‘variance’ should sound familiar, because we mentioned it in Chapter <a href="descriptive-statistics.html#standard-deviation">8.3.6</a> where we looked at the standard deviation, which is derived from the variance.</p>
+<p>Homogeneity of variance implies that the variance of, for example two subsets of data is equal, or close to being equal. Let’s take a look how close the observed values are to the mean for the two groups identified in Figure <a href="sources-of-bias.html#fig:two-normalities-groups">9.3</a>.</p>
+<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="sources-of-bias.html#cb104-1" aria-hidden="true" tabindex="-1"></a>data4 <span class="sc">%&gt;%</span> </span>
+<span id="cb104-2"><a href="sources-of-bias.html#cb104-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> gender, <span class="at">y =</span> income, <span class="at">colour =</span> gender)) <span class="sc">+</span></span>
+<span id="cb104-3"><a href="sources-of-bias.html#cb104-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
+<span id="cb104-4"><a href="sources-of-bias.html#cb104-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> group_means<span class="sc">$</span>mean[<span class="dv">1</span>], <span class="at">color =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
+<span id="cb104-5"><a href="sources-of-bias.html#cb104-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> group_means<span class="sc">$</span>mean[<span class="dv">2</span>], <span class="at">color =</span> <span class="st">&quot;turquoise&quot;</span>)</span></code></pre></div>
+<p><img src="r_for_non_programmers_files/figure-html/Homogeneity%20and%20no%20homogeneity%20of%20variance-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Judging by eye, we could argue that the majority of values lies around the mean for each respective group. There are some observations that are a bit further off. Still, using this visualisation, it is tough to truly judge whether the spread is about the same. However, boxplots can help with this, or even better, a boxplot that is reflected by a bar. The package <code>ggdist</code> has a nice plotting function called <code>stat_interval()</code>, which allows us to show a boxplot in the form of a bar.</p>
+<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="sources-of-bias.html#cb105-1" aria-hidden="true" tabindex="-1"></a>data4 <span class="sc">%&gt;%</span> </span>
+<span id="cb105-2"><a href="sources-of-bias.html#cb105-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> gender, <span class="at">y =</span> income, <span class="at">group =</span> gender)) <span class="sc">+</span></span>
+<span id="cb105-3"><a href="sources-of-bias.html#cb105-3" aria-hidden="true" tabindex="-1"></a>  ggdist<span class="sc">::</span><span class="fu">stat_interval</span>(<span class="fu">aes</span>(<span class="at">y =</span> income),</span>
+<span id="cb105-4"><a href="sources-of-bias.html#cb105-4" aria-hidden="true" tabindex="-1"></a>                        <span class="at">.width =</span> <span class="fu">c</span>(<span class="fl">0.25</span>, <span class="fl">0.5</span>, <span class="fl">0.75</span>, <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb105-5"><a href="sources-of-bias.html#cb105-5" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb105-6"><a href="sources-of-bias.html#cb105-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Let&#39;s add some nice complementary colours into our chart</span></span>
+<span id="cb105-7"><a href="sources-of-bias.html#cb105-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;#4D87B3&quot;</span>, <span class="st">&quot;#A1D6FF&quot;</span>, <span class="st">&quot;#FFDAA1&quot;</span>, <span class="st">&quot;#B3915F&quot;</span>))</span></code></pre></div>
+<p><img src="r_for_non_programmers_files/figure-html/Homogeneity%20and%20no%20homogeneity%20of%20variance%20alternative%20visualisation-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>If we compare the bars, we can tell that the variance in both groups looks very similar, i.e. the length of the bars appear to be about the same height. If we compared the IQR for both groups, we also find that they are very close to each other.</p>
+<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="sources-of-bias.html#cb106-1" aria-hidden="true" tabindex="-1"></a>data4 <span class="sc">%&gt;%</span> </span>
+<span id="cb106-2"><a href="sources-of-bias.html#cb106-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(gender) <span class="sc">%&gt;%</span> </span>
+<span id="cb106-3"><a href="sources-of-bias.html#cb106-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">iqr =</span> <span class="fu">IQR</span>(income))</span>
+<span id="cb106-4"><a href="sources-of-bias.html#cb106-4" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 2 × 2</span></span>
+<span id="cb106-5"><a href="sources-of-bias.html#cb106-5" aria-hidden="true" tabindex="-1"></a><span class="do">##   gender   iqr</span></span>
+<span id="cb106-6"><a href="sources-of-bias.html#cb106-6" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;fct&gt;  &lt;dbl&gt;</span></span>
+<span id="cb106-7"><a href="sources-of-bias.html#cb106-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 male    82.5</span></span>
+<span id="cb106-8"><a href="sources-of-bias.html#cb106-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 female  99</span></span></code></pre></div>
+<p>However, to test whether the variance between these two groups is truly similar or different, we have to perform a Levene’s test. The Levene’s test follows a similar logic as the Shapiro-Wilk test. If the test is significant, i.e. <span class="math inline">\(p &lt; 0.05\)</span>, we have to assume that the variances between these groups is significantly different from each other. However, if the test is not significant, then the variances are similar and we can proceed with a parametric test - assuming the other assumptions are not violated.</p>
+<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="sources-of-bias.html#cb107-1" aria-hidden="true" tabindex="-1"></a>car<span class="sc">::</span><span class="fu">leveneTest</span>(gep<span class="sc">$</span>age <span class="sc">~</span> gep<span class="sc">$</span>gender)</span>
+<span id="cb107-2"><a href="sources-of-bias.html#cb107-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in leveneTest.default(y = y, group = group, ...): group coerced to</span></span>
+<span id="cb107-3"><a href="sources-of-bias.html#cb107-3" aria-hidden="true" tabindex="-1"></a><span class="do">## factor.</span></span>
+<span id="cb107-4"><a href="sources-of-bias.html#cb107-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Levene&#39;s Test for Homogeneity of Variance (center = median)</span></span>
+<span id="cb107-5"><a href="sources-of-bias.html#cb107-5" aria-hidden="true" tabindex="-1"></a><span class="do">##        Df F value Pr(&gt;F)</span></span>
+<span id="cb107-6"><a href="sources-of-bias.html#cb107-6" aria-hidden="true" tabindex="-1"></a><span class="do">## group   2  0.8834 0.4144</span></span>
+<span id="cb107-7"><a href="sources-of-bias.html#cb107-7" aria-hidden="true" tabindex="-1"></a><span class="do">##       297</span></span></code></pre></div>
+<p>The Levene’s test shows that our variances are similar and not different from each other, because <span class="math inline">\(p &gt; 0.05\)</span>. Good news if we wanted to continue and perform a group comparison, like in Chapter <a href="comparing-groups.html#comparing-groups">11</a>.</p>
+</div>
+<div id="dealing-with-outliers" class="section level2" number="9.5">
+<h2><span class="header-section-number">9.5</span> Outliers and how to deal with them</h2>
+<p>In Chapter <a href="descriptive-statistics.html#descriptive-statistics">8</a>, I referred to outliers many times but never eluded to the aspects of handling them. Dealing with outliers is similar to dealing with missing data. It is not quite as straightforward as one might think.</p>
+<p>In a first step, we need to determine which values count as an outlier. <span class="citation"><a href="#ref-aguinis2013best" role="doc-biblioref">Aguinis, Gottfredson, and Joo</a> (<a href="#ref-aguinis2013best" role="doc-biblioref">2013</a>)</span> reviewed 232 journal articles and found that scholars had defined outliers in 14 different ways, used 39 different techniques to detect them and applied 20 different strategies to handle them. It would be impossible to work through all different options in this book. However, I want to offer two options that have been frequently considered in publications in the field of Social Sciences:</p>
+<ul>
+<li><p>The standard deviation, and</p></li>
+<li><p>The inter-quartile range.</p></li>
+</ul>
+<div id="ouliers-standard_deviation" class="section level3" number="9.5.1">
+<h3><span class="header-section-number">9.5.1</span> Detecting outliers using the standard deviation</h3>
+<p>A very frequently used approach to detecting outliers is the use of the standard deviation. Usually, scholars use multiples of the standard deviation to determine thresholds. For example, a value that lies 3 standard deviations above or below the mean could be categorised as an outlier. Unfortunately, there is quite some variability regarding how many multiples of the standard deviation counts as an outlier. Some authors might use 3, others might settle for 2 (see also <span class="citation"><a href="#ref-leys2013detecting" role="doc-biblioref">Leys et al.</a> (<a href="#ref-leys2013detecting" role="doc-biblioref">2013</a>)</span>). Let’s stick with the definition of 3 standard deviations to begin with. We can revisit our previous plot and add lines which show the thresholds above and below the mean.</p>
+<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="sources-of-bias.html#cb108-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute the mean and standard deviation</span></span>
+<span id="cb108-2"><a href="sources-of-bias.html#cb108-2" aria-hidden="true" tabindex="-1"></a>runtime_mean <span class="ot">&lt;-</span> <span class="fu">mean</span>(imdb_top_250<span class="sc">$</span>runtime_min)</span>
+<span id="cb108-3"><a href="sources-of-bias.html#cb108-3" aria-hidden="true" tabindex="-1"></a>sd_upper <span class="ot">&lt;-</span> runtime_mean <span class="sc">+</span> <span class="dv">3</span> <span class="sc">*</span> <span class="fu">sd</span>(imdb_top_250<span class="sc">$</span>runtime_min)</span>
+<span id="cb108-4"><a href="sources-of-bias.html#cb108-4" aria-hidden="true" tabindex="-1"></a>sd_lower <span class="ot">&lt;-</span> runtime_mean <span class="sc">-</span> <span class="dv">3</span> <span class="sc">*</span> <span class="fu">sd</span>(imdb_top_250<span class="sc">$</span>runtime_min)</span>
+<span id="cb108-5"><a href="sources-of-bias.html#cb108-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb108-6"><a href="sources-of-bias.html#cb108-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Create our plot</span></span>
+<span id="cb108-7"><a href="sources-of-bias.html#cb108-7" aria-hidden="true" tabindex="-1"></a>imdb_top_250 <span class="sc">%&gt;%</span> </span>
+<span id="cb108-8"><a href="sources-of-bias.html#cb108-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(title, runtime_min) <span class="sc">%&gt;%</span> </span>
+<span id="cb108-9"><a href="sources-of-bias.html#cb108-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(title, runtime_min), <span class="at">y =</span> runtime_min)) <span class="sc">+</span></span>
+<span id="cb108-10"><a href="sources-of-bias.html#cb108-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">124</span>) <span class="sc">+</span></span>
+<span id="cb108-11"><a href="sources-of-bias.html#cb108-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="fu">aes</span>(<span class="at">yintercept =</span> runtime_mean, <span class="at">colour =</span> <span class="st">&quot;red&quot;</span>), <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb108-12"><a href="sources-of-bias.html#cb108-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="fu">aes</span>(<span class="at">yintercept =</span> sd_upper, <span class="at">color =</span> <span class="st">&quot;blue&quot;</span>), <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb108-13"><a href="sources-of-bias.html#cb108-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="fu">aes</span>(<span class="at">yintercept =</span> sd_lower, <span class="at">color =</span> <span class="st">&quot;blue&quot;</span>), <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb108-14"><a href="sources-of-bias.html#cb108-14" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb108-15"><a href="sources-of-bias.html#cb108-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_blank</span>(),    </span>
+<span id="cb108-16"><a href="sources-of-bias.html#cb108-16" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.grid.major =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb108-17"><a href="sources-of-bias.html#cb108-17" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.background =</span> <span class="fu">element_blank</span>()</span>
+<span id="cb108-18"><a href="sources-of-bias.html#cb108-18" aria-hidden="true" tabindex="-1"></a>        ) <span class="sc">+</span></span>
+<span id="cb108-19"><a href="sources-of-bias.html#cb108-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;run time&quot;</span>) <span class="sc">+</span></span>
+<span id="cb108-20"><a href="sources-of-bias.html#cb108-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;movies&quot;</span>)</span></code></pre></div>
+<p><img src="r_for_non_programmers_files/figure-html/Outlier%20detection%20usind%203%20sd-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>The results suggests that only very few outliers would be detected if we chose these thresholds. Especially ‘Sherlock Jr.’ the shortest movie in our dataset would not classify as an outlier. How about we choosen two standard deviations instead?</p>
+<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="sources-of-bias.html#cb109-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute the mean and standard deviation</span></span>
+<span id="cb109-2"><a href="sources-of-bias.html#cb109-2" aria-hidden="true" tabindex="-1"></a>runtime_mean <span class="ot">&lt;-</span> <span class="fu">mean</span>(imdb_top_250<span class="sc">$</span>runtime_min)</span>
+<span id="cb109-3"><a href="sources-of-bias.html#cb109-3" aria-hidden="true" tabindex="-1"></a>sd_upper <span class="ot">&lt;-</span> runtime_mean <span class="sc">+</span> <span class="dv">2</span> <span class="sc">*</span> <span class="fu">sd</span>(imdb_top_250<span class="sc">$</span>runtime_min)</span>
+<span id="cb109-4"><a href="sources-of-bias.html#cb109-4" aria-hidden="true" tabindex="-1"></a>d_lower <span class="ot">&lt;-</span> runtime_mean <span class="sc">-</span> <span class="dv">2</span> <span class="sc">*</span> <span class="fu">sd</span>(imdb_top_250<span class="sc">$</span>runtime_min)</span>
+<span id="cb109-5"><a href="sources-of-bias.html#cb109-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb109-6"><a href="sources-of-bias.html#cb109-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Create our plot</span></span>
+<span id="cb109-7"><a href="sources-of-bias.html#cb109-7" aria-hidden="true" tabindex="-1"></a>imdb_top_250 <span class="sc">%&gt;%</span> </span>
+<span id="cb109-8"><a href="sources-of-bias.html#cb109-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(title, runtime_min) <span class="sc">%&gt;%</span> </span>
+<span id="cb109-9"><a href="sources-of-bias.html#cb109-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(title, runtime_min), <span class="at">y =</span> runtime_min)) <span class="sc">+</span></span>
+<span id="cb109-10"><a href="sources-of-bias.html#cb109-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">124</span>) <span class="sc">+</span></span>
+<span id="cb109-11"><a href="sources-of-bias.html#cb109-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="fu">aes</span>(<span class="at">yintercept =</span> runtime_mean, <span class="at">colour =</span> <span class="st">&quot;red&quot;</span>), <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb109-12"><a href="sources-of-bias.html#cb109-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="fu">aes</span>(<span class="at">yintercept =</span> sd_upper, <span class="at">color =</span> <span class="st">&quot;blue&quot;</span>), <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb109-13"><a href="sources-of-bias.html#cb109-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="fu">aes</span>(<span class="at">yintercept =</span> sd_lower, <span class="at">color =</span> <span class="st">&quot;blue&quot;</span>), <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb109-14"><a href="sources-of-bias.html#cb109-14" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb109-15"><a href="sources-of-bias.html#cb109-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_blank</span>(),    </span>
+<span id="cb109-16"><a href="sources-of-bias.html#cb109-16" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.grid.major =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb109-17"><a href="sources-of-bias.html#cb109-17" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.background =</span> <span class="fu">element_blank</span>()</span>
+<span id="cb109-18"><a href="sources-of-bias.html#cb109-18" aria-hidden="true" tabindex="-1"></a>        ) <span class="sc">+</span></span>
+<span id="cb109-19"><a href="sources-of-bias.html#cb109-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;run time&quot;</span>) <span class="sc">+</span></span>
+<span id="cb109-20"><a href="sources-of-bias.html#cb109-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;movies&quot;</span>)</span></code></pre></div>
+<p><img src="r_for_non_programmers_files/figure-html/Outlier%20detection%20usind%202%20sd-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>As we would expect, we identify some more movies as being outliers. Still, it feels rather arbitrary to choose a threshold of our liking. Despite its popularity, there are additional problems with this approach:</p>
+<ul>
+<li><p>outliers affect our mean and standard deviation too,</p></li>
+<li><p>since we use the mean, we assume that our data is normally distributed, and</p></li>
+<li><p>in smaller samples, this approach might result in not identifying outliers at all (despite their presence) (<span class="citation"><a href="#ref-leys2013detecting" role="doc-biblioref">Leys et al.</a> (<a href="#ref-leys2013detecting" role="doc-biblioref">2013</a>)</span>, p. 764)</p></li>
+</ul>
+<p><span class="citation"><a href="#ref-leys2013detecting" role="doc-biblioref">Leys et al.</a> (<a href="#ref-leys2013detecting" role="doc-biblioref">2013</a>)</span> propose an alternative approach, based on the fact that medians are much less vulnerable to outliers than the mean. Similarly to the standard deviation, it is possible to calculate thresholds using the ‘median absolute deviation’ (MAD). Best of all, the function <code>mad()</code> in R does this automatically for us. <span class="citation"><a href="#ref-leys2013detecting" role="doc-biblioref">Leys et al.</a> (<a href="#ref-leys2013detecting" role="doc-biblioref">2013</a>)</span> suggest to use 2.5 times the MAD as a threshold. However, if we want to compare directly how well this option does against the standard deviation, we should <code>3</code> again.</p>
+<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="sources-of-bias.html#cb110-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute the median and thresholds</span></span>
+<span id="cb110-2"><a href="sources-of-bias.html#cb110-2" aria-hidden="true" tabindex="-1"></a>runtime_median <span class="ot">&lt;-</span> <span class="fu">median</span>(imdb_top_250<span class="sc">$</span>runtime_min)</span>
+<span id="cb110-3"><a href="sources-of-bias.html#cb110-3" aria-hidden="true" tabindex="-1"></a>mad_upper <span class="ot">&lt;-</span> runtime_median <span class="sc">+</span> <span class="dv">3</span> <span class="sc">*</span> <span class="fu">mad</span>(imdb_top_250<span class="sc">$</span>runtime_min)</span>
+<span id="cb110-4"><a href="sources-of-bias.html#cb110-4" aria-hidden="true" tabindex="-1"></a>mad_lower <span class="ot">&lt;-</span> runtime_median <span class="sc">-</span> <span class="dv">3</span> <span class="sc">*</span> <span class="fu">mad</span>(imdb_top_250<span class="sc">$</span>runtime_min)</span>
+<span id="cb110-5"><a href="sources-of-bias.html#cb110-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb110-6"><a href="sources-of-bias.html#cb110-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Create our plot</span></span>
+<span id="cb110-7"><a href="sources-of-bias.html#cb110-7" aria-hidden="true" tabindex="-1"></a>imdb_top_250 <span class="sc">%&gt;%</span> </span>
+<span id="cb110-8"><a href="sources-of-bias.html#cb110-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(title, runtime_min) <span class="sc">%&gt;%</span> </span>
+<span id="cb110-9"><a href="sources-of-bias.html#cb110-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(title, runtime_min), <span class="at">y =</span> runtime_min)) <span class="sc">+</span></span>
+<span id="cb110-10"><a href="sources-of-bias.html#cb110-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">124</span>) <span class="sc">+</span></span>
+<span id="cb110-11"><a href="sources-of-bias.html#cb110-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="fu">aes</span>(<span class="at">yintercept =</span> runtime_median, <span class="at">colour =</span> <span class="st">&quot;red&quot;</span>), <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb110-12"><a href="sources-of-bias.html#cb110-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="fu">aes</span>(<span class="at">yintercept =</span> mad_upper, <span class="at">color =</span> <span class="st">&quot;blue&quot;</span>), <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb110-13"><a href="sources-of-bias.html#cb110-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="fu">aes</span>(<span class="at">yintercept =</span> mad_lower, <span class="at">color =</span> <span class="st">&quot;blue&quot;</span>), <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb110-14"><a href="sources-of-bias.html#cb110-14" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb110-15"><a href="sources-of-bias.html#cb110-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_blank</span>(),    </span>
+<span id="cb110-16"><a href="sources-of-bias.html#cb110-16" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.grid.major =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb110-17"><a href="sources-of-bias.html#cb110-17" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.background =</span> <span class="fu">element_blank</span>()</span>
+<span id="cb110-18"><a href="sources-of-bias.html#cb110-18" aria-hidden="true" tabindex="-1"></a>        ) <span class="sc">+</span></span>
+<span id="cb110-19"><a href="sources-of-bias.html#cb110-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;run time&quot;</span>) <span class="sc">+</span></span>
+<span id="cb110-20"><a href="sources-of-bias.html#cb110-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;movies&quot;</span>)</span></code></pre></div>
+<p><img src="r_for_non_programmers_files/figure-html/Outlier%20detection%20via%20median%20MAD3-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Compared to our previous results, we notice that the median approach was much better in detecting outliers at the upper range of <code>runtim_min</code>. Because the median is not affected so much by the five hour-long movie, the results have improved. Still, we would not classify the outlier at the bottom for the shortest movie in the data. If we chose the criterion of 2.5*MAD, we would also get this outlier (see Figure <a href="sources-of-bias.html#fig:MAD2-outlier-detection">9.4</a>).</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:MAD2-outlier-detection"></span>
+<img src="r_for_non_programmers_files/figure-html/MAD2-outlier-detection-1.png" alt="Outlier detection via MAD using `2.5 * MAD` as a threshold" width="672" />
+<p class="caption">
+Figure 9.4: Outlier detection via MAD using <code>2.5 * MAD</code> as a threshold
+</p>
+</div>
+<p>Which approach to choose can be informed by the normality of your data. If your data is normally distributed, the mean and median would be very close to each other and the results from both approach would return very similar results. However, if your data is not normally distributed, it might be better to classify outliers using the median.</p>
+</div>
+<div id="outliers-iqr" class="section level3" number="9.5.2">
+<h3><span class="header-section-number">9.5.2</span> Detecting outliers using the interquartile range</h3>
+<p>Another approach to classify outliers is the use of the interquartile range (IQR). This one is used in boxplots and creates the dots at its ends to indicate any outliers. This approach is very easy to implement because the computation of the IQR is simple:</p>
+<div id="iqr-formula" align="center">
+<p><span class="math inline">\(IQR = Q_{3}-Q_{1}\)</span></p>
+</div>
+<p>Therefore, we can create new thresholds for the detection of outliers. For IQR it is common to use ‘1.5 * IQR’ as the lower and upper thresholds.</p>
+<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="sources-of-bias.html#cb111-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute the median and thresholds</span></span>
+<span id="cb111-2"><a href="sources-of-bias.html#cb111-2" aria-hidden="true" tabindex="-1"></a>runtime_median <span class="ot">&lt;-</span> <span class="fu">median</span>(imdb_top_250<span class="sc">$</span>runtime_min)</span>
+<span id="cb111-3"><a href="sources-of-bias.html#cb111-3" aria-hidden="true" tabindex="-1"></a>iqr_upper <span class="ot">&lt;-</span> runtime_median <span class="sc">+</span> <span class="fl">1.5</span> <span class="sc">*</span> <span class="fu">IQR</span>(imdb_top_250<span class="sc">$</span>runtime_min)</span>
+<span id="cb111-4"><a href="sources-of-bias.html#cb111-4" aria-hidden="true" tabindex="-1"></a>iqr_lower <span class="ot">&lt;-</span> runtime_median <span class="sc">-</span> <span class="fl">1.5</span> <span class="sc">*</span> <span class="fu">IQR</span>(imdb_top_250<span class="sc">$</span>runtime_min)</span>
+<span id="cb111-5"><a href="sources-of-bias.html#cb111-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb111-6"><a href="sources-of-bias.html#cb111-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Create our plot</span></span>
+<span id="cb111-7"><a href="sources-of-bias.html#cb111-7" aria-hidden="true" tabindex="-1"></a>imdb_top_250 <span class="sc">%&gt;%</span> </span>
+<span id="cb111-8"><a href="sources-of-bias.html#cb111-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(title, runtime_min) <span class="sc">%&gt;%</span> </span>
+<span id="cb111-9"><a href="sources-of-bias.html#cb111-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(title, runtime_min), <span class="at">y =</span> runtime_min)) <span class="sc">+</span></span>
+<span id="cb111-10"><a href="sources-of-bias.html#cb111-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">124</span>) <span class="sc">+</span></span>
+<span id="cb111-11"><a href="sources-of-bias.html#cb111-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="fu">aes</span>(<span class="at">yintercept =</span> runtime_median, <span class="at">colour =</span> <span class="st">&quot;red&quot;</span>), <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb111-12"><a href="sources-of-bias.html#cb111-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="fu">aes</span>(<span class="at">yintercept =</span> iqr_upper, <span class="at">color =</span> <span class="st">&quot;blue&quot;</span>), <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb111-13"><a href="sources-of-bias.html#cb111-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="fu">aes</span>(<span class="at">yintercept =</span> iqr_lower, <span class="at">color =</span> <span class="st">&quot;blue&quot;</span>), <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb111-14"><a href="sources-of-bias.html#cb111-14" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb111-15"><a href="sources-of-bias.html#cb111-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_blank</span>(),    </span>
+<span id="cb111-16"><a href="sources-of-bias.html#cb111-16" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.grid.major =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb111-17"><a href="sources-of-bias.html#cb111-17" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.background =</span> <span class="fu">element_blank</span>()</span>
+<span id="cb111-18"><a href="sources-of-bias.html#cb111-18" aria-hidden="true" tabindex="-1"></a>        ) <span class="sc">+</span></span>
+<span id="cb111-19"><a href="sources-of-bias.html#cb111-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;run time&quot;</span>) <span class="sc">+</span></span>
+<span id="cb111-20"><a href="sources-of-bias.html#cb111-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;movies&quot;</span>)</span></code></pre></div>
+<p><img src="r_for_non_programmers_files/figure-html/IQR%20as%20a%20threshold%20for%20outliers-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>As we can tell, the IQR detects much more outliers for our data than any of the previous methods. The outliers we find here are the same as shown in Figure <a href="descriptive-statistics.html#fig:a-boxplot">8.1</a>.</p>
+<p>For our data it seems that the MAD by <span class="citation"><a href="#ref-leys2013detecting" role="doc-biblioref">Leys et al.</a> (<a href="#ref-leys2013detecting" role="doc-biblioref">2013</a>)</span> produced the ‘best’ selection. However, we have to acknowledge that these classifications will always be subjective, because the decision of how we position the thresholds is still depending on the researcher’s choice.</p>
+</div>
+<div id="removing-or-replacing-outliers" class="section level3" number="9.5.3">
+<h3><span class="header-section-number">9.5.3</span> Removing or replacing outliers</h3>
+<p>Now that we have identified our outliers we are confronted with the question what we should do with them. Similar to missing data (see Chapter <a href="data-wrangling.html#dealing-with-missing-data">7.6</a>) we can either remove them or replace them with other values. While removal is a fairly simple task, replacing it with other ‘reasonable’ values implies that we need to find techniques to create such values. As you may remember, we were confronted with a similar problem before when we looked into missing data (Chapter <a href="data-wrangling.html#dealing-with-missing-data">7.6</a>. The same techniques, especially multiple imputation <span class="citation">(see <a href="#ref-cousineau2010outliers" role="doc-biblioref">Cousineau and Chartier 2010</a>)</span>, can be used for such scenarios as well.</p>
+<p>Irrespective of whether we remove or replace outliers, we somehow need to single them out of the crowd. Since the MAD strategy worked well for our data, we can use the thresholds we defined before, i.e. <code>mad_upper</code> and <code>mad_lower</code>. Therefore, an observation (i.e. a movie) is considered as an outlier if:</p>
+<ul>
+<li><p>its value lies above <code>mad_upper</code>, or</p></li>
+<li><p>its value lies below <code>mad_lower</code></p></li>
+</ul>
+<p>It becomes clear that we somehow need to define a condition, because if it is an outlier, it should be labelled as one, if not then it should not be labelled as one. Ideally we want a new column in our dataset which indicates whether a movie is an outlier (i.e. outlier = TRUE) or not (outlier = FALSE). R offers a way for us to express such conditions with the function <code>ifelse()</code>. It has the following structure:</p>
+<div id="ifelse-function" align="center">
+<p><code>ifelse(condition, TRUE, FALSE)</code></p>
+</div>
+<p>Let’s formulate a sentence that describes our scenario as an <code>ifelse()</code> function:</p>
+<ul>
+<li><p>If a movie’s <code>runtime_min</code> is longer than <code>mad_upper</code>, <u>or</u></p></li>
+<li><p>if a movie’s <code>runtime_min</code> is lower than <code>mad_lower</code>,</p></li>
+<li><p>classify this movie as an outlier (i.e. <code>TRUE</code>),</p></li>
+<li><p>otherwise classify this movie as not being an outlier (i.e. <code>FALSE</code>).</p></li>
+</ul>
+<p>We already know from Chapter <a href="r-basics-the-very-fundamentals.html#basic-computations-in-r">5.1</a> how to use logical and arithmetic operators. All we have to do is put them together in one function call.</p>
+<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="sources-of-bias.html#cb112-1" aria-hidden="true" tabindex="-1"></a>imdb_top_250 <span class="ot">&lt;-</span> imdb_top_250 <span class="sc">%&gt;%</span> </span>
+<span id="cb112-2"><a href="sources-of-bias.html#cb112-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">outlier =</span> <span class="fu">ifelse</span>(runtime_min <span class="sc">&gt;</span> mad_upper <span class="sc">|</span> runtime_min <span class="sc">&lt;</span> mad_lower,</span>
+<span id="cb112-3"><a href="sources-of-bias.html#cb112-3" aria-hidden="true" tabindex="-1"></a>                          <span class="cn">TRUE</span>, <span class="cn">FALSE</span>))</span></code></pre></div>
+<p>Since we have a classification we can more thoroughly inspect our outliers and see which movies are the ones that are lying outside our defined norm. We can <code>arrange()</code> them by <code>runtime_min</code>.</p>
+<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="sources-of-bias.html#cb113-1" aria-hidden="true" tabindex="-1"></a>imdb_top_250 <span class="sc">%&gt;%</span> </span>
+<span id="cb113-2"><a href="sources-of-bias.html#cb113-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(outlier <span class="sc">==</span> <span class="st">&quot;TRUE&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb113-3"><a href="sources-of-bias.html#cb113-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(title, runtime_min, outlier) <span class="sc">%&gt;%</span> </span>
+<span id="cb113-4"><a href="sources-of-bias.html#cb113-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(runtime_min)</span>
+<span id="cb113-5"><a href="sources-of-bias.html#cb113-5" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 10 × 3</span></span>
+<span id="cb113-6"><a href="sources-of-bias.html#cb113-6" aria-hidden="true" tabindex="-1"></a><span class="do">##    title                                         runtime_min outlier</span></span>
+<span id="cb113-7"><a href="sources-of-bias.html#cb113-7" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;chr&gt;                                               &lt;dbl&gt; &lt;lgl&gt;  </span></span>
+<span id="cb113-8"><a href="sources-of-bias.html#cb113-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 Sherlock Jr.                                           45 TRUE   </span></span>
+<span id="cb113-9"><a href="sources-of-bias.html#cb113-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 The Lord of the Rings: The Return of the King         201 TRUE   </span></span>
+<span id="cb113-10"><a href="sources-of-bias.html#cb113-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 The Godfather: Part II                                202 TRUE   </span></span>
+<span id="cb113-11"><a href="sources-of-bias.html#cb113-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 Andrei Rublev                                         205 TRUE   </span></span>
+<span id="cb113-12"><a href="sources-of-bias.html#cb113-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 Seven Samurai                                         207 TRUE   </span></span>
+<span id="cb113-13"><a href="sources-of-bias.html#cb113-13" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 Ben-Hur                                               212 TRUE   </span></span>
+<span id="cb113-14"><a href="sources-of-bias.html#cb113-14" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 Lawrence of Arabia                                    228 TRUE   </span></span>
+<span id="cb113-15"><a href="sources-of-bias.html#cb113-15" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 Once Upon a Time in America                           229 TRUE   </span></span>
+<span id="cb113-16"><a href="sources-of-bias.html#cb113-16" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 Gone with the Wind                                    238 TRUE   </span></span>
+<span id="cb113-17"><a href="sources-of-bias.html#cb113-17" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 Gangs of Wasseypur                                    321 TRUE</span></span></code></pre></div>
+<p>The list of movies contains some of the most iconic Hollywood films ever shown on screen. I think we can agree that most of them are truly outside the norm of regular movies, not just in terms of runtime.</p>
+<p>From here it is simple to remove these movies (i.e. keep the movies that are not outliers) or set their values to <code>NA</code> by writing the following lines of code. We replace the values with <code>NA</code> we can the continue with one of the techniques demonstrated for missing values (Chapter <a href="data-wrangling.html#dealing-with-missing-data">7.6</a>.</p>
+<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="sources-of-bias.html#cb114-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Keep all movies that are not outliers</span></span>
+<span id="cb114-2"><a href="sources-of-bias.html#cb114-2" aria-hidden="true" tabindex="-1"></a>imdb_top_250 <span class="sc">%&gt;%</span> </span>
+<span id="cb114-3"><a href="sources-of-bias.html#cb114-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(outlier <span class="sc">==</span> <span class="st">&quot;FALSE&quot;</span>)</span>
+<span id="cb114-4"><a href="sources-of-bias.html#cb114-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb114-5"><a href="sources-of-bias.html#cb114-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Replace values with NA</span></span>
+<span id="cb114-6"><a href="sources-of-bias.html#cb114-6" aria-hidden="true" tabindex="-1"></a>imdb_top_250 <span class="sc">%&gt;%</span> </span>
+<span id="cb114-7"><a href="sources-of-bias.html#cb114-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">runtime_min =</span> <span class="fu">replace</span>(runtime_min, outlier <span class="sc">==</span> <span class="st">&quot;TRUE&quot;</span>, <span class="cn">NA</span>))</span></code></pre></div>
+<p>The <code>replace()</code> function is very intuitive to use. It first needs to know where you want to replace a value (<code>runtime_min</code>), then what the condition for replacing is (<code>outlier == "TRUE"</code>), and lastly, which value should be put instead of the original one (<code>NA</code>).</p>
+<p>As you hopefully noticed, understanding your data requires some effort, but it is important to know your data well before proceeding to any further analysis. You can experiment with different data visualisations and design them in a way that best reflect the message you want to get across. For example, because we have now a separate variable which classifies outliers we can do more with our data visualisation than before and dress it up a bit more nicely.</p>
+<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="sources-of-bias.html#cb115-1" aria-hidden="true" tabindex="-1"></a>colour_pal <span class="ot">&lt;-</span> wesanderson<span class="sc">::</span><span class="fu">wes_palette</span>(<span class="st">&quot;Darjeeling1&quot;</span>, <span class="dv">11</span>, <span class="at">type =</span> <span class="st">&quot;continuous&quot;</span>)</span>
+<span id="cb115-2"><a href="sources-of-bias.html#cb115-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb115-3"><a href="sources-of-bias.html#cb115-3" aria-hidden="true" tabindex="-1"></a>imdb_top_250 <span class="sc">%&gt;%</span> </span>
+<span id="cb115-4"><a href="sources-of-bias.html#cb115-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(genre_01, runtime_min),</span>
+<span id="cb115-5"><a href="sources-of-bias.html#cb115-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> runtime_min,</span>
+<span id="cb115-6"><a href="sources-of-bias.html#cb115-6" aria-hidden="true" tabindex="-1"></a>             <span class="at">colour =</span> genre_01)</span>
+<span id="cb115-7"><a href="sources-of-bias.html#cb115-7" aria-hidden="true" tabindex="-1"></a>         ) <span class="sc">+</span></span>
+<span id="cb115-8"><a href="sources-of-bias.html#cb115-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">alpha =</span> <span class="dv">0</span>,</span>
+<span id="cb115-9"><a href="sources-of-bias.html#cb115-9" aria-hidden="true" tabindex="-1"></a>               <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb115-10"><a href="sources-of-bias.html#cb115-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width =</span> <span class="fl">0.1</span>,</span>
+<span id="cb115-11"><a href="sources-of-bias.html#cb115-11" aria-hidden="true" tabindex="-1"></a>              <span class="at">size =</span> <span class="fl">0.5</span>,</span>
+<span id="cb115-12"><a href="sources-of-bias.html#cb115-12" aria-hidden="true" tabindex="-1"></a>              <span class="at">alpha =</span> <span class="fl">0.5</span>,</span>
+<span id="cb115-13"><a href="sources-of-bias.html#cb115-13" aria-hidden="true" tabindex="-1"></a>              <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb115-14"><a href="sources-of-bias.html#cb115-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> colour_pal) <span class="sc">+</span></span>
+<span id="cb115-15"><a href="sources-of-bias.html#cb115-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb115-16"><a href="sources-of-bias.html#cb115-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.background =</span> <span class="fu">element_blank</span>())<span class="sc">+</span></span>
+<span id="cb115-17"><a href="sources-of-bias.html#cb115-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;runtime&quot;</span>) <span class="sc">+</span></span>
+<span id="cb115-18"><a href="sources-of-bias.html#cb115-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Genre&quot;</span>) <span class="sc">+</span></span>
+<span id="cb115-19"><a href="sources-of-bias.html#cb115-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Distribution of movie runtimes by genre&quot;</span>)</span></code></pre></div>
+<p><img src="r_for_non_programmers_files/figure-html/Final%20plot%20to%20show%20outliers-1.png" width="672" style="display: block; margin: auto;" /></p>
+
+</div>
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-aguinis2013best" class="csl-entry">
+Aguinis, Herman, Ryan K Gottfredson, and Harry Joo. 2013. <span>“Best-Practice Recommendations for Defining, Identifying, and Handling Outliers.”</span> <em>Organizational Research Methods</em> 16 (2): 270–301.
+</div>
+<div id="ref-cousineau2010outliers" class="csl-entry">
+Cousineau, Denis, and Sylvain Chartier. 2010. <span>“Outliers Detection and Treatment: A Review.”</span> <em>International Journal of Psychological Research</em> 3 (1): 58–67.
+</div>
+<div id="ref-field2013discovering" class="csl-entry">
+Field, Andy. 2013. <em>Discovering Statistics Using IBM SPSS Statistics</em>. Sage Publications.
+</div>
+<div id="ref-leys2013detecting" class="csl-entry">
+Leys, Christophe, Christophe Ley, Olivier Klein, Philippe Bernard, and Laurent Licata. 2013. <span>“Detecting Outliers: Do Not Use Standard Deviation Around the Mean, Use Absolute Deviation Around the Median.”</span> <em>Journal of Experimental Social Psychology</em> 49 (4): 764–66.
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="descriptive-statistics.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="correlations.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["r_for_non_programmers.pdf", "r_for_non_programmers.epub"],
+"search": {
+"engine": "lunr",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

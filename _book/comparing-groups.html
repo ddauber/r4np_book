@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>11 Comparing groups | R for Non-Programmers: A Guide for Social Scientists</title>
+  <meta name="description" content="This books is intended for Social Scientists. No matter whether you have years of experiences, this book might come in handy if you never use R or any other programming language before." />
+  <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="11 Comparing groups | R for Non-Programmers: A Guide for Social Scientists" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This books is intended for Social Scientists. No matter whether you have years of experiences, this book might come in handy if you never use R or any other programming language before." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="11 Comparing groups | R for Non-Programmers: A Guide for Social Scientists" />
+  
+  <meta name="twitter:description" content="This books is intended for Social Scientists. No matter whether you have years of experiences, this book might come in handy if you never use R or any other programming language before." />
+  
+
+<meta name="author" content="Daniel Dauber" />
+
+
+<meta name="date" content="2021-08-31" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="correlations.html"/>
+<link rel="next" href="regression.html"/>
+<script src="libs/header-attrs-2.10/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
+<script src="libs/viz-1.8.2/viz.js"></script>
+<link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+<script src="libs/grViz-binding-1.0.6.1/grViz.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">R for Non-Programmers</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome 👋</a></li>
+<li class="chapter" data-level="" data-path="acknowledgments.html"><a href="acknowledgments.html"><i class="fa fa-check"></i>Acknowledgments 🙏</a></li>
+<li class="chapter" data-level="1" data-path="readme-before-you-get-started.html"><a href="readme-before-you-get-started.html"><i class="fa fa-check"></i><b>1</b> <code>Readme.</code> Before you get started</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="readme-before-you-get-started.html"><a href="readme-before-you-get-started.html#a-starting-point-and-reference-book"><i class="fa fa-check"></i><b>1.1</b> A starting point and reference book</a></li>
+<li class="chapter" data-level="1.2" data-path="readme-before-you-get-started.html"><a href="readme-before-you-get-started.html#download-the-companion-r-package"><i class="fa fa-check"></i><b>1.2</b> Download the companion R package</a></li>
+<li class="chapter" data-level="1.3" data-path="readme-before-you-get-started.html"><a href="readme-before-you-get-started.html#a-tidyverse-approach-with-some-basic-r"><i class="fa fa-check"></i><b>1.3</b> A ‘tidyverse’ approach with some basic R</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="why-learn-a-programming-language-as-a-non-programmer.html"><a href="why-learn-a-programming-language-as-a-non-programmer.html"><i class="fa fa-check"></i><b>2</b> Why learn a programming language as a non-programmer?</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="why-learn-a-programming-language-as-a-non-programmer.html"><a href="why-learn-a-programming-language-as-a-non-programmer.html#learning-new-tools-to-analyse-your-data-is-always-essential"><i class="fa fa-check"></i><b>2.1</b> Learning new tools to analyse your data is always essential</a></li>
+<li class="chapter" data-level="2.2" data-path="why-learn-a-programming-language-as-a-non-programmer.html"><a href="why-learn-a-programming-language-as-a-non-programmer.html#programming-languages-enhance-your-conceptual-thinking"><i class="fa fa-check"></i><b>2.2</b> Programming languages enhance your conceptual thinking</a></li>
+<li class="chapter" data-level="2.3" data-path="why-learn-a-programming-language-as-a-non-programmer.html"><a href="why-learn-a-programming-language-as-a-non-programmer.html#programming-languages-allow-you-to-look-at-your-data-from-a-different-angle"><i class="fa fa-check"></i><b>2.3</b> Programming languages allow you to look at your data from a different angle</a></li>
+<li class="chapter" data-level="2.4" data-path="why-learn-a-programming-language-as-a-non-programmer.html"><a href="why-learn-a-programming-language-as-a-non-programmer.html#learning-any-programming-language-will-help-you-learn-other-programming-languages."><i class="fa fa-check"></i><b>2.4</b> Learning any programming language will help you learn other programming languages.</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="setting-up-r-and-rstudio.html"><a href="setting-up-r-and-rstudio.html"><i class="fa fa-check"></i><b>3</b> Setting up R and RStudio</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="setting-up-r-and-rstudio.html"><a href="setting-up-r-and-rstudio.html#installing-r"><i class="fa fa-check"></i><b>3.1</b> Installing R</a></li>
+<li class="chapter" data-level="3.2" data-path="setting-up-r-and-rstudio.html"><a href="setting-up-r-and-rstudio.html#installing-rstudio"><i class="fa fa-check"></i><b>3.2</b> Installing RStudio</a></li>
+<li class="chapter" data-level="3.3" data-path="setting-up-r-and-rstudio.html"><a href="setting-up-r-and-rstudio.html#when-you-first-start-rstudio"><i class="fa fa-check"></i><b>3.3</b> When you first start RStudio</a></li>
+<li class="chapter" data-level="3.4" data-path="setting-up-r-and-rstudio.html"><a href="setting-up-r-and-rstudio.html#updating-r-and-rstudio"><i class="fa fa-check"></i><b>3.4</b> Updating R and RStudio: Living at the pulse of innovation</a></li>
+<li class="chapter" data-level="3.5" data-path="setting-up-r-and-rstudio.html"><a href="setting-up-r-and-rstudio.html#rstudio-cloud"><i class="fa fa-check"></i><b>3.5</b> RStudio Cloud</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="the-rstudio-interface.html"><a href="the-rstudio-interface.html"><i class="fa fa-check"></i><b>4</b> The RStudio Interface</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="the-rstudio-interface.html"><a href="the-rstudio-interface.html#the-console-window"><i class="fa fa-check"></i><b>4.1</b> The Console window</a></li>
+<li class="chapter" data-level="4.2" data-path="the-rstudio-interface.html"><a href="the-rstudio-interface.html#the-source-window"><i class="fa fa-check"></i><b>4.2</b> The Source window</a></li>
+<li class="chapter" data-level="4.3" data-path="the-rstudio-interface.html"><a href="the-rstudio-interface.html#the-environment-history-connections-tutorial-window"><i class="fa fa-check"></i><b>4.3</b> The Environment / History / Connections / Tutorial window</a></li>
+<li class="chapter" data-level="4.4" data-path="the-rstudio-interface.html"><a href="the-rstudio-interface.html#the-files-plots-packages-help-viewer-window"><i class="fa fa-check"></i><b>4.4</b> The Files / Plots / Packages / Help / Viewer window</a></li>
+<li class="chapter" data-level="4.5" data-path="the-rstudio-interface.html"><a href="the-rstudio-interface.html#customise-your-user-interface"><i class="fa fa-check"></i><b>4.5</b> Customise your user interface</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="r-basics-the-very-fundamentals.html"><a href="r-basics-the-very-fundamentals.html"><i class="fa fa-check"></i><b>5</b> R Basics: The very fundamentals</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="r-basics-the-very-fundamentals.html"><a href="r-basics-the-very-fundamentals.html#basic-computations-in-r"><i class="fa fa-check"></i><b>5.1</b> Basic computations in R</a></li>
+<li class="chapter" data-level="5.2" data-path="r-basics-the-very-fundamentals.html"><a href="r-basics-the-very-fundamentals.html#assigning-values-to-objects"><i class="fa fa-check"></i><b>5.2</b> Assigning values to objects: ‘&lt;-’</a></li>
+<li class="chapter" data-level="5.3" data-path="r-basics-the-very-fundamentals.html"><a href="r-basics-the-very-fundamentals.html#functions"><i class="fa fa-check"></i><b>5.3</b> Functions</a></li>
+<li class="chapter" data-level="5.4" data-path="r-basics-the-very-fundamentals.html"><a href="r-basics-the-very-fundamentals.html#r-packages"><i class="fa fa-check"></i><b>5.4</b> R packages</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="r-basics-the-very-fundamentals.html"><a href="r-basics-the-very-fundamentals.html#installing-packages-using-a-function"><i class="fa fa-check"></i><b>5.4.1</b> Installing packages using <code>install.packages()</code></a></li>
+<li class="chapter" data-level="5.4.2" data-path="r-basics-the-very-fundamentals.html"><a href="r-basics-the-very-fundamentals.html#installing-packages-via-rstudio"><i class="fa fa-check"></i><b>5.4.2</b> Installing packages via RStudio’s package pane</a></li>
+<li class="chapter" data-level="5.4.3" data-path="r-basics-the-very-fundamentals.html"><a href="r-basics-the-very-fundamentals.html#using-r-packages"><i class="fa fa-check"></i><b>5.4.3</b> Using R Packages</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="r-basics-the-very-fundamentals.html"><a href="r-basics-the-very-fundamentals.html#coding-etiquette"><i class="fa fa-check"></i><b>5.5</b> Coding etiquette</a></li>
+<li class="chapter" data-level="5.6" data-path="r-basics-the-very-fundamentals.html"><a href="r-basics-the-very-fundamentals.html#exercises-chapter-5"><i class="fa fa-check"></i><b>5.6</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="starting-your-r-projects.html"><a href="starting-your-r-projects.html"><i class="fa fa-check"></i><b>6</b> Starting your R projects</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="starting-your-r-projects.html"><a href="starting-your-r-projects.html#creating-an-r-project"><i class="fa fa-check"></i><b>6.1</b> Creating an R Project file</a></li>
+<li class="chapter" data-level="6.2" data-path="starting-your-r-projects.html"><a href="starting-your-r-projects.html#organising-your-projects"><i class="fa fa-check"></i><b>6.2</b> Organising your projects</a></li>
+<li class="chapter" data-level="6.3" data-path="starting-your-r-projects.html"><a href="starting-your-r-projects.html#creating-an-r-script"><i class="fa fa-check"></i><b>6.3</b> Creating an R Script</a></li>
+<li class="chapter" data-level="6.4" data-path="starting-your-r-projects.html"><a href="starting-your-r-projects.html#r-markdown-and-r-notebooks"><i class="fa fa-check"></i><b>6.4</b> Using R Markdown</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="data-wrangling.html"><a href="data-wrangling.html"><i class="fa fa-check"></i><b>7</b> Data Wrangling</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="data-wrangling.html"><a href="data-wrangling.html#import-your-data"><i class="fa fa-check"></i><b>7.1</b> Import your data</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="data-wrangling.html"><a href="data-wrangling.html#import-data-from-the-files-pane"><i class="fa fa-check"></i><b>7.1.1</b> Import data from the Files pane</a></li>
+<li class="chapter" data-level="7.1.2" data-path="data-wrangling.html"><a href="data-wrangling.html#importing-data-from-the-environment-pane"><i class="fa fa-check"></i><b>7.1.2</b> Importing data from the Environment pane</a></li>
+<li class="chapter" data-level="7.1.3" data-path="data-wrangling.html"><a href="data-wrangling.html#importing-data-using-functions"><i class="fa fa-check"></i><b>7.1.3</b> Importing data using functions directly</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="data-wrangling.html"><a href="data-wrangling.html#inspecting-raw-data"><i class="fa fa-check"></i><b>7.2</b> Inspecting your data</a></li>
+<li class="chapter" data-level="7.3" data-path="data-wrangling.html"><a href="data-wrangling.html#colnames-cleaning"><i class="fa fa-check"></i><b>7.3</b> Cleaning your column names: Call the <code>janitor</code></a></li>
+<li class="chapter" data-level="7.4" data-path="data-wrangling.html"><a href="data-wrangling.html#change-data-types"><i class="fa fa-check"></i><b>7.4</b> Data types: What are they and how can you change them</a></li>
+<li class="chapter" data-level="7.5" data-path="data-wrangling.html"><a href="data-wrangling.html#handling-factors"><i class="fa fa-check"></i><b>7.5</b> Handling factors</a>
+<ul>
+<li class="chapter" data-level="7.5.1" data-path="data-wrangling.html"><a href="data-wrangling.html#recoding-factors"><i class="fa fa-check"></i><b>7.5.1</b> Recoding factors</a></li>
+<li class="chapter" data-level="7.5.2" data-path="data-wrangling.html"><a href="data-wrangling.html#reordering-factor-levels"><i class="fa fa-check"></i><b>7.5.2</b> Reordering factor levels</a></li>
+</ul></li>
+<li class="chapter" data-level="7.6" data-path="data-wrangling.html"><a href="data-wrangling.html#dealing-with-missing-data"><i class="fa fa-check"></i><b>7.6</b> Dealing with missing data</a>
+<ul>
+<li class="chapter" data-level="7.6.1" data-path="data-wrangling.html"><a href="data-wrangling.html#mapping-missing-data"><i class="fa fa-check"></i><b>7.6.1</b> Mapping missing data</a></li>
+<li class="chapter" data-level="7.6.2" data-path="data-wrangling.html"><a href="data-wrangling.html#patterns-of-missing-data"><i class="fa fa-check"></i><b>7.6.2</b> Identifying patterns of missing data</a></li>
+<li class="chapter" data-level="7.6.3" data-path="data-wrangling.html"><a href="data-wrangling.html#replacing-removing-missing-data"><i class="fa fa-check"></i><b>7.6.3</b> Replacing or removing missing data</a></li>
+<li class="chapter" data-level="7.6.4" data-path="data-wrangling.html"><a href="data-wrangling.html#main-takeaways-regarding-dealing-with-missing-data"><i class="fa fa-check"></i><b>7.6.4</b> Main takeaways regarding dealing with missing data</a></li>
+</ul></li>
+<li class="chapter" data-level="7.7" data-path="data-wrangling.html"><a href="data-wrangling.html#latent-constructs"><i class="fa fa-check"></i><b>7.7</b> Latent constructs and their reliability</a></li>
+<li class="chapter" data-level="7.8" data-path="data-wrangling.html"><a href="data-wrangling.html#conclusion-data-wrangling"><i class="fa fa-check"></i><b>7.8</b> Once you finished with data wrangling</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html"><i class="fa fa-check"></i><b>8</b> Descriptive Statistics</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#plotting-in-r-with-ggplot2"><i class="fa fa-check"></i><b>8.1</b> Plotting in R with <code>ggplot2</code></a></li>
+<li class="chapter" data-level="8.2" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#central-tendency"><i class="fa fa-check"></i><b>8.2</b> Central tendency measures: Mean, Median, Mode</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#mean"><i class="fa fa-check"></i><b>8.2.1</b> Mean</a></li>
+<li class="chapter" data-level="8.2.2" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#median"><i class="fa fa-check"></i><b>8.2.2</b> Median</a></li>
+<li class="chapter" data-level="8.2.3" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#mode"><i class="fa fa-check"></i><b>8.2.3</b> Mode</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#spread-of-data"><i class="fa fa-check"></i><b>8.3</b> Indicators and visualisations to examine the spread of data</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#boxplot-so-much-information-in-just-one-box"><i class="fa fa-check"></i><b>8.3.1</b> Boxplot: So much information in just one box</a></li>
+<li class="chapter" data-level="8.3.2" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#histogram-do-not-mistake-it-as-a-bar-plot"><i class="fa fa-check"></i><b>8.3.2</b> Histogram: Do not mistake it as a bar plot</a></li>
+<li class="chapter" data-level="8.3.3" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#density-plots-your-smooth-histograms"><i class="fa fa-check"></i><b>8.3.3</b> Density plots: Your smooth histograms</a></li>
+<li class="chapter" data-level="8.3.4" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#violin-plot-your-smooth-boxplot"><i class="fa fa-check"></i><b>8.3.4</b> Violin plot: Your smooth boxplot</a></li>
+<li class="chapter" data-level="8.3.5" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#qq-plot"><i class="fa fa-check"></i><b>8.3.5</b> QQ plot: A ‘cute’ plot to check for normality in your data</a></li>
+<li class="chapter" data-level="8.3.6" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#standard-deviation"><i class="fa fa-check"></i><b>8.3.6</b> Standard deviation: Your average deviation from the mean</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="sources-of-bias.html"><a href="sources-of-bias.html"><i class="fa fa-check"></i><b>9</b> Sources of bias: Outliers, normality and other ‘conundrums’</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="sources-of-bias.html"><a href="sources-of-bias.html#additivity-and-linearity"><i class="fa fa-check"></i><b>9.1</b> Linearity and additivity</a></li>
+<li class="chapter" data-level="9.2" data-path="sources-of-bias.html"><a href="sources-of-bias.html#independence"><i class="fa fa-check"></i><b>9.2</b> Independence</a></li>
+<li class="chapter" data-level="9.3" data-path="sources-of-bias.html"><a href="sources-of-bias.html#normality"><i class="fa fa-check"></i><b>9.3</b> Normality</a></li>
+<li class="chapter" data-level="9.4" data-path="sources-of-bias.html"><a href="sources-of-bias.html#homogeneity-of-variance"><i class="fa fa-check"></i><b>9.4</b> Homogeneity of variance (homoscedasticity)</a></li>
+<li class="chapter" data-level="9.5" data-path="sources-of-bias.html"><a href="sources-of-bias.html#dealing-with-outliers"><i class="fa fa-check"></i><b>9.5</b> Outliers and how to deal with them</a>
+<ul>
+<li class="chapter" data-level="9.5.1" data-path="sources-of-bias.html"><a href="sources-of-bias.html#ouliers-standard_deviation"><i class="fa fa-check"></i><b>9.5.1</b> Detecting outliers using the standard deviation</a></li>
+<li class="chapter" data-level="9.5.2" data-path="sources-of-bias.html"><a href="sources-of-bias.html#outliers-iqr"><i class="fa fa-check"></i><b>9.5.2</b> Detecting outliers using the interquartile range</a></li>
+<li class="chapter" data-level="9.5.3" data-path="sources-of-bias.html"><a href="sources-of-bias.html#removing-or-replacing-outliers"><i class="fa fa-check"></i><b>9.5.3</b> Removing or replacing outliers</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="correlations.html"><a href="correlations.html"><i class="fa fa-check"></i><b>10</b> Correlations</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="correlations.html"><a href="correlations.html#parametric-or-non-parametric"><i class="fa fa-check"></i><b>10.1</b> Parametric or non-parametric: That is the question</a></li>
+<li class="chapter" data-level="10.2" data-path="correlations.html"><a href="correlations.html#plotting-correlations"><i class="fa fa-check"></i><b>10.2</b> Plotting correlations</a></li>
+<li class="chapter" data-level="10.3" data-path="correlations.html"><a href="correlations.html#significance"><i class="fa fa-check"></i><b>10.3</b> Significance: A way to help you judge your findings</a></li>
+<li class="chapter" data-level="10.4" data-path="correlations.html"><a href="correlations.html#limitations-of-correlations"><i class="fa fa-check"></i><b>10.4</b> Limitations of correlations</a>
+<ul>
+<li class="chapter" data-level="10.4.1" data-path="correlations.html"><a href="correlations.html#correlations-are-not-causal-relationships"><i class="fa fa-check"></i><b>10.4.1</b> Correlations are not causal relationships</a></li>
+<li class="chapter" data-level="10.4.2" data-path="correlations.html"><a href="correlations.html#correlations-can-be-spurious"><i class="fa fa-check"></i><b>10.4.2</b> Correlations can be spurious</a></li>
+<li class="chapter" data-level="10.4.3" data-path="correlations.html"><a href="correlations.html#simpsons-paradox"><i class="fa fa-check"></i><b>10.4.3</b> Simpson’s Paradox: When correlations betray you</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="comparing-groups.html"><a href="comparing-groups.html"><i class="fa fa-check"></i><b>11</b> Comparing groups</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="comparing-groups.html"><a href="comparing-groups.html#comparability-apples-vs-oranges"><i class="fa fa-check"></i><b>11.1</b> Comparability: Apples vs Oranges</a></li>
+<li class="chapter" data-level="11.2" data-path="comparing-groups.html"><a href="comparing-groups.html#comparing-two-groups"><i class="fa fa-check"></i><b>11.2</b> Comparing two groups</a>
+<ul>
+<li class="chapter" data-level="11.2.1" data-path="comparing-groups.html"><a href="comparing-groups.html#two-unpaired-groups"><i class="fa fa-check"></i><b>11.2.1</b> Two Unpaired groups</a></li>
+<li class="chapter" data-level="11.2.2" data-path="comparing-groups.html"><a href="comparing-groups.html#two-paired-groups"><i class="fa fa-check"></i><b>11.2.2</b> Two Paired groups</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="comparing-groups.html"><a href="comparing-groups.html#comparing-more-than-two-groups"><i class="fa fa-check"></i><b>11.3</b> Comparing more than two groups</a>
+<ul>
+<li class="chapter" data-level="11.3.1" data-path="comparing-groups.html"><a href="comparing-groups.html#multiple-unpaired-groups"><i class="fa fa-check"></i><b>11.3.1</b> Multiple unpaired groups</a></li>
+<li class="chapter" data-level="11.3.2" data-path="comparing-groups.html"><a href="comparing-groups.html#multiple-paired-groups"><i class="fa fa-check"></i><b>11.3.2</b> Multiple paired groups</a></li>
+</ul></li>
+<li class="chapter" data-level="11.4" data-path="comparing-groups.html"><a href="comparing-groups.html#chi-squared-test"><i class="fa fa-check"></i><b>11.4</b> Comparing groups based on factors: Contingency tables</a></li>
+<li class="chapter" data-level="11.5" data-path="comparing-groups.html"><a href="comparing-groups.html#cheatsheet-group-comparisons"><i class="fa fa-check"></i><b>11.5</b> A cheatsheet to guide your own group comparisons</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>12</b> Regression: Creating models to predict future observations</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="regression.html"><a href="regression.html#single-linear-regression"><i class="fa fa-check"></i><b>12.1</b> Single linear regression</a>
+<ul>
+<li class="chapter" data-level="12.1.1" data-path="regression.html"><a href="regression.html#fitting-a-regression-model-by-hand-i.e.-trial-and-error"><i class="fa fa-check"></i><b>12.1.1</b> Fitting a regression model by hand, i.e. trial and error</a></li>
+</ul></li>
+<li class="chapter" data-level="12.2" data-path="regression.html"><a href="regression.html#multiple-regression"><i class="fa fa-check"></i><b>12.2</b> Multiple regression</a></li>
+<li class="chapter" data-level="12.3" data-path="regression.html"><a href="regression.html#hierarchical-regression"><i class="fa fa-check"></i><b>12.3</b> Hierarchical regression</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="mixed-methods-research-analysing-qualitative-in-r.html"><a href="mixed-methods-research-analysing-qualitative-in-r.html"><i class="fa fa-check"></i><b>13</b> Mixed-methods research: Analysing qualitative in R</a></li>
+<li class="chapter" data-level="14" data-path="next-steps.html"><a href="next-steps.html"><i class="fa fa-check"></i><b>14</b> Where to go from here: The next steps in your R journey</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="next-steps.html"><a href="next-steps.html#next-steps-github"><i class="fa fa-check"></i><b>14.1</b> GitHub: A Gateway to even more ingenious R packages</a></li>
+<li class="chapter" data-level="14.2" data-path="next-steps.html"><a href="next-steps.html#next-steps-books"><i class="fa fa-check"></i><b>14.2</b> Books to read and expand your knowledge</a></li>
+<li class="chapter" data-level="14.3" data-path="next-steps.html"><a href="next-steps.html#next-steps-online-readings"><i class="fa fa-check"></i><b>14.3</b> Engage in regular online readings about R</a></li>
+<li class="chapter" data-level="14.4" data-path="next-steps.html"><a href="next-steps.html#next-steps-twitter"><i class="fa fa-check"></i><b>14.4</b> Join the Twitter community and hone your skills</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="appendix.html"><a href="appendix.html"><i class="fa fa-check"></i>Appendix</a>
+<ul>
+<li class="chapter" data-level="14.5" data-path="appendix.html"><a href="appendix.html#comparing-two-unpaired-groups"><i class="fa fa-check"></i><b>14.5</b> Comparing two unpaired groups</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="exercises-solutions.html"><a href="exercises-solutions.html"><i class="fa fa-check"></i><b>15</b> Exercises: Solutions</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="exercises-solutions.html"><a href="exercises-solutions.html#exercises-solutions-5"><i class="fa fa-check"></i><b>15.1</b> Solutions for 5.6</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://twitter.com/daniel_dauber" target="blank">Find me on twitter!</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">R for Non-Programmers: A Guide for Social Scientists</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="comparing-groups" class="section level1" number="11">
+<h1><span class="header-section-number">11</span> Comparing groups</h1>
+<pre><code>## 
+## Attaching package: &#39;rstatix&#39;
+## The following object is masked from &#39;package:correlation&#39;:
+## 
+##     cor_test
+## The following object is masked from &#39;package:stats&#39;:
+## 
+##     filter
+## Rows: 69578 Columns: 6
+## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr (3): country, gender, relationship_status
+## dbl (3): age, freedom_of_choice, satisfaction
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<p>Social Sciences is about the study of human beings and their interactions. As such, we frequently want to compare two or more groups of human beings, organisations, teams, countries, etc., with each other to see whether they are similar or different from each other. Sometimes we also want to track individuals over time and see how they may have changed in some way or other. In short, comparing groups is an essential technique to make inferences and helps us better understand the diversity that surrounds us.</p>
+<p>If we want to perform a group comparison we have to consider which technique is most appropriate for the data we have. Some of it might be related to the type of data we have collected, other aspects might be linked to the distribution of the data. More specifically, before we apply any statistical technique we have to consider at least the following:</p>
+<ul>
+<li><p>missing data (see Chapter <a href="data-wrangling.html#dealing-with-missing-data">7.6</a>),</p></li>
+<li><p>outliers (see Chapter <a href="sources-of-bias.html#dealing-with-outliers">9.5</a>, and</p></li>
+<li><p>the assumptions made by analytical techniques about our data.</p></li>
+</ul>
+<p>While we covered missing data and outliers in previous chapters, we have yet to discuss assumptions. For group comparisons there are three main questions we need to answer:</p>
+<ul>
+<li><p>Are the groups big enough to be compared, i.e. are they comparable?</p></li>
+<li><p>Is my data parametric or non-parametric? (see Chapter <a href="correlations.html#parametric-or-non-parametric">10.1</a>)</p></li>
+<li><p>How many groups do I wish to compare?</p></li>
+<li><p>Are these groups paired or unpaired?</p></li>
+</ul>
+<p>In the following we will look at group comparisons for parametric and non-parametric data in each category and use the <code>wvs_nona</code> dataset, i.e. the <code>wvs</code> data frame after we performed imputation (see also Chapter <a href="data-wrangling.html#replacing-removing-missing-data">7.6.3</a>). Since we already covered how to test whether data is parametric or non-parametric we will forgo this step out of pure convenience and to remain succinct. We also ignore any potential outliers or missing data. The case studies at the end of the book provide realistic examples of how to perform groups comparisons with a new set of data from start to finish (see Chapter @ref()). Thus, parametric and non-parametric tests will be demonstrated with the same dataset and the same variables.</p>
+<div id="comparability-apples-vs-oranges" class="section level2" number="11.1">
+<h2><span class="header-section-number">11.1</span> Comparability: Apples vs Oranges</h2>
+<p>Before we can jump into group comparisons we need to make ourselves aware of whether our groups can be compared in the first place. ‘Comparability’ should not be confused with ‘are the groups equal.’ In many cases, we don’t want groups to be equal in terms of participants, e.g. between-subject studies. On the other hand, we might want groups to be perfectly equal when we perform within-subject studies. Thus, asking whether groups are comparable is unrelated to whether the subjects in our study are the same. Instead, we are looking at characteristics of our groups. Some commonly considered characteristics include:</p>
+<ul>
+<li><p><em>size</em>: Are the groups about equally large?</p></li>
+<li><p><em>time</em>: Was the data collected around the same time?</p></li>
+<li><p><em>exogenous variables</em>: Is the distribution of characteristics we are not interested in, approximately the same across groups?</p></li>
+</ul>
+<p>When we compare groups we want to minimise the systematic differences that are not the primary focus of our study. Using the right sampling technique can help with this matter. For example, using a random sample and performing a random allocation to groups can help with achieving comparable groups and remove systematic differences in a way no other sampling strategy can. However, there is still no guarantuee that they will be comparable (see also <span class="citation"><a href="#ref-altman1985comparability" role="doc-biblioref">Altman</a> (<a href="#ref-altman1985comparability" role="doc-biblioref">1985</a>)</span> and <span class="citation"><a href="#ref-berger2006review" role="doc-biblioref">Berger</a> (<a href="#ref-berger2006review" role="doc-biblioref">2006</a>)</span>). Besides, we also face the challenge that in Social Sciences we do not have the option of random sampling. For example, International Business studies heavily rely on lists provided by others, e.g. the European Union, Fortune 500, etc., personal judgement and convenience sampling and only a small proportion actually perform probability sampling <span class="citation">(<a href="#ref-yang2006-IBmethods" role="doc-biblioref">Yang, Wang, and Su 2006</a>)</span>. In short, there is no reason to worry if your sampling technique is not random to begin with. However, it emphasises the need to understand your sample and your groups thoroughly.</p>
+<p>In order to inspect characteristics of groups we wish to compare, we can use descriptive statistics as we covered them in Chapter <a href="descriptive-statistics.html#descriptive-statistics">8</a>. The only aspect that is different is that we apply these techniques to subsets of our data and not the entire dataset.</p>
+<p>For example, we might wish to compare female and male Egyptians (see Chapter <a href="comparing-groups.html#two-unpaired-groups">11.2.1</a>). If we wanted to make sure these two groups can be compared we might have to check (among other characteristics) whether their age is distributed similarly. We can use the functions we already know to create a plot to investigate this matter. We could either use a boxplot, or, a bit more accurate, a density plot using the <code>ggridges</code> package.</p>
+<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb132-1"><a href="comparing-groups.html#cb132-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Only select participants from &#39;Egypt&#39;</span></span>
+<span id="cb132-2"><a href="comparing-groups.html#cb132-2" aria-hidden="true" tabindex="-1"></a>comp <span class="ot">&lt;-</span> wvs_nona <span class="sc">%&gt;%</span></span>
+<span id="cb132-3"><a href="comparing-groups.html#cb132-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(country <span class="sc">==</span> <span class="st">&quot;Egypt&quot;</span>)</span>
+<span id="cb132-4"><a href="comparing-groups.html#cb132-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb132-5"><a href="comparing-groups.html#cb132-5" aria-hidden="true" tabindex="-1"></a>comp <span class="sc">%&gt;%</span></span>
+<span id="cb132-6"><a href="comparing-groups.html#cb132-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> age,</span>
+<span id="cb132-7"><a href="comparing-groups.html#cb132-7" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> gender,</span>
+<span id="cb132-8"><a href="comparing-groups.html#cb132-8" aria-hidden="true" tabindex="-1"></a>             <span class="at">fill =</span> gender)) <span class="sc">+</span></span>
+<span id="cb132-9"><a href="comparing-groups.html#cb132-9" aria-hidden="true" tabindex="-1"></a>  ggridges<span class="sc">::</span><span class="fu">geom_density_ridges</span>(<span class="at">bandwidth =</span> <span class="dv">4</span>)</span></code></pre></div>
+<p><img src="r_for_non_programmers_files/figure-html/Comparability%20of%20Egyptians-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>As we can see, the distribution of <code>age</code> across both <code>gender</code> groups is fairly similar and likely not different between groups. Of course, we could also statistically explore this using a suitable test before performing the main group comparison. However, we first have to understand how we can perform them.</p>
+<p>In the following chapters we will largely rely the package <code>rstatix</code> which offers a pipe-friendly approach to using the built-in functions to perform our group comparisons. However, you are welcome to also try the basic functions as well, which you can find in Chapter <a href="appendix.html#appendix"><strong>??</strong></a>.</p>
+</div>
+<div id="comparing-two-groups" class="section level2" number="11.2">
+<h2><span class="header-section-number">11.2</span> Comparing two groups</h2>
+<p>The simplest of comparisons is the one where you only have two groups. These groups could either consist of different people (unpaired) or represent two measurements of the same individuals (paired).</p>
+<div id="two-unpaired-groups" class="section level3" number="11.2.1">
+<h3><span class="header-section-number">11.2.1</span> Two Unpaired groups</h3>
+<p>An unpaired group test assumes that the observations in each group are not related to each other, for example that the participants in each group are different individuals.</p>
+<p>Our first comparison will be participants from <code>Egypt</code> and we want to understand whether male and female citizens in this country perceive that they have <code>freedom_of_choice</code>.</p>
+<p>We first can compare these two groups using our trusty <code>geom_boxplot</code> (or any variation of it).</p>
+<div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb133-1"><a href="comparing-groups.html#cb133-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute the mean for and size of each group </span></span>
+<span id="cb133-2"><a href="comparing-groups.html#cb133-2" aria-hidden="true" tabindex="-1"></a>group_means <span class="ot">&lt;-</span> comp <span class="sc">%&gt;%</span> </span>
+<span id="cb133-3"><a href="comparing-groups.html#cb133-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(gender) <span class="sc">%&gt;%</span> </span>
+<span id="cb133-4"><a href="comparing-groups.html#cb133-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">g_mean =</span> <span class="fu">mean</span>(freedom_of_choice),</span>
+<span id="cb133-5"><a href="comparing-groups.html#cb133-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">n =</span> <span class="fu">n</span>())</span>
+<span id="cb133-6"><a href="comparing-groups.html#cb133-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb133-7"><a href="comparing-groups.html#cb133-7" aria-hidden="true" tabindex="-1"></a>group_means</span>
+<span id="cb133-8"><a href="comparing-groups.html#cb133-8" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 2 × 3</span></span>
+<span id="cb133-9"><a href="comparing-groups.html#cb133-9" aria-hidden="true" tabindex="-1"></a><span class="do">##   gender g_mean     n</span></span>
+<span id="cb133-10"><a href="comparing-groups.html#cb133-10" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;fct&gt;   &lt;dbl&gt; &lt;int&gt;</span></span>
+<span id="cb133-11"><a href="comparing-groups.html#cb133-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 female   6.21   579</span></span>
+<span id="cb133-12"><a href="comparing-groups.html#cb133-12" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 male     6.82   621</span></span>
+<span id="cb133-13"><a href="comparing-groups.html#cb133-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb133-14"><a href="comparing-groups.html#cb133-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Create our data visualisation</span></span>
+<span id="cb133-15"><a href="comparing-groups.html#cb133-15" aria-hidden="true" tabindex="-1"></a>comp <span class="sc">%&gt;%</span> </span>
+<span id="cb133-16"><a href="comparing-groups.html#cb133-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> gender, <span class="at">y =</span> freedom_of_choice, <span class="at">fill =</span> gender)) <span class="sc">+</span></span>
+<span id="cb133-17"><a href="comparing-groups.html#cb133-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb133-18"><a href="comparing-groups.html#cb133-18" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb133-19"><a href="comparing-groups.html#cb133-19" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add the mean for each group</span></span>
+<span id="cb133-20"><a href="comparing-groups.html#cb133-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> group_means,</span>
+<span id="cb133-21"><a href="comparing-groups.html#cb133-21" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x =</span> gender, <span class="at">y =</span> g_mean),</span>
+<span id="cb133-22"><a href="comparing-groups.html#cb133-22" aria-hidden="true" tabindex="-1"></a>             <span class="at">shape =</span> <span class="dv">3</span>,</span>
+<span id="cb133-23"><a href="comparing-groups.html#cb133-23" aria-hidden="true" tabindex="-1"></a>             <span class="at">size =</span> <span class="dv">2</span>)</span></code></pre></div>
+<p><img src="r_for_non_programmers_files/figure-html/Two%20unpaired%20groups%20visualisation-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>While the distribution looks similar, we can notice that the median and the mean (marked by the cross inside the boxplot) are slighter higher for <code>male</code> participants. Thus, we can suspect slight differences between these two groups, but we do not know whether these differences are significant or not. To consider the significance (remember Chapter <a href="correlations.html#significance">10.3</a>) and the effect size (see Table <a href="correlations.html#tab:effect-size-cohen">10.2</a>) we have to perform statistical tests.</p>
+<p>Table <a href="comparing-groups.html#tab:comparing-two-groups-unpaired">11.1</a> summarises the different tests and functions to perform the group comparison computationally. It is important to note that the parametric test compares the means of two groups, while the non-parametric test compares medians. All of these tests turn significant if the differences between groups is large enough. Thus, significant results can be read as ‘these groups are significantly different from each other.’ Of course, if the difference is not significant, the groups are considered to be not different from each other. For parametric tests, i.e. <code>t.test(),</code> it is also important to indicate whether the variances between these two groups are equal or not. Remember this was one of the assumptions for parametric tests. The Welch t-test can be used if the variances are not equal, but all other criteria for normality are met. By setting <code>var.equal = TRUE</code>, a regular T-Test would be performed. By defaulty, <code>t.test</code> assumes that variances are not equal. Make sure you test for homogeneity of variance before making your decision (see Chapter <a href="sources-of-bias.html#homogeneity-of-variance">9.4</a>.</p>
+<table>
+<caption><span id="tab:comparing-two-groups-unpaired">Table 11.1: </span>Comparing two unpaired groups (effect size functions from package <code>effectsize</code>, except for <code>wilcoxonR()</code> from <code>rcompanion</code></caption>
+<colgroup>
+<col width="17%" />
+<col width="17%" />
+<col width="33%" />
+<col width="14%" />
+<col width="16%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Assumption</th>
+<th>Test</th>
+<th>Function</th>
+<th>Effect size</th>
+<th>Function</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Parametric</td>
+<td><p>T-Test</p>
+<p>Welch T-Test</p></td>
+<td><p><code>t_test(var.equal = TRUE)</code></p>
+<p><code>t_test(var.equal = FALSE)</code></p></td>
+<td>Cohen’s d</td>
+<td><code>cohens_d()</code></td>
+</tr>
+<tr class="even">
+<td>Non-parametric</td>
+<td>Mann-Whitney U</td>
+<td><code>wilcox_test(paired = FALSE)</code></td>
+<td>Wilcoxon R</td>
+<td><code>wilcoxonR()</code></td>
+</tr>
+</tbody>
+</table>
+<p>With this information in hand, we can start comparing the female Egyptians with the male Egyptians using the parametric and the non-parametric test for illustration purposes only. By setting <code>detailed = TRUE</code> we can obtain the maximum amount for certain comparisons information. In such cases it is advisable to use <code>glimpse()</code>. This will make the output easier to read because each row presents one piece of information, rather than having one row with many columns.</p>
+<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb134-1"><a href="comparing-groups.html#cb134-1" aria-hidden="true" tabindex="-1"></a><span class="co"># T-Test</span></span>
+<span id="cb134-2"><a href="comparing-groups.html#cb134-2" aria-hidden="true" tabindex="-1"></a>comp <span class="sc">%&gt;%</span> <span class="fu">t_test</span>(freedom_of_choice <span class="sc">~</span> gender,</span>
+<span id="cb134-3"><a href="comparing-groups.html#cb134-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">var.equal =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb134-4"><a href="comparing-groups.html#cb134-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">detailed =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb134-5"><a href="comparing-groups.html#cb134-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span>
+<span id="cb134-6"><a href="comparing-groups.html#cb134-6" aria-hidden="true" tabindex="-1"></a><span class="do">## Rows: 1</span></span>
+<span id="cb134-7"><a href="comparing-groups.html#cb134-7" aria-hidden="true" tabindex="-1"></a><span class="do">## Columns: 15</span></span>
+<span id="cb134-8"><a href="comparing-groups.html#cb134-8" aria-hidden="true" tabindex="-1"></a><span class="do">## $ estimate    &lt;dbl&gt; -0.6120414</span></span>
+<span id="cb134-9"><a href="comparing-groups.html#cb134-9" aria-hidden="true" tabindex="-1"></a><span class="do">## $ estimate1   &lt;dbl&gt; 6.212435</span></span>
+<span id="cb134-10"><a href="comparing-groups.html#cb134-10" aria-hidden="true" tabindex="-1"></a><span class="do">## $ estimate2   &lt;dbl&gt; 6.824477</span></span>
+<span id="cb134-11"><a href="comparing-groups.html#cb134-11" aria-hidden="true" tabindex="-1"></a><span class="do">## $ .y.         &lt;chr&gt; &quot;freedom_of_choice&quot;</span></span>
+<span id="cb134-12"><a href="comparing-groups.html#cb134-12" aria-hidden="true" tabindex="-1"></a><span class="do">## $ group1      &lt;chr&gt; &quot;female&quot;</span></span>
+<span id="cb134-13"><a href="comparing-groups.html#cb134-13" aria-hidden="true" tabindex="-1"></a><span class="do">## $ group2      &lt;chr&gt; &quot;male&quot;</span></span>
+<span id="cb134-14"><a href="comparing-groups.html#cb134-14" aria-hidden="true" tabindex="-1"></a><span class="do">## $ n1          &lt;int&gt; 579</span></span>
+<span id="cb134-15"><a href="comparing-groups.html#cb134-15" aria-hidden="true" tabindex="-1"></a><span class="do">## $ n2          &lt;int&gt; 621</span></span>
+<span id="cb134-16"><a href="comparing-groups.html#cb134-16" aria-hidden="true" tabindex="-1"></a><span class="do">## $ statistic   &lt;dbl&gt; -4.75515</span></span>
+<span id="cb134-17"><a href="comparing-groups.html#cb134-17" aria-hidden="true" tabindex="-1"></a><span class="do">## $ p           &lt;dbl&gt; 2.22e-06</span></span>
+<span id="cb134-18"><a href="comparing-groups.html#cb134-18" aria-hidden="true" tabindex="-1"></a><span class="do">## $ df          &lt;dbl&gt; 1198</span></span>
+<span id="cb134-19"><a href="comparing-groups.html#cb134-19" aria-hidden="true" tabindex="-1"></a><span class="do">## $ conf.low    &lt;dbl&gt; -0.864566</span></span>
+<span id="cb134-20"><a href="comparing-groups.html#cb134-20" aria-hidden="true" tabindex="-1"></a><span class="do">## $ conf.high   &lt;dbl&gt; -0.3595169</span></span>
+<span id="cb134-21"><a href="comparing-groups.html#cb134-21" aria-hidden="true" tabindex="-1"></a><span class="do">## $ method      &lt;chr&gt; &quot;T-test&quot;</span></span>
+<span id="cb134-22"><a href="comparing-groups.html#cb134-22" aria-hidden="true" tabindex="-1"></a><span class="do">## $ alternative &lt;chr&gt; &quot;two.sided&quot;</span></span>
+<span id="cb134-23"><a href="comparing-groups.html#cb134-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb134-24"><a href="comparing-groups.html#cb134-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Welch t-test (var.equal = FALSE by default)</span></span>
+<span id="cb134-25"><a href="comparing-groups.html#cb134-25" aria-hidden="true" tabindex="-1"></a>comp <span class="sc">%&gt;%</span> <span class="fu">t_test</span>(freedom_of_choice <span class="sc">~</span> gender,</span>
+<span id="cb134-26"><a href="comparing-groups.html#cb134-26" aria-hidden="true" tabindex="-1"></a>                <span class="at">var.equal =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb134-27"><a href="comparing-groups.html#cb134-27" aria-hidden="true" tabindex="-1"></a>                <span class="at">detailed =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb134-28"><a href="comparing-groups.html#cb134-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span>
+<span id="cb134-29"><a href="comparing-groups.html#cb134-29" aria-hidden="true" tabindex="-1"></a><span class="do">## Rows: 1</span></span>
+<span id="cb134-30"><a href="comparing-groups.html#cb134-30" aria-hidden="true" tabindex="-1"></a><span class="do">## Columns: 15</span></span>
+<span id="cb134-31"><a href="comparing-groups.html#cb134-31" aria-hidden="true" tabindex="-1"></a><span class="do">## $ estimate    &lt;dbl&gt; -0.6120414</span></span>
+<span id="cb134-32"><a href="comparing-groups.html#cb134-32" aria-hidden="true" tabindex="-1"></a><span class="do">## $ estimate1   &lt;dbl&gt; 6.212435</span></span>
+<span id="cb134-33"><a href="comparing-groups.html#cb134-33" aria-hidden="true" tabindex="-1"></a><span class="do">## $ estimate2   &lt;dbl&gt; 6.824477</span></span>
+<span id="cb134-34"><a href="comparing-groups.html#cb134-34" aria-hidden="true" tabindex="-1"></a><span class="do">## $ .y.         &lt;chr&gt; &quot;freedom_of_choice&quot;</span></span>
+<span id="cb134-35"><a href="comparing-groups.html#cb134-35" aria-hidden="true" tabindex="-1"></a><span class="do">## $ group1      &lt;chr&gt; &quot;female&quot;</span></span>
+<span id="cb134-36"><a href="comparing-groups.html#cb134-36" aria-hidden="true" tabindex="-1"></a><span class="do">## $ group2      &lt;chr&gt; &quot;male&quot;</span></span>
+<span id="cb134-37"><a href="comparing-groups.html#cb134-37" aria-hidden="true" tabindex="-1"></a><span class="do">## $ n1          &lt;int&gt; 579</span></span>
+<span id="cb134-38"><a href="comparing-groups.html#cb134-38" aria-hidden="true" tabindex="-1"></a><span class="do">## $ n2          &lt;int&gt; 621</span></span>
+<span id="cb134-39"><a href="comparing-groups.html#cb134-39" aria-hidden="true" tabindex="-1"></a><span class="do">## $ statistic   &lt;dbl&gt; -4.756287</span></span>
+<span id="cb134-40"><a href="comparing-groups.html#cb134-40" aria-hidden="true" tabindex="-1"></a><span class="do">## $ p           &lt;dbl&gt; 2.21e-06</span></span>
+<span id="cb134-41"><a href="comparing-groups.html#cb134-41" aria-hidden="true" tabindex="-1"></a><span class="do">## $ df          &lt;dbl&gt; 1193.222</span></span>
+<span id="cb134-42"><a href="comparing-groups.html#cb134-42" aria-hidden="true" tabindex="-1"></a><span class="do">## $ conf.low    &lt;dbl&gt; -0.8645067</span></span>
+<span id="cb134-43"><a href="comparing-groups.html#cb134-43" aria-hidden="true" tabindex="-1"></a><span class="do">## $ conf.high   &lt;dbl&gt; -0.3595762</span></span>
+<span id="cb134-44"><a href="comparing-groups.html#cb134-44" aria-hidden="true" tabindex="-1"></a><span class="do">## $ method      &lt;chr&gt; &quot;T-test&quot;</span></span>
+<span id="cb134-45"><a href="comparing-groups.html#cb134-45" aria-hidden="true" tabindex="-1"></a><span class="do">## $ alternative &lt;chr&gt; &quot;two.sided&quot;</span></span>
+<span id="cb134-46"><a href="comparing-groups.html#cb134-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb134-47"><a href="comparing-groups.html#cb134-47" aria-hidden="true" tabindex="-1"></a><span class="co"># Mann-Withney U test</span></span>
+<span id="cb134-48"><a href="comparing-groups.html#cb134-48" aria-hidden="true" tabindex="-1"></a>comp <span class="sc">%&gt;%</span></span>
+<span id="cb134-49"><a href="comparing-groups.html#cb134-49" aria-hidden="true" tabindex="-1"></a>  <span class="fu">wilcox_test</span>(freedom_of_choice <span class="sc">~</span> gender,</span>
+<span id="cb134-50"><a href="comparing-groups.html#cb134-50" aria-hidden="true" tabindex="-1"></a>              <span class="at">detailed =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb134-51"><a href="comparing-groups.html#cb134-51" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span>
+<span id="cb134-52"><a href="comparing-groups.html#cb134-52" aria-hidden="true" tabindex="-1"></a><span class="do">## Rows: 1</span></span>
+<span id="cb134-53"><a href="comparing-groups.html#cb134-53" aria-hidden="true" tabindex="-1"></a><span class="do">## Columns: 12</span></span>
+<span id="cb134-54"><a href="comparing-groups.html#cb134-54" aria-hidden="true" tabindex="-1"></a><span class="do">## $ estimate    &lt;dbl&gt; -0.999948</span></span>
+<span id="cb134-55"><a href="comparing-groups.html#cb134-55" aria-hidden="true" tabindex="-1"></a><span class="do">## $ .y.         &lt;chr&gt; &quot;freedom_of_choice&quot;</span></span>
+<span id="cb134-56"><a href="comparing-groups.html#cb134-56" aria-hidden="true" tabindex="-1"></a><span class="do">## $ group1      &lt;chr&gt; &quot;female&quot;</span></span>
+<span id="cb134-57"><a href="comparing-groups.html#cb134-57" aria-hidden="true" tabindex="-1"></a><span class="do">## $ group2      &lt;chr&gt; &quot;male&quot;</span></span>
+<span id="cb134-58"><a href="comparing-groups.html#cb134-58" aria-hidden="true" tabindex="-1"></a><span class="do">## $ n1          &lt;int&gt; 579</span></span>
+<span id="cb134-59"><a href="comparing-groups.html#cb134-59" aria-hidden="true" tabindex="-1"></a><span class="do">## $ n2          &lt;int&gt; 621</span></span>
+<span id="cb134-60"><a href="comparing-groups.html#cb134-60" aria-hidden="true" tabindex="-1"></a><span class="do">## $ statistic   &lt;dbl&gt; 149937.5</span></span>
+<span id="cb134-61"><a href="comparing-groups.html#cb134-61" aria-hidden="true" tabindex="-1"></a><span class="do">## $ p           &lt;dbl&gt; 4.97e-07</span></span>
+<span id="cb134-62"><a href="comparing-groups.html#cb134-62" aria-hidden="true" tabindex="-1"></a><span class="do">## $ conf.low    &lt;dbl&gt; -0.9999694</span></span>
+<span id="cb134-63"><a href="comparing-groups.html#cb134-63" aria-hidden="true" tabindex="-1"></a><span class="do">## $ conf.high   &lt;dbl&gt; -5.79946e-05</span></span>
+<span id="cb134-64"><a href="comparing-groups.html#cb134-64" aria-hidden="true" tabindex="-1"></a><span class="do">## $ method      &lt;chr&gt; &quot;Wilcoxon&quot;</span></span>
+<span id="cb134-65"><a href="comparing-groups.html#cb134-65" aria-hidden="true" tabindex="-1"></a><span class="do">## $ alternative &lt;chr&gt; &quot;two.sided&quot;</span></span></code></pre></div>
+<p>You might notice that the notation within the functions for group tests looks somewhat different to what we are used to, i.e. we use the <code>~</code> (‘tilde’) symbol. Some functions take a formula as their attribute and to distinguish the dependent and independent variable from each other we use <code>~</code>. A more generic notation of how formulas in functions work is shown below, where <code>DV</code> stands for dependent variable and <code>IV</code> stands for independent variable:</p>
+<div id="formulas-in-functions" align="center">
+<p>function(formula = DV ~ IV)</p>
+</div>
+<p>Group comparisons, even for multiple groups, we usually only have one independent variable, i.e. the grouping variable. Grouping variables are usually of the type <code>factor</code>. In case of two groups, we have two levels present in this factor, e.g. <code>gender</code>. If there are multiple groups, the factor contains multiple levels, e.g. <code>country</code>.</p>
+<p>No matter which test we run, it appears as if the difference is significant. However, how big is the difference? The answer to this is provided by the effect size. The interpretation of what the effect size is, follows the explanations in Chapter <a href="correlations.html#correlations">10</a>, where we looked at the strength of the correlation of two variables. However, different effect size measures imply that we have to use different benchmarks. To help us a bit with the interpretation we can use the <code>effectsize</code> package and their set of <code>interpret_...()</code> functions (see also <a href="https://easystats.github.io/effectsize/articles/interpret.html" target="blank" title="Indices of Effect Size">Indices of Effect Size</a>). Sometimes, there are even more than one way of computing the effect size. For example for the Mann-Whitney test we can choose between the classic Wilcoxon R or the rank-biserial correlation coefficient. In practice, you have to be explicit about how you computed the effect size. The differences between the two measures are often marginal and a matter of taste (or should I say: Your reviewers’ taste). Throughout this chapter I will rely on the effect sizes most commonly found in Social Sciences publications. However, feel free to explore other indices as well, especially those offered in the <code>effectsize</code> package as well.</p>
+<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb135-1"><a href="comparing-groups.html#cb135-1" aria-hidden="true" tabindex="-1"></a><span class="co"># After parametric test</span></span>
+<span id="cb135-2"><a href="comparing-groups.html#cb135-2" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> comp <span class="sc">%&gt;%</span> <span class="fu">cohens_d</span>(freedom_of_choice <span class="sc">~</span> gender,</span>
+<span id="cb135-3"><a href="comparing-groups.html#cb135-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">var.equal =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb135-4"><a href="comparing-groups.html#cb135-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">ci =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb135-5"><a href="comparing-groups.html#cb135-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb135-6"><a href="comparing-groups.html#cb135-6" aria-hidden="true" tabindex="-1"></a>effectsize<span class="sc">::</span><span class="fu">interpret_d</span>(d<span class="sc">$</span>effsize)</span>
+<span id="cb135-7"><a href="comparing-groups.html#cb135-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;small&quot;</span></span>
+<span id="cb135-8"><a href="comparing-groups.html#cb135-8" aria-hidden="true" tabindex="-1"></a><span class="do">## (Rules: cohen1988)</span></span>
+<span id="cb135-9"><a href="comparing-groups.html#cb135-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb135-10"><a href="comparing-groups.html#cb135-10" aria-hidden="true" tabindex="-1"></a><span class="co"># After non-parametric test</span></span>
+<span id="cb135-11"><a href="comparing-groups.html#cb135-11" aria-hidden="true" tabindex="-1"></a>wr <span class="ot">&lt;-</span> comp <span class="sc">%&gt;%</span> <span class="fu">wilcox_effsize</span>(freedom_of_choice <span class="sc">~</span> gender,</span>
+<span id="cb135-12"><a href="comparing-groups.html#cb135-12" aria-hidden="true" tabindex="-1"></a>                        <span class="at">ci =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb135-13"><a href="comparing-groups.html#cb135-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb135-14"><a href="comparing-groups.html#cb135-14" aria-hidden="true" tabindex="-1"></a>effectsize<span class="sc">::</span><span class="fu">interpret_r</span>(wr<span class="sc">$</span>effsize)</span>
+<span id="cb135-15"><a href="comparing-groups.html#cb135-15" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;small&quot;</span></span>
+<span id="cb135-16"><a href="comparing-groups.html#cb135-16" aria-hidden="true" tabindex="-1"></a><span class="do">## (Rules: funder2019)</span></span></code></pre></div>
+<p>Looking at our test results, the female Egyptians perceive <code>freedom_of_choice</code> differently from their male counterparts. This is in line with our boxplots. However, the effect sizes tend to be small, which means the differences between the two groups is marginal. Similar to correlations, group comparisons need to be analysed in two stages answering two questions:</p>
+<ol style="list-style-type: decimal">
+<li><p>Is the difference between groups significant?</p></li>
+<li><p>Is the difference small, medium or large?</p></li>
+</ol>
+<p>The combination of both analytical steps gives us a comprehensive answer to our research question and enables us to derive with meaningful conclusions. This applies to all group comparisons covered in this book.</p>
+</div>
+<div id="two-paired-groups" class="section level3" number="11.2.2">
+<h3><span class="header-section-number">11.2.2</span> Two Paired groups</h3>
+<p>Sometimes, we are not interested in the difference between subjects, but within them, i.e. we want to know whether the same person provides similar or different responses at two different times. Thus, it becomes evident that observations need to be somehow linked to each other. Paired groups are often found and used in longitudinal studies and in experimental studies (e.g. pre-test vs post-test). For example, if we look at our <code>imdb_top_250</code> dataset we can see that some directors have more than one movie in the top 250. Therefore, we could be curious to know whether earlier movies of directors have been significantly more successful than their later ones.</p>
+<div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb136-1"><a href="comparing-groups.html#cb136-1" aria-hidden="true" tabindex="-1"></a>imdb_top_250 <span class="sc">%&gt;%</span></span>
+<span id="cb136-2"><a href="comparing-groups.html#cb136-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(director) <span class="sc">%&gt;%</span></span>
+<span id="cb136-3"><a href="comparing-groups.html#cb136-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb136-4"><a href="comparing-groups.html#cb136-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n))</span>
+<span id="cb136-5"><a href="comparing-groups.html#cb136-5" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 155 × 2</span></span>
+<span id="cb136-6"><a href="comparing-groups.html#cb136-6" aria-hidden="true" tabindex="-1"></a><span class="do">##    director              n</span></span>
+<span id="cb136-7"><a href="comparing-groups.html#cb136-7" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;fct&gt;             &lt;int&gt;</span></span>
+<span id="cb136-8"><a href="comparing-groups.html#cb136-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 Christopher Nolan     7</span></span>
+<span id="cb136-9"><a href="comparing-groups.html#cb136-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 Martin Scorsese       7</span></span>
+<span id="cb136-10"><a href="comparing-groups.html#cb136-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 Stanley Kubrick       7</span></span>
+<span id="cb136-11"><a href="comparing-groups.html#cb136-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 Akira Kurosawa        6</span></span>
+<span id="cb136-12"><a href="comparing-groups.html#cb136-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 Alfred Hitchcock      6</span></span>
+<span id="cb136-13"><a href="comparing-groups.html#cb136-13" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 Steven Spielberg      6</span></span>
+<span id="cb136-14"><a href="comparing-groups.html#cb136-14" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 Billy Wilder          5</span></span>
+<span id="cb136-15"><a href="comparing-groups.html#cb136-15" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 Charles Chaplin       5</span></span>
+<span id="cb136-16"><a href="comparing-groups.html#cb136-16" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 Hayao Miyazaki        5</span></span>
+<span id="cb136-17"><a href="comparing-groups.html#cb136-17" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 Ingmar Bergman        5</span></span>
+<span id="cb136-18"><a href="comparing-groups.html#cb136-18" aria-hidden="true" tabindex="-1"></a><span class="do">## # … with 145 more rows</span></span></code></pre></div>
+<p>For this investigation we use the modified dataset <code>dir_mov</code> which only contains movies of directors who have two or more movies listed in the IMDb Top 250s. Where directors had more than two movies, I randomly sampled two movies. Thus, there is a certain limitation to our dataset.</p>
+<p>We can use boxplots to compare earlier movies (i.e. <code>1</code>) with later movies (i.e. <code>2</code>) across all directors. Thus, each director is reflected in both groups with one of their movies and therefore the same directors can be found in each group. As a measure of success we use the <code>imdb_rating</code>.</p>
+<div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb137-1"><a href="comparing-groups.html#cb137-1" aria-hidden="true" tabindex="-1"></a>dir_mov <span class="sc">%&gt;%</span> </span>
+<span id="cb137-2"><a href="comparing-groups.html#cb137-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> movie, <span class="at">y =</span> imdb_rating, <span class="at">fill =</span> movie)) <span class="sc">+</span></span>
+<span id="cb137-3"><a href="comparing-groups.html#cb137-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code></pre></div>
+<p><img src="r_for_non_programmers_files/figure-html/Comparing%20two%20paired%20groups%20data%20visualisation%20boxplot-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>The boxplots look almost identical which suggests that the rating of movies in both groups has not changed significantly. However, the boxplot can only show a summary statistics for each group. Thus, it only implies that the movies in group <code>1</code> have about the same ratings as the movies in group <code>2</code>. If we want to visualise how the ratings have changed for each director from the first to the second movie, we can create a point plot and draw lines with <code>geom_line()</code> to connect the movies in each group. A line that movies up indicates that the second movie was rated higher than the first one and vice versa.</p>
+<div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb138-1"><a href="comparing-groups.html#cb138-1" aria-hidden="true" tabindex="-1"></a>dir_mov <span class="sc">%&gt;%</span></span>
+<span id="cb138-2"><a href="comparing-groups.html#cb138-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> movie, <span class="at">y =</span> imdb_rating, <span class="at">colour =</span> director)) <span class="sc">+</span></span>
+<span id="cb138-3"><a href="comparing-groups.html#cb138-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb138-4"><a href="comparing-groups.html#cb138-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">group =</span> director)) <span class="sc">+</span></span>
+<span id="cb138-5"><a href="comparing-groups.html#cb138-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Remove the legend</span></span>
+<span id="cb138-6"><a href="comparing-groups.html#cb138-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span></code></pre></div>
+<p><img src="r_for_non_programmers_files/figure-html/Comparing%20two%20paired%20groups%20data%20visualisation%20line%20plot-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Based on this plot we have to revise our interpretation slightly. Directors who received particularly high ratings on their first movie (i.e. the top 3 in group <code>1</code>) scored much lower on the second movie. First, we can notice from our boxplots that these movies count as outliers, and second, obtaining such high scores on a movie is tough to replicate. Needless to say, all these movies are rated as very good, otherwise they would not be in this list. It is worth noting that the way the y axis is scaled emphasises differences. Thus, a difference between a rating of 9 and 8.5 appears large. If we change the range of the y axis to ‘0-10,’ the differences appear marginal, but it reflects (1) the possible length of the scale (IMDb ratings range from 0-10) and (2) the magnitude in change relative to the entire scale. More often than note, this ‘zoom-in’ effect is sometimes used to create the illusion of large differences were there are none. Be aware when you present your findings not to create visualisations that could be misleading.</p>
+<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="comparing-groups.html#cb139-1" aria-hidden="true" tabindex="-1"></a>dir_mov <span class="sc">%&gt;%</span></span>
+<span id="cb139-2"><a href="comparing-groups.html#cb139-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> movie, <span class="at">y =</span> imdb_rating, <span class="at">colour =</span> director)) <span class="sc">+</span></span>
+<span id="cb139-3"><a href="comparing-groups.html#cb139-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb139-4"><a href="comparing-groups.html#cb139-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">group =</span> director)) <span class="sc">+</span></span>
+<span id="cb139-5"><a href="comparing-groups.html#cb139-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Remove the legend</span></span>
+<span id="cb139-6"><a href="comparing-groups.html#cb139-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)<span class="sc">+</span></span>
+<span id="cb139-7"><a href="comparing-groups.html#cb139-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Manuall define the y axis range</span></span>
+<span id="cb139-8"><a href="comparing-groups.html#cb139-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="dv">0</span>,<span class="dv">10</span>)</span></code></pre></div>
+<p><img src="r_for_non_programmers_files/figure-html/Comparing%20two%20paired%20groups%20data%20visualisation%20line%20plot%20and%20full%20y%20scale-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Considering the revised plot, we likely can predict what the statistical test will show. Table <a href="comparing-groups.html#tab:comparing-two-groups-paired">11.2</a> summarises which tests and functions need to be performed if our data is parametric or non-parametric. In both cases, the functions are the same to those of the unpaired group comparisons, but we need to add the attribute <code>paired = TRUE</code>. Still, the interpretations between the unpaired and paired tests remain the same. Also, be aware that some tests have changed in name, e.g. the Mann-Whitney U test has become the Wilcoxon Signed Rank Test. even though we use the same functions as before, by changing the attributed of <code>paired</code> we also change the computational technique to obtain the results. Thus, be aware that the same function can perform different computations.</p>
+<table>
+<caption><span id="tab:comparing-two-groups-paired">Table 11.2: </span>Comparing two unpaired groups (effect size functions from package <code>effectsize</code>, except for <code>wilcoxonPairedR()</code> from <code>rcompanion</code>)</caption>
+<colgroup>
+<col width="15%" />
+<col width="25%" />
+<col width="27%" />
+<col width="12%" />
+<col width="19%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Assumption</th>
+<th>Test</th>
+<th>Function</th>
+<th>Effect size</th>
+<th>Function</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Parametric</td>
+<td>T-Test</td>
+<td><code>t_test(paired = TRUE)</code></td>
+<td>Cohen’s d</td>
+<td><code>cohens_d()</code></td>
+</tr>
+<tr class="even">
+<td>Non-parametric</td>
+<td>Wilcoxon Signed Rank Test</td>
+<td><code>wilcox_test(paired = TRUE)</code></td>
+<td>Wilcoxon r</td>
+<td><code>wilcoxonPairedR()</code></td>
+</tr>
+</tbody>
+</table>
+<p>Let’s apply the functions to find out whether the differences we can see in our plots matter.</p>
+<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="comparing-groups.html#cb140-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Paired T-Test</span></span>
+<span id="cb140-2"><a href="comparing-groups.html#cb140-2" aria-hidden="true" tabindex="-1"></a>dir_mov <span class="sc">%&gt;%</span> <span class="fu">t_test</span>(imdb_rating <span class="sc">~</span> movie,</span>
+<span id="cb140-3"><a href="comparing-groups.html#cb140-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">paired =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb140-4"><a href="comparing-groups.html#cb140-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">var.equal =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb140-5"><a href="comparing-groups.html#cb140-5" aria-hidden="true" tabindex="-1"></a>                   <span class="at">detailed =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb140-6"><a href="comparing-groups.html#cb140-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span>
+<span id="cb140-7"><a href="comparing-groups.html#cb140-7" aria-hidden="true" tabindex="-1"></a><span class="do">## Rows: 1</span></span>
+<span id="cb140-8"><a href="comparing-groups.html#cb140-8" aria-hidden="true" tabindex="-1"></a><span class="do">## Columns: 13</span></span>
+<span id="cb140-9"><a href="comparing-groups.html#cb140-9" aria-hidden="true" tabindex="-1"></a><span class="do">## $ estimate    &lt;dbl&gt; 0.04186047</span></span>
+<span id="cb140-10"><a href="comparing-groups.html#cb140-10" aria-hidden="true" tabindex="-1"></a><span class="do">## $ .y.         &lt;chr&gt; &quot;imdb_rating&quot;</span></span>
+<span id="cb140-11"><a href="comparing-groups.html#cb140-11" aria-hidden="true" tabindex="-1"></a><span class="do">## $ group1      &lt;chr&gt; &quot;1&quot;</span></span>
+<span id="cb140-12"><a href="comparing-groups.html#cb140-12" aria-hidden="true" tabindex="-1"></a><span class="do">## $ group2      &lt;chr&gt; &quot;2&quot;</span></span>
+<span id="cb140-13"><a href="comparing-groups.html#cb140-13" aria-hidden="true" tabindex="-1"></a><span class="do">## $ n1          &lt;int&gt; 43</span></span>
+<span id="cb140-14"><a href="comparing-groups.html#cb140-14" aria-hidden="true" tabindex="-1"></a><span class="do">## $ n2          &lt;int&gt; 43</span></span>
+<span id="cb140-15"><a href="comparing-groups.html#cb140-15" aria-hidden="true" tabindex="-1"></a><span class="do">## $ statistic   &lt;dbl&gt; 0.8717132</span></span>
+<span id="cb140-16"><a href="comparing-groups.html#cb140-16" aria-hidden="true" tabindex="-1"></a><span class="do">## $ p           &lt;dbl&gt; 0.388</span></span>
+<span id="cb140-17"><a href="comparing-groups.html#cb140-17" aria-hidden="true" tabindex="-1"></a><span class="do">## $ df          &lt;dbl&gt; 42</span></span>
+<span id="cb140-18"><a href="comparing-groups.html#cb140-18" aria-hidden="true" tabindex="-1"></a><span class="do">## $ conf.low    &lt;dbl&gt; -0.05504967</span></span>
+<span id="cb140-19"><a href="comparing-groups.html#cb140-19" aria-hidden="true" tabindex="-1"></a><span class="do">## $ conf.high   &lt;dbl&gt; 0.1387706</span></span>
+<span id="cb140-20"><a href="comparing-groups.html#cb140-20" aria-hidden="true" tabindex="-1"></a><span class="do">## $ method      &lt;chr&gt; &quot;T-test&quot;</span></span>
+<span id="cb140-21"><a href="comparing-groups.html#cb140-21" aria-hidden="true" tabindex="-1"></a><span class="do">## $ alternative &lt;chr&gt; &quot;two.sided&quot;</span></span>
+<span id="cb140-22"><a href="comparing-groups.html#cb140-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb140-23"><a href="comparing-groups.html#cb140-23" aria-hidden="true" tabindex="-1"></a><span class="do">## Wilcoxon Signed Rank Test</span></span>
+<span id="cb140-24"><a href="comparing-groups.html#cb140-24" aria-hidden="true" tabindex="-1"></a>dir_mov <span class="sc">%&gt;%</span> <span class="fu">wilcox_test</span>(imdb_rating <span class="sc">~</span> movie,</span>
+<span id="cb140-25"><a href="comparing-groups.html#cb140-25" aria-hidden="true" tabindex="-1"></a>                         <span class="at">paired =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb140-26"><a href="comparing-groups.html#cb140-26" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 1 × 7</span></span>
+<span id="cb140-27"><a href="comparing-groups.html#cb140-27" aria-hidden="true" tabindex="-1"></a><span class="do">##   .y.         group1 group2    n1    n2 statistic     p</span></span>
+<span id="cb140-28"><a href="comparing-groups.html#cb140-28" aria-hidden="true" tabindex="-1"></a><span class="do">## * &lt;chr&gt;       &lt;chr&gt;  &lt;chr&gt;  &lt;int&gt; &lt;int&gt;     &lt;dbl&gt; &lt;dbl&gt;</span></span>
+<span id="cb140-29"><a href="comparing-groups.html#cb140-29" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 imdb_rating 1      2         43    43       278 0.562</span></span></code></pre></div>
+<p>As expected, the paired tests reveal that the differences in rating between the first movie and the second movie are not significant. Usually, there would be no reason to follow this up with the computation of effect sizes, because we only need to do this if the differences are statistically significant. However, nothing can stop us from still doing so.</p>
+<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb141-1"><a href="comparing-groups.html#cb141-1" aria-hidden="true" tabindex="-1"></a><span class="do">## After T-Test</span></span>
+<span id="cb141-2"><a href="comparing-groups.html#cb141-2" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">cohens_d</span>(imdb_rating <span class="sc">~</span> movie,</span>
+<span id="cb141-3"><a href="comparing-groups.html#cb141-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">data =</span> dir_mov,</span>
+<span id="cb141-4"><a href="comparing-groups.html#cb141-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">paired =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb141-5"><a href="comparing-groups.html#cb141-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">var.equal =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb141-6"><a href="comparing-groups.html#cb141-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb141-7"><a href="comparing-groups.html#cb141-7" aria-hidden="true" tabindex="-1"></a>effectsize<span class="sc">::</span><span class="fu">interpret_d</span>(d<span class="sc">$</span>effsize)</span>
+<span id="cb141-8"><a href="comparing-groups.html#cb141-8" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;very small&quot;</span></span>
+<span id="cb141-9"><a href="comparing-groups.html#cb141-9" aria-hidden="true" tabindex="-1"></a><span class="do">## (Rules: cohen1988)</span></span>
+<span id="cb141-10"><a href="comparing-groups.html#cb141-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb141-11"><a href="comparing-groups.html#cb141-11" aria-hidden="true" tabindex="-1"></a><span class="co"># After Wilcoxon Signed Rank Test</span></span>
+<span id="cb141-12"><a href="comparing-groups.html#cb141-12" aria-hidden="true" tabindex="-1"></a>wr <span class="ot">&lt;-</span> dir_mov <span class="sc">%&gt;%</span> <span class="fu">wilcox_effsize</span>(imdb_rating <span class="sc">~</span> movie,</span>
+<span id="cb141-13"><a href="comparing-groups.html#cb141-13" aria-hidden="true" tabindex="-1"></a>                              <span class="at">paired =</span> <span class="cn">TRUE</span>, <span class="at">ci =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb141-14"><a href="comparing-groups.html#cb141-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb141-15"><a href="comparing-groups.html#cb141-15" aria-hidden="true" tabindex="-1"></a>effectsize<span class="sc">::</span><span class="fu">interpret_r</span>(wr<span class="sc">$</span>effsize, <span class="at">rules =</span> <span class="st">&quot;cohen1988&quot;</span>)</span>
+<span id="cb141-16"><a href="comparing-groups.html#cb141-16" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;very small&quot;</span></span>
+<span id="cb141-17"><a href="comparing-groups.html#cb141-17" aria-hidden="true" tabindex="-1"></a><span class="do">## (Rules: cohen1988)</span></span></code></pre></div>
+<p>As we would expect, the effect sizes are very small too, irrespective of whether we treat our data as parametric or non-parametric. After all, being a successful director ranked in the IMDb top 250 seems to imply that other movies are equally successful, but remember the limitations of our dataset before drawing your final conclusions.</p>
+</div>
+</div>
+<div id="comparing-more-than-two-groups" class="section level2" number="11.3">
+<h2><span class="header-section-number">11.3</span> Comparing more than two groups</h2>
+<p>Often we find ourselves in situations where comparing two groups is not enough. Instead, we might be faced with three or more groups fairly quickly. For example, the <code>wvs</code> dataset let’s us look at 48 different countries, all of which we could compare very quickly with just a few lines of code. In the following chapters we look at how we can perform the same type of analysis as before, but with multiple unpaired and paired groups using R. Similarly to the two-samples group comparison, we cover the parametric and non-parametric approaches.</p>
+<div id="multiple-unpaired-groups" class="section level3" number="11.3.1">
+<h3><span class="header-section-number">11.3.1</span> Multiple unpaired groups</h3>
+<p>Have you ever been wondering whether people in different countries are equally satisfied with their lives? You might have a rough guess that it is not the case, because the social, economic and political environment might place an import role. If you live in a country that is affected by social conflicts, one’s life satisfaction might be drastically lower. In the following we take a look at three countries <code>Iraq</code>, <code>Japan</code> and <code>Korea</code>. I did not only chose these countries out of personal interest, but because they nicely demonstrate the purpose of the chapter, i.e. finding out whether there are differences in the perception of <code>satisfaction</code> across three countries. At any time, feel free to remove the <code>filter()</code> function to gain the results of all countries in the dataset, but prepare for slightly longer computations. We first create the dataset which only contains the three desired countries.</p>
+<div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb142-1"><a href="comparing-groups.html#cb142-1" aria-hidden="true" tabindex="-1"></a>mcomp <span class="ot">&lt;-</span> wvs_nona <span class="sc">%&gt;%</span></span>
+<span id="cb142-2"><a href="comparing-groups.html#cb142-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(country <span class="sc">==</span> <span class="st">&quot;Iraq&quot;</span> <span class="sc">|</span></span>
+<span id="cb142-3"><a href="comparing-groups.html#cb142-3" aria-hidden="true" tabindex="-1"></a>           country <span class="sc">==</span> <span class="st">&quot;Japan&quot;</span> <span class="sc">|</span></span>
+<span id="cb142-4"><a href="comparing-groups.html#cb142-4" aria-hidden="true" tabindex="-1"></a>           country <span class="sc">==</span> <span class="st">&quot;Korea&quot;</span>)</span></code></pre></div>
+<p>Similar to before, we can use the <code>ggridges</code> package to draw density plots for each group. This has the added benefit that we can compare the distribution of data for each group and see whether the assumption of normality is likely met or not. On the other hand, we lose the option to easily identify any outliers. You win some and you lose some.</p>
+<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="comparing-groups.html#cb143-1" aria-hidden="true" tabindex="-1"></a>mcomp <span class="sc">%&gt;%</span></span>
+<span id="cb143-2"><a href="comparing-groups.html#cb143-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(country) <span class="sc">%&gt;%</span></span>
+<span id="cb143-3"><a href="comparing-groups.html#cb143-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> satisfaction,</span>
+<span id="cb143-4"><a href="comparing-groups.html#cb143-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> <span class="fu">reorder</span>(country, satisfaction),</span>
+<span id="cb143-5"><a href="comparing-groups.html#cb143-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">fill =</span> country)) <span class="sc">+</span></span>
+<span id="cb143-6"><a href="comparing-groups.html#cb143-6" aria-hidden="true" tabindex="-1"></a>  ggridges<span class="sc">::</span><span class="fu">stat_density_ridges</span>(<span class="at">bandwidth =</span> <span class="fl">0.6</span>,</span>
+<span id="cb143-7"><a href="comparing-groups.html#cb143-7" aria-hidden="true" tabindex="-1"></a>                                <span class="at">quantile_lines =</span> <span class="cn">TRUE</span>,   <span class="co"># adds median indicator</span></span>
+<span id="cb143-8"><a href="comparing-groups.html#cb143-8" aria-hidden="true" tabindex="-1"></a>                                <span class="at">quantiles =</span> (<span class="fl">0.5</span>)) <span class="sc">+</span></span>
+<span id="cb143-9"><a href="comparing-groups.html#cb143-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Remove legend</span></span>
+<span id="cb143-10"><a href="comparing-groups.html#cb143-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span></code></pre></div>
+<p><img src="r_for_non_programmers_files/figure-html/Multiple%20unpaired%20groups%20data%20visualisation-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>The plot shows us that <code>Japan</code> and <code>Korea</code> appear to be very similar if not identical (based on the median), but <code>Iraq</code> appears to be different from the other two groups. When performing a multiple group comparison we can follow similar steps as before with two groups, i.e.</p>
+<ul>
+<li><p>perform the comparison,</p></li>
+<li><p>determine the effect size, and</p></li>
+<li><p>interpret the effect size.</p></li>
+</ul>
+<p>Table <a href="comparing-groups.html#tab:comparing-multiple-groups-unpaired">11.3</a> summarises which test needs to be chosen to compare multiple unpaired groups and their corresponding effect size measures.</p>
+<table>
+<caption><span id="tab:comparing-multiple-groups-unpaired">Table 11.3: </span>Comparing multiple unpaired groups (effect size functions from package <code>effectsize</code>)</caption>
+<colgroup>
+<col width="10%" />
+<col width="14%" />
+<col width="28%" />
+<col width="15%" />
+<col width="30%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Assumption</th>
+<th>Test</th>
+<th>Function for test</th>
+<th>Effect size</th>
+<th>Function for effect size<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Parametric</td>
+<td>ANOVA</td>
+<td><ul>
+<li><code>anova_test</code> (assumes equal variances)</li>
+<li><code>oneway.test(var.equal = TRUE/FALSE)</code></li>
+</ul></td>
+<td>Eta squared</td>
+<td><code>eta_squared()</code></td>
+</tr>
+<tr class="even">
+<td>Non-parametric</td>
+<td>Kruskall-Wallis test</td>
+<td><code>kruskal_test()</code></td>
+<td>Epsilon squared (rank)</td>
+<td><code>rank_epsilon_squared()</code></td>
+</tr>
+</tbody>
+</table>
+<p>Let’s begin by conducting the group comparison. As you will notice, <code>rstatix</code> currently does not support a parametric test where <code>var.equal = FALSE</code>. Therefore we need to fall back to the underlying function <code>oneway.test(var.equal = FALSE)</code></p>
+<div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb144-1"><a href="comparing-groups.html#cb144-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ANOVA</span></span>
+<span id="cb144-2"><a href="comparing-groups.html#cb144-2" aria-hidden="true" tabindex="-1"></a><span class="do">## equal variances assumed</span></span>
+<span id="cb144-3"><a href="comparing-groups.html#cb144-3" aria-hidden="true" tabindex="-1"></a>mcomp <span class="sc">%&gt;%</span></span>
+<span id="cb144-4"><a href="comparing-groups.html#cb144-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">anova_test</span>(satisfaction <span class="sc">~</span> country,</span>
+<span id="cb144-5"><a href="comparing-groups.html#cb144-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">detailed =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb144-6"><a href="comparing-groups.html#cb144-6" aria-hidden="true" tabindex="-1"></a><span class="do">## ANOVA Table (type II tests)</span></span>
+<span id="cb144-7"><a href="comparing-groups.html#cb144-7" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb144-8"><a href="comparing-groups.html#cb144-8" aria-hidden="true" tabindex="-1"></a><span class="do">##    Effect      SSn      SSd DFn  DFd       F         p p&lt;.05   ges</span></span>
+<span id="cb144-9"><a href="comparing-groups.html#cb144-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 country 4258.329 11314.68   2 3795 714.133 5.74e-264     * 0.273</span></span>
+<span id="cb144-10"><a href="comparing-groups.html#cb144-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb144-11"><a href="comparing-groups.html#cb144-11" aria-hidden="true" tabindex="-1"></a><span class="do">## Equal variances not assumed</span></span>
+<span id="cb144-12"><a href="comparing-groups.html#cb144-12" aria-hidden="true" tabindex="-1"></a>(test <span class="ot">&lt;-</span> <span class="fu">oneway.test</span>(satisfaction <span class="sc">~</span> country,</span>
+<span id="cb144-13"><a href="comparing-groups.html#cb144-13" aria-hidden="true" tabindex="-1"></a>            <span class="at">data =</span> mcomp,</span>
+<span id="cb144-14"><a href="comparing-groups.html#cb144-14" aria-hidden="true" tabindex="-1"></a>            <span class="at">var.equal =</span> <span class="cn">FALSE</span>))</span>
+<span id="cb144-15"><a href="comparing-groups.html#cb144-15" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb144-16"><a href="comparing-groups.html#cb144-16" aria-hidden="true" tabindex="-1"></a><span class="do">##  One-way analysis of means (not assuming equal variances)</span></span>
+<span id="cb144-17"><a href="comparing-groups.html#cb144-17" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb144-18"><a href="comparing-groups.html#cb144-18" aria-hidden="true" tabindex="-1"></a><span class="do">## data:  satisfaction and country</span></span>
+<span id="cb144-19"><a href="comparing-groups.html#cb144-19" aria-hidden="true" tabindex="-1"></a><span class="do">## F = 663.17, num df = 2.0, denom df = 2422.8, p-value &lt; 2.2e-16</span></span>
+<span id="cb144-20"><a href="comparing-groups.html#cb144-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb144-21"><a href="comparing-groups.html#cb144-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Kruskall-Wallis test</span></span>
+<span id="cb144-22"><a href="comparing-groups.html#cb144-22" aria-hidden="true" tabindex="-1"></a><span class="do">## Perform comparison</span></span>
+<span id="cb144-23"><a href="comparing-groups.html#cb144-23" aria-hidden="true" tabindex="-1"></a>(test <span class="ot">&lt;-</span> mcomp <span class="sc">%&gt;%</span></span>
+<span id="cb144-24"><a href="comparing-groups.html#cb144-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kruskal_test</span>(satisfaction <span class="sc">~</span> country))</span>
+<span id="cb144-25"><a href="comparing-groups.html#cb144-25" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 1 × 6</span></span>
+<span id="cb144-26"><a href="comparing-groups.html#cb144-26" aria-hidden="true" tabindex="-1"></a><span class="do">##   .y.              n statistic    df         p method        </span></span>
+<span id="cb144-27"><a href="comparing-groups.html#cb144-27" aria-hidden="true" tabindex="-1"></a><span class="do">## * &lt;chr&gt;        &lt;int&gt;     &lt;dbl&gt; &lt;int&gt;     &lt;dbl&gt; &lt;chr&gt;         </span></span>
+<span id="cb144-28"><a href="comparing-groups.html#cb144-28" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 satisfaction  3798     1064.     2 1.11e-231 Kruskal-Wallis</span></span></code></pre></div>
+<p>While <code>anova_test()</code> does provide the effect size automatically, i.e. generalised eta squared (<code>ges</code>), this is not the case for the other two approaches. Therefore, we have to use the <code>effectsize</code> package to help us out. Packages often can get you a long way and make your life easier, but it is good to know alternatives in case a single package does not give you what you need.</p>
+<div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="comparing-groups.html#cb145-1" aria-hidden="true" tabindex="-1"></a><span class="co"># # After ANOVA with var.equal = FALSE</span></span>
+<span id="cb145-2"><a href="comparing-groups.html#cb145-2" aria-hidden="true" tabindex="-1"></a><span class="co"># effectsize::eta_squared(test)</span></span>
+<span id="cb145-3"><a href="comparing-groups.html#cb145-3" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb145-4"><a href="comparing-groups.html#cb145-4" aria-hidden="true" tabindex="-1"></a><span class="co"># # effect size rank epsilon squared</span></span>
+<span id="cb145-5"><a href="comparing-groups.html#cb145-5" aria-hidden="true" tabindex="-1"></a><span class="co"># effectsize::rank_epsilon_squared(mcomp$satisfaction ~ mcomp$gender)</span></span>
+<span id="cb145-6"><a href="comparing-groups.html#cb145-6" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb145-7"><a href="comparing-groups.html#cb145-7" aria-hidden="true" tabindex="-1"></a><span class="co"># # effect size eta squared (an alternative to epsilon squared)</span></span>
+<span id="cb145-8"><a href="comparing-groups.html#cb145-8" aria-hidden="true" tabindex="-1"></a><span class="co"># mcomp %&gt;% kruskal_effsize(satisfaction ~ country)</span></span></code></pre></div>
+<p>The results show that there is a significant and large difference between these groups. You might argue that this is actually not quite true. Considering our plot, we know that Japan and Korea do not look like as if they are significantly different. Multiple group comparisons only consider differences across all three groups. Therefore, if one group lies far away from the other groups, the test will turn significant and even provide a large enough effect size to consider it important. However, these tests do not provide information which differences between groups are significant. To gain more clarification about this, we need to incorporate another step, so called ‘post-hoc tests.’ These tests compare two groups at a time, which is why they are also known as ‘pairwise comparisons.’ Compared to regular two-sample tests, these perform corrections of the <code>p</code>values for mulitple testing, which is necessary. However, there are many different ‘post-hoc’ tests one can choose from. <span class="citation"><a href="#ref-field2013discovering" role="doc-biblioref">Field</a> (<a href="#ref-field2013discovering" role="doc-biblioref">2013</a>)</span> (p.459) nicely outlines the different scenarios and provides recommends to navigate this slightly complex field of post-hoc tests to follow-up a one-way ANOVA. Table <a href="comparing-groups.html#tab:post-hoc-tests">11.4</a> provides an overview of his suggestions.</p>
+<table>
+<caption><span id="tab:post-hoc-tests">Table 11.4: </span> Different post-hoc tests for different scenarios (parametric)</caption>
+<colgroup>
+<col width="13%" />
+<col width="6%" />
+<col width="7%" />
+<col width="72%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Equal sample size</th>
+<th>Equal variances</th>
+<th>Post-hot tests</th>
+<th>Functions in R</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>YES</td>
+<td>YES</td>
+<td><ul>
+<li><p>REGWQ,</p></li>
+<li><p>Tukey,</p></li>
+<li><p>Bonferroni</p></li>
+</ul></td>
+<td><ul>
+<li><p><code>mutoss::regwq()</code><a href="#fn5" class="footnote-ref" id="fnref5"><sup>5</sup></a></p></li>
+<li><p><code>rstatix::tukey_hsd()</code></p></li>
+<li><p><code>pairwise.t.test(p.adjust.method = "bonferroni")</code></p></li>
+</ul></td>
+</tr>
+<tr class="even">
+<td>NO (slightly different)</td>
+<td>YES</td>
+<td><ul>
+<li>Gabriel</li>
+</ul></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>YES</td>
+<td>YES</td>
+<td><ul>
+<li>Hochberg’s GT2</li>
+</ul></td>
+<td><ul>
+<li>Not available in R and should not be confused with <code>pairwise.t.test(p.adjust.method = "hochberg")</code>, which is based on <span class="citation"><a href="#ref-hochberg1988sharper" role="doc-biblioref">Hochberg</a> (<a href="#ref-hochberg1988sharper" role="doc-biblioref">1988</a>)</span>. The GT2, however, is based on <span class="citation"><a href="#ref-hochberg1974some" role="doc-biblioref">Hochberg</a> (<a href="#ref-hochberg1974some" role="doc-biblioref">1974</a>)</span>.</li>
+</ul></td>
+</tr>
+<tr class="even">
+<td>NO (not ideal for small samples)</td>
+<td>NO</td>
+<td><ul>
+<li>Games-Howell</li>
+</ul></td>
+<td><ul>
+<li><code>rstatix::games_howell_test()</code></li>
+</ul></td>
+</tr>
+</tbody>
+</table>
+<p>You might be surprised to see that there are also post-hoc tests for parametric group comparisons when the assumption of equal variances is not assumed. Would we not have to use a non-parametric test for our group comparison instead? Well, empirical studies have demonstrated that ANOVAs tend to produce robust results, even if the assumption of normality (e.g. <span class="citation"><a href="#ref-blanca2017non" role="doc-biblioref">Blanca Mena et al.</a> (<a href="#ref-blanca2017non" role="doc-biblioref">2017</a>)</span>) is not given, or there is some degree of heterogeneity of variance between groups <span class="citation">(<a href="#ref-tomarken1986comparison" role="doc-biblioref">Tomarken and Serlin 1986</a>)</span>. In other words, there can be some leniancy (or flexibility?) when it comes to the violation of parametric assumptions. If you want to reside on the save side, you should ensure you know your data and its properties. If in doubt, non-parametric tests are also available.</p>
+<p>If we want to follow up the Kruskall-Wallis test, i.e. the non-parametric equivalent to the one-way ANOVA, we can make use of two post-hoc tests:</p>
+<ul>
+<li>Dunn Test: <code>rstatix::dunn_test()</code> <span class="citation">(<a href="#ref-dinno2015nonparametric" role="doc-biblioref">Dinno 2015</a>)</span></li>
+<li>Pairwise comparison with Bonferroni (and other) correction: <code>pairwise.wilcox.test()</code>.</li>
+</ul>
+<p>Below are some examples of how you would use these functions in your project. However, be aware that some of the post-hoc tests are not or not well implemented yet in R. Here I show the most important ones which likely serve you in 90% of the cases.</p>
+<div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb146-1"><a href="comparing-groups.html#cb146-1" aria-hidden="true" tabindex="-1"></a><span class="co"># POST_HOC </span><span class="al">TEST</span><span class="co"> FOR PARAMETRIC DATA</span></span>
+<span id="cb146-2"><a href="comparing-groups.html#cb146-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Bonferroni</span></span>
+<span id="cb146-3"><a href="comparing-groups.html#cb146-3" aria-hidden="true" tabindex="-1"></a><span class="fu">pairwise.t.test</span>(mcomp<span class="sc">$</span>satisfaction, mcomp<span class="sc">$</span>country, <span class="at">p.adjust.method =</span> <span class="st">&quot;bonferroni&quot;</span>)</span>
+<span id="cb146-4"><a href="comparing-groups.html#cb146-4" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb146-5"><a href="comparing-groups.html#cb146-5" aria-hidden="true" tabindex="-1"></a><span class="do">##  Pairwise comparisons using t tests with pooled SD </span></span>
+<span id="cb146-6"><a href="comparing-groups.html#cb146-6" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb146-7"><a href="comparing-groups.html#cb146-7" aria-hidden="true" tabindex="-1"></a><span class="do">## data:  mcomp$satisfaction and mcomp$country </span></span>
+<span id="cb146-8"><a href="comparing-groups.html#cb146-8" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb146-9"><a href="comparing-groups.html#cb146-9" aria-hidden="true" tabindex="-1"></a><span class="do">##       Iraq   Japan</span></span>
+<span id="cb146-10"><a href="comparing-groups.html#cb146-10" aria-hidden="true" tabindex="-1"></a><span class="do">## Japan &lt;2e-16 -    </span></span>
+<span id="cb146-11"><a href="comparing-groups.html#cb146-11" aria-hidden="true" tabindex="-1"></a><span class="do">## Korea &lt;2e-16 1    </span></span>
+<span id="cb146-12"><a href="comparing-groups.html#cb146-12" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb146-13"><a href="comparing-groups.html#cb146-13" aria-hidden="true" tabindex="-1"></a><span class="do">## P value adjustment method: bonferroni</span></span>
+<span id="cb146-14"><a href="comparing-groups.html#cb146-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb146-15"><a href="comparing-groups.html#cb146-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Tukey</span></span>
+<span id="cb146-16"><a href="comparing-groups.html#cb146-16" aria-hidden="true" tabindex="-1"></a>mcomp <span class="sc">%&gt;%</span> <span class="fu">tukey_hsd</span>(satisfaction <span class="sc">~</span> country)</span>
+<span id="cb146-17"><a href="comparing-groups.html#cb146-17" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 3 × 9</span></span>
+<span id="cb146-18"><a href="comparing-groups.html#cb146-18" aria-hidden="true" tabindex="-1"></a><span class="do">##   term    group1 group2 null.value estimate conf.low conf.high        p.adj</span></span>
+<span id="cb146-19"><a href="comparing-groups.html#cb146-19" aria-hidden="true" tabindex="-1"></a><span class="do">## * &lt;chr&gt;   &lt;chr&gt;  &lt;chr&gt;       &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;        &lt;dbl&gt;</span></span>
+<span id="cb146-20"><a href="comparing-groups.html#cb146-20" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 country Iraq   Japan           0   2.29      2.13      2.45  0.0000000141</span></span>
+<span id="cb146-21"><a href="comparing-groups.html#cb146-21" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 country Iraq   Korea           0   2.26      2.10      2.43  0.0000000141</span></span>
+<span id="cb146-22"><a href="comparing-groups.html#cb146-22" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 country Japan  Korea           0  -0.0299   -0.189     0.129 0.898       </span></span>
+<span id="cb146-23"><a href="comparing-groups.html#cb146-23" aria-hidden="true" tabindex="-1"></a><span class="do">## # … with 1 more variable: p.adj.signif &lt;chr&gt;</span></span>
+<span id="cb146-24"><a href="comparing-groups.html#cb146-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb146-25"><a href="comparing-groups.html#cb146-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Games-Howell</span></span>
+<span id="cb146-26"><a href="comparing-groups.html#cb146-26" aria-hidden="true" tabindex="-1"></a>mcomp <span class="sc">%&gt;%</span> <span class="fu">games_howell_test</span>(satisfaction <span class="sc">~</span> country)</span>
+<span id="cb146-27"><a href="comparing-groups.html#cb146-27" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 3 × 8</span></span>
+<span id="cb146-28"><a href="comparing-groups.html#cb146-28" aria-hidden="true" tabindex="-1"></a><span class="do">##   .y.          group1 group2 estimate conf.low conf.high    p.adj p.adj.signif</span></span>
+<span id="cb146-29"><a href="comparing-groups.html#cb146-29" aria-hidden="true" tabindex="-1"></a><span class="do">## * &lt;chr&gt;        &lt;chr&gt;  &lt;chr&gt;     &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;       </span></span>
+<span id="cb146-30"><a href="comparing-groups.html#cb146-30" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 satisfaction Iraq   Japan    2.29      2.11      2.47  0        ****        </span></span>
+<span id="cb146-31"><a href="comparing-groups.html#cb146-31" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 satisfaction Iraq   Korea    2.26      2.11      2.42  5.92e-11 ****        </span></span>
+<span id="cb146-32"><a href="comparing-groups.html#cb146-32" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 satisfaction Japan  Korea   -0.0299   -0.178     0.118 8.84e- 1 ns</span></span>
+<span id="cb146-33"><a href="comparing-groups.html#cb146-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb146-34"><a href="comparing-groups.html#cb146-34" aria-hidden="true" tabindex="-1"></a><span class="co"># POST-HOC </span><span class="al">TEST</span><span class="co"> FOR NON-PARAMETRIC DATA</span></span>
+<span id="cb146-35"><a href="comparing-groups.html#cb146-35" aria-hidden="true" tabindex="-1"></a>mcomp <span class="sc">%&gt;%</span> <span class="fu">dunn_test</span>(satisfaction <span class="sc">~</span> country)</span>
+<span id="cb146-36"><a href="comparing-groups.html#cb146-36" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 3 × 9</span></span>
+<span id="cb146-37"><a href="comparing-groups.html#cb146-37" aria-hidden="true" tabindex="-1"></a><span class="do">##   .y.          group1 group2    n1    n2 statistic         p     p.adj p.adj.signif</span></span>
+<span id="cb146-38"><a href="comparing-groups.html#cb146-38" aria-hidden="true" tabindex="-1"></a><span class="do">## * &lt;chr&gt;        &lt;chr&gt;  &lt;chr&gt;  &lt;int&gt; &lt;int&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;       </span></span>
+<span id="cb146-39"><a href="comparing-groups.html#cb146-39" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 satisfaction Iraq   Japan   1200  1353     29.2  4.16e-187 1.25e-186 ****        </span></span>
+<span id="cb146-40"><a href="comparing-groups.html#cb146-40" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 satisfaction Iraq   Korea   1200  1245     27.6  8.30e-168 1.66e-167 ****        </span></span>
+<span id="cb146-41"><a href="comparing-groups.html#cb146-41" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 satisfaction Japan  Korea   1353  1245     -1.02 3.10e-  1 3.10e-  1 ns</span></span>
+<span id="cb146-42"><a href="comparing-groups.html#cb146-42" aria-hidden="true" tabindex="-1"></a><span class="co"># or</span></span>
+<span id="cb146-43"><a href="comparing-groups.html#cb146-43" aria-hidden="true" tabindex="-1"></a><span class="fu">pairwise.wilcox.test</span>(mcomp<span class="sc">$</span>satisfaction, mcomp<span class="sc">$</span>country, <span class="at">p.adjust.method =</span> <span class="st">&quot;holm&quot;</span>)</span>
+<span id="cb146-44"><a href="comparing-groups.html#cb146-44" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb146-45"><a href="comparing-groups.html#cb146-45" aria-hidden="true" tabindex="-1"></a><span class="do">##  Pairwise comparisons using Wilcoxon rank sum test with continuity correction </span></span>
+<span id="cb146-46"><a href="comparing-groups.html#cb146-46" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb146-47"><a href="comparing-groups.html#cb146-47" aria-hidden="true" tabindex="-1"></a><span class="do">## data:  mcomp$satisfaction and mcomp$country </span></span>
+<span id="cb146-48"><a href="comparing-groups.html#cb146-48" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb146-49"><a href="comparing-groups.html#cb146-49" aria-hidden="true" tabindex="-1"></a><span class="do">##       Iraq    Japan  </span></span>
+<span id="cb146-50"><a href="comparing-groups.html#cb146-50" aria-hidden="true" tabindex="-1"></a><span class="do">## Japan &lt; 2e-16 -      </span></span>
+<span id="cb146-51"><a href="comparing-groups.html#cb146-51" aria-hidden="true" tabindex="-1"></a><span class="do">## Korea &lt; 2e-16 0.00093</span></span>
+<span id="cb146-52"><a href="comparing-groups.html#cb146-52" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb146-53"><a href="comparing-groups.html#cb146-53" aria-hidden="true" tabindex="-1"></a><span class="do">## P value adjustment method: holm</span></span></code></pre></div>
+<p>As we can see, no matter which function we use, the interpretation of the results remain the same on this occasion.</p>
+</div>
+<div id="multiple-paired-groups" class="section level3" number="11.3.2">
+<h3><span class="header-section-number">11.3.2</span> Multiple paired groups</h3>
+<p>Additional condition if you compare three or more groups with each other. Might not be good to call them groups actually, because it refers to different measures by the same person usually over an extended period of time.</p>
+<p>Is an extension of the linear model - so why not simply use a regression instead. Is it because regression primarily use quantitative data and not categorical type data?</p>
+<p>repeated measures ANOVA (find dataset)</p>
+<div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb147-1"><a href="comparing-groups.html#cb147-1" aria-hidden="true" tabindex="-1"></a><span class="co"># anova_test()</span></span>
+<span id="cb147-2"><a href="comparing-groups.html#cb147-2" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb147-3"><a href="comparing-groups.html#cb147-3" aria-hidden="true" tabindex="-1"></a><span class="co"># eta_squared()</span></span>
+<span id="cb147-4"><a href="comparing-groups.html#cb147-4" aria-hidden="true" tabindex="-1"></a><span class="co"># omega_squared()</span></span></code></pre></div>
+<p>Friedman Test (find dataset)</p>
+<div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb148-1"><a href="comparing-groups.html#cb148-1" aria-hidden="true" tabindex="-1"></a><span class="co"># # NON=PARAMETRIC COMPARISON</span></span>
+<span id="cb148-2"><a href="comparing-groups.html#cb148-2" aria-hidden="true" tabindex="-1"></a><span class="co"># friedman_test()</span></span>
+<span id="cb148-3"><a href="comparing-groups.html#cb148-3" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb148-4"><a href="comparing-groups.html#cb148-4" aria-hidden="true" tabindex="-1"></a><span class="co"># # Effect size</span></span>
+<span id="cb148-5"><a href="comparing-groups.html#cb148-5" aria-hidden="true" tabindex="-1"></a><span class="co"># kendalls_w()</span></span></code></pre></div>
+<p>A useful overview of all the possible options of comparing groups and how to obtain their effect sizes can also be found here</p>
+<p><a href="https://indrajeetpatil.github.io/statsExpressions/articles/stats_details.html" class="uri">https://indrajeetpatil.github.io/statsExpressions/articles/stats_details.html</a></p>
+</div>
+</div>
+<div id="chi-squared-test" class="section level2" number="11.4">
+<h2><span class="header-section-number">11.4</span> Comparing groups based on factors: Contingency tables</h2>
+<p>Unpaired</p>
+<div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb149-1"><a href="comparing-groups.html#cb149-1" aria-hidden="true" tabindex="-1"></a><span class="co"># wvs_nona %&gt;% infer::chisq_test(relationship_status ~ gender)</span></span>
+<span id="cb149-2"><a href="comparing-groups.html#cb149-2" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb149-3"><a href="comparing-groups.html#cb149-3" aria-hidden="true" tabindex="-1"></a><span class="co"># cramers_v()</span></span></code></pre></div>
+<p>Paired</p>
+<div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb150-1"><a href="comparing-groups.html#cb150-1" aria-hidden="true" tabindex="-1"></a><span class="co"># mcnemar.test()</span></span>
+<span id="cb150-2"><a href="comparing-groups.html#cb150-2" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb150-3"><a href="comparing-groups.html#cb150-3" aria-hidden="true" tabindex="-1"></a><span class="co"># # Effect size</span></span>
+<span id="cb150-4"><a href="comparing-groups.html#cb150-4" aria-hidden="true" tabindex="-1"></a><span class="co"># cohens_g()</span></span></code></pre></div>
+</div>
+<div id="cheatsheet-group-comparisons" class="section level2" number="11.5">
+<h2><span class="header-section-number">11.5</span> A cheatsheet to guide your own group comparisons</h2>
+<p>To summarise what we have covered in this section, we can consider</p>
+
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-altman1985comparability" class="csl-entry">
+Altman, Douglas G. 1985. <span>“Comparability of Randomised Groups.”</span> <em>Journal of the Royal Statistical Society: Series D (The Statistician)</em> 34 (1): 125–36.
+</div>
+<div id="ref-berger2006review" class="csl-entry">
+Berger, Vance W. 2006. <span>“A Review of Methods for Ensuring the Comparability of Comparison Groups in Randomized Clinical Trials.”</span> <em>Reviews on Recent Clinical Trials</em> 1 (1): 81–86.
+</div>
+<div id="ref-blanca2017non" class="csl-entry">
+Blanca Mena, M José, Rafael Alarcón Postigo, Jaume Arnau Gras, Roser Bono Cabré, and Rebecca Bendayan. 2017. <span>“Non-Normal Data: Is ANOVA Still a Valid Option?”</span> <em>Psicothema, 2017, Vol. 29, Num. 4, p. 552-557</em>.
+</div>
+<div id="ref-dinno2015nonparametric" class="csl-entry">
+Dinno, Alexis. 2015. <span>“Nonparametric Pairwise Multiple Comparisons in Independent Groups Using Dunn’s Test.”</span> <em>The Stata Journal</em> 15 (1): 292–300.
+</div>
+<div id="ref-field2013discovering" class="csl-entry">
+Field, Andy. 2013. <em>Discovering Statistics Using IBM SPSS Statistics</em>. Sage Publications.
+</div>
+<div id="ref-hochberg1974some" class="csl-entry">
+Hochberg, Yosef. 1974. <span>“Some Generalizations of the t-Method in Simultaneous Inference.”</span> <em>Journal of Multivariate Analysis</em> 4 (2): 224–34.
+</div>
+<div id="ref-hochberg1988sharper" class="csl-entry">
+———. 1988. <span>“A Sharper Bonferroni Procedure for Multiple Tests of Significance.”</span> <em>Biometrika</em> 75 (4): 800–802.
+</div>
+<div id="ref-tomarken1986comparison" class="csl-entry">
+Tomarken, Andrew J, and Ronald C Serlin. 1986. <span>“Comparison of ANOVA Alternatives Under Variance Heterogeneity and Specific Noncentrality Structures.”</span> <em>Psychological Bulletin</em> 99 (1): 90.
+</div>
+<div id="ref-yang2006-IBmethods" class="csl-entry">
+Yang, Zhilin, Xuehua Wang, and Chenting Su. 2006. <span>“A Review of Research Methodologies in International Business.”</span> <em>International Business Review</em> 15 (6): 601–17. https://doi.org/<a href="https://doi.org/10.1016/j.ibusrev.2006.08.003">https://doi.org/10.1016/j.ibusrev.2006.08.003</a>.
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="4">
+<li id="fn4"><p>These functions are taken from the <code>effectsize</code> package.<a href="comparing-groups.html#fnref4" class="footnote-back">↩︎</a></p></li>
+<li id="fn5"><p>In order to use this package, it is necessary to install a series of other packages found on <a href="https://www.bioconductor.org" target="blank" title="bioconductor.org">bioconductor.org</a><a href="comparing-groups.html#fnref5" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="correlations.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="regression.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["r_for_non_programmers.pdf", "r_for_non_programmers.epub"],
+"search": {
+"engine": "lunr",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
