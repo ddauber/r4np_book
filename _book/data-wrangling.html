@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>7 Data Wrangling | R for Non-Programmers: A Guide for Social Scientists</title>
   <meta name="description" content="This books is intended for Social Scientists. No matter whether you have years of experiences, this book might come in handy if you never use R or any other programming language before." />
-  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
 
   <meta property="og:title" content="7 Data Wrangling | R for Non-Programmers: A Guide for Social Scientists" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Daniel Dauber" />
 
 
-<meta name="date" content="2021-08-11" />
+<meta name="date" content="2021-08-31" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -34,7 +34,7 @@
 <link rel="prev" href="starting-your-r-projects.html"/>
 <link rel="next" href="descriptive-statistics.html"/>
 <script src="libs/header-attrs-2.10/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -53,6 +53,10 @@
 
 <link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
+<script src="libs/viz-1.8.2/viz.js"></script>
+<link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+<script src="libs/grViz-binding-1.0.6.1/grViz.js"></script>
 
 
 <style type="text/css">
@@ -237,21 +241,82 @@ div.csl-indent {
 <li class="chapter" data-level="7.7" data-path="data-wrangling.html"><a href="data-wrangling.html#latent-constructs"><i class="fa fa-check"></i><b>7.7</b> Latent constructs and their reliability</a></li>
 <li class="chapter" data-level="7.8" data-path="data-wrangling.html"><a href="data-wrangling.html#conclusion-data-wrangling"><i class="fa fa-check"></i><b>7.8</b> Once you finished with data wrangling</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html"><i class="fa fa-check"></i><b>8</b> Descriptive Statistics</a></li>
-<li class="chapter" data-level="9" data-path="correlations.html"><a href="correlations.html"><i class="fa fa-check"></i><b>9</b> Correlations</a></li>
-<li class="chapter" data-level="10" data-path="comparing-groups.html"><a href="comparing-groups.html"><i class="fa fa-check"></i><b>10</b> Comparing groups</a></li>
-<li class="chapter" data-level="11" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>11</b> Regression: Creating models to predict future observations</a></li>
-<li class="chapter" data-level="12" data-path="mixed-methods-research-analysing-qualitative-in-r.html"><a href="mixed-methods-research-analysing-qualitative-in-r.html"><i class="fa fa-check"></i><b>12</b> Mixed-methods research: Analysing qualitative in R</a></li>
-<li class="chapter" data-level="13" data-path="next-steps.html"><a href="next-steps.html"><i class="fa fa-check"></i><b>13</b> Where to go from here: The next steps in your R journey</a>
+<li class="chapter" data-level="8" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html"><i class="fa fa-check"></i><b>8</b> Descriptive Statistics</a>
 <ul>
-<li class="chapter" data-level="13.1" data-path="next-steps.html"><a href="next-steps.html#next-steps-github"><i class="fa fa-check"></i><b>13.1</b> GitHub: A Gateway to even more ingenious R packages</a></li>
-<li class="chapter" data-level="13.2" data-path="next-steps.html"><a href="next-steps.html#next-steps-books"><i class="fa fa-check"></i><b>13.2</b> Books to read and expand your knowledge</a></li>
-<li class="chapter" data-level="13.3" data-path="next-steps.html"><a href="next-steps.html#next-steps-online-readings"><i class="fa fa-check"></i><b>13.3</b> Engage in regular online readings about R</a></li>
-<li class="chapter" data-level="13.4" data-path="next-steps.html"><a href="next-steps.html#next-steps-twitter"><i class="fa fa-check"></i><b>13.4</b> Join the Twitter community and hone your skills</a></li>
+<li class="chapter" data-level="8.1" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#plotting-in-r-with-ggplot2"><i class="fa fa-check"></i><b>8.1</b> Plotting in R with <code>ggplot2</code></a></li>
+<li class="chapter" data-level="8.2" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#central-tendency"><i class="fa fa-check"></i><b>8.2</b> Central tendency measures: Mean, Median, Mode</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#mean"><i class="fa fa-check"></i><b>8.2.1</b> Mean</a></li>
+<li class="chapter" data-level="8.2.2" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#median"><i class="fa fa-check"></i><b>8.2.2</b> Median</a></li>
+<li class="chapter" data-level="8.2.3" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#mode"><i class="fa fa-check"></i><b>8.2.3</b> Mode</a></li>
 </ul></li>
-<li class="chapter" data-level="14" data-path="exercises-solutions.html"><a href="exercises-solutions.html"><i class="fa fa-check"></i><b>14</b> Exercises: Solutions</a>
+<li class="chapter" data-level="8.3" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#spread-of-data"><i class="fa fa-check"></i><b>8.3</b> Indicators and visualisations to examine the spread of data</a>
 <ul>
-<li class="chapter" data-level="14.1" data-path="exercises-solutions.html"><a href="exercises-solutions.html#exercises-solutions-5"><i class="fa fa-check"></i><b>14.1</b> Solutions for @ref(exercises-chapter-5)</a></li>
+<li class="chapter" data-level="8.3.1" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#boxplot-so-much-information-in-just-one-box"><i class="fa fa-check"></i><b>8.3.1</b> Boxplot: So much information in just one box</a></li>
+<li class="chapter" data-level="8.3.2" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#histogram-do-not-mistake-it-as-a-bar-plot"><i class="fa fa-check"></i><b>8.3.2</b> Histogram: Do not mistake it as a bar plot</a></li>
+<li class="chapter" data-level="8.3.3" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#density-plots-your-smooth-histograms"><i class="fa fa-check"></i><b>8.3.3</b> Density plots: Your smooth histograms</a></li>
+<li class="chapter" data-level="8.3.4" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#violin-plot-your-smooth-boxplot"><i class="fa fa-check"></i><b>8.3.4</b> Violin plot: Your smooth boxplot</a></li>
+<li class="chapter" data-level="8.3.5" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#qq-plot"><i class="fa fa-check"></i><b>8.3.5</b> QQ plot: A ‘cute’ plot to check for normality in your data</a></li>
+<li class="chapter" data-level="8.3.6" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#standard-deviation"><i class="fa fa-check"></i><b>8.3.6</b> Standard deviation: Your average deviation from the mean</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="sources-of-bias.html"><a href="sources-of-bias.html"><i class="fa fa-check"></i><b>9</b> Sources of bias: Outliers, normality and other ‘conundrums’</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="sources-of-bias.html"><a href="sources-of-bias.html#additivity-and-linearity"><i class="fa fa-check"></i><b>9.1</b> Linearity and additivity</a></li>
+<li class="chapter" data-level="9.2" data-path="sources-of-bias.html"><a href="sources-of-bias.html#independence"><i class="fa fa-check"></i><b>9.2</b> Independence</a></li>
+<li class="chapter" data-level="9.3" data-path="sources-of-bias.html"><a href="sources-of-bias.html#normality"><i class="fa fa-check"></i><b>9.3</b> Normality</a></li>
+<li class="chapter" data-level="9.4" data-path="sources-of-bias.html"><a href="sources-of-bias.html#homogeneity-of-variance"><i class="fa fa-check"></i><b>9.4</b> Homogeneity of variance (homoscedasticity)</a></li>
+<li class="chapter" data-level="9.5" data-path="sources-of-bias.html"><a href="sources-of-bias.html#dealing-with-outliers"><i class="fa fa-check"></i><b>9.5</b> Outliers and how to deal with them</a>
+<ul>
+<li class="chapter" data-level="9.5.1" data-path="sources-of-bias.html"><a href="sources-of-bias.html#ouliers-standard_deviation"><i class="fa fa-check"></i><b>9.5.1</b> Detecting outliers using the standard deviation</a></li>
+<li class="chapter" data-level="9.5.2" data-path="sources-of-bias.html"><a href="sources-of-bias.html#outliers-iqr"><i class="fa fa-check"></i><b>9.5.2</b> Detecting outliers using the interquartile range</a></li>
+<li class="chapter" data-level="9.5.3" data-path="sources-of-bias.html"><a href="sources-of-bias.html#removing-or-replacing-outliers"><i class="fa fa-check"></i><b>9.5.3</b> Removing or replacing outliers</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="correlations.html"><a href="correlations.html"><i class="fa fa-check"></i><b>10</b> Correlations</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="correlations.html"><a href="correlations.html#parametric-or-non-parametric"><i class="fa fa-check"></i><b>10.1</b> Parametric or non-parametric: That is the question</a></li>
+<li class="chapter" data-level="10.2" data-path="correlations.html"><a href="correlations.html#plotting-correlations"><i class="fa fa-check"></i><b>10.2</b> Plotting correlations</a></li>
+<li class="chapter" data-level="10.3" data-path="correlations.html"><a href="correlations.html#significance"><i class="fa fa-check"></i><b>10.3</b> Significance: A way to help you judge your findings</a></li>
+<li class="chapter" data-level="10.4" data-path="correlations.html"><a href="correlations.html#limitations-of-correlations"><i class="fa fa-check"></i><b>10.4</b> Limitations of correlations</a>
+<ul>
+<li class="chapter" data-level="10.4.1" data-path="correlations.html"><a href="correlations.html#correlations-are-not-causal-relationships"><i class="fa fa-check"></i><b>10.4.1</b> Correlations are not causal relationships</a></li>
+<li class="chapter" data-level="10.4.2" data-path="correlations.html"><a href="correlations.html#correlations-can-be-spurious"><i class="fa fa-check"></i><b>10.4.2</b> Correlations can be spurious</a></li>
+<li class="chapter" data-level="10.4.3" data-path="correlations.html"><a href="correlations.html#simpsons-paradox"><i class="fa fa-check"></i><b>10.4.3</b> Simpson’s Paradox: When correlations betray you</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="comparing-groups.html"><a href="comparing-groups.html"><i class="fa fa-check"></i><b>11</b> Comparing groups</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="comparing-groups.html"><a href="comparing-groups.html#comparability-apples-vs-oranges"><i class="fa fa-check"></i><b>11.1</b> Comparability: Apples vs Oranges</a></li>
+<li class="chapter" data-level="11.2" data-path="comparing-groups.html"><a href="comparing-groups.html#comparing-two-groups"><i class="fa fa-check"></i><b>11.2</b> Comparing two groups</a>
+<ul>
+<li class="chapter" data-level="11.2.1" data-path="comparing-groups.html"><a href="comparing-groups.html#two-unpaired-groups"><i class="fa fa-check"></i><b>11.2.1</b> Two Unpaired groups</a></li>
+<li class="chapter" data-level="11.2.2" data-path="comparing-groups.html"><a href="comparing-groups.html#two-paired-groups"><i class="fa fa-check"></i><b>11.2.2</b> Two Paired groups</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="comparing-groups.html"><a href="comparing-groups.html#comparing-more-than-two-groups"><i class="fa fa-check"></i><b>11.3</b> Comparing more than two groups</a>
+<ul>
+<li class="chapter" data-level="11.3.1" data-path="comparing-groups.html"><a href="comparing-groups.html#multiple-unpaired-groups"><i class="fa fa-check"></i><b>11.3.1</b> Multiple unpaired groups</a></li>
+<li class="chapter" data-level="11.3.2" data-path="comparing-groups.html"><a href="comparing-groups.html#multiple-paired-groups"><i class="fa fa-check"></i><b>11.3.2</b> Multiple paired groups</a></li>
+</ul></li>
+<li class="chapter" data-level="11.4" data-path="comparing-groups.html"><a href="comparing-groups.html#chi-squared-test"><i class="fa fa-check"></i><b>11.4</b> Comparing groups based on factors: Contingency tables</a></li>
+<li class="chapter" data-level="11.5" data-path="comparing-groups.html"><a href="comparing-groups.html#cheatsheet-group-comparisons"><i class="fa fa-check"></i><b>11.5</b> A cheatsheet to guide your own group comparisons</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>12</b> Regression: Creating models to predict future observations</a></li>
+<li class="chapter" data-level="13" data-path="mixed-methods-research-analysing-qualitative-in-r.html"><a href="mixed-methods-research-analysing-qualitative-in-r.html"><i class="fa fa-check"></i><b>13</b> Mixed-methods research: Analysing qualitative in R</a></li>
+<li class="chapter" data-level="14" data-path="next-steps.html"><a href="next-steps.html"><i class="fa fa-check"></i><b>14</b> Where to go from here: The next steps in your R journey</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="next-steps.html"><a href="next-steps.html#next-steps-github"><i class="fa fa-check"></i><b>14.1</b> GitHub: A Gateway to even more ingenious R packages</a></li>
+<li class="chapter" data-level="14.2" data-path="next-steps.html"><a href="next-steps.html#next-steps-books"><i class="fa fa-check"></i><b>14.2</b> Books to read and expand your knowledge</a></li>
+<li class="chapter" data-level="14.3" data-path="next-steps.html"><a href="next-steps.html#next-steps-online-readings"><i class="fa fa-check"></i><b>14.3</b> Engage in regular online readings about R</a></li>
+<li class="chapter" data-level="14.4" data-path="next-steps.html"><a href="next-steps.html#next-steps-twitter"><i class="fa fa-check"></i><b>14.4</b> Join the Twitter community and hone your skills</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="appendix.html"><a href="appendix.html"><i class="fa fa-check"></i>Appendix</a>
+<ul>
+<li class="chapter" data-level="14.5" data-path="appendix.html"><a href="appendix.html#comparing-two-unpaired-groups"><i class="fa fa-check"></i><b>14.5</b> Comparing two unpaired groups</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="exercises-solutions.html"><a href="exercises-solutions.html"><i class="fa fa-check"></i><b>15</b> Exercises: Solutions</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="exercises-solutions.html"><a href="exercises-solutions.html#exercises-solutions-5"><i class="fa fa-check"></i><b>15.1</b> Solutions for 5.6</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://twitter.com/daniel_dauber" target="blank">Find me on twitter!</a></li>
@@ -497,7 +562,7 @@ div.csl-indent {
 <span id="cb41-8"><a href="data-wrangling.html#cb41-8" aria-hidden="true" tabindex="-1"></a><span class="do">## $ relationship_status &lt;chr&gt; &quot;married&quot;, &quot;living together as married&quot;, &quot;separate…</span></span>
 <span id="cb41-9"><a href="data-wrangling.html#cb41-9" aria-hidden="true" tabindex="-1"></a><span class="do">## $ freedom_of_choice   &lt;dbl&gt; 10, 9, 9, 9, 8, 10, 10, 8, 8, 10, 9, 8, 10, 7, 10,…</span></span>
 <span id="cb41-10"><a href="data-wrangling.html#cb41-10" aria-hidden="true" tabindex="-1"></a><span class="do">## $ satisfaction        &lt;dbl&gt; 10, 9, 9, 8, 7, 10, 5, 8, 8, 10, 8, 8, 10, 7, 10, …</span></span></code></pre></div>
-<p><code>readr</code> did a great job in identifying all the numeric variables. However, by default, <code>readr</code> imports all variables that include text as <code>&lt;chr&gt;</code>. It appears, in our dataset, this is not entirely correct. The variables <code>countr_name</code>, <code>gender</code> and <code>relationship_status</code> specify a finite number of categories. Therefore they should be classified as a <code>factor</code>. The variable <code>participant_id</code> is represented by numbers, but its meaning is also rather categorical. We would not use the ID numbers of participants to perform additions or multiplications. This would make no sense. Therefore, it might be wise to turn them into a <code>factor</code>, even though we likely will not use it in our analysis and would make no difference. However, I am a stickler for those kinds of things, and I would include in it.</p>
+<p><code>readr</code> did a great job in identifying all the numeric variables. However, by default, <code>readr</code> imports all variables that include text as <code>&lt;chr&gt;</code>. It appears, in our dataset, this is not entirely correct. The variables <code>country</code>, <code>gender</code> and <code>relationship_status</code> specify a finite number of categories. Therefore they should be classified as a <code>factor</code>. The variable <code>participant_id</code> is represented by numbers, but its meaning is also rather categorical. We would not use the ID numbers of participants to perform additions or multiplications. This would make no sense. Therefore, it might be wise to turn them into a <code>factor</code>, even though we likely will not use it in our analysis and would make no difference. However, I am a stickler for those kinds of things, and I would include in it.</p>
 <p>To perform the conversion, we need to use two new functions from <code>dplyr</code>:</p>
 <ul>
 <li><p><code>mutate()</code>: Changes, i.e. ‘mutates,’ a variable.</p></li>
@@ -522,6 +587,7 @@ div.csl-indent {
 <span id="cb42-16"><a href="data-wrangling.html#cb42-16" aria-hidden="true" tabindex="-1"></a><span class="do">## $ freedom_of_choice   &lt;dbl&gt; 10, 9, 9, 9, 8, 10, 10, 8, 8, 10, 9, 8, 10, 7, 10,…</span></span>
 <span id="cb42-17"><a href="data-wrangling.html#cb42-17" aria-hidden="true" tabindex="-1"></a><span class="do">## $ satisfaction        &lt;dbl&gt; 10, 9, 9, 8, 7, 10, 5, 8, 8, 10, 8, 8, 10, 7, 10, …</span></span></code></pre></div>
 <p>The output in the console shows that we successfully performed the transformation and our data types are as we intended them to be. Mission accomplished.</p>
+<p>If you need to convert all <code>&lt;chr&gt;</code> columns you can use <code>mutate_if(is.character, as.factor)</code> instead. This function will look at each column and if it is a <code>character</code> type variable, it will convert it into a <code>factor</code>. However, use this function only if you are certain that all <code>character</code> columns need converting.</p>
 </div>
 <div id="handling-factors" class="section level2" number="7.5">
 <h2><span class="header-section-number">7.5</span> Handling factors</h2>
@@ -598,7 +664,7 @@ div.csl-indent {
 <p>Every study that intends to be rigorous will have to identify how much data is missing. In R, this can be achieved in multiple ways, but using a specialised package like <code>naniar</code> does help us to do this very quickly and systematically. First, we have to load the <code>naniar</code> package, and then we use the function <code>vis_miss()</code> to visualise how much and where exactly data is missing.</p>
 <div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="data-wrangling.html#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(naniar)</span>
 <span id="cb50-2"><a href="data-wrangling.html#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="fu">vis_miss</span>(wvs)</span></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:mapping-missing-data"></span>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:mapping-missing-data"></span>
 <img src="r_for_non_programmers_files/figure-html/mapping-missing-data-1.png" alt="Mapping missing data with naniar" width="672" />
 <p class="caption">
 Figure 7.1: Mapping missing data with naniar
@@ -608,7 +674,7 @@ Figure 7.1: Mapping missing data with naniar
 <p>As we can see, 99,7% of our dataset is complete, and we are only missing 0.3%. The dark lines (actually blocks) refer to missing data points. On the x-axis, we can see all our variables, and on the y-axis, we see our observations. This is the same layout as our rectangular dataset: Rows are observations, and columns are variables. Overall, this dataset appears relatively complete (luckily). In addition, we can see the percentage of missing data per variable. <code>freedom_of_choice</code> is the variable with the most missing data, i.e. 0.79%. Still, the amount of missing data is not very large.</p>
 <p>When working with larger datasets, it might also be helpful to rank variables by their degree of missing data to see where the most significant problems lie.</p>
 <div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="data-wrangling.html#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gg_miss_var</span>(wvs)</span></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:missing-data-per-variable"></span>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:missing-data-per-variable"></span>
 <img src="r_for_non_programmers_files/figure-html/missing-data-per-variable-1.png" alt="Missing data per variable" width="672" />
 <p class="caption">
 Figure 7.2: Missing data per variable
@@ -691,7 +757,7 @@ Figure 7.2: Missing data per variable
 <div id="missing-not-at-random-mnar" class="section level4" number="7.6.2.3">
 <h4><span class="header-section-number">7.6.2.3</span> Missing not at random (MNAR)</h4>
 <p>Lastly, missing not at random (MNAR) implies that data is missing systematically and that other variables or reasons exist that explain why data is missing. Still, they are not fully known to us. In questionnaire-based research, an easily overlooked reason that can explain missing data is the ‘page-drop-off’ phenomenon. In such cases, participants stop completing a questionnaire once they advance to another page. Figure <a href="data-wrangling.html#fig:mnar-example">7.3</a> shows this very clearly for a large scale project where an online questionnaire was used. After almost every page break in the questionnaire, some participants decided to discontinue. Finding these types of patterns is difficult when only working with numeric values. Thus, it is always advisable to visualise your data as well. Such missing data is linked to the design of the data collection tool.</p>
-<div class="figure" style="text-align: center"><span id="fig:mnar-example"></span>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:mnar-example"></span>
 <img src="images/chapter_07_img/03_missing_data/00_mnar_example.png" alt="MNAR pattern in a dataset due to 'page-drop-offs'" width="960" />
 <p class="caption">
 Figure 7.3: MNAR pattern in a dataset due to ‘page-drop-offs’
@@ -733,9 +799,26 @@ Figure 7.3: MNAR pattern in a dataset due to ‘page-drop-offs’
 <div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="data-wrangling.html#cb58-1" aria-hidden="true" tabindex="-1"></a>wvs_nona <span class="ot">&lt;-</span> wvs <span class="sc">%&gt;%</span></span>
 <span id="cb58-2"><a href="data-wrangling.html#cb58-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>participant_id) <span class="sc">%&gt;%</span> </span>
 <span id="cb58-3"><a href="data-wrangling.html#cb58-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span>                  <span class="co"># Transforms our tibble into a data frame</span></span>
-<span id="cb58-4"><a href="data-wrangling.html#cb58-4" aria-hidden="true" tabindex="-1"></a>  simputation<span class="sc">::</span><span class="fu">impute_knn</span>(. <span class="sc">~</span> .)</span></code></pre></div>
-<p>The function <code>impute_knn(. ~ .)</code> might look like a combination of text with an emoji <code>(. ~ .)</code>. This imputation function requires us to specify a model to impute the data. Since we want to impute all missing values in the dataset and use all variables available, we put <code>.</code> on both sides of the equation, separated by a <code>~</code>. The <code>.</code> reflects that we do not specify a specific variable but instead tell the function to use all variables that are not mentioned. In our case, we did not mention any variables at all, and therefore it chooses all of them. For example, if we wanted to impute only <code>freedom_of_choice</code>, we would have to put <code>impute_knn(freedom_of_choice ~ .)</code>. We will elaborate more on how to specify models when we cover regression models (see Chapter <a href="regression.html#regression">11</a>).</p>
-<p>As you will have noticed, we also had to convert our <code>tibble</code> into a <code>data frame</code> using <code>as.data.frame()</code>. As mentioned in Chapter <a href="r-basics-the-very-fundamentals.html#functions">5.3</a>, some functions require a specific data type or format. The <code>simputation</code> package works with <code>dplyr</code>, but it prefers <code>data frame</code>s. Based on my experiences, the wrong data type or format is one of the most frequent causes of errors that novice R programmers report. So, keep an eye on it and read the documentation carefully.</p>
+<span id="cb58-4"><a href="data-wrangling.html#cb58-4" aria-hidden="true" tabindex="-1"></a>  simputation<span class="sc">::</span><span class="fu">impute_knn</span>(. <span class="sc">~</span> .)</span>
+<span id="cb58-5"><a href="data-wrangling.html#cb58-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-6"><a href="data-wrangling.html#cb58-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Be aware that our new dataframe has different datatypes</span></span>
+<span id="cb58-7"><a href="data-wrangling.html#cb58-7" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(wvs_nona)</span>
+<span id="cb58-8"><a href="data-wrangling.html#cb58-8" aria-hidden="true" tabindex="-1"></a><span class="do">## Rows: 69,578</span></span>
+<span id="cb58-9"><a href="data-wrangling.html#cb58-9" aria-hidden="true" tabindex="-1"></a><span class="do">## Columns: 6</span></span>
+<span id="cb58-10"><a href="data-wrangling.html#cb58-10" aria-hidden="true" tabindex="-1"></a><span class="do">## $ country             &lt;fct&gt; Andorra, Andorra, Andorra, Andorra, Andorra, Andor…</span></span>
+<span id="cb58-11"><a href="data-wrangling.html#cb58-11" aria-hidden="true" tabindex="-1"></a><span class="do">## $ gender              &lt;fct&gt; female, male, male, female, male, female, female, …</span></span>
+<span id="cb58-12"><a href="data-wrangling.html#cb58-12" aria-hidden="true" tabindex="-1"></a><span class="do">## $ age                 &lt;chr&gt; &quot;60&quot;, &quot;47&quot;, &quot;48&quot;, &quot;62&quot;, &quot;49&quot;, &quot;51&quot;, &quot;33&quot;, &quot;55&quot;, &quot;4…</span></span>
+<span id="cb58-13"><a href="data-wrangling.html#cb58-13" aria-hidden="true" tabindex="-1"></a><span class="do">## $ relationship_status &lt;fct&gt; married, living together as married, separated, li…</span></span>
+<span id="cb58-14"><a href="data-wrangling.html#cb58-14" aria-hidden="true" tabindex="-1"></a><span class="do">## $ freedom_of_choice   &lt;chr&gt; &quot;10&quot;, &quot;9&quot;, &quot;9&quot;, &quot;9&quot;, &quot;8&quot;, &quot;10&quot;, &quot;10&quot;, &quot;8&quot;, &quot;8&quot;, &quot;1…</span></span>
+<span id="cb58-15"><a href="data-wrangling.html#cb58-15" aria-hidden="true" tabindex="-1"></a><span class="do">## $ satisfaction        &lt;chr&gt; &quot;10&quot;, &quot;9&quot;, &quot;9&quot;, &quot;8&quot;, &quot;7&quot;, &quot;10&quot;, &quot;5&quot;, &quot;8&quot;, &quot;8&quot;, &quot;10…</span></span>
+<span id="cb58-16"><a href="data-wrangling.html#cb58-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-17"><a href="data-wrangling.html#cb58-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Let&#39;s fix this</span></span>
+<span id="cb58-18"><a href="data-wrangling.html#cb58-18" aria-hidden="true" tabindex="-1"></a>wvs_nona <span class="ot">&lt;-</span> wvs_nona <span class="sc">%&gt;%</span> </span>
+<span id="cb58-19"><a href="data-wrangling.html#cb58-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">age =</span> <span class="fu">as.numeric</span>(age),</span>
+<span id="cb58-20"><a href="data-wrangling.html#cb58-20" aria-hidden="true" tabindex="-1"></a>         <span class="at">freedom_of_choice =</span> <span class="fu">as.numeric</span>(freedom_of_choice),</span>
+<span id="cb58-21"><a href="data-wrangling.html#cb58-21" aria-hidden="true" tabindex="-1"></a>         <span class="at">satisfaction =</span> <span class="fu">as.numeric</span>(satisfaction))</span></code></pre></div>
+<p>The function <code>impute_knn(. ~ .)</code> might look like a combination of text with an emoji <code>(. ~ .)</code>. This imputation function requires us to specify a model to impute the data. Since we want to impute all missing values in the dataset and use all variables available, we put <code>.</code> on both sides of the equation, separated by a <code>~</code>. The <code>.</code> reflects that we do not specify a specific variable but instead tell the function to use all variables that are not mentioned. In our case, we did not mention any variables at all, and therefore it chooses all of them. For example, if we wanted to impute only <code>freedom_of_choice</code>, we would have to put <code>impute_knn(freedom_of_choice ~ .)</code>. We will elaborate more on how to specify models when we cover regression models (see Chapter <a href="regression.html#regression">12</a>).</p>
+<p>As you will have noticed, we also had to convert our <code>tibble</code> into a <code>data frame</code> using <code>as.data.frame()</code>. As mentioned in Chapter <a href="r-basics-the-very-fundamentals.html#functions">5.3</a>, some functions require a specific data type or format. The <code>simputation</code> package works with <code>dplyr</code>, but it prefers <code>data frame</code>s. Based on my experiences, the wrong data type or format is one of the most frequent causes of errors that novice R programmers report. So, keep an eye on it and read the documentation carefully. Also, once you inspect the new data frame, you will notice that some of our double variables have now turned into character values. Therefore, I strongly recommend checking your newly created data frames to avoid any surprises further down the line of your analysis.</p>
 <p>Be aware that imputation of any kind can take a long time. For example, my MacBook Pro took about 4.22 seconds to complete <code>impute_knn()</code> with the <code>wvs</code> dataset. If we used multiple imputation, this would have taken considerably longer, i.e. several minutes and more.</p>
 <p>We now should have a dataset that is free of any missing values. To ensure this is the case we can create the missing data matrix that we made at the beginning of this chapter (see Figure <a href="data-wrangling.html#fig:mapping-missing-data">7.1</a>).</p>
 <div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="data-wrangling.html#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vis_miss</span>(wvs_nona)</span></code></pre></div>
@@ -1042,7 +1125,7 @@ Figure 7.3: MNAR pattern in a dataset due to ‘page-drop-offs’
 <li><p>the <code>srmr</code> (Standardised, Root Mean Square Residual) lies well below 0.08.</p></li>
 <li><p>The <code>rmsea</code> (Root Mean Square Error of Approximation) appears slightly higher than desirable, i.e. below 0.6. <span class="citation">(<a href="#ref-hu-bentler-1999cutoff" role="doc-biblioref">Hu and Bentler 1999</a>)</span></p></li>
 </ul>
-<p>Overall, however, the model seems to suggest a good fit with our data. Combined with the computed Cronbach’s <span class="math inline">\(\alpha\)</span>, we can be reasonably confident in our latent variables and perform further analytical steps, for example, as shown in Chapter <a href="regression.html#regression">11</a>.</p>
+<p>Overall, however, the model seems to suggest a good fit with our data. Combined with the computed Cronbach’s <span class="math inline">\(\alpha\)</span>, we can be reasonably confident in our latent variables and perform further analytical steps, for example, as shown in Chapter <a href="regression.html#regression">12</a>.</p>
 </div>
 <div id="conclusion-data-wrangling" class="section level2" number="7.8">
 <h2><span class="header-section-number">7.8</span> Once you finished with data wrangling</h2>
@@ -1151,6 +1234,10 @@ gitbook.start({
 "text": null
 },
 "download": ["r_for_non_programmers.pdf", "r_for_non_programmers.epub"],
+"search": {
+"engine": "lunr",
+"options": null
+},
 "toc": {
 "collapse": "subsection"
 }

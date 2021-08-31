@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>R for Non-Programmers: A Guide for Social Scientists</title>
   <meta name="description" content="This books is intended for Social Scientists. No matter whether you have years of experiences, this book might come in handy if you never use R or any other programming language before." />
-  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
 
   <meta property="og:title" content="R for Non-Programmers: A Guide for Social Scientists" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Daniel Dauber" />
 
 
-<meta name="date" content="2021-08-11" />
+<meta name="date" content="2021-08-31" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -34,7 +34,7 @@
 
 <link rel="next" href="acknowledgments.html"/>
 <script src="libs/header-attrs-2.10/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -53,6 +53,10 @@
 
 <link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
+<script src="libs/viz-1.8.2/viz.js"></script>
+<link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+<script src="libs/grViz-binding-1.0.6.1/grViz.js"></script>
 
 
 <style type="text/css">
@@ -237,21 +241,82 @@ div.csl-indent {
 <li class="chapter" data-level="7.7" data-path="data-wrangling.html"><a href="data-wrangling.html#latent-constructs"><i class="fa fa-check"></i><b>7.7</b> Latent constructs and their reliability</a></li>
 <li class="chapter" data-level="7.8" data-path="data-wrangling.html"><a href="data-wrangling.html#conclusion-data-wrangling"><i class="fa fa-check"></i><b>7.8</b> Once you finished with data wrangling</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html"><i class="fa fa-check"></i><b>8</b> Descriptive Statistics</a></li>
-<li class="chapter" data-level="9" data-path="correlations.html"><a href="correlations.html"><i class="fa fa-check"></i><b>9</b> Correlations</a></li>
-<li class="chapter" data-level="10" data-path="comparing-groups.html"><a href="comparing-groups.html"><i class="fa fa-check"></i><b>10</b> Comparing groups</a></li>
-<li class="chapter" data-level="11" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>11</b> Regression: Creating models to predict future observations</a></li>
-<li class="chapter" data-level="12" data-path="mixed-methods-research-analysing-qualitative-in-r.html"><a href="mixed-methods-research-analysing-qualitative-in-r.html"><i class="fa fa-check"></i><b>12</b> Mixed-methods research: Analysing qualitative in R</a></li>
-<li class="chapter" data-level="13" data-path="next-steps.html"><a href="next-steps.html"><i class="fa fa-check"></i><b>13</b> Where to go from here: The next steps in your R journey</a>
+<li class="chapter" data-level="8" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html"><i class="fa fa-check"></i><b>8</b> Descriptive Statistics</a>
 <ul>
-<li class="chapter" data-level="13.1" data-path="next-steps.html"><a href="next-steps.html#next-steps-github"><i class="fa fa-check"></i><b>13.1</b> GitHub: A Gateway to even more ingenious R packages</a></li>
-<li class="chapter" data-level="13.2" data-path="next-steps.html"><a href="next-steps.html#next-steps-books"><i class="fa fa-check"></i><b>13.2</b> Books to read and expand your knowledge</a></li>
-<li class="chapter" data-level="13.3" data-path="next-steps.html"><a href="next-steps.html#next-steps-online-readings"><i class="fa fa-check"></i><b>13.3</b> Engage in regular online readings about R</a></li>
-<li class="chapter" data-level="13.4" data-path="next-steps.html"><a href="next-steps.html#next-steps-twitter"><i class="fa fa-check"></i><b>13.4</b> Join the Twitter community and hone your skills</a></li>
+<li class="chapter" data-level="8.1" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#plotting-in-r-with-ggplot2"><i class="fa fa-check"></i><b>8.1</b> Plotting in R with <code>ggplot2</code></a></li>
+<li class="chapter" data-level="8.2" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#central-tendency"><i class="fa fa-check"></i><b>8.2</b> Central tendency measures: Mean, Median, Mode</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#mean"><i class="fa fa-check"></i><b>8.2.1</b> Mean</a></li>
+<li class="chapter" data-level="8.2.2" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#median"><i class="fa fa-check"></i><b>8.2.2</b> Median</a></li>
+<li class="chapter" data-level="8.2.3" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#mode"><i class="fa fa-check"></i><b>8.2.3</b> Mode</a></li>
 </ul></li>
-<li class="chapter" data-level="14" data-path="exercises-solutions.html"><a href="exercises-solutions.html"><i class="fa fa-check"></i><b>14</b> Exercises: Solutions</a>
+<li class="chapter" data-level="8.3" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#spread-of-data"><i class="fa fa-check"></i><b>8.3</b> Indicators and visualisations to examine the spread of data</a>
 <ul>
-<li class="chapter" data-level="14.1" data-path="exercises-solutions.html"><a href="exercises-solutions.html#exercises-solutions-5"><i class="fa fa-check"></i><b>14.1</b> Solutions for @ref(exercises-chapter-5)</a></li>
+<li class="chapter" data-level="8.3.1" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#boxplot-so-much-information-in-just-one-box"><i class="fa fa-check"></i><b>8.3.1</b> Boxplot: So much information in just one box</a></li>
+<li class="chapter" data-level="8.3.2" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#histogram-do-not-mistake-it-as-a-bar-plot"><i class="fa fa-check"></i><b>8.3.2</b> Histogram: Do not mistake it as a bar plot</a></li>
+<li class="chapter" data-level="8.3.3" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#density-plots-your-smooth-histograms"><i class="fa fa-check"></i><b>8.3.3</b> Density plots: Your smooth histograms</a></li>
+<li class="chapter" data-level="8.3.4" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#violin-plot-your-smooth-boxplot"><i class="fa fa-check"></i><b>8.3.4</b> Violin plot: Your smooth boxplot</a></li>
+<li class="chapter" data-level="8.3.5" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#qq-plot"><i class="fa fa-check"></i><b>8.3.5</b> QQ plot: A ‘cute’ plot to check for normality in your data</a></li>
+<li class="chapter" data-level="8.3.6" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#standard-deviation"><i class="fa fa-check"></i><b>8.3.6</b> Standard deviation: Your average deviation from the mean</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="sources-of-bias.html"><a href="sources-of-bias.html"><i class="fa fa-check"></i><b>9</b> Sources of bias: Outliers, normality and other ‘conundrums’</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="sources-of-bias.html"><a href="sources-of-bias.html#additivity-and-linearity"><i class="fa fa-check"></i><b>9.1</b> Linearity and additivity</a></li>
+<li class="chapter" data-level="9.2" data-path="sources-of-bias.html"><a href="sources-of-bias.html#independence"><i class="fa fa-check"></i><b>9.2</b> Independence</a></li>
+<li class="chapter" data-level="9.3" data-path="sources-of-bias.html"><a href="sources-of-bias.html#normality"><i class="fa fa-check"></i><b>9.3</b> Normality</a></li>
+<li class="chapter" data-level="9.4" data-path="sources-of-bias.html"><a href="sources-of-bias.html#homogeneity-of-variance"><i class="fa fa-check"></i><b>9.4</b> Homogeneity of variance (homoscedasticity)</a></li>
+<li class="chapter" data-level="9.5" data-path="sources-of-bias.html"><a href="sources-of-bias.html#dealing-with-outliers"><i class="fa fa-check"></i><b>9.5</b> Outliers and how to deal with them</a>
+<ul>
+<li class="chapter" data-level="9.5.1" data-path="sources-of-bias.html"><a href="sources-of-bias.html#ouliers-standard_deviation"><i class="fa fa-check"></i><b>9.5.1</b> Detecting outliers using the standard deviation</a></li>
+<li class="chapter" data-level="9.5.2" data-path="sources-of-bias.html"><a href="sources-of-bias.html#outliers-iqr"><i class="fa fa-check"></i><b>9.5.2</b> Detecting outliers using the interquartile range</a></li>
+<li class="chapter" data-level="9.5.3" data-path="sources-of-bias.html"><a href="sources-of-bias.html#removing-or-replacing-outliers"><i class="fa fa-check"></i><b>9.5.3</b> Removing or replacing outliers</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="correlations.html"><a href="correlations.html"><i class="fa fa-check"></i><b>10</b> Correlations</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="correlations.html"><a href="correlations.html#parametric-or-non-parametric"><i class="fa fa-check"></i><b>10.1</b> Parametric or non-parametric: That is the question</a></li>
+<li class="chapter" data-level="10.2" data-path="correlations.html"><a href="correlations.html#plotting-correlations"><i class="fa fa-check"></i><b>10.2</b> Plotting correlations</a></li>
+<li class="chapter" data-level="10.3" data-path="correlations.html"><a href="correlations.html#significance"><i class="fa fa-check"></i><b>10.3</b> Significance: A way to help you judge your findings</a></li>
+<li class="chapter" data-level="10.4" data-path="correlations.html"><a href="correlations.html#limitations-of-correlations"><i class="fa fa-check"></i><b>10.4</b> Limitations of correlations</a>
+<ul>
+<li class="chapter" data-level="10.4.1" data-path="correlations.html"><a href="correlations.html#correlations-are-not-causal-relationships"><i class="fa fa-check"></i><b>10.4.1</b> Correlations are not causal relationships</a></li>
+<li class="chapter" data-level="10.4.2" data-path="correlations.html"><a href="correlations.html#correlations-can-be-spurious"><i class="fa fa-check"></i><b>10.4.2</b> Correlations can be spurious</a></li>
+<li class="chapter" data-level="10.4.3" data-path="correlations.html"><a href="correlations.html#simpsons-paradox"><i class="fa fa-check"></i><b>10.4.3</b> Simpson’s Paradox: When correlations betray you</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="comparing-groups.html"><a href="comparing-groups.html"><i class="fa fa-check"></i><b>11</b> Comparing groups</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="comparing-groups.html"><a href="comparing-groups.html#comparability-apples-vs-oranges"><i class="fa fa-check"></i><b>11.1</b> Comparability: Apples vs Oranges</a></li>
+<li class="chapter" data-level="11.2" data-path="comparing-groups.html"><a href="comparing-groups.html#comparing-two-groups"><i class="fa fa-check"></i><b>11.2</b> Comparing two groups</a>
+<ul>
+<li class="chapter" data-level="11.2.1" data-path="comparing-groups.html"><a href="comparing-groups.html#two-unpaired-groups"><i class="fa fa-check"></i><b>11.2.1</b> Two Unpaired groups</a></li>
+<li class="chapter" data-level="11.2.2" data-path="comparing-groups.html"><a href="comparing-groups.html#two-paired-groups"><i class="fa fa-check"></i><b>11.2.2</b> Two Paired groups</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="comparing-groups.html"><a href="comparing-groups.html#comparing-more-than-two-groups"><i class="fa fa-check"></i><b>11.3</b> Comparing more than two groups</a>
+<ul>
+<li class="chapter" data-level="11.3.1" data-path="comparing-groups.html"><a href="comparing-groups.html#multiple-unpaired-groups"><i class="fa fa-check"></i><b>11.3.1</b> Multiple unpaired groups</a></li>
+<li class="chapter" data-level="11.3.2" data-path="comparing-groups.html"><a href="comparing-groups.html#multiple-paired-groups"><i class="fa fa-check"></i><b>11.3.2</b> Multiple paired groups</a></li>
+</ul></li>
+<li class="chapter" data-level="11.4" data-path="comparing-groups.html"><a href="comparing-groups.html#chi-squared-test"><i class="fa fa-check"></i><b>11.4</b> Comparing groups based on factors: Contingency tables</a></li>
+<li class="chapter" data-level="11.5" data-path="comparing-groups.html"><a href="comparing-groups.html#cheatsheet-group-comparisons"><i class="fa fa-check"></i><b>11.5</b> A cheatsheet to guide your own group comparisons</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>12</b> Regression: Creating models to predict future observations</a></li>
+<li class="chapter" data-level="13" data-path="mixed-methods-research-analysing-qualitative-in-r.html"><a href="mixed-methods-research-analysing-qualitative-in-r.html"><i class="fa fa-check"></i><b>13</b> Mixed-methods research: Analysing qualitative in R</a></li>
+<li class="chapter" data-level="14" data-path="next-steps.html"><a href="next-steps.html"><i class="fa fa-check"></i><b>14</b> Where to go from here: The next steps in your R journey</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="next-steps.html"><a href="next-steps.html#next-steps-github"><i class="fa fa-check"></i><b>14.1</b> GitHub: A Gateway to even more ingenious R packages</a></li>
+<li class="chapter" data-level="14.2" data-path="next-steps.html"><a href="next-steps.html#next-steps-books"><i class="fa fa-check"></i><b>14.2</b> Books to read and expand your knowledge</a></li>
+<li class="chapter" data-level="14.3" data-path="next-steps.html"><a href="next-steps.html#next-steps-online-readings"><i class="fa fa-check"></i><b>14.3</b> Engage in regular online readings about R</a></li>
+<li class="chapter" data-level="14.4" data-path="next-steps.html"><a href="next-steps.html#next-steps-twitter"><i class="fa fa-check"></i><b>14.4</b> Join the Twitter community and hone your skills</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="appendix.html"><a href="appendix.html"><i class="fa fa-check"></i>Appendix</a>
+<ul>
+<li class="chapter" data-level="14.5" data-path="appendix.html"><a href="appendix.html#comparing-two-unpaired-groups"><i class="fa fa-check"></i><b>14.5</b> Comparing two unpaired groups</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="exercises-solutions.html"><a href="exercises-solutions.html"><i class="fa fa-check"></i><b>15</b> Exercises: Solutions</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="exercises-solutions.html"><a href="exercises-solutions.html#exercises-solutions-5"><i class="fa fa-check"></i><b>15.1</b> Solutions for 5.6</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://twitter.com/daniel_dauber" target="blank">Find me on twitter!</a></li>
@@ -276,7 +341,7 @@ div.csl-indent {
 <div id="header">
 <h1 class="title">R for Non-Programmers: A Guide for Social Scientists</h1>
 <p class="author"><em>Daniel Dauber</em></p>
-<p class="date" style="margin-top: 1.5em;"><em>2021-08-11</em></p>
+<p class="date"><em>2021-08-31</em></p>
 </div>
 <div id="welcome" class="section level1 unnumbered">
 <h1>Welcome 👋</h1>
@@ -335,6 +400,10 @@ gitbook.start({
 "text": null
 },
 "download": ["r_for_non_programmers.pdf", "r_for_non_programmers.epub"],
+"search": {
+"engine": "lunr",
+"options": null
+},
 "toc": {
 "collapse": "subsection"
 }
