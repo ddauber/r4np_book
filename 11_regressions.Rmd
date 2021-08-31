@@ -214,34 +214,16 @@ In the last section we wanted to know how many people will likely not recover fr
 First, we create a dataset that only contains information from the `United Kingdom`, which means we use `filter()` and remove observations with missing data.
 
 ```{r MR filter out UK as a sample}
-covid_bin <- covid %>%
-  na.omit() %>%
-  select(-date_reported, -date_updated, -first_vaccine_date, masks:movements) %>%
-  correlationfunnel::binarize(n_bins = 5)
 
-covid_bin_corr <- covid_bin %>% correlationfunnel::correlate(target = new_cases__575_Inf)
-
-covid_bin_corr %>% correlationfunnel::plot_correlation_funnel()
 ```
 
 As a first step, we might want to know how the UK performed over the course of time in terms of new cases. Let's plot this first.
 
 ```{r Multiple regression plotting cumulative cases, echo=TRUE}
-covid_uk %>%
+covid %>%
   ggplot(aes(x = date_reported,
              y = new_cases)) +
   geom_col()
-
-
-m1 <- lm(new_cases ~ masks + travel + businesses + schools, data = covid_uk)
-broom::tidy(m1) %>% mutate(across(where(is.numeric), round, 2))
-performance::model_performance(m1)
-
-
-covid_uk %>%
-  correlation::correlation() %>% 
-  filter(r > 0.3)
-
 ```
 
 One issue you might encounter when visualising large values in a plot like this are the axis labels. In our case, the values are very high on the y axis and ggplot abbreviates them, i.e. uses a scientific notation. We might not find this useful, especially when comparing it to the values in our dataset. Therefore, we should change it. The `scales` package is fantastic, because it can help us take care of it. Here is the same plot, but with better axis labels which everyone can easily understand by just adding `labels = scales::comma`.

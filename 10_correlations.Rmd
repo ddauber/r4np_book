@@ -171,6 +171,8 @@ In other words, the further the score is away from zero, the stronger is the rel
 If we compare the plot from our data with the sample plots, we would come to the conclusion that the relationship is weak, and therefore the `r` must be close to zero as well. We can test this with the Pearson correlation.
 
 ```{r Pearson correlation for ratings, echo=TRUE}
+library(correlation)
+
 imdb_top_250 %>% 
   select(imdb_rating, metascore) %>% 
   correlation()
@@ -424,7 +426,7 @@ The final limitation is so important that it even has its own name: the 'Simpson
 
 We would assume that an increased in students' `performance` will likely increase the `happiness` of participants. After all, all three have stakes in students's `performance`.
 
-```{r Simpson paradox plot and correlation all, echo=TRUE}
+```{r Simpson paradox plot and correlation all 1, echo=TRUE}
 simpson %>% 
   ggplot(aes(performance, happiness)) +
   geom_point() +
@@ -442,7 +444,7 @@ It appears we were terrible wrong. It seems as if `performance` and `happiness` 
 
 The Simpson's paradox explains the phenomenon were correlation might not exist, or even is reversed when considering an entire sample. However, when inspecting sub-samples, different correlations are found. So, what happens if we look at the correlations for each group separately?
 
-```{r Simpson paradox plot and correlation all, echo=TRUE}
+```{r Simpson paradox plot and correlation all 2, echo=TRUE}
 simpson %>% 
   ggplot(aes(performance, happiness, group = group, colour = group)) +
   geom_point() +

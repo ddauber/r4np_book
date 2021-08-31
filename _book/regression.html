@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>11 Regression: Creating models to predict future observations | R for Non-Programmers: A Guide for Social Scientists</title>
+  <title>12 Regression: Creating models to predict future observations | R for Non-Programmers: A Guide for Social Scientists</title>
   <meta name="description" content="This books is intended for Social Scientists. No matter whether you have years of experiences, this book might come in handy if you never use R or any other programming language before." />
-  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="11 Regression: Creating models to predict future observations | R for Non-Programmers: A Guide for Social Scientists" />
+  <meta property="og:title" content="12 Regression: Creating models to predict future observations | R for Non-Programmers: A Guide for Social Scientists" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="11 Regression: Creating models to predict future observations | R for Non-Programmers: A Guide for Social Scientists" />
+  <meta name="twitter:title" content="12 Regression: Creating models to predict future observations | R for Non-Programmers: A Guide for Social Scientists" />
   
   <meta name="twitter:description" content="This books is intended for Social Scientists. No matter whether you have years of experiences, this book might come in handy if you never use R or any other programming language before." />
   
@@ -24,7 +24,7 @@
 <meta name="author" content="Daniel Dauber" />
 
 
-<meta name="date" content="2021-08-11" />
+<meta name="date" content="2021-08-31" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -34,7 +34,7 @@
 <link rel="prev" href="comparing-groups.html"/>
 <link rel="next" href="mixed-methods-research-analysing-qualitative-in-r.html"/>
 <script src="libs/header-attrs-2.10/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -237,21 +237,90 @@ div.csl-indent {
 <li class="chapter" data-level="7.7" data-path="data-wrangling.html"><a href="data-wrangling.html#latent-constructs"><i class="fa fa-check"></i><b>7.7</b> Latent constructs and their reliability</a></li>
 <li class="chapter" data-level="7.8" data-path="data-wrangling.html"><a href="data-wrangling.html#conclusion-data-wrangling"><i class="fa fa-check"></i><b>7.8</b> Once you finished with data wrangling</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html"><i class="fa fa-check"></i><b>8</b> Descriptive Statistics</a></li>
-<li class="chapter" data-level="9" data-path="correlations.html"><a href="correlations.html"><i class="fa fa-check"></i><b>9</b> Correlations</a></li>
-<li class="chapter" data-level="10" data-path="comparing-groups.html"><a href="comparing-groups.html"><i class="fa fa-check"></i><b>10</b> Comparing groups</a></li>
-<li class="chapter" data-level="11" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>11</b> Regression: Creating models to predict future observations</a></li>
-<li class="chapter" data-level="12" data-path="mixed-methods-research-analysing-qualitative-in-r.html"><a href="mixed-methods-research-analysing-qualitative-in-r.html"><i class="fa fa-check"></i><b>12</b> Mixed-methods research: Analysing qualitative in R</a></li>
-<li class="chapter" data-level="13" data-path="next-steps.html"><a href="next-steps.html"><i class="fa fa-check"></i><b>13</b> Where to go from here: The next steps in your R journey</a>
+<li class="chapter" data-level="8" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html"><i class="fa fa-check"></i><b>8</b> Descriptive Statistics</a>
 <ul>
-<li class="chapter" data-level="13.1" data-path="next-steps.html"><a href="next-steps.html#next-steps-github"><i class="fa fa-check"></i><b>13.1</b> GitHub: A Gateway to even more ingenious R packages</a></li>
-<li class="chapter" data-level="13.2" data-path="next-steps.html"><a href="next-steps.html#next-steps-books"><i class="fa fa-check"></i><b>13.2</b> Books to read and expand your knowledge</a></li>
-<li class="chapter" data-level="13.3" data-path="next-steps.html"><a href="next-steps.html#next-steps-online-readings"><i class="fa fa-check"></i><b>13.3</b> Engage in regular online readings about R</a></li>
-<li class="chapter" data-level="13.4" data-path="next-steps.html"><a href="next-steps.html#next-steps-twitter"><i class="fa fa-check"></i><b>13.4</b> Join the Twitter community and hone your skills</a></li>
+<li class="chapter" data-level="8.1" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#plotting-in-r-with-ggplot2"><i class="fa fa-check"></i><b>8.1</b> Plotting in R with <code>ggplot2</code></a></li>
+<li class="chapter" data-level="8.2" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#central-tendency"><i class="fa fa-check"></i><b>8.2</b> Central tendency measures: Mean, Median, Mode</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#mean"><i class="fa fa-check"></i><b>8.2.1</b> Mean</a></li>
+<li class="chapter" data-level="8.2.2" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#median"><i class="fa fa-check"></i><b>8.2.2</b> Median</a></li>
+<li class="chapter" data-level="8.2.3" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#mode"><i class="fa fa-check"></i><b>8.2.3</b> Mode</a></li>
 </ul></li>
-<li class="chapter" data-level="14" data-path="exercises-solutions.html"><a href="exercises-solutions.html"><i class="fa fa-check"></i><b>14</b> Exercises: Solutions</a>
+<li class="chapter" data-level="8.3" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#spread-of-data"><i class="fa fa-check"></i><b>8.3</b> Indicators and visualisations to examine the spread of data</a>
 <ul>
-<li class="chapter" data-level="14.1" data-path="exercises-solutions.html"><a href="exercises-solutions.html#exercises-solutions-5"><i class="fa fa-check"></i><b>14.1</b> Solutions for @ref(exercises-chapter-5)</a></li>
+<li class="chapter" data-level="8.3.1" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#boxplot-so-much-information-in-just-one-box"><i class="fa fa-check"></i><b>8.3.1</b> Boxplot: So much information in just one box</a></li>
+<li class="chapter" data-level="8.3.2" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#histogram-do-not-mistake-it-as-a-bar-plot"><i class="fa fa-check"></i><b>8.3.2</b> Histogram: Do not mistake it as a bar plot</a></li>
+<li class="chapter" data-level="8.3.3" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#density-plots-your-smooth-histograms"><i class="fa fa-check"></i><b>8.3.3</b> Density plots: Your smooth histograms</a></li>
+<li class="chapter" data-level="8.3.4" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#violin-plot-your-smooth-boxplot"><i class="fa fa-check"></i><b>8.3.4</b> Violin plot: Your smooth boxplot</a></li>
+<li class="chapter" data-level="8.3.5" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#qq-plot"><i class="fa fa-check"></i><b>8.3.5</b> QQ plot: A ‘cute’ plot to check for normality in your data</a></li>
+<li class="chapter" data-level="8.3.6" data-path="descriptive-statistics.html"><a href="descriptive-statistics.html#standard-deviation"><i class="fa fa-check"></i><b>8.3.6</b> Standard deviation: Your average deviation from the mean</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="sources-of-bias.html"><a href="sources-of-bias.html"><i class="fa fa-check"></i><b>9</b> Sources of bias: Outliers, normality and other ‘conundrums’</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="sources-of-bias.html"><a href="sources-of-bias.html#additivity-and-linearity"><i class="fa fa-check"></i><b>9.1</b> Linearity and additivity</a></li>
+<li class="chapter" data-level="9.2" data-path="sources-of-bias.html"><a href="sources-of-bias.html#independence"><i class="fa fa-check"></i><b>9.2</b> Independence</a></li>
+<li class="chapter" data-level="9.3" data-path="sources-of-bias.html"><a href="sources-of-bias.html#normality"><i class="fa fa-check"></i><b>9.3</b> Normality</a></li>
+<li class="chapter" data-level="9.4" data-path="sources-of-bias.html"><a href="sources-of-bias.html#homogeneity-of-variance"><i class="fa fa-check"></i><b>9.4</b> Homogeneity of variance (homoscedasticity)</a></li>
+<li class="chapter" data-level="9.5" data-path="sources-of-bias.html"><a href="sources-of-bias.html#dealing-with-outliers"><i class="fa fa-check"></i><b>9.5</b> Outliers and how to deal with them</a>
+<ul>
+<li class="chapter" data-level="9.5.1" data-path="sources-of-bias.html"><a href="sources-of-bias.html#ouliers-standard_deviation"><i class="fa fa-check"></i><b>9.5.1</b> Detecting outliers using the standard deviation</a></li>
+<li class="chapter" data-level="9.5.2" data-path="sources-of-bias.html"><a href="sources-of-bias.html#outliers-iqr"><i class="fa fa-check"></i><b>9.5.2</b> Detecting outliers using the interquartile range</a></li>
+<li class="chapter" data-level="9.5.3" data-path="sources-of-bias.html"><a href="sources-of-bias.html#removing-or-replacing-outliers"><i class="fa fa-check"></i><b>9.5.3</b> Removing or replacing outliers</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="correlations.html"><a href="correlations.html"><i class="fa fa-check"></i><b>10</b> Correlations</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="correlations.html"><a href="correlations.html#parametric-or-non-parametric"><i class="fa fa-check"></i><b>10.1</b> Parametric or non-parametric: That is the question</a></li>
+<li class="chapter" data-level="10.2" data-path="correlations.html"><a href="correlations.html#plotting-correlations"><i class="fa fa-check"></i><b>10.2</b> Plotting correlations</a></li>
+<li class="chapter" data-level="10.3" data-path="correlations.html"><a href="correlations.html#significance"><i class="fa fa-check"></i><b>10.3</b> Significance: A way to help you judge your findings</a></li>
+<li class="chapter" data-level="10.4" data-path="correlations.html"><a href="correlations.html#limitations-of-correlations"><i class="fa fa-check"></i><b>10.4</b> Limitations of correlations</a>
+<ul>
+<li class="chapter" data-level="10.4.1" data-path="correlations.html"><a href="correlations.html#correlations-are-not-causal-relationships"><i class="fa fa-check"></i><b>10.4.1</b> Correlations are not causal relationships</a></li>
+<li class="chapter" data-level="10.4.2" data-path="correlations.html"><a href="correlations.html#correlations-can-be-spurious"><i class="fa fa-check"></i><b>10.4.2</b> Correlations can be spurious</a></li>
+<li class="chapter" data-level="10.4.3" data-path="correlations.html"><a href="correlations.html#simpsons-paradox"><i class="fa fa-check"></i><b>10.4.3</b> Simpson’s Paradox: When correlations betray you</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="comparing-groups.html"><a href="comparing-groups.html"><i class="fa fa-check"></i><b>11</b> Comparing groups</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="comparing-groups.html"><a href="comparing-groups.html#comparability-apples-vs-oranges"><i class="fa fa-check"></i><b>11.1</b> Comparability: Apples vs Oranges</a></li>
+<li class="chapter" data-level="11.2" data-path="comparing-groups.html"><a href="comparing-groups.html#comparing-two-groups"><i class="fa fa-check"></i><b>11.2</b> Comparing two groups</a>
+<ul>
+<li class="chapter" data-level="11.2.1" data-path="comparing-groups.html"><a href="comparing-groups.html#two-unpaired-groups"><i class="fa fa-check"></i><b>11.2.1</b> Two Unpaired groups</a></li>
+<li class="chapter" data-level="11.2.2" data-path="comparing-groups.html"><a href="comparing-groups.html#two-paired-groups"><i class="fa fa-check"></i><b>11.2.2</b> Two Paired groups</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="comparing-groups.html"><a href="comparing-groups.html#comparing-more-than-two-groups"><i class="fa fa-check"></i><b>11.3</b> Comparing more than two groups</a>
+<ul>
+<li class="chapter" data-level="11.3.1" data-path="comparing-groups.html"><a href="comparing-groups.html#multiple-unpaired-groups"><i class="fa fa-check"></i><b>11.3.1</b> Multiple unpaired groups</a></li>
+<li class="chapter" data-level="11.3.2" data-path="comparing-groups.html"><a href="comparing-groups.html#multiple-paired-groups"><i class="fa fa-check"></i><b>11.3.2</b> Multiple paired groups</a></li>
+</ul></li>
+<li class="chapter" data-level="11.4" data-path="comparing-groups.html"><a href="comparing-groups.html#chi-squared-test"><i class="fa fa-check"></i><b>11.4</b> Comparing groups based on factors: Contingency tables</a></li>
+<li class="chapter" data-level="11.5" data-path="comparing-groups.html"><a href="comparing-groups.html#cheatsheet-group-comparisons"><i class="fa fa-check"></i><b>11.5</b> A cheatsheet to guide your own group comparisons</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>12</b> Regression: Creating models to predict future observations</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="regression.html"><a href="regression.html#single-linear-regression"><i class="fa fa-check"></i><b>12.1</b> Single linear regression</a>
+<ul>
+<li class="chapter" data-level="12.1.1" data-path="regression.html"><a href="regression.html#fitting-a-regression-model-by-hand-i.e.-trial-and-error"><i class="fa fa-check"></i><b>12.1.1</b> Fitting a regression model by hand, i.e. trial and error</a></li>
+</ul></li>
+<li class="chapter" data-level="12.2" data-path="regression.html"><a href="regression.html#multiple-regression"><i class="fa fa-check"></i><b>12.2</b> Multiple regression</a></li>
+<li class="chapter" data-level="12.3" data-path="regression.html"><a href="regression.html#hierarchical-regression"><i class="fa fa-check"></i><b>12.3</b> Hierarchical regression</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="mixed-methods-research-analysing-qualitative-in-r.html"><a href="mixed-methods-research-analysing-qualitative-in-r.html"><i class="fa fa-check"></i><b>13</b> Mixed-methods research: Analysing qualitative in R</a></li>
+<li class="chapter" data-level="14" data-path="next-steps.html"><a href="next-steps.html"><i class="fa fa-check"></i><b>14</b> Where to go from here: The next steps in your R journey</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="next-steps.html"><a href="next-steps.html#next-steps-github"><i class="fa fa-check"></i><b>14.1</b> GitHub: A Gateway to even more ingenious R packages</a></li>
+<li class="chapter" data-level="14.2" data-path="next-steps.html"><a href="next-steps.html#next-steps-books"><i class="fa fa-check"></i><b>14.2</b> Books to read and expand your knowledge</a></li>
+<li class="chapter" data-level="14.3" data-path="next-steps.html"><a href="next-steps.html#next-steps-online-readings"><i class="fa fa-check"></i><b>14.3</b> Engage in regular online readings about R</a></li>
+<li class="chapter" data-level="14.4" data-path="next-steps.html"><a href="next-steps.html#next-steps-twitter"><i class="fa fa-check"></i><b>14.4</b> Join the Twitter community and hone your skills</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="appendix.html"><a href="appendix.html"><i class="fa fa-check"></i>Appendix</a>
+<ul>
+<li class="chapter" data-level="14.5" data-path="appendix.html"><a href="appendix.html#comparing-two-unpaired-groups"><i class="fa fa-check"></i><b>14.5</b> Comparing two unpaired groups</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="exercises-solutions.html"><a href="exercises-solutions.html"><i class="fa fa-check"></i><b>15</b> Exercises: Solutions</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="exercises-solutions.html"><a href="exercises-solutions.html#exercises-solutions-5"><i class="fa fa-check"></i><b>15.1</b> Solutions for 5.6</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://twitter.com/daniel_dauber" target="blank">Find me on twitter!</a></li>
@@ -273,9 +342,450 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="regression" class="section level1" number="11">
-<h1><span class="header-section-number">11</span> Regression: Creating models to predict future observations</h1>
+<div id="regression" class="section level1" number="12">
+<h1><span class="header-section-number">12</span> Regression: Creating models to predict future observations</h1>
+<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──</code></pre>
+<pre><code>## ✓ ggplot2 3.3.5     ✓ purrr   0.3.4
+## ✓ tibble  3.1.4     ✓ dplyr   1.0.7
+## ✓ tidyr   1.1.3     ✓ stringr 1.4.0
+## ✓ readr   2.0.1     ✓ forcats 0.5.1</code></pre>
+<pre><code>## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()</code></pre>
+<p>Regressions are an interesting area of data analysis since it enables us to make very specific predictions about the future incorporating different variables at the same time. As the name implies, regressions ‘regress,’ i.e. they draw on past observations to make predictions about future observations. Thus, any analysis incorporating a regression makes the implicit assumption that the future can be best explained by the past.</p>
+<p>I once heard someone refer to regressions as driving a car by looking at the rearview mirror. As long as the road is straight, we will be able to successfully navigate the car. However, if there is a sudden turn, we might drive into the abyss. This makes it very clear when and how regressions are can be helpful.</p>
+<p>Regressions are also a machine learning method, which falls under models with supervised learning. If you find machine learning fascinating, you might find the book “Hands-on Machine Learning with R” <span class="citation">(<a href="#ref-boehmke2019hands" role="doc-biblioref">Boehmke and Greenwell 2019</a>)</span> very insightful and interesting.</p>
+<p>In the following chapters we will cover three common types of regressions:</p>
+<ul>
+<li><p>Single linear regression</p></li>
+<li><p>Multiple regression</p></li>
+<li><p>Hierarchical regression</p></li>
+</ul>
+<p>These three types will allow you to perform any other type of linear regression you could think of. We can further distinguish two approaches to modelling via regressions:</p>
+<ul>
+<li><p><em>hypothesis testing</em>: A regression model is defined ex-ante</p></li>
+<li><p><em>machine learning</em>: A model is developed based on empirical data</p></li>
+</ul>
+<p>In the following chapters we will slightly blur the lines between both approaches.</p>
+<p>All our regressions will be performed using the <code>covid</code> dataset of the <code>r4np</code> package to investigate whether certain factors can predict COVID numbers in different countries. I felt, this book would not have been complete without covering this topic. After all, I wrote this book during the pandemic and it likely will mark a dark chapter in human history.</p>
+<div id="single-linear-regression" class="section level2" number="12.1">
+<h2><span class="header-section-number">12.1</span> Single linear regression</h2>
+<p>A single linear regression looks very similar to a correlation (see Chapter <a href="correlations.html#correlations">10</a>, but it is different in that it defines which variable affects another variable, i.e. a single direction relationship. I used the terms dependent variable (DV) and independent variable (IV) previously when comparing groups (see Chapter <a href="comparing-groups.html#comparing-groups">11</a>, and we will use them here again. In group comparisons, the independent variable was usually a <code>factor</code>, but in regressions we can use data that is not a categorical variable, i.e. <code>integer</code>, <code>double</code>, etc.</p>
+<p>While I understand that mathematical equations can be confusing, with regressions, they are fairly simple to understand. Also, when writing our models in R, we will continuously use a <code>formula</code> to specify our regression. A single linear regression consists of one independent variable and one dependent variable:</p>
+<div align="center">
+<p><span class="math display">\[
+DV = \beta_{0} + IV * \beta_{1} + error
+\]</span></p>
+</div>
+<p>Beta (<span class="math inline">\(\beta\)</span>) represents the coefficient of the independent variable, i.e. how much a change in IV causes a change in DV. For example, a one unit change in the IV might mean that the DV changes by two units of IV:</p>
+<div id="single-linear-regression-example" align="center">
+<p><span class="math display">\[
+DV = \beta_0 + 2 * IV + error
+\]</span></p>
+</div>
+<p>If we ignore <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(error\)</span> for a moment, we find that that if <span class="math inline">\(IV = 3\)</span>, our <span class="math inline">\(DV = 2*3 = 6\)</span>. Therefore, if <span class="math inline">\(IV = 5\)</span>, we find that <span class="math inline">\(DV = 10\)</span>, and so on. According to this model, DV will always be twice as large as IV.</p>
+<p>You might be wondering what <span class="math inline">\(\beta_0\)</span> stands for. It indicates an offset for each value, also called the intercept. Thus, no matter which value we choose for IV, DV will always be <span class="math inline">\(\beta_0\)</span> different from IV. It is a constant in our model. This can be best explained by visualising a regression line. Pay particular attention to the to the expressions after <code>function(x)</code></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="regression.html#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># A: Two models with different beta(0)</span></span>
+<span id="cb4-2"><a href="regression.html#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb4-3"><a href="regression.html#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_function</span>(<span class="at">fun =</span> <span class="cf">function</span>(x) <span class="dv">2</span> <span class="sc">*</span> x, <span class="at">colour =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
+<span id="cb4-4"><a href="regression.html#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_function</span>(<span class="at">fun =</span> <span class="cf">function</span>(x) <span class="dv">1</span> <span class="sc">+</span> <span class="dv">2</span> <span class="sc">*</span> x, <span class="at">colour =</span> <span class="st">&quot;blue&quot;</span>) <span class="sc">+</span></span>
+<span id="cb4-5"><a href="regression.html#cb4-5" aria-hidden="true" tabindex="-1"></a>  see<span class="sc">::</span><span class="fu">theme_modern</span>()</span></code></pre></div>
+<p><img src="r_for_non_programmers_files/figure-html/beta%20zero%20and%20beta%20one%20explained-1.png" width="672" /></p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="regression.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># B: Two models with the same beta(0), but different beta(1)</span></span>
+<span id="cb5-2"><a href="regression.html#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb5-3"><a href="regression.html#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_function</span>(<span class="at">fun =</span> <span class="cf">function</span>(x) <span class="dv">2</span> <span class="sc">*</span> x, <span class="at">colour =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
+<span id="cb5-4"><a href="regression.html#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_function</span>(<span class="at">fun =</span> <span class="cf">function</span>(x) <span class="dv">3</span> <span class="sc">*</span> x, <span class="at">colour =</span> <span class="st">&quot;blue&quot;</span>) <span class="sc">+</span></span>
+<span id="cb5-5"><a href="regression.html#cb5-5" aria-hidden="true" tabindex="-1"></a>  see<span class="sc">::</span><span class="fu">theme_modern</span>()</span></code></pre></div>
+<p><img src="r_for_non_programmers_files/figure-html/beta%20zero%20and%20beta%20one%20explained-2.png" width="672" /></p>
+<p>Plot B also shows what happens if we change <span class="math inline">\(\beta_1\)</span>, i.e. the slope. The two models both have the same intercept (and therefore the same origin), but the blue line ascends quicker than the red one, because its <span class="math inline">\(\beta_1\)</span> is higher than the one for the red model.</p>
+<p>Lastly, the <span class="math inline">\(error\)</span> component in the regression model refers to the deviation of data from this regression lines. Ideally, we want this value to be as small as possible.</p>
+<div id="fitting-a-regression-model-by-hand-i.e.-trial-and-error" class="section level3" number="12.1.1">
+<h3><span class="header-section-number">12.1.1</span> Fitting a regression model by hand, i.e. trial and error</h3>
+<p>If this sounds all awfully theoretical, let’s try to fit a regression model by hand. First we need to consider what our model should be able to predict. Let’s say that the number of COVID-19 cases predicts the number of deaths due to COVID-19. Intuitively we would assume this should be a linear relationship, because the more cases there are, the more likely we find more deaths caused by it.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="regression.html#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># We only select most recent numbers, i.e. &quot;2021-08-26&quot;</span></span>
+<span id="cb6-2"><a href="regression.html#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co"># and countries which have COVID cases</span></span>
+<span id="cb6-3"><a href="regression.html#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="regression.html#cb6-4" aria-hidden="true" tabindex="-1"></a>covid <span class="sc">%&gt;%</span></span>
+<span id="cb6-5"><a href="regression.html#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(date_reported <span class="sc">==</span> <span class="st">&quot;2021-08-26&quot;</span> <span class="sc">&amp;</span></span>
+<span id="cb6-6"><a href="regression.html#cb6-6" aria-hidden="true" tabindex="-1"></a>           cumulative_cases <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb6-7"><a href="regression.html#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> cumulative_cases,</span>
+<span id="cb6-8"><a href="regression.html#cb6-8" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> cumulative_deaths)) <span class="sc">+</span></span>
+<span id="cb6-9"><a href="regression.html#cb6-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
+<p><img src="r_for_non_programmers_files/figure-html/Finding%20a%20regression%20equation%20by%20hand%20p1-1.png" width="672" /></p>
+<p>This data visualisation shows us not much. We can see that there are three countries, which appear to have considerably more cases than most other countries. Thus, all other countries are crammed together in the bottom left corner. To improve this visualisation without removing the outliers, we can rescale the x and y axis using the function <code>scale_x_continuous()</code> and <code>scale_y_continuous()</code>.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="regression.html#cb7-1" aria-hidden="true" tabindex="-1"></a>covid <span class="sc">%&gt;%</span></span>
+<span id="cb7-2"><a href="regression.html#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(date_reported <span class="sc">==</span> <span class="st">&quot;2021-08-26&quot;</span> <span class="sc">&amp;</span></span>
+<span id="cb7-3"><a href="regression.html#cb7-3" aria-hidden="true" tabindex="-1"></a>           cumulative_cases <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb7-4"><a href="regression.html#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> cumulative_cases,</span>
+<span id="cb7-5"><a href="regression.html#cb7-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> cumulative_deaths)) <span class="sc">+</span></span>
+<span id="cb7-6"><a href="regression.html#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb7-7"><a href="regression.html#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">trans =</span> <span class="st">&quot;log&quot;</span>) <span class="sc">+</span></span>
+<span id="cb7-8"><a href="regression.html#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">trans =</span> <span class="st">&quot;log&quot;</span>)</span></code></pre></div>
+<p><img src="r_for_non_programmers_files/figure-html/Finding%20a%20regression%20equation%20by%20hand%20p2-1.png" width="672" /></p>
+<p>As we can see, the scatterplot is now easier to read and the dots are more spread out. This reveals that there is quite a strong relationship between <code>cumulative_cases</code> and <code>cumulative_deaths</code>. However, similar to before, we should avoid outliers when performing our analysis. For the sake of simplicity, in this section I will limit the number of countries included in our analysis, which also removes the requirement of using <code>scale_x_continuous()</code> and <code>scale_y_continuous()</code>.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="regression.html#cb8-1" aria-hidden="true" tabindex="-1"></a>covid_sample <span class="ot">&lt;-</span> covid <span class="sc">%&gt;%</span></span>
+<span id="cb8-2"><a href="regression.html#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(date_reported <span class="sc">==</span> <span class="st">&quot;2021-08-26&quot;</span> <span class="sc">&amp;</span></span>
+<span id="cb8-3"><a href="regression.html#cb8-3" aria-hidden="true" tabindex="-1"></a>           cumulative_cases <span class="sc">&gt;=</span> <span class="dv">2500</span> <span class="sc">&amp;</span></span>
+<span id="cb8-4"><a href="regression.html#cb8-4" aria-hidden="true" tabindex="-1"></a>           cumulative_cases <span class="sc">&lt;=</span> <span class="dv">150000</span> <span class="sc">&amp;</span></span>
+<span id="cb8-5"><a href="regression.html#cb8-5" aria-hidden="true" tabindex="-1"></a>           cumulative_deaths <span class="sc">&lt;=</span> <span class="dv">3000</span>)</span>
+<span id="cb8-6"><a href="regression.html#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="regression.html#cb8-7" aria-hidden="true" tabindex="-1"></a>plot <span class="ot">&lt;-</span> covid_sample <span class="sc">%&gt;%</span></span>
+<span id="cb8-8"><a href="regression.html#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> cumulative_cases,</span>
+<span id="cb8-9"><a href="regression.html#cb8-9" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> cumulative_deaths)) <span class="sc">+</span></span>
+<span id="cb8-10"><a href="regression.html#cb8-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span>
+<span id="cb8-11"><a href="regression.html#cb8-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-12"><a href="regression.html#cb8-12" aria-hidden="true" tabindex="-1"></a>plot</span></code></pre></div>
+<p><img src="r_for_non_programmers_files/figure-html/Finding%20a%20regression%20equation%20by%20hand%20p3-1.png" width="672" /></p>
+<p>Through trial and error we can try to fit a linear line on top by adjusting the beta values. This is effectively what we hope to achieve with a regression: the best <span class="math inline">\(\beta\)</span> values which best explain our data. Let’s start with the basic assumption of <span class="math inline">\(y = x\)</span> without specific <span class="math inline">\(\beta\)</span>s, i.e. they are zero.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="regression.html#cb9-1" aria-hidden="true" tabindex="-1"></a>plot <span class="sc">+</span></span>
+<span id="cb9-2"><a href="regression.html#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_function</span>(<span class="at">fun =</span> <span class="cf">function</span>(x) x, <span class="at">colour =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<p><img src="r_for_non_programmers_files/figure-html/Finding%20a%20regression%20equation%20by%20hand%20p4-1.png" width="672" /></p>
+<p>What we try to achieve is that the red line fits nicely inside the cloud of dots. Our very simple model provides a very poor fit to our data points, because all the dots are way below it. This makes sense, because <span class="math inline">\(y = x\)</span> would imply that every COVID-19 case leads to a death, i.e. everyone with COVID did not survive. From our own experience we know that this is luckily not true. Ideally we want the line to be less steep, because our first model does not make much sense. We can do this by adding a <span class="math inline">\(\beta_1\)</span> to our equation. Maybe only 2% of people who got COVID-19 might not have recovered, i.e. <span class="math inline">\(\beta_1 = 0.02\)</span>.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="regression.html#cb10-1" aria-hidden="true" tabindex="-1"></a>plot <span class="sc">+</span></span>
+<span id="cb10-2"><a href="regression.html#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_function</span>(<span class="at">fun =</span> <span class="cf">function</span>(x) <span class="fl">0.02</span><span class="sc">*</span>x, <span class="at">colour =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<p><img src="r_for_non_programmers_files/figure-html/Finding%20a%20regression%20equation%20by%20hand%20p5-1.png" width="672" /></p>
+<p>This time the line looks much more aligned with our observations. One could argue that it might have to move a little to the right as well, to cover the observations at the bottom a bit better. Therefore, we should add a <span class="math inline">\(\beta_0\)</span> to our equation, e.g. <code>-50</code>.= to move it to the right and tweak the <span class="math inline">\(\beta_1\)</span> ever so slightly.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="regression.html#cb11-1" aria-hidden="true" tabindex="-1"></a>plot <span class="sc">+</span></span>
+<span id="cb11-2"><a href="regression.html#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_function</span>(<span class="at">fun =</span> <span class="cf">function</span>(x) <span class="sc">-</span><span class="dv">50</span> <span class="sc">+</span> <span class="fl">0.015</span><span class="sc">*</span>x, <span class="at">colour =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<p><img src="r_for_non_programmers_files/figure-html/Finding%20a%20regression%20equation%20by%20hand%20p6-1.png" width="672" /></p>
+<p>We finished creating our regression model. If we wanted to express it as a formula we would write <span class="math inline">\(DV = -5 + 0.015 * IV\)</span>. We could now use this model to predict how high COVID cases likely will be in other countries.</p>
+<p>Estimating a regression model in this way is not ideal and far from accurate. Instead, we would compute the <span class="math inline">\(\beta\)</span>s based on our observed data, i.e. <code>cumulative_cases</code> and <code>cumulative_deaths</code>. We can use the function <code>lm()</code> to achieve this. I also rounded the all <code>numeric</code> values to two decimal places to make the output easier to read. We also use <code>tidy()</code> to retrieve a cleaner output from the computation.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="regression.html#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># classic r</span></span>
+<span id="cb12-2"><a href="regression.html#cb12-2" aria-hidden="true" tabindex="-1"></a>m0 <span class="ot">&lt;-</span> <span class="fu">lm</span>(cumulative_deaths <span class="sc">~</span> cumulative_cases, <span class="at">data =</span> covid_sample)</span>
+<span id="cb12-3"><a href="regression.html#cb12-3" aria-hidden="true" tabindex="-1"></a>broom<span class="sc">::</span><span class="fu">tidy</span>(m0) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.numeric), round, <span class="dv">2</span>))</span></code></pre></div>
+<pre><code>## # A tibble: 2 × 5
+##   term             estimate std.error statistic p.value
+##   &lt;chr&gt;               &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;
+## 1 (Intercept)         88.1       70.5      1.25    0.21
+## 2 cumulative_cases     0.01       0       10.7     0</code></pre>
+<p>We first might notice that the <code>p.value</code> indicates that the relationship between <code>cumulative death</code> and <code>cumulative_cases</code> is significant. Thus, we can conclude that countries with more COVID cases also suffer higher numbers of people who do not successfully recover from it. However, you might be wondering where our <span class="math inline">\(\beta\)</span> scores are. They are found where it says <code>estimate</code>. The standard error (<code>std.error</code>) denotes the <code>error</code> we specified in the <a href="regression.html#single-linear-regression">previous equation</a>. We find that in the first row we get the <span class="math inline">\(\beta_0\)</span>, i.e. the one for the intercept which is 88.10. This one is larger than what we estimated, i.e. <code>-50</code>. However, <span class="math inline">\(\beta_1\)</span> is 0.01, which means we have done a very good job in guessing this estimate. Still, it becomes hopefully obvious that it is much easier to use the function <code>lm()</code> to estimate a model than ‘eyeballing it.’</p>
+<p>We can now visualise the computed model (in blue) and our guessed model (in red) in one plot and see the differences. The plot shows that we have not been too far off. However, it was relatively easy to fit a model onto the observed data in this case. Often, it is much more difficult, especially when more than two variables are involved.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="regression.html#cb14-1" aria-hidden="true" tabindex="-1"></a>plot <span class="sc">+</span></span>
+<span id="cb14-2"><a href="regression.html#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_function</span>(<span class="at">fun =</span> <span class="cf">function</span>(x) <span class="sc">-</span><span class="dv">50</span> <span class="sc">+</span> <span class="fl">0.015</span><span class="sc">*</span>x, <span class="at">colour =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
+<span id="cb14-3"><a href="regression.html#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_function</span>(<span class="at">fun =</span> <span class="cf">function</span>(x) <span class="fl">88.1</span> <span class="sc">+</span> <span class="fl">0.01</span><span class="sc">*</span>x, <span class="at">colour =</span> <span class="st">&quot;blue&quot;</span>)</span></code></pre></div>
+<p><img src="r_for_non_programmers_files/figure-html/Showing%20computed%20and%20guessed%20regression-1.png" width="672" /></p>
+<p>With our final model computed, we also need to check its quality in terms of predictive power based on how well it can actually explain our observed data. We have tested models before when we looked at confirmatory factor analyses for latent variables (see Chapter <a href="data-wrangling.html#latent-constructs">7.7</a>. This time we want to know how accurate our model is in explaining observed data and therefore how accurate it will be predicting future observations. The package <code>performance</code> offers a nice little shortcut to compute many different things at once:</p>
+<ul>
+<li><p><code>check_model()</code>: Checks for linearity, homogeneity, collinearity and outliers</p></li>
+<li><p><code>model_performance()</code>: Tests the quality of our model.</p></li>
+</ul>
+<p>For now, we are mainly interested in the performance of our model. So, we can compute it the following way:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="regression.html#cb15-1" aria-hidden="true" tabindex="-1"></a>performance<span class="sc">::</span><span class="fu">model_performance</span>(m0)</span></code></pre></div>
+<pre><code>## # Indices of model performance
+## 
+## AIC      |      BIC |    R2 | R2 (adj.) |    RMSE |   Sigma
+## -----------------------------------------------------------
+## 1472.626 | 1480.319 | 0.548 |     0.543 | 502.573 | 507.891</code></pre>
+<p>There are quite a number of performance indicators and here is how to read them:</p>
+<ul>
+<li><p><code>AIC</code> stands for <em>Akaike Information Criterion</em> and the lower the score the better the model</p></li>
+<li><p><code>BIC</code> stands for <em>Bayesian Information Criterion</em> and the lower the score the better the model</p></li>
+<li><p><code>R2</code> stands for <em>R squared</em> (<span class="math inline">\(R^2\)</span>) and is also known as the coefficient of determination. It measures how much the independent variable can explain the variance in the dependent variable. In other words, the higher <span class="math inline">\(R^2\)</span> the better is our model, because more of the variance can be explained by our model. <span class="math inline">\(R^2\)</span> falls between 0-1, where 1 would imply that our model can explain 100% of the variance in our sample. <span class="math inline">\(R^2\)</span> is also considered a <em>goodness-of-fit measure</em>.</p></li>
+<li><p><code>R2 (adj.)</code> stands for <em>adjusted R squared</em>. The adjusted version of <span class="math inline">\(R^2\)</span> becomes important if we have more than one preditor (i.e. independent variable) in our regression. The adjustment of <span class="math inline">\(R^2\)</span> accounts for the number of independent variables in our model. Thus, it is possible for us to compare different models with each other, even though they might have different numbers of predictors. It is important to note that <span class="math inline">\(R^2\)</span> will always increase if we add more predictors.</p></li>
+<li><p><code>RMSE</code> stands for <em>Root Mean Square Error</em> and is an indicate how small or large the prediction error of the model is. Conceptually, it aims to measure the average deviations of values from our model when we attempt predictions. The lower the score the better, i.e. a score of 0 would imply that our model perfectly fits the data, which is likely never the case in the field of Social Sciences. The RMSE is particularly useful when trying to compare models.</p></li>
+<li><p><code>Sigma</code> stands for the standard deviation of our residuals (the difference between predicted and empirically observed values) and is therefore a measure of prediction accuracy. <code>Sigma</code> is <em>‘a measure of the average distance each observation falls from its prediction from the model’</em> <span class="citation">(<a href="#ref-gelman2020regression" role="doc-biblioref">Gelman, Hill, and Vehtari 2020, 168</a>)</span>.</p></li>
+</ul>
+<p>Many of these indices will become more relevant when we compare models. However, <span class="math inline">\(R^2\)</span> can also be meaningfully interpreted without a reference model. We know that the bigger <span class="math inline">\(R^2\)</span> the better. In our case it is <code>0.548</code> which is very good considering that our model consist of only one predictor only. It is not easy to interpret whether an particular <span class="math inline">\(R^2\)</span> value is good or bad. In our simple single linear regression, <span class="math inline">\(R^2\)</span> is literally ‘r squared,’ which we already know from correlations and their effect sizes (see Table <a href="#tab:effect-size-cohen"><strong>??</strong></a>. Thus, if we take the square root of <span class="math inline">\(R^2\)</span> we can retrieve the correlation coefficient, i.e. <span class="math inline">\(r = \sqrt{R^2} = \sqrt{0.548} = 0.740\)</span>. According to <span class="citation"><a href="#ref-cohen1988statistical" role="doc-biblioref">Cohen</a> (<a href="#ref-cohen1988statistical" role="doc-biblioref">1988</a>)</span>, this would count as a large effect size.</p>
+<p>However, for multiple regressions, the situation is slightly more complicated, but the interpretation of <span class="math inline">\(R^2\)</span> and its adjusted version remain largely the same.</p>
+<p>Once you have a model and it is fairly accurate, you can start making predictions. This can be achieved by using our model object <code>m0</code> in combination with the function <code>predict()</code>. However, first we should define a set of values for our independent variable, i.e. <code>cumulative_cases</code>, which we store in a tibble using the <code>tribble()</code> function.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="regression.html#cb17-1" aria-hidden="true" tabindex="-1"></a>df_predict <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb17-2"><a href="regression.html#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>cumulative_cases,</span>
+<span id="cb17-3"><a href="regression.html#cb17-3" aria-hidden="true" tabindex="-1"></a>                <span class="dv">100</span>,</span>
+<span id="cb17-4"><a href="regression.html#cb17-4" aria-hidden="true" tabindex="-1"></a>               <span class="dv">1000</span>,</span>
+<span id="cb17-5"><a href="regression.html#cb17-5" aria-hidden="true" tabindex="-1"></a>              <span class="dv">10000</span>,</span>
+<span id="cb17-6"><a href="regression.html#cb17-6" aria-hidden="true" tabindex="-1"></a>             <span class="dv">100000</span></span>
+<span id="cb17-7"><a href="regression.html#cb17-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb17-8"><a href="regression.html#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(m0, <span class="at">newdata =</span> df_predict)</span></code></pre></div>
+<pre><code>##          1          2          3          4 
+##   89.53289  102.45411  231.66629 1523.78810</code></pre>
+<p>As a result we find out how many likely deaths from COVID have to be expected based on our model for each value in our dataset.</p>
+<p>Single linear regressions are simple and a good way to introduce novice scholars to modeling social phenomena. However, hardly ever will find that a single variable can explain enough variance to be a useful model. Instead, we most likely can improve the majority of our single regression models by considering more variables in the form of multiple regressions.</p>
+</div>
+</div>
+<div id="multiple-regression" class="section level2" number="12.2">
+<h2><span class="header-section-number">12.2</span> Multiple regression</h2>
+<p>Multiple regressions expand single linear regressions by allowing us to add more variables. Maybe surprisingly, it is fairly similar to compute these in R, because it requires the same function, i.e. <code>lm()</code>.</p>
+<p>In the last section we wanted to know how many people will likely not recover from COVID. However, it might be even more interesting to understand how we can reduce the number of cumulative cases and prevent casualties from the outset. Since I live in the UK at the time of the pandemic, I am curious to know whether certain COVID measures helped to reduce the number of new COVID cases. Of course, feel free to pick a different country (maybe the one you live in?) to follow with my example.</p>
+<p>First, we create a dataset that only contains information from the <code>United Kingdom</code>, which means we use <code>filter()</code> and remove observations with missing data.</p>
+<p>As a first step, we might want to know how the UK performed over the course of time in terms of new cases. Let’s plot this first.</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="regression.html#cb19-1" aria-hidden="true" tabindex="-1"></a>covid <span class="sc">%&gt;%</span></span>
+<span id="cb19-2"><a href="regression.html#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> date_reported,</span>
+<span id="cb19-3"><a href="regression.html#cb19-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> new_cases)) <span class="sc">+</span></span>
+<span id="cb19-4"><a href="regression.html#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>()</span></code></pre></div>
+<p><img src="r_for_non_programmers_files/figure-html/Multiple%20regression%20plotting%20cumulative%20cases-1.png" width="672" /></p>
+<p>One issue you might encounter when visualising large values in a plot like this are the axis labels. In our case, the values are very high on the y axis and ggplot abbreviates them, i.e. uses a scientific notation. We might not find this useful, especially when comparing it to the values in our dataset. Therefore, we should change it. The <code>scales</code> package is fantastic, because it can help us take care of it. Here is the same plot, but with better axis labels which everyone can easily understand by just adding <code>labels = scales::comma</code>.</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="regression.html#cb20-1" aria-hidden="true" tabindex="-1"></a>covid <span class="sc">%&gt;%</span></span>
+<span id="cb20-2"><a href="regression.html#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(date_reported <span class="sc">==</span> <span class="st">&quot;2021-08-26&quot;</span> <span class="sc">&amp;</span> cumulative_cases <span class="sc">&gt;</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb20-3"><a href="regression.html#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y =</span> cumulative_cases)) <span class="sc">+</span></span>
+<span id="cb20-4"><a href="regression.html#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span> </span>
+<span id="cb20-5"><a href="regression.html#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">trans =</span> <span class="st">&quot;log&quot;</span>,</span>
+<span id="cb20-6"><a href="regression.html#cb20-6" aria-hidden="true" tabindex="-1"></a>                     <span class="at">labels =</span> scales<span class="sc">::</span>comma)</span></code></pre></div>
+<p><img src="r_for_non_programmers_files/figure-html/Multiple%20regression%20plotting%20cumulative%20cases%20v2-1.png" width="672" /></p>
+<p>In short, it seems there is quite a range of countries with different numbers of COVID cases. However, we also notice that we have outliers which we need to deal with in a moment.</p>
+<p>If you have hypotheses you want to test, you would already know which variables to include in your regression. However, in our case, we do not really have a hypothesis based on our prior reading or other studies. Thus, we pick, for example three variables of interest that we suspect could help us with modelling COVID cases across countries. We can be fairly certain that the number of COVID cases should be lower in countries were more safety measures are in place (assuming they are effective, of course). The <code>covid</code> dataset includes such information over a very long period of time. Since we do not wish to work with time-series data in this section, we compute the average amount of measures taken expressed as the average index score for our variables of interest, e.g. <code>masks</code>, <code>movements</code>, and <code>gatherings</code>.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="regression.html#cb21-1" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(cumulative_cases <span class="sc">~</span> who_region <span class="sc">+</span> number_vaccines_types_used, <span class="at">data =</span> covid)</span>
+<span id="cb21-2"><a href="regression.html#cb21-2" aria-hidden="true" tabindex="-1"></a>performance<span class="sc">::</span><span class="fu">model_performance</span>(m1)</span></code></pre></div>
+<pre><code>## # Indices of model performance
+## 
+## AIC       |       BIC |    R2 | R2 (adj.) |      RMSE |     Sigma
+## -----------------------------------------------------------------
+## 4.180e+06 | 4.180e+06 | 0.025 |     0.025 | 1.859e+06 | 1.859e+06</code></pre>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="regression.html#cb23-1" aria-hidden="true" tabindex="-1"></a>covid <span class="sc">%&gt;%</span></span>
+<span id="cb23-2"><a href="regression.html#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(country <span class="sc">==</span> <span class="st">&quot;United Kingdom&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb23-3"><a href="regression.html#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">where</span>(is.numeric)) <span class="sc">%&gt;%</span></span>
+<span id="cb23-4"><a href="regression.html#cb23-4" aria-hidden="true" tabindex="-1"></a>  correlation<span class="sc">::</span><span class="fu">correlation</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb23-5"><a href="regression.html#cb23-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(r <span class="sc">&gt;=</span> <span class="fl">0.4</span>)</span></code></pre></div>
+<pre><code>## Registered S3 method overwritten by &#39;datawizard&#39;:
+##   method                    from
+##   plot.visualisation_recipe see</code></pre>
+<pre><code>## Warning in cor(x, y): the standard deviation is zero
 
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero
+
+## Warning in cor(x, y): the standard deviation is zero</code></pre>
+<pre><code>## # Correlation Matrix (pearson-method)
+## 
+## Parameter1        |        Parameter2 |    r |       95% CI |     t |  df |         p
+## -------------------------------------------------------------------------------------
+## new_cases         |  cumulative_cases | 0.46 | [0.39, 0.52] | 12.59 | 600 | &lt; .001***
+## new_cases         |        new_deaths | 0.45 | [0.39, 0.52] | 12.51 | 600 | &lt; .001***
+## new_cases         |            travel | 0.51 | [0.45, 0.57] | 14.56 | 592 | &lt; .001***
+## new_cases         |           schools | 0.52 | [0.45, 0.57] | 14.66 | 592 | &lt; .001***
+## new_cases         |        businesses | 0.51 | [0.44, 0.56] | 14.28 | 592 | &lt; .001***
+## new_cases         |      global_index | 0.65 | [0.61, 0.70] | 21.08 | 592 | &lt; .001***
+## cumulative_cases  | cumulative_deaths | 0.96 | [0.96, 0.97] | 86.69 | 600 | &lt; .001***
+## cumulative_cases  |      global_index | 0.42 | [0.35, 0.49] | 11.30 | 592 | &lt; .001***
+## new_deaths        |           schools | 0.48 | [0.42, 0.54] | 13.44 | 592 | &lt; .001***
+## new_deaths        |        businesses | 0.48 | [0.41, 0.54] | 13.20 | 592 | &lt; .001***
+## new_deaths        |         movements | 0.54 | [0.48, 0.59] | 15.50 | 592 | &lt; .001***
+## new_deaths        |      global_index | 0.55 | [0.50, 0.61] | 16.17 | 592 | &lt; .001***
+## cumulative_deaths |      global_index | 0.45 | [0.39, 0.52] | 12.42 | 592 | &lt; .001***
+## masks             |        businesses | 0.44 | [0.37, 0.50] | 11.99 | 592 | &lt; .001***
+## masks             |      global_index | 0.64 | [0.59, 0.68] | 20.06 | 592 | &lt; .001***
+## travel            |      global_index | 0.51 | [0.45, 0.57] | 14.50 | 592 | &lt; .001***
+## schools           |        businesses | 0.53 | [0.47, 0.59] | 15.23 | 592 | &lt; .001***
+## schools           |         movements | 0.52 | [0.46, 0.58] | 14.93 | 592 | &lt; .001***
+## schools           |      global_index | 0.72 | [0.68, 0.75] | 25.08 | 592 | &lt; .001***
+## businesses        |         movements | 0.42 | [0.35, 0.48] | 11.29 | 592 | &lt; .001***
+## businesses        |      global_index | 0.67 | [0.62, 0.71] | 21.98 | 592 | &lt; .001***
+## movements         |      global_index | 0.59 | [0.53, 0.64] | 17.57 | 592 | &lt; .001***
+## 
+## p-value adjustment method: Holm (1979)
+## Observations: 594-602</code></pre>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="regression.html#cb27-1" aria-hidden="true" tabindex="-1"></a>covid <span class="sc">%&gt;%</span></span>
+<span id="cb27-2"><a href="regression.html#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> gatherings,</span>
+<span id="cb27-3"><a href="regression.html#cb27-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> new_cases)) <span class="sc">+</span></span>
+<span id="cb27-4"><a href="regression.html#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>() <span class="sc">+</span></span>
+<span id="cb27-5"><a href="regression.html#cb27-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">label =</span> scales<span class="sc">::</span>comma)</span></code></pre></div>
+<pre><code>## Warning: Removed 10806 rows containing missing values (geom_point).</code></pre>
+<p><img src="r_for_non_programmers_files/figure-html/Multiple%20regression-1.png" width="672" /></p>
+</div>
+<div id="hierarchical-regression" class="section level2" number="12.3">
+<h2><span class="header-section-number">12.3</span> Hierarchical regression</h2>
+
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-boehmke2019hands" class="csl-entry">
+Boehmke, Brad, and Brandon Greenwell. 2019. <em>Hands-on Machine Learning with r</em>. Chapman; Hall/CRC.
+</div>
+<div id="ref-cohen1988statistical" class="csl-entry">
+Cohen, Jacob. 1988. <span>“Statistical Power Analysis for the Behavioral Sciences New York.”</span> <em>NY: Academic</em>, 54.
+</div>
+<div id="ref-gelman2020regression" class="csl-entry">
+Gelman, Andrew, Jennifer Hill, and Aki Vehtari. 2020. <em>Regression and Other Stories</em>. Cambridge University Press.
+</div>
 </div>
             </section>
 
@@ -327,6 +837,10 @@ gitbook.start({
 "text": null
 },
 "download": ["r_for_non_programmers.pdf", "r_for_non_programmers.epub"],
+"search": {
+"engine": "lunr",
+"options": null
+},
 "toc": {
 "collapse": "subsection"
 }

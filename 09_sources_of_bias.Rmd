@@ -262,7 +262,7 @@ p1 + p2 + p3 + plot_spacer()
 
 Considering all three plots, we notice that neither the median nor the mean by themselves are a reliable indicator for normality. Fig A and Fig C both show that the median and mean are almost identical, but only Fig A shows a normal distribution. In fact, the median and mean in Fig C are not reflective for the average observation in this dataset. Most scores lie below and above the mean/median. This type of distribution hints at two sub-groups in our dataset, for example male versus female participants. Therefore, when we analyse the normality of our data, we usually are not interested in the normality of a single variable, but the normality of the sampling distribution. However, we cannot directly assess the sampling distribution in most cases. As such, we often revert to testing the normality of our data. There also instances were we would not expect a normal distribution to begin with. Consider the following plots:
 
-```{r Normal distribution for two groups, fig.cap="Two normal distributions in one dataset", label = "two-normalities-groups"  echo=FALSE}
+```{r Normal distribution for two groups, fig.cap="Two normal distributions in one dataset", label = "two-normalities-groups", echo=FALSE}
 data4 <- tribble(
   ~income,   ~gender,
   1400,      "male",

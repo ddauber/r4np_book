@@ -214,10 +214,13 @@ dir_mov %>%
 
 Considering the revised plot, we likely can predict what the statistical test will show. Table \@ref(tab:comparing-two-groups-paired) summarises which tests and functions need to be performed if our data is parametric or non-parametric. In both cases, the functions are the same to those of the unpaired group comparisons, but we need to add the attribute `paired = TRUE`. Still, the interpretations between the unpaired and paired tests remain the same. Also, be aware that some tests have changed in name, e.g. the Mann-Whitney U test has become the Wilcoxon Signed Rank Test. even though we use the same functions as before, by changing the attributed of `paired` we also change the computational technique to obtain the results. Thus, be aware that the same function can perform different computations.
 
++----------------+---------------------------+------------------------------+-------------+---------------------+
 | Assumption     | Test                      | Function                     | Effect size | Function            |
-|----------------|---------------------------|------------------------------|-------------|---------------------|
++================+===========================+==============================+=============+=====================+
 | Parametric     | T-Test                    | `t_test(paired = TRUE)`      | Cohen's d   | `cohens_d()`        |
++----------------+---------------------------+------------------------------+-------------+---------------------+
 | Non-parametric | Wilcoxon Signed Rank Test | `wilcox_test(paired = TRUE)` | Wilcoxon r  | `wilcoxonPairedR()` |
++----------------+---------------------------+------------------------------+-------------+---------------------+
 
 : (\#tab:comparing-two-groups-paired)Comparing two unpaired groups (effect size functions from package `effectsize`, except for `wilcoxonPairedR()` from `rcompanion`)
 
@@ -332,14 +335,14 @@ mcomp %>%
 While `anova_test()` does provide the effect size automatically, i.e. generalised eta squared (`ges`), this is not the case for the other two approaches. Therefore, we have to use the `effectsize` package to help us out. Packages often can get you a long way and make your life easier, but it is good to know alternatives in case a single package does not give you what you need.
 
 ```{r Multiple unpaired groups effect sizes, echo=TRUE, message=FALSE}
-# After ANOVA with var.equal = FALSE
-effectsize::eta_squared(test)
-
-# effect size rank epsilon squared
-effectsize::rank_epsilon_squared(mcomp$satisfaction ~ mcomp$gender)
-
-# effect size eta squared (an alternative to epsilon squared)
-mcomp %>% kruskal_effsize(satisfaction ~ country)
+# # After ANOVA with var.equal = FALSE
+# effectsize::eta_squared(test)
+# 
+# # effect size rank epsilon squared
+# effectsize::rank_epsilon_squared(mcomp$satisfaction ~ mcomp$gender)
+# 
+# # effect size eta squared (an alternative to epsilon squared)
+# mcomp %>% kruskal_effsize(satisfaction ~ country)
 ```
 
 The results show that there is a significant and large difference between these groups. You might argue that this is actually not quite true. Considering our plot, we know that Japan and Korea do not look like as if they are significantly different. Multiple group comparisons only consider differences across all three groups. Therefore, if one group lies far away from the other groups, the test will turn significant and even provide a large enough effect size to consider it important. However, these tests do not provide information which differences between groups are significant. To gain more clarification about this, we need to incorporate another step, so called 'post-hoc tests'. These tests compare two groups at a time, which is why they are also known as 'pairwise comparisons'. Compared to regular two-sample tests, these perform corrections of the `p`values for mulitple testing, which is necessary. However, there are many different 'post-hoc' tests one can choose from. @field2013discovering (p.459) nicely outlines the different scenarios and provides recommends to navigate this slightly complex field of post-hoc tests to follow-up a one-way ANOVA. Table \@ref(tab:post-hoc-tests) provides an overview of his suggestions.
@@ -401,20 +404,20 @@ Is an extension of the linear model - so why not simply use a regression instead
 repeated measures ANOVA (find dataset)
 
 ```{r Repeated measures ANOVA, echo=TRUE}
-anova_test()
-
-eta_squared()
-omega_squared()
+# anova_test()
+# 
+# eta_squared()
+# omega_squared()
 ```
 
 Friedman Test (find dataset)
 
 ```{r Friedman test, echo=TRUE}
-# NON=PARAMETRIC COMPARISON
-friedman_test()
-
-# Effect size
-kendalls_w()
+# # NON=PARAMETRIC COMPARISON
+# friedman_test()
+# 
+# # Effect size
+# kendalls_w()
 ```
 
 A useful overview of all the possible options of comparing groups and how to obtain their effect sizes can also be found here
@@ -426,18 +429,18 @@ A useful overview of all the possible options of comparing groups and how to obt
 Unpaired
 
 ```{r Contigency tables unpaired computation, echo=TRUE}
-wvs_nona %>% infer::chisq_test(relationship_status ~ gender)
-
-cramers_v()
+# wvs_nona %>% infer::chisq_test(relationship_status ~ gender)
+# 
+# cramers_v()
 ```
 
 Paired
 
 ```{r Contigency tables paired computation, echo=TRUE}
-mcnemar.test()
-
-# Effect size
-cohens_g()
+# mcnemar.test()
+# 
+# # Effect size
+# cohens_g()
 ```
 
 ## A cheatsheet to guide your own group comparisons {#cheatsheet-group-comparisons}
@@ -445,49 +448,49 @@ cohens_g()
 To summarise what we have covered in this section, we can consider
 
 ```{r How to decide on the right group comparison, echo=FALSE}
-DiagrammeR::mermaid("
-        graph TB
-
-        data(my data)
-        datatype{type of data}
-        quan[quantitative]
-        qual[qualitative]
-        paracheck{<center>check for <br> assumptions</center>}
-        addlin[additivity and linerarity]
-        normal[normality]
-        homvar[homogeneity of variance]
-        indep[independence]
-        para[parametric]
-        npara[non-parametric]
-        
-        data --> datatype
-        
-        subgraph 
-        datatype --> quan
-        datatype --> qual
-        end
-        
-        
-        quan --> paracheck
-        qual --> npara
-        
-        paracheck --> addlin
-        
-        subgraph 
-        addlin -- yes --> indep
-        indep -- yes --> normal
-        normal -- yes --> homvar
-        end
-
-        addlin -- no --> npara
-        indep -- no --> npara
-        normal -- no --> npara
-        homvar -- no --> npara
-
-        homvar -- yes --> para
-        
-        # hwg[How many groups?]
-        ")
-
+# DiagrammeR::mermaid("
+#         graph TB
+# 
+#         data(my data)
+#         datatype{type of data}
+#         quan[quantitative]
+#         qual[qualitative]
+#         paracheck{<center>check for <br> assumptions</center>}
+#         addlin[additivity and linerarity]
+#         normal[normality]
+#         homvar[homogeneity of variance]
+#         indep[independence]
+#         para[parametric]
+#         npara[non-parametric]
+#         
+#         data --> datatype
+#         
+#         subgraph 
+#         datatype --> quan
+#         datatype --> qual
+#         end
+#         
+#         
+#         quan --> paracheck
+#         qual --> npara
+#         
+#         paracheck --> addlin
+#         
+#         subgraph 
+#         addlin -- yes --> indep
+#         indep -- yes --> normal
+#         normal -- yes --> homvar
+#         end
+# 
+#         addlin -- no --> npara
+#         indep -- no --> npara
+#         normal -- no --> npara
+#         homvar -- no --> npara
+# 
+#         homvar -- yes --> para
+#         
+#         # hwg[How many groups?]
+#         ")
+# 
 
 ```
