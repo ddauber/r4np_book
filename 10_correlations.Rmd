@@ -10,13 +10,19 @@ Sometimes counting and measuring means, medians and standard deviations is not e
 
 There are many different ways of how one can compute the correlation and it partially depends on the type of data you want to relate. The 'Pearson's correlation' is by far the most frequently used correlation technique for data that is normally distributed. On the other hand, if data is not normally distributed, we can opt for the 'Spearman's rank' correlation. One could argue that the relationship between these two correlations is like the mean (Pearson) to the median (Spearman). Both approaches require numeric values to be computed properly. If our data is ordinal, or worse dichotomous (like a logical variables), we have to opt for different options.
 
++-----------------+-------------------------------------------------------------------------+
 | Correlation     | Used                                                                    |
-|-----------------|-------------------------------------------------------------------------|
++=================+=========================================================================+
 | *Pearson*       | Requires variables to be parametric and therefore numeric               |
++-----------------+-------------------------------------------------------------------------+
 | *Spearman*      | Used when data is non-parametric and requires numeric variables         |
++-----------------+-------------------------------------------------------------------------+
 | *Polychoric*    | Used when investigating two ordinal variables                           |
++-----------------+-------------------------------------------------------------------------+
 | *Tetrachoric*   | Used when both variables are dichotomous, e.g. 'yes/no', 'True/False'.  |
++-----------------+-------------------------------------------------------------------------+
 | *Rank-biserial* | Used when one variable is dichotomous and the other variable is ordinal |
++-----------------+-------------------------------------------------------------------------+
 
 : (\#tab:different-correlations) Different ways of computing correlations
 
@@ -265,9 +271,9 @@ In conclusion, while there is some relationship between the rating and the numbe
 
 One of the most common pitfalls of novice statisticians is related to the interpretation of what counts as significant and not significant. Most basic tests offer a 'p value', which stands for 'probability value'. The `p` value can range from 1 (for 100%) to 0 (for 0%) and implies:
 
--   p = 1, there is a 100% chance that the result is a pure coincidence
+-   $p = 1$, there is a 100% chance that the result is a pure coincidence
 
--   p = 0, there is a 0% chance that the results is a pure coincidence, i.e. we can be certain this is not just luck.
+-   $p = 0$, there is a 0% chance that the results is a pure coincidence, i.e. we can be certain this is not just luck.
 
 Technically, we would not find that `p` is ever truly zero, and instead denote very small `p` values with `p < 0.01` or even `p< 0.001`.
 
