@@ -1,6 +1,6 @@
 # Regression: Creating models to predict future observations {#regression}
 
-```{r}
+```{r echo=FALSE}
 library(tidyverse)
 library(r4np)
 ```
@@ -29,13 +29,13 @@ In the following chapters we will slightly blur the lines between both approache
 
 All our regressions will be performed using the `covid` dataset of the `r4np` package to investigate whether certain factors can predict COVID numbers in different countries. I felt, this book would not have been complete without covering this topic. After all, I wrote this book during the pandemic and it likely will mark a dark chapter in human history.
 
-## Single linear regression
+## Single linear regression {#single-linear-regression}
 
 A single linear regression looks very similar to a correlation (see Chapter \@ref(correlations), but it is different in that it defines which variable affects another variable, i.e. a single direction relationship. I used the terms dependent variable (DV) and independent variable (IV) previously when comparing groups (see Chapter \@ref(comparing-groups), and we will use them here again. In group comparisons, the independent variable was usually a `factor`, but in regressions we can use data that is not a categorical variable, i.e. `integer`, `double`, etc.
 
 While I understand that mathematical equations can be confusing, with regressions, they are fairly simple to understand. Also, when writing our models in R, we will continuously use a `formula` to specify our regression. A single linear regression consists of one independent variable and one dependent variable:
 
-::: {#single-linear-regression align="center"}
+::: {align="center"}
 $$
 DV = \beta_{0} + IV * \beta_{1} + error
 $$
@@ -117,21 +117,21 @@ plot <- covid_sample %>%
 plot
 ```
 
-Through trial and error we can try to fit a linear line on top. The line will be slightly curve at the bottom end, because we applied `trans = "log"`, which also affect our reference line. Let's start with the basic assumption of $y = x$ without specific $\beta$s.
+Through trial and error we can try to fit a linear line on top by adjusting the beta values. This is effectively what we hope to achieve with a regression: the best $\beta$ values which best explain our data. Let's start with the basic assumption of $y = x$ without specific $\beta$s, i.e. they are zero.
 
 ```{r Finding a regression equation by hand p4, echo=TRUE, warning=FALSE}
 plot +
   geom_function(fun = function(x) x, colour = "red")
 ```
 
-What we try to achieve is that the red line fits nicely inside the cloud of dots. Our very simple model provides a very poor fit to our data points, because all the dots are way below it. This makes sense, because $y = x$ would imply that every COVID-19 case lead to a death, i.e. everyone with COVID did not survive. Ideally we want the line to be less steep, because our first model does not make much sense. We can do this by adding a $\beta_1$ to our equation. Maybe only 2% of people who got COVID-19 might not have recovered, i.e. $\beta_1 = 0.02$.
+What we try to achieve is that the red line fits nicely inside the cloud of dots. Our very simple model provides a very poor fit to our data points, because all the dots are way below it. This makes sense, because $y = x$ would imply that every COVID-19 case leads to a death, i.e. everyone with COVID did not survive. From our own experience we know that this is luckily not true. Ideally we want the line to be less steep, because our first model does not make much sense. We can do this by adding a $\beta_1$ to our equation. Maybe only 2% of people who got COVID-19 might not have recovered, i.e. $\beta_1 = 0.02$.
 
 ```{r Finding a regression equation by hand p5, echo=TRUE, warning=FALSE}
 plot +
   geom_function(fun = function(x) 0.02*x, colour = "red")
 ```
 
-This time the line looks much more aligned with our observations. One could argue that it might have to move a little to the right as well, to cover the observations at the bottom a bit better. Therefore, we should add a $\beta_0$ to our equation, e.g. `-50`.
+This time the line looks much more aligned with our observations. One could argue that it might have to move a little to the right as well, to cover the observations at the bottom a bit better. Therefore, we should add a $\beta_0$ to our equation, e.g. `-50`.= to move it to the right and tweak the $\beta_1$ ever so slightly.
 
 ```{r Finding a regression equation by hand p6, echo=TRUE, warning=FALSE}
 plot +
@@ -140,18 +140,123 @@ plot +
 
 We finished creating our regression model. If we wanted to express it as a formula we would write $DV = -5 + 0.015 * IV$. We could now use this model to predict how high COVID cases likely will be in other countries.
 
-Estimating a regression model in this way is not ideal and far from accurate. Instead, we would compute the $\beta$s based on our observed data, i.e. `cumulative_cases` and `cumulative_deaths`. We can use the
+Estimating a regression model in this way is not ideal and far from accurate. Instead, we would compute the $\beta$s based on our observed data, i.e. `cumulative_cases` and `cumulative_deaths`. We can use the function `lm()` to achieve this. I also rounded the all `numeric` values to two decimal places to make the output easier to read. We also use `tidy()` to retrieve a cleaner output from the computation.
 
 ```{r Computing a regression, echo=TRUE}
 # classic r
-m0 <- lm(cumulative_deaths ~ cumulative_cases, data = covid)
-broom::tidy(m0)
+m0 <- lm(cumulative_deaths ~ cumulative_cases, data = covid_sample)
+broom::tidy(m0) %>% mutate(across(where(is.numeric), round, 2))
 ```
+
+We first might notice that the `p.value` indicates that the relationship between `cumulative death` and `cumulative_cases` is significant. Thus, we can conclude that countries with more COVID cases also suffer higher numbers of people who do not successfully recover from it. However, you might be wondering where our $\beta$ scores are. They are found where it says `estimate`. The standard error (`std.error`) denotes the `error` we specified in the [previous equation](#single-linear-regression). We find that in the first row we get the $\beta_0$, i.e. the one for the intercept which is 88.10. This one is larger than what we estimated, i.e. `-50`. However, $\beta_1$ is 0.01, which means we have done a very good job in guessing this estimate. Still, it becomes hopefully obvious that it is much easier to use the function `lm()` to estimate a model than 'eyeballing it'.
+
+We can now visualise the computed model (in blue) and our guessed model (in red) in one plot and see the differences. The plot shows that we have not been too far off. However, it was relatively easy to fit a model onto the observed data in this case. Often, it is much more difficult, especially when more than two variables are involved.
+
+```{r Showing computed and guessed regression, echo=TRUE}
+plot +
+  geom_function(fun = function(x) -50 + 0.015*x, colour = "red") +
+    geom_function(fun = function(x) 88.1 + 0.01*x, colour = "blue")
+```
+
+With our final model computed, we also need to check its quality in terms of predictive power based on how well it can actually explain our observed data. We have tested models before when we looked at confirmatory factor analyses for latent variables (see Chapter \@ref(latent-constructs). This time we want to know how accurate our model is in explaining observed data and therefore how accurate it will be predicting future observations. The package `performance` offers a nice little shortcut to compute many different things at once:
+
+-   `check_model()`: Checks for linearity, homogeneity, collinearity and outliers
+
+-   `model_performance()`: Tests the quality of our model.
+
+For now, we are mainly interested in the performance of our model. So, we can compute it the following way:
+
+```{r Single regression model performance, echo=TRUE}
+performance::model_performance(m0)
+```
+
+There are quite a number of performance indicators and here is how to read them:
+
+-   `AIC` stands for *Akaike Information Criterion* and the lower the score the better the model
+
+-   `BIC` stands for *Bayesian Information Criterion* and the lower the score the better the model
+
+-   `R2` stands for *R squared* ($R^2$) and is also known as the coefficient of determination. It measures how much the independent variable can explain the variance in the dependent variable. In other words, the higher $R^2$ the better is our model, because more of the variance can be explained by our model. $R^2$ falls between 0-1, where 1 would imply that our model can explain 100% of the variance in our sample. $R^2$ is also considered a *goodness-of-fit measure*.
+
+-   `R2 (adj.)` stands for *adjusted R squared*. The adjusted version of $R^2$ becomes important if we have more than one preditor (i.e. independent variable) in our regression. The adjustment of $R^2$ accounts for the number of independent variables in our model. Thus, it is possible for us to compare different models with each other, even though they might have different numbers of predictors. It is important to note that $R^2$ will always increase if we add more predictors.
+
+-   `RMSE` stands for *Root Mean Square Error* and is an indicate how small or large the prediction error of the model is. Conceptually, it aims to measure the average deviations of values from our model when we attempt predictions. The lower the score the better, i.e. a score of 0 would imply that our model perfectly fits the data, which is likely never the case in the field of Social Sciences. The RMSE is particularly useful when trying to compare models.
+
+-   `Sigma` stands for the standard deviation of our residuals (the difference between predicted and empirically observed values) and is therefore a measure of prediction accuracy. `Sigma` is *'a measure of the average distance each observation falls from its prediction from the model'* [@gelman2020regression, p. 168].
+
+Many of these indices will become more relevant when we compare models. However, $R^2$ can also be meaningfully interpreted without a reference model. We know that the bigger $R^2$ the better. In our case it is `0.548` which is very good considering that our model consist of only one predictor only. It is not easy to interpret whether an particular $R^2$ value is good or bad. In our simple single linear regression, $R^2$ is literally 'r squared', which we already know from correlations and their effect sizes (see Table \@ref(tab:effect-size-cohen). Thus, if we take the square root of $R^2$ we can retrieve the correlation coefficient, i.e. $r = \sqrt{R^2} = \sqrt{0.548} = 0.740$. According to @cohen1988statistical, this would count as a large effect size.
+
+However, for multiple regressions, the situation is slightly more complicated, but the interpretation of $R^2$ and its adjusted version remain largely the same.
+
+Once you have a model and it is fairly accurate, you can start making predictions. This can be achieved by using our model object `m0` in combination with the function `predict()`. However, first we should define a set of values for our independent variable, i.e. `cumulative_cases`, which we store in a tibble using the `tribble()` function.
+
+```{r Predict values from linear regression, echo=TRUE}
+df_predict <- tribble(
+  ~cumulative_cases,
+                100,
+               1000,
+              10000,
+             100000
+)
+predict(m0, newdata = df_predict)
+```
+
+As a result we find out how many likely deaths from COVID have to be expected based on our model for each value in our dataset.
+
+Single linear regressions are simple and a good way to introduce novice scholars to modeling social phenomena. However, hardly ever will find that a single variable can explain enough variance to be a useful model. Instead, we most likely can improve the majority of our single regression models by considering more variables in the form of multiple regressions.
 
 ## Multiple regression
 
-```{r Multiple regression, echo=TRUE}
+Multiple regressions expand single linear regressions by allowing us to add more variables. Maybe surprisingly, it is fairly similar to compute these in R, because it requires the same function, i.e. `lm()`.
 
+In the last section we wanted to know how many people will likely not recover from COVID. However, it might be even more interesting to understand how we can reduce the number of cumulative cases and prevent casualties from the outset. Since I live in the UK at the time of the pandemic, I am curious to know whether certain COVID measures helped to reduce the number of new COVID cases. Of course, feel free to pick a different country (maybe the one you live in?) to follow with my example.
+
+First, we create a dataset that only contains information from the `United Kingdom`, which means we use `filter()` and remove observations with missing data.
+
+```{r MR filter out UK as a sample}
+
+```
+
+As a first step, we might want to know how the UK performed over the course of time in terms of new cases. Let's plot this first.
+
+```{r Multiple regression plotting cumulative cases, echo=TRUE}
+covid %>%
+  ggplot(aes(x = date_reported,
+             y = new_cases)) +
+  geom_col()
+```
+
+One issue you might encounter when visualising large values in a plot like this are the axis labels. In our case, the values are very high on the y axis and ggplot abbreviates them, i.e. uses a scientific notation. We might not find this useful, especially when comparing it to the values in our dataset. Therefore, we should change it. The `scales` package is fantastic, because it can help us take care of it. Here is the same plot, but with better axis labels which everyone can easily understand by just adding `labels = scales::comma`.
+
+```{r Multiple regression plotting cumulative cases v2, echo=TRUE}
+covid %>%
+  filter(date_reported == "2021-08-26" & cumulative_cases > 0) %>% 
+  ggplot(aes(y = cumulative_cases)) +
+  geom_boxplot() + 
+  scale_y_continuous(trans = "log",
+                     labels = scales::comma)
+```
+
+In short, it seems there is quite a range of countries with different numbers of COVID cases. However, we also notice that we have outliers which we need to deal with in a moment.
+
+If you have hypotheses you want to test, you would already know which variables to include in your regression. However, in our case, we do not really have a hypothesis based on our prior reading or other studies. Thus, we pick, for example three variables of interest that we suspect could help us with modelling COVID cases across countries. We can be fairly certain that the number of COVID cases should be lower in countries were more safety measures are in place (assuming they are effective, of course). The `covid` dataset includes such information over a very long period of time. Since we do not wish to work with time-series data in this section, we compute the average amount of measures taken expressed as the average index score for our variables of interest, e.g. `masks`, `movements`, and `gatherings`.
+
+```{r Multiple regression, echo=TRUE}
+m1 <- lm(cumulative_cases ~ who_region + number_vaccines_types_used, data = covid)
+performance::model_performance(m1)
+
+covid %>%
+  filter(country == "United Kingdom") %>% 
+  select(where(is.numeric)) %>%
+  correlation::correlation() %>% 
+  filter(r >= 0.4)
+
+
+covid %>%
+  ggplot(aes(x = gatherings,
+             y = new_cases)) +
+  geom_jitter() +
+  scale_y_continuous(label = scales::comma)
 ```
 
 ## Hierarchical regression

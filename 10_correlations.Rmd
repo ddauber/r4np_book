@@ -273,9 +273,9 @@ In conclusion, while there is some relationship between the rating and the numbe
 
 One of the most common pitfalls of novice statisticians is related to the interpretation of what counts as significant and not significant. Most basic tests offer a 'p value', which stands for 'probability value'. The `p` value can range from 1 (for 100%) to 0 (for 0%) and implies:
 
--   p = 1, there is a 100% chance that the result is a pure coincidence
+-   $p = 1$, there is a 100% chance that the result is a pure coincidence
 
--   p = 0, there is a 0% chance that the results is a pure coincidence, i.e. we can be certain this is not just luck.
+-   $p = 0$, there is a 0% chance that the results is a pure coincidence, i.e. we can be certain this is not just luck.
 
 Technically, we would not find that `p` is ever truly zero, and instead denote very small `p` values with `p < 0.01` or even `p< 0.001`.
 
