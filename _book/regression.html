@@ -24,7 +24,7 @@
 <meta name="author" content="Daniel Dauber" />
 
 
-<meta name="date" content="2021-08-31" />
+<meta name="date" content="2021-09-03" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -53,10 +53,6 @@
 
 <link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
-<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
-<script src="libs/viz-1.8.2/viz.js"></script>
-<link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
-<script src="libs/grViz-binding-1.0.6.1/grViz.js"></script>
 
 
 <style type="text/css">
@@ -307,8 +303,12 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="12.1.1" data-path="regression.html"><a href="regression.html#fitting-a-regression-model-by-hand-i.e.-trial-and-error"><i class="fa fa-check"></i><b>12.1.1</b> Fitting a regression model by hand, i.e. trial and error</a></li>
 </ul></li>
-<li class="chapter" data-level="12.2" data-path="regression.html"><a href="regression.html#multiple-regression"><i class="fa fa-check"></i><b>12.2</b> Multiple regression</a></li>
+<li class="chapter" data-level="12.2" data-path="regression.html"><a href="regression.html#multiple-regression"><i class="fa fa-check"></i><b>12.2</b> Multiple regression</a>
+<ul>
+<li class="chapter" data-level="12.2.1" data-path="regression.html"><a href="regression.html#outliers-in-multiple-regressions"><i class="fa fa-check"></i><b>12.2.1</b> Outliers in multiple regressions</a></li>
+</ul></li>
 <li class="chapter" data-level="12.3" data-path="regression.html"><a href="regression.html#hierarchical-regression"><i class="fa fa-check"></i><b>12.3</b> Hierarchical regression</a></li>
+<li class="chapter" data-level="12.4" data-path="regression.html"><a href="regression.html#moderated-regressions"><i class="fa fa-check"></i><b>12.4</b> Moderated regression</a></li>
 </ul></li>
 <li class="chapter" data-level="13" data-path="mixed-methods-research-analysing-qualitative-in-r.html"><a href="mixed-methods-research-analysing-qualitative-in-r.html"><i class="fa fa-check"></i><b>13</b> Mixed-methods research: Analysing qualitative in R</a></li>
 <li class="chapter" data-level="14" data-path="next-steps.html"><a href="next-steps.html"><i class="fa fa-check"></i><b>14</b> Where to go from here: The next steps in your R journey</a>
@@ -381,98 +381,96 @@ DV = \beta_0 + 2 * IV + error
 </div>
 <p>If we ignore <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(error\)</span> for a moment, we find that that if <span class="math inline">\(IV = 3\)</span>, our <span class="math inline">\(DV = 2*3 = 6\)</span>. Therefore, if <span class="math inline">\(IV = 5\)</span>, we find that <span class="math inline">\(DV = 10\)</span>, and so on. According to this model, DV will always be twice as large as IV.</p>
 <p>You might be wondering what <span class="math inline">\(\beta_0\)</span> stands for. It indicates an offset for each value, also called the intercept. Thus, no matter which value we choose for IV, DV will always be <span class="math inline">\(\beta_0\)</span> different from IV. It is a constant in our model. This can be best explained by visualising a regression line. Pay particular attention to the to the expressions after <code>function(x)</code></p>
-<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb151-1"><a href="regression.html#cb151-1" aria-hidden="true" tabindex="-1"></a><span class="co"># A: Two models with different beta(0)</span></span>
-<span id="cb151-2"><a href="regression.html#cb151-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb151-3"><a href="regression.html#cb151-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_function</span>(<span class="at">fun =</span> <span class="cf">function</span>(x) <span class="dv">2</span> <span class="sc">*</span> x, <span class="at">colour =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
-<span id="cb151-4"><a href="regression.html#cb151-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_function</span>(<span class="at">fun =</span> <span class="cf">function</span>(x) <span class="dv">1</span> <span class="sc">+</span> <span class="dv">2</span> <span class="sc">*</span> x, <span class="at">colour =</span> <span class="st">&quot;blue&quot;</span>) <span class="sc">+</span></span>
-<span id="cb151-5"><a href="regression.html#cb151-5" aria-hidden="true" tabindex="-1"></a>  see<span class="sc">::</span><span class="fu">theme_modern</span>()</span></code></pre></div>
-<p><img src="r_for_non_programmers_files/figure-html/beta%20zero%20and%20beta%20one%20explained-1.png" width="672" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb152-1"><a href="regression.html#cb152-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb152-2"><a href="regression.html#cb152-2" aria-hidden="true" tabindex="-1"></a><span class="co"># B: Two models with the same beta(0), but different beta(1)</span></span>
-<span id="cb152-3"><a href="regression.html#cb152-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb152-4"><a href="regression.html#cb152-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_function</span>(<span class="at">fun =</span> <span class="cf">function</span>(x) <span class="dv">2</span> <span class="sc">*</span> x, <span class="at">colour =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
-<span id="cb152-5"><a href="regression.html#cb152-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_function</span>(<span class="at">fun =</span> <span class="cf">function</span>(x) <span class="dv">3</span> <span class="sc">*</span> x, <span class="at">colour =</span> <span class="st">&quot;blue&quot;</span>) <span class="sc">+</span></span>
-<span id="cb152-6"><a href="regression.html#cb152-6" aria-hidden="true" tabindex="-1"></a>  see<span class="sc">::</span><span class="fu">theme_modern</span>()</span></code></pre></div>
-<p><img src="r_for_non_programmers_files/figure-html/beta%20zero%20and%20beta%20one%20explained-2.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="regression.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># A: Two models with different beta(0)</span></span>
+<span id="cb1-2"><a href="regression.html#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb1-3"><a href="regression.html#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_function</span>(<span class="at">fun =</span> <span class="cf">function</span>(x) <span class="dv">2</span> <span class="sc">*</span> x, <span class="at">colour =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
+<span id="cb1-4"><a href="regression.html#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_function</span>(<span class="at">fun =</span> <span class="cf">function</span>(x) <span class="dv">1</span> <span class="sc">+</span> <span class="dv">2</span> <span class="sc">*</span> x, <span class="at">colour =</span> <span class="st">&quot;blue&quot;</span>) <span class="sc">+</span></span>
+<span id="cb1-5"><a href="regression.html#cb1-5" aria-hidden="true" tabindex="-1"></a>  see<span class="sc">::</span><span class="fu">theme_modern</span>()</span></code></pre></div>
+<p><img src="r_for_non_programmers_files/figure-html/beta%20zero%20and%20beta%20one%20explained-1.png" width="672" /></p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="regression.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># B: Two models with the same beta(0), but different beta(1)</span></span>
+<span id="cb2-2"><a href="regression.html#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb2-3"><a href="regression.html#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_function</span>(<span class="at">fun =</span> <span class="cf">function</span>(x) <span class="dv">2</span> <span class="sc">*</span> x, <span class="at">colour =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
+<span id="cb2-4"><a href="regression.html#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_function</span>(<span class="at">fun =</span> <span class="cf">function</span>(x) <span class="dv">3</span> <span class="sc">*</span> x, <span class="at">colour =</span> <span class="st">&quot;blue&quot;</span>) <span class="sc">+</span></span>
+<span id="cb2-5"><a href="regression.html#cb2-5" aria-hidden="true" tabindex="-1"></a>  see<span class="sc">::</span><span class="fu">theme_modern</span>()</span></code></pre></div>
+<p><img src="r_for_non_programmers_files/figure-html/beta%20zero%20and%20beta%20one%20explained-2.png" width="672" /></p>
 <p>Plot B also shows what happens if we change <span class="math inline">\(\beta_1\)</span>, i.e. the slope. The two models both have the same intercept (and therefore the same origin), but the blue line ascends quicker than the red one, because its <span class="math inline">\(\beta_1\)</span> is higher than the one for the red model.</p>
 <p>Lastly, the <span class="math inline">\(error\)</span> component in the regression model refers to the deviation of data from this regression lines. Ideally, we want this value to be as small as possible.</p>
 <div id="fitting-a-regression-model-by-hand-i.e.-trial-and-error" class="section level3" number="12.1.1">
 <h3><span class="header-section-number">12.1.1</span> Fitting a regression model by hand, i.e. trial and error</h3>
 <p>If this sounds all awfully theoretical, let’s try to fit a regression model by hand. First we need to consider what our model should be able to predict. Let’s say that the number of COVID-19 cases predicts the number of deaths due to COVID-19. Intuitively we would assume this should be a linear relationship, because the more cases there are, the more likely we find more deaths caused by it.</p>
-<div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb153-1"><a href="regression.html#cb153-1" aria-hidden="true" tabindex="-1"></a><span class="co"># We only select most recent numbers, i.e. &quot;2021-08-26&quot;</span></span>
-<span id="cb153-2"><a href="regression.html#cb153-2" aria-hidden="true" tabindex="-1"></a><span class="co"># and countries which have COVID cases</span></span>
-<span id="cb153-3"><a href="regression.html#cb153-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb153-4"><a href="regression.html#cb153-4" aria-hidden="true" tabindex="-1"></a>covid <span class="sc">%&gt;%</span></span>
-<span id="cb153-5"><a href="regression.html#cb153-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(date_reported <span class="sc">==</span> <span class="st">&quot;2021-08-26&quot;</span> <span class="sc">&amp;</span></span>
-<span id="cb153-6"><a href="regression.html#cb153-6" aria-hidden="true" tabindex="-1"></a>           cumulative_cases <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb153-7"><a href="regression.html#cb153-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> cumulative_cases,</span>
-<span id="cb153-8"><a href="regression.html#cb153-8" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> cumulative_deaths)) <span class="sc">+</span></span>
-<span id="cb153-9"><a href="regression.html#cb153-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
-<p><img src="r_for_non_programmers_files/figure-html/Finding%20a%20regression%20equation%20by%20hand%20p1-1.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="regression.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># We only select most recent numbers, i.e. &quot;2021-08-26&quot;</span></span>
+<span id="cb3-2"><a href="regression.html#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># and countries which have COVID cases</span></span>
+<span id="cb3-3"><a href="regression.html#cb3-3" aria-hidden="true" tabindex="-1"></a>covid_sample <span class="ot">&lt;-</span> covid <span class="sc">%&gt;%</span></span>
+<span id="cb3-4"><a href="regression.html#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(date_reported <span class="sc">==</span> <span class="st">&quot;2021-08-26&quot;</span> <span class="sc">&amp;</span></span>
+<span id="cb3-5"><a href="regression.html#cb3-5" aria-hidden="true" tabindex="-1"></a>           cumulative_cases <span class="sc">!=</span> <span class="dv">0</span>)</span>
+<span id="cb3-6"><a href="regression.html#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="regression.html#cb3-7" aria-hidden="true" tabindex="-1"></a>covid_sample <span class="sc">%&gt;%</span></span>
+<span id="cb3-8"><a href="regression.html#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> cumulative_cases,</span>
+<span id="cb3-9"><a href="regression.html#cb3-9" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> cumulative_deaths)) <span class="sc">+</span></span>
+<span id="cb3-10"><a href="regression.html#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
+<p><img src="r_for_non_programmers_files/figure-html/Finding%20a%20regression%20equation%20by%20hand%20p1-1.png" width="672" /></p>
 <p>This data visualisation shows us not much. We can see that there are three countries, which appear to have considerably more cases than most other countries. Thus, all other countries are crammed together in the bottom left corner. To improve this visualisation without removing the outliers, we can rescale the x and y axis using the function <code>scale_x_continuous()</code> and <code>scale_y_continuous()</code>.</p>
-<div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb154-1"><a href="regression.html#cb154-1" aria-hidden="true" tabindex="-1"></a>covid <span class="sc">%&gt;%</span></span>
-<span id="cb154-2"><a href="regression.html#cb154-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(date_reported <span class="sc">==</span> <span class="st">&quot;2021-08-26&quot;</span> <span class="sc">&amp;</span></span>
-<span id="cb154-3"><a href="regression.html#cb154-3" aria-hidden="true" tabindex="-1"></a>           cumulative_cases <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb154-4"><a href="regression.html#cb154-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> cumulative_cases,</span>
-<span id="cb154-5"><a href="regression.html#cb154-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> cumulative_deaths)) <span class="sc">+</span></span>
-<span id="cb154-6"><a href="regression.html#cb154-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb154-7"><a href="regression.html#cb154-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">trans =</span> <span class="st">&quot;log&quot;</span>) <span class="sc">+</span></span>
-<span id="cb154-8"><a href="regression.html#cb154-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">trans =</span> <span class="st">&quot;log&quot;</span>)</span></code></pre></div>
-<p><img src="r_for_non_programmers_files/figure-html/Finding%20a%20regression%20equation%20by%20hand%20p2-1.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="regression.html#cb4-1" aria-hidden="true" tabindex="-1"></a>covid_sample <span class="sc">%&gt;%</span></span>
+<span id="cb4-2"><a href="regression.html#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> cumulative_cases,</span>
+<span id="cb4-3"><a href="regression.html#cb4-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> cumulative_deaths)) <span class="sc">+</span></span>
+<span id="cb4-4"><a href="regression.html#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb4-5"><a href="regression.html#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">trans =</span> <span class="st">&quot;log&quot;</span>) <span class="sc">+</span></span>
+<span id="cb4-6"><a href="regression.html#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">trans =</span> <span class="st">&quot;log&quot;</span>)</span></code></pre></div>
+<p><img src="r_for_non_programmers_files/figure-html/Finding%20a%20regression%20equation%20by%20hand%20p2-1.png" width="672" /></p>
 <p>As we can see, the scatterplot is now easier to read and the dots are more spread out. This reveals that there is quite a strong relationship between <code>cumulative_cases</code> and <code>cumulative_deaths</code>. However, similar to before, we should avoid outliers when performing our analysis. For the sake of simplicity, in this section I will limit the number of countries included in our analysis, which also removes the requirement of using <code>scale_x_continuous()</code> and <code>scale_y_continuous()</code>.</p>
-<div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb155-1"><a href="regression.html#cb155-1" aria-hidden="true" tabindex="-1"></a>covid_sample <span class="ot">&lt;-</span> covid <span class="sc">%&gt;%</span></span>
-<span id="cb155-2"><a href="regression.html#cb155-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(date_reported <span class="sc">==</span> <span class="st">&quot;2021-08-26&quot;</span> <span class="sc">&amp;</span></span>
-<span id="cb155-3"><a href="regression.html#cb155-3" aria-hidden="true" tabindex="-1"></a>           cumulative_cases <span class="sc">&gt;=</span> <span class="dv">2500</span> <span class="sc">&amp;</span></span>
-<span id="cb155-4"><a href="regression.html#cb155-4" aria-hidden="true" tabindex="-1"></a>           cumulative_cases <span class="sc">&lt;=</span> <span class="dv">150000</span> <span class="sc">&amp;</span></span>
-<span id="cb155-5"><a href="regression.html#cb155-5" aria-hidden="true" tabindex="-1"></a>           cumulative_deaths <span class="sc">&lt;=</span> <span class="dv">3000</span>)</span>
-<span id="cb155-6"><a href="regression.html#cb155-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb155-7"><a href="regression.html#cb155-7" aria-hidden="true" tabindex="-1"></a>plot <span class="ot">&lt;-</span> covid_sample <span class="sc">%&gt;%</span></span>
-<span id="cb155-8"><a href="regression.html#cb155-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> cumulative_cases,</span>
-<span id="cb155-9"><a href="regression.html#cb155-9" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> cumulative_deaths)) <span class="sc">+</span></span>
-<span id="cb155-10"><a href="regression.html#cb155-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span>
-<span id="cb155-11"><a href="regression.html#cb155-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb155-12"><a href="regression.html#cb155-12" aria-hidden="true" tabindex="-1"></a>plot</span></code></pre></div>
-<p><img src="r_for_non_programmers_files/figure-html/Finding%20a%20regression%20equation%20by%20hand%20p3-1.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="regression.html#cb5-1" aria-hidden="true" tabindex="-1"></a>covid_sample <span class="ot">&lt;-</span> covid_sample <span class="sc">%&gt;%</span></span>
+<span id="cb5-2"><a href="regression.html#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(date_reported <span class="sc">==</span> <span class="st">&quot;2021-08-26&quot;</span> <span class="sc">&amp;</span></span>
+<span id="cb5-3"><a href="regression.html#cb5-3" aria-hidden="true" tabindex="-1"></a>           cumulative_cases <span class="sc">&gt;=</span> <span class="dv">2500</span> <span class="sc">&amp;</span></span>
+<span id="cb5-4"><a href="regression.html#cb5-4" aria-hidden="true" tabindex="-1"></a>           cumulative_cases <span class="sc">&lt;=</span> <span class="dv">150000</span> <span class="sc">&amp;</span></span>
+<span id="cb5-5"><a href="regression.html#cb5-5" aria-hidden="true" tabindex="-1"></a>           cumulative_deaths <span class="sc">&lt;=</span> <span class="dv">3000</span>)</span>
+<span id="cb5-6"><a href="regression.html#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="regression.html#cb5-7" aria-hidden="true" tabindex="-1"></a>plot <span class="ot">&lt;-</span> covid_sample <span class="sc">%&gt;%</span></span>
+<span id="cb5-8"><a href="regression.html#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> cumulative_cases,</span>
+<span id="cb5-9"><a href="regression.html#cb5-9" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> cumulative_deaths)) <span class="sc">+</span></span>
+<span id="cb5-10"><a href="regression.html#cb5-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span>
+<span id="cb5-11"><a href="regression.html#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-12"><a href="regression.html#cb5-12" aria-hidden="true" tabindex="-1"></a>plot</span></code></pre></div>
+<p><img src="r_for_non_programmers_files/figure-html/Finding%20a%20regression%20equation%20by%20hand%20p3-1.png" width="672" /></p>
 <p>Through trial and error we can try to fit a linear line on top by adjusting the beta values. This is effectively what we hope to achieve with a regression: the best <span class="math inline">\(\beta\)</span> values which best explain our data. Let’s start with the basic assumption of <span class="math inline">\(y = x\)</span> without specific <span class="math inline">\(\beta\)</span>s, i.e. they are zero.</p>
-<div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb156-1"><a href="regression.html#cb156-1" aria-hidden="true" tabindex="-1"></a>plot <span class="sc">+</span></span>
-<span id="cb156-2"><a href="regression.html#cb156-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_function</span>(<span class="at">fun =</span> <span class="cf">function</span>(x) x, <span class="at">colour =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
-<p><img src="r_for_non_programmers_files/figure-html/Finding%20a%20regression%20equation%20by%20hand%20p4-1.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="regression.html#cb6-1" aria-hidden="true" tabindex="-1"></a>plot <span class="sc">+</span></span>
+<span id="cb6-2"><a href="regression.html#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_function</span>(<span class="at">fun =</span> <span class="cf">function</span>(x) x, <span class="at">colour =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<p><img src="r_for_non_programmers_files/figure-html/Finding%20a%20regression%20equation%20by%20hand%20p4-1.png" width="672" /></p>
 <p>What we try to achieve is that the red line fits nicely inside the cloud of dots. Our very simple model provides a very poor fit to our data points, because all the dots are way below it. This makes sense, because <span class="math inline">\(y = x\)</span> would imply that every COVID-19 case leads to a death, i.e. everyone with COVID did not survive. From our own experience we know that this is luckily not true. Ideally we want the line to be less steep, because our first model does not make much sense. We can do this by adding a <span class="math inline">\(\beta_1\)</span> to our equation. Maybe only 2% of people who got COVID-19 might not have recovered, i.e. <span class="math inline">\(\beta_1 = 0.02\)</span>.</p>
-<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb157-1"><a href="regression.html#cb157-1" aria-hidden="true" tabindex="-1"></a>plot <span class="sc">+</span></span>
-<span id="cb157-2"><a href="regression.html#cb157-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_function</span>(<span class="at">fun =</span> <span class="cf">function</span>(x) <span class="fl">0.02</span><span class="sc">*</span>x, <span class="at">colour =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
-<p><img src="r_for_non_programmers_files/figure-html/Finding%20a%20regression%20equation%20by%20hand%20p5-1.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="regression.html#cb7-1" aria-hidden="true" tabindex="-1"></a>plot <span class="sc">+</span></span>
+<span id="cb7-2"><a href="regression.html#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_function</span>(<span class="at">fun =</span> <span class="cf">function</span>(x) <span class="fl">0.02</span><span class="sc">*</span>x, <span class="at">colour =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<p><img src="r_for_non_programmers_files/figure-html/Finding%20a%20regression%20equation%20by%20hand%20p5-1.png" width="672" /></p>
 <p>This time the line looks much more aligned with our observations. One could argue that it might have to move a little to the right as well, to cover the observations at the bottom a bit better. Therefore, we should add a <span class="math inline">\(\beta_0\)</span> to our equation, e.g. <code>-50</code>.= to move it to the right and tweak the <span class="math inline">\(\beta_1\)</span> ever so slightly.</p>
-<div class="sourceCode" id="cb158"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb158-1"><a href="regression.html#cb158-1" aria-hidden="true" tabindex="-1"></a>plot <span class="sc">+</span></span>
-<span id="cb158-2"><a href="regression.html#cb158-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_function</span>(<span class="at">fun =</span> <span class="cf">function</span>(x) <span class="sc">-</span><span class="dv">50</span> <span class="sc">+</span> <span class="fl">0.015</span><span class="sc">*</span>x, <span class="at">colour =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
-<p><img src="r_for_non_programmers_files/figure-html/Finding%20a%20regression%20equation%20by%20hand%20p6-1.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="regression.html#cb8-1" aria-hidden="true" tabindex="-1"></a>plot <span class="sc">+</span></span>
+<span id="cb8-2"><a href="regression.html#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_function</span>(<span class="at">fun =</span> <span class="cf">function</span>(x) <span class="sc">-</span><span class="dv">50</span> <span class="sc">+</span> <span class="fl">0.015</span><span class="sc">*</span>x, <span class="at">colour =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<p><img src="r_for_non_programmers_files/figure-html/Finding%20a%20regression%20equation%20by%20hand%20p6-1.png" width="672" /></p>
 <p>We finished creating our regression model. If we wanted to express it as a formula we would write <span class="math inline">\(DV = -5 + 0.015 * IV\)</span>. We could now use this model to predict how high COVID cases likely will be in other countries.</p>
 <p>Estimating a regression model in this way is not ideal and far from accurate. Instead, we would compute the <span class="math inline">\(\beta\)</span>s based on our observed data, i.e. <code>cumulative_cases</code> and <code>cumulative_deaths</code>. We can use the function <code>lm()</code> to achieve this. I also rounded the all <code>numeric</code> values to two decimal places to make the output easier to read. We also use <code>tidy()</code> to retrieve a cleaner output from the computation.</p>
-<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="regression.html#cb159-1" aria-hidden="true" tabindex="-1"></a><span class="co"># classic r</span></span>
-<span id="cb159-2"><a href="regression.html#cb159-2" aria-hidden="true" tabindex="-1"></a>m0 <span class="ot">&lt;-</span> <span class="fu">lm</span>(cumulative_deaths <span class="sc">~</span> cumulative_cases, <span class="at">data =</span> covid_sample)</span>
-<span id="cb159-3"><a href="regression.html#cb159-3" aria-hidden="true" tabindex="-1"></a>broom<span class="sc">::</span><span class="fu">tidy</span>(m0) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.numeric), round, <span class="dv">2</span>))</span>
-<span id="cb159-4"><a href="regression.html#cb159-4" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 2 × 5</span></span>
-<span id="cb159-5"><a href="regression.html#cb159-5" aria-hidden="true" tabindex="-1"></a><span class="do">##   term             estimate std.error statistic p.value</span></span>
-<span id="cb159-6"><a href="regression.html#cb159-6" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;chr&gt;               &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;</span></span>
-<span id="cb159-7"><a href="regression.html#cb159-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 (Intercept)         88.1       70.5      1.25    0.21</span></span>
-<span id="cb159-8"><a href="regression.html#cb159-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 cumulative_cases     0.01       0       10.7     0</span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="regression.html#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># classic r</span></span>
+<span id="cb9-2"><a href="regression.html#cb9-2" aria-hidden="true" tabindex="-1"></a>m0 <span class="ot">&lt;-</span> <span class="fu">lm</span>(cumulative_deaths <span class="sc">~</span> cumulative_cases, <span class="at">data =</span> covid_sample)</span>
+<span id="cb9-3"><a href="regression.html#cb9-3" aria-hidden="true" tabindex="-1"></a>broom<span class="sc">::</span><span class="fu">tidy</span>(m0) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.numeric), round, <span class="dv">2</span>))</span></code></pre></div>
+<pre><code>## # A tibble: 2 × 5
+##   term             estimate std.error statistic p.value
+##   &lt;chr&gt;               &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;
+## 1 (Intercept)         88.1       70.5      1.25    0.21
+## 2 cumulative_cases     0.01       0       10.7     0</code></pre>
 <p>We first might notice that the <code>p.value</code> indicates that the relationship between <code>cumulative death</code> and <code>cumulative_cases</code> is significant. Thus, we can conclude that countries with more COVID cases also suffer higher numbers of people who do not successfully recover from it. However, you might be wondering where our <span class="math inline">\(\beta\)</span> scores are. They are found where it says <code>estimate</code>. The standard error (<code>std.error</code>) denotes the <code>error</code> we specified in the <a href="regression.html#single-linear-regression">previous equation</a>. We find that in the first row we get the <span class="math inline">\(\beta_0\)</span>, i.e. the one for the intercept which is 88.10. This one is larger than what we estimated, i.e. <code>-50</code>. However, <span class="math inline">\(\beta_1\)</span> is 0.01, which means we have done a very good job in guessing this estimate. Still, it becomes hopefully obvious that it is much easier to use the function <code>lm()</code> to estimate a model than ‘eyeballing it.’</p>
 <p>We can now visualise the computed model (in blue) and our guessed model (in red) in one plot and see the differences. The plot shows that we have not been too far off. However, it was relatively easy to fit a model onto the observed data in this case. Often, it is much more difficult, especially when more than two variables are involved.</p>
-<div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb160-1"><a href="regression.html#cb160-1" aria-hidden="true" tabindex="-1"></a>plot <span class="sc">+</span></span>
-<span id="cb160-2"><a href="regression.html#cb160-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_function</span>(<span class="at">fun =</span> <span class="cf">function</span>(x) <span class="sc">-</span><span class="dv">50</span> <span class="sc">+</span> <span class="fl">0.015</span><span class="sc">*</span>x, <span class="at">colour =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
-<span id="cb160-3"><a href="regression.html#cb160-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_function</span>(<span class="at">fun =</span> <span class="cf">function</span>(x) <span class="fl">88.1</span> <span class="sc">+</span> <span class="fl">0.01</span><span class="sc">*</span>x, <span class="at">colour =</span> <span class="st">&quot;blue&quot;</span>)</span></code></pre></div>
-<p><img src="r_for_non_programmers_files/figure-html/Showing%20computed%20and%20guessed%20regression-1.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="regression.html#cb11-1" aria-hidden="true" tabindex="-1"></a>plot <span class="sc">+</span></span>
+<span id="cb11-2"><a href="regression.html#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_function</span>(<span class="at">fun =</span> <span class="cf">function</span>(x) <span class="sc">-</span><span class="dv">50</span> <span class="sc">+</span> <span class="fl">0.015</span><span class="sc">*</span>x, <span class="at">colour =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
+<span id="cb11-3"><a href="regression.html#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_function</span>(<span class="at">fun =</span> <span class="cf">function</span>(x) <span class="fl">88.1</span> <span class="sc">+</span> <span class="fl">0.01</span><span class="sc">*</span>x, <span class="at">colour =</span> <span class="st">&quot;blue&quot;</span>)</span></code></pre></div>
+<p><img src="r_for_non_programmers_files/figure-html/Showing%20computed%20and%20guessed%20regression-1.png" width="672" /></p>
 <p>With our final model computed, we also need to check its quality in terms of predictive power based on how well it can actually explain our observed data. We have tested models before when we looked at confirmatory factor analyses for latent variables (see Chapter <a href="data-wrangling.html#latent-constructs">7.7</a>. This time we want to know how accurate our model is in explaining observed data and therefore how accurate it will be predicting future observations. The package <code>performance</code> offers a nice little shortcut to compute many different things at once:</p>
 <ul>
 <li><p><code>check_model()</code>: Checks for linearity, homogeneity, collinearity and outliers</p></li>
 <li><p><code>model_performance()</code>: Tests the quality of our model.</p></li>
 </ul>
 <p>For now, we are mainly interested in the performance of our model. So, we can compute it the following way:</p>
-<div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb161-1"><a href="regression.html#cb161-1" aria-hidden="true" tabindex="-1"></a>performance<span class="sc">::</span><span class="fu">model_performance</span>(m0)</span>
-<span id="cb161-2"><a href="regression.html#cb161-2" aria-hidden="true" tabindex="-1"></a><span class="do">## # Indices of model performance</span></span>
-<span id="cb161-3"><a href="regression.html#cb161-3" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb161-4"><a href="regression.html#cb161-4" aria-hidden="true" tabindex="-1"></a><span class="do">## AIC      |      BIC |    R2 | R2 (adj.) |    RMSE |   Sigma</span></span>
-<span id="cb161-5"><a href="regression.html#cb161-5" aria-hidden="true" tabindex="-1"></a><span class="do">## -----------------------------------------------------------</span></span>
-<span id="cb161-6"><a href="regression.html#cb161-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 1472.626 | 1480.319 | 0.548 |     0.543 | 502.573 | 507.891</span></span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="regression.html#cb12-1" aria-hidden="true" tabindex="-1"></a>performance<span class="sc">::</span><span class="fu">model_performance</span>(m0)</span></code></pre></div>
+<pre><code>## # Indices of model performance
+## 
+## AIC      |      BIC |    R2 | R2 (adj.) |    RMSE |   Sigma
+## -----------------------------------------------------------
+## 1472.626 | 1480.319 | 0.548 |     0.543 | 502.573 | 507.891</code></pre>
 <p>There are quite a number of performance indicators and here is how to read them:</p>
 <ul>
 <li><p><code>AIC</code> stands for <em>Akaike Information Criterion</em> and the lower the score the better the model</p></li>
@@ -482,293 +480,256 @@ DV = \beta_0 + 2 * IV + error
 <li><p><code>RMSE</code> stands for <em>Root Mean Square Error</em> and is an indicate how small or large the prediction error of the model is. Conceptually, it aims to measure the average deviations of values from our model when we attempt predictions. The lower the score the better, i.e. a score of 0 would imply that our model perfectly fits the data, which is likely never the case in the field of Social Sciences. The RMSE is particularly useful when trying to compare models.</p></li>
 <li><p><code>Sigma</code> stands for the standard deviation of our residuals (the difference between predicted and empirically observed values) and is therefore a measure of prediction accuracy. <code>Sigma</code> is <em>‘a measure of the average distance each observation falls from its prediction from the model’</em> <span class="citation">(<a href="#ref-gelman2020regression" role="doc-biblioref">Gelman, Hill, and Vehtari 2020, 168</a>)</span>.</p></li>
 </ul>
-<p>Many of these indices will become more relevant when we compare models. However, <span class="math inline">\(R^2\)</span> can also be meaningfully interpreted without a reference model. We know that the bigger <span class="math inline">\(R^2\)</span> the better. In our case it is <code>0.548</code> which is very good considering that our model consist of only one predictor only. It is not easy to interpret whether an particular <span class="math inline">\(R^2\)</span> value is good or bad. In our simple single linear regression, <span class="math inline">\(R^2\)</span> is literally ‘r squared,’ which we already know from correlations and their effect sizes (see Table <a href="correlations.html#tab:effect-size-cohen">10.2</a>. Thus, if we take the square root of <span class="math inline">\(R^2\)</span> we can retrieve the correlation coefficient, i.e. <span class="math inline">\(r = \sqrt{R^2} = \sqrt{0.548} = 0.740\)</span>. According to <span class="citation"><a href="#ref-cohen1988statistical" role="doc-biblioref">Cohen</a> (<a href="#ref-cohen1988statistical" role="doc-biblioref">1988</a>)</span>, this would count as a large effect size.</p>
+<p>Many of these indices will become more relevant when we compare models. However, <span class="math inline">\(R^2\)</span> can also be meaningfully interpreted without a reference model. We know that the bigger <span class="math inline">\(R^2\)</span> the better. In our case it is <code>0.548</code> which is very good considering that our model consist of only one predictor only. It is not easy to interpret whether an particular <span class="math inline">\(R^2\)</span> value is good or bad. In our simple single linear regression, <span class="math inline">\(R^2\)</span> is literally ‘r squared,’ which we already know from correlations and their effect sizes (see Table <a href="#tab:effect-size-cohen"><strong>??</strong></a>. Thus, if we take the square root of <span class="math inline">\(R^2\)</span> we can retrieve the correlation coefficient, i.e. <span class="math inline">\(r = \sqrt{R^2} = \sqrt{0.548} = 0.740\)</span>. According to <span class="citation"><a href="#ref-cohen1988statistical" role="doc-biblioref">J. Cohen</a> (<a href="#ref-cohen1988statistical" role="doc-biblioref">1988</a>)</span>, this would count as a large effect size.</p>
 <p>However, for multiple regressions, the situation is slightly more complicated, but the interpretation of <span class="math inline">\(R^2\)</span> and its adjusted version remain largely the same.</p>
 <p>Once you have a model and it is fairly accurate, you can start making predictions. This can be achieved by using our model object <code>m0</code> in combination with the function <code>predict()</code>. However, first we should define a set of values for our independent variable, i.e. <code>cumulative_cases</code>, which we store in a tibble using the <code>tribble()</code> function.</p>
-<div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb162-1"><a href="regression.html#cb162-1" aria-hidden="true" tabindex="-1"></a>df_predict <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
-<span id="cb162-2"><a href="regression.html#cb162-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>cumulative_cases,</span>
-<span id="cb162-3"><a href="regression.html#cb162-3" aria-hidden="true" tabindex="-1"></a>                <span class="dv">100</span>,</span>
-<span id="cb162-4"><a href="regression.html#cb162-4" aria-hidden="true" tabindex="-1"></a>               <span class="dv">1000</span>,</span>
-<span id="cb162-5"><a href="regression.html#cb162-5" aria-hidden="true" tabindex="-1"></a>              <span class="dv">10000</span>,</span>
-<span id="cb162-6"><a href="regression.html#cb162-6" aria-hidden="true" tabindex="-1"></a>             <span class="dv">100000</span></span>
-<span id="cb162-7"><a href="regression.html#cb162-7" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb162-8"><a href="regression.html#cb162-8" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(m0, <span class="at">newdata =</span> df_predict)</span>
-<span id="cb162-9"><a href="regression.html#cb162-9" aria-hidden="true" tabindex="-1"></a><span class="do">##          1          2          3          4 </span></span>
-<span id="cb162-10"><a href="regression.html#cb162-10" aria-hidden="true" tabindex="-1"></a><span class="do">##   89.53289  102.45411  231.66629 1523.78810</span></span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="regression.html#cb14-1" aria-hidden="true" tabindex="-1"></a>df_predict <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb14-2"><a href="regression.html#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>cumulative_cases,</span>
+<span id="cb14-3"><a href="regression.html#cb14-3" aria-hidden="true" tabindex="-1"></a>                <span class="dv">100</span>,</span>
+<span id="cb14-4"><a href="regression.html#cb14-4" aria-hidden="true" tabindex="-1"></a>               <span class="dv">1000</span>,</span>
+<span id="cb14-5"><a href="regression.html#cb14-5" aria-hidden="true" tabindex="-1"></a>              <span class="dv">10000</span>,</span>
+<span id="cb14-6"><a href="regression.html#cb14-6" aria-hidden="true" tabindex="-1"></a>             <span class="dv">100000</span></span>
+<span id="cb14-7"><a href="regression.html#cb14-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb14-8"><a href="regression.html#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(m0, <span class="at">newdata =</span> df_predict)</span></code></pre></div>
+<pre><code>##          1          2          3          4 
+##   89.53289  102.45411  231.66629 1523.78810</code></pre>
 <p>As a result we find out how many likely deaths from COVID have to be expected based on our model for each value in our dataset.</p>
 <p>Single linear regressions are simple and a good way to introduce novice scholars to modeling social phenomena. However, hardly ever will find that a single variable can explain enough variance to be a useful model. Instead, we most likely can improve the majority of our single regression models by considering more variables in the form of multiple regressions.</p>
 </div>
 </div>
 <div id="multiple-regression" class="section level2" number="12.2">
 <h2><span class="header-section-number">12.2</span> Multiple regression</h2>
-<p>Multiple regressions expand single linear regressions by allowing us to add more variables. Maybe surprisingly, it is fairly similar to compute these in R, because it requires the same function, i.e. <code>lm()</code>.</p>
-<p>In the last section we wanted to know how many people will likely not recover from COVID. However, it might be even more interesting to understand how we can reduce the number of cumulative cases and prevent casualties from the outset. Since I live in the UK at the time of the pandemic, I am curious to know whether certain COVID measures helped to reduce the number of new COVID cases. Of course, feel free to pick a different country (maybe the one you live in?) to follow with my example.</p>
-<p>First, we create a dataset that only contains information from the <code>United Kingdom</code>, which means we use <code>filter()</code> and remove observations with missing data.</p>
-<p>As a first step, we might want to know how the UK performed over the course of time in terms of new cases. Let’s plot this first.</p>
-<div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb163-1"><a href="regression.html#cb163-1" aria-hidden="true" tabindex="-1"></a>covid <span class="sc">%&gt;%</span></span>
-<span id="cb163-2"><a href="regression.html#cb163-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> date_reported,</span>
-<span id="cb163-3"><a href="regression.html#cb163-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> new_cases)) <span class="sc">+</span></span>
-<span id="cb163-4"><a href="regression.html#cb163-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>()</span></code></pre></div>
-<p><img src="r_for_non_programmers_files/figure-html/Multiple%20regression%20plotting%20cumulative%20cases-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>One issue you might encounter when visualising large values in a plot like this are the axis labels. In our case, the values are very high on the y axis and ggplot abbreviates them, i.e. uses a scientific notation. We might not find this useful, especially when comparing it to the values in our dataset. Therefore, we should change it. The <code>scales</code> package is fantastic, because it can help us take care of it. Here is the same plot, but with better axis labels which everyone can easily understand by just adding <code>labels = scales::comma</code>.</p>
-<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb164-1"><a href="regression.html#cb164-1" aria-hidden="true" tabindex="-1"></a>covid <span class="sc">%&gt;%</span></span>
-<span id="cb164-2"><a href="regression.html#cb164-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(date_reported <span class="sc">==</span> <span class="st">&quot;2021-08-26&quot;</span> <span class="sc">&amp;</span> cumulative_cases <span class="sc">&gt;</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb164-3"><a href="regression.html#cb164-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y =</span> cumulative_cases)) <span class="sc">+</span></span>
-<span id="cb164-4"><a href="regression.html#cb164-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span> </span>
-<span id="cb164-5"><a href="regression.html#cb164-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">trans =</span> <span class="st">&quot;log&quot;</span>,</span>
-<span id="cb164-6"><a href="regression.html#cb164-6" aria-hidden="true" tabindex="-1"></a>                     <span class="at">labels =</span> scales<span class="sc">::</span>comma)</span></code></pre></div>
-<p><img src="r_for_non_programmers_files/figure-html/Multiple%20regression%20plotting%20cumulative%20cases%20v2-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>In short, it seems there is quite a range of countries with different numbers of COVID cases. However, we also notice that we have outliers which we need to deal with in a moment.</p>
-<p>If you have hypotheses you want to test, you would already know which variables to include in your regression. However, in our case, we do not really have a hypothesis based on our prior reading or other studies. Thus, we pick, for example three variables of interest that we suspect could help us with modelling COVID cases across countries. We can be fairly certain that the number of COVID cases should be lower in countries were more safety measures are in place (assuming they are effective, of course). The <code>covid</code> dataset includes such information over a very long period of time. Since we do not wish to work with time-series data in this section, we compute the average amount of measures taken expressed as the average index score for our variables of interest, e.g. <code>masks</code>, <code>movements</code>, and <code>gatherings</code>.</p>
-<div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb165-1"><a href="regression.html#cb165-1" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(cumulative_cases <span class="sc">~</span> who_region <span class="sc">+</span> number_vaccines_types_used, <span class="at">data =</span> covid)</span>
-<span id="cb165-2"><a href="regression.html#cb165-2" aria-hidden="true" tabindex="-1"></a>performance<span class="sc">::</span><span class="fu">model_performance</span>(m1)</span>
-<span id="cb165-3"><a href="regression.html#cb165-3" aria-hidden="true" tabindex="-1"></a><span class="do">## # Indices of model performance</span></span>
-<span id="cb165-4"><a href="regression.html#cb165-4" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb165-5"><a href="regression.html#cb165-5" aria-hidden="true" tabindex="-1"></a><span class="do">## AIC       |       BIC |    R2 | R2 (adj.) |      RMSE |     Sigma</span></span>
-<span id="cb165-6"><a href="regression.html#cb165-6" aria-hidden="true" tabindex="-1"></a><span class="do">## -----------------------------------------------------------------</span></span>
-<span id="cb165-7"><a href="regression.html#cb165-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 4.180e+06 | 4.180e+06 | 0.025 |     0.025 | 1.859e+06 | 1.859e+06</span></span>
-<span id="cb165-8"><a href="regression.html#cb165-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-9"><a href="regression.html#cb165-9" aria-hidden="true" tabindex="-1"></a>covid <span class="sc">%&gt;%</span></span>
-<span id="cb165-10"><a href="regression.html#cb165-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(country <span class="sc">==</span> <span class="st">&quot;United Kingdom&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb165-11"><a href="regression.html#cb165-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">where</span>(is.numeric)) <span class="sc">%&gt;%</span></span>
-<span id="cb165-12"><a href="regression.html#cb165-12" aria-hidden="true" tabindex="-1"></a>  correlation<span class="sc">::</span><span class="fu">correlation</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb165-13"><a href="regression.html#cb165-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(r <span class="sc">&gt;=</span> <span class="fl">0.4</span>)</span>
-<span id="cb165-14"><a href="regression.html#cb165-14" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-15"><a href="regression.html#cb165-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-16"><a href="regression.html#cb165-16" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-17"><a href="regression.html#cb165-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-18"><a href="regression.html#cb165-18" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-19"><a href="regression.html#cb165-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-20"><a href="regression.html#cb165-20" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-21"><a href="regression.html#cb165-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-22"><a href="regression.html#cb165-22" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-23"><a href="regression.html#cb165-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-24"><a href="regression.html#cb165-24" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-25"><a href="regression.html#cb165-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-26"><a href="regression.html#cb165-26" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-27"><a href="regression.html#cb165-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-28"><a href="regression.html#cb165-28" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-29"><a href="regression.html#cb165-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-30"><a href="regression.html#cb165-30" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-31"><a href="regression.html#cb165-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-32"><a href="regression.html#cb165-32" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-33"><a href="regression.html#cb165-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-34"><a href="regression.html#cb165-34" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-35"><a href="regression.html#cb165-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-36"><a href="regression.html#cb165-36" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-37"><a href="regression.html#cb165-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-38"><a href="regression.html#cb165-38" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-39"><a href="regression.html#cb165-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-40"><a href="regression.html#cb165-40" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-41"><a href="regression.html#cb165-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-42"><a href="regression.html#cb165-42" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-43"><a href="regression.html#cb165-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-44"><a href="regression.html#cb165-44" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-45"><a href="regression.html#cb165-45" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-46"><a href="regression.html#cb165-46" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-47"><a href="regression.html#cb165-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-48"><a href="regression.html#cb165-48" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-49"><a href="regression.html#cb165-49" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-50"><a href="regression.html#cb165-50" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-51"><a href="regression.html#cb165-51" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-52"><a href="regression.html#cb165-52" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-53"><a href="regression.html#cb165-53" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-54"><a href="regression.html#cb165-54" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-55"><a href="regression.html#cb165-55" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-56"><a href="regression.html#cb165-56" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-57"><a href="regression.html#cb165-57" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-58"><a href="regression.html#cb165-58" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-59"><a href="regression.html#cb165-59" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-60"><a href="regression.html#cb165-60" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-61"><a href="regression.html#cb165-61" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-62"><a href="regression.html#cb165-62" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-63"><a href="regression.html#cb165-63" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-64"><a href="regression.html#cb165-64" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-65"><a href="regression.html#cb165-65" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-66"><a href="regression.html#cb165-66" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-67"><a href="regression.html#cb165-67" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-68"><a href="regression.html#cb165-68" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-69"><a href="regression.html#cb165-69" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-70"><a href="regression.html#cb165-70" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-71"><a href="regression.html#cb165-71" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-72"><a href="regression.html#cb165-72" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-73"><a href="regression.html#cb165-73" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-74"><a href="regression.html#cb165-74" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-75"><a href="regression.html#cb165-75" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-76"><a href="regression.html#cb165-76" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-77"><a href="regression.html#cb165-77" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-78"><a href="regression.html#cb165-78" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-79"><a href="regression.html#cb165-79" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-80"><a href="regression.html#cb165-80" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-81"><a href="regression.html#cb165-81" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-82"><a href="regression.html#cb165-82" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-83"><a href="regression.html#cb165-83" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-84"><a href="regression.html#cb165-84" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-85"><a href="regression.html#cb165-85" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-86"><a href="regression.html#cb165-86" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-87"><a href="regression.html#cb165-87" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-88"><a href="regression.html#cb165-88" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-89"><a href="regression.html#cb165-89" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-90"><a href="regression.html#cb165-90" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-91"><a href="regression.html#cb165-91" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-92"><a href="regression.html#cb165-92" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-93"><a href="regression.html#cb165-93" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-94"><a href="regression.html#cb165-94" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-95"><a href="regression.html#cb165-95" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-96"><a href="regression.html#cb165-96" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-97"><a href="regression.html#cb165-97" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-98"><a href="regression.html#cb165-98" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-99"><a href="regression.html#cb165-99" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-100"><a href="regression.html#cb165-100" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-101"><a href="regression.html#cb165-101" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-102"><a href="regression.html#cb165-102" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-103"><a href="regression.html#cb165-103" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-104"><a href="regression.html#cb165-104" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-105"><a href="regression.html#cb165-105" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-106"><a href="regression.html#cb165-106" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-107"><a href="regression.html#cb165-107" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-108"><a href="regression.html#cb165-108" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-109"><a href="regression.html#cb165-109" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-110"><a href="regression.html#cb165-110" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-111"><a href="regression.html#cb165-111" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-112"><a href="regression.html#cb165-112" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-113"><a href="regression.html#cb165-113" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-114"><a href="regression.html#cb165-114" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-115"><a href="regression.html#cb165-115" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-116"><a href="regression.html#cb165-116" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-117"><a href="regression.html#cb165-117" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-118"><a href="regression.html#cb165-118" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-119"><a href="regression.html#cb165-119" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-120"><a href="regression.html#cb165-120" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-121"><a href="regression.html#cb165-121" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-122"><a href="regression.html#cb165-122" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-123"><a href="regression.html#cb165-123" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-124"><a href="regression.html#cb165-124" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-125"><a href="regression.html#cb165-125" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-126"><a href="regression.html#cb165-126" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-127"><a href="regression.html#cb165-127" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-128"><a href="regression.html#cb165-128" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-129"><a href="regression.html#cb165-129" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-130"><a href="regression.html#cb165-130" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-131"><a href="regression.html#cb165-131" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-132"><a href="regression.html#cb165-132" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-133"><a href="regression.html#cb165-133" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-134"><a href="regression.html#cb165-134" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-135"><a href="regression.html#cb165-135" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-136"><a href="regression.html#cb165-136" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-137"><a href="regression.html#cb165-137" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-138"><a href="regression.html#cb165-138" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-139"><a href="regression.html#cb165-139" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-140"><a href="regression.html#cb165-140" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-141"><a href="regression.html#cb165-141" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-142"><a href="regression.html#cb165-142" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-143"><a href="regression.html#cb165-143" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-144"><a href="regression.html#cb165-144" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-145"><a href="regression.html#cb165-145" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-146"><a href="regression.html#cb165-146" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-147"><a href="regression.html#cb165-147" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-148"><a href="regression.html#cb165-148" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-149"><a href="regression.html#cb165-149" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-150"><a href="regression.html#cb165-150" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-151"><a href="regression.html#cb165-151" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-152"><a href="regression.html#cb165-152" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-153"><a href="regression.html#cb165-153" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-154"><a href="regression.html#cb165-154" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-155"><a href="regression.html#cb165-155" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-156"><a href="regression.html#cb165-156" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-157"><a href="regression.html#cb165-157" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-158"><a href="regression.html#cb165-158" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-159"><a href="regression.html#cb165-159" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-160"><a href="regression.html#cb165-160" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-161"><a href="regression.html#cb165-161" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-162"><a href="regression.html#cb165-162" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-163"><a href="regression.html#cb165-163" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-164"><a href="regression.html#cb165-164" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-165"><a href="regression.html#cb165-165" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-166"><a href="regression.html#cb165-166" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-167"><a href="regression.html#cb165-167" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-168"><a href="regression.html#cb165-168" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-169"><a href="regression.html#cb165-169" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-170"><a href="regression.html#cb165-170" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-171"><a href="regression.html#cb165-171" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-172"><a href="regression.html#cb165-172" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-173"><a href="regression.html#cb165-173" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-174"><a href="regression.html#cb165-174" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-175"><a href="regression.html#cb165-175" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-176"><a href="regression.html#cb165-176" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-177"><a href="regression.html#cb165-177" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-178"><a href="regression.html#cb165-178" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-179"><a href="regression.html#cb165-179" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-180"><a href="regression.html#cb165-180" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-181"><a href="regression.html#cb165-181" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-182"><a href="regression.html#cb165-182" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-183"><a href="regression.html#cb165-183" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-184"><a href="regression.html#cb165-184" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-185"><a href="regression.html#cb165-185" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-186"><a href="regression.html#cb165-186" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-187"><a href="regression.html#cb165-187" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-188"><a href="regression.html#cb165-188" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-189"><a href="regression.html#cb165-189" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-190"><a href="regression.html#cb165-190" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-191"><a href="regression.html#cb165-191" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-192"><a href="regression.html#cb165-192" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-193"><a href="regression.html#cb165-193" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-194"><a href="regression.html#cb165-194" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-195"><a href="regression.html#cb165-195" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-196"><a href="regression.html#cb165-196" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-197"><a href="regression.html#cb165-197" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-198"><a href="regression.html#cb165-198" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-199"><a href="regression.html#cb165-199" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-200"><a href="regression.html#cb165-200" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-201"><a href="regression.html#cb165-201" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-202"><a href="regression.html#cb165-202" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-203"><a href="regression.html#cb165-203" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-204"><a href="regression.html#cb165-204" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-205"><a href="regression.html#cb165-205" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-206"><a href="regression.html#cb165-206" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-207"><a href="regression.html#cb165-207" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-208"><a href="regression.html#cb165-208" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning in cor(x, y): the standard deviation is zero</span></span>
-<span id="cb165-209"><a href="regression.html#cb165-209" aria-hidden="true" tabindex="-1"></a><span class="do">## # Correlation Matrix (pearson-method)</span></span>
-<span id="cb165-210"><a href="regression.html#cb165-210" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb165-211"><a href="regression.html#cb165-211" aria-hidden="true" tabindex="-1"></a><span class="do">## Parameter1        |        Parameter2 |    r |       95% CI |     t |  df |         p</span></span>
-<span id="cb165-212"><a href="regression.html#cb165-212" aria-hidden="true" tabindex="-1"></a><span class="do">## -------------------------------------------------------------------------------------</span></span>
-<span id="cb165-213"><a href="regression.html#cb165-213" aria-hidden="true" tabindex="-1"></a><span class="do">## new_cases         |  cumulative_cases | 0.46 | [0.39, 0.52] | 12.59 | 600 | &lt; .001***</span></span>
-<span id="cb165-214"><a href="regression.html#cb165-214" aria-hidden="true" tabindex="-1"></a><span class="do">## new_cases         |        new_deaths | 0.45 | [0.39, 0.52] | 12.51 | 600 | &lt; .001***</span></span>
-<span id="cb165-215"><a href="regression.html#cb165-215" aria-hidden="true" tabindex="-1"></a><span class="do">## new_cases         |            travel | 0.51 | [0.45, 0.57] | 14.56 | 592 | &lt; .001***</span></span>
-<span id="cb165-216"><a href="regression.html#cb165-216" aria-hidden="true" tabindex="-1"></a><span class="do">## new_cases         |           schools | 0.52 | [0.45, 0.57] | 14.66 | 592 | &lt; .001***</span></span>
-<span id="cb165-217"><a href="regression.html#cb165-217" aria-hidden="true" tabindex="-1"></a><span class="do">## new_cases         |        businesses | 0.51 | [0.44, 0.56] | 14.28 | 592 | &lt; .001***</span></span>
-<span id="cb165-218"><a href="regression.html#cb165-218" aria-hidden="true" tabindex="-1"></a><span class="do">## new_cases         |      global_index | 0.65 | [0.61, 0.70] | 21.08 | 592 | &lt; .001***</span></span>
-<span id="cb165-219"><a href="regression.html#cb165-219" aria-hidden="true" tabindex="-1"></a><span class="do">## cumulative_cases  | cumulative_deaths | 0.96 | [0.96, 0.97] | 86.69 | 600 | &lt; .001***</span></span>
-<span id="cb165-220"><a href="regression.html#cb165-220" aria-hidden="true" tabindex="-1"></a><span class="do">## cumulative_cases  |      global_index | 0.42 | [0.35, 0.49] | 11.30 | 592 | &lt; .001***</span></span>
-<span id="cb165-221"><a href="regression.html#cb165-221" aria-hidden="true" tabindex="-1"></a><span class="do">## new_deaths        |           schools | 0.48 | [0.42, 0.54] | 13.44 | 592 | &lt; .001***</span></span>
-<span id="cb165-222"><a href="regression.html#cb165-222" aria-hidden="true" tabindex="-1"></a><span class="do">## new_deaths        |        businesses | 0.48 | [0.41, 0.54] | 13.20 | 592 | &lt; .001***</span></span>
-<span id="cb165-223"><a href="regression.html#cb165-223" aria-hidden="true" tabindex="-1"></a><span class="do">## new_deaths        |         movements | 0.54 | [0.48, 0.59] | 15.50 | 592 | &lt; .001***</span></span>
-<span id="cb165-224"><a href="regression.html#cb165-224" aria-hidden="true" tabindex="-1"></a><span class="do">## new_deaths        |      global_index | 0.55 | [0.50, 0.61] | 16.17 | 592 | &lt; .001***</span></span>
-<span id="cb165-225"><a href="regression.html#cb165-225" aria-hidden="true" tabindex="-1"></a><span class="do">## cumulative_deaths |      global_index | 0.45 | [0.39, 0.52] | 12.42 | 592 | &lt; .001***</span></span>
-<span id="cb165-226"><a href="regression.html#cb165-226" aria-hidden="true" tabindex="-1"></a><span class="do">## masks             |        businesses | 0.44 | [0.37, 0.50] | 11.99 | 592 | &lt; .001***</span></span>
-<span id="cb165-227"><a href="regression.html#cb165-227" aria-hidden="true" tabindex="-1"></a><span class="do">## masks             |      global_index | 0.64 | [0.59, 0.68] | 20.06 | 592 | &lt; .001***</span></span>
-<span id="cb165-228"><a href="regression.html#cb165-228" aria-hidden="true" tabindex="-1"></a><span class="do">## travel            |      global_index | 0.51 | [0.45, 0.57] | 14.50 | 592 | &lt; .001***</span></span>
-<span id="cb165-229"><a href="regression.html#cb165-229" aria-hidden="true" tabindex="-1"></a><span class="do">## schools           |        businesses | 0.53 | [0.47, 0.59] | 15.23 | 592 | &lt; .001***</span></span>
-<span id="cb165-230"><a href="regression.html#cb165-230" aria-hidden="true" tabindex="-1"></a><span class="do">## schools           |         movements | 0.52 | [0.46, 0.58] | 14.93 | 592 | &lt; .001***</span></span>
-<span id="cb165-231"><a href="regression.html#cb165-231" aria-hidden="true" tabindex="-1"></a><span class="do">## schools           |      global_index | 0.72 | [0.68, 0.75] | 25.08 | 592 | &lt; .001***</span></span>
-<span id="cb165-232"><a href="regression.html#cb165-232" aria-hidden="true" tabindex="-1"></a><span class="do">## businesses        |         movements | 0.42 | [0.35, 0.48] | 11.29 | 592 | &lt; .001***</span></span>
-<span id="cb165-233"><a href="regression.html#cb165-233" aria-hidden="true" tabindex="-1"></a><span class="do">## businesses        |      global_index | 0.67 | [0.62, 0.71] | 21.98 | 592 | &lt; .001***</span></span>
-<span id="cb165-234"><a href="regression.html#cb165-234" aria-hidden="true" tabindex="-1"></a><span class="do">## movements         |      global_index | 0.59 | [0.53, 0.64] | 17.57 | 592 | &lt; .001***</span></span>
-<span id="cb165-235"><a href="regression.html#cb165-235" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb165-236"><a href="regression.html#cb165-236" aria-hidden="true" tabindex="-1"></a><span class="do">## p-value adjustment method: Holm (1979)</span></span>
-<span id="cb165-237"><a href="regression.html#cb165-237" aria-hidden="true" tabindex="-1"></a><span class="do">## Observations: 594-602</span></span>
-<span id="cb165-238"><a href="regression.html#cb165-238" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-239"><a href="regression.html#cb165-239" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-240"><a href="regression.html#cb165-240" aria-hidden="true" tabindex="-1"></a>covid <span class="sc">%&gt;%</span></span>
-<span id="cb165-241"><a href="regression.html#cb165-241" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> gatherings,</span>
-<span id="cb165-242"><a href="regression.html#cb165-242" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> new_cases)) <span class="sc">+</span></span>
-<span id="cb165-243"><a href="regression.html#cb165-243" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>() <span class="sc">+</span></span>
-<span id="cb165-244"><a href="regression.html#cb165-244" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">label =</span> scales<span class="sc">::</span>comma)</span>
-<span id="cb165-245"><a href="regression.html#cb165-245" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning: Removed 10806 rows containing missing values (geom_point).</span></span></code></pre></div>
-<p><img src="r_for_non_programmers_files/figure-html/Multiple%20regression-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Multiple regressions expand single linear regressions by allowing us to add more variables. Maybe less surprising, computing a multiple regression is similar to a single regression in R, because it requires the same function, i.e. <code>lm()</code>. However, we add more IVs. Therefore, the equation we used before needs to be modified slightly by adding more independent variables each of which will have its own <span class="math inline">\(\beta\)</span> value:</p>
+<div align="center">
+<p><span class="math display">\[
+DV = \beta_{0} + IV_{1} * \beta_{1} + IV_{2} * \beta_{2} + ... + IV_{n} * \beta_{n} + error
+\]</span></p>
+</div>
+<p>In the last section we wanted to know how many people will likely not recover from COVID. However, it might be even more interesting to understand how we can predict new cases and prevent casualties from the outset. Since I live in the United Kingdom at the time of the pandemic, I am curious to know whether certain COVID measures helped to reduce the number of new cases there. To keep it more interesting, I will also add Germany to the mix since it has shown to be very effective in handling the pandemic relative to other European countries. Of course, feel free to pick different countries (maybe the one you live in?) to follow with my example. In Chapter <a href="regression.html#moderated-regressions">12.4</a> it will become obvious why I chose two countries (#spoiler-alert).</p>
+<p>First, we create a dataset that only contains information from the <code>United Kingdom</code> and <code>Germany</code><a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>, which means we use <code>filter()</code>.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="regression.html#cb16-1" aria-hidden="true" tabindex="-1"></a>covid_uk_ger <span class="ot">&lt;-</span> covid <span class="sc">%&gt;%</span></span>
+<span id="cb16-2"><a href="regression.html#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(iso3 <span class="sc">==</span> <span class="st">&quot;GBR&quot;</span> <span class="sc">|</span> iso3 <span class="sc">==</span> <span class="st">&quot;DEU&quot;</span>)</span></code></pre></div>
+<p>In a next step, we might want to know how new cases are distributed over time. It is always a good idea to inspect the dependent variable to also get a feeling of how much variance there is in your data. Having a bigger range of data values is ideal because the regression model will be able to consider low and high values of the dependent variable instead of just high or low scores. Let’s plot the DV <code>new_cases</code> across time to see when and how much new COVID cases had to be reported.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="regression.html#cb17-1" aria-hidden="true" tabindex="-1"></a>covid_uk_ger <span class="sc">%&gt;%</span></span>
+<span id="cb17-2"><a href="regression.html#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> date_reported,</span>
+<span id="cb17-3"><a href="regression.html#cb17-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> new_cases)) <span class="sc">+</span></span>
+<span id="cb17-4"><a href="regression.html#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>()</span></code></pre></div>
+<p><img src="r_for_non_programmers_files/figure-html/Multiple%20regression%20plotting%20new%20cases-1.png" width="672" /></p>
+<p>We can tell that there are different waves of new cases. As such, we should find that there are certain variables that should help explain when <code>new_cases</code> are high and when they are low. If you have hypotheses you want to test, you would already know which variables to include in your regression. However, in our case, we do not really have a hypothesis based on our prior reading or other studies. Thus, we pick variables of interest that we suspect could help us with modelling new COVID cases. We can be fairly certain that the number of new COVID cases should be lower if there are more safety measures in place - assuming that they are effective and adhered to, of course. The <code>covid</code> dataset includes such information evaluated by the <a href="https://covid19.who.int/info/" target="blank" title="WHO">WHO</a>, i.e. <code>masks</code>, <code>travel</code>, <code>gatherings</code>, <code>schools</code> and <code>movements</code>. Remember, you can always find out what these variables stand for by typing <code>?covid</code> into the console. A higher value for these variables indicates that there were more safety measures. Scores can range from 0 (i.e. no measures) to 100 (all WHO measures taken).</p>
+<p>We simply add these variables by using the <code>+</code> symbol in the <code>lm()</code> function.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="regression.html#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create our model</span></span>
+<span id="cb18-2"><a href="regression.html#cb18-2" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(new_cases <span class="sc">~</span> masks <span class="sc">+</span> movements <span class="sc">+</span> gatherings <span class="sc">+</span> schools <span class="sc">+</span> businesses <span class="sc">+</span> travel,</span>
+<span id="cb18-3"><a href="regression.html#cb18-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">data =</span> covid_uk_ger)</span>
+<span id="cb18-4"><a href="regression.html#cb18-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-5"><a href="regression.html#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Inspect the model specifications</span></span>
+<span id="cb18-6"><a href="regression.html#cb18-6" aria-hidden="true" tabindex="-1"></a>broom<span class="sc">::</span><span class="fu">tidy</span>(m1)</span></code></pre></div>
+<pre><code>## # A tibble: 7 × 5
+##   term        estimate std.error statistic  p.value
+##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+## 1 (Intercept)  -2585.     745.       -3.47 5.43e- 4
+## 2 masks          -14.8      9.18     -1.61 1.08e- 1
+## 3 movements      -54.7     15.5      -3.52 4.43e- 4
+## 4 gatherings     -26.0     19.8      -1.31 1.91e- 1
+## 5 schools        394.      29.7      13.2  2.28e-37
+## 6 businesses      93.7     13.8       6.79 1.77e-11
+## 7 travel          49.5      9.30      5.32 1.22e- 7</code></pre>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="regression.html#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Evaluate the quality of our model</span></span>
+<span id="cb20-2"><a href="regression.html#cb20-2" aria-hidden="true" tabindex="-1"></a>performance<span class="sc">::</span><span class="fu">model_performance</span>(m1)</span></code></pre></div>
+<pre><code>## # Indices of model performance
+## 
+## AIC       |       BIC |    R2 | R2 (adj.) |      RMSE |     Sigma
+## -----------------------------------------------------------------
+## 25277.622 | 25318.262 | 0.233 |     0.229 | 10027.204 | 10056.877</code></pre>
+<p>Overall (and purely subjectively judged), the model is not particularly great, because even though we added so many variables, the <span class="math inline">\(adjusted \ R^2\)</span> is not particularly high, i.e. ‘only’ 0.229. As mentioned earlier, for multiple regression it is better to look at <span class="math inline">\(adjusted \ R^2\)</span>, because it adjusts for the number of variables in our model and makes comparison of multiple models easier. There are a couple more important insights gained from this analysis:</p>
+<ul>
+<li><p>All variables appear to be significant and therefore help to explain new cases.</p></li>
+<li><p>The variables <code>masks</code>, <code>movements</code> and <code>gatherings</code> seem to reduce <code>new_cases</code>, i.e. they have negative estimates (<span class="math inline">\(\beta\)</span>).</p></li>
+<li><p>However, <code>schools</code>, <code>businesses</code>, <code>travel</code> have a positive effect on <code>new_cases</code>.</p></li>
+</ul>
+<p>Especially the last point might appear confusing. How can measures taken increase the number of new COVID cases? Should we avoid them? What we have not considered in our regression is the fact that measures might be put in place to reduce the number of new cases rather than to prevent them. Thus, it might not be the case that <code>schools</code>, <code>businesses</code> and <code>travel</code> predict higher <code>new_cases</code>, but rather the opposite, i.e. due to higher <code>new_cases</code> the measures for <code>schools</code>, <code>businesses</code> and <code>travel</code> were tightened, which later on (with a time lag) led to lower <code>new_cases</code>. Thus, the relationships might be a bit more complicated, but to keep things simple, we accept the fact that with our data we face certain limitations (as is usually the case).</p>
+<p>However, there are a couple of things we overlooked when running this regression. If you are familiar with regressions already, you might have been folding the hands over your face and bursted into tears about the blasphemeous approach to linear regression modelling. Let me course-correct at this point.</p>
+<p>Similar to other parametric approaches to conducting research, we need to test for sources of bias, linearity, normality and homogeneity of variance (or the unpronounceable word ‘homoscedasticity’). Since multiple regressions consider more than one variable we have to consider these crieria in light of other variables. As such, we have to draw on different tools to assess our data. There are certain pre- and post-tests we have to perform to fully assess and develop a multiple regression model:</p>
+<ul>
+<li><p><em>pre-test</em>: We need to consider whether there are any outliers and whether all variables are parametric.</p></li>
+<li><p><em>post-test</em>: Do our independent variables correlate very strongly with each other, i.e. are there issues of multiple collinearity.</p></li>
+</ul>
+<p>We already covered aspects of linearity, normality and homogeneity of variance. However, outliers and collinearity have to be reconsidered for multiple regressions.</p>
+<div id="outliers-in-multiple-regressions" class="section level3" number="12.2.1">
+<h3><span class="header-section-number">12.2.1</span> Outliers in multiple regressions</h3>
+<p>While it should be fairly clear by now why we need to handle outliers (remember Chapter <a href="sources-of-bias.html#dealing-with-outliers">9.5</a>), the approach we take is somewhat different when we need to consider multiple variables at once. Instead of identifying outliers for each variable independently, we have to consider the interplay of variables as well. In other words, we need to find out how an outlier in our independent variable affects the overall model rather than just on single other variable. In short, we need a different technique to assess outliers. By now, you might not be shocked to find out that there is more than one way of identifying outliers in regressions and many different ways to compute them in R. <span class="citation">(<a href="#ref-cohen2014applied" role="doc-biblioref">P. Cohen, West, and Aiken 2014</a>)</span> distinguishes between where one can find outliers in the model as summarised in Table <a href="regression.html#tab:outliers-in-multiple-regressions">12.1</a>. I offer a selection of possible ways of computing the relevant statistics, but this list is not exhaustive. For example, many of these statistics can also be found by using <code>influence.measures()</code>.</p>
+<table>
+<caption><span id="tab:outliers-in-multiple-regressions">Table 12.1: </span>Outlier detection in multiple regressions</caption>
+<colgroup>
+<col width="17%" />
+<col width="26%" />
+<col width="56%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Outlier in?</th>
+<th>Measures</th>
+<th>function in R</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><em>Dependent variable</em></td>
+<td><ul>
+<li>Internally studentized residuals</li>
+</ul></td>
+<td><ul>
+<li><code>rstandard()</code> or <code>fortify()</code></li>
+</ul></td>
+</tr>
+<tr class="even">
+<td><em>Dependent variable</em></td>
+<td><ul>
+<li>Externally studentized residuals</li>
+</ul></td>
+<td><ul>
+<li><code>rstudent()</code></li>
+</ul></td>
+</tr>
+<tr class="odd">
+<td><em>Independent variable</em></td>
+<td><ul>
+<li>Leverage</li>
+</ul></td>
+<td><ul>
+<li><code>hatvalues()</code> or <code>fortify()</code></li>
+</ul></td>
+</tr>
+<tr class="even">
+<td><em>Independent variable</em></td>
+<td><ul>
+<li>Mahalanobis distance</li>
+</ul></td>
+<td><ul>
+<li><code>mahalanobis()</code><a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a> or <code>mahalanobis_distance()</code><a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a></li>
+</ul></td>
+</tr>
+<tr class="odd">
+<td><em>Entire model</em></td>
+<td><p><em>Global measures of influence</em></p>
+<ul>
+<li><p>DFFITS,</p></li>
+<li><p>Cook’s d</p></li>
+</ul></td>
+<td><p><em>Global measures of influence</em></p>
+<ul>
+<li><p><code>dffits()</code></p></li>
+<li><p><code>cooks.distance()</code> or <code>fortify()</code></p></li>
+</ul></td>
+</tr>
+<tr class="even">
+<td><em>Entire model</em></td>
+<td><p><em>Specific measures of influence:</em></p>
+<ul>
+<li>DFBETAS</li>
+</ul></td>
+<td><p><em>Specific measures of influence:</em></p>
+<ul>
+<li><code>dfbetas()</code></li>
+</ul></td>
+</tr>
+</tbody>
+</table>
+<p>While it might be clear why we need to use different approaches to find outliers in different components of our model, this might be less clear when evaluating outliers that affect the entire model. We distinguish between <em>global measures of influence</em>, which identify how a single observation affects the quality of the entire model, and <em>specific measures of influence</em>, which identify how a single observation affects each individual independent variable, i.e. its regression coefficients denoted as <span class="math inline">\(\beta\)</span>. It is recommended to look at all different measures of outliers before venturing ahead to performing a linear multiple regression. Going through the entire set of possible outliers I will focus on four popular measures which cover all three categories:</p>
+<ul>
+<li><p>Dependent variable: Externally studentized residuals</p></li>
+<li><p>Independent variable: Leverage and Mahalanobis distance</p></li>
+<li><p>Entire model: Cook’s d</p></li>
+</ul>
+<p>The approach taken is the same for the other outlier detection methods. Thus, it should be fairly simple to reproduce these as well after having finished the chapters below.</p>
+<div id="outliers-in-the-dependent-variable" class="section level4" number="12.2.1.1">
+<h4><span class="header-section-number">12.2.1.1</span> Outliers in the dependent variable</h4>
+<p>Irrespective of whether we look at independent or dependent variables, we always want to know whether there are extreme values present. Here I will use the externally studentized residual which ’is the preferred statistic to use to identify cases whose […] values are highly discrepant from their predicted values <span class="citation">(<a href="#ref-cohen2014applied" role="doc-biblioref">P. Cohen, West, and Aiken 2014, 401</a>)</span>.</p>
+<p>First we need to compute the residuals for our model as a new column in our dataset. Since we also want to use other methods to investigate outliers we can use the function <code>fortify()</code> which will add some of the later indicators as well and create a <code>tibble</code> which only includes the variables from our model. One function to do a lot of things at once.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="regression.html#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a tibble with some pre-computed stats</span></span>
+<span id="cb22-2"><a href="regression.html#cb22-2" aria-hidden="true" tabindex="-1"></a>m1_outliers <span class="ot">&lt;-</span> <span class="fu">fortify</span>(m1) <span class="sc">%&gt;%</span> <span class="fu">as_tibble</span>()</span>
+<span id="cb22-3"><a href="regression.html#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(m1_outliers)</span></code></pre></div>
+<pre><code>## Rows: 1,188
+## Columns: 13
+## $ new_cases  &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,…
+## $ masks      &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,…
+## $ movements  &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,…
+## $ gatherings &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,…
+## $ schools    &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,…
+## $ businesses &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,…
+## $ travel     &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,…
+## $ .hat       &lt;dbl&gt; 0.005493624, 0.005493624, 0.005493624, 0.005493624, 0.00549…
+## $ .sigma     &lt;dbl&gt; 10060.85, 10060.85, 10060.85, 10060.85, 10060.85, 10060.85,…
+## $ .cooksd    &lt;dbl&gt; 5.243271e-05, 5.243271e-05, 5.243271e-05, 5.243271e-05, 5.2…
+## $ .fitted    &lt;dbl&gt; -2585.184, -2585.184, -2585.184, -2585.184, -2585.184, -258…
+## $ .resid     &lt;dbl&gt; 2585.184, 2585.184, 2585.184, 2585.184, 2585.184, 2585.184,…
+## $ .stdresid  &lt;dbl&gt; 0.2577653, 0.2577653, 0.2577653, 0.2577653, 0.2577653, 0.25…</code></pre>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="regression.html#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Add the externally studentized residuals</span></span>
+<span id="cb24-2"><a href="regression.html#cb24-2" aria-hidden="true" tabindex="-1"></a>m1_outliers <span class="ot">&lt;-</span> m1_outliers <span class="sc">%&gt;%</span></span>
+<span id="cb24-3"><a href="regression.html#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">.studresid =</span> <span class="fu">rstudent</span>(m1))</span>
+<span id="cb24-4"><a href="regression.html#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(m1_outliers)</span></code></pre></div>
+<pre><code>## Rows: 1,188
+## Columns: 14
+## $ new_cases  &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,…
+## $ masks      &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,…
+## $ movements  &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,…
+## $ gatherings &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,…
+## $ schools    &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,…
+## $ businesses &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,…
+## $ travel     &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,…
+## $ .hat       &lt;dbl&gt; 0.005493624, 0.005493624, 0.005493624, 0.005493624, 0.00549…
+## $ .sigma     &lt;dbl&gt; 10060.85, 10060.85, 10060.85, 10060.85, 10060.85, 10060.85,…
+## $ .cooksd    &lt;dbl&gt; 5.243271e-05, 5.243271e-05, 5.243271e-05, 5.243271e-05, 5.2…
+## $ .fitted    &lt;dbl&gt; -2585.184, -2585.184, -2585.184, -2585.184, -2585.184, -258…
+## $ .resid     &lt;dbl&gt; 2585.184, 2585.184, 2585.184, 2585.184, 2585.184, 2585.184,…
+## $ .stdresid  &lt;dbl&gt; 0.2577653, 0.2577653, 0.2577653, 0.2577653, 0.2577653, 0.25…
+## $ .studresid &lt;dbl&gt; 0.2576634, 0.2576634, 0.2576634, 0.2576634, 0.2576634, 0.25…</code></pre>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="regression.html#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create an ID column</span></span>
+<span id="cb26-2"><a href="regression.html#cb26-2" aria-hidden="true" tabindex="-1"></a>m1_outliers <span class="ot">&lt;-</span> m1_outliers <span class="sc">%&gt;%</span> <span class="fu">rownames_to_column</span>()</span>
+<span id="cb26-3"><a href="regression.html#cb26-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-4"><a href="regression.html#cb26-4" aria-hidden="true" tabindex="-1"></a>m1_outliers <span class="sc">%&gt;%</span></span>
+<span id="cb26-5"><a href="regression.html#cb26-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> rowname,</span>
+<span id="cb26-6"><a href="regression.html#cb26-6" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> .studresid)) <span class="sc">+</span></span>
+<span id="cb26-7"><a href="regression.html#cb26-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="fl">0.5</span>)</span></code></pre></div>
+<p><img src="r_for_non_programmers_files/figure-html/Plot%20externally%20studentized%20residuals-1.png" width="672" /></p>
+<p>The values of the externally studentized residuals can be positive or negative. All we need to know now is which values count as outliers and which ones do not. <span class="citation"><a href="#ref-cohen2014applied" role="doc-biblioref">P. Cohen, West, and Aiken</a> (<a href="#ref-cohen2014applied" role="doc-biblioref">2014</a>)</span> provides some guidance: $$</p>
+<ul>
+<li><p>$outlier = $</p></li>
+<li></li>
+</ul>
+</div>
+<div id="cooks-d" class="section level4" number="12.2.1.2">
+<h4><span class="header-section-number">12.2.1.2</span> Cook’s d</h4>
+<p>For regressions, Cook’s d <span class="citation">(<a href="#ref-cook1982residuals" role="doc-biblioref">Cook and Weisberg 1982</a>)</span> is a popular method in the Social Sciences. It measures to which extend a single observation can affect the predictive power of our model to explain all other observations. Obviously, we do not wish to have observations that make it more difficult to predict most of the other observations correctly.</p>
+<p>Our plotting package <code>ggplot2</code> has a nice function to automatically add model fit statistics to your dataset based on our regression model, i.e. <code>fortify()</code>. You can either use it as part of a <code>ggplot()</code> or create a new <code>tibble</code> to save the results together with your model data. I opt for the latter purely for demonstration purposes.</p>
+<p>Among other variables, <code>fortify()</code> automatically adds <code>.cooksd</code>. Thus, we cannot only compute whether outliers exist, but also inspect them visually as we did before. A good starting point to find outliers via the Cook’s D is to plot its distribution.</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="regression.html#cb27-1" aria-hidden="true" tabindex="-1"></a>m1_outliers <span class="sc">%&gt;%</span></span>
+<span id="cb27-2"><a href="regression.html#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">rownames</span>(m1_outliers),</span>
+<span id="cb27-3"><a href="regression.html#cb27-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> .cooksd)) <span class="sc">+</span></span>
+<span id="cb27-4"><a href="regression.html#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>()</span></code></pre></div>
+<p><img src="r_for_non_programmers_files/figure-html/Plotting%20Cooks%20d-1.png" width="672" /></p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="regression.html#cb28-1" aria-hidden="true" tabindex="-1"></a>performance<span class="sc">::</span><span class="fu">check_model</span>(m1)</span></code></pre></div>
+<pre><code>## Registered S3 method overwritten by &#39;datawizard&#39;:
+##   method                    from
+##   plot.visualisation_recipe see</code></pre>
+<p><img src="r_for_non_programmers_files/figure-html/Plotting%20Cooks%20d-2.png" width="672" /></p>
+<p>Inspecting this barplot, we can tell that there are some observations that have much higher <code>.cooksd</code> values that any other observations. However, we first need to decide on a benchmark to determine whether we can consider these values as outliers. As you probably can guess, there are different conventions on how people decide on whether an outlier is really an outlier. If we follow <span class="citation"><a href="#ref-cook1982residuals" role="doc-biblioref">Cook and Weisberg</a> (<a href="#ref-cook1982residuals" role="doc-biblioref">1982</a>)</span>, values that are higher than $d &gt; 1$ require reviewing. Alternatively, one can also consider the median of all Cook’s d values.</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="regression.html#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Any Cook&#39;s d &gt;1?</span></span>
+<span id="cb30-2"><a href="regression.html#cb30-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-3"><a href="regression.html#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Any Cook&#39;s d &gt; median?</span></span></code></pre></div>
+</div>
+<div id="leverage" class="section level4" number="12.2.1.3">
+<h4><span class="header-section-number">12.2.1.3</span> Leverage</h4>
+</div>
+<div id="mahalanobis-distance" class="section level4" number="12.2.1.4">
+<h4><span class="header-section-number">12.2.1.4</span> Mahalanobis distance</h4>
+</div>
+</div>
 </div>
 <div id="hierarchical-regression" class="section level2" number="12.3">
 <h2><span class="header-section-number">12.3</span> Hierarchical regression</h2>
+</div>
+<div id="moderated-regressions" class="section level2" number="12.4">
+<h2><span class="header-section-number">12.4</span> Moderated regression</h2>
 
 </div>
 </div>
@@ -780,9 +741,23 @@ Boehmke, Brad, and Brandon Greenwell. 2019. <em>Hands-on Machine Learning with r
 <div id="ref-cohen1988statistical" class="csl-entry">
 Cohen, Jacob. 1988. <span>“Statistical Power Analysis for the Behavioral Sciences New York.”</span> <em>NY: Academic</em>, 54.
 </div>
+<div id="ref-cohen2014applied" class="csl-entry">
+Cohen, Patricia, Stephen G West, and Leona S Aiken. 2014. <em>Applied Multiple Regression/Correlation Analysis for the Behavioral Sciences</em>. Psychology press.
+</div>
+<div id="ref-cook1982residuals" class="csl-entry">
+Cook, R Dennis, and Sanford Weisberg. 1982. <em>Residuals and Influence in Regression</em>. New York: Chapman; Hall.
+</div>
 <div id="ref-gelman2020regression" class="csl-entry">
 Gelman, Andrew, Jennifer Hill, and Aki Vehtari. 2020. <em>Regression and Other Stories</em>. Cambridge University Press.
 </div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="1">
+<li id="fn1"><p>Germany is called ‘Deutschland’ in German, hence the abbreivation ‘DEU’ according to the <a href="https://www.iso.org/obp/ui/#iso:code:3166:DE" target="blank" title="ISO country code">ISO country code</a>.<a href="regression.html#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p>orThis function does not take the model as an attribute, but instead requires the data, the column means and the covariance. Thus, we have to specify this function in the following way: <code>mahalanobis(data, colMeans(data), cov(data))</code><a href="regression.html#fnref2" class="footnote-back">↩︎</a></p></li>
+<li id="fn3"><p>Function from <code>rstatix</code> package which automatically classifies values as outliers for us.<a href="regression.html#fnref3" class="footnote-back">↩︎</a></p></li>
+</ol>
 </div>
             </section>
 

@@ -134,3 +134,10 @@ next-steps-twitter
 comparing-two-unpaired-groups
 exercises-solutions
 exercises-solutions-5
+tab:outliers-in-multiple-regressions
+outliers-in-multiple-regressions
+cooks-d
+leverage
+mahalanobis-distance
+moderated-regressions
+outliers-in-the-dependent-variable

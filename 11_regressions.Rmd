@@ -71,7 +71,7 @@ Plot B also shows what happens if we change $\beta_1$, i.e. the slope. The two m
 
 Lastly, the $error$ component in the regression model refers to the deviation of data from this regression lines. Ideally, we want this value to be as small as possible.
 
-### Fitting a regression model by hand, i.e. trial and error
+### Fitting a regression model by hand, i.e. trial and error {#fitting-a-regression-model-by-hand}
 
 If this sounds all awfully theoretical, let's try to fit a regression model by hand. First we need to consider what our model should be able to predict. Let's say that the number of COVID-19 cases predicts the number of deaths due to COVID-19. Intuitively we would assume this should be a linear relationship, because the more cases there are, the more likely we find more deaths caused by it.
 
@@ -139,7 +139,9 @@ plot +
 
 We finished creating our regression model. If we wanted to express it as a formula we would write $DV = -5 + 0.015 * IV$. We could now use this model to predict how high COVID cases likely will be in other countries.
 
-Estimating a regression model in this way is not ideal and far from accurate. Instead, we would compute the $\beta$s based on our observed data, i.e. `cumulative_cases` and `cumulative_deaths`. We can use the function `lm()` to achieve this. I also rounded the all `numeric` values to two decimal places to make the output easier to read. We also use `tidy()` to retrieve a cleaner output from the computation.
+### Fitting a regression model computationally {#fitting-a-regression-model-computationally}
+
+Estimating a regression model by hand is not ideal and far from accurate. Instead, we would compute the $\beta$s based on our observed data, i.e. `cumulative_cases` and `cumulative_deaths`. We can use the function `lm()` to achieve this. I also rounded the all `numeric` values to two decimal places to make the output easier to read. We also use `tidy()` to retrieve a cleaner output from the computation.
 
 ```{r Computing a regression, echo=TRUE}
 # classic r
@@ -204,7 +206,7 @@ As a result we find out how many likely deaths from COVID have to be expected ba
 
 Single linear regressions are simple and a good way to introduce novice scholars to modeling social phenomena. However, hardly ever will find that a single variable can explain enough variance to be a useful model. Instead, we most likely can improve the majority of our single regression models by considering more variables in the form of multiple regressions.
 
-## Multiple regression
+## Multiple regression {#multiple-regression}
 
 Multiple regressions expand single linear regressions by allowing us to add more variables. Maybe less surprising, computing a multiple regression is similar to a single regression in R, because it requires the same function, i.e. `lm()`. However, we add more IVs. Therefore, the equation we used before needs to be modified slightly by adding more independent variables each of which will have its own $\beta$ value:
 
@@ -225,7 +227,7 @@ covid_uk_ger <- covid %>%
   filter(iso3 == "GBR" | iso3 == "DEU")
 ```
 
-In a next step, we might want to know how new cases are distributed over time. Let's plot this first.
+In a next step, we might want to know how new cases are distributed over time. It is always a good idea to inspect the dependent variable to also get a feeling of how much variance there is in your data. Having a bigger range of data values is ideal because the regression model will be able to consider low and high values of the dependent variable instead of just high or low scores. Let's plot the DV `new_cases` across time to see when and how much new COVID cases had to be reported.
 
 ```{r Multiple regression plotting new cases, echo=TRUE}
 covid_uk_ger %>%
@@ -234,7 +236,7 @@ covid_uk_ger %>%
   geom_col()
 ```
 
-We can tell that there are different waves of new cases. As such, we should find that there are certain variables that should help explain when `new_cases` are high and when they are low. If you have hypotheses you want to test, you would already know which variables to include in your regression. However, in our case, we do not really have a hypothesis based on our prior reading or other studies. Thus, we pick variables of interest that we suspect could help us with modelling new COVID cases. We can be fairly certain that the number of new COVID cases should be lower if there are more safety measures in place - assuming that they are effective, of course. The `covid` dataset includes such information evaluated by the [WHO](https://covid19.who.int/info/ "WHO"){target="blank"}, i.e. `masks`, `travel`, `gatherings`, `schools` and `movements`. Remember, you can always find out what these variables stand for by typing `?covid` into the console.
+We can tell that there are different waves of new cases. As such, we should find that there are certain variables that should help explain when `new_cases` are high and when they are low. If you have hypotheses you want to test, you would already know which variables to include in your regression. However, in our case, we do not really have a hypothesis based on our prior reading or other studies. Thus, we pick variables of interest that we suspect could help us with modelling new COVID cases. We can be fairly certain that the number of new COVID cases should be lower if there are more safety measures in place - assuming that they are effective and adhered to, of course. The `covid` dataset includes such information evaluated by the [WHO](https://covid19.who.int/info/ "WHO"){target="blank"}, i.e. `masks`, `travel`, `gatherings`, `schools` and `movements`. Remember, you can always find out what these variables stand for by typing `?covid` into the console. A higher value for these variables indicates that there were more safety measures. Scores can range from 0 (i.e. no measures) to 100 (all WHO measures taken).
 
 We simply add these variables by using the `+` symbol in the `lm()` function.
 
@@ -248,11 +250,9 @@ broom::tidy(m1)
 
 # Evaluate the quality of our model
 performance::model_performance(m1)
-
-# covid_uk_ger %>% correlation::correlation(redundant = TRUE)
 ```
 
-Overall, the model is not particularly great, because even though we added so many variables, the $adjusted \ R^2$ is not particularly high, i.e. only 0.229. There are a couple more important insights gained from this analysis:
+Overall (and purely subjectively judged), the model is not particularly great, because even though we added so many variables, the $adjusted \ R^2$ is not particularly high, i.e. 'only' 0.229. As mentioned earlier, for multiple regression it is better to look at $adjusted \ R^2$, because it adjusts for the number of variables in our model and makes comparison of multiple models easier. There are a couple more important insights gained from this analysis:
 
 -   All variables appear to be significant and therefore help to explain new cases.
 
@@ -260,43 +260,233 @@ Overall, the model is not particularly great, because even though we added so ma
 
 -   However, `schools`, `businesses`, `travel` have a positive effect on `new_cases`.
 
-Especially the last point might appear confusing. How can measures taken increase the number of new COVID cases? Should we avoid them? What we have not considered in our regression is the fact that measures might be put in place to reduce the number of new cases rather than the other way around. Thus, it might not be that `schools`, `business` and `travel` predict higher `new_cases`, but rather the opposite, i.e. due to higher `new_cases` the measures for `schools`, `businesses` and `travel` were tightened, which later on (with a time lag) led to lower `new_cases`. Thus, the relationships might be a bit more complicated, but to keep things simple, we accept the fact that with our data we face certain limitations (as is usually the case).
+Especially the last point might appear confusing. How can measures taken increase the number of new COVID cases? Should we avoid them? What we have not considered in our regression is the fact that measures might be put in place to reduce the number of new cases rather than to prevent them. Thus, it might not be the case that `schools`, `businesses` and `travel` predict higher `new_cases`, but rather the opposite, i.e. due to higher `new_cases` the measures for `schools`, `businesses` and `travel` were tightened, which later on (with a time lag) led to lower `new_cases`. Thus, the relationships might be a bit more complicated, but to keep things simple, we accept the fact that with our data we face certain limitations (as is usually the case).
 
-However, there are a couple of things we overlooked when running this regression. We did not test for sources of bias, especially outliers. Since multiple regressions consider more than one variable we have to consider outliers in light of other variables. As such, we have to draw on different tools to assess our data. There are certain pre- and post-tests we have to perform to fully assess a multiple regression model:
+However, there are a couple of things we overlooked when running this regression. If you are familiar with regressions already, you might have been folding the hands over your face and bursted into tears about the blasphemeous approach to linear regression modelling. Let me course-correct at this point.
 
--   pre-test: We need to consider whether there are any outliers and whether all variables are parametric
+Similar to other parametric approaches to conducting research, we need to test for sources of bias, linearity, normality and homogeneity of variance (or the unpronounceable word 'homoscedasticity'). Since multiple regressions consider more than one variable we have to consider these crieria in light of other variables. As such, we have to draw on different tools to assess our data. There are certain pre- and post-tests we have to perform to fully assess and develop a multiple regression model:
 
--   post-test: Do our independent variables correlate very strongly with each other, i.e. are there issues of multiple collinearity.
+-   *pre-test*: We need to consider whether there are any outliers and whether all variables are parametric.
+
+-   *post-test*: Do our independent variables correlate very strongly with each other, i.e. are there issues of multiple collinearity.
 
 We already covered aspects of linearity, normality and homogeneity of variance. However, outliers and collinearity have to be reconsidered for multiple regressions.
 
-### Outliers in multiple regressions
+### Outliers in multiple regressions {#outliers-in-multiple-regressions}
 
-While it should be fairly clear by now why we need to handle outliers (remember Chapter \@ref(dealing-with-outliers)), the approach we take is somewhat different when we need to consider multiple variables at once. Instead of identifying outliers for each variable independently, we have to consider the interplay of variables as well. In short, we need a different technique to assess outliers. For regressions Cook's d is the preferred method in the Social Sciences. Our plotting package `ggplot2` has a nice function to automatically add model fit statistics to your dataset based on our regression model, i.e. `fortify()`.
+While it should be fairly clear by now why we need to handle outliers (remember Chapter \@ref(dealing-with-outliers)), the approach we take is somewhat different when we need to consider multiple variables at once. Instead of identifying outliers for each variable independently, we have to consider the interplay of variables as well. In other words, we need to find out how an outlier in our independent variable affects the overall model rather than just on single other variable. In short, we need a different technique to assess outliers. By now, you might not be shocked to find out that there is more than one way of identifying outliers in regressions and many different ways to compute them in R. [@cohen2014applied] distinguishes between where one can find outliers in the model as summarised in Table \@ref(tab:outliers-in-multiple-regressions). I offer a selection of possible ways of computing the relevant statistics, but this list is not exhaustive. For example, many of these statistics can also be found by using `influence.measures()`.
 
-```{r Computing Cooks d, echo=TRUE}
-m1_fitted <- fortify(m1) %>% as_tibble()
-glimpse(m1_fitted)
++------------------------+--------------------------------------+---------------------------------------------------------------------------------+
+| Outlier in?            | Measures                             | function in R                                                                   |
++========================+======================================+=================================================================================+
+| *Dependent variable*   | -   Internally studentized residuals | -   `rstandard()` or `fortify()`                                                |
++------------------------+--------------------------------------+---------------------------------------------------------------------------------+
+| *Dependent variable*   | -   Externally studentized residuals | -   `rstudent()`                                                                |
++------------------------+--------------------------------------+---------------------------------------------------------------------------------+
+| *Independent variable* | -   Leverage                         | -   `hatvalues()` or `fortify()`                                                |
++------------------------+--------------------------------------+---------------------------------------------------------------------------------+
+| *Independent variable* | -   Mahalanobis distance             | -   `mahalanobis()`[^regressions-2] or `mahalanobis_distance()`[^regressions-3] |
++------------------------+--------------------------------------+---------------------------------------------------------------------------------+
+| *Entire model*         | *Global measures of influence*       | *Global measures of influence*                                                  |
+|                        |                                      |                                                                                 |
+|                        | -   DFFITS,                          | -   `dffits()`                                                                  |
+|                        |                                      |                                                                                 |
+|                        | -   Cook's d                         | -   `cooks.distance()` or `fortify()`                                           |
++------------------------+--------------------------------------+---------------------------------------------------------------------------------+
+| *Entire model*         | *Specific measures of influence:*    | *Specific measures of influence:*                                               |
+|                        |                                      |                                                                                 |
+|                        | -   DFBETAS                          | -   `dfbetas()`                                                                 |
++------------------------+--------------------------------------+---------------------------------------------------------------------------------+
+
+: (\#tab:outliers-in-multiple-regressions)Outlier detection in multiple regressions
+
+[^regressions-2]:  orThis function does not take the model as an attribute, but instead requires the data, the column means and the covariance. Thus, we have to specify this function in the following way: `mahalanobis(data, colMeans(data), cov(data))`
+
+[^regressions-3]: Function from `rstatix` package which automatically classifies values as outliers for us.
+
+While it might be clear why we need to use different approaches to find outliers in different components of our model, this might be less clear when evaluating outliers that affect the entire model. We distinguish between *global measures of influence*, which identify how a single observation affects the quality of the entire model, and *specific measures of influence*, which identify how a single observation affects each individual independent variable, i.e. its regression coefficients denoted as $\beta$. It is recommended to look at all different measures of outliers before venturing ahead to performing a linear multiple regression. Going through the entire set of possible outliers I will focus on four popular measures which cover all three categories:
+
+-   Dependent variable: Externally studentized residuals
+
+-   Independent variable: Leverage and Mahalanobis distance
+
+-   Entire model: Cook's d
+
+The approach taken is the same for the other outlier detection methods. Thus, it should be fairly simple to reproduce these as well after having finished the chapters below.
+
+#### Outliers in the dependent variable {#outliers-in-the-dependent-variable}
+
+Irrespective of whether we look at independent or dependent variables, we always want to know whether there are extreme values present. Here I will use the externally studentized residual which 'is the preferred statistic to use to identify cases whose [...] values are highly discrepant from their predicted values [@cohen2014applied, p.401].
+
+First we need to compute the residuals for our model as a new column in our dataset. Since we also want to use other methods to investigate outliers we can use the function `fortify()` which will add some of the later indicators as well and create a `tibble` which only includes the variables from our model. One function to do a lot of things at once.
+
+```{r Compute externally studentized residuals, echo=TRUE}
+# Create a tibble with some pre-computed stats
+m1_outliers <- fortify(m1) %>% as_tibble()
+glimpse(m1_outliers)
+
+# Add the externally studentized residuals
+m1_outliers <- m1_outliers %>%
+  mutate(.studresid = rstudent(m1))
+glimpse(m1_outliers)
 ```
 
-Among other variables, `fortify()` automatically adds `.cooksd`. Thus, we cannot only compute whether outliers exist, but also inspect them visually as we did before. A good starting point to find outliers via the Cook's D is to plot the distribution.
+```{r Plot externally studentized residuals, echo=TRUE}
+# Create an ID column
+m1_outliers <- m1_outliers %>% rownames_to_column()
+
+m1_outliers %>%
+  ggplot(aes(x = rowname,
+             y = .studresid)) +
+  geom_point(size = 0.5)
+```
+
+The values of the externally studentized residuals can be positive or negative. All we need to know now is which values count as outliers and which ones do not. @cohen2014applied (p. 401) provides some guidance:
+
+-   general: $outlier = \pm 2$
+
+-   bigger samples: $outlier = \pm 3$ or $\pm 3.5$ or $\pm 4$
+
+As you can tell, it is a matter of well-informed personal judgement. Our dataset consists of over 1200 observations. As such, the dataset certainly counts as large. We can take a look and see how many outliers we would get for each of the benchmarks.
+
+```{r Compute the number of outliers externally studentized residuals, echo=TRUE}
+out_detect <- m1_outliers %>%
+  mutate(pm_2 = ifelse(abs(.studresid) > 2, "yes", "no"),
+         pm_3 = ifelse(abs(.studresid) > 3, "yes", "no"),
+         pm_35 = ifelse(abs(.studresid) > 3.5, "yes", "no"),
+         pm_4 = ifelse(abs(.studresid) > 4, "yes", "no"))
+
+out_detect %>% count(pm_2)
+out_detect %>% count(pm_3)
+out_detect %>% count(pm_35)
+out_detect %>% count(pm_4)
+```
+
+The results indicate we could have as many as 53 outliers and as little as 7. It becomes apparent that choosing the right threshold is a tricky undertaking. Let's plot the data again in an easier way to read and add some of the thresholds. I skip `3.5`, since it is very close to `3`. I also reorder the observations (i.e. the x axis) based on `.studresid` using `reorder()`.
+
+```{r Plotting the number of outliers externally studentized residuals, echo=TRUE}
+m1_outliers %>%
+  ggplot(aes(x = reorder(rowname, .studresid),
+             y = .studresid)) +
+  geom_point(size = 0.5) +
+  geom_hline(yintercept = c(-2, 2), col = "green") +
+  geom_hline(yintercept = c(-3, 3), col = "orange") +
+    geom_hline(yintercept = c(-4, 4), col = "red")
+```
+
+At this point, it is a matter of choosing the threshold that you feel is most appropriate. More importantly, though, you have to make sure you are transparent in your choices and provide some explanations around your decision-making. For example, a threshold of `2` appears a bit too harsh for my taste. Using the orange threshold of `3` seems to capture most outliers, because we can also visually see how the dots start to look less like a line and separate out more strongly. Since we have an id column (i.e. `rownames`) we can also store our outliers in a separate object to easily reference it later for comparisons with other measures.
+
+```{r Save outliers in a tibble, echo=TRUE}
+outliers <- out_detect %>%
+  select(rowname, pm_3) %>%
+  rename(studresid = pm_3)
+```
+
+There are still more diagnostic steps we have to take before we make a final decision on which observations we want to remove or deal with in other ways (see also Chapter \@ref(dealing-with-outliers).
+
+#### Outliers in the independent variables {#outliers-in-the-independent-variables}
+
+To identify outliers in the independent variables we can either use *Leverage scores*, or use the *Mahalanobis distances*. Both are legitimate approaches and be inspected very easily.
+
+For the leverage scores, we can find them already in our `fortify()`-ed dataset `m1_outliers`. The are in the column `.hat`. An outlier is defined by the distance from the average leverage value, i.e. the further bigger the distance from this value, the more likely we have to classify it as an outlier. The average leverage is computed as follows:
+
+::: {#average-leverage-equation align="center"}
+$average\ leverage = \frac{k + 1}{n}$
+:::
+
+In this equation, *k* stands for the number of predictors (i.e. 6) and *n* for the number of observations (i.e. 1188). Therefore, our average leverage can be computed as follows:
+
+```{r Compute average leverage, echo=TRUE}
+(avg_lvg <- (6 + 1) / 1188)
+```
+
+Also for this indicator we find different approaches to setting cut-off points. While @hoaglin1978hat argue that a distance twice the average counts as an outlier, @stevens2012applied (p.105) suggests that values three times higher than the average leverage will negatively affect the model. The rationale is the same as for the externally studentized residuals: If the thresholds are too low, we might find ourselves with many observations which we would have to further investigate. This might not always be possible or even desirable. However, this should not imply that many outliers are not worth checking. Instead, if there are many, one would have to raise questions about the model itself and whether an important variable needs adding to explain a series of observations that appear to be somewhat 'off'.
+
+Let's plot the leverages and use @stevens2012applied benchmark to draw our reference line.
+
+```{r Plotting leverages, echo=TRUE}
+m1_outliers %>%
+  ggplot(aes(x = reorder(rowname, .hat),
+             y = .hat)) +
+  geom_point(size = 0.5) +
+  geom_hline(yintercept = 3*avg_lvg, col = "orange")
+```
+
+As before, we want to know which observations fall beyond the threshold.
+
+```{r Determine observations above average leverage, echo=TRUE}
+new_outliers <- m1_outliers %>%
+  mutate(avglvg = ifelse(.hat > 3*avg_lvg, "yes", "no")) %>%
+  select(rowname, avglvg)
+
+# Add new results to our reference list
+outliers <- left_join(outliers, new_outliers, by = "rowname")
+```
+
+If you look at our reference object `outliers` now, you will notice that there is only one observation that was detected by both methods. Thus, it very much depends on where we look for outliers, i.e. dependent variable or independent variable.
+
+The second method I will cover in this section is the Mahalanobis distance. Luckily the `rstatix` package includes a handy function `mahalanobis_distance()` which automatically detects outliers and presents them to us.
+
+```{r Mahalanobis distance, echo=TRUE}
+mhnbs_outliers <- m1_outliers %>%
+  select(new_cases:travel) %>%
+  rstatix::mahalanobis_distance() %>% 
+  rownames_to_column() %>%
+  select(rowname, mahal.dist, is.outlier) %>%
+  rename(mhnbs = is.outlier)
+
+# Add new results to our reference list
+outliers <- left_join(outliers, mhnbs_outliers, by = "rowname")
+outliers <- outliers %>% select(-mahal.dist)
+```
+
+While very convenient, it does pick the cut-off point for us. As we have learned so far, picking the 'right' cut-off point is important. Since the values follow a chi-square distribution, we can determine the cut-off points based on the relevant critical value at the chosen p value. R has a function which allows to find the critical value for our model, i.e. `qchisq()`.
+
+```{r Chi square critical value, echo=TRUE}
+(mhnbs_th <- qchisq(p = 0.05,
+                   df = 6,
+                   lower.tail = FALSE))
+```
+
+The `p` value reflects the probability we are willing to accept that our result is significant/not significant. The `df` refers to the degrees of freedom, which in this case relates to the number of independent variables, i.e. 6. Thus, it is fairly simple to identify a cut-off point yourself by choosing the p value you consider most appropriate. The function `mahalanobis_distance()` assumes $p = 0.01$.
+
+If we wanted to plot outliers like we did before, we can reuse our code from above and replace it with the relevant new variables.
+
+```{r Plotting Mahalanobis distance scores, echo=TRUE}
+mhnbs_outliers %>%
+  ggplot(aes(x = reorder(rowname, mahal.dist),
+             y = mahal.dist)) +
+  geom_point(size = 0.5) +
+  geom_hline(yintercept = mhnbs_th, col = "orange")
+```
+
+We can notice that the Mahalanobis distance identifies less outliers compared to the leverage, but the same ones. Thus, whether you really need to use both approaches for the same study is questionable and likely redundant. Still, in a few edge cases, you might want to double-check the results, especially when you feel uncertain which observations should be dealt with later.
+
+#### Cook's d
+
+For regressions, Cook's d [@cook1982residuals] is a popular method in the Social Sciences. It measures to which extend a single observation can affect the predictive power of our model to explain all other observations. Obviously, we do not wish to have observations that make it more difficult to predict most of the other observations correctly.
+
+Our plotting package `ggplot2` has a nice function to automatically add model fit statistics to your dataset based on our regression model, i.e. `fortify()`. You can either use it as part of a `ggplot()` or create a new `tibble` to save the results together with your model data. I opt for the latter purely for demonstration purposes.
+
+Among other variables, `fortify()` automatically adds `.cooksd`. Thus, we cannot only compute whether outliers exist, but also inspect them visually as we did before. A good starting point to find outliers via the Cook's D is to plot its distribution.
 
 ```{r Plotting Cooks d, echo=TRUE}
-m1_fitted %>%
-  ggplot(aes(x = rownames(m1_fitted),
-             y = .cooksd)) +
+mhnbs_outliers %>%
+  ggplot(aes(x = rowname,
+             y = m)) +
   geom_col()
+
+performance::check_model(m1)
 ```
 
-In order to plot every observation in our dataset, we had to use the function `rownames()`, which in our case represents a consecutive number which indexes each row, like an id column in a dataset. We use this 'row number' for our x axis. Here is what `rownames(m1_fitted)` produces:
+Inspecting this barplot, we can tell that there are some observations that have much higher `.cooksd` values that any other observations. However, we first need to decide on a benchmark to determine whether we can consider these values as outliers. As you probably can guess, there are different conventions on how people decide on whether an outlier is really an outlier. If we follow @cook1982residuals, values that are higher than \$d \> 1\$ require reviewing. Alternatively, one can also consider the median of all Cook's d values.
 
-```{r Show what rownames does, echo=TRUE}
-rownames(m1_fitted)
+```{r Evaluating Cooks d, echo=TRUE}
+# Any Cook's d >1?
+
+# Any Cook's d > median?
+
 ```
-
-If you want this sequence as a regular column in your dataset, you can use the handy function `rownames_to_column()` from the `tibble` package, which is part of the `tidyverse`.
-
-Inspecting this barplot, we can tell that there are some observations that are far away from any other values. However, we first need to decide on a benchmark to determine whether we can consider these values as outliers.
 
 ## Hierarchical regression
 
