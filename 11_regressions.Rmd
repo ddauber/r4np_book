@@ -353,10 +353,10 @@ As you can tell, it is a matter of well-informed personal judgement. Our dataset
 
 ```{r Compute the number of outliers externally studentized residuals, echo=TRUE}
 out_detect <- m1_outliers %>%
-  mutate(pm_2 = ifelse(abs(.studresid) > 2, "yes", "no"),
-         pm_3 = ifelse(abs(.studresid) > 3, "yes", "no"),
-         pm_35 = ifelse(abs(.studresid) > 3.5, "yes", "no"),
-         pm_4 = ifelse(abs(.studresid) > 4, "yes", "no"))
+  mutate(pm_2 = ifelse(abs(.studresid) > 2, "TRUE", "FALSE"),
+         pm_3 = ifelse(abs(.studresid) > 3, "TRUE", "FALSE"),
+         pm_35 = ifelse(abs(.studresid) > 3.5, "TRUE", "FALSE"),
+         pm_4 = ifelse(abs(.studresid) > 4, "TRUE", "FALSE"))
 
 out_detect %>% count(pm_2)
 out_detect %>% count(pm_3)
@@ -418,7 +418,7 @@ As before, we want to know which observations fall beyond the threshold.
 
 ```{r Determine observations above average leverage, echo=TRUE}
 new_outliers <- m1_outliers %>%
-  mutate(avglvg = ifelse(.hat > 3*avg_lvg, "yes", "no")) %>%
+  mutate(avglvg = ifelse(.hat > 3*avg_lvg, "TRUE", "FALSE")) %>%
   select(rowname, avglvg)
 
 # Add new results to our reference list
@@ -509,15 +509,77 @@ While Cook's d helps us to identify outliers which affect the quality of the ent
 The function `dbetas()` takes our model `m1` and returns the statistics for each predictor in our model. Thus, we do not receive a single score for each observation but multiple for each specific predictor, i.e. each specific measure.
 
 ```{r Computing DFBETAS, echo=TRUE}
-m1_dfbetas <- dfbetas(m1) %>% as_tibble() %>% rownames_to_column()
+m1_dfbetas <- dfbetas(m1) %>%
+  as_tibble() %>%               # convert into a tibble for convenience
+  rownames_to_column()          # add our rownames
+
 glimpse(m1_dfbetas)
 ```
 
-All that is left to do is to compare the scores against a benchmark for each variable in this dataset and we know which observations substantially affect one of the predictors. @cohen2014applied provides us with the following benchmark recommendations:
+All that is left to do is to compare the scores against a benchmark for each variable in this dataset and we know which observations substantially affect one of the predictors. @cohen2014applied provides us with the following recommendations for suitable thresholds:
 
 -   small or moderate dataset: $DFBETAS > \pm 1$
 
 -   large dataset: $DFBETAS > \pm\frac{2}{\sqrt(n)}$
+
+Since our dataset falls rather into the 'large' camp, we should choose the second option. Again, $n$ stands for the sample size. Let's create an object to store this value.
+
+```{r Compute DFBETAS thresholds, echo=TRUE}
+(dfbetas_th <- 2 / sqrt(1188))
+```
+
+For demonstration purposes, I will pick `masks` to check for outliers. If this was a proper analysis for a project you would have to compute this for each variable separately. As the benchmarks indicate above, the DFEBTAS values can be positive or negative. So, when we compare the computed values with it we need to look at the absolute value, i.e. use `abs()`.
+
+```{r Check for outliers using DFBETAS, echo=TRUE}
+# Check whether values exceed the threshold
+dfbetas_check <- m1_dfbetas %>%
+  mutate(dfbetas_masks = ifelse(abs(masks) > dfbetas_th, "TRUE", "FALSE")) %>%
+  select(rowname, dfbetas_masks)
+
+# Add result to our outliers object
+outliers <- outliers %>% left_join(dfbetas_check, by = "rowname")
+```
+
+Of course, we can also visualise the outliers as we did before.
+
+```{r Plot outliers using DFBETAS, echo=TRUE}
+m1_dfbetas %>%
+  ggplot(aes(x = rowname,
+             y = masks)) +
+  geom_point(size = 0.5) +
+  geom_hline(yintercept = dfbetas_th, col = "red") +
+  geom_hline(yintercept = -dfbetas_th, col = "red")
+```
+
+I want to take this opportunity to also show that sometimes we can make visualisations even simpler. Remember, we used `abs()` to make all values positive? We can apply the simple principle here. This way we only need one line to indicate the theshold. In addition, we could also plot multiple variables at once. Instead of defining the `aes()` inside the `ggplot()` function, we can also define it for each `geom` separately. What do you think about the following version of the same plot?
+
+```{r Alternative way of plotting DFBETAS, echo=TRUE}
+m1_dfbetas %>%
+  ggplot() +
+  geom_point(aes(x = rowname,
+                 y = abs(masks)),
+             size = 0.5,
+             alpha = 0.5,
+             col = "#2EA5FF") +
+  geom_point(aes(x = rowname,
+                 y = abs(travel)),
+             size = 0.5,
+             alpha = 0.5,
+             col = "#7DB33B") +
+  geom_hline(yintercept = dfbetas_th, col = "#FF503A")
+```
+
+Since we also plotted the observations that affect the variable `travel`, we can notice that there are seemingly less outliers for this predictor.
+
+#### Reviewing the outliers {#reviewing-the-outliers}
+
+After all this hard work and what turned out to be a very lengthy chapter, we finally arrive at the point to check which observations we might wish to remove or handle in some shape or form. First, we want to know which observations are affected. Therefore we need to review our reference data `outliers`. What we want to see are all observations which were identified by one or more diagnostic tool as an outlier. There is two ways to achieve this. We can use what we have learned so far and simply `filter()` each column for the value `TRUE`. This is the hard way of doing it and if you have many more columns this will take a little while. The easy (and clever) way of filtering across multiple columns can be achieved with the function `across()`. This function works similar to the `select()` function, but it takes two arguments which can be expressed as `across(.cols, .fns)`. The argument `.cols` refers to the columns we want to filter (or perform any other computation), and `.fns` allows us to define the function that should be used across all columns defined in `.cols`. In our case, we want to select all columns but `rowname` and return all values that `TRUE`. Therefore, we can perform all these steps with one line of code
+
+```{r Reviewing the outliers, echo=TRUE}
+outliers %>% filter(if_any(everything(), ~ .x == "TRUE"))
+```
+
+The result is a `tibble` which tells us there were in total 18 outliers detected.
 
 ## Hierarchical regression
 
