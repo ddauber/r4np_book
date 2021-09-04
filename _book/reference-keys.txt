@@ -141,3 +141,8 @@ leverage
 mahalanobis-distance
 moderated-regressions
 outliers-in-the-dependent-variable
+fitting-a-regression-model-by-hand
+fitting-a-regression-model-computationally
+outliers-in-the-independent-variables
+outlier-detection-global-measures
+outlier-detection-specific-measures

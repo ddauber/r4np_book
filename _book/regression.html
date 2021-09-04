@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>12 Regression: Creating models to predict future observations | R for Non-Programmers: A Guide for Social Scientists</title>
   <meta name="description" content="This books is intended for Social Scientists. No matter whether you have years of experiences, this book might come in handy if you never use R or any other programming language before." />
-  <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
   <meta property="og:title" content="12 Regression: Creating models to predict future observations | R for Non-Programmers: A Guide for Social Scientists" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Daniel Dauber" />
 
 
-<meta name="date" content="2021-09-03" />
+<meta name="date" content="2021-09-04" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -35,6 +35,7 @@
 <link rel="next" href="mixed-methods-research-analysing-qualitative-in-r.html"/>
 <script src="libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -42,7 +43,6 @@
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
-
 
 
 
@@ -301,7 +301,8 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="12.1" data-path="regression.html"><a href="regression.html#single-linear-regression"><i class="fa fa-check"></i><b>12.1</b> Single linear regression</a>
 <ul>
-<li class="chapter" data-level="12.1.1" data-path="regression.html"><a href="regression.html#fitting-a-regression-model-by-hand-i.e.-trial-and-error"><i class="fa fa-check"></i><b>12.1.1</b> Fitting a regression model by hand, i.e. trial and error</a></li>
+<li class="chapter" data-level="12.1.1" data-path="regression.html"><a href="regression.html#fitting-a-regression-model-by-hand"><i class="fa fa-check"></i><b>12.1.1</b> Fitting a regression model by hand, i.e. trial and error</a></li>
+<li class="chapter" data-level="12.1.2" data-path="regression.html"><a href="regression.html#fitting-a-regression-model-computationally"><i class="fa fa-check"></i><b>12.1.2</b> Fitting a regression model computationally</a></li>
 </ul></li>
 <li class="chapter" data-level="12.2" data-path="regression.html"><a href="regression.html#multiple-regression"><i class="fa fa-check"></i><b>12.2</b> Multiple regression</a>
 <ul>
@@ -395,7 +396,7 @@ DV = \beta_0 + 2 * IV + error
 <p><img src="r_for_non_programmers_files/figure-html/beta%20zero%20and%20beta%20one%20explained-2.png" width="672" /></p>
 <p>Plot B also shows what happens if we change <span class="math inline">\(\beta_1\)</span>, i.e. the slope. The two models both have the same intercept (and therefore the same origin), but the blue line ascends quicker than the red one, because its <span class="math inline">\(\beta_1\)</span> is higher than the one for the red model.</p>
 <p>Lastly, the <span class="math inline">\(error\)</span> component in the regression model refers to the deviation of data from this regression lines. Ideally, we want this value to be as small as possible.</p>
-<div id="fitting-a-regression-model-by-hand-i.e.-trial-and-error" class="section level3" number="12.1.1">
+<div id="fitting-a-regression-model-by-hand" class="section level3" number="12.1.1">
 <h3><span class="header-section-number">12.1.1</span> Fitting a regression model by hand, i.e. trial and error</h3>
 <p>If this sounds all awfully theoretical, let’s try to fit a regression model by hand. First we need to consider what our model should be able to predict. Let’s say that the number of COVID-19 cases predicts the number of deaths due to COVID-19. Intuitively we would assume this should be a linear relationship, because the more cases there are, the more likely we find more deaths caused by it.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="regression.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># We only select most recent numbers, i.e. &quot;2021-08-26&quot;</span></span>
@@ -444,7 +445,10 @@ DV = \beta_0 + 2 * IV + error
 <span id="cb8-2"><a href="regression.html#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_function</span>(<span class="at">fun =</span> <span class="cf">function</span>(x) <span class="sc">-</span><span class="dv">50</span> <span class="sc">+</span> <span class="fl">0.015</span><span class="sc">*</span>x, <span class="at">colour =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
 <p><img src="r_for_non_programmers_files/figure-html/Finding%20a%20regression%20equation%20by%20hand%20p6-1.png" width="672" /></p>
 <p>We finished creating our regression model. If we wanted to express it as a formula we would write <span class="math inline">\(DV = -5 + 0.015 * IV\)</span>. We could now use this model to predict how high COVID cases likely will be in other countries.</p>
-<p>Estimating a regression model in this way is not ideal and far from accurate. Instead, we would compute the <span class="math inline">\(\beta\)</span>s based on our observed data, i.e. <code>cumulative_cases</code> and <code>cumulative_deaths</code>. We can use the function <code>lm()</code> to achieve this. I also rounded the all <code>numeric</code> values to two decimal places to make the output easier to read. We also use <code>tidy()</code> to retrieve a cleaner output from the computation.</p>
+</div>
+<div id="fitting-a-regression-model-computationally" class="section level3" number="12.1.2">
+<h3><span class="header-section-number">12.1.2</span> Fitting a regression model computationally</h3>
+<p>Estimating a regression model by hand is not ideal and far from accurate. Instead, we would compute the <span class="math inline">\(\beta\)</span>s based on our observed data, i.e. <code>cumulative_cases</code> and <code>cumulative_deaths</code>. We can use the function <code>lm()</code> to achieve this. I also rounded the all <code>numeric</code> values to two decimal places to make the output easier to read. We also use <code>tidy()</code> to retrieve a cleaner output from the computation.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="regression.html#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># classic r</span></span>
 <span id="cb9-2"><a href="regression.html#cb9-2" aria-hidden="true" tabindex="-1"></a>m0 <span class="ot">&lt;-</span> <span class="fu">lm</span>(cumulative_deaths <span class="sc">~</span> cumulative_cases, <span class="at">data =</span> covid_sample)</span>
 <span id="cb9-3"><a href="regression.html#cb9-3" aria-hidden="true" tabindex="-1"></a>broom<span class="sc">::</span><span class="fu">tidy</span>(m0) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.numeric), round, <span class="dv">2</span>))</span></code></pre></div>
@@ -634,17 +638,17 @@ DV = \beta_{0} + IV_{1} * \beta_{1} + IV_{2} * \beta_{2} + ... + IV_{n} * \beta_
 </tr>
 </tbody>
 </table>
-<p>While it might be clear why we need to use different approaches to find outliers in different components of our model, this might be less clear when evaluating outliers that affect the entire model. We distinguish between <em>global measures of influence</em>, which identify how a single observation affects the quality of the entire model, and <em>specific measures of influence</em>, which identify how a single observation affects each individual independent variable, i.e. its regression coefficients denoted as <span class="math inline">\(\beta\)</span>. It is recommended to look at all different measures of outliers before venturing ahead to performing a linear multiple regression. Going through the entire set of possible outliers I will focus on four popular measures which cover all three categories:</p>
+<p>While it might be clear why we need to use different approaches to find outliers in different components of our model, this might be less clear when evaluating outliers that affect the entire model. We distinguish between <em>global measures of influence</em>, which identify how a single observation affects the quality of the entire model, and <em>specific measures of influence</em>, which identify how a single observation affects each individual independent variable, i.e. its regression coefficients denoted as <span class="math inline">\(\beta\)</span>. It is recommended to look at all different measures of outliers before venturing ahead to performing a linear multiple regression. Going through the entire set of possible outliers would way beyond the scope of this book. So, I will focus on five popular measures which cover all three categories:</p>
 <ul>
 <li><p>Dependent variable: Externally studentized residuals</p></li>
 <li><p>Independent variable: Leverage and Mahalanobis distance</p></li>
-<li><p>Entire model: Cook’s d</p></li>
+<li><p>Entire model: Cook’s d, DFBETAS</p></li>
 </ul>
 <p>The approach taken is the same for the other outlier detection methods. Thus, it should be fairly simple to reproduce these as well after having finished the chapters below.</p>
 <div id="outliers-in-the-dependent-variable" class="section level4" number="12.2.1.1">
 <h4><span class="header-section-number">12.2.1.1</span> Outliers in the dependent variable</h4>
 <p>Irrespective of whether we look at independent or dependent variables, we always want to know whether there are extreme values present. Here I will use the externally studentized residual which ’is the preferred statistic to use to identify cases whose […] values are highly discrepant from their predicted values <span class="citation">(<a href="#ref-cohen2014applied" role="doc-biblioref">P. Cohen, West, and Aiken 2014, 401</a>)</span>.</p>
-<p>First we need to compute the residuals for our model as a new column in our dataset. Since we also want to use other methods to investigate outliers we can use the function <code>fortify()</code> which will add some of the later indicators as well and create a <code>tibble</code> which only includes the variables from our model. One function to do a lot of things at once.</p>
+<p>First we need to compute the residuals for our model as a new column in our dataset. Since we also want to use other methods to investigate outliers we can use the function <code>fortify()</code> which will add some of the later indicators as well and create a <code>tibble</code> which only includes the variables from our model. One function to do a lot of things at once. In a second step we hadd the studentized residuals using <code>rstudent()</code>.</p>
 <div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="regression.html#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a tibble with some pre-computed stats</span></span>
 <span id="cb22-2"><a href="regression.html#cb22-2" aria-hidden="true" tabindex="-1"></a>m1_outliers <span class="ot">&lt;-</span> <span class="fu">fortify</span>(m1) <span class="sc">%&gt;%</span> <span class="fu">as_tibble</span>()</span>
 <span id="cb22-3"><a href="regression.html#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(m1_outliers)</span></code></pre></div>
@@ -683,6 +687,7 @@ DV = \beta_{0} + IV_{1} * \beta_{1} + IV_{2} * \beta_{2} + ... + IV_{n} * \beta_
 ## $ .resid     &lt;dbl&gt; 2585.184, 2585.184, 2585.184, 2585.184, 2585.184, 2585.184,…
 ## $ .stdresid  &lt;dbl&gt; 0.2577653, 0.2577653, 0.2577653, 0.2577653, 0.2577653, 0.25…
 ## $ .studresid &lt;dbl&gt; 0.2576634, 0.2576634, 0.2576634, 0.2576634, 0.2576634, 0.25…</code></pre>
+<p>With our dataset ready for plotting we can do exactly that.</p>
 <div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="regression.html#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create an ID column</span></span>
 <span id="cb26-2"><a href="regression.html#cb26-2" aria-hidden="true" tabindex="-1"></a>m1_outliers <span class="ot">&lt;-</span> m1_outliers <span class="sc">%&gt;%</span> <span class="fu">rownames_to_column</span>()</span>
 <span id="cb26-3"><a href="regression.html#cb26-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -691,37 +696,139 @@ DV = \beta_{0} + IV_{1} * \beta_{1} + IV_{2} * \beta_{2} + ... + IV_{n} * \beta_
 <span id="cb26-6"><a href="regression.html#cb26-6" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> .studresid)) <span class="sc">+</span></span>
 <span id="cb26-7"><a href="regression.html#cb26-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="fl">0.5</span>)</span></code></pre></div>
 <p><img src="r_for_non_programmers_files/figure-html/Plot%20externally%20studentized%20residuals-1.png" width="672" /></p>
-<p>The values of the externally studentized residuals can be positive or negative. All we need to know now is which values count as outliers and which ones do not. <span class="citation"><a href="#ref-cohen2014applied" role="doc-biblioref">P. Cohen, West, and Aiken</a> (<a href="#ref-cohen2014applied" role="doc-biblioref">2014</a>)</span> provides some guidance: $$</p>
+<p>The values of the externally studentized residuals can be positive or negative. All we need to know now is which values count as outliers and which ones do not. <span class="citation"><a href="#ref-cohen2014applied" role="doc-biblioref">P. Cohen, West, and Aiken</a> (<a href="#ref-cohen2014applied" role="doc-biblioref">2014</a>)</span> (p. 401) provides some guidance:</p>
 <ul>
-<li><p>$outlier = $</p></li>
-<li></li>
+<li><p>general: <span class="math inline">\(outlier = \pm 2\)</span></p></li>
+<li><p>bigger samples: <span class="math inline">\(outlier = \pm 3\)</span> or <span class="math inline">\(\pm 3.5\)</span> or <span class="math inline">\(\pm 4\)</span></p></li>
 </ul>
+<p>As you can tell, it is a matter of well-informed personal judgement. Our dataset consists of over 1200 observations. As such, the dataset certainly counts as large. We can take a look and see how many outliers we would get for each of the benchmarks.</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="regression.html#cb27-1" aria-hidden="true" tabindex="-1"></a>out_detect <span class="ot">&lt;-</span> m1_outliers <span class="sc">%&gt;%</span></span>
+<span id="cb27-2"><a href="regression.html#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pm_2 =</span> <span class="fu">ifelse</span>(<span class="fu">abs</span>(.studresid) <span class="sc">&gt;</span> <span class="dv">2</span>, <span class="st">&quot;yes&quot;</span>, <span class="st">&quot;no&quot;</span>),</span>
+<span id="cb27-3"><a href="regression.html#cb27-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">pm_3 =</span> <span class="fu">ifelse</span>(<span class="fu">abs</span>(.studresid) <span class="sc">&gt;</span> <span class="dv">3</span>, <span class="st">&quot;yes&quot;</span>, <span class="st">&quot;no&quot;</span>),</span>
+<span id="cb27-4"><a href="regression.html#cb27-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">pm_35 =</span> <span class="fu">ifelse</span>(<span class="fu">abs</span>(.studresid) <span class="sc">&gt;</span> <span class="fl">3.5</span>, <span class="st">&quot;yes&quot;</span>, <span class="st">&quot;no&quot;</span>),</span>
+<span id="cb27-5"><a href="regression.html#cb27-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">pm_4 =</span> <span class="fu">ifelse</span>(<span class="fu">abs</span>(.studresid) <span class="sc">&gt;</span> <span class="dv">4</span>, <span class="st">&quot;yes&quot;</span>, <span class="st">&quot;no&quot;</span>))</span>
+<span id="cb27-6"><a href="regression.html#cb27-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-7"><a href="regression.html#cb27-7" aria-hidden="true" tabindex="-1"></a>out_detect <span class="sc">%&gt;%</span> <span class="fu">count</span>(pm_2)</span></code></pre></div>
+<pre><code>## # A tibble: 2 × 2
+##   pm_2      n
+##   &lt;chr&gt; &lt;int&gt;
+## 1 no     1135
+## 2 yes      53</code></pre>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="regression.html#cb29-1" aria-hidden="true" tabindex="-1"></a>out_detect <span class="sc">%&gt;%</span> <span class="fu">count</span>(pm_3)</span></code></pre></div>
+<pre><code>## # A tibble: 2 × 2
+##   pm_3      n
+##   &lt;chr&gt; &lt;int&gt;
+## 1 no     1170
+## 2 yes      18</code></pre>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="regression.html#cb31-1" aria-hidden="true" tabindex="-1"></a>out_detect <span class="sc">%&gt;%</span> <span class="fu">count</span>(pm_35)</span></code></pre></div>
+<pre><code>## # A tibble: 2 × 2
+##   pm_35     n
+##   &lt;chr&gt; &lt;int&gt;
+## 1 no     1175
+## 2 yes      13</code></pre>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="regression.html#cb33-1" aria-hidden="true" tabindex="-1"></a>out_detect <span class="sc">%&gt;%</span> <span class="fu">count</span>(pm_4)</span></code></pre></div>
+<pre><code>## # A tibble: 2 × 2
+##   pm_4      n
+##   &lt;chr&gt; &lt;int&gt;
+## 1 no     1181
+## 2 yes       7</code></pre>
+<p>The results indicate we could have as many as 53 outliers and as little as 7. It becomes apparent that choosing the right threshold is a tricky undertaking. Let’s plot the data again in an easier way to read and add some of the thresholds. I skip <code>3.5</code>, since it is very close to <code>3</code>. I also reorder the observations (i.e. the x axis) based on <code>.studresid</code> using <code>reorder()</code>.</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="regression.html#cb35-1" aria-hidden="true" tabindex="-1"></a>m1_outliers <span class="sc">%&gt;%</span></span>
+<span id="cb35-2"><a href="regression.html#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(rowname, .studresid),</span>
+<span id="cb35-3"><a href="regression.html#cb35-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> .studresid)) <span class="sc">+</span></span>
+<span id="cb35-4"><a href="regression.html#cb35-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb35-5"><a href="regression.html#cb35-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="dv">2</span>), <span class="at">col =</span> <span class="st">&quot;green&quot;</span>) <span class="sc">+</span></span>
+<span id="cb35-6"><a href="regression.html#cb35-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="dv">3</span>), <span class="at">col =</span> <span class="st">&quot;orange&quot;</span>) <span class="sc">+</span></span>
+<span id="cb35-7"><a href="regression.html#cb35-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="dv">4</span>), <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<p><img src="r_for_non_programmers_files/figure-html/Plotting%20the%20number%20of%20outliers%20externally%20studentized%20residuals-1.png" width="672" /></p>
+<p>At this point, it is a matter of choosing the threshold that you feel is most appropriate. More importantly, though, you have to make sure you are transparent in your choices and provide some explanations around your decision-making. For example, a threshold of <code>2</code> appears a bit too harsh for my taste and identifies too many observations as outliers. Using the orange threshold of <code>3</code> seems to capture most outliers, because we can also visually see how the dots start to look less like a line and separate out more strongly. Besides, a threshold of <code>3</code> seems also more suitable for larger datasets. Since we have an id column (i.e. <code>rownames</code>) we can also store our outliers in a separate object to easily reference it later for comparisons with other measures. You will see later why this is handy to have.</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="regression.html#cb36-1" aria-hidden="true" tabindex="-1"></a>outliers <span class="ot">&lt;-</span> out_detect <span class="sc">%&gt;%</span></span>
+<span id="cb36-2"><a href="regression.html#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(rowname, pm_3) <span class="sc">%&gt;%</span></span>
+<span id="cb36-3"><a href="regression.html#cb36-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">studresid =</span> pm_3)</span></code></pre></div>
+<p>There are still more diagnostic steps we have to take before we make a final decision on which observations we want to remove or deal with in other ways (see also Chapter <a href="sources-of-bias.html#dealing-with-outliers">9.5</a>.</p>
 </div>
-<div id="cooks-d" class="section level4" number="12.2.1.2">
-<h4><span class="header-section-number">12.2.1.2</span> Cook’s d</h4>
-<p>For regressions, Cook’s d <span class="citation">(<a href="#ref-cook1982residuals" role="doc-biblioref">Cook and Weisberg 1982</a>)</span> is a popular method in the Social Sciences. It measures to which extend a single observation can affect the predictive power of our model to explain all other observations. Obviously, we do not wish to have observations that make it more difficult to predict most of the other observations correctly.</p>
-<p>Our plotting package <code>ggplot2</code> has a nice function to automatically add model fit statistics to your dataset based on our regression model, i.e. <code>fortify()</code>. You can either use it as part of a <code>ggplot()</code> or create a new <code>tibble</code> to save the results together with your model data. I opt for the latter purely for demonstration purposes.</p>
-<p>Among other variables, <code>fortify()</code> automatically adds <code>.cooksd</code>. Thus, we cannot only compute whether outliers exist, but also inspect them visually as we did before. A good starting point to find outliers via the Cook’s D is to plot its distribution.</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="regression.html#cb27-1" aria-hidden="true" tabindex="-1"></a>m1_outliers <span class="sc">%&gt;%</span></span>
-<span id="cb27-2"><a href="regression.html#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">rownames</span>(m1_outliers),</span>
-<span id="cb27-3"><a href="regression.html#cb27-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> .cooksd)) <span class="sc">+</span></span>
-<span id="cb27-4"><a href="regression.html#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>()</span></code></pre></div>
+<div id="outliers-in-the-independent-variables" class="section level4" number="12.2.1.2">
+<h4><span class="header-section-number">12.2.1.2</span> Outliers in the independent variables</h4>
+<p>To identify outliers in the independent variables we can either use, for example, <em>Leverage scores</em>, or use the <em>Mahalanobis distances</em>. Both are legitimate approaches and can be computed very easily.</p>
+<p>For the leverage scores, we can find them already in our <code>fortify()</code>-ed dataset <code>m1_outliers</code>. They are in the column <code>.hat</code>. An outlier is defined by the distance from the average leverage value, i.e. the further the distance of an observation from this average leverage, the more likely we have to classify it as an outlier. The average leverage is computed as follows:</p>
+<div id="average-leverage-equation" align="center">
+<p><span class="math inline">\(average\ leverage = \frac{k + 1}{n}\)</span></p>
+</div>
+<p>In this equation, <em>k</em> stands for the number of predictors (i.e. 6) and <em>n</em> for the number of observations (i.e. 1188). Therefore, our average leverage can be computed as follows:</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="regression.html#cb37-1" aria-hidden="true" tabindex="-1"></a>(avg_lvg <span class="ot">&lt;-</span> (<span class="dv">6</span> <span class="sc">+</span> <span class="dv">1</span>) <span class="sc">/</span> <span class="dv">1188</span>)</span></code></pre></div>
+<pre><code>## [1] 0.005892256</code></pre>
+<p>Also for this indicator we find different approaches to setting cut-off points. While <span class="citation"><a href="#ref-hoaglin1978hat" role="doc-biblioref">Hoaglin and Welsch</a> (<a href="#ref-hoaglin1978hat" role="doc-biblioref">1978</a>)</span> argue that a distance twice the average counts as an outlier, <span class="citation"><a href="#ref-stevens2012applied" role="doc-biblioref">Stevens</a> (<a href="#ref-stevens2012applied" role="doc-biblioref">2012</a>)</span> (p.105) suggests that values three times higher than the average leverage will negatively affect the model. The rationale is the same as for the externally studentized residuals: If the thresholds are too low, we might find ourselves with many observations which we would have to further investigate. This might not always be possible or even desirable. However, this should not imply that many outliers are not worth checking. Instead, if there are many, one would have to raise questions about the model itself and whether an important variable needs adding to explain a series of observations that appear to be somewhat ‘off.’</p>
+<p>Let’s plot the leverages and use <span class="citation"><a href="#ref-stevens2012applied" role="doc-biblioref">Stevens</a> (<a href="#ref-stevens2012applied" role="doc-biblioref">2012</a>)</span> benchmark to draw our reference line.</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="regression.html#cb39-1" aria-hidden="true" tabindex="-1"></a>m1_outliers <span class="sc">%&gt;%</span></span>
+<span id="cb39-2"><a href="regression.html#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(rowname, .hat),</span>
+<span id="cb39-3"><a href="regression.html#cb39-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> .hat)) <span class="sc">+</span></span>
+<span id="cb39-4"><a href="regression.html#cb39-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb39-5"><a href="regression.html#cb39-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">3</span><span class="sc">*</span>avg_lvg, <span class="at">col =</span> <span class="st">&quot;orange&quot;</span>)</span></code></pre></div>
+<p><img src="r_for_non_programmers_files/figure-html/Plotting%20leverages-1.png" width="672" /></p>
+<p>As before, we want to know which observations fall beyond the threshold.</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="regression.html#cb40-1" aria-hidden="true" tabindex="-1"></a>new_outliers <span class="ot">&lt;-</span> m1_outliers <span class="sc">%&gt;%</span></span>
+<span id="cb40-2"><a href="regression.html#cb40-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">avglvg =</span> <span class="fu">ifelse</span>(.hat <span class="sc">&gt;</span> <span class="dv">3</span><span class="sc">*</span>avg_lvg, <span class="st">&quot;yes&quot;</span>, <span class="st">&quot;no&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb40-3"><a href="regression.html#cb40-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(rowname, avglvg)</span>
+<span id="cb40-4"><a href="regression.html#cb40-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-5"><a href="regression.html#cb40-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Add new results to our reference list</span></span>
+<span id="cb40-6"><a href="regression.html#cb40-6" aria-hidden="true" tabindex="-1"></a>outliers <span class="ot">&lt;-</span> <span class="fu">left_join</span>(outliers, new_outliers, <span class="at">by =</span> <span class="st">&quot;rowname&quot;</span>)</span></code></pre></div>
+<p>If you look at our reference object <code>outliers</code> now, you will notice that there is only one observation that was detected by both methods. Thus, it very much depends on where we look for outliers, i.e. dependent variable or independent variable.</p>
+<p>The second method I will cover in this section is the Mahalanobis distance. Luckily the <code>rstatix</code> package includes a handy function <code>mahalanobis_distance()</code> which automatically detects outliers and presents them to us.</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="regression.html#cb41-1" aria-hidden="true" tabindex="-1"></a>mhnbs_outliers <span class="ot">&lt;-</span> m1_outliers <span class="sc">%&gt;%</span></span>
+<span id="cb41-2"><a href="regression.html#cb41-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(new_cases<span class="sc">:</span>travel) <span class="sc">%&gt;%</span></span>
+<span id="cb41-3"><a href="regression.html#cb41-3" aria-hidden="true" tabindex="-1"></a>  rstatix<span class="sc">::</span><span class="fu">mahalanobis_distance</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb41-4"><a href="regression.html#cb41-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rownames_to_column</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb41-5"><a href="regression.html#cb41-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(rowname, mahal.dist, is.outlier) <span class="sc">%&gt;%</span></span>
+<span id="cb41-6"><a href="regression.html#cb41-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">mhnbs =</span> is.outlier)</span>
+<span id="cb41-7"><a href="regression.html#cb41-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-8"><a href="regression.html#cb41-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Add new results to our reference list</span></span>
+<span id="cb41-9"><a href="regression.html#cb41-9" aria-hidden="true" tabindex="-1"></a>outliers <span class="ot">&lt;-</span> <span class="fu">left_join</span>(outliers, mhnbs_outliers, <span class="at">by =</span> <span class="st">&quot;rowname&quot;</span>)</span>
+<span id="cb41-10"><a href="regression.html#cb41-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-11"><a href="regression.html#cb41-11" aria-hidden="true" tabindex="-1"></a><span class="co"># We need to remove mahal.dist because it does not indicate</span></span>
+<span id="cb41-12"><a href="regression.html#cb41-12" aria-hidden="true" tabindex="-1"></a><span class="co"># whether a value is an outlier #data-cleaning</span></span>
+<span id="cb41-13"><a href="regression.html#cb41-13" aria-hidden="true" tabindex="-1"></a>outliers <span class="ot">&lt;-</span> outliers <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>mahal.dist)</span></code></pre></div>
+<p>While very convenient, it does pick the cut-off point for us. As we have learned so far, picking the ‘right’ cut-off point is important. Since the values follow a chi-square distribution, we can determine the cut-off points based on the relevant critical value at the chosen p value. R has a function which allows to find the critical value for our model, i.e. <code>qchisq()</code>.</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="regression.html#cb42-1" aria-hidden="true" tabindex="-1"></a>(mhnbs_th <span class="ot">&lt;-</span> <span class="fu">qchisq</span>(<span class="at">p =</span> <span class="fl">0.05</span>,</span>
+<span id="cb42-2"><a href="regression.html#cb42-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">df =</span> <span class="dv">6</span>,</span>
+<span id="cb42-3"><a href="regression.html#cb42-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">lower.tail =</span> <span class="cn">FALSE</span>))</span></code></pre></div>
+<pre><code>## [1] 12.59159</code></pre>
+<p>The <code>p</code> value reflects the probability we are willing to accept that our result is significant/not significant. The <code>df</code> refers to the degrees of freedom, which in this case relates to the number of independent variables, i.e. 6. Thus, it is fairly simple to identify a cut-off point yourself by choosing the p value you consider most appropriate. The function <code>mahalanobis_distance()</code> assumes <span class="math inline">\(p = 0.01\)</span>.</p>
+<p>If we wanted to plot outliers like we did before, we can reuse our code from above and replace it with the relevant new variables.</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="regression.html#cb44-1" aria-hidden="true" tabindex="-1"></a>mhnbs_outliers <span class="sc">%&gt;%</span></span>
+<span id="cb44-2"><a href="regression.html#cb44-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(rowname, mahal.dist),</span>
+<span id="cb44-3"><a href="regression.html#cb44-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> mahal.dist)) <span class="sc">+</span></span>
+<span id="cb44-4"><a href="regression.html#cb44-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb44-5"><a href="regression.html#cb44-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> mhnbs_th, <span class="at">col =</span> <span class="st">&quot;orange&quot;</span>)</span></code></pre></div>
+<p><img src="r_for_non_programmers_files/figure-html/Plotting%20Mahalanobis%20distance%20scores-1.png" width="672" /></p>
+<p>We can notice that the Mahalanobis distance identifies less outliers compared to the leverage, but the same ones. Thus, whether you really need to use both approaches for the same study is questionable and likely redundant. Still, in a few edge cases, you might want to double-check the results, especially when you feel uncertain which observations should be dealt with later.</p>
+<p>Besides looking at each side of the regression separately, we might also want to consider whether removing an observation significantly changes the <span class="math inline">\(\beta\)</span> estimates. This is done with outlier detection diagnostics which consider the entire model.</p>
+</div>
+<div id="outlier-detection-global-measures" class="section level4" number="12.2.1.3">
+<h4><span class="header-section-number">12.2.1.3</span> Outlier detection considering the entire model: Global measures</h4>
+<p>To assess the global impact of outliers on the entirety of a regression model, Cook’s d <span class="citation">(<a href="#ref-cook1982residuals" role="doc-biblioref">Cook and Weisberg 1982</a>)</span> is a popular method in the Social Sciences. It measures to which extend a single observation can affect the predictive power of our model to explain all other observations. Obviously, we do not wish to keep observations that make it more difficult to predict most of the other observations correctly. However, as shown in Table <a href="regression.html#tab:outliers-in-multiple-regressions">12.1</a>, there are different approaches to this, but some are somewhat redundant. For example, <span class="citation"><a href="#ref-cohen2014applied" role="doc-biblioref">P. Cohen, West, and Aiken</a> (<a href="#ref-cohen2014applied" role="doc-biblioref">2014</a>)</span> highlight that DDFITS and Cook’s d are ‘interchangeable statistics’ (p. 404). Thus, there is no point in demonstrating both since they function in a similar way. Your decision might be swayed by the preferences of a publisher, lecturer, supervisor or reviewer. Here, I will focus on Cook’s d since it was I see most frequently used in my own field. By all means, feel encouraged to go the extra mile and perform the same steps for the DDFITS.</p>
+<p>The good news, <code>fortify()</code> automatically added <code>.cooksd</code> to our dataset <code>m1_outliers</code>. Thus, we cannot only compute whether outliers exist, but also inspect them visually as we did before. A good starting point to find outliers via the Cook’s D is to plot its distribution.</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="regression.html#cb45-1" aria-hidden="true" tabindex="-1"></a>m1_outliers <span class="sc">%&gt;%</span></span>
+<span id="cb45-2"><a href="regression.html#cb45-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> rowname,</span>
+<span id="cb45-3"><a href="regression.html#cb45-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> .cooksd)) <span class="sc">+</span></span>
+<span id="cb45-4"><a href="regression.html#cb45-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>()</span></code></pre></div>
 <p><img src="r_for_non_programmers_files/figure-html/Plotting%20Cooks%20d-1.png" width="672" /></p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="regression.html#cb28-1" aria-hidden="true" tabindex="-1"></a>performance<span class="sc">::</span><span class="fu">check_model</span>(m1)</span></code></pre></div>
-<pre><code>## Registered S3 method overwritten by &#39;datawizard&#39;:
-##   method                    from
-##   plot.visualisation_recipe see</code></pre>
-<p><img src="r_for_non_programmers_files/figure-html/Plotting%20Cooks%20d-2.png" width="672" /></p>
-<p>Inspecting this barplot, we can tell that there are some observations that have much higher <code>.cooksd</code> values that any other observations. However, we first need to decide on a benchmark to determine whether we can consider these values as outliers. As you probably can guess, there are different conventions on how people decide on whether an outlier is really an outlier. If we follow <span class="citation"><a href="#ref-cook1982residuals" role="doc-biblioref">Cook and Weisberg</a> (<a href="#ref-cook1982residuals" role="doc-biblioref">1982</a>)</span>, values that are higher than $d &gt; 1$ require reviewing. Alternatively, one can also consider the median of all Cook’s d values.</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="regression.html#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Any Cook&#39;s d &gt;1?</span></span>
-<span id="cb30-2"><a href="regression.html#cb30-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-3"><a href="regression.html#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Any Cook&#39;s d &gt; median?</span></span></code></pre></div>
+<p>Inspecting this barplot, we can tell that there are some observations that have much higher <code>.cooksd</code> values than any other observations. Again, we first need to decide on a benchmark to determine whether we can consider these values as outliers. If we follow <span class="citation"><a href="#ref-cook1982residuals" role="doc-biblioref">Cook and Weisberg</a> (<a href="#ref-cook1982residuals" role="doc-biblioref">1982</a>)</span>, values that are higher than <span class="math inline">\(d &gt; 1\)</span> require reviewing. Looking at our plot, none of the observations reaches <code>1</code> and therefore we would have no need to investigate outliers. Alternatively, <span class="citation"><a href="#ref-cohen2014applied" role="doc-biblioref">P. Cohen, West, and Aiken</a> (<a href="#ref-cohen2014applied" role="doc-biblioref">2014</a>)</span> suggest that other benchmarks are also worth considering, for example based on the critical value of an F distribution, which we can determine with the function <code>qf()</code>, which requires us to determine two degrees of freedom (<span class="math inline">\(df_1\)</span> and <span class="math inline">\(df_2\)</span>) and a p value. To determine these values <span class="citation"><a href="#ref-cohen2014applied" role="doc-biblioref">P. Cohen, West, and Aiken</a> (<a href="#ref-cohen2014applied" role="doc-biblioref">2014</a>)</span> suggests <span class="math inline">\(p = 0.5\)</span> and the following formulas to determine the correct <span class="math inline">\(df\)</span>:</p>
+<div id="critical-value-cooks-d" align="center">
+<p><span class="math inline">\(df_1 = k +1\)</span></p>
+<p><span class="math inline">\(df_2 = n - k - 1\)</span></p>
 </div>
-<div id="leverage" class="section level4" number="12.2.1.3">
-<h4><span class="header-section-number">12.2.1.3</span> Leverage</h4>
+<p>Similar to the critical value for <a href="regression.html#average-leverage-equation" title="average leverage">average leverage</a>, <span class="math inline">\(k\)</span> reflects the number of predictors, and <span class="math inline">\(n\)</span> refers to the sample size. Thus, we can determine the critical value, and therefore our cut-off point as follows:</p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="regression.html#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qf</span>(<span class="at">p =</span> <span class="fl">0.5</span>,</span>
+<span id="cb46-2"><a href="regression.html#cb46-2" aria-hidden="true" tabindex="-1"></a>   <span class="at">df1 =</span> <span class="dv">6</span><span class="sc">+</span><span class="dv">1</span>,</span>
+<span id="cb46-3"><a href="regression.html#cb46-3" aria-hidden="true" tabindex="-1"></a>   <span class="at">df2 =</span> <span class="dv">1188-6-1</span>)</span></code></pre></div>
+<pre><code>## [1] 0.9070612</code></pre>
+<p>Also this score would imply that we have no particular outliers to consider, because the highest value in <code>.cooksd</code> is 0.0733569</p>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="regression.html#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Any Cook&#39;s d &gt;1?</span></span>
+<span id="cb48-2"><a href="regression.html#cb48-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-3"><a href="regression.html#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Any Cook&#39;s d &gt; median?</span></span></code></pre></div>
 </div>
-<div id="mahalanobis-distance" class="section level4" number="12.2.1.4">
-<h4><span class="header-section-number">12.2.1.4</span> Mahalanobis distance</h4>
+<div id="outlier-detection-specific-measures" class="section level4" number="12.2.1.4">
+<h4><span class="header-section-number">12.2.1.4</span> Outlier detection considering the entire model: Specific measures</h4>
 </div>
 </div>
 </div>
@@ -750,12 +857,18 @@ Cook, R Dennis, and Sanford Weisberg. 1982. <em>Residuals and Influence in Regre
 <div id="ref-gelman2020regression" class="csl-entry">
 Gelman, Andrew, Jennifer Hill, and Aki Vehtari. 2020. <em>Regression and Other Stories</em>. Cambridge University Press.
 </div>
+<div id="ref-hoaglin1978hat" class="csl-entry">
+Hoaglin, David C, and Roy E Welsch. 1978. <span>“The Hat Matrix in Regression and ANOVA.”</span> <em>The American Statistician</em> 32 (1): 17–22.
+</div>
+<div id="ref-stevens2012applied" class="csl-entry">
+Stevens, James P. 2012. <em>Applied Multivariate Statistics for the Social Sciences</em>. Routledge.
+</div>
 </div>
 <div class="footnotes">
 <hr />
 <ol start="1">
 <li id="fn1"><p>Germany is called ‘Deutschland’ in German, hence the abbreivation ‘DEU’ according to the <a href="https://www.iso.org/obp/ui/#iso:code:3166:DE" target="blank" title="ISO country code">ISO country code</a>.<a href="regression.html#fnref1" class="footnote-back">↩︎</a></p></li>
-<li id="fn2"><p>orThis function does not take the model as an attribute, but instead requires the data, the column means and the covariance. Thus, we have to specify this function in the following way: <code>mahalanobis(data, colMeans(data), cov(data))</code><a href="regression.html#fnref2" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p>This function does not take the model as an attribute, but instead requires the data, the column means and the covariance. Thus, we have to specify this function in the following way: <code>mahalanobis(data, colMeans(data), cov(data))</code><a href="regression.html#fnref2" class="footnote-back">↩︎</a></p></li>
 <li id="fn3"><p>Function from <code>rstatix</code> package which automatically classifies values as outliers for us.<a href="regression.html#fnref3" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
@@ -769,7 +882,6 @@ Gelman, Andrew, Jennifer Hill, and Aki Vehtari. 2020. <em>Regression and Other S
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -810,7 +922,7 @@ gitbook.start({
 },
 "download": ["r_for_non_programmers.pdf", "r_for_non_programmers.epub"],
 "search": {
-"engine": "lunr",
+"engine": "fuse",
 "options": null
 },
 "toc": {

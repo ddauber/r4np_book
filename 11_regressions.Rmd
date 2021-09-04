@@ -300,17 +300,17 @@ While it should be fairly clear by now why we need to handle outliers (remember 
 
 : (\#tab:outliers-in-multiple-regressions)Outlier detection in multiple regressions
 
-[^regressions-2]:  orThis function does not take the model as an attribute, but instead requires the data, the column means and the covariance. Thus, we have to specify this function in the following way: `mahalanobis(data, colMeans(data), cov(data))`
+[^regressions-2]: This function does not take the model as an attribute, but instead requires the data, the column means and the covariance. Thus, we have to specify this function in the following way: `mahalanobis(data, colMeans(data), cov(data))`
 
 [^regressions-3]: Function from `rstatix` package which automatically classifies values as outliers for us.
 
-While it might be clear why we need to use different approaches to find outliers in different components of our model, this might be less clear when evaluating outliers that affect the entire model. We distinguish between *global measures of influence*, which identify how a single observation affects the quality of the entire model, and *specific measures of influence*, which identify how a single observation affects each individual independent variable, i.e. its regression coefficients denoted as $\beta$. It is recommended to look at all different measures of outliers before venturing ahead to performing a linear multiple regression. Going through the entire set of possible outliers I will focus on four popular measures which cover all three categories:
+While it might be clear why we need to use different approaches to find outliers in different components of our model, this might be less clear when evaluating outliers that affect the entire model. We distinguish between *global measures of influence*, which identify how a single observation affects the quality of the entire model, and *specific measures of influence*, which identify how a single observation affects each individual independent variable, i.e. its regression coefficients denoted as $\beta$. It is recommended to look at all different measures of outliers before venturing ahead to performing a linear multiple regression. Going through the entire set of possible outliers would way beyond the scope of this book. So, I will focus on five popular measures which cover all three categories:
 
 -   Dependent variable: Externally studentized residuals
 
 -   Independent variable: Leverage and Mahalanobis distance
 
--   Entire model: Cook's d
+-   Entire model: Cook's d, DFBETAS
 
 The approach taken is the same for the other outlier detection methods. Thus, it should be fairly simple to reproduce these as well after having finished the chapters below.
 
@@ -318,7 +318,7 @@ The approach taken is the same for the other outlier detection methods. Thus, it
 
 Irrespective of whether we look at independent or dependent variables, we always want to know whether there are extreme values present. Here I will use the externally studentized residual which 'is the preferred statistic to use to identify cases whose [...] values are highly discrepant from their predicted values [@cohen2014applied, p.401].
 
-First we need to compute the residuals for our model as a new column in our dataset. Since we also want to use other methods to investigate outliers we can use the function `fortify()` which will add some of the later indicators as well and create a `tibble` which only includes the variables from our model. One function to do a lot of things at once.
+First we need to compute the residuals for our model as a new column in our dataset. Since we also want to use other methods to investigate outliers we can use the function `fortify()` which will add some of the later indicators as well and create a `tibble` which only includes the variables from our model. One function to do a lot of things at once. In a second step we hadd the studentized residuals using `rstudent()`.
 
 ```{r Compute externally studentized residuals, echo=TRUE}
 # Create a tibble with some pre-computed stats
@@ -330,6 +330,8 @@ m1_outliers <- m1_outliers %>%
   mutate(.studresid = rstudent(m1))
 glimpse(m1_outliers)
 ```
+
+With our dataset ready for plotting we can do exactly that.
 
 ```{r Plot externally studentized residuals, echo=TRUE}
 # Create an ID column
@@ -374,7 +376,7 @@ m1_outliers %>%
     geom_hline(yintercept = c(-4, 4), col = "red")
 ```
 
-At this point, it is a matter of choosing the threshold that you feel is most appropriate. More importantly, though, you have to make sure you are transparent in your choices and provide some explanations around your decision-making. For example, a threshold of `2` appears a bit too harsh for my taste. Using the orange threshold of `3` seems to capture most outliers, because we can also visually see how the dots start to look less like a line and separate out more strongly. Since we have an id column (i.e. `rownames`) we can also store our outliers in a separate object to easily reference it later for comparisons with other measures.
+At this point, it is a matter of choosing the threshold that you feel is most appropriate. More importantly, though, you have to make sure you are transparent in your choices and provide some explanations around your decision-making. For example, a threshold of `2` appears a bit too harsh for my taste and identifies too many observations as outliers. Using the orange threshold of `3` seems to capture most outliers, because we can also visually see how the dots start to look less like a line and separate out more strongly. Besides, a threshold of `3` seems also more suitable for larger datasets. Since we have an id column (i.e. `rownames`) we can also store our outliers in a separate object to easily reference it later for comparisons with other measures. You will see later why this is handy to have.
 
 ```{r Save outliers in a tibble, echo=TRUE}
 outliers <- out_detect %>%
@@ -386,9 +388,9 @@ There are still more diagnostic steps we have to take before we make a final dec
 
 #### Outliers in the independent variables {#outliers-in-the-independent-variables}
 
-To identify outliers in the independent variables we can either use *Leverage scores*, or use the *Mahalanobis distances*. Both are legitimate approaches and be inspected very easily.
+To identify outliers in the independent variables we can either use, for example, *Leverage scores*, or use the *Mahalanobis distances*. Both are legitimate approaches and can be computed very easily.
 
-For the leverage scores, we can find them already in our `fortify()`-ed dataset `m1_outliers`. The are in the column `.hat`. An outlier is defined by the distance from the average leverage value, i.e. the further bigger the distance from this value, the more likely we have to classify it as an outlier. The average leverage is computed as follows:
+For the leverage scores, we can find them already in our `fortify()`-ed dataset `m1_outliers`. They are in the column `.hat`. An outlier is defined by the distance from the average leverage value, i.e. the further the distance of an observation from this average leverage, the more likely we have to classify it as an outlier. The average leverage is computed as follows:
 
 ::: {#average-leverage-equation align="center"}
 $average\ leverage = \frac{k + 1}{n}$
@@ -437,6 +439,9 @@ mhnbs_outliers <- m1_outliers %>%
 
 # Add new results to our reference list
 outliers <- left_join(outliers, mhnbs_outliers, by = "rowname")
+
+# We need to remove mahal.dist because it does not indicate
+# whether a value is an outlier #data-cleaning
 outliers <- outliers %>% select(-mahal.dist)
 ```
 
@@ -462,31 +467,57 @@ mhnbs_outliers %>%
 
 We can notice that the Mahalanobis distance identifies less outliers compared to the leverage, but the same ones. Thus, whether you really need to use both approaches for the same study is questionable and likely redundant. Still, in a few edge cases, you might want to double-check the results, especially when you feel uncertain which observations should be dealt with later.
 
-#### Cook's d
+Besides looking at each side of the regression separately, we might also want to consider whether removing an observation significantly changes the $\beta$ estimates. This is done with outlier detection diagnostics which consider the entire model.
 
-For regressions, Cook's d [@cook1982residuals] is a popular method in the Social Sciences. It measures to which extend a single observation can affect the predictive power of our model to explain all other observations. Obviously, we do not wish to have observations that make it more difficult to predict most of the other observations correctly.
+#### Outlier detection considering the entire model: Global measures {#outlier-detection-global-measures}
 
-Our plotting package `ggplot2` has a nice function to automatically add model fit statistics to your dataset based on our regression model, i.e. `fortify()`. You can either use it as part of a `ggplot()` or create a new `tibble` to save the results together with your model data. I opt for the latter purely for demonstration purposes.
+To assess the global impact of outliers on the entirety of a regression model, Cook's d [@cook1982residuals] is a popular method in the Social Sciences. It measures to which extend a single observation can affect the predictive power of our model to explain all other observations. Obviously, we do not wish to keep observations that make it more difficult to predict most of the other observations correctly. However, as shown in Table \@ref(tab:outliers-in-multiple-regressions), there are different approaches to this, but some are somewhat redundant. For example, @cohen2014applied highlight that DDFITS and Cook's d are 'interchangeable statistics' (p. 404). Thus, there is no point in demonstrating both since they function in a similar way. Your decision might be swayed by the preferences of a publisher, lecturer, supervisor or reviewer. Here, I will focus on Cook's d since it was I see most frequently used in my own field. By all means, feel encouraged to go the extra mile and perform the same steps for the DDFITS.
 
-Among other variables, `fortify()` automatically adds `.cooksd`. Thus, we cannot only compute whether outliers exist, but also inspect them visually as we did before. A good starting point to find outliers via the Cook's D is to plot its distribution.
+The good news, `fortify()` automatically added `.cooksd` to our dataset `m1_outliers`. Thus, we cannot only compute whether outliers exist, but also inspect them visually as we did before. A good starting point to find outliers via the Cook's D is to plot its distribution.
 
 ```{r Plotting Cooks d, echo=TRUE}
-mhnbs_outliers %>%
+m1_outliers %>%
   ggplot(aes(x = rowname,
-             y = m)) +
+             y = .cooksd)) +
   geom_col()
-
-performance::check_model(m1)
 ```
 
-Inspecting this barplot, we can tell that there are some observations that have much higher `.cooksd` values that any other observations. However, we first need to decide on a benchmark to determine whether we can consider these values as outliers. As you probably can guess, there are different conventions on how people decide on whether an outlier is really an outlier. If we follow @cook1982residuals, values that are higher than \$d \> 1\$ require reviewing. Alternatively, one can also consider the median of all Cook's d values.
+Inspecting this barplot, we can tell that there are some observations that have much higher `.cooksd` values than any other observations. Again, we first need to decide on a benchmark to determine whether we can consider these values as outliers. If we follow @cook1982residuals, values that are higher than $d > 1$ require reviewing. Looking at our plot, none of the observations reaches `1` and therefore we would have no need to investigate outliers. Alternatively, @cohen2014applied suggest that other benchmarks are also worth considering, for example based on the critical value of an F distribution, which we can determine with the function `qf()`, which requires us to determine two degrees of freedom ($df_1$ and $df_2$) and a p value. To determine these values @cohen2014applied suggests $p = 0.5$ and the following formulas to determine the correct $df$:
 
-```{r Evaluating Cooks d, echo=TRUE}
-# Any Cook's d >1?
+::: {#critical-value-cooks-d align="center"}
+$df_1 = k +1$
 
-# Any Cook's d > median?
+$df_2 = n - k - 1$
+:::
 
+Similar to the critical value for [average leverage](#average-leverage-equation "average leverage"), $k$ reflects the number of predictors, and $n$ refers to the sample size. Thus, we can determine the critical value, and therefore our cut-off point as follows:
+
+```{r Compute the critical value of an F distribution, echo=TRUE}
+qf(p = 0.5,
+   df1 = 6+1,
+   df2 = 1188-6-1)
 ```
+
+Also this score would imply that we have no particular outliers to consider, because the highest value in `.cooksd` is `r round(max(m1_outliers$.cooksd),2)` compute via \``max(m1_outliers$.cooksd)`\`.
+
+We might be lead to believe that our work is done here, but @cohen2014applied recommends that any larger deviation is worth inspecting and we do notice that relative to other observations there are some cases that appear extreme. Ideally, one would further investigate these cases and compare the results of the regression by removing such extreme cases iteratively. This way one can assess whether the extreme observations truly affect the overall estimates of our model. This would imply repeating steps we already covered earlier when performing multiple regressions with and without outliers. At the end of this chapter of outliers we will rerun the regression to see what effects it had on our model estimates. However, before we can do this, we have one more method of detecting outliers to cover.
+
+#### Outlier detection considering the entire model: Specific measures {#outlier-detection-specific-measures}
+
+While Cook's d helps us to identify outliers which affect the quality of the entire model, there is also a way to investigate how outliers affect specific predictors. This is achieved with DIFBETAS, which also, similar to previous methods, identifies outliers by assessing the impact of deleting extreme cases has on other parts of the regression model.
+
+The function `dbetas()` takes our model `m1` and returns the statistics for each predictor in our model. Thus, we do not receive a single score for each observation but multiple for each specific predictor, i.e. each specific measure.
+
+```{r Computing DFBETAS, echo=TRUE}
+m1_dfbetas <- dfbetas(m1) %>% as_tibble() %>% rownames_to_column()
+glimpse(m1_dfbetas)
+```
+
+All that is left to do is to compare the scores against a benchmark for each variable in this dataset and we know which observations substantially affect one of the predictors. @cohen2014applied provides us with the following benchmark recommendations:
+
+-   small or moderate dataset: $DFBETAS > \pm 1$
+
+-   large dataset: $DFBETAS > \pm\frac{2}{\sqrt(n)}$
 
 ## Hierarchical regression
 
