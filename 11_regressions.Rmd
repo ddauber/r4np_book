@@ -556,30 +556,53 @@ I want to take this opportunity to also show that sometimes we can make visualis
 ```{r Alternative way of plotting DFBETAS, echo=TRUE}
 m1_dfbetas %>%
   ggplot() +
-  geom_point(aes(x = rowname,
-                 y = abs(masks)),
+  geom_point(aes(x = reorder(rowname, abs(masks)),
+                 y = abs(masks),
+                 col = "masks"),
              size = 0.5,
-             alpha = 0.5,
-             col = "#2EA5FF") +
+             alpha = 0.5) +
   geom_point(aes(x = rowname,
-                 y = abs(travel)),
+                 y = abs(travel),
+                 col = "travel"),
              size = 0.5,
-             alpha = 0.5,
-             col = "#7DB33B") +
-  geom_hline(yintercept = dfbetas_th, col = "#FF503A")
+             alpha = 0.5) +
+  geom_hline(yintercept = dfbetas_th, col = "#FF503A") +
+  scale_color_manual(values = c("masks" = "#2EA5FF",
+                       "travel" = "#7DB33B")) +
+  
+  # Label the legend appropriately
+  labs(col = "COVID measures")
 ```
 
-Since we also plotted the observations that affect the variable `travel`, we can notice that there are seemingly less outliers for this predictor.
+After `reorder()`ing the variable `masks` and plotting `travel` as well, we can notice that there are seemingly less outliers for `masks` than for `travel`. Thus, some observations affect some predictors more strongly than others.
 
 #### Reviewing the outliers {#reviewing-the-outliers}
 
-After all this hard work and what turned out to be a very lengthy chapter, we finally arrive at the point to check which observations we might wish to remove or handle in some shape or form. First, we want to know which observations are affected. Therefore we need to review our reference data `outliers`. What we want to see are all observations which were identified by one or more diagnostic tool as an outlier. There is two ways to achieve this. We can use what we have learned so far and simply `filter()` each column for the value `TRUE`. This is the hard way of doing it and if you have many more columns this will take a little while. The easy (and clever) way of filtering across multiple columns can be achieved with the function `across()`. This function works similar to the `select()` function, but it takes two arguments which can be expressed as `across(.cols, .fns)`. The argument `.cols` refers to the columns we want to filter (or perform any other computation), and `.fns` allows us to define the function that should be used across all columns defined in `.cols`. In our case, we want to select all columns but `rowname` and return all values that `TRUE`. Therefore, we can perform all these steps with one line of code
+After all this hard work and what turned out to be a very lengthy chapter, we finally arrive at the point to check which observations we might wish to remove or handle in some shape or form. First, we want to know which observations are affected. Therefore we need to review our reference data `outliers`. What we want to see are all observations which were identified by one or more diagnostic tool as an outlier. There is two ways to achieve this. We can use what we have learned so far and simply `filter()` each column for the value `TRUE`. This is the hard way of doing it and if you have many more columns this will take a little while and potentially drive you insane. The easy (and clever) way of filtering across multiple columns can be achieved with the function `if_any()`. This function works similar to the `select()` function, but it takes two arguments which can be expressed as `if_any(.cols, .fns)`. The argument `.cols` refers to the columns we want to filter (or perform any other computation), and `.fns` allows us to define the function that should be used across all columns defined in `.cols`. In our case, we want to select all rows which contain the the value `TRUE` in any of the columns. This translates into the following with the function `if_any()`:
+
+-   `.cols`: We want all columns, i.e. `everything()`.
+
+-   `.fns`: We want to select only those that are `TRUE`, i.e. `.x == "TRUE"`
+
+You probably wonder what `.x` stands for. It is a placeholder for the columns we have selected, which in our case includes all of them. If you wanted to select only certainly columns, you only have to change the `.cols` component to whatever is of interest to you. Let's put these pieces together into one single line of code. We also have to use the tilde smybol (`~`), because we provide a formula as the second argument, similar to what we did when defining our regression models.
 
 ```{r Reviewing the outliers, echo=TRUE}
-outliers %>% filter(if_any(everything(), ~ .x == "TRUE"))
+outliers <- outliers %>%
+  filter(if_any(everything(), ~ .x == "TRUE")) %>%
+  
+  # some housekeeping, i.e. making all columns <lgl>
+  mutate(across(where(is.character), is.logical))
+
+glimpse(outliers)
 ```
 
-The result is a `tibble` which tells us there were in total 18 outliers detected.
+The result is a `tibble` which tells us that there we 72 outliers identified. This might sound like a lot, but we also have to remember that our dataset consists of 1188 observations, i.e. 6% of our data are outliers. As highlighted in Chapter \@ref(dealing-with-outliers) there are many ways we can go about outliers. To keep our analysis simple, I intend to remove those observations which were detected by multiple methods.
+
+```{r Check which observations were outlierst according to different methods, echo=TRUE}
+test <- outliers %>%
+  group_by(rowname) %>%
+  summarise(count_true = across(everything(), ~ sum(. == "TRUE")))
+```
 
 ## Hierarchical regression
 
