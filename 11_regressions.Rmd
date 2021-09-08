@@ -11,7 +11,7 @@ I once heard someone refer to regressions as driving a car by looking at the rea
 
 Regressions are also a machine learning method, which falls under models with supervised learning. If you find machine learning fascinating, you might find the book "Hands-on Machine Learning with R" [@boehmke2019hands] very insightful and interesting.
 
-In the following chapters we will cover three common types of regressions:
+In the following chapters we will cover three common types of regressions, which are also known as Ordinary Least Squares (OLS) regression models:
 
 -   Single linear regression
 
@@ -19,15 +19,15 @@ In the following chapters we will cover three common types of regressions:
 
 -   Hierarchical regression
 
-These three types will allow you to perform any other type of linear regression you could think of. We can further distinguish two approaches to modelling via regressions:
+These three types will allow you to perform any OLS regression you could think of. We can further distinguish two approaches to modelling via regressions:
 
--   *hypothesis testing*: A regression model is defined ex-ante
+-   *hypothesis testing*: A regression model is defined ex-ante.
 
--   *machine learning*: A model is developed based on empirical data
+-   *machine learning*: A model is developed based on empirical data.
 
-In the following chapters we will slightly blur the lines between both approaches.
+In the following chapters we will slightly blur the lines between both approaches by making assumptions about relationships (hypothesising) and make informed decisions based on our data (exploring).
 
-All our regressions will be performed using the `covid` dataset of the `r4np` package to investigate whether certain factors can predict COVID numbers in different countries. I felt, this book would not have been complete without covering this topic. After all, I wrote this book during the pandemic and it likely will mark a dark chapter in human history.
+All our regressions will be performed using the `covid` dataset of the `r4np` package to investigate whether certain factors can predict COVID numbers in different countries. I felt, this book would not have been complete without covering this topic. After all, I wrote it during the pandemic and it likely will mark a dark chapter in human history.
 
 ## Single linear regression {#single-linear-regression}
 
@@ -179,7 +179,7 @@ There are quite a number of performance indicators and here is how to read them:
 
 -   `R2` stands for *R squared* ($R^2$) and is also known as the coefficient of determination. It measures how much the independent variable can explain the variance in the dependent variable. In other words, the higher $R^2$ the better is our model, because more of the variance can be explained by our model. $R^2$ falls between 0-1, where 1 would imply that our model can explain 100% of the variance in our sample. $R^2$ is also considered a *goodness-of-fit measure*.
 
--   `R2 (adj.)` stands for *adjusted R squared*. The adjusted version of $R^2$ becomes important if we have more than one preditor (i.e. independent variable) in our regression. The adjustment of $R^2$ accounts for the number of independent variables in our model. Thus, it is possible for us to compare different models with each other, even though they might have different numbers of predictors. It is important to note that $R^2$ will always increase if we add more predictors.
+-   `R2 (adj.)` stands for *adjusted R squared*. The adjusted version of $R^2$ becomes important if we have more than one predictor (i.e. independent variable) in our regression. The adjustment of $R^2$ accounts for the number of independent variables in our model. Thus, it is possible for us to compare different models with each other, even though they might have different numbers of predictors. It is important to note that $R^2$ will always increase if we add more predictors.
 
 -   `RMSE` stands for *Root Mean Square Error* and is an indicate how small or large the prediction error of the model is. Conceptually, it aims to measure the average deviations of values from our model when we attempt predictions. The lower the score the better, i.e. a score of 0 would imply that our model perfectly fits the data, which is likely never the case in the field of Social Sciences. The RMSE is particularly useful when trying to compare models.
 
@@ -218,7 +218,7 @@ $$
 
 In the last section we wanted to know how many people will likely not recover from COVID. However, it might be even more interesting to understand how we can predict new cases and prevent casualties from the outset. Since I live in the United Kingdom at the time of the pandemic, I am curious to know whether certain COVID measures helped to reduce the number of new cases there. To keep it more interesting, I will also add Germany to the mix since it has shown to be very effective in handling the pandemic relative to other European countries. Of course, feel free to pick different countries (maybe the one you live in?) to follow with my example. In Chapter \@ref(moderated-regressions) it will become obvious why I chose two countries (\#spoiler-alert).
 
-First, we create a dataset that only contains information from the `United Kingdom` and `Germany`[^regressions-1], which means we use `filter()`.
+First, we create a dataset that only contains information from the `United Kingdom` and `Germany`[^regressions-1], which means we use `filter()`. We also create a column with unique identifiers, i.e. an ID, because there is none. We can take the names of rows (which are numbers) and create a new column `rownames` by using the function `rownames_to_column`. This will come in handy at a later stage - no spoilers. We also should remove observations with missing data.
 
 [^regressions-1]: Germany is called 'Deutschland' in German, hence the abbreivation 'DEU' according to the [ISO country code](https://www.iso.org/obp/ui/#iso:code:3166:DE "ISO country code"){target="blank"}.
 
@@ -242,31 +242,53 @@ We simply add these variables by using the `+` symbol in the `lm()` function.
 
 ```{r Multiple regression, echo=TRUE}
 # Create our model
-m1 <- lm(new_cases ~ masks + movements + gatherings + schools + businesses + travel,
+m0 <- lm(new_cases ~ masks + movements + gatherings + schools + businesses + travel,
          data = covid_uk_ger)
 
 # Inspect the model specifications
-broom::tidy(m1)
+# I always round the p.value since I
+# do not prefer the scientific notation
+broom::tidy(m0) %>%
+  mutate(p.value = round(p.value, 3))
 
 # Evaluate the quality of our model
-performance::model_performance(m1)
+performance::model_performance(m0)
 ```
 
 Overall (and purely subjectively judged), the model is not particularly great, because even though we added so many variables, the $adjusted \ R^2$ is not particularly high, i.e. 'only' 0.229. As mentioned earlier, for multiple regression it is better to look at $adjusted \ R^2$, because it adjusts for the number of variables in our model and makes comparison of multiple models easier. There are a couple more important insights gained from this analysis:
 
--   All variables appear to be significant and therefore help to explain new cases.
+-   Not variables appear to be significant. The predictors `masks` and `gatherings` are not significant, i.e. `p.value > 0.05`. Thus, it might be worth removing these variables to optimise the model.
 
--   The variables `masks`, `movements` and `gatherings` seem to reduce `new_cases`, i.e. they have negative estimates ($\beta$).
+-   The variable, `movements` seems to reduce `new_cases`, i.e. it has a negative estimate ($\beta$).
 
 -   However, `schools`, `businesses`, `travel` have a positive effect on `new_cases`.
 
 Especially the last point might appear confusing. How can measures taken increase the number of new COVID cases? Should we avoid them? What we have not considered in our regression is the fact that measures might be put in place to reduce the number of new cases rather than to prevent them. Thus, it might not be the case that `schools`, `businesses` and `travel` predict higher `new_cases`, but rather the opposite, i.e. due to higher `new_cases` the measures for `schools`, `businesses` and `travel` were tightened, which later on (with a time lag) led to lower `new_cases`. Thus, the relationships might be a bit more complicated, but to keep things simple, we accept the fact that with our data we face certain limitations (as is usually the case).
 
+As a final step, we should remove the variables that are not significant and see how this affects our model.
+
+```{r The final regression model without masks and gatherings, echo=TRUE}
+m1 <- lm(new_cases ~ movements + schools + businesses + travel,
+         data = covid_uk_ger)
+
+broom::tidy(m1) %>%
+  mutate(p.value = round(p.value, 3))
+
+# Evaluate the quality of our model
+performance::model_performance(m1)
+```
+
+If we compare our original model `m0` with our revised model `m1`, we can see that our `R2 (adj.)` barely changed. Thus, `m1` is a superior model, because it can explain (almost) the same amount of variance, but with less predictors. The model `m1` would also be called a *parsimonious model*, i.e. a model that is simple, but has good predictive power.
+
+```{r Comparing m0 with m1 in multiple regression, echo=TRUE}
+performance::compare_performance(m0, m1)
+```
+
 However, there are a couple of things we overlooked when running this regression. If you are familiar with regressions already, you might have been folding the hands over your face and bursted into tears about the blasphemeous approach to linear regression modelling. Let me course-correct at this point.
 
-Similar to other parametric approaches to conducting research, we need to test for sources of bias, linearity, normality and homogeneity of variance (or the unpronounceable word 'homoscedasticity'). Since multiple regressions consider more than one variable we have to consider these crieria in light of other variables. As such, we have to draw on different tools to assess our data. There are certain pre- and post-tests we have to perform to fully assess and develop a multiple regression model:
+Similar to other parametric approaches to conducting research, we need to test for sources of bias, linearity, normality and homogeneity of variance (or the unpronounceable word 'homoscedasticity'). Since multiple regressions consider more than one variable we have to consider these criteria in light of other variables. As such, we have to draw on different tools to assess our data. There are certain pre- and post-tests we have to perform to fully assess and develop a multiple regression model:
 
--   *pre-test*: We need to consider whether there are any outliers and whether all variables are parametric.
+-   *pre-test*: We need to consider whether there are any outliers and whether all assumptions of OLS regression models are met.
 
 -   *post-test*: Do our independent variables correlate very strongly with each other, i.e. are there issues of multiple collinearity.
 
@@ -318,7 +340,7 @@ The approach taken is the same for the other outlier detection methods. Thus, it
 
 Irrespective of whether we look at independent or dependent variables, we always want to know whether there are extreme values present. Here I will use the externally studentized residual which 'is the preferred statistic to use to identify cases whose [...] values are highly discrepant from their predicted values [@cohen2014applied, p.401].
 
-First we need to compute the residuals for our model as a new column in our dataset. Since we also want to use other methods to investigate outliers we can use the function `fortify()` which will add some of the later indicators as well and create a `tibble` which only includes the variables from our model. One function to do a lot of things at once. In a second step we hadd the studentized residuals using `rstudent()`.
+First we need to compute the residuals for our model as a new column in our dataset. Since we also want to use other methods to investigate outliers we can use the function `fortify()` which will add some of the later indicators as well and create a `tibble` which only includes the variables from our model. One function to do a lot of things at once. In a second step we add the studentized residuals using `rstudent()`.
 
 ```{r Compute externally studentized residuals, echo=TRUE}
 # Create a tibble with some pre-computed stats
@@ -331,7 +353,7 @@ m1_outliers <- m1_outliers %>%
 glimpse(m1_outliers)
 ```
 
-With our dataset ready for plotting we can do exactly that.
+With our dataset ready for plotting we can do exactly that and see which observations are particularly far away from the rest of our `.studresid` values.
 
 ```{r Plot externally studentized residuals, echo=TRUE}
 # Create an ID column
@@ -449,7 +471,7 @@ While very convenient, it does pick the cut-off point for us. As we have learned
 
 ```{r Chi square critical value, echo=TRUE}
 (mhnbs_th <- qchisq(p = 0.05,
-                   df = 6,
+                   df = 4,
                    lower.tail = FALSE))
 ```
 
@@ -465,7 +487,7 @@ mhnbs_outliers %>%
   geom_hline(yintercept = mhnbs_th, col = "orange")
 ```
 
-We can notice that the Mahalanobis distance identifies less outliers compared to the leverage, but the same ones. Thus, whether you really need to use both approaches for the same study is questionable and likely redundant. Still, in a few edge cases, you might want to double-check the results, especially when you feel uncertain which observations should be dealt with later.
+We can notice that the Mahalanobis distance identifies more outliers compared to the leverage, but the same ones. Thus, whether you really need to use both approaches for the same study is questionable and likely redundant. Still, in a few edge cases, you might want to double-check the results, especially when you feel uncertain which observations should be dealt with later. Of course, it does not take much time to consider both options.
 
 Besides looking at each side of the regression separately, we might also want to consider whether removing an observation significantly changes the $\beta$ estimates. This is done with outlier detection diagnostics which consider the entire model.
 
@@ -494,11 +516,11 @@ Similar to the critical value for [average leverage](#average-leverage-equation 
 
 ```{r Compute the critical value of an F distribution, echo=TRUE}
 qf(p = 0.5,
-   df1 = 6+1,
+   df1 = 4+1,
    df2 = 1188-6-1)
 ```
 
-Also this score would imply that we have no particular outliers to consider, because the highest value in `.cooksd` is `r round(max(m1_outliers$.cooksd),2)` compute via \``max(m1_outliers$.cooksd)`\`.
+Also this score would imply that we have no particular outliers to consider, because the highest value in `.cooksd` is `r round(max(m1_outliers$.cooksd),2)` computed via \``max(m1_outliers$.cooksd)`\`.
 
 We might be lead to believe that our work is done here, but @cohen2014applied recommends that any larger deviation is worth inspecting and we do notice that relative to other observations there are some cases that appear extreme. Ideally, one would further investigate these cases and compare the results of the regression by removing such extreme cases iteratively. This way one can assess whether the extreme observations truly affect the overall estimates of our model. This would imply repeating steps we already covered earlier when performing multiple regressions with and without outliers. At the end of this chapter of outliers we will rerun the regression to see what effects it had on our model estimates. However, before we can do this, we have one more method of detecting outliers to cover.
 
@@ -528,15 +550,15 @@ Since our dataset falls rather into the 'large' camp, we should choose the secon
 (dfbetas_th <- 2 / sqrt(1188))
 ```
 
-For demonstration purposes, I will pick `masks` to check for outliers. If this was a proper analysis for a project you would have to compute this for each variable separately. As the benchmarks indicate above, the DFEBTAS values can be positive or negative. So, when we compare the computed values with it we need to look at the absolute value, i.e. use `abs()`.
+For demonstration purposes, I will pick `movements` to check for outliers. If this was a proper analysis for a project you would have to compute this for each variable separately. As the benchmarks indicate above, the DFEBTAS values can be positive or negative. So, when we compare the computed values with it we need to look at the absolute value, i.e. use `abs()`.
 
 ```{r Check for outliers using DFBETAS, echo=TRUE}
 # Check whether values exceed the threshold
 dfbetas_check <- m1_dfbetas %>%
-  mutate(dfbetas_masks = ifelse(abs(masks) > dfbetas_th,
+  mutate(dfbetas_movements = ifelse(abs(movements) > dfbetas_th,
                                 "TRUE",
                                 "FALSE")) %>%
-  select(rowname, dfbetas_masks)
+  select(rowname, dfbetas_movements)
 
 # Add result to our outliers object
 outliers <- outliers %>% left_join(dfbetas_check, by = "rowname")
@@ -552,7 +574,7 @@ Of course, we can also visualise the outliers as we did before.
 ```{r Plot outliers using DFBETAS, echo=TRUE}
 m1_dfbetas %>%
   ggplot(aes(x = rowname,
-             y = masks)) +
+             y = movements)) +
   geom_point(size = 0.5) +
   geom_hline(yintercept = dfbetas_th, col = "red") +
   geom_hline(yintercept = -dfbetas_th, col = "red")
@@ -563,9 +585,9 @@ I want to take this opportunity to also show that sometimes we can make visualis
 ```{r Alternative way of plotting DFBETAS, echo=TRUE}
 m1_dfbetas %>%
   ggplot() +
-  geom_point(aes(x = reorder(rowname, abs(masks)),
-                 y = abs(masks),
-                 col = "masks"),
+  geom_point(aes(x = reorder(rowname, abs(movements)),
+                 y = abs(movements),
+                 col = "movements"),
              size = 0.5,
              alpha = 0.5) +
   geom_point(aes(x = rowname,
@@ -574,14 +596,14 @@ m1_dfbetas %>%
              size = 0.5,
              alpha = 0.5) +
   geom_hline(yintercept = dfbetas_th, col = "#FF503A") +
-  scale_color_manual(values = c("masks" = "#2EA5FF",
+  scale_color_manual(values = c("movements" = "#2EA5FF",
                        "travel" = "#7DB33B")) +
   
   # Label the legend appropriately
   labs(col = "COVID measures")
 ```
 
-After `reorder()`ing the variable `masks` and plotting `travel` as well, we can notice that there are seemingly less outliers for `masks` than for `travel`. Thus, some observations affect some predictors more strongly than others.
+After `reorder()`ing the variable `movements` and plotting `travel` as well, we can notice that there are seemingly less outliers for `movements` than for `travel`. Thus, some observations affect some predictors more strongly than others.
 
 #### Reviewing the outliers {#reviewing-the-outliers}
 
@@ -646,7 +668,7 @@ outliers_true <- outliers %>%
 outliers_true
 ```
 
-The result is a `tibble` which tells us that there we 72 distinct outliers identified. This might sound like a lot, but we also have to remember that our dataset consists of 1188 observations, i.e. 6% of our data are outliers.
+The result is a `tibble` which tells us that we identified `r nrow(outliers_true)` distinct outliers. This might sound like a lot, but we also have to remember that our dataset consists of `r nrow(m1_outliers)` observations, i.e. `r paste(round(nrow(outliers_true)/nrow(m1_outliers)*100,0), "%", sep = "")` of our data are outliers.
 
 Since the output is fairly long, we might want to plot the outcome to get an idea of the bigger picture.
 
@@ -660,7 +682,7 @@ outliers_true %>%
 
 There are a few observations which were detected by three out of the four methods we used to detect outliers. there are some more which were detected by two different methods. However, there are also more than half of observations which were only detected by one method.
 
-As highlighted in Chapter \@ref(dealing-with-outliers) there are many ways we can go about outliers. To keep our analysis simple, I intend to remove those observations which were detected by multiple methods rather than only by one. Whether this approach is truly appropriate is a matter of further investigation. I take a very pragmatic approach with our sample data. However, it is worth reviewing the options available to transform data, as covered by @field2013discovering (p.203). Data transformation can help to deal with outliers, instead of removing or imputing them. However, data transformation comes with severe drawbacks and in most cases, using a *bootstrapping* technique to account for violations of parametric conditions is often more advisable. Bootstrapping refers to the process of randomly resampling data from your dataset and rerun the same test multiple times, e.g. 2000 times. The process is somewhat similar to multiple imputation (see Chapter \@ref(replacing-removing-missing-data), but instead of estimating a specific value in our dataset, we estimate statistical parameters, e.g. confidence intervals or regression coefficients (i.e. estimates). The package `rsample` allows to implement boostrapping in a fairly straightfoward way. [PROVIDE AN EXAMPLE AS A CASE STUDY AT THE END?]
+As highlighted in Chapter \@ref(dealing-with-outliers) there are many ways we can go about outliers. To keep our analysis simple, I intend to remove those observations which were detected by multiple methods rather than only by one. Whether this approach is truly appropriate is a matter of further investigation. I take a very pragmatic approach with our sample data. However, it is worth reviewing the options available to transform data, as covered by @field2013discovering (p.203). Data transformation can help to deal with outliers, instead of removing or imputing them. However, data transformation comes with severe drawbacks and in most cases, using a *bootstrapping* technique to account for violations of parametric conditions is often more advisable. Bootstrapping refers to the process of randomly resampling data from your dataset and rerun the same test multiple times, e.g. 2000 times. The process is somewhat similar to multiple imputation (see Chapter \@ref(replacing-removing-missing-data), but instead of estimating a specific value in our dataset, we estimate statistical parameters, e.g. confidence intervals or regression coefficients (i.e. estimates). The package `rsample` allows to implement boostrapping in a fairly straightfoward way. For an example of a detailed look at a bootstrapped regression see Chapter \@ref(bootstrapped-regression).
 
 For now, I settle on removing outliers entirely. The easiest way to remove these outliers is to combine our `outliers` dataset with the one for our regression (`m1_outliers`).
 
@@ -681,17 +703,21 @@ As the final step, we want to compare how the removal of outliers affected our m
 
 ```{r Comparing the multiple regression before and after outlier removal, echo=TRUE, warning=FALSE}
 # Original regression
-m1 <- lm(new_cases ~ masks + movements + gatherings + schools + businesses + travel,
+m1 <- lm(new_cases ~ movements + schools + businesses + travel,
          data = covid_uk_ger)
 
 # Regression with outliers removed
-m2 <- lm(new_cases ~ masks + movements + gatherings + schools + businesses + travel,
+m2 <- lm(new_cases ~ movements + schools + businesses + travel,
          data = m1_no_outliers)
 
 # Compare the parameters between models
+# I added quite some reformatting, because
+# I prefer a regular tibble over pre-formatted
+# tables. Technially you only need the first line.
 parameters::compare_parameters(m1, m2) %>%
   as_tibble() %>%
-  select(Parameter, Coefficient.m1, Coefficient.m2)
+  select(Parameter, Coefficient.m1, p.m1, Coefficient.m2, p.m2) %>% 
+  mutate(across(where(is.double), round, 3))
 
 # Compare the performance between models
 performance::compare_performance(m1, m2)
@@ -699,9 +725,23 @@ performance::compare_performance(m1, m2)
 
 If you look at `R2 (adj.)` you might feel a sense of disappointment. How does the model explain less variance? Well, if we consider `AIC`, `BIC` and `RMSE`, we managed to improve the model, because their values are lower for `m2`. However, it seems that the outliers affected `R2`, which means they inflated this model indicator. In other words, our regression explains less than we hoped for. However, we can be more confident that the predictions of this model will be more accurate.
 
-As a final remark, it is worth noting that the $\beta$ for some predictors has changed drastically, e.g. `masks` and `travel`. Thus, these are now more accurate as well and would require a reinterpretation in terms of which predictors have a strong impact on the outcome, i.e. `new_cases`.
+If we inspect the estimates more closely, we also notice that `movements` (where we removed outliers) and `travel` are not significant anymore (i.e `p.m2 > 0.05`). As such, we should remove these from our model, since they do not help explain the variance of `new_cases`.
 
-### Standardised $\beta$ vs. unstandardised $\beta$
+```{r the final model m3, echo=TRUE}
+m3 <- lm(new_cases ~ schools + businesses,
+         data = m1_no_outliers)
+
+parameters::model_parameters(m3) %>%
+  as_tibble() %>%
+  select(Parameter, Coefficient, p) %>% 
+  mutate(across(where(is.double), round, 3))
+
+performance::model_performance(m3)
+```
+
+Similar to before, after removing the insignificant predictors we end up with an equally good model (in terms of $adjusted R^2$, but we need less variables to explain the same amount of variance in `new_cases`.
+
+### Standardised beta ($\beta$) vs. unstandardised beta ($B$)
 
 In multiple regressions we often use variables which are measured in different ways and which use different measurement units, e.g. currency, age, etc. Thus, it is fairly difficult to compare their $\beta$s without standardising the measurement units. Standardised scores (also referred to as *z-scores*) for a variable, imply that each variable has a distribution where the mean equals 0 and the standard deviation equals 1. By transforming your variables to z-scores makes them 'unit free' [@cohen2014applied, p.25] and therefore we can easily compare them irrespective of their original measurement unites. Here is an example with a simplified dataset:
 
@@ -715,7 +755,6 @@ data <- data %>%
 
 # Compare the mean and sd for each variable
 # and put it into a nice table
-
 tibble(
   variable = c("x", "x_scaled"),
   mean = c(mean(data$x), mean(data$x_scaled)),
@@ -743,30 +782,26 @@ Unfortunately, this is not the end of the story, because 'standardisation' can m
 
 ```{r Retrieving standardised betas, echo=TRUE}
 # Scaling 'by hand'
-m2_scaled <- lm(scale(new_cases) ~
-                  scale(masks) +
-                  scale(movements) +
-                  scale(gatherings) +
+m3_scaled <- lm(scale(new_cases) ~
                   scale(schools) +
-                  scale(businesses) +
-                  scale(travel),
+                  scale(businesses),
                 data = m1_no_outliers)
 
-parameters::model_parameters(m2_scaled)
+parameters::model_parameters(m3_scaled)
 
 # Scaling using 'parameters' package
-parameters::model_parameters(m2, standardize = "refit")
+parameters::model_parameters(m3, standardize = "refit")
 
 # Scaling using `parameters` package without refitting the model
-parameters::model_parameters(m2, standardize = "posthoc")
+parameters::model_parameters(m3, standardize = "posthoc")
 
 ```
 
 Personally, I prefer to standardise using the `parameters` package, because it makes my life easier and I need to write less code. I can also easily compare results prior to scaling my variables. The choice is yours, of course.
 
-## Multicollinearity: The dilemma of highly correlated independent variables
+### Multicollinearity: The dilemma of highly correlated independent variables
 
-We finished fitting our model and we are likely exhausted, but also happy that we accomplished something. However, we are not yet done with our analysis. One of the most important post-tests for multiple regressions is a test for multicollinearity or sometimes referred to as collinearity. The phenomenon of multicollinearity defines a situation in which some of our independent variables can be explained by other independent variables in our regression model. In other words, there exists a very large correlation (a linear relationship) between two or more independent variables. It is important to not confuse this with correlations between dependent variable and independent variables. Remember, a regression reflects the linear relationship between the predictor variables and the outcome variable. As such, we do hope to find a correlation between these variables, just not among the independent variables.
+We finished fitting our model and we are likely exhausted, but also happy that we accomplished something. However, we are not yet done with our analysis. One of the most important post-tests for multiple regressions is a test for *multicollinearity* or sometimes referred to as *collinearity*. The phenomenon of multicollinearity defines a situation in which some of our independent variables can be explained by other independent variables in our regression model. In other words, there exists a very large correlation (a linear relationship) between two or more independent variables. It is important to not confuse this with correlations between dependent variable and independent variables. Remember, a regression reflects the linear relationship between the predictor variables and the outcome variable. As such, we do hope to find a correlation between these variables, just not among the independent variables.
 
 If we have evidence that multicollinearity exists in our data, we face some problems:
 
@@ -778,12 +813,12 @@ If we have evidence that multicollinearity exists in our data, we face some prob
 
 -   We also likely underestimate the variance our model can explain, i.e. our $R^2$.
 
--   We produce more Type II errors, i.e. we likely reject important predictors due to statistical insignificance.
+-   We produce more Type II errors, i.e. we likely reject important predictors due to statistical insignificance. (see also @cohen2014applied, @field2013discovering, @sage-methods2004dbw)
 
-The Variance Inflation Factor (VIF) iand Tolerance are methods to identify issues of multicollinearity. Compared to detecting outliers, it is very simple to compute these indicators and surprisingly uncomplicated. The package `performance` offers a simple function called `check_collinearity()` which provides both. The tolerance is computes as $\frac{1}{VIF}$.
+The Variance Inflation Factor (VIF) and it little sibling Tolerance are methods to identify issues of multicollinearity. Compared to detecting outliers, it is very simple to compute these indicators and surprisingly uncomplicated. The package `performance` offers a simple function called `check_collinearity()` which provides both. The tolerance is computed as $\frac{1}{VIF}$.
 
 ```{r Detecting multicollinearity using VIF, echo=TRUE}
-performance::check_collinearity(m2)
+performance::check_collinearity(m3)
 ```
 
 As the output already indicates, there is a `Low Correlation` between our independent variables. So, good news for us. In terms of interpretations we find the following benchmarks as recommendations to determine multicollinearity:
@@ -792,16 +827,16 @@ As the output already indicates, there is a `Low Correlation` between our indepe
 
 -   `mean(VIF) > 1`: If the mean of all VIFs lies substantially above `1`, multicollinearity might be an issue.
 
--   `Tolerance < 0.1`: Multicollinearity is a serious concern and is the same condition as `VIF > 10`.
+-   `Tolerance < 0.1`: Multicollinearity is a serious concern. This is the same condition as `VIF > 10`.
 
 -   `Tolerance < 0.2`: Multicollinearity could be a concern.
 
-However, @cohen2014applied warns to not rely on these indicators alone. There is sufficient evidence that lower VIF scores could also cause issues due to multicollinearity. Thus, it is always important to still investigate relationships of independent variables statistically (e.g. correlation) and visually (e.g. scatterplots). Outliers often can be a cause for too high or too low VIFs. In short, the simplicity in computation in R of these indicators should not be mistaken as a convenient shortcut.
+However, @cohen2014applied warns to not rely on these indicators alone. There is sufficient evidence that lower VIF scores could also cause issues. Thus, it is always important to still investigate relationships of independent variables statistically (e.g. correlation) and visually (e.g. scatterplots). For example, outliers can often be a cause for too high or too low VIFs. In short, the simplicity in computation of these indicators should not be mistaken as a convenient shortcut.
 
 Besides the VIF and tolerance, multicollinearity can also exist among residuals, i.e. the error terms that are associated with each predictor. Regressions assume that errors are independent from each other. The Durbin-Watson Test offers an equally easy way to detect multicollinearity among residuals. We can use the `car` package and the function `durbinWatsonTest()` to retrieve the relevant information.
 
 ```{r Durbin Watson Statistics, echo=TRUE}
-car::durbinWatsonTest(m2) %>%
+car::durbinWatsonTest(m3) %>%
   broom::tidy()
 ```
 
@@ -813,20 +848,198 @@ If we wanted to remedy multicollinearity we could consider for example:
 
 -   We could collect more data, because a larger dataset will always increase the precision of the regression coefficients [@cohen2014applied].
 
--   Use different modelling techniques which can resolve such issues, for example using generalised least squares (GLS) and transform some variables [@sage-methods2004dbw].
+-   Use different modelling techniques [@cohen2014applied] which can resolve such issues, for example using generalised least squares (GLS) and transform some variables of concern [@sage-methods2004dbw].
 
-The cause for this multicollinearity of residuals can be rooted in either 'clustered data' or a 'serial dependency' [@cohen2014applied]. In our dataset, both could apply. First, we have data that was collected over time which could lead to wrong standard errors. Second, we have data from two different countries (`United Kingdom` and `Germany`). Thus, our data might be clustered.
+The cause for this multicollinearity of residuals is often rooted in either 'clustered data' or a 'serial dependency' [@cohen2014applied]. In our dataset, both could apply. First, we have data that was collected over time which could lead to wrong standard errors. Second, we have data from two different countries (`United Kingdom` and `Germany`). Thus, our data might be clustered.
 
-In order to remove serial depenceny effects we would have to transform data and account of the correlation across time. Such a technique is showen in @cohen2014applied (p.149). To counteract the issue of clustered data, we need to use multilevel regression models, also known as hierarchical regressions, which we will cover in the next chapter.
+In order to remove serial dependency effects we would have to transform data and account for the correlation across time. Such a technique is shown in @cohen2014applied (p.149). To counteract the issue of clustered data, we need to use multilevel regression models, also known as hierarchical regressions, which we will cover in the next chapter.
 
 ## Hierarchical regression
 
-```{r Hierarchical regression, echo=TRUE}
+Adding independent variables to a regression model often happens in a stepwise approach, i.e. we do not add all variables at once. Instead we might add variables that are most important (based on prior research) first, run the regression and examine the results. After that we might add more variables that could possibly add value to our regression model and run the regression again. We then have two models which we can compare and see whether we improve our model. Most frequently though, we consider three tpyes of independent variables:
 
+1.  main effects: These are the independent variables that the researchers expects to best predict the independent variable
+
+2.  control variables: These are independent variables which might affect the independent variable in some way and we want to make sure it is not influential (or too influential)
+
+3.  interaction variables: These are variables that moderate the strength of the relationship between independent and depend variables.
+
+Hierarchical regressions are most frequently used for the latter two options.
+
+`CONTINUE FROM HERE`
+
+Hierarchical regressions are a special type of multiple regression were we predetermine the order in which we add variables to our model. There are many other ways of perform multiple, for example starting with all variables and removing those that are not significant, which @cohen2014applied calls a 'tear-down' approach (p. 158). As the title indicates, we take a less exploratory approach to our analysis, because we define the hierarchy, i.e. the order, in which we enter variables. In the Social Sciences this is very often the preferred method., which is why I cover it in greater detail.
+
+However, I should probably explain what the purpose of entering variables in a stepwise approach[^regressions-4] is. As we just discussed in the previous chapter, sometimes we face issues of multicollinearity which makes it difficult to understand which variables are more important than others for our model. As such we can decide to enter variables which we want to control for first and then create another model which contains all variables. You will often find the term 'control variable' associated with those independent variables that are not the main focus of the study, but likely exert an impact on the other independent variables and therefore on our model. The procedure is fairly straight forward:
+
+[^regressions-4]: Stepwise approach does not refer to 'Stepwise' in SPSS regressions, i.e. were the software decides which variables to enter. I would recommend to never let the software decide how to handle your variables in a multiple regression.
+
+1.  Create a model `m1` which only contains the dependent variable `new_cases` and a control variable `country`.
+2.  Inspect the results of this model and note down the performance measures of this model.
+3.  Create another model `m2` and include the control variable `country` and all other independent variables of interest, i.e. `masks`, `movements`, `gatherings`, `schools`, and `businesses`.
+4.  Inspect the results of this model and note down the performance measures of this model.
+5.  Compare the models and see whether they are significantly different from each other. We can use `anova()` to perform this step.
+
+Let's put these steps into action and start with formulating our first model. I choose `country` as a control variable, because we have sufficient evidence that clustered data could be a reason for the high autocorrelation of residuals we found in Chapter \@ref(multicollinearity-the-dilemma-of-highly-correlated-independent-variables). For all computations in this chapter we use the original dataset, i.e. `covid_uk_ger`, because we changed the model and therefore would have to revisit outliers from scratch, which we shall skip at this point. We also have to remove observations with missing data to allow comparisons of models in a statistical way. We begin my first selecting our variables of interest and then remove missing data.
+
+```{r Hierarchical regression data prep, echo=TRUE}
+hr_data <- covid_uk_ger %>%
+  select(new_cases, country, schools, businesses) %>%
+  droplevels() %>%
+  na.omit()
 ```
 
-## Moderated regression {#moderated-regressions}
+```{r Hierarchical regression m1, echo=TRUE}
+hr_data2 <- hr_data %>%
+  mutate(country = as.numeric(case_when(country == "United Kingdom" ~ "1",
+                                        country == "Germany" ~ "0")))
+         
+m1 <- lm(formula = new_cases ~ country,
+         data = hr_data)
+
+parameters::model_parameters(m1, standardize = "refit")
+performance::model_performance(m1)
+```
+
+Our control variable turns out to be significant for our model, but it explains only a small proportion of the variance in `new_cases`. If you are testing hypotheses, you would consider this a good result, because you do not want your control variables to explain too much of the variance. At the same time, it is a significant variable, though. Let's construct our second model by adding the variables of interest to it and then compare the models
+
+```{r Hierarchical regression m2, echo=TRUE}
+m2 <- lm(formula = new_cases ~
+           schools +
+           businesses +
+           country,
+         data = hr_data)
+
+parameters::compare_parameters(m1, m2, standardize = "refit") %>%
+  as_tibble() %>%
+  select(Parameter, Coefficient.m1, p.m1, Coefficient.m2, p.m2) %>% 
+  mutate(across(where(is.double), round, 3))
+
+performance::compare_performance(m1, m2)
+```
+
+After adding all our variables, $adjusted\ R^2$ went up from 0.037 to 0.255. While this might seem like a huge improvement, we have to perform a statistical test to compare the two models. This leads us back to comparing groups and in many ways this is what we do here by using the function `anova()`, but we compare models based on the residual sum of squares, i.e. the amount of error the models produce. Thus, if the ANOVA returns a significant result, `m2` shows a significantly reduced residual sum of squares compared to `m1`.
+
+```{r Compare model m1 and m2 in hierarchical regression, echo=TRUE}
+anova(m1, m2)
+```
+
+The results show that our model significantly improved. You might argue that this is not surprising, because we added those variables which already worked in the final model of Chapter \@ref(multicollinearity-the-dilemma-of-highly-correlated-independent-variables). However, the important takeaway here is that our control variable `country` helps us explain some more variance in `new_cases`. Comparing the model with and without the control variable, we would find that the $adjusted\ R^2$ improves our model by about 25%. As such, it is worth keeping it as part of our final regression model. Here is evidence of this improvment:
+
+```{r Compare model m0 and m2 in hiearchical regression 2, echo=TRUE}
+m0 <- lm(formula = new_cases ~
+           schools +
+           businesses,
+         data = hr_data)
+
+performance::compare_performance(m0, m2)
+anova(m0, m2)
+```
+
+There are many more combinations of models we could test. For example, instead of specifying two models (`m1`, `m2`) we could also add independent variables one at a time and compare it to a baseline model (`m0`) which does contain the control variable, which means we end up with four models to compare:
+
+::: {#four-hierarchical-regressions-nested}
+m0 \<- lm(formula = new_cases \~ schools + businesses, data = hr_data)
+
+m1 \<- lm(formula = new_cases \~ country, data = hr_data)
+
+m2 \<- lm(formula = new_cases \~ country + schools, data = hr_data)
+
+m3 \<- lm(formula = new_cases \~ country + schools + businesses, data = hr_data)
+:::
+
+All these decisions have to be guided by the purpose of your research and whether you explore your data or have specified hypotheses. However, the steps largely remain the same in terms of computation in R.
+
+### Moderated regression
+
+While hierarchical regressions help us make decisions on whether we should include or exclude variables, moderation models imply that we expect a certain interaction between an independent variable and a so-called moderator. A moderator also enters the equation on the right-hand side and therefore constitutes an independent variable.
+
+Computationally an interaction is defined by the multiplication of an independent variable with the moderating variable. For example, instead of assuming that country is a control variable, we might think that the measures for `business` and `schools` were significantly differently implemented in each of the countries. Therefore, the scores of `business` and `schools` vary depending on the country we collected it from.
+
+When performing a moderation regression, we assume that the relationship between independent variables and dependent variables differ, for example the country we look at. If we visualise the idea of moderation we would plot the data against each other for each country and fit two (instead of one) regression line by defining the colours of each group with `col = country`.
+
+```{r Plotting moderation effects, echo=TRUE}
+# Plotting the interaction between schools and country
+p1 <- hr_data %>%
+  ggplot(aes(x = schools,
+             y = new_cases,
+             col = country)) +
+  geom_jitter(width = 5,
+              size = 0.5,
+              alpha = 0.5) +
+  stat_smooth(method = "lm",
+              formula = y ~ x,
+              se = FALSE)
+
+# Plotting the interaction between schools and country
+p2 <- hr_data %>%
+  ggplot(aes(x = businesses,
+             y = new_cases,
+             col = country)) +
+  geom_jitter(width = 5,
+              size = 0.5,
+              alpha = 0.5) +
+  geom_smooth(method = "lm",
+              formula = y ~ x,
+              se = FALSE)
+
+# Use the package 'patchwork' to stitch them together
+# library(patchwork) # If you have not done so yet
+p1 + p2
+```
+
+There are two interesting insights we can gain from these plots:
+
+1.  In terms of `business` measures, the `United Kingdom` seems to have more observations at the lower end, i.e. taking less protective measures than Germany, while for `schools` it is rather the opposite.
+2.  The UK reports more frequently higher numbers of `new_cases` even if measures taken are high, which results in a steeper regression line. We find this particularly with `schools`, where `Germany` has barely any new cases when the measures were high, but the UK still reports very high numbers of new cases when tight measures were taken.
+
+Given the difference in the slope of the regression line, we have to assume that the $\beta$s for `Germany` are different from the ones for the `United Kingdom`. Does, the relationship between `new_cases` and `business`/`schools` can be partially explained by `country`. Therefore, we could include country as a moderator and introduce the interaction of these variables with each other into our model.
 
 ```{r Moderated regression, echo=TRUE}
 
+# COUNTRY REQUIRES DUMMY CODING TO WORK PROPERLY
+
+m4 <- lm(formula = new_cases ~
+           schools +
+           businesses +
+           schools * country +  # moderator 1
+           businesses * country, # moderator 2
+         data = hr_data)
+
+parameters::compare_parameters(m0, m4, standardize = "refit") %>%
+  as_tibble() %>%
+  select(Parameter, Coefficient.m0, p.m0, Coefficient.m4, p.m4) %>% 
+  mutate(across(where(is.double), round, 3))
+
+performance::compare_performance(m0, m4)
+
+anova(m0, m4)
 ```
+
+The moderation effect is quite strong. Compared to our baseline model `m0`, which only contains `businesses` and `schools` as predictor, our new model `m4` considerably outperforms it with an $adjusted\ R^2 = 0.307$. If we consider our previous model with country as a control variable, we only explained 25.5% of the variance in `new_cases`. This quite an improvement.
+
+However, if we take a look at the regression coefficients, we find that once we add this moderation effect, `schools` is not a significant predictor anymore. Comparing the $\beta$ values with each other, `country` is the strongest predictor, followed by the moderator `businesses * country`. Similar to before, with a desire to achieve a parsimonious model, we can remove the non-significant predictor.
+
+```{r Model after moderation effects accounted for, echo=TRUE}
+m5 <- lm(formula = new_cases ~
+           businesses +
+           businesses * country, # moderator 2
+         data = hr_data)
+
+parameters::compare_parameters(m4, m5, standardize = "refit") %>%
+  as_tibble() %>%
+  select(Parameter, Coefficient.m4, p.m4, Coefficient.m5, p.m5) %>% 
+  mutate(across(where(is.double), round, 3))
+
+performance::compare_performance(m4, m5)
+
+anova(m4, m5)
+```
+
+## Other regression models:  Alternatives to OLS
+
+So far we covered linear regressions which are considered Ordinary Least Squares (OLS) regression models. These are by far the most frequently used models in the Social Sciences. However, what can we do if the assumptions of OLS models is violated, e.g. if our dependent variable is dichotomous and not continuous? In such cases we might have to consider other types of regression models. There are several different approaches but we most frequently find one of the following:
+
+-   Polynomial regressions, which fit multiple linear regressions onto a curvilinear relationship
+
+-   Generalised Linear models, such as Logistic regressions or Poisson regressions.
