@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Page not found | R for Non-Programmers: A Guide for Social Scientists</title>
   <meta name="description" content="This books is intended for Social Scientists. No matter whether you have years of experiences, this book might come in handy if you never use R or any other programming language before." />
-  <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Page not found | R for Non-Programmers: A Guide for Social Scientists" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Daniel Dauber" />
 
 
-<meta name="date" content="2021-08-31" />
+<meta name="date" content="2021-09-09" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -35,6 +35,7 @@
 
 <script src="libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -50,13 +51,8 @@
 
 
 
-
 <link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
-<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
-<script src="libs/viz-1.8.2/viz.js"></script>
-<link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
-<script src="libs/grViz-binding-1.0.6.1/grViz.js"></script>
 
 
 <style type="text/css">
@@ -305,10 +301,21 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="12.1" data-path="regression.html"><a href="regression.html#single-linear-regression"><i class="fa fa-check"></i><b>12.1</b> Single linear regression</a>
 <ul>
-<li class="chapter" data-level="12.1.1" data-path="regression.html"><a href="regression.html#fitting-a-regression-model-by-hand-i.e.-trial-and-error"><i class="fa fa-check"></i><b>12.1.1</b> Fitting a regression model by hand, i.e. trial and error</a></li>
+<li class="chapter" data-level="12.1.1" data-path="regression.html"><a href="regression.html#fitting-a-regression-model-by-hand"><i class="fa fa-check"></i><b>12.1.1</b> Fitting a regression model by hand, i.e. trial and error</a></li>
+<li class="chapter" data-level="12.1.2" data-path="regression.html"><a href="regression.html#fitting-a-regression-model-computationally"><i class="fa fa-check"></i><b>12.1.2</b> Fitting a regression model computationally</a></li>
 </ul></li>
-<li class="chapter" data-level="12.2" data-path="regression.html"><a href="regression.html#multiple-regression"><i class="fa fa-check"></i><b>12.2</b> Multiple regression</a></li>
-<li class="chapter" data-level="12.3" data-path="regression.html"><a href="regression.html#hierarchical-regression"><i class="fa fa-check"></i><b>12.3</b> Hierarchical regression</a></li>
+<li class="chapter" data-level="12.2" data-path="regression.html"><a href="regression.html#multiple-regression"><i class="fa fa-check"></i><b>12.2</b> Multiple regression</a>
+<ul>
+<li class="chapter" data-level="12.2.1" data-path="regression.html"><a href="regression.html#outliers-in-multiple-regressions"><i class="fa fa-check"></i><b>12.2.1</b> Outliers in multiple regressions</a></li>
+<li class="chapter" data-level="12.2.2" data-path="regression.html"><a href="regression.html#standardised-beta-beta-vs.-unstandardised-beta-b"><i class="fa fa-check"></i><b>12.2.2</b> Standardised beta (<span class="math inline">\(\beta\)</span>) vs. unstandardised beta (<span class="math inline">\(B\)</span>)</a></li>
+<li class="chapter" data-level="12.2.3" data-path="regression.html"><a href="regression.html#multicollinearity-the-dilemma-of-highly-correlated-independent-variables"><i class="fa fa-check"></i><b>12.2.3</b> Multicollinearity: The dilemma of highly correlated independent variables</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="regression.html"><a href="regression.html#hierarchical-regression"><i class="fa fa-check"></i><b>12.3</b> Hierarchical regression</a>
+<ul>
+<li class="chapter" data-level="12.3.1" data-path="regression.html"><a href="regression.html#regressions-with-control-variables"><i class="fa fa-check"></i><b>12.3.1</b> Regressions with control variables</a></li>
+<li class="chapter" data-level="12.3.2" data-path="regression.html"><a href="regression.html#moderated-regression"><i class="fa fa-check"></i><b>12.3.2</b> Moderated regression</a></li>
+</ul></li>
+<li class="chapter" data-level="12.4" data-path="regression.html"><a href="regression.html#other-regression-models-alternatives-to-ols"><i class="fa fa-check"></i><b>12.4</b> Other regression models: Alternatives to OLS</a></li>
 </ul></li>
 <li class="chapter" data-level="13" data-path="mixed-methods-research-analysing-qualitative-in-r.html"><a href="mixed-methods-research-analysing-qualitative-in-r.html"><i class="fa fa-check"></i><b>13</b> Mixed-methods research: Analysing qualitative in R</a></li>
 <li class="chapter" data-level="14" data-path="next-steps.html"><a href="next-steps.html"><i class="fa fa-check"></i><b>14</b> Where to go from here: The next steps in your R journey</a>
@@ -318,13 +325,17 @@ div.csl-indent {
 <li class="chapter" data-level="14.3" data-path="next-steps.html"><a href="next-steps.html#next-steps-online-readings"><i class="fa fa-check"></i><b>14.3</b> Engage in regular online readings about R</a></li>
 <li class="chapter" data-level="14.4" data-path="next-steps.html"><a href="next-steps.html#next-steps-twitter"><i class="fa fa-check"></i><b>14.4</b> Join the Twitter community and hone your skills</a></li>
 </ul></li>
+<li class="chapter" data-level="15" data-path="case-studies-in-depth-analysis.html"><a href="case-studies-in-depth-analysis.html"><i class="fa fa-check"></i><b>15</b> Case studies: In-depth analysis</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="case-studies-in-depth-analysis.html"><a href="case-studies-in-depth-analysis.html#bootstrapped-regression-with-multi-level-control-variable-and-moderation"><i class="fa fa-check"></i><b>15.1</b> Bootstrapped regression with multi-level control variable and moderation</a></li>
+</ul></li>
 <li class="chapter" data-level="" data-path="appendix.html"><a href="appendix.html"><i class="fa fa-check"></i>Appendix</a>
 <ul>
-<li class="chapter" data-level="14.5" data-path="appendix.html"><a href="appendix.html#comparing-two-unpaired-groups"><i class="fa fa-check"></i><b>14.5</b> Comparing two unpaired groups</a></li>
+<li class="chapter" data-level="15.2" data-path="appendix.html"><a href="appendix.html#comparing-two-unpaired-groups"><i class="fa fa-check"></i><b>15.2</b> Comparing two unpaired groups</a></li>
 </ul></li>
-<li class="chapter" data-level="15" data-path="exercises-solutions.html"><a href="exercises-solutions.html"><i class="fa fa-check"></i><b>15</b> Exercises: Solutions</a>
+<li class="chapter" data-level="16" data-path="exercises-solutions.html"><a href="exercises-solutions.html"><i class="fa fa-check"></i><b>16</b> Exercises: Solutions</a>
 <ul>
-<li class="chapter" data-level="15.1" data-path="exercises-solutions.html"><a href="exercises-solutions.html#exercises-solutions-5"><i class="fa fa-check"></i><b>15.1</b> Solutions for 5.6</a></li>
+<li class="chapter" data-level="16.1" data-path="exercises-solutions.html"><a href="exercises-solutions.html#exercises-solutions-5"><i class="fa fa-check"></i><b>16.1</b> Solutions for 5.6</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://twitter.com/daniel_dauber" target="blank">Find me on twitter!</a></li>
@@ -362,7 +373,6 @@ the table of contents to find the page you are looking for.</p>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -403,7 +413,7 @@ gitbook.start({
 },
 "download": ["r_for_non_programmers.pdf", "r_for_non_programmers.epub"],
 "search": {
-"engine": "lunr",
+"engine": "fuse",
 "options": null
 },
 "toc": {
