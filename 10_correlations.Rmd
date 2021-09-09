@@ -10,19 +10,13 @@ Sometimes counting and measuring means, medians, and standard deviations is not 
 
 There are many different ways to compute the correlation, and it partially depends on the type of data you want to relate to each other. The 'Pearson's correlation' is by far the most frequently used correlation technique for normally distributed data. On the other hand, if data is not normally distributed, we can opt for the 'Spearman's rank' correlation. One could argue that the relationship between these two correlations is like the mean (Pearson) to the median (Spearman). Both approaches require numeric values to be computed correctly. If our data is ordinal, or worse dichotomous (like a logical variable), we have to choose different options.
 
-+-----------------+-------------------------------------------------------------------------+
 | Correlation     | Used                                                                    |
-+=================+=========================================================================+
+|-----------------|-------------------------------------------------------------------------|
 | *Pearson*       | Requires variables to be parametric and therefore numeric               |
-+-----------------+-------------------------------------------------------------------------+
 | *Spearman*      | Used when data is non-parametric and requires numeric variables         |
-+-----------------+-------------------------------------------------------------------------+
 | *Polychoric*    | Used when investigating two ordinal variables                           |
-+-----------------+-------------------------------------------------------------------------+
 | *Tetrachoric*   | Used when both variables are dichotomous, e.g. 'yes/no', 'True/False'.  |
-+-----------------+-------------------------------------------------------------------------+
 | *Rank-biserial* | Used when one variable is dichotomous and the other variable is ordinal |
-+-----------------+-------------------------------------------------------------------------+
 
 : (\#tab:different-correlations) Different ways of computing correlations
 

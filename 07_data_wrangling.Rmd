@@ -338,7 +338,7 @@ First, we need to find out which country names are particularly long. There are 
 
 ```{r Listing selected country names, echo=TRUE}
 wvs %>%
-  filter(stringr::str_length(country) >= 15) %>% 
+  filter(str_length(country) >= 15) %>% 
   count(country)
 ```
 
