@@ -1,0 +1,13 @@
+# Power: You either have it or you don't {#power-analysis}
+
+By far the most frequently asked question by my students is: How much data do I have to collect? My answer is always the same: It depends. From a student's perspective, surely this must be one of the most annoying answers. However, there is a way to determine how large your sample has to be to reliably detect specific relationships. This procedure is called power analysis.
+
+While power analysis can be performed before and after data collection, it might seem rather pointless to do it afterwards when collecting (potentially) more data is not only difficult but sometimes impossible. Thus, my explaantions in this chapter will largely focus on the question: How much data is enough data to reliably detect relationships between variables.
+
+Power analysis is something that applies to all kinds of tests, such as corrrelations (Chapter \@ref(correlations), group comparisons (Chapter \@ref(comparing-groups)) and regressions (Chapter \@ref(regression). Thus, it is important to know about it. There is nothing more worse than presenting a model or results that are utterly 'underpowered', i.e. the sample is not large enough to reliably detect a desired relationship of variables.
+
+-   ingredients used to compute power
+
+-   plotting power levels
+
+-   computing power levels
