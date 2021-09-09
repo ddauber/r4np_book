@@ -1,6 +1,6 @@
 # Case studies: In-depth analysis
 
-## Bootstrapped regression
+## Bootstrapped regression with multi-level control variable and moderation {#bootstrapped-regression}
 
 ```{r}
 # Bootstrapping the regression

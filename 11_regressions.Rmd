@@ -3,6 +3,7 @@
 ```{r echo=FALSE, message=FALSE}
 library(tidyverse)
 library(r4np)
+library(patchwork)
 ```
 
 Regressions are an interesting area of data analysis since it enables us to make very specific predictions about the future incorporating different variables at the same time. As the name implies, regressions 'regress', i.e. they draw on past observations to make predictions about future observations. Thus, any analysis incorporating a regression makes the implicit assumption that the future can be best explained by the past.
@@ -856,31 +857,33 @@ In order to remove serial dependency effects we would have to transform data and
 
 ## Hierarchical regression
 
-Adding independent variables to a regression model often happens in a stepwise approach, i.e. we do not add all variables at once. Instead we might add variables that are most important (based on prior research) first, run the regression and examine the results. After that we might add more variables that could possibly add value to our regression model and run the regression again. We then have two models which we can compare and see whether we improve our model. Most frequently though, we consider three tpyes of independent variables:
+Adding independent variables to a regression model often happens in a stepwise approach, i.e. we do not add all variables at once. Instead we might add variables that are most important (based on prior research) first, run the regression and examine the results. After that we add more variables that could possibly add value to our regression model and run the regression again. We then have two models which we can compare and see whether we improved it.
 
-1.  main effects: These are the independent variables that the researchers expects to best predict the independent variable
+In hierarchical regressions, we most frequently distinguish three types of independent variables which also reflect the order in which we add variables to a multiple regression:
 
-2.  control variables: These are independent variables which might affect the independent variable in some way and we want to make sure it is not influential (or too influential)
+1.  *control variables*: These are independent variables which might affect the dependent variable in some way and we want to make sure its effects are accounted for. Control variables tend to be not the primary focus of a study, but ensure that effects of other independent variables (the main effects) are not spurious. Control variables are added first to a regression.
 
-3.  interaction variables: These are variables that moderate the strength of the relationship between independent and depend variables.
+2.  *main effects variables*: These are the independent variables that the researcher expects to best predict the independent variable. Main effects variables are added after any control variables.
 
-Hierarchical regressions are most frequently used for the latter two options.
+3.  *moderating variables*: These are variables that attenuate the strength of the relationship between independent and depend variables. They are also referred to as *interactions* or *interaction terms.* Moderating variables are added last, i.e. after main effects variables and control variables.
 
-`CONTINUE FROM HERE`
+In the field of Social Sciences, it is fairly rare to not find control variables and/or moderators in multiple regressions, because the social phenomena we tend to investigate are usually affected by other factors as well. Classic control variables or moderators are socio-demographic variables, such as age and gender. The following two chapters cover control variables and moderation effects separately from each other. However, it is not unusual to find both types of variables in the same regression model. They are not mutually exclusive approaches, but simply different types of independent variables as shown above.
 
-Hierarchical regressions are a special type of multiple regression were we predetermine the order in which we add variables to our model. There are many other ways of perform multiple, for example starting with all variables and removing those that are not significant, which @cohen2014applied calls a 'tear-down' approach (p. 158). As the title indicates, we take a less exploratory approach to our analysis, because we define the hierarchy, i.e. the order, in which we enter variables. In the Social Sciences this is very often the preferred method., which is why I cover it in greater detail.
+### Regressions with control variables
 
-However, I should probably explain what the purpose of entering variables in a stepwise approach[^regressions-4] is. As we just discussed in the previous chapter, sometimes we face issues of multicollinearity which makes it difficult to understand which variables are more important than others for our model. As such we can decide to enter variables which we want to control for first and then create another model which contains all variables. You will often find the term 'control variable' associated with those independent variables that are not the main focus of the study, but likely exert an impact on the other independent variables and therefore on our model. The procedure is fairly straight forward:
+Hierarchical regression imply that we added variables step-by-step, or as some call it 'block-wise'. Each block represents a group of variables. Control variables tend to be the first ones to be added to a regression model. However, there are many other ways to perform multiple regression, for example starting with all variables and removing those that are not significant, which @cohen2014applied calls a 'tear-down' approach (p. 158). As the title indicates, we take less of an exploratory approach to our analysis, because we define the hierarchy, i.e. the order, in which we enter variables. In the Social Sciences this is very often the preferred method, which is why I cover it in greater detail.
+
+However, I should probably explain what the purpose of entering variables in a stepwise approach[^regressions-4] is. As we just discussed in the previous chapter, sometimes we face issues of multicollinearity which makes it difficult to understand which variables are more important than others for our model. As such we can decide to enter variables which we want to control for first and then create another model which contains all variables. You will often find the term 'control variable' associated with those independent variables that are not the main focus of the study, but likely exert an impact on the other independent variables and therefore on our model. The procedure is fairly straight forward for our research focus of predicting `new_cases` of COVID-19:
 
 [^regressions-4]: Stepwise approach does not refer to 'Stepwise' in SPSS regressions, i.e. were the software decides which variables to enter. I would recommend to never let the software decide how to handle your variables in a multiple regression.
 
-1.  Create a model `m1` which only contains the dependent variable `new_cases` and a control variable `country`.
-2.  Inspect the results of this model and note down the performance measures of this model.
-3.  Create another model `m2` and include the control variable `country` and all other independent variables of interest, i.e. `masks`, `movements`, `gatherings`, `schools`, and `businesses`.
-4.  Inspect the results of this model and note down the performance measures of this model.
-5.  Compare the models and see whether they are significantly different from each other. We can use `anova()` to perform this step.
+1.  Create a model `m1` (or whichever name you want to give it) which only contains the dependent variable `new_cases` and a control variable `country`.
+2.  Inspect the results of this model and note down the performance measures.
+3.  Create another model `m2` and include the control variable `country` and all other independent variables of interest, i.e. `schools`, and `businesses`.
+4.  Inspect the results of this model and note down the performance measures.
+5.  Compare the `m1` and `m2` to see whether they are significantly different from each other. We can use `anova()` to perform this step.
 
-Let's put these steps into action and start with formulating our first model. I choose `country` as a control variable, because we have sufficient evidence that clustered data could be a reason for the high autocorrelation of residuals we found in Chapter \@ref(multicollinearity-the-dilemma-of-highly-correlated-independent-variables). For all computations in this chapter we use the original dataset, i.e. `covid_uk_ger`, because we changed the model and therefore would have to revisit outliers from scratch, which we shall skip at this point. We also have to remove observations with missing data to allow comparisons of models in a statistical way. We begin my first selecting our variables of interest and then remove missing data.
+Let's put these steps into action and start with formulating our first model. I choose `country` as a control variable, because we have sufficient evidence that clustered data could be a reason for the high autocorrelation of residuals we found in Chapter \@ref(multicollinearity-the-dilemma-of-highly-correlated-independent-variables). For all computations in this section we use the original dataset, i.e. `covid_uk_ger`, because we changed the model and therefore would have to revisit outliers from scratch, which we shall skip at this point. We also have to remove observations with missing data to allow comparisons of models in a statistical way. We begin by first selecting our variables of interest and then remove missing data.
 
 ```{r Hierarchical regression data prep, echo=TRUE}
 hr_data <- covid_uk_ger %>%
@@ -889,19 +892,54 @@ hr_data <- covid_uk_ger %>%
   na.omit()
 ```
 
+You find a new function called `droplevels()` in this code chunk. What this function does it removes unused factor levels from a factor. To demonstrate this more clearly, let me give you an example:
+
+```{r How to drop levels of factors, echo=TRUE}
+# A factor with all levels
+(gender <- as_factor(c("female", "male", "NA")))
+
+# Subset our data by picking the first two values only
+(gender2 <- gender[1:2])
+
+# Dropping unused levels
+(gender3 <- gender[1:2] %>% droplevels())
+```
+
+The problem we encounter is that even though we only have data points with `female` and `male` values in `gender2`, it still keeps the levels of `NA`, based on the original factor `gender`. In my experience, it is always good to remove unused categories, because sometimes they can lead to unexpected outcomes. Thus, it is a matter of good practice than a real necessity.
+
+We have to recode factors into so called [dummy variables](https://methods.sagepub.com/reference/the-sage-encyclopedia-of-educational-research-measurement-and-evaluation/i7682.xml?fromsearch=true "dummy variables"){target="blank"} or indicator variables. Dummy variables represent categories as `0`s (i.e. FALSE for this observation) and `1`s (TRUE for this observation). The good news is, the `lm()` function will do this automatically for us. If you want to inspect the coding ex-ante you can use the function `contrasts().`
+
+```{r Showing contrasts of categorical variables, echo=TRUE}
+contrasts(hr_data$country)
+```
+
+The column reflects the coding and the rows represent the levels of our factor. If we had more levels, we will find that the coding will always be the number of levels minus 1. This is a common mistake that novices easily make. You might think you need to have a dummy variable for `Germany` (i.e. 0 and 1) and a dummy variable for `United Kingdom` (i.e. 0 and 1). However, all you really need is one variable, which tells us whether the `country` is the `United Kingdom` (i.e. 1) or not (i.e. 0).
+
+If our control variable has more than two levels, for example by adding `Italy`, the dummy coding would change to the following:
+
+```{r showing contrasts for categorical variables with more levels, echo=TRUE}
+hr_uk_ger_ita <- covid %>%
+  filter(country == "United Kingdom" |
+           country == "Germany" |
+           country == "Italy") %>%
+  droplevels()
+
+contrasts(hr_uk_ger_ita$country)
+```
+
+With this new dataset, our regression would include more control variables as well, because for each level of the factor (minus one level!) we create a new control variable. For an example of such a scenario, please take a look at the case study in Chapter \@ref(bootstrapped-regression).
+
+Returning to our hierarchical regression we can start by building our first model, i.e. `m0`, which only contains our control variable `country`.
+
 ```{r Hierarchical regression m1, echo=TRUE}
-hr_data2 <- hr_data %>%
-  mutate(country = as.numeric(case_when(country == "United Kingdom" ~ "1",
-                                        country == "Germany" ~ "0")))
-         
 m1 <- lm(formula = new_cases ~ country,
          data = hr_data)
 
-parameters::model_parameters(m1, standardize = "refit")
+parameters::model_parameters(m1, standardize = "posthoc")
 performance::model_performance(m1)
 ```
 
-Our control variable turns out to be significant for our model, but it explains only a small proportion of the variance in `new_cases`. If you are testing hypotheses, you would consider this a good result, because you do not want your control variables to explain too much of the variance. At the same time, it is a significant variable, though. Let's construct our second model by adding the variables of interest to it and then compare the models
+Our control variable turns out to be significant for our model, but it explains only a small proportion of the variance in `new_cases`. If you are testing hypotheses, you would consider this a good result, because you do not want your control variables to explain too much of the variance. At the same time, it is a significant variable and should be retained in our model. Let's construct our next model `m1` by adding the main effects variables and then compare our models.
 
 ```{r Hierarchical regression m2, echo=TRUE}
 m2 <- lm(formula = new_cases ~
@@ -918,13 +956,13 @@ parameters::compare_parameters(m1, m2, standardize = "refit") %>%
 performance::compare_performance(m1, m2)
 ```
 
-After adding all our variables, $adjusted\ R^2$ went up from 0.037 to 0.255. While this might seem like a huge improvement, we have to perform a statistical test to compare the two models. This leads us back to comparing groups and in many ways this is what we do here by using the function `anova()`, but we compare models based on the residual sum of squares, i.e. the amount of error the models produce. Thus, if the ANOVA returns a significant result, `m2` shows a significantly reduced residual sum of squares compared to `m1`.
+After adding all our variables, $adjusted\ R^2$ went up from 0.033 to 0.255. While this might seem like a huge improvement, we have to perform a statistical test to compare the two models. This leads us back to comparing groups and in many ways this is what we do here by using the function `anova()`, but we compare models based on the residual sum of squares, i.e. the amount of error the models produce. Thus, if the ANOVA returns a significant result, `m1` shows a significantly reduced residual sum of squares compared to `m1`. Thus, `m2` would be the better model.
 
 ```{r Compare model m1 and m2 in hierarchical regression, echo=TRUE}
 anova(m1, m2)
 ```
 
-The results show that our model significantly improved. You might argue that this is not surprising, because we added those variables which already worked in the final model of Chapter \@ref(multicollinearity-the-dilemma-of-highly-correlated-independent-variables). However, the important takeaway here is that our control variable `country` helps us explain some more variance in `new_cases`. Comparing the model with and without the control variable, we would find that the $adjusted\ R^2$ improves our model by about 25%. As such, it is worth keeping it as part of our final regression model. Here is evidence of this improvment:
+The results show that our model significantly improved. You might argue that this is not surprising, because we added those variables which already worked in the final model of Chapter \@ref(multicollinearity-the-dilemma-of-highly-correlated-independent-variables). However, the important takeaway here is that our control variable `country` helps us explain some more variance in `new_cases`. Comparing the model with and without the control variable, we would find that the $adjusted\ R^2$ improves our model by about 25%. As such, it is worth keeping it as part of our final regression model. Here is evidence of this improvement:
 
 ```{r Compare model m0 and m2 in hiearchical regression 2, echo=TRUE}
 m0 <- lm(formula = new_cases ~
@@ -936,11 +974,9 @@ performance::compare_performance(m0, m2)
 anova(m0, m2)
 ```
 
-There are many more combinations of models we could test. For example, instead of specifying two models (`m1`, `m2`) we could also add independent variables one at a time and compare it to a baseline model (`m0`) which does contain the control variable, which means we end up with four models to compare:
+There are many more combinations of models we could test. For example, instead of specifying two models (`m1`, `m2`) we could also add independent variables one at a time and compare it to a baseline model (`m0`) which does contain the control variable, which means we end up with more models to compare, for example:
 
 ::: {#four-hierarchical-regressions-nested}
-m0 \<- lm(formula = new_cases \~ schools + businesses, data = hr_data)
-
 m1 \<- lm(formula = new_cases \~ country, data = hr_data)
 
 m2 \<- lm(formula = new_cases \~ country + schools, data = hr_data)
@@ -952,15 +988,15 @@ All these decisions have to be guided by the purpose of your research and whethe
 
 ### Moderated regression
 
-While hierarchical regressions help us make decisions on whether we should include or exclude variables, moderation models imply that we expect a certain interaction between an independent variable and a so-called moderator. A moderator also enters the equation on the right-hand side and therefore constitutes an independent variable.
+While regressions with control variables help us primarily make decisions on whether we should include or exclude variables by controling for another variable, moderation models imply that we expect a certain interaction between an independent variable and a so-called moderator. A moderator also enters the equation on the right-hand side and therefore constitutes an independent variable, but is usually entered after control variables and main effects variables..
 
-Computationally an interaction is defined by the multiplication of an independent variable with the moderating variable. For example, instead of assuming that country is a control variable, we might think that the measures for `business` and `schools` were significantly differently implemented in each of the countries. Therefore, the scores of `business` and `schools` vary depending on the country we collected it from.
+IIn our quest to find a model that predcits new COVID cases, we change our mind and not assume that country is a control variable, but a moderating one. We could suspect that the measures for `businesses` and `schools` were significantly differently implemented in each of the countries. Therefore, the strength of the relationship between `businesses`/`schools` and `new_cases` varies depending on the country we look at.
 
-When performing a moderation regression, we assume that the relationship between independent variables and dependent variables differ, for example the country we look at. If we visualise the idea of moderation we would plot the data against each other for each country and fit two (instead of one) regression line by defining the colours of each group with `col = country`.
+When performing a moderation regression, we assume that the relationship between independent variables and dependent variable differs based on a third variable, in our case `country`. If we visualise the idea of moderation we would plot the data against each other for each country separately and fit two (instead of one) regression line by defining the colours of each group with `col = country`.
 
-```{r Plotting moderation effects, echo=TRUE}
+```{r Plotting moderation effects schools, echo=TRUE, fig.cap="Plotting moderation effects for `schools`", label = "plotting-moderation-effects-schools"}
 # Plotting the interaction between schools and country
-p1 <- hr_data %>%
+hr_data %>%
   ggplot(aes(x = schools,
              y = new_cases,
              col = country)) +
@@ -970,9 +1006,11 @@ p1 <- hr_data %>%
   stat_smooth(method = "lm",
               formula = y ~ x,
               se = FALSE)
+```
 
+```{r Plotting moderation effects businesses, echo=TRUE, fig.cap="Plotting moderation effects for `businesses`", label = "plotting-moderation-effects-businesses"}
 # Plotting the interaction between schools and country
-p2 <- hr_data %>%
+hr_data %>%
   ggplot(aes(x = businesses,
              y = new_cases,
              col = country)) +
@@ -982,23 +1020,17 @@ p2 <- hr_data %>%
   geom_smooth(method = "lm",
               formula = y ~ x,
               se = FALSE)
-
-# Use the package 'patchwork' to stitch them together
-# library(patchwork) # If you have not done so yet
-p1 + p2
 ```
 
-There are two interesting insights we can gain from these plots:
+There are three interesting insights we can gain from these plots:
 
 1.  In terms of `business` measures, the `United Kingdom` seems to have more observations at the lower end, i.e. taking less protective measures than Germany, while for `schools` it is rather the opposite.
-2.  The UK reports more frequently higher numbers of `new_cases` even if measures taken are high, which results in a steeper regression line. We find this particularly with `schools`, where `Germany` has barely any new cases when the measures were high, but the UK still reports very high numbers of new cases when tight measures were taken.
+2.  For `schools` the UK reports more frequently higher numbers of `new_cases` even if measures taken are high, which results in a steeper regression line.
+3.  However, for `businesses`, the `United Kingdom` has barely any `new_cases` when the measures were high, but Germany still reports high numbers of new cases when tight measures were taken.
 
-Given the difference in the slope of the regression line, we have to assume that the $\beta$s for `Germany` are different from the ones for the `United Kingdom`. Does, the relationship between `new_cases` and `business`/`schools` can be partially explained by `country`. Therefore, we could include country as a moderator and introduce the interaction of these variables with each other into our model.
+Given the difference in the slope of the regression lines, we have to assume that the $\beta$s for `Germany` are quite different from the ones for the `United Kingdom`. It seems that the relationship between `new_cases` and `business`/`schools` can be partially explained by `country`. Therefore, we could include `country` as a moderator and introduce the interaction of these variables with each other into a new model, i.e. `m4`.
 
 ```{r Moderated regression, echo=TRUE}
-
-# COUNTRY REQUIRES DUMMY CODING TO WORK PROPERLY
-
 m4 <- lm(formula = new_cases ~
            schools +
            businesses +
@@ -1016,30 +1048,18 @@ performance::compare_performance(m0, m4)
 anova(m0, m4)
 ```
 
-The moderation effect is quite strong. Compared to our baseline model `m0`, which only contains `businesses` and `schools` as predictor, our new model `m4` considerably outperforms it with an $adjusted\ R^2 = 0.307$. If we consider our previous model with country as a control variable, we only explained 25.5% of the variance in `new_cases`. This quite an improvement.
+The moderation effect is quite strong. Compared to our baseline model `m0`, which only contains `businesses` and `schools` as predictors, our new model `m4` considerably outperforms it with an $adjusted\ R^2 = 0.307$. Our previous model with country as a control variable achieved an $adjusted\ R^2 = 0.255$. I would argue this is quite an improvement.
 
-However, if we take a look at the regression coefficients, we find that once we add this moderation effect, `schools` is not a significant predictor anymore. Comparing the $\beta$ values with each other, `country` is the strongest predictor, followed by the moderator `businesses * country`. Similar to before, with a desire to achieve a parsimonious model, we can remove the non-significant predictor.
+While significant moderation effects help us to make better predictions with our model, they come with a caveat: Interpreting the relative importance of the main effects becomes considerably more difficult, because their effect is depending on the level of our moderation variable. As such, you cannot really interpret the main effects without considering the moderation variable as well. You might have noticed that our variable `schools` is not significant anymore. However, this does not imply it is not important, because its significance depends on the level of our moderator, i.e. whether we look at `Germany` or the `United Kingdom`.
 
-```{r Model after moderation effects accounted for, echo=TRUE}
-m5 <- lm(formula = new_cases ~
-           businesses +
-           businesses * country, # moderator 2
-         data = hr_data)
+## Other regression models: Alternatives to OLS
 
-parameters::compare_parameters(m4, m5, standardize = "refit") %>%
-  as_tibble() %>%
-  select(Parameter, Coefficient.m4, p.m4, Coefficient.m5, p.m5) %>% 
-  mutate(across(where(is.double), round, 3))
+This book only covers linear regressions which are considered Ordinary Least Squares (OLS) regression models. These are by far the most frequently used models in the Social Sciences. However, what can we do if the assumptions of OLS models is violated, for example the relationship of variables looks curved or if our dependent variable is dichotomous and not continuous? In such cases we might have to consider other types of regression models. There are several different approaches but we most frequently find one of the following:
 
-performance::compare_performance(m4, m5)
+-   *Polynomial regressions*, which are used for curvilinear relationships between variables.
 
-anova(m4, m5)
-```
+-   *Generalised Linear models*, such as *Logistic regressions* (when the predictor is a logical variable) or *Poisson regressions* (when we model count data, i.e. frequencies and contingency tables).
 
-## Other regression models:  Alternatives to OLS
+These are specialised models and learning them requires a more in-depth knowledge of their mechanics which would go beyond the scope of a book which intends to cover the basics of conducting statistical analysis in R. However, [@cohen2014applied] offers an excellent introduction to both approaches.
 
-So far we covered linear regressions which are considered Ordinary Least Squares (OLS) regression models. These are by far the most frequently used models in the Social Sciences. However, what can we do if the assumptions of OLS models is violated, e.g. if our dependent variable is dichotomous and not continuous? In such cases we might have to consider other types of regression models. There are several different approaches but we most frequently find one of the following:
-
--   Polynomial regressions, which fit multiple linear regressions onto a curvilinear relationship
-
--   Generalised Linear models, such as Logistic regressions or Poisson regressions.
+`[CONSIDER OFFERING EXAMPLES]`
