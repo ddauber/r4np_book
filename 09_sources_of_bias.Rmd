@@ -1,11 +1,5 @@
 # Sources of bias: Outliers, normality and other 'conundrums' {#sources-of-bias}
 
-```{r}
-library(tidyverse)
-library(r4np)
-library(patchwork)
-```
-
 'Bias' in your analysis is hardly ever a good thing unless you are a qualitative researcher. Whether you consider it positive or negative, we have to be aware of issues preventing us from performing a specific type of analysis. All of the statistical computations discussed in the following chapters can easily be affected by different sources of bias. The lack of certain biases can be even an assumption of particular statistical tests. Thus, violating these assumptions would imply that the analytical technique we use will produce wrong results, i.e. biased results. @field2013discovering summarises three main assumptions we have to consider:
 
 -   Linearity and additivity,

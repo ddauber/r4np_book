@@ -1,6 +1,6 @@
 # Correlations {#correlations}
 
-Sometimes counting and measuring means, medians and standard deviations is not enough, because they are all based on a single variable. Instead, we might have questions related to the relationship of two or more variables. In this section we will explore how correlations can (and kind of cannot - see Chapter \@ref(simpsons-paradox)) provide insights into the following questions:
+Sometimes counting and measuring means, medians, and standard deviations is not enough because they are all based on a single variable. Instead, we might have questions related to the relationship of two or more variables. In this section, we will explore how correlations can (and kind of cannot - see Chapter \@ref(simpsons-paradox)) provide insights into the following questions:
 
 -   Do movie viewers agree with critics regarding the rating of movies?
 
@@ -8,7 +8,7 @@ Sometimes counting and measuring means, medians and standard deviations is not e
 
 -   Do movies with more votes also make more money?
 
-There are many different ways of how one can compute the correlation and it partially depends on the type of data you want to relate. The 'Pearson's correlation' is by far the most frequently used correlation technique for data that is normally distributed. On the other hand, if data is not normally distributed, we can opt for the 'Spearman's rank' correlation. One could argue that the relationship between these two correlations is like the mean (Pearson) to the median (Spearman). Both approaches require numeric values to be computed properly. If our data is ordinal, or worse dichotomous (like a logical variables), we have to opt for different options.
+There are many different ways to compute the correlation, and it partially depends on the type of data you want to relate to each other. The 'Pearson's correlation' is by far the most frequently used correlation technique for normally distributed data. On the other hand, if data is not normally distributed, we can opt for the 'Spearman's rank' correlation. One could argue that the relationship between these two correlations is like the mean (Pearson) to the median (Spearman). Both approaches require numeric values to be computed correctly. If our data is ordinal, or worse dichotomous (like a logical variable), we have to choose different options.
 
 +-----------------+-------------------------------------------------------------------------+
 | Correlation     | Used                                                                    |
@@ -26,15 +26,11 @@ There are many different ways of how one can compute the correlation and it part
 
 : (\#tab:different-correlations) Different ways of computing correlations
 
-There are many more variations of correlations, which you can explore on the [website of the package](https://easystats.github.io/correlation/articles/types.html "website of the package"){target="blank"} we will use in this chapter: `correlation`. We will primarily focus on Pearson, Spearman and the Chi-Squared test, because they are the most commonly used correlation types in academic publications to understand the relationship between two variables. In addition, we also look at 'partial correlations', which allow us to introduce a third variable into this mix.
-
-## Parametric or non-parametric: That is the question {#parametric-or-non-parametric}
-
-`TODO: ADD SECTION`
+There are many more variations of correlations, which you can explore on the [package's website](https://easystats.github.io/correlation/articles/types.html "website of the package"){target="blank"} we will use in this chapter: `correlation`. However, we will primarily focus on Pearson, Spearman and the Chi-Squared test because they are the most commonly used correlation types in academic publications to understand the relationship between two variables. In addition, we also look at 'partial correlations', which allow us to introduce a third variable into this mix.
 
 ## Plotting correlations {#plotting-correlations}
 
-Since correlations only show the relationship between two variables, we can easily put one variable onto the x axis and one variable onto the y axis creating a so-called 'scatterplot'. We used the functions to create scatterplots before, i.e. `geom_point()` and `geom_jitter`. Let's try to answer our first research question, i.e. whether regular movie viewers and critics (people who review movies as a profession) rate the top 250 in the same way. One assumption could be that it does not matter whether you are a regular movie viewer or someone who does it professionally. After all, we are just human beings. A counter thesis could be that critics have a different perspective on movies and might use different evaluation criteria. Either way, we first need to identify the two variables of interest:
+Since correlations only show the relationship between two variables, we can easily put one variable on the x-axis and one on the y-axis, creating a so-called 'scatterplot'. We used the functions to plot scatterplots before, i.e. `geom_point()` and `geom_jitter`. Let's try to answer our first research question, i.e. whether regular movie viewers and critics (people who review movies as a profession) rate the top 250 in the same way. One assumption could be that it does not matter whether you are a regular movie viewer or someone who does it professionally. After all, we are just human beings. A counter thesis could be that critics have a different perspective on movies and might use other evaluation criteria. Either way, we first need to identify the two variables of interest:
 
 -   `imdb_rating` is based on IMDb users
 
@@ -48,7 +44,7 @@ imdb_top_250 %>%
   see::theme_modern()
 ```
 
-The results from our scatterplot are, well, somewhat random. We can see that some movies receive high `imdb_rating`s as well as high `metascore`s. However, there are also some movies that receive high `imdb_rating`s, but low `metascore`s. Overall, the points look like they are randomly scattered all over our canvas. The only visible pattern we can notice is that there are more movies at the lower end of the rating system relative to all the movies in the top 250. In fact, ther are only 2 movies which actually received an IMDb rating of over 9. Be aware, `geom_jitter()` makes it look like there were more than 9!).
+The results from our scatterplot are, well, somewhat random. We can see that some movies receive high `imdb_rating`s as well as high `metascore`s. However, some movies receive high `imdb_rating`s but low `metascore`s. Overall, the points look like they are randomly scattered all over our canvas. The only visible pattern we can notice is that there are more movies at the lower end of the rating system relative to all the films in the top 250. In fact, there are only two movies that received an IMDb rating of over 9. Be aware, `geom_jitter()` makes it look like there were more than 9!).
 
 Since correlations only explain linear relationships, a perfect correlation would be represented by a straight line. Consider the following examples of correlations:
 
@@ -149,15 +145,15 @@ p6 <- data %>% ggplot(aes(x, y)) + geom_point()  + ggtitle("r = 1") +
 p6 + p1 + p2 + p4 + p3 + p5
 ```
 
-A correlation can be either positive or negative and its score (i.e. `r` in case of Pearson) can range from -1 to 1:
+A correlation can be either positive or negative, and its value (i.e. `r` in case of the Pearson correlation) can range from `-1` to `1`:
 
--   -1 defines a perfectly negative correlation,
+-   `-1` defines a perfectly negative correlation,
 
--   0 defines no correlation (completely random), and
+-   `0` defines no correlation (completely random), and
 
--   1 defines a perfectly positive correlation.
+-   `1` defines a perfectly positive correlation.
 
-In other words, the further the score is away from zero, the stronger is the relationship between variables. We also have benchmarks which we can use to asses the strength of a relationship, for example the one by @cohen1988statistical. The strength of the relationship is also called 'effect size'. Table \@ref(tab:effect-size-cohen) shows the relevant benchmarks. Note that effect sizes are always provided as absolute figures. Therefore, -0.4 would also count as a moderate relationship.
+In other words, the further the score is away from zero, the stronger is the relationship between variables. We also have benchmarks that we can use to assess the strength of a relationship, for example, the one by @cohen1988statistical. The strength of the relationship is also called 'effect size'. Table \@ref(tab:effect-size-cohen) shows the relevant benchmarks. Note that effect sizes are always provided as absolute figures. Therefore, -0.4 would also count as a moderate relationship.
 
 | effect size         | interpretation |
 |---------------------|----------------|
@@ -168,19 +164,27 @@ In other words, the further the score is away from zero, the stronger is the rel
 
 : (\#tab:effect-size-cohen) Assessing effect size of relationships according to Cohen (1988)
 
-If we compare the plot from our data with the sample plots, we would come to the conclusion that the relationship is weak, and therefore the `r` must be close to zero as well. We can test this with the Pearson correlation.
+## Computing correlations
+
+If we compare the plot from our data with the sample plots, we will conclude that the relationship is weak, and therefore the `r` must be close to zero. We can test this with the Pearson correlation using the function `correlation()` from the `correlation` package. By default, it will perform a Pearson correlation, which is only applicable for parametric data. If our data violates the assumptions for parametric tests, we can use Spearman's correlation methods instead. For the rest of the chapter, we assume that our data is parametric.
 
 ```{r Pearson correlation for ratings, echo=TRUE}
 library(correlation)
 
+# Pearson correlation
 imdb_top_250 %>% 
   select(imdb_rating, metascore) %>% 
   correlation()
+
+# Spearman correlation
+imdb_top_250 %>% 
+  select(imdb_rating, metascore) %>% 
+  correlation(method = "spearman")
 ```
 
-Indeed, our analysis reveals that the effect size is very small (r = 0.08 \< 0.1). Therefore, critics appear to rate movies differently than regular movie viewers. This triggers an interesting follow-up question: Which movie is the most controversial, i.e. where is the difference between `imdb_rating` and `metascore` the highest?
+Indeed, our analysis reveals that the effect size is very small (r = 0.08 \< 0.1). Therefore, critics appear to rate movies differently than regular movie viewers, irrespective of which method we use. This mistmatch of ratings triggers an interesting follow-up question: Which movie is the most controversial, i.e. where is the difference between `imdb_rating` and `metascore` the highest?
 
-We can answer this question with the tools we already know. We create a new variable to subtract the `metascore` from the `imdb_rating` and plot it. We have to make sure both scales are the same length. The variable `imdb_rating` ranges from 0-10, but the `metascore` ranges from 0-100. As such, I used the percentile score instead by dividing the scores by 10 and 100 respectively. Since plotting 250 movies would have been too much and would also not help us find the answer to our question, I chose arbitrary values to pick only those movies with the highest differences in scores. Feel free to adjust the filter to your liking to see more or less movies.
+We can answer this question with the tools we already know. We create a new variable to subtract the `metascore` from the `imdb_rating` and plot it. We have to make sure both scales are the same length. The variable `imdb_rating` ranges from 0-10, but the `metascore` ranges from 0-100. I used the percentile score instead by dividing the scores by 10 and 100, respectively. Since plotting 250 movies would have been too much and would also not help us find the answer to our question, I chose arbitrary values to pick only those movies with the highest differences in scores. Feel free to adjust the filter to your liking to see more or fewer movies.
 
 ```{r Biggest discrepancy in movie ratings, echo=TRUE}
 plot <- imdb_top_250 %>%
@@ -203,16 +207,11 @@ plot %>%
   
   # Cleaning up the plot to make it look more readable and colourful
   scale_fill_manual(values = c("#FFCE7D", "#7DC0FF")) +
-  theme(axis.title = element_blank(),
-        plot.background = element_blank(),
-        panel.background = element_blank(),
-        axis.text = element_blank(),
-        axis.ticks = element_blank(),
-        legend.title = element_blank()
-        )
+  theme_void() +
+  theme(legend.title = element_blank())
 ```
 
-Another question we posed at the beginning was: Do popular movies receive more votes from users than less popular movies? Our intuition might say 'yes'. More popular movies are likely seen by more people, which makes them more popular. Consequently, the more people have seen a movie, the more likely they might vote for this movie. For less popular movies, the opposite should be true. Let's create another scatterplot to find out.
+Another question we posed at the beginning was: Do higher-ranked movies receive more votes from users than lower-ranked ones? Our intuition might say 'yes'. If movies are ranked higher, they are likely seen by more people, which makes them more popular. Consequently, the more people have seen a movie, the more likely they might vote for this movie. For lower ranked movies, the opposite should be true. Let's create another scatterplot to find out.
 
 ```{r Ratings vs votes, echo=TRUE}
 imdb_top_250 %>%
@@ -221,9 +220,9 @@ imdb_top_250 %>%
   scale_y_continuous(labels = scales::label_number(big.mark = ","))
 ```
 
-The last line of code helps to make the labels on the y axis more readable. The numbers are in the millions and it helps to have the indicators present using `label_number()` from the `scales` package.
+The last line of code helps to make the labels on the y axis more readable. The numbers are in the millions, and it helps to have the indicators present using `label_number()` from the `scales` package.
 
-The scatterplot shows a somewhat positive trend. Often, it can be tough to see the trend clearly. In order to improve our plot we can make use of the function `geom_smooth()`, which can help us draw a straight line that fits our data points the best. We need to set the `method` for drawing the line to `lm`, which stands for linear model. Remember, correlations assume a linear relationship between two variables.
+The scatterplot shows a somewhat positive trend. Often, it can be tough to see the trend. To improve our plot, we can use the function `geom_smooth()`, which can help us draw a straight line that best fits our data points. We need to set the `method` for drawing the line to `lm`, which stands for 'linear model'. Remember, correlations assume a linear relationship between two variables.
 
 ```{r Ratings vs votes plus regression line, echo=TRUE}
 imdb_top_250 %>%
@@ -235,7 +234,7 @@ imdb_top_250 %>%
               colour = "red")
 ```
 
-Another problem we face with this plot (and correlations) are extreme values, i.e. outliers. We already know that outliers tend to cause trouble for our analysis (see Chapter \@ref(dealing-with-outliers) and in correlations they can affect the strength of relationships. If we compute the the Pearson correlation with and without some of the outliers, the differences are very significant. Be aware, since we work with two variables at the same time, we should consider outliers on both. There our `filter()` will have to include two conditions.
+Another problem we face with this plot (and correlations) are extreme values, i.e. outliers. We already know that outliers tend to cause trouble for our analysis (see Chapter \@ref(dealing-with-outliers), and in correlations, they can affect the strength of relationships. However, the differences are very significant if we compute the Pearson correlation with and without some outliers. Be aware that since we work with two variables simultaneously, we should consider outliers on both. The function `filter()` will have to include two conditions.
 
 ```{r Outliers in regressions, echo=TRUE}
 # The correlation with outliers
@@ -271,23 +270,23 @@ In conclusion, while there is some relationship between the rating and the numbe
 
 ## Significance: A way to help you judge your findings {#significance}
 
-One of the most common pitfalls of novice statisticians is related to the interpretation of what counts as significant and not significant. Most basic tests offer a 'p value', which stands for 'probability value'. The `p` value can range from 1 (for 100%) to 0 (for 0%) and implies:
+One of the most common pitfalls of novice statisticians is the interpretation of what counts as significant and not significant. Most basic tests offer a 'p value', which stands for 'probability value'. The `p`-value can range from 1 (for 100%) to 0 (for 0%) and implies:
 
 -   $p = 1$, there is a 100% chance that the result is a pure coincidence
 
--   $p = 0$, there is a 0% chance that the results is a pure coincidence, i.e. we can be certain this is not just luck.
+-   $p = 0$, there is a 0% chance that the result is a pure coincidence, i.e. we can be certain this is not just luck.
 
-Technically, we would not find that `p` is ever truly zero, and instead denote very small `p` values with `p < 0.01` or even `p< 0.001`.
+Technically, we would not find that `p` is ever truly zero and instead denote very small `p`-values with `p < 0.01` or even `p < 0.001`.
 
-There are also commonly considered thresholds for the `p` value:
+There are also commonly considered thresholds for the `p`-value:
 
--   $p > 0.05$, the result is not significant. There is chance of 5% that our finding is a pure coincidence.
+-   $p > 0.05$, the result is not significant. There is a chance of 5% that our finding is a pure coincidence.
 
 -   p $\leq 0.05$ , the result is significant.
 
 -   p $\leq 0.01$, the result is highly significant.
 
-We will cover more about the `p` value in Chapter \@ref(comparing-groups) and Chapter \@ref(regression). For now, it is important to know that a significant correlation is one that we should look at more closely. Usually, correlations that nor significant suffer from low effect sizes. However, different samples can lead to different effect sizes and different significant levels. Consider the following examples:
+We will cover more about the `p`-value in Chapter \@ref(comparing-groups) and Chapter \@ref(regression). For now, it is important to know that a significant correlation is one that we should look at more closely. Usually, correlations that nor significant suffer from small effect sizes. However, different samples can lead to different effect sizes and different significant levels. Consider the following examples:
 
 ```{r Significance for different sample sizes, echo=FALSE}
 
@@ -321,17 +320,17 @@ df_02 %>% correlation()
 
 ```
 
-In both examples $r = 0.77$, but the sample sizes are different (4 vs 12) and the `p` values differ as well. In the first example $p = 0.225$, which means the relationship is not significant, while in the second example, we find that $p < 0.01$ and is therefore highly significant. As a general rule, we find that the bigger the sample, the more likely we find significant results, even though the effect size is small. Therefore, it is important to interpret correlations base on at least three factors:
+In both examples $r = 0.77$, but the sample sizes are different (4 vs 12), and the `p`-values differ. In the first example, $p = 0.225$, which means the relationship is not significant, while in the second example, we find that $p < 0.01$ and is therefore highly significant. As a general rule, the bigger the sample, the more likely we find significant results, even though the effect size is small. Therefore, it is crucial to interpret correlations base on at least three factors:
 
--   the `p` value, i.e. significance level
+-   the `p`-value, i.e. significance level,
 
--   the `r` value, i.e. the effect size, and
+-   the `r`-value, i.e. the effect size, and
 
 -   the sample size.
 
-The interplay of all three can help determine whether a relationship is truly important. Therefore, when we include correlation tables in publications, we have to make sure we provide information about all three.
+The interplay of all three can help determine whether a relationship is important. Therefore, when we include correlation tables in publications, we have to provide information about all three indicators.
 
-It is common that we do not only compute correlations for two variables at a time, instead, we can do this for multiple variables simultaneously.
+It is common that we do not only compute correlations for two variables at a time. Instead, we can do this for multiple variables simultaneously.
 
 ```{r Correlation table format list, echo=TRUE}
 imdb_top_250 %>% 
@@ -339,7 +338,7 @@ imdb_top_250 %>%
   correlation()
 ```
 
-If you have seen correlation tables before, you might find that `correlation()` does not produce the classic table by default. If you want it to look like the tables in publications, which are more compact but offers less information, you can use the function `summary()`.
+If you have seen correlation tables before, you might find that `correlation()` does not produce the classic table by default. If you want it to look like the tables in publications, which are more compact but offer less information, you can use the function `summary()`.
 
 ```{r Correlation table format table, echo=TRUE}
 imdb_top_250 %>% 
@@ -348,7 +347,7 @@ imdb_top_250 %>%
   summary()
 ```
 
-This table also provides an answer to our final question, i.e. do movies with more votes earn more money. It appears as if this is true, because $r = 0.56$ and $p < 0.001$. In the classic correlation table you also see `*`. These stand for the difference significant levels:
+This table answers our final question, i.e. do movies with more votes earn more money. It appears as if this is true, because $r = 0.56$ and $p < 0.001$. In the classic correlation table, you often see `*`. These stand for the different significant levels:
 
 -   `*`, i.e. $p < 0.05$
 
@@ -356,11 +355,11 @@ This table also provides an answer to our final question, i.e. do movies with mo
 
 -   `***`, i.e. $p < 0.001$ (although you might find some do not use this as a separate level)
 
-In short, the more `*` there are attached to each value, the more significant a result. In other words, relationships with many `*` likely repeat if we collect data again.
+In short, the more `*` there are attached to each value, the more significant a result. Therefore, we likely find the same relationships in newly collected data if there are many `*`.
 
 ## Limitations of correlations {#limitations-of-correlations}
 
-Correlations are useful, but only to some extend. The three most common limitations you should be aware of are:
+Correlations are helpful, but only to some extend. The three most common limitations you should be aware of are:
 
 -   Correlations are not causal relationships
 
@@ -370,11 +369,11 @@ Correlations are useful, but only to some extend. The three most common limitati
 
 ### Correlations are not causal relationships {#correlations-are-not-causal-relationships}
 
-Correlations do not offer insights into causality, i.e. whether change in one variable causes change in the other variable. Correlations only provide insights into whether these two variables tend to change when one of them changes. Still, sometimes we can infer such causality by the nature of the variables. For example, in countries with heavy rain, more umbrellas are sold. It is apparent that buying more umbrellas will not cause more rain, but if there is more rain in a country, we rightly assume that there is a higher demand for umbrellas. If we can theorise the relationship between variables we would rather opt for a regression model instead of a correlation (see Chapter \@ref(regression).
+Correlations do not offer insights into causality, i.e. whether a change in one variable causes change in the other variable. Correlations only provide insights into whether these two variables tend to change when one of them changes. Still, sometimes we can infer such causality by the nature of the variables. For example, in countries with heavy rain, more umbrellas are sold. Buying more umbrellas will not cause more rain, but if there is more rain in a country, we rightly assume a higher demand for umbrellas. If we can theorise the relationship between variables, we would rather opt for a regression model instead of a correlation (see Chapter \@ref(regression).
 
 ### Correlations can be spurious {#correlations-can-be-spurious}
 
-Just because we find a relationship between two variables does not necessarily mean that are truly related to each other. Instead, it might be possible that a third variable is the reason for the relationship. We call relationships between variables that are cause by a third variable 'spurious correlations'. This third variable can either be part of our dataset or even something we have not measured at all. The latter case would make it impossible to investigate the relationship further. However, we can always test whether some of our variables affect the relationship between the two variables of interest. This can be done by using partial correlations. A partial correlation returns the relationship between two variables minus the relationship two a third variable. Figure \@ref(fig:illustration-spurious-correlation) depicts this visually. While `a` and `b` appear to be correlated with each other, the correlation might only exist because of their correlation with `x`.
+Just because we find a relationship between two variables does not necessarily mean that they are truly related. Instead, it might be possible that a third variable is the reason for the relationship. We call relationships between variables that are caused by a third variable 'spurious correlations'. This third variable can either be part of our dataset or even something we have not measured at all. The latter case would make it impossible to investigate the relationship further. However, we can always test whether some of our variables affect the relationship between the two variables of interest. This can be done by using partial correlations. A partial correlation returns the relationship between two variables minus the relationship two a third variable. Figure \@ref(fig:illustration-spurious-correlation) depicts this visually. While `a` and `b` appear to be correlated, the correlation might only exist because they correlate with `x`.
 
 ```{r Illustration of spurious correlations, fig.cap="Illustration of a spurious correlation", label="illustration-spurious-correlation", echo=FALSE}
 library(DiagrammeR)
@@ -402,29 +401,29 @@ grViz("
       ")
 ```
 
-Let's consider a practical example. We found that `votes` and `gross_in_m` are positively correlated with each other. However, could it be possible that these are affected by the year in which the movies was published. We could assume that movies that appeared later received more votes, because it has become more of a cultural phenomenon to vote about almost everything online[^correlations-1].
+Let's consider a practical example. We found that `votes` and `gross_in_m` are positively correlated with each other. However, could it be possible that this relationship is affected by the year in which the movies were published? We could assume that later movies received more votes because it has become more of a cultural phenomenon to vote about almost everything online[^correlations-1].
 
 [^correlations-1]: If you want to know what people vote on these days, have a look at [www.ranker.com](https://www.ranker.com)
 
 ```{r Partial correlation example, echo=TRUE}
-# Correlation between variables without considering partial correlations
+# Correlation between variables
 imdb_top_250 %>% 
   select(votes, gross_in_m, year) %>% 
   correlation()
 
-# Correlation between variables with consideration of partial correlations
+# Correlation between variables, considering partial correlations
 imdb_top_250 %>% 
   select(votes, gross_in_m, year) %>% 
   correlation(partial = TRUE)
 ```
 
-The first table reveals that there is a strong relationship between the variables of interest, i.e. between `votes` and `gross_in_m` with an effect size of $r = 0.56$. There is also a significant relationship between `votes` and `year`, $r = 0.37$ and between `gross_in_m` and `year`, $r = 0.36$. Thus, we should control for `year` to see how it might affect the relationship between `votes` and `gross_in_m`. The second table, suggests that `year` does not much affect the relationship between `votes` and `gross_in_m`. However, we do notice that the relationship between `gross_in_m` and `year` substantially goes down to $r = 0.16$. It appears, as if the `year` has not managed to impact the relationship between `votes` and `gross_in_m` all that much. Therefore, we can be more confident that this relationship is likely not spurious. However, we can never be fully sure, because we might not have all data that could explain this correlation.
+The first table reveals a strong relationship between the variables of interest, i.e. between `votes` and `gross_in_m` with an effect size of $r = 0.56$. There is also a significant relationship between `votes` and `year`, $r = 0.37$ and between `gross_in_m` and `year`, $r = 0.36$. Thus, we should control for `year` to see how it might affect the relationship between `votes` and `gross_in_m`. The second table suggests that `year` does not much affect the relationship between `votes` and `gross_in_m`. However, we notice that the relationship between `gross_in_m` and `year` substantially goes down to $r = 0.16$. It appears as if the `year` has not managed to impact the relationship between `votes` and `gross_in_m` all that much. Therefore, we can be more confident that this relationship is likely not spurious. However, we can never be fully sure because we might not have all data that could explain this correlation.
 
 ### Simpson's Paradox: When correlations betray you {#simpsons-paradox}
 
-The final limitation is so important that it even has its own name: the 'Simpson's Paradox'. Let's find out what is so paradox about some correlations. For this demonstration we have to make use of a different dataset: `simpson` of the `r4np` package. It contains information about changes in student `performance` and changes in `happiness`. The dataset includes responses from three different groups: `Teachers`, `Students` and `Parents`.
+The final limitation is so important that it even has its own name: the 'Simpson's Paradox'. Let's find out what is so paradoxical about some correlations. For this demonstration, we have to make use of a different dataset: `simpson` of the `r4np` package. It contains information about changes in student `performance` and changes in `happiness`. The dataset includes responses from three different groups: `Teachers`, `Students` and `Parents`.
 
-We would assume that an increased in students' `performance` will likely increase the `happiness` of participants. After all, all three have stakes in students's `performance`.
+We would assume that an increase in students' `performance` will likely increase the `happiness` of participants. After all, all three have stakes in students' `performance`.
 
 ```{r Simpson paradox plot and correlation all 1, echo=TRUE}
 simpson %>% 
@@ -440,9 +439,11 @@ simpson %>%
   correlation()
 ```
 
-It appears we were terrible wrong. It seems as if `performance` and `happiness` are moderately negatively correlated with each other. Thus, the more a student improves their performance, the less happy teachers, parents and even students are. I hope you agree that this is quite counter-intuitive. However, what could be the cause for such a finding.
+It appears we were terribly wrong. It seems as if `performance` and `happiness` are moderately negatively correlated with each other. Thus, the more a student improves their performance, the less happy teachers, parents and even students are. I hope you agree that this is quite counter-intuitive. However, what could be the cause for such a finding.
 
-The Simpson's paradox explains the phenomenon were correlation might not exist, or even is reversed when considering an entire sample. However, when inspecting sub-samples, different correlations are found. So, what happens if we look at the correlations for each group separately?
+It appears we were terribly wrong. It seems as if performance and happiness are moderately negatively correlated with each other. Thus, the more a student improves their performance, the less happy teachers, parents, and students are. I hope you agree that this is quite counter-intuitive. However, what could be the cause for such a finding?
+
+If you have the instincts of a [true detective](https://www.imdb.com/title/tt2356777/episodes?season=1 "True Detective"){traget="blank"}, you would think that maybe we should look at each group of participants separately. So, let's plot the same scatterplot again but colour the responses of each participant `group` differently and also compute the correlation for each subset of our data.
 
 ```{r Simpson paradox plot and correlation all 2, echo=TRUE}
 simpson %>% 
@@ -458,12 +459,11 @@ simpson %>%
 
 simpson %>% 
   group_by(group) %>% 
-  select(performance, happiness) %>% 
   correlation()
 ```
 
-The results have magically been inverted. Instead of a negative correlation we now find a strong positive correlation for among all groups. This seems to make much sense.
+The results have magically been inverted. Instead of a negative correlation, we now find a strong positive correlation among all groups. This result seems to make much more sense.
 
-When compute correlations we need to be aware that subsets of our data might show different directions of correlations, or where we found now correlation, there might suddenly be one.
+When computing correlations, we need to be aware that subsets of our data might show different directions of correlations. Sometimes insignificant correlations might suddenly become significant.
 
-If your study relies on correlations only to detect relationships between variables, which it hopefully does not, it is important to investigate whether the detected or undetected correlations exist. Of course, such an investigation can only be based on data you obtain. The rest remains pure speculation. Nevertheless, as descriptive statistics correlations are very helpful to review the bilateral relationship of your variables. It is often used as a pre-test for regressions (see Chapter \@ref(regression)) and similarly more advanced computations. As a technique to make inferences, the correlation is a good starting point, but should be complemented by other steps, if possible.
+If your study relies on correlations only to detect relationships between variables, which it hopefully does not, it is essential to investigate whether the detected or undetected correlations exist. Of course, such an investigation can only be based on the data you obtained. The rest remains pure speculation. Nevertheless, correlations are beneficial to review the bilateral relationship of your variables. It is often used as a pre-test for regressions (see Chapter \@ref(regression)) and similarly more advanced computations. As a technique to make inferences, the correlation is a good starting point but should be complemented by other steps, if possible.
