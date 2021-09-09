@@ -1,12 +1,65 @@
 # Power: You either have it or you don't {#power-analysis}
 
-By far the most frequently asked question by my students is: How much data do I have to collect? My answer is always the same: It depends. From a student's perspective, surely this must be one of the most annoying answers. However, there is a way to determine how large your sample has to be to reliably detect specific relationships. This procedure is called power analysis.
+By far the most frequently asked question by my students is: How much data do I have to collect? My answer is always the same: It depends. From a student's perspective this must be one of the most annoying answers. Usually, I follow this sentence up with something more helpful to guide students on their way. For example, there is a way to determine how large your sample has to be to reliably detect specific relationships. This procedure is called power analysis.
 
-While power analysis can be performed before and after data collection, it might seem rather pointless to do it afterwards when collecting (potentially) more data is not only difficult but sometimes impossible. Thus, my explaantions in this chapter will largely focus on the question: How much data is enough data to reliably detect relationships between variables.
+While power analysis can be performed before and after data collection, it seems rather pointless to do it afterwards when collecting more data is not only difficult but sometimes impossible. Thus, my explanations in this chapter will largely focus on the question: How much data is enough data to reliably detect relationships between variables.
 
-Power analysis is something that applies to all kinds of tests, such as corrrelations (Chapter \@ref(correlations), group comparisons (Chapter \@ref(comparing-groups)) and regressions (Chapter \@ref(regression). Thus, it is important to know about it. There is nothing more worse than presenting a model or results that are utterly 'underpowered', i.e. the sample is not large enough to reliably detect a desired relationship of variables.
+Power analysis is something that applies to all kinds of tests, such as correlations (Chapter \@ref(correlations), group comparisons (Chapter \@ref(comparing-groups)) and regressions (Chapter \@ref(regression). Thus, it is important to know about it. There is nothing more worse than presenting a model or result that is utterly 'underpowered', i.e. the sample is not large enough to reliably detect a desired relationship between variables. And in anticipation of your question whether your analysis can be 'overpowered', the answer is 'yes'. Usually, there are no particular statistical concerns of having an overpowered analysis - more power to you (\#pun-intended). However, if we think of time as a scarce resource, we should not collect more data than we need. Participant's time is valuable and being economic with data collection is not only desirable to bother less people with your research, but also to avoid survey fatigue, which makes it more difficult for others to carry out their own research. Thus, being mindful of the required sample size is always important.
 
--   ingredients used to compute power
+## Ingredients to achieve the power you deserve
+
+We already know that sample size matters, for example to assume normality when there is non in your sample (see Central Limit Theorem in Chapter \@ref(normality)). However, it also matters to ensure we do not mistakenly assume that a relationship exists where there is none and vice versa. What I am referring to are Type I and Type II errors.
+
++-----------+----------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Error     | Meaning                                                                                                                                                  |
++===========+==========================================================================================================================================================+
+| *Type I*  | -   We assume a relationship exists between variables where there is none in the population.                                                             |
+|           |                                                                                                                                                          |
+|           | -   We also refer to this as 'false positives'.                                                                                                          |
+|           |                                                                                                                                                          |
+|           | -   While we find a significant relationship between variables in our sample, a much larger sample would not find such a relationship.                   |
+|           |                                                                                                                                                          |
+|           | -   Is represented by the Greek letter $\alpha$ (alpha).                                                                                                 |
++-----------+----------------------------------------------------------------------------------------------------------------------------------------------------------+
+| *Type II* | -   We assume that there is no relationship between variables even though there is one in the population.                                                |
+|           |                                                                                                                                                          |
+|           | -   We also refer to this as 'false negatives'.                                                                                                          |
+|           |                                                                                                                                                          |
+|           | -   While our sample does not reveal a significant relationship between variables, a much larger sample would show that the relationship is significant. |
+|           |                                                                                                                                                          |
+|           | -   Is represented by the Greek letter $\beta$ (beta).                                                                                                   |
++-----------+----------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+: (\#tab:type-one-and-type-two-error)Type I and Type II error defined
+
+The goal of power analysis is to help us avoid type II errors and is defined as the opposite of it, i.e. \$1 - \beta\$, i.e. a 'true positive'.
+
+To perform such a power analysis we need at least three of the following four ingredients:
+
+-   the power level we want to achieve, i.e. the probability that we find a 'true positive',
+
+-   the expected effect size ($r$) we hope to find,
+
+-   the significance level we set for our test, i.e. how strict we are about deciding when a relationship is significant,
+
+-   the sample size.
+
+As I mentioned earlier, it makes more sense to use a power analysis to determine the sample size. However, in the unfortunate event that you forgot to do so, at least you can find out whether your results are underpowered. If they are underpowered, you are in serious trouble and in dire need of more participants.
+
+So, how exactly can we compute the right sample size and how do we find all the numbers for these ingredients without empirical data at our disposal? First, we need a function which can compute it for us, because computing it manually is insanity. The package `pwr` was developed to do exactly that for different kinds of statistical tests, i.e. we need different functions for different tests, but the ingredients remain the same.
+
+```{r Power calculation for correlations r, echo=TRUE}
+
+pwr::pwr.r.test(r = 0.4,
+                sig.level = 0.05,
+                power = 0.8)
+
+pwr::pwr.r.test(r = 0.3,
+                sig.level = 0.05,
+                power = 0.8)
+```
+
+can determine the required power level. Luckily, @cohen1988statistical recommends a failure rate fof 20% to not detect a significant relationship, i.e. the acceptable level for Type II errors. Since the power level
 
 -   plotting power levels
 
