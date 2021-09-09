@@ -6,48 +6,27 @@ library(r4np)
 library(patchwork)
 ```
 
-'Bias' in your analysis is hardly ever a good thing, unless you are qualitative researcher. No matter whether you consider it as something positive or negative, we certainly have to be aware of issues that could hinder us of performing a certain type of analysis. All of the statistical computations that we discuss in the following chapters can easily be affected by different sources of bias. The lack of certain biases can be even an assumption of particular statistical tests. Thus, violating these assumptions would imply that the analytical technique we use will produce wrong results, i.e. biased results. @field2013discovering summarises three main assumptions we have to consider:
+'Bias' in your analysis is hardly ever a good thing unless you are a qualitative researcher. Whether you consider it positive or negative, we have to be aware of issues preventing us from performing a specific type of analysis. All of the statistical computations discussed in the following chapters can easily be affected by different sources of bias. The lack of certain biases can be even an assumption of particular statistical tests. Thus, violating these assumptions would imply that the analytical technique we use will produce wrong results, i.e. biased results. @field2013discovering summarises three main assumptions we have to consider:
 
 -   Linearity and additivity,
 
 -   Independence,
 
--   Normality
+-   Normality, and
 
--   Homogeneity of variance, i.e. homoscedasticity,
+-   Homogeneity of variance, i.e. homoscedasticity.
 
-Most parametric tests require that all assumptions are met. If this is not the case we have to use alternative approaches, i.e. non-parametric tests. The distinction is of importance, since parametric and non-parametric tests are based on different computational methods and can lead to vastly different results.
+Most parametric tests require that all assumptions are met. If this is not the case, we have to use alternative approaches, i.e. non-parametric tests. The distinction is essential since parametric and non-parametric tests are based on different computational methods, leading to vastly different results.
 
-Lastly, @field2013discovering also mentions outliers as an important source of bias. Irrespective of whether your data fulfils the assumptions for parametric tests, outliers tend to be a major problem. They usually lead to misinterpretations of our findings. We will also cover how we can identify and handle such outliers in our data at the end of this chapter.
+Lastly, @field2013discovering also mentions outliers as an important source of bias. Irrespective of whether your data fulfils the assumptions for parametric tests, outliers tend to be a significant problem. They usually lead to wrong results and, consequently, to misinterpretations of our findings. We will also cover how we can identify and handle such outliers in our data at the end of this chapter.
 
 ## Linearity and additivity {#additivity-and-linearity}
 
-The assumption of linearity postulates that the relationship of variables represents a straight line and not a curve or any other shape. Figure \@ref(fig:linear-nonlinear-relationship) depicts examples of how two variables could be related to each other. Only the first one demonstrates a linear relationship and all other plots would represent a violation for parametric tests.
+The assumption of linearity postulates that the relationship of variables represents a straight line and not a curve or any other shape. Figure \@ref(fig:linear-nonlinear-relationship) depicts examples of how two variables could be related to each other. Only the first one demonstrates a linear relationship, and all other plots would represent a violation for parametric tests.
 
 ```{r Linearity visualised, fig.cap="Examples of linear and non-linear relationship of two variables", label = "linear-nonlinear-relationships", echo=FALSE}
-data <- tribble(
-  ~x,
-   1,
-   2,
-   3,
-   4, 
-   5,
-   6,
-   7,
-   8,
-   9,
-  10,
-  -1,
-  -2,
-  -3,
-  -4,
-  -5,
-  -6,
-  -7,
-  -8,
-  -9,
-  -10
-)
+data <- tibble(x = seq(from = -10,
+                       to = 10))
 
 p1 <- data %>% 
   ggplot(aes(x = x, y = x)) +
@@ -105,7 +84,7 @@ p4 <- data %>%
 p1 + p2 + p3 + p4
 ```
 
-Data visualisations are particularly useful to identify whether variables are related to each other in a linear fashion. The examples above were all created with `geom_point()`, which creates a dot plot that maps the relationship between two variables. In the Chapter \@ref(correlations) we will look more closely at the relationship of two variables in the form of correlations, which measure the strength of a linear relationship between variables.
+Data visualisations are particularly useful to identify whether variables are related to each other in a linear fashion. The examples above were all created with `geom_point()`, which creates a dot plot that maps the relationship between two variables. In Chapter \@ref(correlations), we will look more closely at the relationship of two variables in the form of correlations, which measure the strength of a linear relationship between variables.
 
 Additivity is given when the effects of all independent variables can be added up to obtain the total effect they have on a dependent variable. In other words, the effect that multiple variables have on another variable can be added up to reflect their total effect.
 
@@ -115,17 +94,17 @@ If we assume that we have a dependent variable $Y$ which is affected by other (i
 $Y = \beta_{1} * X_1 + \beta_{2} * X_{2} + ... + \beta_{n} * X_{n}$
 :::
 
-The $\beta$ stands for the degree of change a variable $X$ causes in $Y$. Or, in simpler terms, $\beta$ reflects the impact a independent variable has on the dependent variable. We will return to this equation in Chapter \@ref(regression), were we try to create a linear model via regression.
+The $\beta$ (beta) stands for the degree of changing a variable $X$ causes in $Y$. Or, in simpler terms, $\beta$ reflects the impact an independent variable has on the dependent variable. We will return to this equation in Chapter \@ref(regression), where we create a linear model via regression.
 
 ## Independence
 
-The notion of independence is an important one. It assumes that the each observation in our dataset is independent from other observations. For example, imagine my wife Fiona and I take part in a survey which asks us to rank movies by how much we like them. Each of us has to complete the ranking by themselves, but since we both sit in the same living room, we start chatting about these movies. By doing so, we influence each others rankings and might even agree on the same ranking. Thus, our scores are not independent from each other. If we were both sitting in our respective offices and rank these movies independently from each other, the rankings could potentially still be very similar to each other, but this time the observations are independent from each other.
+The notion of independence is an important one. It assumes that each observation in our dataset is independent of other observations. For example, imagine my wife Fiona and I take part in a survey that asks us to rank movies by how much we like them. Each of us has to complete the ranking by ourselves, but since we both sit in the same living room, we start chatting about these movies. By doing so, we influence each other's rankings and might even agree on the same ranking. Thus, our scores are not independent of each other. On the other hand, suppose we were both sitting in our respective offices and rank these movies independently from each other. In that case, the rankings could potentially still be very similar, but this time the observations are independent of each other.
 
-There is no statistical measurement or plot that can tell us whether observations are independent or not. Ensuring independence is a matter of data collection and not data analysis. Thus, it depends on how you designed your experiment, when and where you ask participants to complete a survey, etc. Still, this criterion should not be downplayed as being a 'soft' one, just because there is no statistical test, but should remain on your radar throughout the planning and data collection stage of your research.
+There is no statistical measurement or plot that can tell us whether observations are independent or not. Ensuring independence is a matter of data collection and not data analysis. Thus, it depends on how you, for example, designed your experiment, when and where you ask participants to complete a survey, etc. Still, this criterion should not be downplayed as being a 'soft' one, just because there is no statistical test, but should remain on your radar throughout the planning and data collection stage of your research.
 
 ## Normality {#normality}
 
-We already touched upon the notion of 'normality' and 'normal distributions' in Chapter \@ref(spread-of-data), because it refers to the spread of our data. Figure \@ref(fig:normal-distribution2) should look familiar by now.
+We already touched upon the notion of 'normality' and 'normal distributions' in Chapter \@ref(spread-of-data) because it refers to the spread of our data. Figure \@ref(fig:normal-distribution2) should look familiar by now.
 
 ```{r Normal distribution 2, fig.cap="A normal distribution", echo=FALSE, label="normal-distribution2"}
 
@@ -142,7 +121,7 @@ data %>% ggplot(aes(x)) +
   ylab("")
 ```
 
-However, we have yet to understand why it is important that our data follows a normal distribution. Most parametric tests are based on means. For example, if we want to compare two groups with each other, we would compute the mean for each of them and then see whether their means differ from each other in a significant way. Of course, if our data is not very normally distributed, means are a poor reference point for the majority of the observations in this group. We already know that means are heavily affected by outliers, but even without outliers, the mean could be a poor choice.
+However, we have yet to understand why it is essential that our data follows a normal distribution. Most parametric tests are based on means. For example, if we want to compare two groups with each other, we would compute the mean for each of them and then see whether their means differ from each other in a significant way. But, of course, if our data is not very normally distributed, means are a poor reference point for most of the observations in this group. We already know that outliers heavily affect means, but even without outliers, the mean could be a poor choice.
 
 ```{r Comparing two distributions and their means, echo=FALSE}
 data <- tribble(
@@ -260,7 +239,7 @@ p3 <- data3 %>%
 p1 + p2 + p3 + plot_spacer()
 ```
 
-Considering all three plots, we notice that neither the median nor the mean by themselves are a reliable indicator for normality. Fig A and Fig C both show that the median and mean are almost identical, but only Fig A shows a normal distribution. In fact, the median and mean in Fig C are not reflective for the average observation in this dataset. Most scores lie below and above the mean/median. This type of distribution hints at two sub-groups in our dataset, for example male versus female participants. Therefore, when we analyse the normality of our data, we usually are not interested in the normality of a single variable, but the normality of the sampling distribution. However, we cannot directly assess the sampling distribution in most cases. As such, we often revert to testing the normality of our data. There also instances were we would not expect a normal distribution to begin with. Consider the following plots:
+Considering all three plots, we notice that neither the median nor the mean by themselves is a reliable indicator for normality. Fig A and Fig C both show that the median and mean are almost identical, but only Fig A shows a normal distribution. The median and mean in Fig C are not reflective of the average observation in this dataset. Most scores lie below and above the mean/median. Therefore, when we analyse the normality of our data, we usually are not interested in the normality of a single variable but the normality of the sampling distribution. However, we cannot directly assess the sampling distribution in most cases. As such, we often revert to testing the normality of our data. There are also instances where we would not expect a normal distribution to exist. Consider the following plots:
 
 ```{r Normal distribution for two groups, fig.cap="Two normal distributions in one dataset", label = "two-normalities-groups", echo=FALSE}
 data4 <- tribble(
@@ -325,27 +304,25 @@ p2 <- data4 %>%
 p1 / p2
 ```
 
-The first plot clearly shows that data is not normally distributed. If anything, it looks more like the back of a camel. If we identify distributions that look remotely like this, we can assume that there must be another variable that helps explain why there are two peaks in our distribution. The plot below reveals that gender appears to play an important role. Drawing the distribution for each subset of our data reveals that `income` is now normally distributed for each group and that these groups have two different means. Thus, solely focusing on normal distributions for a single variable would not be meaningful if you do not consider the impact of other variables.
+The first plot clearly shows that data is not normally distributed. If anything, it looks more like the back of a camel. If we identify distributions that look remotely like this, we can assume that there must be another variable that helps explain why there are two peaks in our distribution. The plot below reveals that gender appears to play an important role. Drawing the distribution for each subset of our data reveals that `income` is now normally distributed for each group and has two different means. Thus, solely focusing on normal distributions for a single variable would not be meaningful if you do not consider the impact of other variables. If we think that `gender` plays an important role to understand `income` levels, we would have to expect that the distribution is not normal when looking at our data in its entirety.
 
-Determining whether data is normally distributed can be very challenging when only inspecting plots, e.g. historgrams, density plots or QQ plots. Luckily, there is also a statistical method to test whether our data is normally distributed: The Shapiro-Wilk test. This test compares our distribution with a normal distribution (like in our plot) and tells us whether our distribution is **significantly different** from it. Thus, if the test is not significant the distribution of our data is not significantly different from a normal distribution, or in simple terms: It is normally distributed. We can run the test in R as follows for the dataset that underpins Fig A above
+Determining whether data is normally distributed can be challenging when only inspecting plots, e.g. histograms, density plots or QQ plots. Luckily, there is also a statistical method to test whether our data is normally distributed: *The Shapiro-Wilk test*. This test compares our distribution with a normal distribution (like in our plot) and tells us whether our distribution is **significantly different** from it. Thus, if the test is not significant, the distribution of our data is not significantly different from a normal distribution, or in simple terms: It is normally distributed. We can run the test in R as follows for the dataset that underpins Fig A above:
 
 ```{r Shapiro Wilk test, echo=TRUE}
 shapiro.test(data$income)
 ```
 
-According to this result, we can confirm that the data is normally distributed, because it is not significantly different from it ($p > 0.05$). We look at significance and its meaning more thoroughly in the chapter on correlations (Chapter \@ref(correlations)).
+This result confirms that the data is normally distributed, because it is not significantly different ($p > 0.05$). The chapter on correlations looks at significance and its meaning more thoroughly (Chapter \@ref(correlations)).
 
-In conclusion, normality of data is an important pre-test for any of your studies. If we violate the assumption of normality, we will have to fall back to non-parametric tests. However, there is one exception to this rule: The Central Limit Theorem.
+In conclusion, the normality of data is an essential pre-test for any of your studies. If we violate the assumption of normality, we will have to fall back to non-parametric tests. However, this rule has two exceptions: The Central Limit Theorem and using 'robust' measures of parametric tests.The Central Limit Theorem postulates that as our sample becomes larger, our sampling distribution becomes more and more normal around the mean of the underlying population. For example, @field2013discovering (p.54) refers to a sample of 30 as a common rule of thumb. As such, it is possible to assume normality for larger datasets even though our visualisation and Shapiro-Wilk test tell us otherwise.The second exception is that many parametric tests offer a 'robust' alternative, often via bootstrapping. Bootstrapping refers to the process of subsampling your data, for example, 2000 times and look at the average outcome. An example of bootstrapping is shown in Chapter \@ref(bootstrapped-regression).
 
-The Central Limit Theorem postulates that as our sample becomes larger, our sampling distribution becomes more and more normal around the mean of the underlying population. @field2013discovering (p.54) refers to a sample of 30 as a common rule of thumb. As such, it is possible to assume normality for larger datasets even though our visualisation and Shapiro-Wilk test tell us otherwise.
-
-Admittedly, this raises the question: Can I simply ignore normality and move on with my analysis if my sample is large enough? In short: Yes. This probably also explains why we hardly ever find results from normality tests in journal publications since most Social Science research involves more than 30 participants. However, if you find yourself in a situation where the sample size is smaller, all of the above needs to be check and thoroughly considered. The sample size, however, also has implications with regards to the power of your test/findings (for more details see Chapter \@ref()).
+Admittedly, this raises the question: Can I ignore normality and move on with my analysis if my sample is large enough or I use bootstrapping? In short: Yes. This fact probably also explains why we hardly ever find results from normality tests in journal publications since most Social Science research involves more than 30 participants. However, if you find yourself in a situation where the sample size is smaller, all of the above needs to be check and thoroughly considered. However, the sample size also has implications with regards to the power of your test/findings (for more details, see Chapter \@ref(power-analysis)). Ultimately, the answer to the above questions remains, unsatisfyingly, as 'It depends'.
 
 ## Homogeneity of variance (homoscedasticity) {#homogeneity-of-variance}
 
-The term 'variance' should sound familiar, because we mentioned it in Chapter \@ref(standard-deviation) where we looked at the standard deviation, which is derived from the variance.
+The term 'variance' should sound familiar, because we mentioned it in Chapter \@ref(standard-deviation) where we looked at the standard deviation derived from the variance.
 
-Homogeneity of variance implies that the variance of, for example two subsets of data is equal, or close to being equal. Let's take a look how close the observed values are to the mean for the two groups identified in Figure \@ref(fig:two-normalities-groups).
+Homogeneity of variance implies that the variance of, for example, two subsets of data, is equal or close to being equal. Let's look at how close the observed values are to the mean for the two groups identified in Figure \@ref(fig:two-normalities-groups).
 
 ```{r Homogeneity and no homogeneity of variance, echo=TRUE}
 data4 %>% 
@@ -355,7 +332,7 @@ data4 %>%
   geom_hline(yintercept = group_means$mean[2], color = "turquoise")
 ```
 
-Judging by eye, we could argue that the majority of values lies around the mean for each respective group. There are some observations that are a bit further off. Still, using this visualisation, it is tough to truly judge whether the spread is about the same. However, boxplots can help with this, or even better, a boxplot that is reflected by a bar. The package `ggdist` has a nice plotting function called `stat_interval()`, which allows us to show a boxplot in the form of a bar.
+Judging by eye, we could argue that most values lie around the mean for each respective group. However, some observations are a bit further off. Still, using this visualisation, it is tough to judge whether the spread is about the same. However, boxplots can help with this, or even better, a boxplot reflected by a bar. The package `ggdist` has an excellent plotting function called `stat_interval()`, which allows us to show a boxplot in the form of a bar.
 
 ```{r Homogeneity and no homogeneity of variance alternative visualisation, echo=TRUE}
 data4 %>% 
@@ -363,11 +340,11 @@ data4 %>%
   ggdist::stat_interval(aes(y = income),
                         .width = c(0.25, 0.5, 0.75, 1)) +
   
-  # Let's add some nice complementary colours into our chart
+  # Let's add some nice complementary colours
   scale_color_manual(values = c("#4D87B3", "#A1D6FF", "#FFDAA1", "#B3915F"))
 ```
 
-If we compare the bars, we can tell that the variance in both groups looks very similar, i.e. the length of the bars appear to be about the same height. If we compared the IQR for both groups, we also find that they are very close to each other.
+If we compare the bars, we can tell that the variance in both groups looks very similar, i.e. the length of the bars appear to be about the same height. Furthermore, if we compared the IQR for both groups, we find that they are very closer.
 
 ```{r IQR for both groups, echo=TRUE}
 data4 %>% 
@@ -375,27 +352,27 @@ data4 %>%
   summarise(iqr = IQR(income))
 ```
 
-However, to test whether the variance between these two groups is truly similar or different, we have to perform a Levene's test. The Levene's test follows a similar logic as the Shapiro-Wilk test. If the test is significant, i.e. $p < 0.05$, we have to assume that the variances between these groups is significantly different from each other. However, if the test is not significant, then the variances are similar and we can proceed with a parametric test - assuming the other assumptions are not violated.
+However, to test whether the variance between these two groups is truly similar or different, we have to perform a Levene's test. The Levene's test follows a similar logic as the Shapiro-Wilk test. If the test is significant, i.e. $p < 0.05$, we have to assume that the variances between these groups are significantly different from each other. However, if the test is not significant, then the variances are similar, and we can proceed with a parametric test - assuming other assumptions are not violated. The interpretation of this test follows the one for the Shapiro-Wilk test.
 
-```{r Levenes test, echo=TRUE}
+```{r Levenes test, echo=TRUE, warning=FALSE}
 car::leveneTest(gep$age ~ gep$gender)
 ```
 
-The Levene's test shows that our variances are similar and not different from each other, because $p > 0.05$. Good news if we wanted to continue and perform a group comparison, like in Chapter \@ref(comparing-groups).
+The Levene's test shows that our variances are similar and not different from each other because $p > 0.05$. Good news if we wanted to continue and perform a group comparison, like in Chapter \@ref(comparing-groups).
 
 ## Outliers and how to deal with them {#dealing-with-outliers}
 
-In Chapter \@ref(descriptive-statistics), I referred to outliers many times but never eluded to the aspects of handling them. Dealing with outliers is similar to dealing with missing data. It is not quite as straightforward as one might think.
+In Chapter \@ref(descriptive-statistics), I referred to outliers many times but never eluded to the aspects of handling them. Dealing with outliers is similar to dealing with missing data. However, it is not quite as straightforward as one might think.
 
-In a first step, we need to determine which values count as an outlier. @aguinis2013best reviewed 232 journal articles and found that scholars had defined outliers in 14 different ways, used 39 different techniques to detect them and applied 20 different strategies to handle them. It would be impossible to work through all different options in this book. However, I want to offer two options that have been frequently considered in publications in the field of Social Sciences:
+In a first step, we need to determine which values count as an outlier. @aguinis2013best reviewed 232 journal articles and found that scholars had defined outliers in 14 different ways, used 39 different techniques to detect them and applied 20 different strategies to handle them. It would be impossible to work through all these options in this book. However, I want to offer two options that have been frequently considered in publications in the field of Social Sciences:
 
--   The standard deviation, and
+-   The standard deviation (SD), and
 
--   The inter-quartile range.
+-   The inter-quartile range (IQR).
 
 ### Detecting outliers using the standard deviation {#ouliers-standard_deviation}
 
-A very frequently used approach to detecting outliers is the use of the standard deviation. Usually, scholars use multiples of the standard deviation to determine thresholds. For example, a value that lies 3 standard deviations above or below the mean could be categorised as an outlier. Unfortunately, there is quite some variability regarding how many multiples of the standard deviation counts as an outlier. Some authors might use 3, others might settle for 2 (see also @leys2013detecting). Let's stick with the definition of 3 standard deviations to begin with. We can revisit our previous plot and add lines which show the thresholds above and below the mean.
+A very frequently used approach to detecting outliers is the use of the standard deviation. Usually, scholars use multiples of the standard deviation to determine thresholds. For example, a value that lies 3 standard deviations above or below the mean could be categorised as an outlier. Unfortunately, there is quite some variability regarding how many multiples of the standard deviation counts as an outlier. Some authors might use 3, and others might settle for 2 (see also @leys2013detecting). Let's stick with the definition of 3 standard deviations to get us started. We can revisit our previous plot and add lines that show the thresholds above and below the mean.
 
 ```{r Outlier detection usind 3 sd, echo=TRUE}
 # Compute the mean and standard deviation
@@ -420,7 +397,7 @@ imdb_top_250 %>%
   xlab("movies")
 ```
 
-The results suggests that only very few outliers would be detected if we chose these thresholds. Especially 'Sherlock Jr.', the shortest movie in our dataset would not classify as an outlier. How about we choosen two standard deviations instead?
+The results suggest that only very few outliers would be detected if we chose these thresholds. Especially 'Sherlock Jr.', the shortest movie in our dataset, would not classify as an outlier. How about we choose 2 standard deviations instead?
 
 ```{r Outlier detection usind 2 sd, echo=TRUE}
 # Compute the mean and standard deviation
@@ -446,7 +423,7 @@ imdb_top_250 %>%
 
 ```
 
-As we would expect, we identify some more movies as being outliers. Still, it feels rather arbitrary to choose a threshold of our liking. Despite its popularity, there are additional problems with this approach:
+As we would expect, we identify some more movies as being outliers. Still, it feels somewhat arbitrary to choose a threshold of our liking. Despite its popularity, there are additional problems with this approach:
 
 -   outliers affect our mean and standard deviation too,
 
@@ -454,7 +431,7 @@ As we would expect, we identify some more movies as being outliers. Still, it fe
 
 -   in smaller samples, this approach might result in not identifying outliers at all (despite their presence) (@leys2013detecting, p. 764)
 
-@leys2013detecting propose an alternative approach, based on the fact that medians are much less vulnerable to outliers than the mean. Similarly to the standard deviation, it is possible to calculate thresholds using the 'median absolute deviation' (MAD). Best of all, the function `mad()` in R does this automatically for us. @leys2013detecting suggest to use 2.5 times the MAD as a threshold. However, if we want to compare directly how well this option does against the standard deviation, we should `3` again.
+@leys2013detecting propose an alternative approach because medians are much less vulnerable to outliers than the mean. Similarly to the standard deviation, it is possible to calculate thresholds using the 'median absolute deviation' (MAD). Best of all, the function `mad()` in R does this automatically for us. @leys2013detecting suggest to using 2.5 times the MAD as a threshold. However, if we want to compare how well this option performs against the standard deviation, we should use `3` again.
 
 ```{r Outlier detection via median MAD3, echo=TRUE}
 # Compute the median and thresholds
@@ -479,7 +456,7 @@ imdb_top_250 %>%
   xlab("movies")
 ```
 
-Compared to our previous results, we notice that the median approach was much better in detecting outliers at the upper range of `runtim_min`. Because the median is not affected so much by the five hour-long movie, the results have improved. Still, we would not classify the outlier at the bottom for the shortest movie in the data. If we chose the criterion of 2.5\*MAD, we would also get this outlier (see Figure \@ref(fig:MAD2-outlier-detection)).
+Compared to our previous results, we notice that the median approach was much better in detecting outliers at the upper range of `runtim_min`. Because the median is not affected so much by the five-hour-long movie, the results have improved. Still, we would not classify the outlier at the bottom for the shortest film in the data. If we chose the criterion of 2.5\*MAD, we would also get this outlier (see Figure \@ref(fig:MAD2-outlier-detection)).
 
 ```{r Outlier detection via median MAD2, echo=FALSE, fig.cap="Outlier detection via MAD using `2.5 * MAD` as a threshold", label = "MAD2-outlier-detection"}
 # Compute the median and thresholds
@@ -504,17 +481,17 @@ imdb_top_250 %>%
   xlab("movies")
 ```
 
-Which approach to choose can be informed by the normality of your data. If your data is normally distributed, the mean and median would be very close to each other and the results from both approach would return very similar results. However, if your data is not normally distributed, it might be better to classify outliers using the median.
+Which approach to choose can be informed by the normality of your data. For example, if your data is normally distributed, the mean and median would be very close to each other, and the results from both approaches would return very similar results. However, if your data is not normally distributed, it might be better to classify outliers using the median.
 
 ### Detecting outliers using the interquartile range {#outliers-iqr}
 
-Another approach to classify outliers is the use of the interquartile range (IQR). This one is used in boxplots and creates the dots at its ends to indicate any outliers. This approach is very easy to implement because the computation of the IQR is simple:
+Another approach to classifying outliers is the use of the interquartile range (IQR). This one is used in boxplots and creates the dots at its ends to indicate any outliers. This approach is straightforward to implement because the computation of the IQR is simple:
 
 ::: {#iqr-formula align="center"}
 $IQR = Q_{3}-Q_{1}$
 :::
 
-Therefore, we can create new thresholds for the detection of outliers. For IQR it is common to use '1.5 \* IQR' as the lower and upper thresholds.
+Therefore, we can create new thresholds for the detection of outliers. For IQR, it is common to use '1.5 \* IQR' as the lower and upper thresholds.
 
 ```{r IQR as a threshold for outliers, echo=TRUE}
 # Compute the median and thresholds
@@ -541,19 +518,19 @@ imdb_top_250 %>%
 
 As we can tell, the IQR detects much more outliers for our data than any of the previous methods. The outliers we find here are the same as shown in Figure \@ref(fig:a-boxplot).
 
-For our data it seems that the MAD by @leys2013detecting produced the 'best' selection. However, we have to acknowledge that these classifications will always be subjective, because the decision of how we position the thresholds is still depending on the researcher's choice.
+For our data, I would argue that the MAD by @leys2013detecting produced the 'best' selection. However, we have to acknowledge that these classifications will always be subjective because how we position the thresholds still depends on the researcher's choice. Still, the computation is standardised, and we can plausibly explain the process of identifying outliers.
 
 ### Removing or replacing outliers {#removing-or-replacing-outliers}
 
-Now that we have identified our outliers we are confronted with the question what we should do with them. Similar to missing data (see Chapter \@ref(dealing-with-missing-data)) we can either remove them or replace them with other values. While removal is a fairly simple task, replacing it with other 'reasonable' values implies that we need to find techniques to create such values. As you may remember, we were confronted with a similar problem before when we looked into missing data (Chapter \@ref(dealing-with-missing-data). The same techniques, especially multiple imputation [see @cousineau2010outliers], can be used for such scenarios as well.
+Now that we have identified our outliers, we are confronted with the question of what we should do with them. Like missing data (see Chapter \@ref(dealing-with-missing-data)), we can either remove them or replace them with other values. While removal is a relatively simple task, replacing it with other 'reasonable' values implies finding techniques to create such values. As you may remember, we were confronted with a similar problem before when we looked into missing data (Chapter \@ref(dealing-with-missing-data). The same techniques, especially multiple imputation [see @cousineau2010outliers], can also be used for such scenarios.
 
-Irrespective of whether we remove or replace outliers, we somehow need to single them out of the crowd. Since the MAD strategy worked well for our data, we can use the thresholds we defined before, i.e. `mad_upper` and `mad_lower`. Therefore, an observation (i.e. a movie) is considered as an outlier if:
+Irrespective of whether we remove or replace outliers, we somehow need to single them out of the crowd. Since the MAD strategy worked well for our data, we can use the thresholds we defined before, i.e. `mad_upper` and `mad_lower`. Therefore, an observation (i.e. a movie) is considered an outlier if
 
 -   its value lies above `mad_upper`, or
 
 -   its value lies below `mad_lower`
 
-It becomes clear that we somehow need to define a condition, because if it is an outlier, it should be labelled as one, if not then it should not be labelled as one. Ideally we want a new column in our dataset which indicates whether a movie is an outlier (i.e. outlier = TRUE) or not (outlier = FALSE). R offers a way for us to express such conditions with the function `ifelse()`. It has the following structure:
+It becomes clear that we somehow need to define a condition because if it is an outlier, it should be labelled as one. Ideally, we want a new column in our dataset which indicates whether a movie is an outlier (i.e. outlier = TRUE) or not (outlier = FALSE). R offers a way for us to express such conditions with the function `ifelse()`. It has the following structure:
 
 ::: {#ifelse-function align="center"}
 `ifelse(condition, TRUE, FALSE)`
@@ -567,7 +544,7 @@ Let's formulate a sentence that describes our scenario as an `ifelse()` function
 
 -   classify this movie as an outlier (i.e. `TRUE`),
 
--   otherwise classify this movie as not being an outlier (i.e. `FALSE`).
+-   otherwise, classify this movie as not being an outlier (i.e. `FALSE`).
 
 We already know from Chapter \@ref(basic-computations-in-r) how to use logical and arithmetic operators. All we have to do is put them together in one function call.
 
@@ -577,7 +554,7 @@ imdb_top_250 <- imdb_top_250 %>%
                           TRUE, FALSE))
 ```
 
-Since we have a classification we can more thoroughly inspect our outliers and see which movies are the ones that are lying outside our defined norm. We can `arrange()` them by `runtime_min`.
+Since we have a classification, we can more thoroughly inspect our outliers and see which movies are the ones that are lying outside our defined norm. We can `arrange()` them by `runtime_min`.
 
 ```{r List the outliers, echo=TRUE}
 imdb_top_250 %>% 
@@ -586,9 +563,9 @@ imdb_top_250 %>%
   arrange(runtime_min)
 ```
 
-The list of movies contains some of the most iconic Hollywood films ever shown on screen. I think we can agree that most of them are truly outside the norm of regular movies, not just in terms of runtime.
+The list of movies contains some of the most iconic Hollywood films ever shown on screen. However, I think we can agree that most of them are truly outside the norm of regular movies, not just in terms of runtime.
 
-From here it is simple to remove these movies (i.e. keep the movies that are not outliers) or set their values to `NA` by writing the following lines of code. We replace the values with `NA` we can the continue with one of the techniques demonstrated for missing values (Chapter \@ref(dealing-with-missing-data).
+From here, it is simple to remove these movies (i.e. keep the movies that are not outliers) or set their values to `NA`. If we replace the values with `NA`, we can continue with one of the techniques demonstrated for missing values in Chapter \@ref(dealing-with-missing-data). Both approaches are shown in the following code chunk.
 
 ```{r Remove and replacing outliers, echo=TRUE, results='hide'}
 # Keep all movies that are not outliers
@@ -602,7 +579,22 @@ imdb_top_250 %>%
 
 The `replace()` function is very intuitive to use. It first needs to know where you want to replace a value (`runtime_min`), then what the condition for replacing is (`outlier == "TRUE"`), and lastly, which value should be put instead of the original one (`NA`).
 
-As you hopefully noticed, understanding your data requires some effort, but it is important to know your data well before proceeding to any further analysis. You can experiment with different data visualisations and design them in a way that best reflect the message you want to get across. For example, because we have now a separate variable which classifies outliers we can do more with our data visualisation than before and dress it up a bit more nicely.
+As you hopefully noticed, understanding your data requires some effort, but it is important to know your data well before proceeding to any further analysis. You can experiment with different data visualisations and design them in a way that best reflects the message you want to get across. For example, because we have now a separate variable that classifies outliers, we can do more with our data visualisation than before and dress it up more nicely.
+
+```{r Plot with outliers formatted differently, echo=TRUE}
+imdb_top_250 %>% 
+  ggplot(aes(x = reorder(genre_01, runtime_min),
+             y = runtime_min,
+             colour = outlier,
+             shape = outlier)
+         ) +
+  geom_point(size = 1) +
+  theme(panel.background = element_blank()) +
+  coord_flip()
+
+```
+
+To round things off, let me share with you one more visualisation, which demonstrates that outliers might also have to be defined based on specific groupings of your data, e.g. movie genres. Thus, it might be essential to consider outliers in light of sub-samples of your data rather than the entire dataset.
 
 ```{r Final plot to show outliers, echo=TRUE, warning=FALSE}
 colour_pal <- wesanderson::wes_palette("Darjeeling1", 11, type = "continuous")
@@ -617,7 +609,8 @@ imdb_top_250 %>%
   geom_jitter(width = 0.1,
               size = 0.5,
               alpha = 0.5,
-              show.legend = FALSE) +
+              show.legend = FALSE
+              ) +
   scale_color_manual(values = colour_pal) +
   coord_flip() +
   theme(panel.background = element_blank())+
