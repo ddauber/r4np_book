@@ -129,3 +129,8 @@ fig:plotting-moderation-effects-1
 fig:plotting-moderation-effects-2
 fig:plotting-moderation-effects-schools
 fig:plotting-moderation-effects-businesses
+tab:type-one-and-type-two-error
+computing-correlations
+power-analysis
+ingredients-to-achieve-the-power-you-deserve
+bootstrapped-regression
