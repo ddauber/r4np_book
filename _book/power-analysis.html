@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Page not found | R for Non-Programmers: A Guide for Social Scientists</title>
+  <title>11 Power: You either have it or you don’t | R for Non-Programmers: A Guide for Social Scientists</title>
   <meta name="description" content="This books is intended for Social Scientists. No matter whether you have years of experiences, this book might come in handy if you never use R or any other programming language before." />
   <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Page not found | R for Non-Programmers: A Guide for Social Scientists" />
+  <meta property="og:title" content="11 Power: You either have it or you don’t | R for Non-Programmers: A Guide for Social Scientists" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Page not found | R for Non-Programmers: A Guide for Social Scientists" />
+  <meta name="twitter:title" content="11 Power: You either have it or you don’t | R for Non-Programmers: A Guide for Social Scientists" />
   
   <meta name="twitter:description" content="This books is intended for Social Scientists. No matter whether you have years of experiences, this book might come in handy if you never use R or any other programming language before." />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-
-
+<link rel="prev" href="correlations.html"/>
+<link rel="next" href="comparing-groups.html"/>
 <script src="libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
@@ -361,19 +361,100 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="page-not-found" class="section level1">
-<h1>Page not found</h1>
-<p>The page you requested cannot be found (perhaps it was moved or renamed).</p>
-<p>You may want to try searching to find the page's new location, or use
-the table of contents to find the page you are looking for.</p>
+<div id="power-analysis" class="section level1" number="11">
+<h1><span class="header-section-number">11</span> Power: You either have it or you don’t</h1>
+<p>By far the most frequently asked question by my students is: How much data do I have to collect? My answer is always the same: It depends. From a student’s perspective this must be one of the most annoying answers. Usually, I follow this sentence up with something more helpful to guide students on their way. For example, there is a way to determine how large your sample has to be to reliably detect specific relationships. This procedure is called power analysis.</p>
+<p>While power analysis can be performed before and after data collection, it seems rather pointless to do it afterwards when collecting more data is not only difficult but sometimes impossible. Thus, my explanations in this chapter will largely focus on the question: How much data is enough data to reliably detect relationships between variables.</p>
+<p>Power analysis is something that applies to all kinds of tests, such as correlations (Chapter <a href="correlations.html#correlations">10</a>, group comparisons (Chapter <a href="comparing-groups.html#comparing-groups">12</a>) and regressions (Chapter <a href="regression.html#regression">14</a>. Thus, it is important to know about it. There is nothing more worse than presenting a model or result that is utterly ‘underpowered,’ i.e. the sample is not large enough to reliably detect a desired relationship between variables. And in anticipation of your question whether your analysis can be ‘overpowered,’ the answer is ‘yes.’ Usually, there are no particular statistical concerns of having an overpowered analysis - more power to you (#pun-intended). However, if we think of time as a scarce resource, we should not collect more data than we need. Participant’s time is valuable and being economic with data collection is not only desirable to bother less people with your research, but also to avoid survey fatigue, which makes it more difficult for others to carry out their own research. Thus, being mindful of the required sample size is always important.</p>
+<div id="ingredients-to-achieve-the-power-you-deserve" class="section level2" number="11.1">
+<h2><span class="header-section-number">11.1</span> Ingredients to achieve the power you deserve</h2>
+<p>We already know that sample size matters, for example to assume normality when there is non in your sample (see Central Limit Theorem in Chapter <a href="sources-of-bias.html#normality">9.3</a>). However, it also matters to ensure we do not mistakenly assume that a relationship exists where there is none and vice versa. What I am referring to are Type I and Type II errors.</p>
+<table>
+<caption><span id="tab:type-one-and-type-two-error">Table 11.1: </span>Type I and Type II error defined</caption>
+<colgroup>
+<col width="7%" />
+<col width="92%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Error</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><em>Type I</em></td>
+<td><ul>
+<li><p>We assume a relationship exists between variables where there is none in the population.</p></li>
+<li><p>We also refer to this as ‘false positives.’</p></li>
+<li><p>While we find a significant relationship between variables in our sample, a much larger sample would not find such a relationship.</p></li>
+<li><p>Is represented by the Greek letter <span class="math inline">\(\alpha\)</span> (alpha).</p></li>
+</ul></td>
+</tr>
+<tr class="even">
+<td><em>Type II</em></td>
+<td><ul>
+<li><p>We assume that there is no relationship between variables even though there is one in the population.</p></li>
+<li><p>We also refer to this as ‘false negatives.’</p></li>
+<li><p>While our sample does not reveal a significant relationship between variables, a much larger sample would show that the relationship is significant.</p></li>
+<li><p>Is represented by the Greek letter <span class="math inline">\(\beta\)</span> (beta).</p></li>
+</ul></td>
+</tr>
+</tbody>
+</table>
+<p>The goal of power analysis is to help us avoid type II errors and is defined as the opposite of it, i.e. $1 - $, i.e. a ‘true positive.’</p>
+<p>To perform such a power analysis we need at least three of the following four ingredients:</p>
+<ul>
+<li><p>the power level we want to achieve, i.e. the probability that we find a ‘true positive,’</p></li>
+<li><p>the expected effect size (<span class="math inline">\(r\)</span>) we hope to find,</p></li>
+<li><p>the significance level we set for our test, i.e. how strict we are about deciding when a relationship is significant,</p></li>
+<li><p>the sample size.</p></li>
+</ul>
+<p>As I mentioned earlier, it makes more sense to use a power analysis to determine the sample size. However, in the unfortunate event that you forgot to do so, at least you can find out whether your results are underpowered. If they are underpowered, you are in serious trouble and in dire need of more participants.</p>
+<p>So, how exactly can we compute the right sample size and how do we find all the numbers for these ingredients without empirical data at our disposal? First, we need a function which can compute it for us, because computing it manually is insanity. The package <code>pwr</code> was developed to do exactly that for different kinds of statistical tests, i.e. we need different functions for different tests, but the ingredients remain the same.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="power-analysis.html#cb1-1" aria-hidden="true" tabindex="-1"></a>pwr<span class="sc">::</span><span class="fu">pwr.r.test</span>(<span class="at">r =</span> <span class="fl">0.4</span>,</span>
+<span id="cb1-2"><a href="power-analysis.html#cb1-2" aria-hidden="true" tabindex="-1"></a>                <span class="at">sig.level =</span> <span class="fl">0.05</span>,</span>
+<span id="cb1-3"><a href="power-analysis.html#cb1-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">power =</span> <span class="fl">0.8</span>)</span></code></pre></div>
+<pre><code>## 
+##      approximate correlation power calculation (arctangh transformation) 
+## 
+##               n = 45.91614
+##               r = 0.4
+##       sig.level = 0.05
+##           power = 0.8
+##     alternative = two.sided</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="power-analysis.html#cb3-1" aria-hidden="true" tabindex="-1"></a>pwr<span class="sc">::</span><span class="fu">pwr.r.test</span>(<span class="at">r =</span> <span class="fl">0.3</span>,</span>
+<span id="cb3-2"><a href="power-analysis.html#cb3-2" aria-hidden="true" tabindex="-1"></a>                <span class="at">sig.level =</span> <span class="fl">0.05</span>,</span>
+<span id="cb3-3"><a href="power-analysis.html#cb3-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">power =</span> <span class="fl">0.8</span>)</span></code></pre></div>
+<pre><code>## 
+##      approximate correlation power calculation (arctangh transformation) 
+## 
+##               n = 84.07364
+##               r = 0.3
+##       sig.level = 0.05
+##           power = 0.8
+##     alternative = two.sided</code></pre>
+<p>can determine the required power level. Luckily, <span class="citation"><a href="#ref-cohen1988statistical" role="doc-biblioref">Cohen</a> (<a href="#ref-cohen1988statistical" role="doc-biblioref">1988</a>)</span> recommends a failure rate fof 20% to not detect a significant relationship, i.e. the acceptable level for Type II errors. Since the power level</p>
+<ul>
+<li><p>plotting power levels</p></li>
+<li><p>computing power levels</p></li>
+</ul>
+
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-cohen1988statistical" class="csl-entry">
+Cohen, Jacob. 1988. <span>“Statistical Power Analysis for the Behavioral Sciences New York.”</span> <em>NY: Academic</em>, 54.
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-
-
+<a href="correlations.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="comparing-groups.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
