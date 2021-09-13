@@ -1062,7 +1062,7 @@ While significant moderation effects help us make better predictions with our mo
 
 ## Other regression models: Alternatives to OLS
 
-This book only covers linear regressions. which are considered Ordinary Least Squares (OLS) regression models. These are by far the most frequently used models in the Social Sciences. However, what can we do if the assumptions of OLS models are violated, for example, the relationship of variables looks curved or if our dependent variable is dichotomous and not continuous? In such cases, we might have to consider other types of regression models. There are several different approaches, but we most frequently find one of the following:
+This book only covers linear regressions, which are considered Ordinary Least Squares (OLS) regression models. These are by far the most frequently used models in the Social Sciences. However, what can we do if the assumptions of OLS models are violated, for example, the relationship of variables looks curved or if our dependent variable is dichotomous and not continuous? In such cases, we might have to consider other types of regression models. There are several different approaches, but we most frequently find one of the following:
 
 -   *Polynomial regressions*, which are used for curvilinear relationships between variables.
 
