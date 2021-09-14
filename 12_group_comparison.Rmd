@@ -1,9 +1,10 @@
-# Comparing groups
+# Comparing groups {#comparing-groups}
 
 ```{r echo=FALSE}
 library(tidyverse)
 library(r4np)
 library(rstatix)
+library(patchwork)
 
 wvs_nona <- read_csv("wvs_nona.csv") %>% 
   mutate_if(is.character, as_factor)
@@ -159,11 +160,11 @@ wr <- comp %>% wilcox_effsize(freedom_of_choice ~ gender,
 effectsize::interpret_r(wr$effsize)
 ```
 
-Looking at our test results, the female Egyptians perceive `freedom_of_choice` differently from their male counterparts. This is in line with our boxplots. However, the effect sizes tend to be small, which means the differences between the two groups is marginal. Similar to correlations, group comparisons need to be analysed in two stages answering two questions:
+Looking at our test results, the female Egyptians perceive `freedom_of_choice` differently from their male counterparts. This is in line with our boxplots. However, the effect sizes tend to be small, which means the differences between the two groups is marginal. Similar to correlations, group comparisons need to be analysed in two stages, answering two questions:
 
 1.  Is the difference between groups significant?
 
-2.  Is the difference small, medium or large?
+2.  If it is significant, is the difference small, medium or large?
 
 The combination of both analytical steps gives us a comprehensive answer to our research question and enables us to derive with meaningful conclusions. This applies to all group comparisons covered in this book.
 
@@ -214,10 +215,13 @@ dir_mov %>%
 
 Considering the revised plot, we likely can predict what the statistical test will show. Table \@ref(tab:comparing-two-groups-paired) summarises which tests and functions need to be performed if our data is parametric or non-parametric. In both cases, the functions are the same to those of the unpaired group comparisons, but we need to add the attribute `paired = TRUE`. Still, the interpretations between the unpaired and paired tests remain the same. Also, be aware that some tests have changed in name, e.g. the Mann-Whitney U test has become the Wilcoxon Signed Rank Test. even though we use the same functions as before, by changing the attributed of `paired` we also change the computational technique to obtain the results. Thus, be aware that the same function can perform different computations.
 
++----------------+---------------------------+------------------------------+-------------+---------------------+
 | Assumption     | Test                      | Function                     | Effect size | Function            |
-|----------------|---------------------------|------------------------------|-------------|---------------------|
++================+===========================+==============================+=============+=====================+
 | Parametric     | T-Test                    | `t_test(paired = TRUE)`      | Cohen's d   | `cohens_d()`        |
++----------------+---------------------------+------------------------------+-------------+---------------------+
 | Non-parametric | Wilcoxon Signed Rank Test | `wilcox_test(paired = TRUE)` | Wilcoxon r  | `wilcoxonPairedR()` |
++----------------+---------------------------+------------------------------+-------------+---------------------+
 
 : (\#tab:comparing-two-groups-paired)Comparing two unpaired groups (effect size functions from package `effectsize`, except for `wilcoxonPairedR()` from `rcompanion`)
 
@@ -236,7 +240,7 @@ dir_mov %>% wilcox_test(imdb_rating ~ movie,
                          paired = TRUE)
 ```
 
-As expected, the paired tests reveal that the differences in rating between the first movie and the second movie are not significant. Usually, there would be no reason to follow this up with the computation of effect sizes, because we only need to do this if the differences are statistically significant. However, nothing can stop us from still doing so.
+As expected, the paired tests reveal that the differences in rating between the first movie and the second movie are not significant. Usually, there would be no reason to follow this up with the computation of effect sizes because we only need to do this if the differences are statistically significant. However, nothing can stop us from doing so (for demonstration purposes).
 
 ```{r Comparing two paired groups data effec sizes, echo=TRUE}
 ## After T-Test
@@ -254,7 +258,7 @@ wr <- dir_mov %>% wilcox_effsize(imdb_rating ~ movie,
 effectsize::interpret_r(wr$effsize, rules = "cohen1988")
 ```
 
-As we would expect, the effect sizes are very small too, irrespective of whether we treat our data as parametric or non-parametric. After all, being a successful director ranked in the IMDb top 250 seems to imply that other movies are equally successful, but remember the limitations of our dataset before drawing your final conclusions.
+As we would expect, the effect sizes are very small, irrespective of whether we treat our data as parametric or non-parametric. After all, being a successful director ranked in the IMDb top 250 seems to imply that other movies are equally successful, but remember the limitations of our dataset before drawing your final conclusions.
 
 ## Comparing more than two groups {#comparing-more-than-two-groups}
 
@@ -423,15 +427,252 @@ A useful overview of all the possible options of comparing groups and how to obt
 
 ## Comparing groups based on factors: Contingency tables {#chi-squared-test}
 
-Unpaired
+So far, our dependent variable was always a numeric one. However, what if both, independent and dependent variable, are categorical? In such cases, we can only count the number of occurrences for each combination of the categories. For example, we might recode our variable `satisfaction` into a dichotomous variable, i.e. participants are either happy or not. Since the original scale ranges from 1-10, we assume that participants who scored higher than `5` are `satisfied` with their life, while those who scored lower are categorised as `unsatisfied`.
 
-```{r Contigency tables unpaired computation, echo=TRUE}
-# wvs_nona %>% infer::chisq_test(relationship_status ~ gender)
-# 
-# cramers_v()
+```{r Recode satisfaction as a dichotomous variable, echo=TRUE}
+# Create a dichotomous/binary variable for satisfaction
+wvs_nona <- wvs_nona %>%
+  mutate(satisfaction_bin = as_factor(ifelse(satisfaction >= 5,
+                                             "satisfied",
+                                             "unsatisfied"))
+         )
 ```
 
-Paired
+Your first intuition is likely to ask: Are there more `satisfied` or `unsatisfied` people in my sample?
+
+```{r frequencies of satisfaction_bin, echo=TRUE}
+wvs_nona %>% count(satisfaction_bin)
+```
+
+The results reveal that there are considerably more people who are satisfied with their life than there are unsatisfied people. In the spirit of group comparisons, we might wonder whether `gender` differences might exist among the `satisfied` and `unsatisfied` group of people. Thus, we want to split the `satisfied` and `unsatisfied` responses into male and female groups. We can do this by adding a second argument to the function `count()`.
+
+```{r Contigency table satisfaction_bin with gender, echo=TRUE}
+wvs_nona %>% count(satisfaction_bin, gender)
+```
+
+This `tibble` reveals that there are more `female` participants who are satisfied than `male` ones. However, the same is true for the category `unsatisfied`. Using absolute values is not very meaningful when the sample size of each group is not equal. Thus, it is better to use the relative frequency instead which we can add as a new variable.
+
+```{r Contigency table relative satisfaction_bin with gender, echo=TRUE}
+ct <- wvs_nona %>%
+  count(satisfaction_bin, gender) %>%
+  group_by(gender) %>%
+  mutate(perc = round(n/sum(n), 3))
+
+ct
+```
+
+The relative frequency (`perc`) reveals that `female` and `male` participants are equally satisfied and unsatisfied. In other words, we could argue that gender does not predict satisfaction with life, because the proportion of `male` and `female` participants is almost identical.
+
+A more common and compact way to show such dependencies between categorical variables is a contingency table. To convert our current table into a contingency table we need to map the levels of `satisfaction_bin` as rows (i.e. `satisfied` and `unsatisfied`), and for `gender` we want each level represented as a column (i.e. `male` and `female`). This can be achieved with the function `pivot_wider()`. It turns our 'long' data frame into a 'wide' one. Let's take a look at the output, which is much easier to understand.
+
+```{r Contigency table relative satisfaction_bin with gender wide, echo=TRUE}
+ct %>% pivot_wider(id_cols = satisfaction_bin,
+                   names_from = gender,
+                   values_from = perc)
+```
+
+The resulting `tibble` looks like a table as we know it from Excel. It is much more compact than the long format. However, what are the different arguments I passed to the function `pivot_wider()`? Here is a more detailed explanation of what we just did:
+
+-   `id_cols` refers to one or more columns which define the groups for each row. In our case, we wanted to group observations based on whether these reflect the state of `satisfied` or `unsatisfied`. Thus, each group is only represented once in this column. It underlying concept is comparable to using the function `group_by()` together with `summarise()`.
+
+-   `names_from` defines which variable should be translated into separate columns. In other words, we replace the column `gender` and create a new column for each level of the factor, i.e. `male` and `female`.
+
+-   `values_from` requires us to specify which variable holds the values that should be entered into our table. Since we want only our percentages included in the final output, we used `perc`.
+
+It is essential to note that we did not change any values but rearranged them. However, it is true that we lost one variable, i.e. `n`. Where has it gone? When using `pivot_wider()` we have to make sure we include all variables of interest. By default, the function will drop any other variables not mentioned. If we wanted to keep `n`, we can include it as another variable which is added to `values_from`.
+
+```{r Contigency table relative and absolute satisfaction_bin with gender, echo=TRUE}
+ct %>% pivot_wider(id_cols = satisfaction_bin,
+                   names_from = gender,
+                   values_from = c(perc, n))
+```
+
+The table has become even wider, because we have two more columns to show the absolute frequency per `gender` and `satisfaction_bin`.
+
+As you probably expect, there are also situations where we want to turn a 'wide' data frame into a long one. An example with in-depth explanations is shown in Chapter \@ref(reviewing-the-outliers).
+
+Contingency tables are like plots: They provide an excellent overview of the structure of our data and relationships between variables. However, they provide no certainty about the strength of relationships. Therefore, we need to draw on a set of statistical tests to gain further insights.
+
+Similar to previous group comparisons, we can distinguish between paired and unpaired groups. I will cover each comparison in turn and also allude to ways of plotting two more categories in a `ggplot()`.
+
+### Unpaired groups of categorical variables {#unpaired-groups-categorical-variables}
+
+In the introduction to this chapter we covered a classic example of an unpaired comparison of two groups (`male` and `female`) regarding another categorical variable, i.e. `satisfaction_bin`. The tables we produced offered detailed insights into the distribution of these categories. However, it is always helpful to also have a visual representation. To plot two categorical variables (i.e. factors) in `ggplot2` can be achieved in many different ways. Three commonly used options are shown in Figure \@ref(fig:three-plots-satisfaction-gender).
+
+```{r Visualising a contingency table with bars, echo=TRUE, fig.cap="Three ways to plot frequencies", label="three-plots-satisfaction-gender"}
+
+# Plot with absolute frequencies (stacked)
+absolute_stacked <- wvs_nona %>%
+  ggplot(aes(x = satisfaction_bin,
+             fill = gender)) +
+  geom_bar() +
+  ggtitle("Stacked absolute frequency") +
+  theme(legend.position = "none")
+
+# Plot with absolute frequencies (grouped)
+absolute_grouped <- wvs_nona %>%
+  ggplot(aes(x = satisfaction_bin,
+             fill = gender)) +
+  geom_bar(position = "dodge") +
+  ggtitle("Grouped absolute frequency") +
+  theme(legend.position = "none")
+
+# Plot with relative frequencies
+relative <- wvs_nona %>%
+  ggplot(aes(x = satisfaction_bin,
+             fill = gender)) +
+  geom_bar(position = "fill") +
+  ggtitle("Relative frequency") +
+  theme(legend.position = "none")
+
+# Plot all three plots with 'patchwork'
+absolute_stacked + absolute_grouped + relative + plot_spacer()
+```
+
+A more elegant and compact way of visualising frequencies across two or more categories are mosaic plots. These visualise relative frequencies for both variables in one plot. Consider the following mosaic plot created with `ggmosaic` and the function `geom_mosaic()`.
+
+```{r Visualising a contingency table with mosaics, echo=TRUE, fig.cap="A mosaic plot which visualises the relationship of two categorical variables", label="mosaic-plot"}
+library(ggmosaic)
+wvs_nona %>%
+  ggplot() +
+  geom_mosaic(aes(x = product(satisfaction_bin, gender),
+                            fill = gender)) + 
+  theme_mosaic()
+```
+
+From our data it might not be obvious, but the height and the width of the bars is determine by frequencies of each variable. In other words, the width of the bars (i.e. x-axis) is determine by the relative frequency of `female` and `male` participants in our sample. On the other hand, the height of each bar (i.e. the y-axis) is determine by the relative frequency of `satisfied` and \`unsatisfied. This results square block that is divided by the respective relative distributions. Let me share an example where it is more apparent what a mosaic plot aims to achieve.
+
+```{r Showcasing a mosaic plot data, echo=FALSE}
+data <- tibble(gender = c("male", "male", "male",
+                        "male", "male", "male",
+                        "male", "female", "female",
+                        "female"),
+               married = c("yes", "no", "no",
+                           "NA", "no", "no",
+                           "yes", "no", "NA",
+                           "yes"))
+```
+
+```{r Showcasing a mosaic plot, echo=TRUE}
+data %>%
+  ggplot() +
+  geom_mosaic(aes(x = product(married, gender),
+                  fill = married)) + 
+  theme_mosaic()
+```
+
+In this example we can tell that there were more `male` participants than females because the bar for `male` is much wider. Apart from that we can notice that `female` participants have more missing values `NA` for the variable `married`. However, more `female` participants reported that they are `married`, i.e. answered with `yes`. While mosaic plots make for impressive visualisations, we have to be mindful that more complex visualisations are always more challenging to understand. Thus, it is wise to carefully plan the usage of such plots.
+
+Throughout the remaining chapters I will use the mosaic plot to illustrate distributions. A main difference to regular bar plots is the function `product()`, which allows us to define different variables of interest instead of using `x` and `y` in the `aes()` of `ggplot()`. Apart from that, the same ggplot syntax applies.
+
+When it comes to the computational side of things, we have to distinguish whether our two variables create a 2-by-2 matrix, i.e. both variables only have two levels, or whether our two variables have multiple levels. Depending on which scenario applies to our analysis, a different statistical test has to be performed. For some tests, a minimum frequency for each value in our contingency table (i.e. cell) needs to be achieved. This is usually a matter of sample size and diversity in a sample. Table \@ref(tab:statistical-tests-unpaired-cat-variables) provides an overview of the different scenarios and indicates the functions we have to use to conduct our analysis in R.
+
++--------+---------------------+----------------------------------------------------+----------------------------------------------------------+---------------+
+| Matrix | Condition           | Test                                               | Function in R                                            | Effect size   |
++========+=====================+====================================================+==========================================================+===============+
+| 2x2    | \< 10 obs.          | Fisher's Exact Test                                | `fisher.test()`                                          | `phi()`       |
++--------+---------------------+----------------------------------------------------+----------------------------------------------------------+---------------+
+| 2x2    | \> 10 obs.          | Chi-squared Test with Yate's Continuity Correction | `infer::chisq_test(correct = TRUE)`[^group_comparison-3] | `cramers_v()` |
++--------+---------------------+----------------------------------------------------+----------------------------------------------------------+---------------+
+| n x n  | \> 5 (80% of cells) | Chi-squared Test                                   | `infer::chisq_test()`                                    | `cramers_v()` |
++--------+---------------------+----------------------------------------------------+----------------------------------------------------------+---------------+
+
+: (\#tab:statistical-tests-unpaired-cat-variables)Statistical tests to compare two unpaired categorical variables. Effect sizes are computed using the `effectsize` package.
+
+[^group_comparison-3]: `infer` is an R package which is part of `tidymodels`.
+
+To cut a long story short, we only need to be worried about 2x2 contingency tables where the values in some (or all) cells is lower than 10. In those cases we need to rely on the Fisher's Exact Test. In all other cases we can rely on the Pearson Chi-squared Test to do our bidding. The function `infer::chisq_test()` is based on the function `chisq.test()`, which automatically applies the required Yate's Continuity Correction if necessary.
+
+Every test that involves two categorical variables we have to perform three steps:
+
+1.  Compute a contingency table and check the conditions outlined in Table \@ref(tab:statistical-tests-unpaired-cat-variables).
+
+2.  Conduct the appropriate statistical test.
+
+3.  If the test is significant, compute the effect size and interpret its value.
+
+Considering our example from the beginning of the chapter, we are confronted with a 2x2 table which has the following distribution:
+
+```{r Recap contigency table of satisfaction_bin and gender, echo=TRUE}
+ct %>% pivot_wider(id_cols = satisfaction_bin,
+                   names_from = gender,
+                   values_from = n)
+```
+
+We easily satisfy the requirement for a regular Chi-squared test with Yate's continuity correction, because each row has at least a value of 10. However, for demonstration purposes I will show how to compute both, the Chi-squared test and the Fisher's Exact test for the same contingency table.
+
+```{r Fisher exact test, echo=TRUE}
+# Fisher's Exact Test
+fisher.test(wvs_nona$satisfaction_bin, wvs_nona$gender) %>%
+  # Make output more readable
+  broom::tidy() %>%
+  glimpse()
+
+## Effect size
+(phi <- effectsize::phi(wvs_nona$satisfaction_bin, wvs_nona$gender))
+effectsize::interpret_r(phi$phi, rules = "cohen1988")
+
+# Chi-squared test with Yate's continuity correction
+wvs_nona %>% infer::chisq_test(satisfaction_bin ~ gender,
+                               correct = TRUE)
+
+## Effect size
+cv <- effectsize::cramers_v(wvs_nona$satisfaction_bin, wvs_nona$gender)
+effectsize::interpret_r(cv$Cramers_v, rules = "cohen1988")
+```
+
+Both tests reveal that the relationship between our variables is not significant and the effect sizes are very small. This result is very much line with our visualisation shown in Figure \@ref(fig:mosaic-plot), because everything looks very symmetrical.
+
+Contingency tables do not always come as 2x2 matrices. Therefore, it makes sense to look at one more example where we have a much larger matrix. Bear in mind that the larger your matrix, the larger your dataset has to be to produce reliable results.
+
+You might find yourself in a soirée[^group_comparison-4] and someone might raise the question: Is it true that men are less likely to be married than women? In order to give you an edge over others at this French evening party, we can take a closer look at this question with our `wvs_nona` dataset. We can create a mosaic plot and contingency table which feature `relationship_status` and `gender`.
+
+[^group_comparison-4]: A fancy way of saying 'evening party' in French.
+
+As usual, let's start with the plot first.
+
+```{r Plot contigency table relationship_status and gender, echo=TRUE}
+wvs_nona %>%
+  ggplot() +
+  geom_mosaic(aes(x = product(relationship_status, gender),
+                  fill = relationship_status)) + 
+  theme_mosaic()
+```
+
+While this plot is a lot more colourful than our previous ones, it still seems to suggest that differences across categories are not particularly large. Especially the category `married` seems to indicate that `male` and `female` participants do not differ, i.e. their relative frequency is very similar.
+
+Next, we compute the numbers underpinning this plot, comparing the absolute distribution to check our conditions and the relative distribution to interpret the contingency table correctly.
+
+```{r Contingency tables unpaired computation relationship_status and gender, echo=TRUE}
+# Check whether we fulfill the criteria
+rel_gen <- wvs_nona %>%
+  count(relationship_status, gender)
+
+rel_gen
+
+# Compute relative frequency
+rel_gen %>% group_by(gender) %>%
+  mutate(perc = round(n/sum(n), 3)) %>%
+  pivot_wider(id_cols = relationship_status,
+              names_from = gender,
+              values_from = perc)
+```
+
+The contingency table with the relative frequencies confirms what we suspected. The differences are very minimal between `male` and `female` participants. In a final step, we need to perform a Chi-squared test to see whether the differences are significant or not.
+
+```{r Chi squared test for relationship_status and gender, echo=TRUE}
+# Perform Chi-squared test
+wvs_nona %>% infer::chisq_test(relationship_status ~ gender)
+
+# Compute effect size
+(cv <- effectsize::cramers_v(wvs_nona$relationship_status,
+                            wvs_nona$gender))
+effectsize::interpret_r(cv$Cramers_v, rules = "cohen1988")
+```
+
+The statistical results further confirm that the relationship between `relationship_status` and `gender` is weak. Therefore, at your next soirée you can confidently say: "This is bogus. The World Value Survey, which covers 48 different countries, shows that such a relationship is insignificant considering responses from over 69,000 individuals." \#cheers-to-that
+
+### Paired groups of categorical variables {#paired-groups-categorical-variables}
 
 ```{r Contigency tables paired computation, echo=TRUE}
 # mcnemar.test()
