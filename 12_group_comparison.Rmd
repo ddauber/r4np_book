@@ -427,7 +427,9 @@ A useful overview of all the possible options of comparing groups and how to obt
 
 ## Comparing groups based on factors: Contingency tables {#chi-squared-test}
 
-So far, our dependent variable was always a numeric one. However, what if both, independent and dependent variable, are categorical? In such cases, we can only count the number of occurrences for each combination of the categories. For example, we might recode our variable `satisfaction` into a dichotomous variable, i.e. participants are either happy or not. Since the original scale ranges from 1-10, we assume that participants who scored higher than `5` are `satisfied` with their life, while those who scored lower are categorised as `unsatisfied`.
+So far, our dependent variable was always a numeric one. However, what if both, independent and dependent variable, are categorical? In such cases, we can only count the number of occurrences for each combination of the categories.
+
+For example, we might recode our previous dependent variable `satisfaction` into a dichotomous one, i.e. participants are either happy or not. Since the original scale ranges from 1-10, we assume that participants who scored higher than `5` are `satisfied` with their life, while those who scored lower are categorised as `unsatisfied`.
 
 ```{r Recode satisfaction as a dichotomous variable, echo=TRUE}
 # Create a dichotomous/binary variable for satisfaction
@@ -440,7 +442,7 @@ wvs_nona <- wvs_nona %>%
 
 Your first intuition is likely to ask: Are there more `satisfied` or `unsatisfied` people in my sample?
 
-```{r frequencies of satisfaction_bin, echo=TRUE}
+```{r frequencies of satisfaction binary, echo=TRUE}
 wvs_nona %>% count(satisfaction_bin)
 ```
 
@@ -461,9 +463,9 @@ ct <- wvs_nona %>%
 ct
 ```
 
-The relative frequency (`perc`) reveals that `female` and `male` participants are equally satisfied and unsatisfied. In other words, we could argue that gender does not predict satisfaction with life, because the proportion of `male` and `female` participants is almost identical.
+The relative frequency (`perc`) reveals that `female` and `male` participants are equally satisfied and unsatisfied. In other words, we could argue that gender does not explain satisfaction with life, because the proportion of `male` and `female` participants is almost identical.
 
-A more common and compact way to show such dependencies between categorical variables is a contingency table. To convert our current table into a contingency table we need to map the levels of `satisfaction_bin` as rows (i.e. `satisfied` and `unsatisfied`), and for `gender` we want each level represented as a column (i.e. `male` and `female`). This can be achieved with the function `pivot_wider()`. It turns our 'long' data frame into a 'wide' one. Let's take a look at the output, which is much easier to understand.
+A more common and compact way to show such dependencies between categorical variables is a contingency table. To convert our current table into a contingency table we need to map the levels of `satisfaction_bin` as rows (i.e. `satisfied` and `unsatisfied`), and for `gender` we want each level represented as a column (i.e. `male` and `female`). This can be achieved with the function `pivot_wider()`. It turns our 'long' data frame into a 'wide' one. Let's take a look at the output first, which is much easier to understand.
 
 ```{r Contigency table relative satisfaction_bin with gender wide, echo=TRUE}
 ct %>% pivot_wider(id_cols = satisfaction_bin,
@@ -473,7 +475,7 @@ ct %>% pivot_wider(id_cols = satisfaction_bin,
 
 The resulting `tibble` looks like a table as we know it from Excel. It is much more compact than the long format. However, what are the different arguments I passed to the function `pivot_wider()`? Here is a more detailed explanation of what we just did:
 
--   `id_cols` refers to one or more columns which define the groups for each row. In our case, we wanted to group observations based on whether these reflect the state of `satisfied` or `unsatisfied`. Thus, each group is only represented once in this column. It underlying concept is comparable to using the function `group_by()` together with `summarise()`.
+-   `id_cols` refers to one or more columns which define the groups for each row. In our case, we wanted to group observations based on whether these reflect the state of `satisfied` or `unsatisfied`. Thus, each group is only represented once in this column. The underlying concept is comparable to using the function `group_by()` together with `summarise()`, which happens to be the same as using `count()`.
 
 -   `names_from` defines which variable should be translated into separate columns. In other words, we replace the column `gender` and create a new column for each level of the factor, i.e. `male` and `female`.
 
@@ -493,11 +495,11 @@ As you probably expect, there are also situations where we want to turn a 'wide'
 
 Contingency tables are like plots: They provide an excellent overview of the structure of our data and relationships between variables. However, they provide no certainty about the strength of relationships. Therefore, we need to draw on a set of statistical tests to gain further insights.
 
-Similar to previous group comparisons, we can distinguish between paired and unpaired groups. I will cover each comparison in turn and also allude to ways of plotting two more categories in a `ggplot()`.
+Similar to previous group comparisons, we can distinguish between paired and unpaired groups. I will cover each comparison in turn and also allude to ways of plotting two or more categories in a `ggplot()`.
 
 ### Unpaired groups of categorical variables {#unpaired-groups-categorical-variables}
 
-In the introduction to this chapter we covered a classic example of an unpaired comparison of two groups (`male` and `female`) regarding another categorical variable, i.e. `satisfaction_bin`. The tables we produced offered detailed insights into the distribution of these categories. However, it is always helpful to also have a visual representation. To plot two categorical variables (i.e. factors) in `ggplot2` can be achieved in many different ways. Three commonly used options are shown in Figure \@ref(fig:three-plots-satisfaction-gender).
+In the introduction to this chapter we covered a classic example of an unpaired comparison of two groups (`male` and `female`) regarding another categorical variable, i.e. `satisfaction_bin`. The tables we produced offered detailed insights into the distribution of these categories. However, it is always helpful to have a visual representation. To plot two categorical variables (i.e. factors) in `ggplot2` can be achieved in many different ways. Three commonly used options are shown in Figure \@ref(fig:three-plots-satisfaction-gender).
 
 ```{r Visualising a contingency table with bars, echo=TRUE, fig.cap="Three ways to plot frequencies", label="three-plots-satisfaction-gender"}
 
@@ -540,7 +542,7 @@ wvs_nona %>%
   theme_mosaic()
 ```
 
-From our data it might not be obvious, but the height and the width of the bars is determine by frequencies of each variable. In other words, the width of the bars (i.e. x-axis) is determine by the relative frequency of `female` and `male` participants in our sample. On the other hand, the height of each bar (i.e. the y-axis) is determine by the relative frequency of `satisfied` and \`unsatisfied. This results square block that is divided by the respective relative distributions. Let me share an example where it is more apparent what a mosaic plot aims to achieve.
+From our data it might not be obvious, but the height and the width of the bars is determined by frequencies of each variable. In other words, the width of the bars (i.e. x-axis) is determine by the relative frequency of `female` and `male` participants in our sample. On the other hand, the height of each bar (i.e. the y-axis) is determine by the relative frequency of `satisfied` and \`unsatisfied. This results in a square block that is divided by the respective relative distributions. Let me share an example where it is more apparent what a mosaic plot aims to achieve.
 
 ```{r Showcasing a mosaic plot data, echo=FALSE}
 data <- tibble(gender = c("male", "male", "male",
@@ -563,9 +565,9 @@ data %>%
 
 In this example we can tell that there were more `male` participants than females because the bar for `male` is much wider. Apart from that we can notice that `female` participants have more missing values `NA` for the variable `married`. However, more `female` participants reported that they are `married`, i.e. answered with `yes`. While mosaic plots make for impressive visualisations, we have to be mindful that more complex visualisations are always more challenging to understand. Thus, it is wise to carefully plan the usage of such plots.
 
-Throughout the remaining chapters I will use the mosaic plot to illustrate distributions. A main difference to regular bar plots is the function `product()`, which allows us to define different variables of interest instead of using `x` and `y` in the `aes()` of `ggplot()`. Apart from that, the same ggplot syntax applies.
+Throughout the remaining chapters I will use the mosaic plot to illustrate distributions. A main difference to regular bar plots is the function `product()`, which allows us to define different variables of interest instead of using `x` and `y` in the `aes()` of `ggplot()`. It is this function which enables a mosaic visualisation. Apart from that, the same ggplot syntax applies.
 
-When it comes to the computational side of things, we have to distinguish whether our two variables create a 2-by-2 matrix, i.e. both variables only have two levels, or whether our two variables have multiple levels. Depending on which scenario applies to our analysis, a different statistical test has to be performed. For some tests, a minimum frequency for each value in our contingency table (i.e. cell) needs to be achieved. This is usually a matter of sample size and diversity in a sample. Table \@ref(tab:statistical-tests-unpaired-cat-variables) provides an overview of the different scenarios and indicates the functions we have to use to conduct our analysis in R.
+When it comes to the computational side of things, we have to distinguish whether our two variables create a 2-by-2 matrix, i.e. both variables only have two levels, or more. Depending on which scenario applies to our analysis, a different statistical test has to be performed. For some tests, a minimum frequency for each value in our contingency table (i.e. cells) needs to be achieved. This is usually a matter of sample size and diversity in a sample. Table \@ref(tab:statistical-tests-unpaired-cat-variables) provides an overview of the different scenarios and indicates the functions we have to use to conduct our analysis in R.
 
 +--------+---------------------+----------------------------------------------------+----------------------------------------------------------+---------------+
 | Matrix | Condition           | Test                                               | Function in R                                            | Effect size   |
@@ -583,7 +585,7 @@ When it comes to the computational side of things, we have to distinguish whethe
 
 To cut a long story short, we only need to be worried about 2x2 contingency tables where the values in some (or all) cells is lower than 10. In those cases we need to rely on the Fisher's Exact Test. In all other cases we can rely on the Pearson Chi-squared Test to do our bidding. The function `infer::chisq_test()` is based on the function `chisq.test()`, which automatically applies the required Yate's Continuity Correction if necessary.
 
-Every test that involves two categorical variables we have to perform three steps:
+For every test that involves two categorical variables we have to perform three steps:
 
 1.  Compute a contingency table and check the conditions outlined in Table \@ref(tab:statistical-tests-unpaired-cat-variables).
 
@@ -621,15 +623,15 @@ cv <- effectsize::cramers_v(wvs_nona$satisfaction_bin, wvs_nona$gender)
 effectsize::interpret_r(cv$Cramers_v, rules = "cohen1988")
 ```
 
-Both tests reveal that the relationship between our variables is not significant and the effect sizes are very small. This result is very much line with our visualisation shown in Figure \@ref(fig:mosaic-plot), because everything looks very symmetrical.
+Both tests reveal that the relationship between our variables is not significant and the effect sizes are very small. This result is in line with our visualisation shown in Figure \@ref(fig:mosaic-plot), because everything looks very symmetrical.
 
 Contingency tables do not always come as 2x2 matrices. Therefore, it makes sense to look at one more example where we have a much larger matrix. Bear in mind that the larger your matrix, the larger your dataset has to be to produce reliable results.
 
-You might find yourself in a soirée[^group_comparison-4] and someone might raise the question: Is it true that men are less likely to be married than women? In order to give you an edge over others at this French evening party, we can take a closer look at this question with our `wvs_nona` dataset. We can create a mosaic plot and contingency table which feature `relationship_status` and `gender`.
+Let's explore an example for contigency table that is a 6x2 matrix. Imagine yourself at a soirée[^group_comparison-4] and someone might raise the question: Is it true that men are less likely to be married than women? In order to give you an edge over others at this French evening party, we can take a closer look at this question with our `wvs_nona` dataset. We can create a mosaic plot and contingency table which feature `relationship_status` and `gender`.
 
 [^group_comparison-4]: A fancy way of saying 'evening party' in French.
 
-As usual, let's start with the plot first.
+As usual, let's start with a plot first. We create a mosaic plot to visualise all six levels of the factor `relationship_status` against the two levels of `gender`.
 
 ```{r Plot contigency table relationship_status and gender, echo=TRUE}
 wvs_nona %>%
@@ -639,7 +641,7 @@ wvs_nona %>%
   theme_mosaic()
 ```
 
-While this plot is a lot more colourful than our previous ones, it still seems to suggest that differences across categories are not particularly large. Especially the category `married` seems to indicate that `male` and `female` participants do not differ, i.e. their relative frequency is very similar.
+While this plot is a lot more colourful than our previous ones, it still seems to suggest that differences across categories are not particularly large. Especially the category `married` seems to indicate that `male` and `female` participants do not differ, i.e. their relative frequency is very similar. The only larger difference can be found for `widowed`. Apparently `female` participants more frequently indicated being `widowed`.
 
 Next, we compute the numbers underpinning this plot, comparing the absolute distribution to check our conditions and the relative distribution to interpret the contingency table correctly.
 
@@ -670,16 +672,63 @@ wvs_nona %>% infer::chisq_test(relationship_status ~ gender)
 effectsize::interpret_r(cv$Cramers_v, rules = "cohen1988")
 ```
 
-The statistical results further confirm that the relationship between `relationship_status` and `gender` is weak. Therefore, at your next soirée you can confidently say: "This is bogus. The World Value Survey, which covers 48 different countries, shows that such a relationship is insignificant considering responses from over 69,000 individuals." \#cheers-to-that
+The statistical results further confirm that the relationship between `relationship_status` and `gender` is weak but significant. Therefore, at your next soirée you can confidently say: "This is bogus. The World Value Survey, which covers 48 different countries, shows that such a relationship is weak considering responses from over 69,000 individuals." \#cheers-to-that
 
 ### Paired groups of categorical variables {#paired-groups-categorical-variables}
 
-```{r Contigency tables paired computation, echo=TRUE}
-# mcnemar.test()
-# 
-# # Effect size
-# cohens_g()
+Similar to paired group comparisons it is possible that contingency tables show paired data. For example, we could be interested in knowing whether certain training we delivered improved participants skills (or at least their personal perception).
+
+The dataset `ic_training` looks at participants' confidence in `communication` with other people from diverse cultural backgrounds before and after an intercultural training session. Thus, we might be curious to know whether the training was effective. The dataset contains multiple versions of the same variable measured in different ways. Let's begin with the variable `communication2` which measures improvement as a factor with only two levels, i.e. `yes` and `no`. We can start by plotting a mosaic plot
+
+```{r Contigency table paired comparison 2by2 mosaic plot, echo=TRUE}
+ic_training %>%
+  ggplot() +
+  geom_mosaic(aes(x = product(test, communication2),
+                  fill = test)) +
+  theme_mosaic()
 ```
+
+The mosaic plot shows that more participants indicate `post-training` that they feel more confident in communicating with others, i.e. they replied with '`yes`, I feel more confident'. There were only very few participants who indicated that they have not become more confident.
+
+Let's get more specific and compute the corresponding contingency table.
+
+```{r Contigency table paired comparison 2by2, echo=TRUE}
+
+ic_training %>% infer::chisq_test(test ~ communication2,
+                               correct = TRUE)
+
+(phi <- effectsize::phi(ic_training$test, ic_training$communication2))
+
+# Wrong table - this is more for chi-squared tests
+ic_training %>%
+  count(test, communication2) %>%
+  group_by(test) %>%
+  # mutate(perc = n/sum(n)) %>%
+  pivot_wider(id_cols = test,
+              names_from = communication2,
+              values_from = n) %>%
+  mutate(across(where(is.double), round, 2))
+```
+
+With these insights we can refine our interpretation and further state that after the intercultural training, 98% of participants. This is quite a substantial improvement, given that only 43% of participants felt already confident. Still, we want to be as precise as possible and therefore should conduct the corresponding significance test. For paired 2x2 contingency tables we have to use McNemar's Test, using the function `mcnemar.test()`. To determine the effect size we have to compute Cohen's g and use the function `cohens_g()` from the `effectsize` package to compute it.
+
+```{r Contigency tables paired computation, echo=TRUE}
+#McNemar's test
+mcnemar.test(ic_training$test, ic_training$communication2)
+
+# Effect size
+effectsize::cohens_g(ic_training$test, ic_training$communication2)
+```
+
+To correctly interpret the effect size @cohen1988statistical suggest the following benchmarks:
+
+-   $g < 0.05 = negligible$,
+
+-   $0.05 \leq g < 0.15 = small$,
+
+-   $0.15 \leq g < 0.25 = medium$,
+
+-   $0.25 \leq g = large$
 
 ## A cheatsheet to guide your own group comparisons {#cheatsheet-group-comparisons}
 
