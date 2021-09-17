@@ -215,13 +215,10 @@ dir_mov %>%
 
 Considering the revised plot, we likely can predict what the statistical test will show. Table \@ref(tab:comparing-two-groups-paired) summarises which tests and functions need to be performed if our data is parametric or non-parametric. In both cases, the functions are the same to those of the unpaired group comparisons, but we need to add the attribute `paired = TRUE`. Still, the interpretations between the unpaired and paired tests remain the same. Also, be aware that some tests have changed in name, e.g. the Mann-Whitney U test has become the Wilcoxon Signed Rank Test. even though we use the same functions as before, by changing the attributed of `paired` we also change the computational technique to obtain the results. Thus, be aware that the same function can perform different computations.
 
-+----------------+---------------------------+------------------------------+-------------+---------------------+
 | Assumption     | Test                      | Function                     | Effect size | Function            |
-+================+===========================+==============================+=============+=====================+
+|----------------|---------------------------|------------------------------|-------------|---------------------|
 | Parametric     | T-Test                    | `t_test(paired = TRUE)`      | Cohen's d   | `cohens_d()`        |
-+----------------+---------------------------+------------------------------+-------------+---------------------+
 | Non-parametric | Wilcoxon Signed Rank Test | `wilcox_test(paired = TRUE)` | Wilcoxon r  | `wilcoxonPairedR()` |
-+----------------+---------------------------+------------------------------+-------------+---------------------+
 
 : (\#tab:comparing-two-groups-paired)Comparing two unpaired groups (effect size functions from package `effectsize`, except for `wilcoxonPairedR()` from `rcompanion`)
 
@@ -323,27 +320,31 @@ mcomp %>%
               detailed = TRUE)
 
 ## Equal variances not assumed
-(test <- oneway.test(satisfaction ~ country,
+(oneway_test <- oneway.test(satisfaction ~ country,
             data = mcomp,
             var.equal = FALSE))
 
 # Kruskall-Wallis test
 ## Perform comparison
-(test <- mcomp %>%
-  kruskal_test(satisfaction ~ country))
+mcomp %>%
+  kruskal_test(satisfaction ~ country)
 ```
 
 While `anova_test()` does provide the effect size automatically, i.e. generalised eta squared (`ges`), this is not the case for the other two approaches. Therefore, we have to use the `effectsize` package to help us out. Packages often can get you a long way and make your life easier, but it is good to know alternatives in case a single package does not give you what you need.
 
 ```{r Multiple unpaired groups effect sizes, echo=TRUE, message=FALSE}
-# # After ANOVA with var.equal = FALSE
-# effectsize::eta_squared(test)
-# 
-# # effect size rank epsilon squared
-# effectsize::rank_epsilon_squared(mcomp$satisfaction ~ mcomp$gender)
-# 
-# # effect size eta squared (an alternative to epsilon squared)
-# mcomp %>% kruskal_effsize(satisfaction ~ country)
+
+anova_ev <- aov(satisfaction ~ country, data = mcomp)
+summary(anova_ev)
+
+effectsize::eta_squared(anova_ev)
+
+
+# After ANOVA with var.equal = FALSE
+effectsize::eta_squared(oneway_test)
+
+# effect size rank epsilon squared
+effectsize::rank_epsilon_squared(mcomp$satisfaction ~ mcomp$gender)
 ```
 
 The results show that there is a significant and large difference between these groups. You might argue that this is actually not quite true. Considering our plot, we know that Japan and Korea do not look like as if they are significantly different. Multiple group comparisons only consider differences across all three groups. Therefore, if one group lies far away from the other groups, the test will turn significant and even provide a large enough effect size to consider it important. However, these tests do not provide information which differences between groups are significant. To gain more clarification about this, we need to incorporate another step, so called 'post-hoc tests'. These tests compare two groups at a time, which is why they are also known as 'pairwise comparisons'. Compared to regular two-sample tests, these perform corrections of the `p`values for mulitple testing, which is necessary. However, there are many different 'post-hoc' tests one can choose from. @field2013discovering (p.459) nicely outlines the different scenarios and provides recommends to navigate this slightly complex field of post-hoc tests to follow-up a one-way ANOVA. Table \@ref(tab:post-hoc-tests) provides an overview of his suggestions.
@@ -398,7 +399,9 @@ As we can see, no matter which function we use, the interpretation of the result
 
 ### Multiple paired groups {#multiple-paired-groups}
 
-Additional condition if you compare three or more groups with each other. Might not be good to call them groups actually, because it refers to different measures by the same person usually over an extended period of time.
+When comparing multiple paired groups, matters become slightly more complicated. On the one hand, our groups are not really groups anymore, because it refers to the same group of people person who provide multiple measures, usually over an extended period of time. In experimental studies, this can also refer to different 'treatments' or 'conditions' participants are exposed to. On the other hand, we also have to deal with yet another assumption: Sphericity.
+
+Sphericity assumes that the variance between all groups is roughly the same. Thus,
 
 Is an extension of the linear model - so why not simply use a regression instead. Is it because regression primarily use quantitative data and not categorical type data?
 
@@ -569,15 +572,11 @@ Throughout the remaining chapters I will use the mosaic plot to illustrate distr
 
 When it comes to the computational side of things, we have to distinguish whether our two variables create a 2-by-2 matrix, i.e. both variables only have two levels, or more. Depending on which scenario applies to our analysis, a different statistical test has to be performed. For some tests, a minimum frequency for each value in our contingency table (i.e. cells) needs to be achieved. This is usually a matter of sample size and diversity in a sample. Table \@ref(tab:statistical-tests-unpaired-cat-variables) provides an overview of the different scenarios and indicates the functions we have to use to conduct our analysis in R.
 
-+--------+---------------------+----------------------------------------------------+----------------------------------------------------------+---------------+
 | Matrix | Condition           | Test                                               | Function in R                                            | Effect size   |
-+========+=====================+====================================================+==========================================================+===============+
+|--------|---------------------|----------------------------------------------------|----------------------------------------------------------|---------------|
 | 2x2    | \< 10 obs.          | Fisher's Exact Test                                | `fisher.test()`                                          | `phi()`       |
-+--------+---------------------+----------------------------------------------------+----------------------------------------------------------+---------------+
 | 2x2    | \> 10 obs.          | Chi-squared Test with Yate's Continuity Correction | `infer::chisq_test(correct = TRUE)`[^group_comparison-3] | `cramers_v()` |
-+--------+---------------------+----------------------------------------------------+----------------------------------------------------------+---------------+
 | n x n  | \> 5 (80% of cells) | Chi-squared Test                                   | `infer::chisq_test()`                                    | `cramers_v()` |
-+--------+---------------------+----------------------------------------------------+----------------------------------------------------------+---------------+
 
 : (\#tab:statistical-tests-unpaired-cat-variables)Statistical tests to compare two unpaired categorical variables. Effect sizes are computed using the `effectsize` package.
 
@@ -688,18 +687,18 @@ ic_training %>%
   theme_mosaic()
 ```
 
-The mosaic plot shows that more participants indicate `post-training` that they feel more confident in communicating with others, i.e. they replied with '`yes`, I feel more confident'. There were only very few participants who indicated that they have not become more confident.
+The mosaic plot shows that more participants indicate to be more confident in communicating with culturally others `post-training`. There were only very few participants who indicated that they have not become more confident.
 
-Let's get more specific and compute the corresponding contingency table.
+In a next step, we want to compute the contingency table. However, there is one aspect we need to account for: The responses are paired and therefore we need a contingency table of paired responses. this requires some modification of our data. Let's start with a classic contingency table as we did for unpaired data.
 
-```{r Contigency table paired comparison 2by2, echo=TRUE}
+```{r Contigency table paired comparison 2by2 before pairing , echo=TRUE}
 
-ic_training %>% infer::chisq_test(test ~ communication2,
-                               correct = TRUE)
+# ic_training %>% infer::chisq_test(test ~ communication2,
+#                                correct = TRUE)
+# 
+# (phi <- effectsize::phi(ic_training$test, ic_training$communication2))
 
-(phi <- effectsize::phi(ic_training$test, ic_training$communication2))
-
-# Wrong table - this is more for chi-squared tests
+# Unpaired contingency table
 ic_training %>%
   count(test, communication2) %>%
   group_by(test) %>%
@@ -710,14 +709,64 @@ ic_training %>%
   mutate(across(where(is.double), round, 2))
 ```
 
-With these insights we can refine our interpretation and further state that after the intercultural training, 98% of participants. This is quite a substantial improvement, given that only 43% of participants felt already confident. Still, we want to be as precise as possible and therefore should conduct the corresponding significance test. For paired 2x2 contingency tables we have to use McNemar's Test, using the function `mcnemar.test()`. To determine the effect size we have to compute Cohen's g and use the function `cohens_g()` from the `effectsize` package to compute it.
+This contingency table reflects the mosaic plot we created, but it does not show paired answers. If we sum the frequencies in each cell we receive a score of `96`, which equals the number of observations in `ic_training`. However, since we have two observations per person (i.e. paired responses), we only have 48 participants. Thus, this frequency table treats each the pre and post-training group as being independent from each other.
+
+The current dataset includes two rows for each participant and if we want to create a contingency table with paired scores, we need to first convert our data in such a way that each participant is reflected by one row only, i.e. we need to make our data frame wider with `pivot_wider()`.
+
+```{r Convert dataset to enable paired contingency table, echo=TRUE}
+# Creating data frame reflecting paired responses
+paired_data <- ic_training %>%
+  pivot_wider(id_cols = name,
+              names_from = test,
+              values_from = communication2)
+```
+
+In simple terms, we converted the column `communication2` into two columns based on the factor levels of `test`, i.e. `pre-training` and `post-training`. If we now use these two columns to create a contingency table and mosaic plot, we get an understanding of how the paired distributions between `pre-training` and `post-training` look like.
+
+```{r Contigency table paired comparison 2by2 and mosaic plot, echo=TRUE}
+# Contignency table with paired values
+ct_paired <- paired_data %>%
+  count(pre_training, post_training) %>%
+  pivot_wider(names_from = post_training,
+              names_prefix = "post_training_",
+              values_from = n,
+              values_fill = 0) # fill empty cells with '0'
+ct_paired
+
+# Contigency table with paired percentage values
+ct_paired %>%
+  mutate(post_training_yes = post_training_yes/nrow(paired_data),
+         post_training_no = post_training_no/nrow(paired_data)) %>%
+  mutate(across(where(is.double), round, 2))
+  
+  
+# Mosaic plot with paired values
+paired_data %>%
+  ggplot() +
+  geom_mosaic(aes(x = product(pre_training, post_training),
+                  fill = post_training)
+              ) +
+  theme_mosaic()
+```
+
+With these insights we can refine our interpretation and state the following:
+
+-   There were 19 participants (40%) for whom the training caused no change, i.e. before and after the training their response was still `yes` or `no`.
+
+-   However, for the other 29 participants (60%) the training helped them to change from `no` to `yes`. This is an excellent result.
+
+-   We notice that there was not a single participant who scores `no` after the training was delivered, which is also a great achievement by those hosting the training session.
+
+Lastly, we need to perform a statistical test to confirm our suspicion that the training had a significant impact on participants. For paired 2x2 contingency tables we have to use McNemar's Test, using the function `mcnemar.test()`. To determine the effect size we have to compute Cohen's g and use the function `cohens_g()` from the `effectsize` package to compute it. Be aware that we have to use the `paired_data` as our data frame and not `ic_training`.
 
 ```{r Contigency tables paired computation, echo=TRUE}
 #McNemar's test
-mcnemar.test(ic_training$test, ic_training$communication2)
+mcnemar.test(paired_data$pre_training, paired_data$post_training)
+
+binom.test()
 
 # Effect size
-effectsize::cohens_g(ic_training$test, ic_training$communication2)
+effectsize::cohens_g(paired_data$pre_training, paired_data$post_training)
 ```
 
 To correctly interpret the effect size @cohen1988statistical suggest the following benchmarks:
@@ -728,56 +777,47 @@ To correctly interpret the effect size @cohen1988statistical suggest the followi
 
 -   $0.15 \leq g < 0.25 = medium$,
 
--   $0.25 \leq g = large$
+-   $0.25 \leq g = large$.
 
-## A cheatsheet to guide your own group comparisons {#cheatsheet-group-comparisons}
+Thus, our effect size is very large and we can truly claim that the intercultural training had a significant impact on the participants. Well, there is only one flaw in our analysis. An eager eye will have noticed that one of our cells was empty, i.e. the top-right cell in the contingency table. The conditions to run such a test are similar to the Chi-squared Test. Thus, using the McNemar test is not quite appropriate in our case. Instead we need to use the 'exact McNemar test' which compares the results against a binomial distribution and not a chi-squared one . More important than remembering the name or the distribution is to understand that for smaller samples, the exact test produces more accurate results. However, we have to draw on a different package to compute it, i.e. `exact2x2` and its function `mcnemar.exact()`.
 
-To summarise what we have covered in this section, we can consider
-
-```{r How to decide on the right group comparison, echo=FALSE}
-# DiagrammeR::mermaid("
-#         graph TB
-# 
-#         data(my data)
-#         datatype{type of data}
-#         quan[quantitative]
-#         qual[qualitative]
-#         paracheck{<center>check for <br> assumptions</center>}
-#         addlin[additivity and linerarity]
-#         normal[normality]
-#         homvar[homogeneity of variance]
-#         indep[independence]
-#         para[parametric]
-#         npara[non-parametric]
-#         
-#         data --> datatype
-#         
-#         subgraph 
-#         datatype --> quan
-#         datatype --> qual
-#         end
-#         
-#         
-#         quan --> paracheck
-#         qual --> npara
-#         
-#         paracheck --> addlin
-#         
-#         subgraph 
-#         addlin -- yes --> indep
-#         indep -- yes --> normal
-#         normal -- yes --> homvar
-#         end
-# 
-#         addlin -- no --> npara
-#         indep -- no --> npara
-#         normal -- no --> npara
-#         homvar -- no --> npara
-# 
-#         homvar -- yes --> para
-#         
-#         # hwg[How many groups?]
-#         ")
-# 
-
+```{r Compute exact McNemar test}
+library(exact2x2)
+mcnemar.exact(paired_data$pre_training, paired_data$post_training)
 ```
+
+Even after using a more robust computation for our data, we find that the results are still significant. Thus, there is no doubt that the intercultural training helped participants to improve.
+
+There many other combinations of contingency tables. The McNemar test can be extended to a 3x3 or higher matrix, but the rows and columns always have to be the same length. If you want to compare multiple categorical variables it would be necessary to look into a loglinear analysis. While this book does not cover this technique, an excellent starting point for this is provided by @field2013discovering (p. 732ff).
+
+### A final remark about comparing groups based on categorical data
+
+Admittedly, I hardly ever find studies in the field of Social Sciences which work with primarily categorical data. Political Science might be an exception, because working, for example, with polling data usually implies working with categorical data. A reason why you likely find yourself in the situation to work with such data and analytical techniques is measurement accuracy. If you look at the `ic_training`, the variable `communication2` was artificially created to turn `numeric` data into a `factor`. This is usually not good practice, because you are losing measurement accuracy and it tends to exaggerate differences between groups. Consider the following plots:
+
+```{r Comparing categorical vs numeric one, echo=TRUE}
+p1 <- ic_training %>%
+  ggplot(aes(x = communication)) +
+  geom_bar() +
+  ggtitle("Full scale")
+
+p2 <- ic_training %>%
+  ggplot(aes(x = communication3)) +
+  geom_bar() +
+  ggtitle("Category with 3 levels")
+
+p3 <- ic_training %>%
+  ggplot(aes(x = communication2)) +
+  geom_bar() + 
+  ggtitle("Category with 2 levels")
+
+# Create plot with 'patchwork'
+p1 + p2 + p3 + plot_spacer()
+```
+
+The more we aggregate the data into fewer categories, the more likely we increase differences between groups. The plot `Category with 3 levels` shows that most participants fall into the category `medium`. However, reducing the categories to two, most participants are classified as `yes`. Thus, some participants which were classified as `medium` are now in the `no` category. However, in reality, several participants will still have improved in confidence, but are not considered together with those who have not improved. This is a major problem, because now it seems there are more people who are confident about communicating with people from different cultural backgrounds.
+
+In short, I recommend to only use the techniques outline in this chapter if your data is truly categorical in nature. Thus, when designing your data collection tool, you might also wish to abstain from measuring quantitative variables as categories, for example `age`, which is very popular among my own students. While it might be sometimes more appropriate to offer categories, it is always good to use multiple categories and not just two. Every additional level in your factor will increase measurement accuracy and provides access to more advance analytical techniques. Remember: it is always possible to convert `numeric` data into a `factor`, but not the other way around.
+
+## Reviewing group comparisons {#reviewing-group-comparisons}
+
+In Social Sciences we almost always find ourselves comparing individuals against each other or with themselves over time. As such, understanding how to compare groups of participants is an essential analytical skill. The techniques outline in this chapter merely provide a solid starting point and likely cover 80% of datasets you will collect.
