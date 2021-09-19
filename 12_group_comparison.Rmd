@@ -215,10 +215,13 @@ dir_mov %>%
 
 Considering the revised plot, we likely can predict what the statistical test will show. Table \@ref(tab:comparing-two-groups-paired) summarises which tests and functions need to be performed if our data is parametric or non-parametric. In both cases, the functions are the same to those of the unpaired group comparisons, but we need to add the attribute `paired = TRUE`. Still, the interpretations between the unpaired and paired tests remain the same. Also, be aware that some tests have changed in name, e.g. the Mann-Whitney U test has become the Wilcoxon Signed Rank Test. even though we use the same functions as before, by changing the attributed of `paired` we also change the computational technique to obtain the results. Thus, be aware that the same function can perform different computations.
 
++----------------+---------------------------+------------------------------+-------------+---------------------+
 | Assumption     | Test                      | Function                     | Effect size | Function            |
-|----------------|---------------------------|------------------------------|-------------|---------------------|
++================+===========================+==============================+=============+=====================+
 | Parametric     | T-Test                    | `t_test(paired = TRUE)`      | Cohen's d   | `cohens_d()`        |
++----------------+---------------------------+------------------------------+-------------+---------------------+
 | Non-parametric | Wilcoxon Signed Rank Test | `wilcox_test(paired = TRUE)` | Wilcoxon r  | `wilcoxonPairedR()` |
++----------------+---------------------------+------------------------------+-------------+---------------------+
 
 : (\#tab:comparing-two-groups-paired)Comparing two unpaired groups (effect size functions from package `effectsize`, except for `wilcoxonPairedR()` from `rcompanion`)
 
@@ -399,20 +402,125 @@ As we can see, no matter which function we use, the interpretation of the result
 
 ### Multiple paired groups {#multiple-paired-groups}
 
-When comparing multiple paired groups, matters become slightly more complicated. On the one hand, our groups are not really groups anymore, because it refers to the same group of people person who provide multiple measures, usually over an extended period of time. In experimental studies, this can also refer to different 'treatments' or 'conditions' participants are exposed to. On the other hand, we also have to deal with yet another assumption: Sphericity.
+When comparing multiple paired groups, matters become slightly more complicated. On the one hand, our groups are not really groups anymore, because our data refers to the same group of people, usually over an extended period of time. In experimental studies, this can also refer to different 'treatments' or 'conditions'. On the other hand, we also have to deal with yet another assumption: Sphericity.
 
-Sphericity assumes that the variance between all groups is roughly the same. Thus,
+#### Testing the assumption of sphericity {#sphericity}
 
-Is an extension of the linear model - so why not simply use a regression instead. Is it because regression primarily use quantitative data and not categorical type data?
+Sphericity assumes that the variance of covariate pairs (i.e. any combination of the groups/treatments) are roughly equal. This might sound familiar to the assumption of homogeneity of variance in between-subject ANOVAs only that we look at differences between pairs and not between two different groups. Less surprising that the parametric test to compare multiple paired groups is also called 'repeated measures ANOVA'.
 
-repeated measures ANOVA (find dataset)
+To illustrate the concept of sphericity let's look at an example. Assume we conduct a longitudinal study which involves five university students who started their studies in a foreign country. We ask them to complete a survey which tests their level of integration into the local community at three points in time: month 1 (`m1`), month 4 (`m4`) and month 8 (`m8)`. This gives us the following data set:
+
+```{r Sphericity example data, echo=FALSE}
+set.seed(1234)
+
+acculturation <-
+  tibble(name = randomNames::randomNames(5,
+                                         ethnicity = c(1,2,3,4,5),
+                                         which.names = "first"),
+         m1 = rnorm(5, mean = 1.7, sd = 0.3),
+         m4 = rnorm(5, mean = 3.0, sd = 0.2),
+         m8 = rnorm(5, mean = 5, sd = 0.5)
+         ) %>%
+  mutate(across(where(is.double), round, 0))
+```
+
+```{r Sphericity example p1, echo=TRUE}
+acculturation
+```
+
+If each month was measured with a different group of participants we would compare the differences between each month. However, since we look at paired data, we need to consider the differences in pairs of measures. In our study the following combinations are possible:
+
+-   `m1` and `m4`
+
+-   `m4` and `m8`
+
+-   `m1` and `m8`
+
+Let's add the differences between measures for each participant based on these pairs and compute the variance of these values.
+
+```{r Sphericity example p2, echo=TRUE}
+# Compute the differences across all three pairs of measurements
+variances <- acculturation %>%
+  mutate(m1_m4 = m1 - m4,
+         m4_m8 = m4 - m8,
+         m1_m8 = m1 - m8)
+
+variances
+
+# Compute the variance for each pair
+variances %>%
+  summarise(m1_m4_var = var(m1_m4),
+            m4_m8_var = var(m4_m8),
+            m1_m8_var = var(m1_m8))
+```
+
+We can tell that the differences across groups is fairly small when comparing the values of `m1_m4_var` and `m4_m8_var`. However, the value for `m1_m8_var` appears quite bigger. So, how can we be certain whether the assumption of sphericity is violated or not? Similar to many of the other assumptions we covered, there is a significance test which provides the answer to this question. For multiple paired groups, we use the Mauchly's Test of Sphericity. If the test is significant, the variance across groups is not equal. In other words, a significant Mauchly test implies a violation of sphericity. The `rstatix` package includes Mauchly's Test of Sphericity in its `anova_test()`. Thus, we get both with one function. However, our data in this example is not tidy. We first need to convert it into a tidy dataset.
+
+```{r Testing for sphericity, echo=TRUE}
+# Convert into tidy data
+acc_long <-
+  acculturation %>%
+  pivot_longer(cols = c(m1, m4, m8),
+               names_to = "month",
+               values_to = "integration")
+
+# Perform repeated-measures ANOVA
+# plus Mauchly's Test of Sphericity
+acc_long %>%
+  rstatix::anova_test(dv = integration,
+                      wid = name,
+                      within = month,
+                      detailed = TRUE)
+```
+
+Not only do the results show that the differences across measures are significant, but that our Mauchly's Test of Sphericity is not significant. Good news on all fronts.
+
+The output from `anova_test()` also provides information labelled as `Sphericity Corrections`. These we need to consider if the sphericity assumption is violated, i.e. Mauchly's Test if Sphericity is significant. We commonly use two methods to correct for the degrees of freedom in our analysis: Greenhouse-Geisser correction [@greenhouse1959methods] and Huynh-Field correction [@huynh1976estimation]. @field2013discovering explains that if the Greenhouse-Geisser estimate (i.e. `GGe`) is greater than `0.74`, it is advisable to use the Huynh-Field correction instead. For each correction, the `anova_test()` provides corrected p-values. In our example, we do not have to worry about corrections.
+
+#### Visualising and computing multiple paired group comparisons {#visualising-computing-multiple-paired-group-comparisons}
+
+So far we blindly assumed that our data is parametric. If our assumptions for parametric tests are violated, we can draw on a non-parametric equivalent called `Friedman Test`.
+
++----------------+-------------------------+-------------------+-------------+-----------------+
+| Assumption     | Test                    | Function          | Effect size | Function        |
++================+=========================+===================+=============+=================+
+| Parametric     | Repeated measures ANOVA | `anova_test()`    | Eta squared | `eta_squared()` |
++----------------+-------------------------+-------------------+-------------+-----------------+
+| Non-parametric | Friedman Test           | `friedman_test()` | Kendall's R | `kendalls_w()`  |
++----------------+-------------------------+-------------------+-------------+-----------------+
+
+: (\#tab:comparing-multiple-groups-paired)Comparing multiple paired groups (effect size functions from package `effectsize`)
+
+Instead of using a fictional example as in the previous chapter, let's draw on some real observations in `wvs_waves`. This dataset contains similar data to `wvs`, but multiple measures for the same country. For example, we might interested to know whether `satisfaction` across different countries changed over the years.
+
+Let's start by visualising the groups and measures using a `geom_boxplot()`.
+
+```{r Visualise multiple paired groups, echo=TRUE}
+wvs_waves %>%
+  ggplot(aes(x = wave,
+             y = satisfaction,
+             fill = country)) +
+  geom_boxplot()
+```
+
+In total we plotted 21 boxplots comparing three countries across seven waves. We can tell that `satisfaction` with life has not changed much for people in `Japan`. They are more or less equally satisfied throughout the years. However, we notice some increases in `satisfaction` for `Argentina` and `Mexico`. There appear to be also quite some outliers, which we ignore for the sake of simplicity.
+
+Next, we would have to check for our assumptions to conduct a parametric test. Since we have covered this in Chapter \@ref(sources-of-bias) we only consider the Mauchly's Test of Sphericity. Our data is currently b
 
 ```{r Repeated measures ANOVA, echo=TRUE}
-# anova_test()
-# 
+# Compute repeated measures ANOVA and
+# Mauchly's Test of Sphericity
+
+wvs_waves %>% rstatix::anova_test(dv = satisfaction,
+                                  wid = country,
+                                  within = wave)
+
+# Effect size
 # eta_squared()
-# omega_squared()
+
 ```
+
+Is an extension of the linear model - so why not simply use a regression instead. Is it because regression primarily use quantitative data and not categorical type data?
 
 Friedman Test (find dataset)
 
@@ -572,11 +680,15 @@ Throughout the remaining chapters I will use the mosaic plot to illustrate distr
 
 When it comes to the computational side of things, we have to distinguish whether our two variables create a 2-by-2 matrix, i.e. both variables only have two levels, or more. Depending on which scenario applies to our analysis, a different statistical test has to be performed. For some tests, a minimum frequency for each value in our contingency table (i.e. cells) needs to be achieved. This is usually a matter of sample size and diversity in a sample. Table \@ref(tab:statistical-tests-unpaired-cat-variables) provides an overview of the different scenarios and indicates the functions we have to use to conduct our analysis in R.
 
++--------+---------------------+----------------------------------------------------+----------------------------------------------------------+---------------+
 | Matrix | Condition           | Test                                               | Function in R                                            | Effect size   |
-|--------|---------------------|----------------------------------------------------|----------------------------------------------------------|---------------|
++========+=====================+====================================================+==========================================================+===============+
 | 2x2    | \< 10 obs.          | Fisher's Exact Test                                | `fisher.test()`                                          | `phi()`       |
++--------+---------------------+----------------------------------------------------+----------------------------------------------------------+---------------+
 | 2x2    | \> 10 obs.          | Chi-squared Test with Yate's Continuity Correction | `infer::chisq_test(correct = TRUE)`[^group_comparison-3] | `cramers_v()` |
++--------+---------------------+----------------------------------------------------+----------------------------------------------------------+---------------+
 | n x n  | \> 5 (80% of cells) | Chi-squared Test                                   | `infer::chisq_test()`                                    | `cramers_v()` |
++--------+---------------------+----------------------------------------------------+----------------------------------------------------------+---------------+
 
 : (\#tab:statistical-tests-unpaired-cat-variables)Statistical tests to compare two unpaired categorical variables. Effect sizes are computed using the `effectsize` package.
 
