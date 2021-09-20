@@ -406,7 +406,7 @@ When comparing multiple paired groups, matters become slightly more complicated.
 
 #### Testing the assumption of sphericity {#sphericity}
 
-Sphericity assumes that the variance of covariate pairs (i.e. any combination of the groups/treatments) are roughly equal. This might sound familiar to the assumption of homogeneity of variance in between-subject ANOVAs only that we look at differences between pairs and not between two different groups. Less surprising that the parametric test to compare multiple paired groups is also called 'repeated measures ANOVA'.
+Sphericity assumes that the variance of covariate pairs (i.e. any combination of the groups/treatments) are roughly equal. This might sound familiar to the assumption of homogeneity of variance in between-subject ANOVAs, only that we look at differences between pairs and not between two different groups. It seems less surprising that the parametric test to compare multiple paired groups is also called 'repeated measures ANOVA'.
 
 To illustrate the concept of sphericity let's look at an example. Assume we conduct a longitudinal study which involves five university students who started their studies in a foreign country. We ask them to complete a survey which tests their level of integration into the local community at three points in time: month 1 (`m1`), month 4 (`m4`) and month 8 (`m8)`. This gives us the following data set:
 
@@ -428,7 +428,7 @@ acculturation <-
 acculturation
 ```
 
-If each month was measured with a different group of participants we would compare the differences between each month. However, since we look at paired data, we need to consider the differences in pairs of measures. In our study the following combinations are possible:
+If each month measured a different group of participants we would compare the differences between each month regarding homogeneity. However, since we look at paired data, we need to consider the differences in pairs of measures. In our study the following combinations are possible:
 
 -   `m1` and `m4`
 
@@ -440,21 +440,21 @@ Let's add the differences between measures for each participant based on these p
 
 ```{r Sphericity example p2, echo=TRUE}
 # Compute the differences across all three pairs of measurements
-variances <- acculturation %>%
+differences <- acculturation %>%
   mutate(m1_m4 = m1 - m4,
          m4_m8 = m4 - m8,
          m1_m8 = m1 - m8)
 
-variances
+differences
 
 # Compute the variance for each pair
-variances %>%
+differences %>%
   summarise(m1_m4_var = var(m1_m4),
             m4_m8_var = var(m4_m8),
             m1_m8_var = var(m1_m8))
 ```
 
-We can tell that the differences across groups is fairly small when comparing the values of `m1_m4_var` and `m4_m8_var`. However, the value for `m1_m8_var` appears quite bigger. So, how can we be certain whether the assumption of sphericity is violated or not? Similar to many of the other assumptions we covered, there is a significance test which provides the answer to this question. For multiple paired groups, we use the Mauchly's Test of Sphericity. If the test is significant, the variance across groups is not equal. In other words, a significant Mauchly test implies a violation of sphericity. The `rstatix` package includes Mauchly's Test of Sphericity in its `anova_test()`. Thus, we get both with one function. However, our data in this example is not tidy. We first need to convert it into a tidy dataset.
+We can tell that the differences across groups is fairly small when comparing the values of `m1_m4_var` and `m4_m8_var`. However, the value for `m1_m8_var` appears bigger. So, how can we be certain whether the assumption of sphericity is violated or not? Similar to many of the other assumptions we covered, there is a significance test which provides the answer to this question. For multiple paired groups, we use the Mauchly's Test of Sphericity. If the test is significant, the variances across groups are not equal. In other words, a significant Mauchly test implies a violation of sphericity. The `rstatix` package includes Mauchly's Test of Sphericity in its `anova_test()`. Thus, we get both with one function. However, our data in this example is not tidy. We first need to convert it into a tidy dataset.
 
 ```{r Testing for sphericity, echo=TRUE}
 # Convert into tidy data
@@ -475,11 +475,11 @@ acc_long %>%
 
 Not only do the results show that the differences across measures are significant, but that our Mauchly's Test of Sphericity is not significant. Good news on all fronts.
 
-The output from `anova_test()` also provides information labelled as `Sphericity Corrections`. These we need to consider if the sphericity assumption is violated, i.e. Mauchly's Test if Sphericity is significant. We commonly use two methods to correct for the degrees of freedom in our analysis: Greenhouse-Geisser correction [@greenhouse1959methods] and Huynh-Field correction [@huynh1976estimation]. @field2013discovering explains that if the Greenhouse-Geisser estimate (i.e. `GGe`) is greater than `0.74`, it is advisable to use the Huynh-Field correction instead. For each correction, the `anova_test()` provides corrected p-values. In our example, we do not have to worry about corrections.
+The output from `anova_test()` also provides information labelled as `Sphericity Corrections`. These we need to consider if the sphericity assumption is violated, i.e. Mauchly's Test of Sphericity is significant. We commonly use two methods to correct for the degrees of freedom in our analysis: Greenhouse-Geisser correction [@greenhouse1959methods] and Huynh-Field correction [@huynh1976estimation]. @field2013discovering explains that if the Greenhouse-Geisser estimate (i.e. `GGe`) is greater than `0.74`, it is advisable to use the Huynh-Field correction instead. For each correction, the `anova_test()` provides corrected p-values. In our example, we do not have to worry about corrections, though. Still, it is very convenient that this function delivers the corrected results as well.
 
 #### Visualising and computing multiple paired group comparisons {#visualising-computing-multiple-paired-group-comparisons}
 
-So far we blindly assumed that our data is parametric. If our assumptions for parametric tests are violated, we can draw on a non-parametric equivalent called `Friedman Test`.
+So far we blindly assumed that our data is parametric. If our assumptions for parametric tests are violated, we can draw on a non-parametric equivalent called `Friedman Test`. Table \@ref(tab:comparing-multiple-groups-paired) summarises the parametric and non-parametric tests as well as their respective effect sizes.
 
 +----------------+-------------------------+-------------------+-------------+-----------------+
 | Assumption     | Test                    | Function          | Effect size | Function        |
@@ -491,45 +491,66 @@ So far we blindly assumed that our data is parametric. If our assumptions for pa
 
 : (\#tab:comparing-multiple-groups-paired)Comparing multiple paired groups (effect size functions from package `effectsize`)
 
-Instead of using a fictional example as in the previous chapter, let's draw on some real observations in `wvs_waves`. This dataset contains similar data to `wvs`, but multiple measures for the same country. For example, we might interested to know whether `satisfaction` across different countries changed over the years.
+Instead of using a fictional example as we did in the previous chapter, let's draw on some real observations using the dataset `wvs_waves`. This dataset contains similar data to `wvs`, but offers multiple measures indicates in the variable `wave`. For example, we might be interested to know whether `satisfaction` changed over the years.
 
-Let's start by visualising the groups and measures using a `geom_boxplot()`.
+Let's start by visualising the data across all measures using a `geom_boxplot()`. I also added the mean for each wave, since this is what we will eventually compare in our repeated measures ANOVA.
 
 ```{r Visualise multiple paired groups, echo=TRUE}
+wave_means <- wvs_waves %>%
+  group_by(wave) %>%
+  summarise(w_mean = mean(satisfaction))
+
 wvs_waves %>%
   ggplot(aes(x = wave,
              y = satisfaction,
-             fill = country)) +
-  geom_boxplot()
+             fill = wave)) +
+  geom_boxplot() +
+  
+  # Add the means
+  geom_point(data = wave_means,
+             aes(x = wave,
+                 y = w_mean),
+             shape = 4)
 ```
 
-In total we plotted 21 boxplots comparing three countries across seven waves. We can tell that `satisfaction` with life has not changed much for people in `Japan`. They are more or less equally satisfied throughout the years. However, we notice some increases in `satisfaction` for `Argentina` and `Mexico`. There appear to be also quite some outliers, which we ignore for the sake of simplicity.
+In total we plotted 7 boxplots for each of the waves of data collection. We can tell that `satisfaction` with life has improved slightly, especially from wave 3 (`w3`) to wave 4 (`w4`). There appear to be also quite some outliers, which we ignore for the sake of simplicity.
 
-Next, we would have to check for our assumptions to conduct a parametric test. Since we have covered this in Chapter \@ref(sources-of-bias) we only consider the Mauchly's Test of Sphericity. Our data is currently b
+Next, we would have to check the assumptions for parametric tests. Since we have covered this in Chapter \@ref(sources-of-bias) we only consider the Mauchly's Test of Sphericity by running `anova_test()`.
 
 ```{r Repeated measures ANOVA, echo=TRUE}
 # Compute repeated measures ANOVA and
 # Mauchly's Test of Sphericity
-
-wvs_waves %>% rstatix::anova_test(dv = satisfaction,
-                                  wid = country,
-                                  within = wave)
-
-# Effect size
-# eta_squared()
-
+wvs_waves %>%
+  rstatix::anova_test(dv = satisfaction,
+                      wid = id,
+                      within = wave)
 ```
 
-Is an extension of the linear model - so why not simply use a regression instead. Is it because regression primarily use quantitative data and not categorical type data?
+We first take a look at the sphericity assumption which we did not violate, i.e. $p > 0.05$. Thus, using the ANOVA test is appropriate. Next we take a look at the ANOVA test results and find that the differences are significant as well, i.e. $p < 0.05$. Still, the effect size `ges` is small.
 
-Friedman Test (find dataset)
+From our plot, we know that some of the waves are fairly similar to each other and we need to determine which pair of waves is truly significantly different from each other. Therefore, we are in need of a post-hoc test which allows us to perform pairwise comparisons. By now, this should sound oddly familiar (see also Table \@ref(tab:post-hoc-tests).
+
+Since we assume our data is parametric and the groups are equally large for each wave ($n = 300$) we can use T-Tests with a Bonferroni correction.
+
+```{r Post-hoc test for paired multiple groups, echo=TRUE}
+pairwise.t.test(wvs_waves$satisfaction,
+                wvs_waves$wave,
+                p.adjust.method = "bonferroni",
+                paired = TRUE)
+```
+
+Based on these insights we find that that mainly `w2` shows significant differences with other waves. This is not a coincidence, because `w2` has the lowest mean of all waves. Similarly, `w7` which reports the highest mean for satisfaction, also reports several significant differences with other groups.
+
+In view of the above, we can confirm that `satisfaction` with life has changed positively for our participants, but the change is very small (statistically).
+
+To finish this chapter, I want to share the non-parametric version of this test, i.e. the Friedman test, i.e. `friedman_test()` from `rstatix`.
 
 ```{r Friedman test, echo=TRUE}
-# # NON=PARAMETRIC COMPARISON
-# friedman_test()
-# 
-# # Effect size
-# kendalls_w()
+# NON=PARAMETRIC COMPARISON
+wvs_waves %>% rstatix::friedman_test(satisfaction ~ wave | id)
+
+# Effect size
+wvs_waves %>% effectsize::kendalls_w(satisfaction ~ wave | id)
 ```
 
 A useful overview of all the possible options of comparing groups and how to obtain their effect sizes can also be found here
@@ -787,7 +808,7 @@ The statistical results further confirm that the relationship between `relations
 
 ### Paired groups of categorical variables {#paired-groups-categorical-variables}
 
-Similar to paired group comparisons it is possible that contingency tables show paired data. For example, we could be interested in knowing whether certain training we delivered improved participants skills (or at least their personal perception).
+Similar to paired group comparisons it is possible that contingency tables show paired data. For example, we could be interested in knowing whether an intercultural training we delivered, improved participants skills (or at least their personal perception of having improved).
 
 The dataset `ic_training` looks at participants' confidence in `communication` with other people from diverse cultural backgrounds before and after an intercultural training session. Thus, we might be curious to know whether the training was effective. The dataset contains multiple versions of the same variable measured in different ways. Let's begin with the variable `communication2` which measures improvement as a factor with only two levels, i.e. `yes` and `no`. We can start by plotting a mosaic plot
 
