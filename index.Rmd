@@ -4,8 +4,8 @@ author: "Daniel Dauber"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 documentclass: book
-bibliography: [book.bib]
-biblio-style: apalike
+bibliography: book.bib
+biblio-style: apa
 link-citations: yes
 description: "This books is intended for Social Scientists. No matter whether you have years of experiences, this book might come in handy if you never use R or any other programming language before."
 always_allow_html: true
