@@ -26,7 +26,7 @@ The `r4np` package hosts several different datasets to work with, but at some po
 
 3.  Import your data calling one of the `readr` functions in the console or RScript.
 
-We will use the `readr` package to import our data. Using this package we can import a range of different file formats, including `.csv`, `.tsv`, `.txt`. If you want to import data from an `.xlsx` file, you need to use another package called `readxl`. The following sections will primarily focus on using `readr` via RStudio or directly in your Console or RScript.
+We will use the `readr` package to import our data. Using this package we can import a range of different file formats, including `.csv`, `.tsv`, `.txt`. If you want to import data from an `.xlsx` file, you need to use another package called `readxl`. Similarly, if you used SPSS, Stata or SAS files before and want to use them in R you can use the `haven` package. The following sections will primarily focus on using `readr` via RStudio or directly in your Console or RScript.
 
 ### Import data from the Files pane
 
@@ -294,10 +294,10 @@ Another common problem we have to tackle when working with data is their represe
 
 [^data_wrangling-1]: A sophisticated research project would likely not rely on a dichotomous approach to gender, but appreciate the diversity in this regard.
 
-For example, we might be interested in knowing how many participants in the `wvs` were `male` and `female`. The function `count()` from `dplyr` does precisely that.
+For example, we might be interested in knowing how many participants in the `wvs` were `male` and `female`. The function `count()` from `dplyr` does precisely that. We can sort the results, i.e. `n`, in descending order by including `sort = TRUE`. By default, `count()` arranges our variable `gender` in alphabetical order.
 
 ```{r Count male and female participants, echo=TRUE}
-wvs %>% count(gender)
+wvs %>% count(gender, sort = TRUE)
 ```
 
 Now we know how many people were `male` and `female` and how many did not disclose their `gender`. Or do we? The issue here is that you would have to know what the `0` and `1` stand for. Surely you would have a coding manual that gives you the answer, but it seems a bit of a complication. For `gender`, this might still be easy to remember, but can you recall the ID numbers for 48 countries?
@@ -305,13 +305,16 @@ Now we know how many people were `male` and `female` and how many did not disclo
 It certainly would be easier to replace the `0`s and `1`s with their corresponding labels. This can be achieved with a simple function called `fct_recode()` from `forcats`. However, since we 'mutate' a variable into something else, we also have to use the `mutate()` function.
 
 ```{r Recode gender, echo=TRUE}
-wvs <- wvs %>% mutate(gender = fct_recode(gender, "male" = "0", "female" = "1"))
+wvs <-
+  wvs %>%
+  mutate(gender = fct_recode(gender, "male" = "0", "female" = "1"))
 ```
 
 If you have been following along very carefully, you might spot one oddity in this code: `"0"` and `"1"`. You likely recall that in Chapter \@ref(r-basics-the-very-fundamentals), I mentioned that we use `""` for `character` values but not for numbers. So what happens if we run the code and remove `""`.
 
 ```{r Recode gender without quotation marks, echo=TRUE, error=TRUE}
-wvs %>% mutate(gender = fct_recode(gender, "male" = 0, "female" = 1))
+wvs %>%
+  mutate(gender = fct_recode(gender, "male" = 0, "female" = 1))
 ```
 
 The error message is easy to understand: `fct_recode()` only expects `strings` as input and not numbers. R recognises `0` and `1` as numbers, but `fct_recode()` converts a `factor` value into another `factor` value. To refer to a factor level (i.e. one of the categories in our factor), we have to use `""`. In other words, data types matter and are often a source of problems with your code. Thus, always pay close attention to it.
@@ -325,8 +328,9 @@ wvs %>% count(gender)
 Another benefit of going through the trouble of recoding your factors is the readability of your plots. For example, we could quickly generate a bar plot based on the above table and have appropriate labels instead of `0` and `1`.
 
 ```{r Barplot for gender, echo=TRUE}
-wvs %>% count(gender) %>% 
-  ggplot(aes(gender, n)) + 
+wvs %>%
+  count(gender) %>%
+  ggplot(aes(gender, n)) +
   geom_col()
 ```
 
@@ -338,7 +342,7 @@ First, we need to find out which country names are particularly long. There are 
 
 ```{r Listing selected country names, echo=TRUE}
 wvs %>%
-  filter(str_length(country) >= 15) %>% 
+  filter(str_length(country) >= 15) %>%
   count(country)
 ```
 
@@ -347,9 +351,9 @@ I use the value `15` arbitrarily after some trial and error. You can change the 
 ```{r Recoding country names, echo=TRUE}
 wvs <- wvs %>%
   mutate(country = fct_recode(country,
-                                   "Bolivia" = "Bolivia, Plurinational State of",
-                                   "Iran" = "Iran, Islamic Republic of",
-                                   "Korea" = "Korea, Republic of"))
+                              "Bolivia" = "Bolivia, Plurinational State of",
+                              "Iran" = "Iran, Islamic Republic of",
+                              "Korea" = "Korea, Republic of"))
 ```
 
 ### Reordering factor levels {#reordering-factor-levels}
@@ -416,7 +420,8 @@ The `naniar` package comes with the very popular Little's MCAR test [@little-198
 
 ```{r Little-s MCAR test, echo=TRUE}
 wvs %>%
-  select(-participant_id) %>%     # Remove variables which do not reflect a response
+  # Remove variables which do not reflect a response
+  select(-participant_id) %>%
   mcar_test()
 ```
 
@@ -434,12 +439,11 @@ Thus,the main difference between MCAR and MAR data lies in the fact that we can 
 
 Accordingly, we first look into variables with no missing data and see whether they can explain our missing data in other variables. For example, we could investigate whether missing data in `freedom_of_choice` is attributed to specific countries. <a id="missing-data-by-country-table"></a>
 
-```{r Check missing data by country, }
-wvs %>% 
-  group_by(country) %>% 
-  filter(is.na(freedom_of_choice)) %>% 
-  count() %>% 
-  arrange(desc(n))                      # Rearranging scores for easier reading
+```{r Check missing data by country, echo=TRUE}
+wvs %>%
+  group_by(country) %>%
+  filter(is.na(freedom_of_choice)) %>%
+  count(sort = TRUE)
 ```
 
 It seems four countries have exceptionally high numbers of missing data for `freedom_of_choice`: Japan, Brazil, New Zealand, Russia and Bolivia. Why this is the case lies beyond this dataset and is something only the researchers themselves could explain. Collecting data in different countries is particularly challenging, and one is quickly faced with different unfavourable conditions. Furthermore, the missing data is not completely random because we have some first evidence that the location of data collection might have affected its completeness.
@@ -510,15 +514,16 @@ If we apply this function to our dataset, we have to write the following:
 
 ```{r Use KNN imputation via simputation package, echo=TRUE}
 wvs_nona <- wvs %>%
-  select(-participant_id) %>% 
-  as.data.frame() %>%                  # Transforms our tibble into a data frame
+  select(-participant_id) %>%
+  # Transforms our tibble into a data frame
+  as.data.frame() %>%
   simputation::impute_knn(. ~ .)
 
 # Be aware that our new dataframe has different datatypes
 glimpse(wvs_nona)
 
 # Let's fix this
-wvs_nona <- wvs_nona %>% 
+wvs_nona <- wvs_nona %>%
   mutate(age = as.numeric(age),
          freedom_of_choice = as.numeric(freedom_of_choice),
          satisfaction = as.numeric(satisfaction))
@@ -560,8 +565,8 @@ The same is true for communication skills (`cs_imp` and `cs_exp`). We can comput
 
 ```{r Compute latent variables, echo=TRUE}
 # Compute the scores for the latent variable 'si' and 'cs'
-gep <- gep %>% 
-  rowwise() %>% 
+gep <- gep %>%
+  rowwise() %>%
   mutate(si = mean(c(si_socialise_with_people_exp,
                      si_supportive_friends_exp,
                      si_time_socialising_exp
@@ -587,9 +592,8 @@ Compared to dealing with missing data, this is a fairly straightforward task. Ho
 By far, the most common approach to assessing reliability (or more accurately 'internal consistency') of latent variables is Cronbach's $\alpha$. This indicator looks at how strongly a set of items (i.e. questions in your questionnaire) are related to each other. For example, the stronger the relationship of all items starting with `si_` to each other, the more likely we achieve a higher Cronbach's $\alpha$. The psych package has a suitable function to compute it for us.
 
 Instead of listing all the items by hand, I use the function `starts_with()` to pick only the variables whose names start with `si_`. It certainly pays off to think about your variable names more thoroughly in advance to benefit from such shortcuts (see also Chapter \@ref(colnames-cleaning).
-
 ```{r Compute Cronbachs alpha for si, echo=TRUE}
-gep %>% 
+gep %>%
   select(starts_with("si_")) %>%
   psych::alpha()
 ```
@@ -597,7 +601,7 @@ gep %>%
 The function `alpha()` returns a lot of information. The most important part, though, is shown at the very beginning:
 
 ```{r Output from alpha(), echo=FALSE}
-si_alpha <- gep %>% 
+si_alpha <- gep %>%
   select(starts_with("si_")) %>%
   psych::alpha()
 
@@ -621,7 +625,7 @@ Our dataset shows that `si` scores a solid $\alpha = 0.85$, which is excellent. 
 ```{r Evolution of select function for example, echo=TRUE}
 # Select only variables which start with 'cs_'
 gep %>%
-  select(starts_with("cs_")) %>% 
+  select(starts_with("cs_")) %>%
   glimpse()
 
 # Do the above but include only variables that also end with '_imp'
@@ -638,11 +642,11 @@ gep %>%
 Since we want to compute the Cronbach's $\alpha$ for both variables, we write the following:
 
 ```{r Compute Cronbachs alpha for cs, echo=TRUE, warning=FALSE}
-gep %>% 
+gep %>%
   select(starts_with("cs_") & ends_with("_imp"), -cs_imp) %>%
   psych::alpha()
 
-gep %>% 
+gep %>%
   select(starts_with("cs_") & ends_with("_exp"), -cs_exp) %>%
   psych::alpha()
 ```
@@ -667,7 +671,7 @@ An example of exploratory factor analysis is presented in Chapter \@ref(). Since
 library(lavaan)
 
 #1: Define the model which explains how items relate to latent variables
-model <- '
+model <- "
 social_integration =~
 si_socialise_with_people_exp +
 si_supportive_friends_exp +
@@ -682,7 +686,7 @@ comm_skills_exp =~
 cs_explain_ideas_exp +
 cs_find_clarification_exp +
 cs_learn_different_styles_exp
-'
+"
 
 #2: Run the CFA to see how well this model fits our data
 fit <- cfa(model, data = gep)
@@ -690,12 +694,13 @@ fit <- cfa(model, data = gep)
 #3a: Extract the performance indicators
 fit_indices <- fitmeasures(fit)
 
-#3b: We tidy the results with the 'broom' package and pick only those indices we are most interested in
+#3b: We tidy the results with the 'broom' package and
+#    pick only those indices we are most interested in
 broom::tidy(fit_indices) %>%
-  filter(names == "cfi" | 
+  filter(names == "cfi" |
          names == "srmr" |
-         names == "rmsea") %>% 
-  mutate(x = round(x, 3))         # Round the results to 3 decimal places
+         names == "rmsea") %>%
+  mutate(x = round(x, 3))         # Round to 3 decimal places
 ```
 
 The `broom` package is useful to clean output from all kinds of models, such as a CFA model. It allows us to convert the raw output into a `tibble`, which we can further manipulate using the functions we already know. If you want to know where `names` and `x` came from we have to inspect the output from `broom::tidy(fit_indices)`.

@@ -2,7 +2,7 @@
 
 *'R'*, it is not just a letter you learn in primary school, but a powerful programming language. While it is used for a lot of quantitative data analysis, it has grown over the years to become a powerful tool that excels (\#no-pun-intended) in handling data and performing customised computations with quantitative and qualitative data.
 
-*R* is now one of my core tools to perform various types of analysis because I can use it in many different ways, for example,
+*R* is now one of my core tools to perform various types of analysis because I can use it in many different ways, for example,
 
 -   statistical analysis,
 -   corpus analysis,

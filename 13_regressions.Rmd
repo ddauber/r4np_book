@@ -55,14 +55,14 @@ You might be wondering what $\beta_0$ stands for. It indicates an offset for eac
 ```{r beta zero and beta one explained, echo=TRUE}
 # A: Two models with different beta(0)
 ggplot() +
-  geom_function(fun = function(x) 0 + 2 * x, colour = "red") +
-  geom_function(fun = function(x) 1 + 2 * x, colour = "blue") +
+  geom_function(fun = function(x) 0 + 2 * x, col = "red") +
+  geom_function(fun = function(x) 1 + 2 * x, col = "blue") +
   see::theme_modern()
 
 # B: Two models with the same beta(0), but different beta(1)
 ggplot() +
-  geom_function(fun = function(x) 0 + 2 * x, colour = "red") +
-  geom_function(fun = function(x) 0 + 3 * x, colour = "blue") +
+  geom_function(fun = function(x) 0 + 2 * x, col = "red") +
+  geom_function(fun = function(x) 0 + 3 * x, col = "blue") +
   see::theme_modern()
 ```
 
@@ -119,21 +119,21 @@ We can try to fit a straight line on top by adjusting the beta values through tr
 
 ```{r Finding a regression equation by hand p4, echo=TRUE, warning=FALSE}
 plot +
-  geom_function(fun = function(x) x, colour = "red")
+  geom_function(fun = function(x) x, col = "red")
 ```
 
 What we try to achieve is that the red line fits nicely inside the cloud of dots. Our simple model provides a very poor fit to our data points, because the dots are considerably below it. This makes sense because $y = x$ would imply that every COVID-19 case leads to death, i.e. everyone with COVID did not survive. From our own experience, we know that this is luckily not true. Ideally, we want the line to be less steep. We can do this by adding a $\beta_1$ to our equation. Maybe only 2% of people who got COVID-19 might not have recovered, i.e. $\beta_1 = 0.02$.
 
 ```{r Finding a regression equation by hand p5, echo=TRUE, warning=FALSE}
 plot +
-  geom_function(fun = function(x) 0.02*x, colour = "red")
+  geom_function(fun = function(x) 0.02 * x, col = "red")
 ```
 
 This time the line looks much more aligned with our observations. However, one could argue that it might have to move a little to the right to cover the observations at the bottom better. Therefore, we should add a $\beta_0$ to our equation, e.g. `-50`. This moves the line to the right. I also adjusted $\beta_1$ ever so slightly to make it fit even better.
 
 ```{r Finding a regression equation by hand p6, echo=TRUE, warning=FALSE}
 plot +
-  geom_function(fun = function(x) -50 + 0.015*x, colour = "red")
+  geom_function(fun = function(x) -50 + 0.015 * x, col = "red")
 ```
 
 We finished creating our regression model. If we wanted to express it as a formula, we would write $DV = -5 + 0.015 * IV$. We could use this model to predict how high COVID cases will likely be in other countries not included in our dataset.
@@ -157,8 +157,8 @@ We can now visualise the computed model (in blue) and our guessed model (in red)
 
 ```{r Showing computed and guessed regression, echo=TRUE}
 plot +
-  geom_function(fun = function(x) -50 + 0.015*x, colour = "red") +
-    geom_function(fun = function(x) 88.1 + 0.01*x, colour = "blue")
+  geom_function(fun = function(x) -50 + 0.015 * x, col = "red") +
+    geom_function(fun = function(x) 88.1 + 0.01 * x, col = "blue")
 ```
 
 With our final model computed, we also need to check its quality in terms of predictive power based on how well it can explain our observed data. We tested models before when we looked at confirmatory factor analyses for latent variables (see Chapter \@ref(latent-constructs). This time we want to know how accurate our model is in explaining observed data and, therefore, how accurate it predicts future observations. The package `performance` offers a nice shortcut to compute many different indicators at once:
@@ -198,7 +198,8 @@ df_predict <-
   tibble(cumulative_cases = c(100, 1000, 10000))
 
 # Make our predictions
-df_predict %>% modelr::add_predictions(m0) %>%
+df_predict %>%
+  modelr::add_predictions(m0) %>%
   mutate(pred = round(pred, 0))
 ```
 
@@ -433,14 +434,14 @@ m1_outliers %>%
   ggplot(aes(x = reorder(rowname, .hat),
              y = .hat)) +
   geom_point(size = 0.5) +
-  geom_hline(yintercept = 3*avg_lvg, col = "orange")
+  geom_hline(yintercept = 3 * avg_lvg, col = "orange")
 ```
 
 As before, we want to know which observations fall beyond the threshold.
 
 ```{r Determine observations above average leverage, echo=TRUE}
 new_outliers <- m1_outliers %>%
-  mutate(avglvg = ifelse(.hat > 3*avg_lvg, "TRUE", "FALSE")) %>%
+  mutate(avglvg = ifelse(.hat > 3 * avg_lvg, "TRUE", "FALSE")) %>%
   select(rowname, avglvg)
 
 # Add new results to our reference list
@@ -454,7 +455,7 @@ The second method I will cover in this section is the Mahalanobis distance. Luck
 ```{r Mahalanobis distance, echo=TRUE}
 mhnbs_outliers <- m1_outliers %>%
   select(new_cases:travel) %>%
-  rstatix::mahalanobis_distance() %>% 
+  rstatix::mahalanobis_distance() %>%
   rownames_to_column() %>%
   select(rowname, mahal.dist, is.outlier) %>%
   rename(mhnbs = is.outlier)
@@ -522,8 +523,8 @@ Like the critical value for [average leverage](#average-leverage-equation "avera
 
 ```{r Compute the critical value of an F distribution, echo=TRUE}
 qf(p = 0.5,
-   df1 = 4+1,
-   df2 = 1188-6-1)
+   df1 = 4 + 1,
+   df2 = 1188 - 6 - 1)
 ```
 
 This score would also imply that we have no particular outliers to consider, because the highest value in `.cooksd` is `r round(max(m1_outliers$.cooksd),2)` computed via \``max(m1_outliers$.cooksd)`\`.
@@ -605,8 +606,8 @@ m1_dfbetas %>%
              alpha = 0.5) +
   geom_hline(yintercept = dfbetas_th, col = "#FF503A") +
   scale_color_manual(values = c("movements" = "#2EA5FF",
-                       "travel" = "#7DB33B")) +
-  
+                                "travel" = "#7DB33B")) +
+
   # Label the legend appropriately
   labs(col = "COVID measures")
 ```
@@ -692,7 +693,7 @@ outliers_true %>%
 
 A few observations were detected by three out of the four methods we used to detect outliers. There are some more which were detected by two different methods. However, there are also more than half of our outliers which were only detected by one method.
 
-As highlighted in Chapter \@ref(dealing-with-outliers), there are many ways we can go about outliers. To keep our analysis simple, I intend to remove those observations detected by multiple methods rather than only by one. Whether this approach is genuinely appropriate is a matter of further investigation. I take a very pragmatic approach with our sample data. However, it is worth reviewing the options available to transform data, as covered by \@field2013discovering (p.203). Data transformation can help to deal with outliers instead of removing or imputing them. However, data transformation comes with severe drawbacks and in most cases, using a bootstrapping technique to account for violations of parametric conditions is often more advisable. Bootstrapping refers to the process of randomly resampling data from your dataset and rerun the same test multiple times, e.g. 2000 times. The process is somewhat similar to multiple imputation (see Chapter \@ref(replacing-removing-missing-data). Still, instead of estimating a specific value in our dataset, we estimate statistical parameters, e.g. confidence intervals or regression coefficients (i.e. estimates). The package `rsample` allows implementing bootstrapping straightforwardly. For an example of a detailed look at a bootstrapped regression, see Chapter \@ref(bootstrapped-regression). However, bootstrapping comes at the cost of lower power because we are running the test so many times.
+As highlighted in Chapter \@ref(dealing-with-outliers), there are many ways we can go about outliers. To keep our analysis simple, I intend to remove those observations detected by multiple methods rather than only by one. Whether this approach is genuinely appropriate is a matter of further investigation. I take a very pragmatic approach with our sample data. However, it is worth reviewing the options available to transform data, as covered by \@field2013discovering (p.203). Data transformation can help to deal with outliers instead of removing or imputing them. However, data transformation comes with severe drawbacks and in most cases, using a bootstrapping technique to account for violations of parametric conditions is often more advisable. Bootstrapping refers to the process of randomly resampling data from your dataset and rerun the same test multiple times, e.g. 2000 times. The process is somewhat similar to multiple imputation (see Chapter \@ref(replacing-removing-missing-data). Still, instead of estimating a specific value in our dataset, we estimate statistical parameters, e.g. confidence intervals or regression coefficients (i.e. estimates). The package `rsample` allows implementing bootstrapping straightforwardly. For an example of a detailed look at a bootstrapped regression, see Chapter \@ref(case-study-bootstrapped-regression). However, bootstrapping comes at the cost of lower power because we are running the test so many times.
 
 For now, I settle on removing outliers entirely. The easiest way to remove these outliers is to combine our `outliers` dataset with our regression (`m1_outliers`). Now you will notice that having `rowname` allows us to match the values of each table to each other. Otherwise, this would not be possible.
 
@@ -726,7 +727,7 @@ m2 <- lm(new_cases ~ movements + schools + businesses + travel,
 # table. Technially you only need the first line.
 parameters::compare_parameters(m1, m2) %>%
   as_tibble() %>%
-  select(Parameter, Coefficient.m1, p.m1, Coefficient.m2, p.m2) %>% 
+  select(Parameter, Coefficient.m1, p.m1, Coefficient.m2, p.m2) %>%
   mutate(across(where(is.double), round, 3))
 
 # Compare the performance between models
@@ -743,7 +744,7 @@ m3 <- lm(new_cases ~ schools + businesses,
 
 parameters::model_parameters(m3) %>%
   as_tibble() %>%
-  select(Parameter, Coefficient, p) %>% 
+  select(Parameter, Coefficient, p) %>%
   mutate(across(where(is.double), round, 3))
 
 performance::model_performance(m3)
@@ -757,7 +758,7 @@ In multiple regressions, we often use variables that are measured in different w
 
 ```{r Standardisation of a variable z scores, echo=TRUE}
 # Create some data
-data <- tibble(x = c(1,2,3,4))
+data <- tibble(x = c(1, 2, 3, 4))
 
 # Compute z-scores
 data <- data %>%
@@ -958,7 +959,7 @@ m2 <- lm(formula = new_cases ~
 
 parameters::compare_parameters(m1, m2, standardize = "refit") %>%
   as_tibble() %>%
-  select(Parameter, Coefficient.m1, p.m1, Coefficient.m2, p.m2) %>% 
+  select(Parameter, Coefficient.m1, p.m1, Coefficient.m2, p.m2) %>%
   mutate(across(where(is.double), round, 3))
 
 performance::compare_performance(m1, m2)
@@ -1048,7 +1049,7 @@ m4 <- lm(formula = new_cases ~
 
 parameters::compare_parameters(m0, m4, standardize = "refit") %>%
   as_tibble() %>%
-  select(Parameter, Coefficient.m0, p.m0, Coefficient.m4, p.m4) %>% 
+  select(Parameter, Coefficient.m0, p.m0, Coefficient.m4, p.m4) %>%
   mutate(across(where(is.double), round, 3))
 
 performance::compare_performance(m0, m4)

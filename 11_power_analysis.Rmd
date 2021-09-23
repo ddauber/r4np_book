@@ -71,8 +71,8 @@ So, how exactly can we compute the right sample size, and how do we find all the
 Since all functions work essentially the same, I will provide an example of the last chapter's correlation analysis. You likely remember that we looked at whether the number of votes a movie receives on IMDb can predict its earnings. Below is the partial correlation that revealed a relationship in our sample based on the top 250 movies. This is just a sample, and it is not representative of all movies listed on IMDb because it only includes the best movies of all time. As of June 2021, IMDb offers information about [8 million movie titles](https://www.imdb.com/pressroom/stats/).
 
 ```{r Recap of partial correlation investigated, echo=TRUE}
-imdb_top_250 %>% 
-  select(votes, gross_in_m, year) %>% 
+imdb_top_250 %>%
+  select(votes, gross_in_m, year) %>%
   correlation(partial = TRUE)
 ```
 
@@ -141,17 +141,17 @@ glimpse(power_df)
 # Plot the effect sizes against the sample size
 power_df %>%
   ggplot() +
-  
+
   # the points for p = 0.01
   geom_line(aes(x = r,
                 y = n_0.01,
                 col = "p = 0.01")) +
-  
+
   # the points for p = 0.05
   geom_line(aes(x = r,
                 y = n_0.05,
                 col = "p = 0.05")) +
-  
+
   # add nice labels
   labs(col = "Sig. levels",
        x = "r",

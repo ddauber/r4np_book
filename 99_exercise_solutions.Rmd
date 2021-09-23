@@ -6,7 +6,7 @@ Return to Chapter \@ref(exercises-chapter-5)
 
 ```{r Solution for Chapter 5, echo=TRUE, collapse=TRUE}
 #1 ---------------
-sqrt(25-16)+2*8-6
+sqrt(25 - 16) + 2 * 8 - 6
 
 #2 ---------------
 "Five" == 5
@@ -20,14 +20,14 @@ books <- list("Harry Potter and the Deathly Hallows",
 books
 
 # 4 ---------------
-x_x <- function(number1, number2){       # Creates a function that takes 2 arguments
-  result1 <- number1*number2             # Result1 multiplies the two arguments
-  result2 <- sqrt(number1)               # Result2 computes the squareroot of the 1st argument
-  result3 <- number1-number2             # Result3 subtracts the 2nd argument from the 1st
-  return(c(result1, result2, result3))   # Prints all three results into the console
-} 
+x_x <- function(number1, number2) {    # Creates a function with 2 arguments
+  result1 <- number1 * number2         # Multiplies two arguments
+  result2 <- sqrt(number1)             # Computes squareroot of 1st argument
+  result3 <- number1 - number2         # Subtracts t2nd argument from 1st
+  return(c(result1, result2, result3)) # Prints all three results
+}
 
-x_x(2,3)
+x_x(2, 3)
 
 # 5 ---------------
 
@@ -37,5 +37,4 @@ x_x(2,3)
 #         or use '::' to load only a particular function once.
 
 # Third, call the function you are interested in.
-
 ```

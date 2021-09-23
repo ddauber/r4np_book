@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>17 Exercises: Solutions | R for Non-Programmers: A Guide for Social Scientists</title>
+  <title>18 Exercises: Solutions | R for Non-Programmers: A Guide for Social Scientists</title>
   <meta name="description" content="This books is intended for Social Scientists. No matter whether you have years of experiences, this book might come in handy if you never use R or any other programming language before." />
   <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="17 Exercises: Solutions | R for Non-Programmers: A Guide for Social Scientists" />
+  <meta property="og:title" content="18 Exercises: Solutions | R for Non-Programmers: A Guide for Social Scientists" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="17 Exercises: Solutions | R for Non-Programmers: A Guide for Social Scientists" />
+  <meta name="twitter:title" content="18 Exercises: Solutions | R for Non-Programmers: A Guide for Social Scientists" />
   
   <meta name="twitter:description" content="This books is intended for Social Scientists. No matter whether you have years of experiences, this book might come in handy if you never use R or any other programming language before." />
   
@@ -24,7 +24,7 @@
 <meta name="author" content="Daniel Dauber" />
 
 
-<meta name="date" content="2021-09-16" />
+<meta name="date" content="2021-09-23" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -164,12 +164,13 @@ div.csl-indent {
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome 👋</a></li>
-<li class="chapter" data-level="" data-path="acknowledgments.html"><a href="acknowledgments.html"><i class="fa fa-check"></i>Acknowledgments 🙏</a></li>
-<li class="chapter" data-level="1" data-path="readme-before-you-get-started.html"><a href="readme-before-you-get-started.html"><i class="fa fa-check"></i><b>1</b> <code>Readme.</code> Before you get started</a>
+<li class="chapter" data-level="" data-path="acknowledgments.html"><a href="acknowledgments.html"><i class="fa fa-check"></i>Acknowledgements 🙏</a></li>
+<li class="chapter" data-level="1" data-path="readme-before-you-get-started.html"><a href="readme-before-you-get-started.html"><i class="fa fa-check"></i><b>1</b> <code>Readme.</code> before you get started</a>
 <ul>
 <li class="chapter" data-level="1.1" data-path="readme-before-you-get-started.html"><a href="readme-before-you-get-started.html#a-starting-point-and-reference-book"><i class="fa fa-check"></i><b>1.1</b> A starting point and reference book</a></li>
 <li class="chapter" data-level="1.2" data-path="readme-before-you-get-started.html"><a href="readme-before-you-get-started.html#download-the-companion-r-package"><i class="fa fa-check"></i><b>1.2</b> Download the companion R package</a></li>
 <li class="chapter" data-level="1.3" data-path="readme-before-you-get-started.html"><a href="readme-before-you-get-started.html#a-tidyverse-approach-with-some-basic-r"><i class="fa fa-check"></i><b>1.3</b> A ‘tidyverse’ approach with some basic R</a></li>
+<li class="chapter" data-level="1.4" data-path="readme-before-you-get-started.html"><a href="readme-before-you-get-started.html#formatting-of-this-book"><i class="fa fa-check"></i><b>1.4</b> Understanding the formatting of this book</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="why-learn-a-programming-language-as-a-non-programmer.html"><a href="why-learn-a-programming-language-as-a-non-programmer.html"><i class="fa fa-check"></i><b>2</b> Why learn a programming language as a non-programmer?</a>
 <ul>
@@ -297,8 +298,8 @@ div.csl-indent {
 <li class="chapter" data-level="12.1" data-path="comparing-groups.html"><a href="comparing-groups.html#comparability-apples-vs-oranges"><i class="fa fa-check"></i><b>12.1</b> Comparability: Apples vs Oranges</a></li>
 <li class="chapter" data-level="12.2" data-path="comparing-groups.html"><a href="comparing-groups.html#comparing-two-groups"><i class="fa fa-check"></i><b>12.2</b> Comparing two groups</a>
 <ul>
-<li class="chapter" data-level="12.2.1" data-path="comparing-groups.html"><a href="comparing-groups.html#two-unpaired-groups"><i class="fa fa-check"></i><b>12.2.1</b> Two Unpaired groups</a></li>
-<li class="chapter" data-level="12.2.2" data-path="comparing-groups.html"><a href="comparing-groups.html#two-paired-groups"><i class="fa fa-check"></i><b>12.2.2</b> Two Paired groups</a></li>
+<li class="chapter" data-level="12.2.1" data-path="comparing-groups.html"><a href="comparing-groups.html#two-unpaired-groups"><i class="fa fa-check"></i><b>12.2.1</b> Two unpaired groups</a></li>
+<li class="chapter" data-level="12.2.2" data-path="comparing-groups.html"><a href="comparing-groups.html#two-paired-groups"><i class="fa fa-check"></i><b>12.2.2</b> Two paired groups</a></li>
 </ul></li>
 <li class="chapter" data-level="12.3" data-path="comparing-groups.html"><a href="comparing-groups.html#comparing-more-than-two-groups"><i class="fa fa-check"></i><b>12.3</b> Comparing more than two groups</a>
 <ul>
@@ -309,48 +310,60 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="12.4.1" data-path="comparing-groups.html"><a href="comparing-groups.html#unpaired-groups-categorical-variables"><i class="fa fa-check"></i><b>12.4.1</b> Unpaired groups of categorical variables</a></li>
 <li class="chapter" data-level="12.4.2" data-path="comparing-groups.html"><a href="comparing-groups.html#paired-groups-categorical-variables"><i class="fa fa-check"></i><b>12.4.2</b> Paired groups of categorical variables</a></li>
+<li class="chapter" data-level="12.4.3" data-path="comparing-groups.html"><a href="comparing-groups.html#a-final-remark-about-comparing-groups-based-on-categorical-data"><i class="fa fa-check"></i><b>12.4.3</b> A final remark about comparing groups based on categorical data</a></li>
 </ul></li>
-<li class="chapter" data-level="12.5" data-path="comparing-groups.html"><a href="comparing-groups.html#cheatsheet-group-comparisons"><i class="fa fa-check"></i><b>12.5</b> A cheatsheet to guide your own group comparisons</a></li>
+<li class="chapter" data-level="12.5" data-path="comparing-groups.html"><a href="comparing-groups.html#reviewing-group-comparisons"><i class="fa fa-check"></i><b>12.5</b> Reviewing group comparisons</a></li>
 </ul></li>
-<li class="chapter" data-level="13" data-path="mixed-methods-research-analysing-qualitative-in-r.html"><a href="mixed-methods-research-analysing-qualitative-in-r.html"><i class="fa fa-check"></i><b>13</b> Mixed-methods research: Analysing qualitative in R</a></li>
-<li class="chapter" data-level="14" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>14</b> Regression: Creating models to predict future observations</a>
+<li class="chapter" data-level="13" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>13</b> Regression: Creating models to predict future observations</a>
 <ul>
-<li class="chapter" data-level="14.1" data-path="regression.html"><a href="regression.html#single-linear-regression"><i class="fa fa-check"></i><b>14.1</b> Single linear regression</a>
+<li class="chapter" data-level="13.1" data-path="regression.html"><a href="regression.html#single-linear-regression"><i class="fa fa-check"></i><b>13.1</b> Single linear regression</a>
 <ul>
-<li class="chapter" data-level="14.1.1" data-path="regression.html"><a href="regression.html#fitting-a-regression-model-by-hand"><i class="fa fa-check"></i><b>14.1.1</b> Fitting a regression model by hand, i.e. trial and error</a></li>
-<li class="chapter" data-level="14.1.2" data-path="regression.html"><a href="regression.html#fitting-a-regression-model-computationally"><i class="fa fa-check"></i><b>14.1.2</b> Fitting a regression model computationally</a></li>
+<li class="chapter" data-level="13.1.1" data-path="regression.html"><a href="regression.html#fitting-a-regression-model-by-hand"><i class="fa fa-check"></i><b>13.1.1</b> Fitting a regression model by hand, i.e. trial and error</a></li>
+<li class="chapter" data-level="13.1.2" data-path="regression.html"><a href="regression.html#fitting-a-regression-model-computationally"><i class="fa fa-check"></i><b>13.1.2</b> Fitting a regression model computationally</a></li>
 </ul></li>
-<li class="chapter" data-level="14.2" data-path="regression.html"><a href="regression.html#multiple-regression"><i class="fa fa-check"></i><b>14.2</b> Multiple regression</a>
+<li class="chapter" data-level="13.2" data-path="regression.html"><a href="regression.html#multiple-regression"><i class="fa fa-check"></i><b>13.2</b> Multiple regression</a>
 <ul>
-<li class="chapter" data-level="14.2.1" data-path="regression.html"><a href="regression.html#outliers-in-multiple-regressions"><i class="fa fa-check"></i><b>14.2.1</b> Outliers in multiple regressions</a></li>
-<li class="chapter" data-level="14.2.2" data-path="regression.html"><a href="regression.html#standardised-beta-beta-vs.-unstandardised-beta-b"><i class="fa fa-check"></i><b>14.2.2</b> Standardised beta (<span class="math inline">\(\beta\)</span>) vs. unstandardised beta (<span class="math inline">\(B\)</span>)</a></li>
-<li class="chapter" data-level="14.2.3" data-path="regression.html"><a href="regression.html#multicollinearity-the-dilemma-of-highly-correlated-independent-variables"><i class="fa fa-check"></i><b>14.2.3</b> Multicollinearity: The dilemma of highly correlated independent variables</a></li>
+<li class="chapter" data-level="13.2.1" data-path="regression.html"><a href="regression.html#outliers-in-multiple-regressions"><i class="fa fa-check"></i><b>13.2.1</b> Outliers in multiple regressions</a></li>
+<li class="chapter" data-level="13.2.2" data-path="regression.html"><a href="regression.html#standardised-beta-beta-vs.-unstandardised-beta-b"><i class="fa fa-check"></i><b>13.2.2</b> Standardised beta (<span class="math inline">\(\beta\)</span>) vs. unstandardised beta (<span class="math inline">\(B\)</span>)</a></li>
+<li class="chapter" data-level="13.2.3" data-path="regression.html"><a href="regression.html#multicollinearity-the-dilemma-of-highly-correlated-independent-variables"><i class="fa fa-check"></i><b>13.2.3</b> Multicollinearity: The dilemma of highly correlated independent variables</a></li>
 </ul></li>
-<li class="chapter" data-level="14.3" data-path="regression.html"><a href="regression.html#hierarchical-regression"><i class="fa fa-check"></i><b>14.3</b> Hierarchical regression</a>
+<li class="chapter" data-level="13.3" data-path="regression.html"><a href="regression.html#hierarchical-regression"><i class="fa fa-check"></i><b>13.3</b> Hierarchical regression</a>
 <ul>
-<li class="chapter" data-level="14.3.1" data-path="regression.html"><a href="regression.html#regressions-with-control-variables"><i class="fa fa-check"></i><b>14.3.1</b> Regressions with control variables</a></li>
-<li class="chapter" data-level="14.3.2" data-path="regression.html"><a href="regression.html#moderated-regression"><i class="fa fa-check"></i><b>14.3.2</b> Moderated regression</a></li>
+<li class="chapter" data-level="13.3.1" data-path="regression.html"><a href="regression.html#regressions-with-control-variables"><i class="fa fa-check"></i><b>13.3.1</b> Regressions with control variables</a></li>
+<li class="chapter" data-level="13.3.2" data-path="regression.html"><a href="regression.html#moderated-regression"><i class="fa fa-check"></i><b>13.3.2</b> Moderated regression</a></li>
 </ul></li>
-<li class="chapter" data-level="14.4" data-path="regression.html"><a href="regression.html#other-regression-models-alternatives-to-ols"><i class="fa fa-check"></i><b>14.4</b> Other regression models: Alternatives to OLS</a></li>
+<li class="chapter" data-level="13.4" data-path="regression.html"><a href="regression.html#other-regression-models-alternatives-to-ols"><i class="fa fa-check"></i><b>13.4</b> Other regression models: Alternatives to OLS</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="mixed-methods-research.html"><a href="mixed-methods-research.html"><i class="fa fa-check"></i><b>14</b> Mixed-methods research: Analysing qualitative in R</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="mixed-methods-research.html"><a href="mixed-methods-research.html#tidy-process-for-textual-data"><i class="fa fa-check"></i><b>14.1</b> The tidy process of working with textual data</a></li>
+<li class="chapter" data-level="14.2" data-path="mixed-methods-research.html"><a href="mixed-methods-research.html#stop-words-removing-noise-in-the-data"><i class="fa fa-check"></i><b>14.2</b> Stop words: Removing noise in the data</a></li>
+<li class="chapter" data-level="14.3" data-path="mixed-methods-research.html"><a href="mixed-methods-research.html#n-grams"><i class="fa fa-check"></i><b>14.3</b> N-grams: Exploring correlations of words</a></li>
+<li class="chapter" data-level="14.4" data-path="mixed-methods-research.html"><a href="mixed-methods-research.html#exploring-more-mixed-methods-research-approaches-in-r"><i class="fa fa-check"></i><b>14.4</b> Exploring more mixed-methods research approaches in R</a></li>
 </ul></li>
 <li class="chapter" data-level="15" data-path="next-steps.html"><a href="next-steps.html"><i class="fa fa-check"></i><b>15</b> Where to go from here: The next steps in your R journey</a>
 <ul>
-<li class="chapter" data-level="15.1" data-path="next-steps.html"><a href="next-steps.html#next-steps-github"><i class="fa fa-check"></i><b>15.1</b> GitHub: A Gateway to even more ingenious R packages</a></li>
-<li class="chapter" data-level="15.2" data-path="next-steps.html"><a href="next-steps.html#next-steps-books"><i class="fa fa-check"></i><b>15.2</b> Books to read and expand your knowledge</a></li>
-<li class="chapter" data-level="15.3" data-path="next-steps.html"><a href="next-steps.html#next-steps-online-readings"><i class="fa fa-check"></i><b>15.3</b> Engage in regular online readings about R</a></li>
-<li class="chapter" data-level="15.4" data-path="next-steps.html"><a href="next-steps.html#next-steps-twitter"><i class="fa fa-check"></i><b>15.4</b> Join the Twitter community and hone your skills</a></li>
+<li class="chapter" data-level="15.1" data-path="next-steps.html"><a href="next-steps.html#github-a-gateway-to-even-more-ingenious-r-packages"><i class="fa fa-check"></i><b>15.1</b> GitHub: A Gateway to even more ingenious R packages</a></li>
+<li class="chapter" data-level="15.2" data-path="next-steps.html"><a href="next-steps.html#books-to-read-and-expand-your-knowledge"><i class="fa fa-check"></i><b>15.2</b> Books to read and expand your knowledge</a></li>
+<li class="chapter" data-level="15.3" data-path="next-steps.html"><a href="next-steps.html#engage-in-regular-online-readings-about-r"><i class="fa fa-check"></i><b>15.3</b> Engage in regular online readings about R</a></li>
+<li class="chapter" data-level="15.4" data-path="next-steps.html"><a href="next-steps.html#join-the-twitter-community-and-hone-your-skills"><i class="fa fa-check"></i><b>15.4</b> Join the Twitter community and hone your skills</a></li>
 </ul></li>
 <li class="chapter" data-level="16" data-path="case-studies-in-depth-analysis.html"><a href="case-studies-in-depth-analysis.html"><i class="fa fa-check"></i><b>16</b> Case studies: In-depth analysis</a>
 <ul>
 <li class="chapter" data-level="16.1" data-path="case-studies-in-depth-analysis.html"><a href="case-studies-in-depth-analysis.html#bootstrapped-regression"><i class="fa fa-check"></i><b>16.1</b> Bootstrapped regression with multi-level control variable and moderation</a></li>
 </ul></li>
+<li class="chapter" data-level="" data-path="epilogue.html"><a href="epilogue.html"><i class="fa fa-check"></i>Epilogue</a></li>
+<li class="chapter" data-level="17" data-path="case-studies-in-depth-analysis-1.html"><a href="case-studies-in-depth-analysis-1.html"><i class="fa fa-check"></i><b>17</b> Case studies: In-depth analysis</a>
+<ul>
+<li class="chapter" data-level="17.1" data-path="case-studies-in-depth-analysis-1.html"><a href="case-studies-in-depth-analysis-1.html#case-study-bootstrapped-regression"><i class="fa fa-check"></i><b>17.1</b> Bootstrapped regression with multi-level control variable and moderation</a></li>
+</ul></li>
 <li class="chapter" data-level="" data-path="appendix.html"><a href="appendix.html"><i class="fa fa-check"></i>Appendix</a>
 <ul>
-<li class="chapter" data-level="16.2" data-path="appendix.html"><a href="appendix.html#comparing-two-unpaired-groups"><i class="fa fa-check"></i><b>16.2</b> Comparing two unpaired groups</a></li>
+<li class="chapter" data-level="17.2" data-path="appendix.html"><a href="appendix.html#comparing-two-unpaired-groups"><i class="fa fa-check"></i><b>17.2</b> Comparing two unpaired groups</a></li>
 </ul></li>
-<li class="chapter" data-level="17" data-path="exercises-solutions.html"><a href="exercises-solutions.html"><i class="fa fa-check"></i><b>17</b> Exercises: Solutions</a>
+<li class="chapter" data-level="18" data-path="exercises-solutions.html"><a href="exercises-solutions.html"><i class="fa fa-check"></i><b>18</b> Exercises: Solutions</a>
 <ul>
-<li class="chapter" data-level="17.1" data-path="exercises-solutions.html"><a href="exercises-solutions.html#exercises-solutions-5"><i class="fa fa-check"></i><b>17.1</b> Solutions for 5.6</a></li>
+<li class="chapter" data-level="18.1" data-path="exercises-solutions.html"><a href="exercises-solutions.html#exercises-solutions-5"><i class="fa fa-check"></i><b>18.1</b> Solutions for 5.6</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://twitter.com/daniel_dauber" target="blank">Find me on twitter!</a></li>
@@ -372,63 +385,57 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="exercises-solutions" class="section level1" number="17">
-<h1><span class="header-section-number">17</span> Exercises: Solutions</h1>
-<div id="exercises-solutions-5" class="section level2" number="17.1">
-<h2><span class="header-section-number">17.1</span> Solutions for 5.6</h2>
+<div id="exercises-solutions" class="section level1" number="18">
+<h1><span class="header-section-number">18</span> Exercises: Solutions</h1>
+<div id="exercises-solutions-5" class="section level2" number="18.1">
+<h2><span class="header-section-number">18.1</span> Solutions for 5.6</h2>
 <p>Return to Chapter <a href="r-basics-the-very-fundamentals.html#exercises-chapter-5">5.6</a></p>
-<div class="sourceCode" id="cb231"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb231-1"><a href="exercises-solutions.html#cb231-1" aria-hidden="true" tabindex="-1"></a><span class="co">#1 ---------------</span></span>
-<span id="cb231-2"><a href="exercises-solutions.html#cb231-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="dv">25-16</span>)<span class="sc">+</span><span class="dv">2</span><span class="sc">*</span><span class="dv">8-6</span></span>
-<span id="cb231-3"><a href="exercises-solutions.html#cb231-3" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 13</span></span>
-<span id="cb231-4"><a href="exercises-solutions.html#cb231-4" aria-hidden="true" tabindex="-1"></a><span class="co">#2 ---------------</span></span>
-<span id="cb231-5"><a href="exercises-solutions.html#cb231-5" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;Five&quot;</span> <span class="sc">==</span> <span class="dv">5</span></span>
-<span id="cb231-6"><a href="exercises-solutions.html#cb231-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] FALSE</span></span>
-<span id="cb231-7"><a href="exercises-solutions.html#cb231-7" aria-hidden="true" tabindex="-1"></a><span class="co">#3 ---------------</span></span>
-<span id="cb231-8"><a href="exercises-solutions.html#cb231-8" aria-hidden="true" tabindex="-1"></a>books <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">&quot;Harry Potter and the Deathly Hallows&quot;</span>,</span>
-<span id="cb231-9"><a href="exercises-solutions.html#cb231-9" aria-hidden="true" tabindex="-1"></a>              <span class="st">&quot;The Alchemist&quot;</span>,</span>
-<span id="cb231-10"><a href="exercises-solutions.html#cb231-10" aria-hidden="true" tabindex="-1"></a>              <span class="st">&quot;The Davinci Code&quot;</span>,</span>
-<span id="cb231-11"><a href="exercises-solutions.html#cb231-11" aria-hidden="true" tabindex="-1"></a>              <span class="st">&quot;R For Dummies&quot;</span>)</span>
-<span id="cb231-12"><a href="exercises-solutions.html#cb231-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb231-13"><a href="exercises-solutions.html#cb231-13" aria-hidden="true" tabindex="-1"></a>books</span>
-<span id="cb231-14"><a href="exercises-solutions.html#cb231-14" aria-hidden="true" tabindex="-1"></a><span class="do">## [[1]]</span></span>
-<span id="cb231-15"><a href="exercises-solutions.html#cb231-15" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;Harry Potter and the Deathly Hallows&quot;</span></span>
-<span id="cb231-16"><a href="exercises-solutions.html#cb231-16" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb231-17"><a href="exercises-solutions.html#cb231-17" aria-hidden="true" tabindex="-1"></a><span class="do">## [[2]]</span></span>
-<span id="cb231-18"><a href="exercises-solutions.html#cb231-18" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;The Alchemist&quot;</span></span>
-<span id="cb231-19"><a href="exercises-solutions.html#cb231-19" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb231-20"><a href="exercises-solutions.html#cb231-20" aria-hidden="true" tabindex="-1"></a><span class="do">## [[3]]</span></span>
-<span id="cb231-21"><a href="exercises-solutions.html#cb231-21" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;The Davinci Code&quot;</span></span>
-<span id="cb231-22"><a href="exercises-solutions.html#cb231-22" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb231-23"><a href="exercises-solutions.html#cb231-23" aria-hidden="true" tabindex="-1"></a><span class="do">## [[4]]</span></span>
-<span id="cb231-24"><a href="exercises-solutions.html#cb231-24" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;R For Dummies&quot;</span></span>
-<span id="cb231-25"><a href="exercises-solutions.html#cb231-25" aria-hidden="true" tabindex="-1"></a><span class="co"># 4 ---------------</span></span>
-<span id="cb231-26"><a href="exercises-solutions.html#cb231-26" aria-hidden="true" tabindex="-1"></a>x_x <span class="ot">&lt;-</span> <span class="cf">function</span>(number1, number2){       <span class="co"># Creates a function that takes 2 arguments</span></span>
-<span id="cb231-27"><a href="exercises-solutions.html#cb231-27" aria-hidden="true" tabindex="-1"></a>  result1 <span class="ot">&lt;-</span> number1<span class="sc">*</span>number2             <span class="co"># Result1 multiplies the two arguments</span></span>
-<span id="cb231-28"><a href="exercises-solutions.html#cb231-28" aria-hidden="true" tabindex="-1"></a>  result2 <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(number1)               <span class="co"># Result2 computes the squareroot of the 1st argument</span></span>
-<span id="cb231-29"><a href="exercises-solutions.html#cb231-29" aria-hidden="true" tabindex="-1"></a>  result3 <span class="ot">&lt;-</span> number1<span class="sc">-</span>number2             <span class="co"># Result3 subtracts the 2nd argument from the 1st</span></span>
-<span id="cb231-30"><a href="exercises-solutions.html#cb231-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">c</span>(result1, result2, result3))   <span class="co"># Prints all three results into the console</span></span>
-<span id="cb231-31"><a href="exercises-solutions.html#cb231-31" aria-hidden="true" tabindex="-1"></a>} </span>
-<span id="cb231-32"><a href="exercises-solutions.html#cb231-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb231-33"><a href="exercises-solutions.html#cb231-33" aria-hidden="true" tabindex="-1"></a><span class="fu">x_x</span>(<span class="dv">2</span>,<span class="dv">3</span>)</span>
-<span id="cb231-34"><a href="exercises-solutions.html#cb231-34" aria-hidden="true" tabindex="-1"></a><span class="do">## [1]  6.000000  1.414214 -1.000000</span></span>
-<span id="cb231-35"><a href="exercises-solutions.html#cb231-35" aria-hidden="true" tabindex="-1"></a><span class="co"># 5 ---------------</span></span>
-<span id="cb231-36"><a href="exercises-solutions.html#cb231-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb231-37"><a href="exercises-solutions.html#cb231-37" aria-hidden="true" tabindex="-1"></a><span class="co"># First, install the package.</span></span>
-<span id="cb231-38"><a href="exercises-solutions.html#cb231-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb231-39"><a href="exercises-solutions.html#cb231-39" aria-hidden="true" tabindex="-1"></a><span class="co"># Second, load the package with &#39;library()&#39;</span></span>
-<span id="cb231-40"><a href="exercises-solutions.html#cb231-40" aria-hidden="true" tabindex="-1"></a><span class="co">#         or use &#39;::&#39; to load only a particular function once.</span></span>
-<span id="cb231-41"><a href="exercises-solutions.html#cb231-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb231-42"><a href="exercises-solutions.html#cb231-42" aria-hidden="true" tabindex="-1"></a><span class="co"># Third, call the function you are interested in.</span></span></code></pre></div>
+<div class="sourceCode" id="cb268"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb268-1"><a href="exercises-solutions.html#cb268-1" aria-hidden="true" tabindex="-1"></a><span class="co">#1 ---------------</span></span>
+<span id="cb268-2"><a href="exercises-solutions.html#cb268-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="dv">25</span> <span class="sc">-</span> <span class="dv">16</span>) <span class="sc">+</span> <span class="dv">2</span> <span class="sc">*</span> <span class="dv">8</span> <span class="sc">-</span> <span class="dv">6</span></span>
+<span id="cb268-3"><a href="exercises-solutions.html#cb268-3" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 13</span></span>
+<span id="cb268-4"><a href="exercises-solutions.html#cb268-4" aria-hidden="true" tabindex="-1"></a><span class="co">#2 ---------------</span></span>
+<span id="cb268-5"><a href="exercises-solutions.html#cb268-5" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;Five&quot;</span> <span class="sc">==</span> <span class="dv">5</span></span>
+<span id="cb268-6"><a href="exercises-solutions.html#cb268-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] FALSE</span></span>
+<span id="cb268-7"><a href="exercises-solutions.html#cb268-7" aria-hidden="true" tabindex="-1"></a><span class="co">#3 ---------------</span></span>
+<span id="cb268-8"><a href="exercises-solutions.html#cb268-8" aria-hidden="true" tabindex="-1"></a>books <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">&quot;Harry Potter and the Deathly Hallows&quot;</span>,</span>
+<span id="cb268-9"><a href="exercises-solutions.html#cb268-9" aria-hidden="true" tabindex="-1"></a>              <span class="st">&quot;The Alchemist&quot;</span>,</span>
+<span id="cb268-10"><a href="exercises-solutions.html#cb268-10" aria-hidden="true" tabindex="-1"></a>              <span class="st">&quot;The Davinci Code&quot;</span>,</span>
+<span id="cb268-11"><a href="exercises-solutions.html#cb268-11" aria-hidden="true" tabindex="-1"></a>              <span class="st">&quot;R For Dummies&quot;</span>)</span>
+<span id="cb268-12"><a href="exercises-solutions.html#cb268-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb268-13"><a href="exercises-solutions.html#cb268-13" aria-hidden="true" tabindex="-1"></a>books</span>
+<span id="cb268-14"><a href="exercises-solutions.html#cb268-14" aria-hidden="true" tabindex="-1"></a><span class="do">## [[1]]</span></span>
+<span id="cb268-15"><a href="exercises-solutions.html#cb268-15" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;Harry Potter and the Deathly Hallows&quot;</span></span>
+<span id="cb268-16"><a href="exercises-solutions.html#cb268-16" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb268-17"><a href="exercises-solutions.html#cb268-17" aria-hidden="true" tabindex="-1"></a><span class="do">## [[2]]</span></span>
+<span id="cb268-18"><a href="exercises-solutions.html#cb268-18" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;The Alchemist&quot;</span></span>
+<span id="cb268-19"><a href="exercises-solutions.html#cb268-19" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb268-20"><a href="exercises-solutions.html#cb268-20" aria-hidden="true" tabindex="-1"></a><span class="do">## [[3]]</span></span>
+<span id="cb268-21"><a href="exercises-solutions.html#cb268-21" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;The Davinci Code&quot;</span></span>
+<span id="cb268-22"><a href="exercises-solutions.html#cb268-22" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb268-23"><a href="exercises-solutions.html#cb268-23" aria-hidden="true" tabindex="-1"></a><span class="do">## [[4]]</span></span>
+<span id="cb268-24"><a href="exercises-solutions.html#cb268-24" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;R For Dummies&quot;</span></span>
+<span id="cb268-25"><a href="exercises-solutions.html#cb268-25" aria-hidden="true" tabindex="-1"></a><span class="co"># 4 ---------------</span></span>
+<span id="cb268-26"><a href="exercises-solutions.html#cb268-26" aria-hidden="true" tabindex="-1"></a>x_x <span class="ot">&lt;-</span> <span class="cf">function</span>(number1, number2) {    <span class="co"># Creates a function with 2 arguments</span></span>
+<span id="cb268-27"><a href="exercises-solutions.html#cb268-27" aria-hidden="true" tabindex="-1"></a>  result1 <span class="ot">&lt;-</span> number1 <span class="sc">*</span> number2         <span class="co"># Multiplies two arguments</span></span>
+<span id="cb268-28"><a href="exercises-solutions.html#cb268-28" aria-hidden="true" tabindex="-1"></a>  result2 <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(number1)             <span class="co"># Computes squareroot of 1st argument</span></span>
+<span id="cb268-29"><a href="exercises-solutions.html#cb268-29" aria-hidden="true" tabindex="-1"></a>  result3 <span class="ot">&lt;-</span> number1 <span class="sc">-</span> number2         <span class="co"># Subtracts t2nd argument from 1st</span></span>
+<span id="cb268-30"><a href="exercises-solutions.html#cb268-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">c</span>(result1, result2, result3)) <span class="co"># Prints all three results</span></span>
+<span id="cb268-31"><a href="exercises-solutions.html#cb268-31" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb268-32"><a href="exercises-solutions.html#cb268-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb268-33"><a href="exercises-solutions.html#cb268-33" aria-hidden="true" tabindex="-1"></a><span class="fu">x_x</span>(<span class="dv">2</span>, <span class="dv">3</span>)</span>
+<span id="cb268-34"><a href="exercises-solutions.html#cb268-34" aria-hidden="true" tabindex="-1"></a><span class="do">## [1]  6.000000  1.414214 -1.000000</span></span>
+<span id="cb268-35"><a href="exercises-solutions.html#cb268-35" aria-hidden="true" tabindex="-1"></a><span class="co"># 5 ---------------</span></span>
+<span id="cb268-36"><a href="exercises-solutions.html#cb268-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb268-37"><a href="exercises-solutions.html#cb268-37" aria-hidden="true" tabindex="-1"></a><span class="co"># First, install the package.</span></span>
+<span id="cb268-38"><a href="exercises-solutions.html#cb268-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb268-39"><a href="exercises-solutions.html#cb268-39" aria-hidden="true" tabindex="-1"></a><span class="co"># Second, load the package with &#39;library()&#39;</span></span>
+<span id="cb268-40"><a href="exercises-solutions.html#cb268-40" aria-hidden="true" tabindex="-1"></a><span class="co">#         or use &#39;::&#39; to load only a particular function once.</span></span>
+<span id="cb268-41"><a href="exercises-solutions.html#cb268-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb268-42"><a href="exercises-solutions.html#cb268-42" aria-hidden="true" tabindex="-1"></a><span class="co"># Third, call the function you are interested in.</span></span></code></pre></div>
 
 <div id="refs" class="references csl-bib-body hanging-indent">
 <div class="csl-entry">
 Aguinis, Herman, Ryan K Gottfredson, and Harry Joo. 2013. <span>“Best-Practice Recommendations for Defining, Identifying, and Handling Outliers.”</span> <em>Organizational Research Methods</em> 16 (2): 270–301.
-</div>
-<div class="csl-entry">
-Altman, Douglas G. 1985. <span>“Comparability of Randomised Groups.”</span> <em>Journal of the Royal Statistical Society: Series D (The Statistician)</em> 34 (1): 125–36.
-</div>
-<div class="csl-entry">
-Berger, Vance W. 2006. <span>“A Review of Methods for Ensuring the Comparability of Comparison Groups in Randomized Clinical Trials.”</span> <em>Reviews on Recent Clinical Trials</em> 1 (1): 81–86.
 </div>
 <div class="csl-entry">
 Blanca Mena, M José, Rafael Alarcón Postigo, Jaume Arnau Gras, Roser Bono Cabré, and Rebecca Bendayan. 2017. <span>“Non-Normal Data: Is ANOVA Still a Valid Option?”</span> <em>Psicothema, 2017, Vol. 29, Num. 4, p. 552-557</em>.
@@ -470,6 +477,9 @@ Ginkel, Joost R van, Marielle Linting, Ralph CA Rippe, and Anja van der Voort. 2
 Grandstrand, Ove. 2004. <span>“Durbin-Watson Statistic.”</span> In <em>The SAGE Encyclopedia of Social Science Research Methods</em>, edited by Bryman Lewis-Beck Michael S. Thousand Oaks, California. <a href="https://methods.sagepub.com/reference/the-sage-encyclopedia-of-social-science-research-methods">https://methods.sagepub.com/reference/the-sage-encyclopedia-of-social-science-research-methods</a>.
 </div>
 <div class="csl-entry">
+Greenhouse, Samuel W, and Seymour Geisser. 1959. <span>“On Methods in the Analysis of Profile Data.”</span> <em>Psychometrika</em> 24 (2): 95–112.
+</div>
+<div class="csl-entry">
 Henson, Robin K. 2001. <span>“Understanding Internal Consistency Reliability Estimates: A Conceptual Primer on Coefficient Alpha.”</span> <em>Measurement and Evaluation in Counseling and Development</em> 34 (3): 177–89.
 </div>
 <div class="csl-entry">
@@ -485,7 +495,13 @@ Hochberg, Yosef. 1974. <span>“Some Generalizations of the t-Method in Simultan
 Hu, Li-tze, and Peter M Bentler. 1999. <span>“Cutoff Criteria for Fit Indexes in Covariance Structure Analysis: Conventional Criteria Versus New Alternatives.”</span> <em>Structural Equation Modeling: A Multidisciplinary Journal</em> 6 (1): 1–55.
 </div>
 <div class="csl-entry">
+Huynh, Huynh, and Leonard S Feldt. 1976. <span>“Estimation of the Box Correction for Degrees of Freedom from Sample Data in Randomized Block and Split-Plot Designs.”</span> <em>Journal of Educational Statistics</em> 1 (1): 69–82.
+</div>
+<div class="csl-entry">
 Jakobsen, Janus Christian, Christian Gluud, Jørn Wetterslev, and Per Winkel. 2017. <span>“When and How Should Multiple Imputation Be Used for Handling Missing Data in Randomised Clinical Trials–a Practical Guide with Flowcharts.”</span> <em>BMC Medical Research Methodology</em> 17 (1): 1–10.
+</div>
+<div class="csl-entry">
+Landis, J Richard, and Gary G Koch. 1977. <span>“The Measurement of Observer Agreement for Categorical Data.”</span> <em>Biometrics</em>, 159–74.
 </div>
 <div class="csl-entry">
 Leys, Christophe, Christophe Ley, Olivier Klein, Philippe Bernard, and Laurent Licata. 2013. <span>“Detecting Outliers: Do Not Use Standard Deviation Around the Mean, Use Absolute Deviation Around the Median.”</span> <em>Journal of Experimental Social Psychology</em> 49 (4): 764–66.
@@ -509,6 +525,9 @@ Rubin, Donald B. 1976. <span>“Inference and Missing Data.”</span> <em>Biomet
 Schafer, Joseph L. 1999. <span>“Multiple Imputation: A Primer.”</span> <em>Statistical Methods in Medical Research</em> 8 (1): 3–15.
 </div>
 <div class="csl-entry">
+Silge, Julia, and David Robinson. 2017. <em>Text Mining with r: A Tidy Approach</em>. " O’Reilly Media, Inc.".
+</div>
+<div class="csl-entry">
 Stevens, James P. 2012. <em>Applied Multivariate Statistics for the Social Sciences</em>. Routledge.
 </div>
 <div class="csl-entry">
@@ -521,11 +540,12 @@ Wickham, Hadley. 2021. <span>“The Tidyverse Style Guide.”</span> <a href="ht
 Wickham, Hadley, and Garrett Grolemund. 2016. <em>R for Data Science: Import, Tidy, Transform, Visualize, and Model Data</em>. " O’Reilly Media, Inc.".
 </div>
 <div class="csl-entry">
-Yang, Zhilin, Xuehua Wang, and Chenting Su. 2006. <span>“A Review of Research Methodologies in International Business.”</span> <em>International Business Review</em> 15 (6): 601–17. https://doi.org/<a href="https://doi.org/10.1016/j.ibusrev.2006.08.003">https://doi.org/10.1016/j.ibusrev.2006.08.003</a>.
+Xie, Yihui, J. J. Allaire, and Garrett Grolemund. 2018. <em>R Markdown: The Definitive Guide</em>. Boca Raton, Florida: Chapman; Hall/CRC. <a href="https://bookdown.org/yihui/rmarkdown">https://bookdown.org/yihui/rmarkdown</a>.
 </div>
 </div>
 </div>
 </div>
+
 
 
 
@@ -565,9 +585,9 @@ gitbook.start({
 "github": false,
 "facebook": true,
 "twitter": true,
-"linkedin": false,
+"linkedin": true,
 "weibo": false,
-"instapaper": false,
+"instapaper": true,
 "vk": false,
 "whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
@@ -577,10 +597,7 @@ gitbook.start({
 "family": "sans",
 "size": 2
 },
-"edit": {
-"link": null,
-"text": null
-},
+"edit": null,
 "history": {
 "link": null,
 "text": null
@@ -589,7 +606,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["r_for_non_programmers.pdf", "r_for_non_programmers.epub"],
+"download": null,
 "search": {
 "engine": "fuse",
 "options": null

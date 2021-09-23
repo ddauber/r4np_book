@@ -20,7 +20,7 @@ The console is located in the bottom-left, and it is where you often will find t
 
 ```{r Algebra in the Console, echo=TRUE}
 # We type the below into the console 👇
-10+5
+10 + 5
 ```
 
 Here is a screenshot of how it should look like at your end in RStudio:

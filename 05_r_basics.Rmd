@@ -231,9 +231,14 @@ To further illustrate how functions look like, let's create one ourselves and ca
 
 ```{r Creating our own mean function, echo=TRUE}
 my_mean <- function(numbers){
-  sum <- sum(numbers)              # Compute the sum of all values in 'numbers'
-  result <- sum/length(numbers)    # Divide the sum by the number of items in 'numbers'
-  return(result)                   # Return the result in the console
+  # Compute the sum of all values in 'numbers'
+  sum <- sum(numbers)
+  
+  # Divide the sum by the number of items in 'numbers'
+  result <- sum/length(numbers)
+  
+  # Return the result in the console
+  return(result)
 }
 
 my_mean(pocket_money)
@@ -376,7 +381,7 @@ library(tidyverse)
 library(jtools)
 model1 <- lm(covid_cases_per_1m ~ idv, data = df)
 summ(model1, scale = TRUE, transform.response = TRUE, vifs = TRUE)
-df %>% ggplot(aes(covid_cases_per_1m, idv, colour = europe, label = country))+
+df %>% ggplot(aes(covid_cases_per_1m, idv, coleurope, label = country))+
 theme_minimal()+ geom_label(nudge_y = 2) + geom_point()
 mod_model2 <- lm(cases_per_1m ~ idv + uai + idv*europe + uai*europe, data = df)
 summ(mod_model2, scale = TRUE, transform.response = TRUE, vifs = TRUE)
@@ -404,7 +409,7 @@ summ(model1, scale = TRUE, transform.response = TRUE, vifs = TRUE)
 
 ## Visualise rel. of covid cases, idv and being a European country
 df %>%
-  ggplot(aes(covid_cases_per_1m, idv, colour = europe, label = country))+
+  ggplot(aes(covid_cases_per_1m, idv, coleurope, label = country))+
   theme_minimal()+
   geom_label(nudge_y = 2) +
   geom_point()

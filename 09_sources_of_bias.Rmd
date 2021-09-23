@@ -22,53 +22,53 @@ The assumption of linearity postulates that the relationship of variables repres
 data <- tibble(x = seq(from = -10,
                        to = 10))
 
-p1 <- data %>% 
+p1 <- data %>%
   ggplot(aes(x = x, y = x)) +
   geom_point() +
   geom_smooth(method = "lm",
               formula = y ~ x,
               se = FALSE,
-              colour = "red") +
+              col = "red") +
   see::theme_modern() +
   theme(axis.title.x = element_blank(),
         axis.title.y = element_blank()) +
   ggtitle("y = x")
 
-p2 <- data %>% 
+p2 <- data %>%
   mutate(zz = x^2) %>%
   ggplot(aes(x = x, y = zz)) +
   geom_point() +
   geom_smooth(method = "lm",
               formula = y ~ poly(x, 5),
               se = FALSE,
-              colour = "red") +
+              col = "red") +
   see::theme_modern() +
   theme(axis.title.x = element_blank(),
         axis.title.y = element_blank()) +
   ggtitle("y = x^2")
 
 
-p3 <- data %>% 
+p3 <- data %>%
   mutate(zz = x^3) %>%
   ggplot(aes(x = x, y = zz)) +
   geom_point() +
   geom_smooth(method = "lm",
               formula = y ~ poly(x, 5),
               se = FALSE,
-              colour = "red") +
+              col = "red") +
   see::theme_modern() +
   theme(axis.title.x = element_blank(),
         axis.title.y = element_blank()) +
   ggtitle("y = x^3")
 
-p4 <- data %>% 
+p4 <- data %>%
   mutate(zz = x^4) %>%
   ggplot(aes(x = x, y = zz)) +
   geom_point() +
   geom_smooth(method = "lm",
               formula = y ~ poly(x, 5),
               se = FALSE,
-              colour = "red") +
+              col = "red") +
   see::theme_modern() +
   theme(axis.title.x = element_blank(),
         axis.title.y = element_blank()) +
@@ -106,7 +106,7 @@ data <- tribble(~x, -5, 5)
 
 data %>% ggplot(aes(x)) +
   geom_hline(yintercept = 0) +
-  geom_vline(xintercept = c(0), colour = "red") +
+  geom_vline(xintercept = c(0), col = "red") +
   stat_function(fun = dnorm, n = 200, args = list(mean = 0, sd = 1.5)) +
   scale_y_continuous(breaks = NULL) +
   scale_x_continuous(breaks = NULL) +
@@ -137,14 +137,14 @@ p1 <- data %>%
   ggplot(aes(income)) +
   geom_density(bw = 80) +
   geom_vline(aes(xintercept = mean(income), color = "red")) +
-  geom_text(aes(x = mean(income)-15,
+  geom_text(aes(x = mean(income) - 15,
                 y = 0.0002,
                 label = "mean",
                 angle = 90,
                 color = "red"
                 )) +
   geom_vline(aes(xintercept = median(income), color = "blue")) +
-  geom_text(aes(x = median(income)+15,
+  geom_text(aes(x = median(income) + 15,
                 y = 0.00024,
                 label = "median",
                 angle = 90,
@@ -176,14 +176,14 @@ p2 <- data2 %>%
   ggplot(aes(income)) +
   geom_density(bw = 80) +
   geom_vline(aes(xintercept = mean(income), color = "red")) +
-  geom_text(aes(x = mean(income)+25,
+  geom_text(aes(x = mean(income) + 25,
                 y = 0.0002,
                 label = "mean",
                 angle = 90,
                 color = "red"
                 )) +
   geom_vline(aes(xintercept = median(income), color = "blue")) +
-  geom_text(aes(x = median(income)-30,
+  geom_text(aes(x = median(income) - 30,
                 y = 0.00024,
                 label = "median",
                 angle = 90,
@@ -213,14 +213,14 @@ p3 <- data3 %>%
   ggplot(aes(income)) +
   geom_density(bw = 80) +
   geom_vline(aes(xintercept = mean(income), color = "red")) +
-  geom_text(aes(x = mean(income)-15,
+  geom_text(aes(x = mean(income) - 15,
                 y = 0.0002,
                 label = "mean",
                 angle = 90,
                 color = "red"
                 )) +
   geom_vline(aes(xintercept = median(income), color = "blue")) +
-  geom_text(aes(x = median(income)+15,
+  geom_text(aes(x = median(income) + 15,
                 y = 0.00024,
                 label = "median",
                 angle = 90,
@@ -260,35 +260,35 @@ data4 <- tribble(
   2058,    "female",
   2160,    "female",
   2340,    "female"
-  ) %>% 
+  ) %>%
   mutate(gender = as_factor(gender))
 
-p1 <- data4 %>% 
+p1 <- data4 %>%
   ggplot(aes(income)) +
   geom_density(bw = 80) +
   ggtitle("Not normal distribution")
 
-group_means <- data4 %>% 
-  group_by(gender) %>% 
+group_means <- data4 %>%
+  group_by(gender) %>%
   summarise(mean = mean(income))
 
-p2 <- data4 %>% 
+p2 <- data4 %>%
   ggplot(aes(income, group = gender, color = gender)) +
   geom_density(bw = 80) +
   ggtitle("Normal distribution for each group") +
   geom_vline(data = group_means,
              aes(xintercept = mean[1])) +
   geom_text(data = group_means,
-            aes(x = mean[1]-15,
+            aes(x = mean[1] - 15,
                 y = 0.00024,
                 label = "mean",
                 angle = 90
                 )
             ) +
   geom_vline(data = group_means,
-             aes(xintercept = mean[2]))+
+             aes(xintercept = mean[2])) +
     geom_text(data = group_means,
-            aes(x = mean[2]-15,
+            aes(x = mean[2] - 15,
                 y = 0.00024,
                 label = "mean",
                 angle = 90
@@ -319,8 +319,8 @@ The term 'variance' should sound familiar, because we mentioned it in Chapter \@
 Homogeneity of variance implies that the variance of, for example, two subsets of data, is equal or close to being equal. Let's look at how close the observed values are to the mean for the two groups identified in Figure \@ref(fig:two-normalities-groups).
 
 ```{r Homogeneity and no homogeneity of variance, echo=TRUE}
-data4 %>% 
-  ggplot(aes(x = gender, y = income, colour = gender)) +
+data4 %>%
+  ggplot(aes(x = gender, y = income, colgender)) +
   geom_jitter(width = 0.1) +
   geom_hline(yintercept = group_means$mean[1], color = "red") +
   geom_hline(yintercept = group_means$mean[2], color = "turquoise")
@@ -329,11 +329,11 @@ data4 %>%
 Judging by eye, we could argue that most values lie around the mean for each respective group. However, some observations are a bit further off. Still, using this visualisation, it is tough to judge whether the spread is about the same. However, boxplots can help with this, or even better, a boxplot reflected by a bar. The package `ggdist` has an excellent plotting function called `stat_interval()`, which allows us to show a boxplot in the form of a bar.
 
 ```{r Homogeneity and no homogeneity of variance alternative visualisation, echo=TRUE}
-data4 %>% 
+data4 %>%
   ggplot(aes(x = gender, y = income, group = gender)) +
   ggdist::stat_interval(aes(y = income),
                         .width = c(0.25, 0.5, 0.75, 1)) +
-  
+
   # Let's add some nice complementary colours
   scale_color_manual(values = c("#4D87B3", "#A1D6FF", "#FFDAA1", "#B3915F"))
 ```
@@ -341,8 +341,8 @@ data4 %>%
 If we compare the bars, we can tell that the variance in both groups looks very similar, i.e. the length of the bars appear to be about the same height. Furthermore, if we compared the IQR for both groups, we find that they are very closer.
 
 ```{r IQR for both groups, echo=TRUE}
-data4 %>% 
-  group_by(gender) %>% 
+data4 %>%
+  group_by(gender) %>%
   summarise(iqr = IQR(income))
 ```
 
@@ -375,15 +375,15 @@ sd_upper <- runtime_mean + 3 * sd(imdb_top_250$runtime_min)
 sd_lower <- runtime_mean - 3 * sd(imdb_top_250$runtime_min)
 
 # Create our plot
-imdb_top_250 %>% 
-  select(title, runtime_min) %>% 
+imdb_top_250 %>%
+  select(title, runtime_min) %>%
   ggplot(aes(x = reorder(title, runtime_min), y = runtime_min)) +
   geom_point(shape = 124) +
-  geom_hline(aes(yintercept = runtime_mean, colour = "red"), show.legend = FALSE) +
-  geom_hline(aes(yintercept = sd_upper, color = "blue"), show.legend = FALSE) +
-  geom_hline(aes(yintercept = sd_lower, color = "blue"), show.legend = FALSE) +
-  
-  theme(axis.text.x = element_blank(),    
+  geom_hline(aes(yintercept = runtime_mean, col = "red"), show.legend = FALSE) +
+  geom_hline(aes(yintercept = sd_upper, col = "blue"), show.legend = FALSE) +
+  geom_hline(aes(yintercept = sd_lower, col = "blue"), show.legend = FALSE) +
+
+  theme(axis.text.x = element_blank(),
         panel.grid.major = element_blank(),
         panel.background = element_blank()
         ) +
@@ -400,15 +400,18 @@ sd_upper <- runtime_mean + 2 * sd(imdb_top_250$runtime_min)
 d_lower <- runtime_mean - 2 * sd(imdb_top_250$runtime_min)
 
 # Create our plot
-imdb_top_250 %>% 
-  select(title, runtime_min) %>% 
+imdb_top_250 %>%
+  select(title, runtime_min) %>%
   ggplot(aes(x = reorder(title, runtime_min), y = runtime_min)) +
   geom_point(shape = 124) +
-  geom_hline(aes(yintercept = runtime_mean, colour = "red"), show.legend = FALSE) +
-  geom_hline(aes(yintercept = sd_upper, color = "blue"), show.legend = FALSE) +
-  geom_hline(aes(yintercept = sd_lower, color = "blue"), show.legend = FALSE) +
-  
-  theme(axis.text.x = element_blank(),    
+  geom_hline(aes(yintercept = runtime_mean, col = "red"),
+             show.legend = FALSE) +
+  geom_hline(aes(yintercept = sd_upper, col = "blue"),
+             show.legend = FALSE) +
+  geom_hline(aes(yintercept = sd_lower, col = "blue"),
+             show.legend = FALSE) +
+
+  theme(axis.text.x = element_blank(),
         panel.grid.major = element_blank(),
         panel.background = element_blank()
         ) +
@@ -434,15 +437,18 @@ mad_upper <- runtime_median + 3 * mad(imdb_top_250$runtime_min)
 mad_lower <- runtime_median - 3 * mad(imdb_top_250$runtime_min)
 
 # Create our plot
-imdb_top_250 %>% 
-  select(title, runtime_min) %>% 
+imdb_top_250 %>%
+  select(title, runtime_min) %>%
   ggplot(aes(x = reorder(title, runtime_min), y = runtime_min)) +
   geom_point(shape = 124) +
-  geom_hline(aes(yintercept = runtime_median, colour = "red"), show.legend = FALSE) +
-  geom_hline(aes(yintercept = mad_upper, color = "blue"), show.legend = FALSE) +
-  geom_hline(aes(yintercept = mad_lower, color = "blue"), show.legend = FALSE) +
-  
-  theme(axis.text.x = element_blank(),    
+  geom_hline(aes(yintercept = runtime_median, col = "red"),
+             show.legend = FALSE) +
+  geom_hline(aes(yintercept = mad_upper, col = "blue"),
+             show.legend = FALSE) +
+  geom_hline(aes(yintercept = mad_lower, col = "blue"),
+             show.legend = FALSE) +
+
+  theme(axis.text.x = element_blank(),
         panel.grid.major = element_blank(),
         panel.background = element_blank()
         ) +
@@ -459,15 +465,18 @@ mad_upper <- runtime_median + 2.5 * mad(imdb_top_250$runtime_min)
 mad_lower <- runtime_median - 2.5 * mad(imdb_top_250$runtime_min)
 
 # Create our plot
-imdb_top_250 %>% 
-  select(title, runtime_min) %>% 
+imdb_top_250 %>%
+  select(title, runtime_min) %>%
   ggplot(aes(x = reorder(title, runtime_min), y = runtime_min)) +
   geom_point(shape = 124) +
-  geom_hline(aes(yintercept = runtime_median, colour = "red"), show.legend = FALSE) +
-  geom_hline(aes(yintercept = mad_upper, color = "blue"), show.legend = FALSE) +
-  geom_hline(aes(yintercept = mad_lower, color = "blue"), show.legend = FALSE) +
-  
-  theme(axis.text.x = element_blank(),    
+  geom_hline(aes(yintercept = runtime_median, col = "red"),
+             show.legend = FALSE) +
+  geom_hline(aes(yintercept = mad_upper, col = "blue"),
+             show.legend = FALSE) +
+  geom_hline(aes(yintercept = mad_lower, col = "blue"),
+             show.legend = FALSE) +
+
+  theme(axis.text.x = element_blank(),
         panel.grid.major = element_blank(),
         panel.background = element_blank()
         ) +
@@ -494,15 +503,18 @@ iqr_upper <- runtime_median + 1.5 * IQR(imdb_top_250$runtime_min)
 iqr_lower <- runtime_median - 1.5 * IQR(imdb_top_250$runtime_min)
 
 # Create our plot
-imdb_top_250 %>% 
-  select(title, runtime_min) %>% 
+imdb_top_250 %>%
+  select(title, runtime_min) %>%
   ggplot(aes(x = reorder(title, runtime_min), y = runtime_min)) +
   geom_point(shape = 124) +
-  geom_hline(aes(yintercept = runtime_median, colour = "red"), show.legend = FALSE) +
-  geom_hline(aes(yintercept = iqr_upper, color = "blue"), show.legend = FALSE) +
-  geom_hline(aes(yintercept = iqr_lower, color = "blue"), show.legend = FALSE) +
-  
-  theme(axis.text.x = element_blank(),    
+  geom_hline(aes(yintercept = runtime_median, col = "red"),
+             show.legend = FALSE) +
+  geom_hline(aes(yintercept = iqr_upper, col = "blue"),
+             show.legend = FALSE) +
+  geom_hline(aes(yintercept = iqr_lower, col = "blue"),
+             show.legend = FALSE) +
+
+  theme(axis.text.x = element_blank(),
         panel.grid.major = element_blank(),
         panel.background = element_blank()
         ) +
@@ -543,7 +555,7 @@ Let's formulate a sentence that describes our scenario as an `ifelse()` function
 We already know from Chapter \@ref(basic-computations-in-r) how to use logical and arithmetic operators. All we have to do is put them together in one function call.
 
 ```{r Classifying outliers with MAD, echo=TRUE}
-imdb_top_250 <- imdb_top_250 %>% 
+imdb_top_250 <- imdb_top_250 %>%
   mutate(outlier = ifelse(runtime_min > mad_upper | runtime_min < mad_lower,
                           TRUE, FALSE))
 ```
@@ -551,9 +563,9 @@ imdb_top_250 <- imdb_top_250 %>%
 Since we have a classification, we can more thoroughly inspect our outliers and see which movies are the ones that are lying outside our defined norm. We can `arrange()` them by `runtime_min`.
 
 ```{r List the outliers, echo=TRUE}
-imdb_top_250 %>% 
-  filter(outlier == "TRUE") %>% 
-  select(title, runtime_min, outlier) %>% 
+imdb_top_250 %>%
+  filter(outlier == "TRUE") %>%
+  select(title, runtime_min, outlier) %>%
   arrange(runtime_min)
 ```
 
@@ -563,11 +575,11 @@ From here, it is simple to remove these movies (i.e. keep the movies that are no
 
 ```{r Remove and replacing outliers, echo=TRUE, results='hide'}
 # Keep all movies that are not outliers
-imdb_top_250 %>% 
+imdb_top_250 %>%
   filter(outlier == "FALSE")
 
 # Replace values with NA
-imdb_top_250 %>% 
+imdb_top_250 %>%
   mutate(runtime_min = replace(runtime_min, outlier == "TRUE", NA))
 ```
 
@@ -576,10 +588,10 @@ The `replace()` function is very intuitive to use. It first needs to know where 
 As you hopefully noticed, understanding your data requires some effort, but it is important to know your data well before proceeding to any further analysis. You can experiment with different data visualisations and design them in a way that best reflects the message you want to get across. For example, because we have now a separate variable that classifies outliers, we can do more with our data visualisation than before and dress it up more nicely.
 
 ```{r Plot with outliers formatted differently, echo=TRUE}
-imdb_top_250 %>% 
+imdb_top_250 %>%
   ggplot(aes(x = reorder(genre_01, runtime_min),
              y = runtime_min,
-             colour = outlier,
+             coloutlier,
              shape = outlier)
          ) +
   geom_point(size = 1) +
@@ -593,10 +605,10 @@ To round things off, let me share with you one more visualisation, which demonst
 ```{r Final plot to show outliers, echo=TRUE, warning=FALSE}
 colour_pal <- wesanderson::wes_palette("Darjeeling1", 11, type = "continuous")
 
-imdb_top_250 %>% 
+imdb_top_250 %>%
   ggplot(aes(x = reorder(genre_01, runtime_min),
              y = runtime_min,
-             colour = genre_01)
+             colgenre_01)
          ) +
   geom_boxplot(alpha = 0,
                show.legend = FALSE) +
@@ -607,7 +619,7 @@ imdb_top_250 %>%
               ) +
   scale_color_manual(values = colour_pal) +
   coord_flip() +
-  theme(panel.background = element_blank())+
+  theme(panel.background = element_blank()) +
   xlab("runtime") +
   ylab("Genre") +
   ggtitle("Distribution of movie runtimes by genre")

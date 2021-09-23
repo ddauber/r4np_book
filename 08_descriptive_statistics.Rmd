@@ -77,25 +77,27 @@ The problem you encounter when rearranging a `geom_bar()` with only one variable
 -   use this table to plot the genres by the frequency we computed
 
 ```{r Most popular genre with barplot and extras step-by-step, echo=TRUE}
-
 # Step 1: The frequency table only
-imdb_top_250 %>% 
+imdb_top_250 %>%
   count(genre_01)
 
 # Step 2: Plotting a barplot based on the frequency table
-imdb_top_250 %>% 
-  count(genre_01) %>% 
+imdb_top_250 %>%
+  count(genre_01) %>%
   ggplot(aes(x = genre_01, y = n)) +
-  geom_col() +                             # Use geom_col() instead of geom_bar()
+
+  # Use geom_col() instead of geom_bar()
+  geom_col() +
+
   ggtitle("Most popular movie genres") +
   xlab("movie genre") +
   ylab("frequency") +
   coord_flip()
 
 #Step 3: Sort the plot by frequency, i.e. by 'n'
-imdb_top_250 %>% 
-  count(genre_01) %>% 
-  ggplot(aes(x = reorder(genre_01, n), y = n)) +    # Use 'reorder()'
+imdb_top_250 %>%
+  count(genre_01) %>%
+  ggplot(aes(x = reorder(genre_01, n), y = n)) +  # Use 'reorder()'
   geom_col() +
   ggtitle("Most popular movie genres") +
   xlab("movie genre") +
@@ -126,13 +128,12 @@ The mean is likely the most known descriptive statistics and, at the same time, 
 In R, it is simple to compute the mean using the function `mean()`. We used this function in Chapter \@ref(functions) and Chapter \@ref(latent-constructs) already. However, we have not looked at how we can plot the mean.
 
 Assume we are curious to know how successful movies are in each of the genres. The mean could be a good starting point to answer this question because it provides the 'average' success of movies in a genre. The simplest approach to investigating this is using a bar plot, like in Chapter \@ref(plotting-in-r-with-ggplot2). So, we first create a tibble that contains the means of `gross_in_m` for each genre in `genre_01`. Then we use this table to plot a bar plot with `geom_col()`.
-
 ```{r Plotting the mean of movie genre earnings, echo=TRUE}
-imdb_top_250 %>% 
+imdb_top_250 %>%
   # Group data by genre
-  group_by(genre_01) %>% 
+  group_by(genre_01) %>%
   # Compute the mean for each group (remove NAs via na.rm = TRUE)
-  summarise(mean_earnings_in_m = mean(gross_in_m, na.rm = TRUE)) %>% 
+  summarise(mean_earnings_in_m = mean(gross_in_m, na.rm = TRUE)) %>%
 # Create the plot
   ggplot(aes(x = genre_01, y = mean_earnings_in_m)) +
   geom_col() +
@@ -142,9 +143,9 @@ imdb_top_250 %>%
 It appears as if `Action` and `Animation` are far ahead of the rest. On average, both make around 200 million per movie. `Adventure` ranks third with only approximately 70 million. We can retrieve the exact earnings by removing the plot from the above code.
 
 ```{r Earnings by movie genre as tibble, echo=TRUE}
-imdb_top_250 %>% 
+imdb_top_250 %>%
   group_by(genre_01) %>%
-  summarise(mean_earnings_in_m = mean(gross_in_m, na.rm = TRUE)) %>% 
+  summarise(mean_earnings_in_m = mean(gross_in_m, na.rm = TRUE)) %>%
   arrange(desc(mean_earnings_in_m))
 ```
 
@@ -166,10 +167,10 @@ Thus, the 'mean' alone might not be a good indicator. It can tell us which genre
 Let's add the number of movies (`n)` in each genre to our table.
 
 ```{r Earning by genre plus number of movies in each genre, echo=TRUE}
-imdb_top_250 %>% 
+imdb_top_250 %>%
   group_by(genre_01) %>%
   summarise(mean_earnings_in_m = mean(gross_in_m, na.rm = TRUE),
-            n = n()) %>% 
+            n = n()) %>%
   arrange(desc(mean_earnings_in_m))
 ```
 
@@ -179,9 +180,9 @@ As a final step, we can plot the sum of all earnings per genre as yet another in
 
 ```{r Compute sum of earnings per genre, echo=TRUE}
 imdb_top_250 %>%
-  filter(!is.na(gross_in_m)) %>% 
-  group_by(genre_01) %>% 
-  summarise(sum_gross_in_m = sum(gross_in_m)) %>% 
+  filter(!is.na(gross_in_m)) %>%
+  group_by(genre_01) %>%
+  summarise(sum_gross_in_m = sum(gross_in_m)) %>%
   ggplot(aes(x = genre_01, y = sum_gross_in_m)) +
   geom_col() +
   coord_flip()
@@ -190,16 +191,16 @@ imdb_top_250 %>%
 These results confirm that the `Action` genre made the most money out of all genres covered by the top 250 IMDb movies. I am sure you are curious to know which action movie contributed the most to this result. We can achieve this easily by using functions we already know.
 
 ```{r Which action movie is the most successful one, echo=TRUE}
-imdb_top_250 %>% 
-  select(title, genre_01, gross_in_m) %>% 
-  filter(genre_01 == "Action") %>% 
-  arrange(desc(gross_in_m)) %>% 
-  top_n(5)
+imdb_top_250 %>%
+  select(title, genre_01, gross_in_m) %>%
+  filter(genre_01 == "Action") %>%
+  slice_max(order_by = gross_in_m,
+            n = 5)
 ```
 
 `Avengers: Endgame` and `Avengers: Infinity` war rank the highest out of all Action movies. Two incredible movies if you are into Marvel comics.
 
-In the last line, I sneaked in another new function from `dplyr` called `top_n()`. This function allows us to pick any given number of rows from the top. So, if you have many rows in your dataset (remember there are 40 action movies), you might want to be 'picky' and report only the top 3, 4 or 5.
+In the last line, I sneaked in another new function from `dplyr` called `slice_max()`. This function allows us to pick the top 5 movies in our data. So, if you have many rows in your dataset (remember there are 40 action movies), you might want to be 'picky' and report only the top 3, 4 or 5. As you can see, it requires at least to arguments: `order_by` which defines the variable your dataset should be sorted by, and `n` which defines how many rows should be selected, e.g. `n = 3` for the top 3 movies or `n = 10` for the Top 10 movies. If you want to pick the lowest observations in your dataframe, you can use `slice_min()`. There are several other 'slicing' functions that can be useful and can be found on thecorresponding [dplyr website](https://dplyr.tidyverse.org/reference/slice.html "dplyr website"){target="blank"}.
 
 In conclusion, the mean helps understand how each movie, on average, performed across different genres. However, the mean alone provides a somewhat incomplete picture. Thus, we need to always look at means in the context of other information to gain a more comprehensive insight into our data.
 
@@ -208,9 +209,9 @@ In conclusion, the mean helps understand how each movie, on average, performed a
 The 'median' is the little, for some, lesser-known and used brother of the 'mean'. However, it can be a powerful indicator for central tendency because it is not so much affected by outliers. With outliers, I mean observations that lie way beyond or below the average observation in our dataset. Let's inspect the `Action` genre more closely and see how each movie in this category performed relative to each other. We first `filter()` our dataset to only show movies in the genre `Action` and also remove responses that have no value for `gross_in_m`.
 
 ```{r Earnings of action movies barplot, echo=TRUE}
-imdb_top_250 %>% 
-  filter(genre_01 == "Action" & !is.na(gross_in_m)) %>% 
-  ggplot(aes(x = reorder(title, gross_in_m), y = gross_in_m)) + 
+imdb_top_250 %>%
+  filter(genre_01 == "Action" & !is.na(gross_in_m)) %>%
+  ggplot(aes(x = reorder(title, gross_in_m), y = gross_in_m)) +
   geom_col() +
   coord_flip()
 ```
@@ -219,15 +220,15 @@ imdb_top_250 %>%
 
 ```{r Compute mean for action genre with and without Avengers movies, echo=TRUE}
 # Mean earnings for Action genre with Avengers movies
-imdb_top_250 %>% 
-  filter(genre_01 == "Action") %>% 
+imdb_top_250 %>%
+  filter(genre_01 == "Action") %>%
   summarise(mean = mean(gross_in_m, na.rm = TRUE))
 
 # Mean earnings for Action genre with Avengers movies
-imdb_top_250 %>% 
+imdb_top_250 %>%
   filter(genre_01 == "Action" &
            title != "Avengers: Endgame" &
-           title != "Avengers: Infinity War") %>% 
+           title != "Avengers: Infinity War") %>%
   summarise(mean = mean(gross_in_m, na.rm = TRUE))
 ```
 
@@ -235,15 +236,15 @@ The result is striking. Without these two movies, the `Action` genre would have 
 
 ```{r Compute median for action genre with and without Avengers movies, echo=TRUE}
 # Median earnings for Action genre with Avengers movies
-imdb_top_250 %>% 
-  filter(genre_01 == "Action") %>% 
+imdb_top_250 %>%
+  filter(genre_01 == "Action") %>%
   summarise(median = median(gross_in_m, na.rm = TRUE))
 
 # Median earnings for Action genre with Avengers movies
-imdb_top_250 %>% 
+imdb_top_250 %>%
   filter(genre_01 == "Action" &
            title != "Avengers: Endgame" &
-           title != "Avengers: Infinity War") %>% 
+           title != "Avengers: Infinity War") %>%
   summarise(median = median(gross_in_m, na.rm = TRUE))
 ```
 
@@ -252,11 +253,10 @@ Both medians are much closer to each other, showing how much better suited the m
 We can visualise medians using boxplots. Boxplots are a very effective tool to show how your data is distributed in one single data visualisation, and it offers more than just the mean. It also shows the spread of your data (see Chapter \@ref(spread-of-data)).
 
 ```{r Boxplot for action movies, echo=TRUE}
-imdb_top_250 %>% 
+imdb_top_250 %>%
   filter(genre_01 == "Action" & !is.na(gross_in_m)) %>%
-  ggplot(aes(gross_in_m)) + 
+  ggplot(aes(gross_in_m)) +
   geom_boxplot()
-
 ```
 
 To interpret this boxplot consider Figure \@ref(fig:).
@@ -266,9 +266,9 @@ To interpret this boxplot consider Figure \@ref(fig:).
 The boxplot shows that we have one observation that is an outlier, which is likely `Avengers: Endgame`, but what happened to the over Avengers movie? Is it not an outlier as well? It seems we need some more information. We can overlay another `geom_` on top to visualise where precisely each movie lies on this boxplot. We can represent each movie as a point by using `geom_point()`. This function requires us to define the values for the x and y-axis. Here it makes sense to set `y = 0,` which aligns all the dots in the middle of the boxplot.
 
 ```{r Boxplot plus geom_point for action movies, echo=TRUE}
-imdb_top_250 %>% 
+imdb_top_250 %>%
   filter(genre_01 == "Action" & !is.na(gross_in_m)) %>%
-  ggplot(aes(gross_in_m)) + 
+  ggplot(aes(gross_in_m)) +
   geom_boxplot() +
   geom_point(aes(y = 0, col = "red"), show.legend = FALSE)
 ```
@@ -292,8 +292,8 @@ imdb_top_250 %>% count(imdb_rating)
 We can also easily visualise this frequency table in the same way as before. To make the plot a bit more 'fancy', we can add labels to the bar which reflect the frequency of the rating. We need to add the attribute `label` and also add a `geom_text()` layer to display them. Because the numbers would overlap with the bars, I 'nudge' the labels up by `4` units on the y-axis.
 
 ```{r The mode visualised as a frequency table, echo=TRUE}
-imdb_top_250 %>% 
-  count(imdb_rating) %>% 
+imdb_top_250 %>%
+  count(imdb_rating) %>%
   ggplot(aes(imdb_rating, n, label = n)) +
   geom_col() +
   geom_text(nudge_y = 4)
@@ -349,22 +349,18 @@ As we can see from our visualisation, both movies would also count as outliers i
 
 Another frequently used approach to show the spread (or distribution) of data is the histogram. The histogram easily gets confused with a bar plot. However, you would be very mistaken to assume that they are the same. Some key differences between these two types of plots is summarised in Table \@ref(tab:histogram-vs-bar-plot).
 
-+----------------------------------------------------------------------+--------------------------------------------------------------------+
 | Histogram                                                            | Bar plot                                                           |
-+======================================================================+====================================================================+
+|----------------------------------------------------------------------|--------------------------------------------------------------------|
 | Used to show the distribution of non-categorical data                | Used for showing the frequency of categorical data, i.e. `factor`s |
-+----------------------------------------------------------------------+--------------------------------------------------------------------+
 | Each bar (also called 'bin') represents a group of observations.     | Each bar represents one category (or level) in our `factor`.       |
-+----------------------------------------------------------------------+--------------------------------------------------------------------+
 | The order of the bars is important and cannot/should not be changed. | The order of bars is arbitrary and can be reordered if meaningful. |
-+----------------------------------------------------------------------+--------------------------------------------------------------------+
 
 : (\#tab:histogram-vs-bar-plot) Histogram vs bar plot
 
 Let's overlap a bar plot with a histogram for the same variable to make this difference even more apparent.
 
 ```{r Compare histogram with bar plot, echo=TRUE}
-imdb_top_250 %>% 
+imdb_top_250 %>%
   ggplot(aes(runtime_min)) +
   geom_histogram() +
   geom_bar(aes(fill = "red"), show.legend = FALSE)
@@ -379,48 +375,48 @@ There are a couple of important observations to be made:
 We can control the number of bars in our histogram using the `bins` attribute. `ggplot` even reminds us in a warning that we should adjust it to represent more details in the plot. Let's experiment with this setting to see how it would look like with different numbers of `bins`.
 
 ```{r Histogram with different bins, echo=TRUE, fig.show='hide'}
-imdb_top_250 %>% 
+imdb_top_250 %>%
   ggplot(aes(runtime_min)) +
   geom_histogram(bins = 5) +
   geom_bar(aes(fill = "red"), show.legend = FALSE)
 
-imdb_top_250 %>% 
+imdb_top_250 %>%
   ggplot(aes(runtime_min)) +
   geom_histogram(bins = 20) +
   geom_bar(aes(fill = "red"), show.legend = FALSE)
 
-imdb_top_250 %>% 
+imdb_top_250 %>%
   ggplot(aes(runtime_min)) +
   geom_histogram(bins = 60) +
   geom_bar(aes(fill = "red"), show.legend = FALSE)
 
-imdb_top_250 %>% 
+imdb_top_250 %>%
   ggplot(aes(runtime_min)) +
   geom_histogram(bins = 300) +
   geom_bar(aes(fill = "red"), show.legend = FALSE)
 ```
 
 ```{r Histogram with different bins output, echo=FALSE}
-p1 <- imdb_top_250 %>% 
+p1 <- imdb_top_250 %>%
   ggplot(aes(runtime_min)) +
   geom_histogram(bins = 5) +
   geom_bar(aes(fill = "red"), show.legend = FALSE) +
   ggtitle("bins = 5")
 
-p2 <- imdb_top_250 %>% 
+p2 <- imdb_top_250 %>%
   ggplot(aes(runtime_min)) +
   geom_histogram(bins = 20) +
   geom_bar(aes(fill = "red"), show.legend = FALSE) +
   ggtitle("bins = 20")
 
-p3 <- imdb_top_250 %>% 
+p3 <- imdb_top_250 %>%
   ggplot(aes(runtime_min)) +
   geom_histogram(bins = 60) +
   geom_bar(aes(fill = "red"), show.legend = FALSE) +
   ggtitle("bins = 60")
 
 
-p4 <- imdb_top_250 %>% 
+p4 <- imdb_top_250 %>%
   ggplot(aes(runtime_min)) +
   geom_histogram(bins = 300) +
   geom_bar(aes(fill = "red"), show.legend = FALSE) +
@@ -429,7 +425,7 @@ p4 <- imdb_top_250 %>%
 
 library(patchwork)
 
-p1 +p2 + p3 + p4
+p1 + p2 + p3 + p4
 ```
 
 As becomes evident, if we select a large enough number of bins, we can achieve the same result as a bar plot. This is the closest a bar plot can become to a histogram, i.e. if you define the number of `bins` so that each observation is captured by one `bin`. While theoretically possible, practically, this rarely makes much sense.
@@ -441,12 +437,12 @@ We use histograms to judge whether our data is normally distributed. A normal di
 -   the mean is a good representation for our data/variable.
 
 ```{r Normal distribution, fig.cap="A normal distribution", echo=FALSE, label="normal-distribution"}
-
 data <- tribble(~x, -5, 5)
 
-data %>% ggplot(aes(x)) +
+data %>%
+  ggplot(aes(x)) +
   geom_hline(yintercept = 0) +
-  geom_vline(xintercept = c(0), colour = "#DDDDDD") +
+  geom_vline(xintercept = c(0), col = "#DDDDDD") +
   stat_function(fun = dnorm, n = 200, args = list(mean = 0, sd = 1.5)) +
   scale_y_continuous(breaks = NULL) +
   scale_x_continuous(breaks = NULL) +
@@ -467,18 +463,18 @@ Let's see whether our data is normally distributed using the histogram we alread
 It is more important to understand what the aim of this task is, rather than fully comprehending the computational side in R: we try to compare our distribution with a normal one.
 
 ```{r Compare normal distribution to our distribution, echo=TRUE, warning=FALSE}
-imdb_top_250 %>% 
+imdb_top_250 %>%
   ggplot(aes(runtime_min)) +
   geom_histogram(aes(y = ..density..), bins = 30) +
-  
+
   # This part creates a normal curve based on the mean
   # and standard deviation of our data
-  
+
   geom_function(fun = dnorm,
                 n = 103,
                 args = list(mean = mean(imdb_top_250$runtime_min),
                             sd = sd(imdb_top_250$runtime_min)),
-                colour = "red")
+                col = "red")
 ```
 
 However, there are two problems if we use histograms in combination with a normal distribution reference plot: First, the y-axis needs to be transformed to fit the normal distribution (which is a density plot and not a histogram). Second, the shape of our histogram is affected by the number of `bins` we have chosen, which is an arbitrary choice we make. Besides, the lines of code might be tough to understand because we have to 'hack' the visualisation to make it work. There is, however, a better way to do this: Density plots.
@@ -493,14 +489,14 @@ Density plots are a special form of the histogram. It uses 'kernel smoothing', w
 mean_ref <- mean(imdb_top_250$runtime_min)
 sd_ref <- sd(imdb_top_250$runtime_min)
 
-imdb_top_250 %>% 
+imdb_top_250 %>%
   ggplot(aes(runtime_min)) +
   geom_density() +
   geom_function(fun = dnorm,
                 n = 103,
                 args = list(mean = mean_ref,
                             sd = sd_ref),
-                colour = "red")
+                col = "red")
 ```
 
 We can also define how big the `bins` are for density plots, which make the plot more or less smooth. After all, the density plot is a histogram, but the transitions from one bin to the next are 'smoothed'. Here is an example of how different `bw` settings affect the plot.
@@ -511,51 +507,50 @@ mean_ref <- mean(imdb_top_250$runtime_min)
 sd_ref <- sd(imdb_top_250$runtime_min)
 
 # bw = 18
-imdb_top_250 %>% 
+imdb_top_250 %>%
   ggplot(aes(runtime_min)) +
-  geom_density(bw=18) +
+  geom_density(bw = 18) +
   geom_function(fun = dnorm,
                 n = 103,
                 args = list(mean = mean_ref,
                             sd = sd_ref),
-                colour = "red") +
+                col = "red") +
   ggtitle("bw = 18")
 
 # bw = 3
-imdb_top_250 %>% 
+imdb_top_250 %>%
   ggplot(aes(runtime_min)) +
-  geom_density(bw=3) +
+  geom_density(bw = 3) +
   geom_function(fun = dnorm,
                 n = 103,
                 args = list(mean = mean_ref,
                             sd = sd_ref),
-                colour = "red") +
+                col = "red") +
     ggtitle("bw = 18")
-
 ```
 
 ```{r Illustration of different bw settings using patchwork to stich together, echo=FALSE}
 # bw = 18
-p1 <- imdb_top_250 %>% 
+p1 <- imdb_top_250 %>%
   ggplot(aes(runtime_min)) +
-  geom_density(bw=18) +
+  geom_density(bw = 18) +
   geom_function(fun = dnorm,
                 n = 103,
                 args = list(mean = mean_ref,
                             sd = sd_ref),
-                colour = "red") +
+                col = "red") +
   ggtitle("bw = 18")
 
 
 # bw = 3
-p2 <- imdb_top_250 %>% 
+p2 <- imdb_top_250 %>%
   ggplot(aes(runtime_min)) +
-  geom_density(bw=3) +
+  geom_density(bw = 3) +
   geom_function(fun = dnorm,
                 n = 103,
                 args = list(mean = mean_ref,
                             sd = sd_ref),
-                colour = "red") +
+                col = "red") +
   ggtitle("bw = 3")
 
 p1 / p2
@@ -578,20 +573,28 @@ Looking at our plot, it becomes evident where the violin plot got its name from,
 ```{r Half violin plot, echo=TRUE}
 imdb_top_250 %>%
   ggplot(aes(x = 0, y = runtime_min)) +
-  see::geom_violinhalf()+
+  see::geom_violinhalf() +
   coord_flip()
 ```
 
 It looks exactly like the density plot we plotted earlier (see Figure \@ref(fig:density-vs-normal). The interpretation largely remains the same to a density plot as well. The relationship between the boxplot and the violin plot lies in the symmetry of the violin plot.
 
-At this point, it is fair to say that we enter 'fashion' territory. It is really up to your taste which visualisation you prefer because they are largely similar but offer nuances that some data sets might require.
+At this point, it is fair to say that we enter 'fashion' territory. It is really up to your taste which visualisation you prefer because they are largely similar but offer nuances that some data sets might require. Each visualisation, though, comes with caveats, which results in the emergence of new plot types. For example, 'sina' plots which address the following problem: A boxplot by itself will never be able to show bimodal distributions like a density plot. On the other hand, a density plot can show observations that do not exist, because they are smoothed. The package `ggforce` enables us to draw a 'sina' plot which combines a violin plot with a dot plot. Here is an example of overlaying a sina plot (black dots) and a violin plot (faded blue violin plot).
+
+```{r Creating sina plots, echo=TRUE}
+imdb_top_250 %>%
+  ggplot(aes(y = runtime_min, x = 0)) +
+  geom_violin(alpha = 0.5, col = "#395F80", fill = "#C0E2FF") +
+  ggforce::geom_sina() +
+  coord_flip()
+```
 
 Lastly, I cannot finish this chapter without sharing with you one of the most popular uses of half-violin plots: The rain cloud plot. It combines a dot plot with a density plot, and each dot represents a movie in our dataset. This creates the appearance of a cloud with raindrops. There are several packages available that can make such a plot. Here I used the `see` package.
 
 ```{r Rain cloud plot, echo=TRUE}
 imdb_top_250 %>%
-  filter(genre_01 == "Action" | genre_01 == "Drama") %>% 
-  ggplot(aes(x = genre_01, y = imdb_rating, fill = genre_01)) + 
+  filter(genre_01 == "Action" | genre_01 == "Drama") %>%
+  ggplot(aes(x = genre_01, y = imdb_rating, fill = genre_01)) +
   see::geom_violindot(fill_dots = "blue", size_dots = 0.2) +
   see::theme_modern() +
   coord_flip()
@@ -613,7 +616,7 @@ With these definitions out of the way, let's plot some quantiles against each ot
 imdb_top_250 %>%
   ggplot(aes(sample = runtime_min)) +
   geom_qq() +
-  geom_qq_line(colour = "red")+
+  geom_qq_line(col = "red") +
   annotate("text",
            label = "The 5h-long movie",
            x = 2.5,
@@ -632,11 +635,11 @@ To understand what the standard deviation is, we can consider the following visu
 ```{r Standard deviation visualised p1, echo=TRUE}
 runtime_mean <- mean(imdb_top_250$runtime_min)
 
-imdb_top_250 %>% 
-  select(title, runtime_min) %>% 
+imdb_top_250 %>%
+  select(title, runtime_min) %>%
   ggplot(aes(x = title, y = runtime_min)) +
   geom_point() +
-  geom_hline(aes(yintercept = runtime_mean, colour = "red"), show.legend = FALSE) +
+  geom_hline(aes(yintercept = runtime_mean, col = "red"), show.legend = FALSE) +
 
   # Making the plot a bit more pretty
   theme(axis.text.x = element_blank(),         # Removes movie titles
@@ -650,13 +653,13 @@ imdb_top_250 %>%
 The red line represents the mean runtime for all movies in the dataset, which is 129 minutes. We notice that the points are falling around the mean, but not directly on it. In other words, there are not many movies that are about 129 minutes long. We make this visualisation even more meaningful if we sorted the movies by their runtime. We can also change the shape of the dots (see also Chapter \@ref(correlations) by using the attribute shape. This helps to plot many dots without having them overlap.
 
 ```{r Standard deviation visualised p2, echo=TRUE}
-imdb_top_250 %>% 
-  select(title, runtime_min) %>% 
+imdb_top_250 %>%
+  select(title, runtime_min) %>%
   ggplot(aes(x = reorder(title, runtime_min), y = runtime_min)) +
   geom_point(shape = 124) +
-  geom_hline(aes(yintercept = runtime_mean, colour = "red"), show.legend = FALSE) +
-  
-  theme(axis.text.x = element_blank(),    
+  geom_hline(aes(yintercept = runtime_mean, col = "red"), show.legend = FALSE) +
+
+  theme(axis.text.x = element_blank(),
         panel.grid.major = element_blank(),
         panel.background = element_blank()
         ) +
