@@ -375,7 +375,8 @@ The values of the externally studentised residuals can be positive or negative. 
 As you can tell, it is a matter of well-informed personal judgement. Our dataset consists of over 1200 observations. As such, the dataset certainly counts as large. We can take a look and see how many outliers we would get for each of the benchmarks.
 
 ```{r Compute the number of outliers externally studentised residuals, echo=TRUE}
-out_detect <- m1_outliers %>%
+out_detect <-
+  m1_outliers %>%
   mutate(pm_2 = ifelse(abs(.studresid) > 2, "TRUE", "FALSE"),
          pm_3 = ifelse(abs(.studresid) > 3, "TRUE", "FALSE"),
          pm_35 = ifelse(abs(.studresid) > 3.5, "TRUE", "FALSE"),
@@ -402,7 +403,8 @@ m1_outliers %>%
 At this point, it is a matter of choosing the threshold that you feel is most appropriate. More importantly, though, you have to make sure you are transparent in your choices and provide some explanations around your decision-making. For example, a threshold of `2` appears too harsh for my taste and identifies too many observations as outliers. On the other hand, using the orange threshold of `3` seems to capture most observations I would consider an outlier because we can also visually see how the dots start to look less like a line and separate more strongly. Besides, Cohen also suggests that a threshold of `3` is more suitable for larger datasets. Finally, since we have an id column (i.e. `rownames`), we can also store our outliers in a separate object to easily reference it later for comparisons with other measures. Again, the purpose of doing this will become evident in Chapter \@ref(reviewing-the-outliers).
 
 ```{r Save outliers in a tibble, echo=TRUE}
-outliers <- out_detect %>%
+outliers <-
+  out_detect %>%
   select(rowname, pm_3) %>%
   rename(studresid = pm_3)
 ```
@@ -425,7 +427,7 @@ In this equation, *k* stands for the number of predictors (i.e. 6) and *n* for t
 (avg_lvg <- (6 + 1) / 1188)
 ```
 
-Similarly to before, we find different approaches to setting cut-off points for this indicator. While @hoaglin1978hat argue that a distance twice the average counts as an outlier, @stevens2012applied (p.105) suggests that values three times higher than the average leverage will negatively affect the model. The rationale is the same as for the externally studentised residuals: If the thresholds are too low, we might find ourselves with many observations, which we would have to investigate further. This might not always be possible or even desirable. However, this should not imply that many outliers are not worth checking. Instead, if there are many, one would have to raise questions about the model itself and whether an important variable needs adding to explain a series of observations that appear to be somewhat 'off'.
+Similarly to before, we find different approaches to setting cut-off points for this indicator. While @hoaglin1978hat argue that a distance twice the average counts as an outlier, @stevens2012applied (p. 105) suggests that values three times higher than the average leverage will negatively affect the model. The rationale is the same as for the externally studentised residuals: If the thresholds are too low, we might find ourselves with many observations, which we would have to investigate further. This might not always be possible or even desirable. However, this should not imply that many outliers are not worth checking. Instead, if there are many, one would have to raise questions about the model itself and whether an important variable needs adding to explain a series of observations that appear to be somewhat 'off'.
 
 Let's plot the leverages and use @stevens2012applied benchmark to draw our reference line.
 
@@ -440,8 +442,9 @@ m1_outliers %>%
 As before, we want to know which observations fall beyond the threshold.
 
 ```{r Determine observations above average leverage, echo=TRUE}
-new_outliers <- m1_outliers %>%
-  mutate(avglvg = ifelse(.hat > 3 * avg_lvg, "TRUE", "FALSE")) %>%
+new_outliers <-
+  m1_outliers %>%
+  mutate(avglvg = ifelse(.hat = 3 * avg_lvg, "TRUE", "FALSE")) %>%
   select(rowname, avglvg)
 
 # Add new results to our reference list
@@ -450,10 +453,11 @@ outliers <- left_join(outliers, new_outliers, by = "rowname")
 
 Looking at our reference object `outliers`, you will notice both methods do not detect a single observation. Thus, the detection of outliers depends on where we look, i.e. dependent variable or independent variable.
 
-The second method I will cover in this section is the Mahalanobis distance. Luckily the `rstatix` package includes a handy function `mahalanobis_distance()` which automatically detects outliers and presents them to us.
+The second method I will cover in this section is the Mahalanobis distance. Luckily the `rstatix` package includes a handy function `mahalanobis_distance()` which automatically detects outliers and classifies them to us.
 
 ```{r Mahalanobis distance, echo=TRUE}
-mhnbs_outliers <- m1_outliers %>%
+mhnbs_outliers <-
+  m1_outliers %>%
   select(new_cases:travel) %>%
   rstatix::mahalanobis_distance() %>%
   rownames_to_column() %>%
@@ -540,8 +544,9 @@ While Cook's d helps us identify outliers that affect the quality of the entire 
 The function `dbetas()` takes our model `m1` and returns the statistics for each predictor in the model. Thus, we do not receive a single score for each observation but multiple for each specific predictor, i.e. each specific measure.
 
 ```{r Computing DFBETAS, echo=TRUE}
-m1_dfbetas <- dfbetas(m1) %>%
-  as_tibble() %>%               # convert into a tibble for convenience
+m1_dfbetas <-
+  dfbetas(m1) %>%
+  as_tibble() %>%               # convert to tibble for convenience
   rownames_to_column()          # add our rownames
 
 glimpse(m1_dfbetas)

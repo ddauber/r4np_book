@@ -5,26 +5,26 @@
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>9 Sources of bias: Outliers, normality and other ‘conundrums’ | R for Non-Programmers: A Guide for Social Scientists</title>
-  <meta name="description" content="This books is intended for Social Scientists. No matter whether you have years of experiences, this book might come in handy if you never use R or any other programming language before." />
+  <meta name="description" content="9 Sources of bias: Outliers, normality and other ‘conundrums’ | R for Non-Programmers: A Guide for Social Scientists is a springboard into the world of R without having to become a full-fledged R programmer or possess abundant knowledge in other programming languages. This book guides you through the most common challenges in empirical research in the Social Sciences and offers practical and efficient solutions. Each chapter is dedicated to a common task we have to achieve to answer our research questions. In addition, it provides plenty of exercises and in-depth case studies based on actual data." />
   <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
   <meta property="og:title" content="9 Sources of bias: Outliers, normality and other ‘conundrums’ | R for Non-Programmers: A Guide for Social Scientists" />
   <meta property="og:type" content="book" />
   
   
-  <meta property="og:description" content="This books is intended for Social Scientists. No matter whether you have years of experiences, this book might come in handy if you never use R or any other programming language before." />
+  <meta property="og:description" content="9 Sources of bias: Outliers, normality and other ‘conundrums’ | R for Non-Programmers: A Guide for Social Scientists is a springboard into the world of R without having to become a full-fledged R programmer or possess abundant knowledge in other programming languages. This book guides you through the most common challenges in empirical research in the Social Sciences and offers practical and efficient solutions. Each chapter is dedicated to a common task we have to achieve to answer our research questions. In addition, it provides plenty of exercises and in-depth case studies based on actual data." />
   
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="9 Sources of bias: Outliers, normality and other ‘conundrums’ | R for Non-Programmers: A Guide for Social Scientists" />
   
-  <meta name="twitter:description" content="This books is intended for Social Scientists. No matter whether you have years of experiences, this book might come in handy if you never use R or any other programming language before." />
+  <meta name="twitter:description" content="9 Sources of bias: Outliers, normality and other ‘conundrums’ | R for Non-Programmers: A Guide for Social Scientists is a springboard into the world of R without having to become a full-fledged R programmer or possess abundant knowledge in other programming languages. This book guides you through the most common challenges in empirical research in the Social Sciences and offers practical and efficient solutions. Each chapter is dedicated to a common task we have to achieve to answer our research questions. In addition, it provides plenty of exercises and in-depth case studies based on actual data." />
   
 
 <meta name="author" content="Daniel Dauber" />
 
 
-<meta name="date" content="2021-09-23" />
+<meta name="date" content="2021-09-24" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -163,8 +163,8 @@ div.csl-indent {
 <li><a href="./">R for Non-Programmers</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome 👋</a></li>
-<li class="chapter" data-level="" data-path="acknowledgments.html"><a href="acknowledgments.html"><i class="fa fa-check"></i>Acknowledgements 🙏</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome</a></li>
+<li class="chapter" data-level="" data-path="acknowledgments.html"><a href="acknowledgments.html"><i class="fa fa-check"></i>Acknowledgements</a></li>
 <li class="chapter" data-level="1" data-path="readme-before-you-get-started.html"><a href="readme-before-you-get-started.html"><i class="fa fa-check"></i><b>1</b> <code>Readme.</code> before you get started</a>
 <ul>
 <li class="chapter" data-level="1.1" data-path="readme-before-you-get-started.html"><a href="readme-before-you-get-started.html#a-starting-point-and-reference-book"><i class="fa fa-check"></i><b>1.1</b> A starting point and reference book</a></li>
@@ -216,7 +216,7 @@ div.csl-indent {
 <li class="chapter" data-level="6.3" data-path="starting-your-r-projects.html"><a href="starting-your-r-projects.html#creating-an-r-script"><i class="fa fa-check"></i><b>6.3</b> Creating an R Script</a></li>
 <li class="chapter" data-level="6.4" data-path="starting-your-r-projects.html"><a href="starting-your-r-projects.html#r-markdown-and-r-notebooks"><i class="fa fa-check"></i><b>6.4</b> Using R Markdown</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="data-wrangling.html"><a href="data-wrangling.html"><i class="fa fa-check"></i><b>7</b> Data Wrangling</a>
+<li class="chapter" data-level="7" data-path="data-wrangling.html"><a href="data-wrangling.html"><i class="fa fa-check"></i><b>7</b> Data Wrangling and Cleaning</a>
 <ul>
 <li class="chapter" data-level="7.1" data-path="data-wrangling.html"><a href="data-wrangling.html#import-your-data"><i class="fa fa-check"></i><b>7.1</b> Import your data</a>
 <ul>
@@ -436,7 +436,7 @@ Figure 9.2: A normal distribution
 Figure 9.3: Two normal distributions in one dataset
 </p>
 </div>
-<p>The first plot clearly shows that data is not normally distributed. If anything, it looks more like the back of a camel. If we identify distributions that look remotely like this, we can assume that there must be another variable that helps explain why there are two peaks in our distribution. The plot below reveals that gender appears to play an important role. Drawing the distribution for each subset of our data reveals that <code>income</code> is now normally distributed for each group and has two different means. Thus, solely focusing on normal distributions for a single variable would not be meaningful if you do not consider the impact of other variables. If we think that <code>gender</code> plays an important role to understand <code>income</code> levels, we would have to expect that the distribution is not normal when looking at our data in its entirety.</p>
+<p>The first plot clearly shows that data is not normally distributed. If anything, it looks more like the back of a camel. The technical term for this distribution is called ‘binmodal distribution.’ In cases where our data has even more peaks we consider it as a ‘multimodal distribution.’ If we identify distributions that look remotely like this, we can assume that there must be another variable that helps explain why there are two peaks in our distribution. The plot below reveals that gender appears to play an important role. Drawing the distribution for each subset of our data reveals that <code>income</code> is now normally distributed for each group and has two different means. Thus, solely focusing on normal distributions for a single variable would not be meaningful if you do not consider the impact of other variables. If we think that <code>gender</code> plays an important role to understand <code>income</code> levels, we would have to expect that the distribution is not normal when looking at our data in its entirety.</p>
 <p>Determining whether data is normally distributed can be challenging when only inspecting plots, e.g. histograms, density plots or QQ plots. Luckily, there is also a statistical method to test whether our data is normally distributed: <em>The Shapiro-Wilk test</em>. This test compares our distribution with a normal distribution (like in our plot) and tells us whether our distribution is <strong>significantly different</strong> from it. Thus, if the test is not significant, the distribution of our data is not significantly different from a normal distribution, or in simple terms: It is normally distributed. We can run the test in R as follows for the dataset that underpins Fig A above:</p>
 <div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="sources-of-bias.html#cb105-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(data<span class="sc">$</span>income)</span>
 <span id="cb105-2"><a href="sources-of-bias.html#cb105-2" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
@@ -467,7 +467,7 @@ Figure 9.3: Two normal distributions in one dataset
 <span id="cb107-6"><a href="sources-of-bias.html#cb107-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Let&#39;s add some nice complementary colours</span></span>
 <span id="cb107-7"><a href="sources-of-bias.html#cb107-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;#4D87B3&quot;</span>, <span class="st">&quot;#A1D6FF&quot;</span>, <span class="st">&quot;#FFDAA1&quot;</span>, <span class="st">&quot;#B3915F&quot;</span>))</span></code></pre></div>
 <p><img src="r_for_non_programmers_files/figure-html/Homogeneity%20and%20no%20homogeneity%20of%20variance%20alternative%20visualisation-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>If we compare the bars, we can tell that the variance in both groups looks very similar, i.e. the length of the bars appear to be about the same height. Furthermore, if we compared the IQR for both groups, we find that they are very closer.</p>
+<p>If we compare the bars, we can tell that the variance in both groups looks very similar, i.e. the length of the bars appear to be about the same height. Furthermore, if we compare the IQR for both groups, we find that they are quite close to each other.</p>
 <div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="sources-of-bias.html#cb108-1" aria-hidden="true" tabindex="-1"></a>data4 <span class="sc">%&gt;%</span></span>
 <span id="cb108-2"><a href="sources-of-bias.html#cb108-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(gender) <span class="sc">%&gt;%</span></span>
 <span id="cb108-3"><a href="sources-of-bias.html#cb108-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">iqr =</span> <span class="fu">IQR</span>(income))</span>
@@ -587,11 +587,11 @@ Figure 9.4: Outlier detection via MAD using <code>2.5 * MAD</code> as a threshol
 <div id="iqr-formula" align="center">
 <p><span class="math inline">\(IQR = Q_{3}-Q_{1}\)</span></p>
 </div>
-<p>Therefore, we can create new thresholds for the detection of outliers. For IQR, it is common to use ‘1.5 * IQR’ as the lower and upper thresholds.</p>
+<p>Therefore, we can create new thresholds for the detection of outliers. For IQR, it is common to use <span class="math inline">\(\pm 1.5 * IQR\)</span> as the lower and upper thresholds measured from <span class="math inline">\(Q_1\)</span> and <span class="math inline">\(Q3\)</span> respectively.</p>
 <div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="sources-of-bias.html#cb113-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute the median and thresholds</span></span>
-<span id="cb113-2"><a href="sources-of-bias.html#cb113-2" aria-hidden="true" tabindex="-1"></a>runtime_median <span class="ot">&lt;-</span> <span class="fu">median</span>(imdb_top_250<span class="sc">$</span>runtime_min)</span>
-<span id="cb113-3"><a href="sources-of-bias.html#cb113-3" aria-hidden="true" tabindex="-1"></a>iqr_upper <span class="ot">&lt;-</span> runtime_median <span class="sc">+</span> <span class="fl">1.5</span> <span class="sc">*</span> <span class="fu">IQR</span>(imdb_top_250<span class="sc">$</span>runtime_min)</span>
-<span id="cb113-4"><a href="sources-of-bias.html#cb113-4" aria-hidden="true" tabindex="-1"></a>iqr_lower <span class="ot">&lt;-</span> runtime_median <span class="sc">-</span> <span class="fl">1.5</span> <span class="sc">*</span> <span class="fu">IQR</span>(imdb_top_250<span class="sc">$</span>runtime_min)</span>
+<span id="cb113-2"><a href="sources-of-bias.html#cb113-2" aria-hidden="true" tabindex="-1"></a>runtime_quantiles <span class="ot">&lt;-</span> <span class="fu">quantile</span>(imdb_top_250<span class="sc">$</span>runtime_min)</span>
+<span id="cb113-3"><a href="sources-of-bias.html#cb113-3" aria-hidden="true" tabindex="-1"></a>iqr_upper <span class="ot">&lt;-</span> runtime_quantiles[<span class="dv">4</span>] <span class="sc">+</span> <span class="fl">1.5</span> <span class="sc">*</span> <span class="fu">IQR</span>(imdb_top_250<span class="sc">$</span>runtime_min)</span>
+<span id="cb113-4"><a href="sources-of-bias.html#cb113-4" aria-hidden="true" tabindex="-1"></a>iqr_lower <span class="ot">&lt;-</span> runtime_quantiles[<span class="dv">1</span>] <span class="sc">-</span> <span class="fl">1.5</span> <span class="sc">*</span> <span class="fu">IQR</span>(imdb_top_250<span class="sc">$</span>runtime_min)</span>
 <span id="cb113-5"><a href="sources-of-bias.html#cb113-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb113-6"><a href="sources-of-bias.html#cb113-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Create our plot</span></span>
 <span id="cb113-7"><a href="sources-of-bias.html#cb113-7" aria-hidden="true" tabindex="-1"></a>imdb_top_250 <span class="sc">%&gt;%</span></span>
@@ -612,8 +612,8 @@ Figure 9.4: Outlier detection via MAD using <code>2.5 * MAD</code> as a threshol
 <span id="cb113-22"><a href="sources-of-bias.html#cb113-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;run time&quot;</span>) <span class="sc">+</span></span>
 <span id="cb113-23"><a href="sources-of-bias.html#cb113-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;movies&quot;</span>)</span></code></pre></div>
 <p><img src="r_for_non_programmers_files/figure-html/IQR%20as%20a%20threshold%20for%20outliers-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>As we can tell, the IQR detects much more outliers for our data than any of the previous methods. The outliers we find here are the same as shown in Figure <a href="descriptive-statistics.html#fig:a-boxplot">8.1</a>.</p>
-<p>For our data, I would argue that the MAD by <span class="citation"><a href="#ref-leys2013detecting" role="doc-biblioref">Leys et al.</a> (<a href="#ref-leys2013detecting" role="doc-biblioref">2013</a>)</span> produced the ‘best’ selection. However, we have to acknowledge that these classifications will always be subjective because how we position the thresholds still depends on the researcher’s choice. Still, the computation is standardised, and we can plausibly explain the process of identifying outliers.</p>
+<p>As we can tell, the IQR detects much more outliers for our data than any of the previous methods. The outliers we find here are the same as shown in Figure <a href="descriptive-statistics.html#fig:a-boxplot">8.2</a>.</p>
+<p>For our data, I would argue that the MAD by <span class="citation"><a href="#ref-leys2013detecting" role="doc-biblioref">Leys et al.</a> (<a href="#ref-leys2013detecting" role="doc-biblioref">2013</a>)</span> produced the ‘best’ selection. However, we have to acknowledge that these classifications will always be subjective because how we position the thresholds depends on the researcher’s choice. Still, the computation is standardised, and we can plausibly explain the process of identifying outliers.</p>
 </div>
 <div id="removing-or-replacing-outliers" class="section level3" number="9.5.3">
 <h3><span class="header-section-number">9.5.3</span> Removing or replacing outliers</h3>

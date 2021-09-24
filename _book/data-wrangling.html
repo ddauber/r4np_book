@@ -4,27 +4,27 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>7 Data Wrangling | R for Non-Programmers: A Guide for Social Scientists</title>
-  <meta name="description" content="This books is intended for Social Scientists. No matter whether you have years of experiences, this book might come in handy if you never use R or any other programming language before." />
+  <title>7 Data Wrangling and Cleaning | R for Non-Programmers: A Guide for Social Scientists</title>
+  <meta name="description" content="7 Data Wrangling and Cleaning | R for Non-Programmers: A Guide for Social Scientists is a springboard into the world of R without having to become a full-fledged R programmer or possess abundant knowledge in other programming languages. This book guides you through the most common challenges in empirical research in the Social Sciences and offers practical and efficient solutions. Each chapter is dedicated to a common task we have to achieve to answer our research questions. In addition, it provides plenty of exercises and in-depth case studies based on actual data." />
   <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="7 Data Wrangling | R for Non-Programmers: A Guide for Social Scientists" />
+  <meta property="og:title" content="7 Data Wrangling and Cleaning | R for Non-Programmers: A Guide for Social Scientists" />
   <meta property="og:type" content="book" />
   
   
-  <meta property="og:description" content="This books is intended for Social Scientists. No matter whether you have years of experiences, this book might come in handy if you never use R or any other programming language before." />
+  <meta property="og:description" content="7 Data Wrangling and Cleaning | R for Non-Programmers: A Guide for Social Scientists is a springboard into the world of R without having to become a full-fledged R programmer or possess abundant knowledge in other programming languages. This book guides you through the most common challenges in empirical research in the Social Sciences and offers practical and efficient solutions. Each chapter is dedicated to a common task we have to achieve to answer our research questions. In addition, it provides plenty of exercises and in-depth case studies based on actual data." />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="7 Data Wrangling | R for Non-Programmers: A Guide for Social Scientists" />
+  <meta name="twitter:title" content="7 Data Wrangling and Cleaning | R for Non-Programmers: A Guide for Social Scientists" />
   
-  <meta name="twitter:description" content="This books is intended for Social Scientists. No matter whether you have years of experiences, this book might come in handy if you never use R or any other programming language before." />
+  <meta name="twitter:description" content="7 Data Wrangling and Cleaning | R for Non-Programmers: A Guide for Social Scientists is a springboard into the world of R without having to become a full-fledged R programmer or possess abundant knowledge in other programming languages. This book guides you through the most common challenges in empirical research in the Social Sciences and offers practical and efficient solutions. Each chapter is dedicated to a common task we have to achieve to answer our research questions. In addition, it provides plenty of exercises and in-depth case studies based on actual data." />
   
 
 <meta name="author" content="Daniel Dauber" />
 
 
-<meta name="date" content="2021-09-23" />
+<meta name="date" content="2021-09-24" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -163,8 +163,8 @@ div.csl-indent {
 <li><a href="./">R for Non-Programmers</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome 👋</a></li>
-<li class="chapter" data-level="" data-path="acknowledgments.html"><a href="acknowledgments.html"><i class="fa fa-check"></i>Acknowledgements 🙏</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome</a></li>
+<li class="chapter" data-level="" data-path="acknowledgments.html"><a href="acknowledgments.html"><i class="fa fa-check"></i>Acknowledgements</a></li>
 <li class="chapter" data-level="1" data-path="readme-before-you-get-started.html"><a href="readme-before-you-get-started.html"><i class="fa fa-check"></i><b>1</b> <code>Readme.</code> before you get started</a>
 <ul>
 <li class="chapter" data-level="1.1" data-path="readme-before-you-get-started.html"><a href="readme-before-you-get-started.html#a-starting-point-and-reference-book"><i class="fa fa-check"></i><b>1.1</b> A starting point and reference book</a></li>
@@ -216,7 +216,7 @@ div.csl-indent {
 <li class="chapter" data-level="6.3" data-path="starting-your-r-projects.html"><a href="starting-your-r-projects.html#creating-an-r-script"><i class="fa fa-check"></i><b>6.3</b> Creating an R Script</a></li>
 <li class="chapter" data-level="6.4" data-path="starting-your-r-projects.html"><a href="starting-your-r-projects.html#r-markdown-and-r-notebooks"><i class="fa fa-check"></i><b>6.4</b> Using R Markdown</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="data-wrangling.html"><a href="data-wrangling.html"><i class="fa fa-check"></i><b>7</b> Data Wrangling</a>
+<li class="chapter" data-level="7" data-path="data-wrangling.html"><a href="data-wrangling.html"><i class="fa fa-check"></i><b>7</b> Data Wrangling and Cleaning</a>
 <ul>
 <li class="chapter" data-level="7.1" data-path="data-wrangling.html"><a href="data-wrangling.html#import-your-data"><i class="fa fa-check"></i><b>7.1</b> Import your data</a>
 <ul>
@@ -386,7 +386,7 @@ div.csl-indent {
 
             <section class="normal" id="section-">
 <div id="data-wrangling" class="section level1" number="7">
-<h1><span class="header-section-number">7</span> Data Wrangling</h1>
+<h1><span class="header-section-number">7</span> Data Wrangling and Cleaning</h1>
 <p>You collected your data over months (and sometimes years), and all you want to know is whether your data makes sense and reveals something nobody would have ever expected. However, before we can truly go ahead with our analysis, it is essential to understand whether our data is ‘tidy.’ Very often, the data we receive is everything else but clean, and we need to check whether our data is fit for analysis and ensure it is in a format that is easy to handle. For small datasets, this is usually a brief exercise. However, I found myself cleaning data for a month because the dataset was spread out into multiple spreadsheets (no pun intended) with different numbers of columns and odd column names. Thus, data cleaning or data wrangling is an essential first step in any data analysis. It is a step that cannot be skipped and has to be performed on every new dataset.</p>
 <p>Luckily, R provides many useful functions to make our lives easier. You will be in for a treat if you are like me and used to do this in Excel. It is a lot simpler using R to achieve a clean dataset.</p>
 <p>Here is an overview of the different steps we usually work through before starting with our primary analysis. This list is certainly not exhaustive:</p>
@@ -487,8 +487,17 @@ div.csl-indent {
 <span id="cb36-18"><a href="data-wrangling.html#cb36-18" aria-hidden="true" tabindex="-1"></a><span class="do">## 10         20070010 Andorra             1    38 living together as married</span></span>
 <span id="cb36-19"><a href="data-wrangling.html#cb36-19" aria-hidden="true" tabindex="-1"></a><span class="do">## # … with 69,568 more rows, and 2 more variables: Freedom.of.Choice &lt;dbl&gt;,</span></span>
 <span id="cb36-20"><a href="data-wrangling.html#cb36-20" aria-hidden="true" tabindex="-1"></a><span class="do">## #   Satisfaction-with-life &lt;dbl&gt;</span></span></code></pre></div>
-<p>The result is a series of rows and columns. The first information we receive is: <code>A tibble: 69,578 x 9</code>. This indicates that our dataset has 69,578 observations (i.e. rows) and 9 columns (i.e. variables). This rectangular format is the one we encounter most frequently in Social Sciences (and probably beyond). If you ever worked in Microsoft Excel, this format will look familiar.</p>
-<p>Even though it might be nice to look at a dataset in this way, it is not particularly useful. Depending on your monitor size, you might only see a small number of columns, and therefore we do not get to see a complete list of all variables. In short, we hardly ever will find much use in inspecting data this way. Luckily other functions can help us.</p>
+<p>The result is a series of rows and columns. The first information we receive is: <code>A tibble: 69,578 x 9</code>. This indicates that our dataset has 69,578 observations (i.e. rows) and 9 columns (i.e. variables). This rectangular format is the one we encounter most frequently in Social Sciences (and probably beyond). If you ever worked in Microsoft Excel, this format will look familiar. However, rectangular data is not necessarily <code>tidy</code> data. <span class="citation"><a href="#ref-wickham2014tidy" role="doc-biblioref">Wickham</a> (<a href="#ref-wickham2014tidy" role="doc-biblioref">2014</a>)</span> (p. 4) defined tidy data as follows:</p>
+<p><br></p>
+<blockquote>
+<ol style="list-style-type: decimal">
+<li>Each variable forms a column.</li>
+<li>Each observation forms a row.</li>
+<li>Each type of observational unit forms a table.</li>
+</ol>
+</blockquote>
+<p><br></p>
+<p>Even though it might be nice to look at a tibble in the console, it is not particularly useful. Depending on your monitor size, you might only see a small number of columns, and therefore we do not get to see a complete list of all variables. In short, we hardly ever will find much use in inspecting data this way. Luckily other functions can help us.</p>
 <p>If you want to see each variable covered in the dataset and their data types, you can use the function <code>glimpse()</code> from the <code>dplyr</code> package (loaded as part of the <code>tidyverse</code> package).</p>
 <div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="data-wrangling.html#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(wvs)</span>
 <span id="cb37-2"><a href="data-wrangling.html#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Rows: 69,578</span></span>
@@ -1221,8 +1230,11 @@ Rubin, Donald B. 1976. <span>“Inference and Missing Data.”</span> <em>Biomet
 <div id="ref-schafer-1999" class="csl-entry">
 Schafer, Joseph L. 1999. <span>“Multiple Imputation: A Primer.”</span> <em>Statistical Methods in Medical Research</em> 8 (1): 3–15.
 </div>
+<div id="ref-wickham2014tidy" class="csl-entry">
+Wickham, Hadley. 2014. <span>“Tidy Data.”</span> <em>Journal of Statistical Software</em> 59 (1): 1–23.
+</div>
 <div id="ref-wickham-2021" class="csl-entry">
-Wickham, Hadley. 2021. <span>“The Tidyverse Style Guide.”</span> <a href="https://style.tidyverse.org">https://style.tidyverse.org</a>.
+———. 2021. <span>“The Tidyverse Style Guide.”</span> <a href="https://style.tidyverse.org">https://style.tidyverse.org</a>.
 </div>
 </div>
 <div class="footnotes">

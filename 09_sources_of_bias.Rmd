@@ -338,7 +338,7 @@ data4 %>%
   scale_color_manual(values = c("#4D87B3", "#A1D6FF", "#FFDAA1", "#B3915F"))
 ```
 
-If we compare the bars, we can tell that the variance in both groups looks very similar, i.e. the length of the bars appear to be about the same height. Furthermore, if we compared the IQR for both groups, we find that they are very closer.
+If we compare the bars, we can tell that the variance in both groups looks very similar, i.e. the length of the bars appear to be about the same height. Furthermore, if we compare the IQR for both groups, we find that they are quite close to each other.
 
 ```{r IQR for both groups, echo=TRUE}
 data4 %>%
@@ -494,13 +494,15 @@ Another approach to classifying outliers is the use of the interquartile range (
 $IQR = Q_{3}-Q_{1}$
 :::
 
-Therefore, we can create new thresholds for the detection of outliers. For IQR, it is common to use '1.5 \* IQR' as the lower and upper thresholds.
+Therefore, we can create new thresholds for the detection of outliers. For IQR, it is common to use $\pm 1.5 * IQR$ as the lower and upper thresholds measured from $Q_1$ and $Q3$ respectively. To compute the quartiles we can use the function `quantile()`, which returns $Minimum, Q_1, Q_2, Q_3, and\ Q_4$
 
 ```{r IQR as a threshold for outliers, echo=TRUE}
-# Compute the median and thresholds
-runtime_median <- median(imdb_top_250$runtime_min)
-iqr_upper <- runtime_median + 1.5 * IQR(imdb_top_250$runtime_min)
-iqr_lower <- runtime_median - 1.5 * IQR(imdb_top_250$runtime_min)
+# Compute the quartiles
+(runtime_quantiles <- quantile(imdb_top_250$runtime_min))
+
+# Compute the thresholds
+iqr_upper <- runtime_quantiles[4] + 1.5 * IQR(imdb_top_250$runtime_min)
+iqr_lower <- runtime_quantiles[2] - 1.5 * IQR(imdb_top_250$runtime_min)
 
 # Create our plot
 imdb_top_250 %>%
@@ -522,19 +524,19 @@ imdb_top_250 %>%
   xlab("movies")
 ```
 
-As we can tell, the IQR detects much more outliers for our data than any of the previous methods. The outliers we find here are the same as shown in Figure \@ref(fig:a-boxplot).
+As we can tell, the IQR method detects about the same outliers for our data as the median absolute deviation (MAD) approach. The outliers we find here are the same as shown in Figure \@ref(fig:a-boxplot).
 
-For our data, I would argue that the MAD by @leys2013detecting produced the 'best' selection. However, we have to acknowledge that these classifications will always be subjective because how we position the thresholds still depends on the researcher's choice. Still, the computation is standardised, and we can plausibly explain the process of identifying outliers.
+For our data, I would argue that the IQR and MAD method by @leys2013detecting produced the 'best' selection of outliers. However, we have to acknowledge that these classifications will always be subjective because how we position the thresholds depends on the researcher's choice. Still, the computation is standardised, and we can plausibly explain the process of identifying outliers.
 
 ### Removing or replacing outliers {#removing-or-replacing-outliers}
 
 Now that we have identified our outliers, we are confronted with the question of what we should do with them. Like missing data (see Chapter \@ref(dealing-with-missing-data)), we can either remove them or replace them with other values. While removal is a relatively simple task, replacing it with other 'reasonable' values implies finding techniques to create such values. As you may remember, we were confronted with a similar problem before when we looked into missing data (Chapter \@ref(dealing-with-missing-data). The same techniques, especially multiple imputation [see @cousineau2010outliers], can also be used for such scenarios.
 
-Irrespective of whether we remove or replace outliers, we somehow need to single them out of the crowd. Since the MAD strategy worked well for our data, we can use the thresholds we defined before, i.e. `mad_upper` and `mad_lower`. Therefore, an observation (i.e. a movie) is considered an outlier if
+Irrespective of whether we remove or replace outliers, we somehow need to single them out of the crowd. Since the IQR strategy worked well for our data, we can use the thresholds we defined before, i.e. `iqr_upper` and `iqr_lower`. Therefore, an observation (i.e. a movie) is considered an outlier if
 
--   its value lies above `mad_upper`, or
+-   its value lies above `iqr_upper`, or
 
--   its value lies below `mad_lower`
+-   its value lies below `iqr_lower`
 
 It becomes clear that we somehow need to define a condition because if it is an outlier, it should be labelled as one. Ideally, we want a new column in our dataset which indicates whether a movie is an outlier (i.e. outlier = TRUE) or not (outlier = FALSE). R offers a way for us to express such conditions with the function `ifelse()`. It has the following structure:
 
@@ -544,9 +546,9 @@ It becomes clear that we somehow need to define a condition because if it is an 
 
 Let's formulate a sentence that describes our scenario as an `ifelse()` function:
 
--   If a movie's `runtime_min` is longer than `mad_upper`, [or]{.ul}
+-   If a movie's `runtime_min` is longer than `iqr_upper`, [or]{.ul}
 
--   if a movie's `runtime_min` is lower than `mad_lower`,
+-   if a movie's `runtime_min` is lower than `iqr_lower`,
 
 -   classify this movie as an outlier (i.e. `TRUE`),
 
@@ -554,9 +556,9 @@ Let's formulate a sentence that describes our scenario as an `ifelse()` function
 
 We already know from Chapter \@ref(basic-computations-in-r) how to use logical and arithmetic operators. All we have to do is put them together in one function call.
 
-```{r Classifying outliers with MAD, echo=TRUE}
+```{r Classifying outliers with IQR, echo=TRUE}
 imdb_top_250 <- imdb_top_250 %>%
-  mutate(outlier = ifelse(runtime_min > mad_upper | runtime_min < mad_lower,
+  mutate(outlier = ifelse(runtime_min > iqr_upper | runtime_min < iqr_lower,
                           TRUE, FALSE))
 ```
 
@@ -576,11 +578,13 @@ From here, it is simple to remove these movies (i.e. keep the movies that are no
 ```{r Remove and replacing outliers, echo=TRUE, results='hide'}
 # Keep all movies that are not outliers
 imdb_top_250 %>%
-  filter(outlier == "FALSE")
+  filter(outlier == "FALSE") %>%
+  select(title, outlier)
 
 # Replace values with NA
 imdb_top_250 %>%
-  mutate(runtime_min = replace(runtime_min, outlier == "TRUE", NA))
+  mutate(runtime_min = replace(runtime_min, outlier == "TRUE", NA)) %>%
+  select(title, runtime_min)
 ```
 
 The `replace()` function is very intuitive to use. It first needs to know where you want to replace a value (`runtime_min`), then what the condition for replacing is (`outlier == "TRUE"`), and lastly, which value should be put instead of the original one (`NA`).
@@ -608,7 +612,7 @@ colour_pal <- wesanderson::wes_palette("Darjeeling1", 11, type = "continuous")
 imdb_top_250 %>%
   ggplot(aes(x = reorder(genre_01, runtime_min),
              y = runtime_min,
-             colgenre_01)
+             col = genre_01)
          ) +
   geom_boxplot(alpha = 0,
                show.legend = FALSE) +

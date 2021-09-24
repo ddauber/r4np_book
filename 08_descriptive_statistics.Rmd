@@ -128,6 +128,7 @@ The mean is likely the most known descriptive statistics and, at the same time, 
 In R, it is simple to compute the mean using the function `mean()`. We used this function in Chapter \@ref(functions) and Chapter \@ref(latent-constructs) already. However, we have not looked at how we can plot the mean.
 
 Assume we are curious to know how successful movies are in each of the genres. The mean could be a good starting point to answer this question because it provides the 'average' success of movies in a genre. The simplest approach to investigating this is using a bar plot, like in Chapter \@ref(plotting-in-r-with-ggplot2). So, we first create a tibble that contains the means of `gross_in_m` for each genre in `genre_01`. Then we use this table to plot a bar plot with `geom_col()`.
+
 ```{r Plotting the mean of movie genre earnings, echo=TRUE}
 imdb_top_250 %>%
   # Group data by genre
@@ -259,9 +260,19 @@ imdb_top_250 %>%
   geom_boxplot()
 ```
 
-To interpret this boxplot consider Figure \@ref(fig:).
+To interpret this boxplot consider Figure \@ref(fig:anatomy-of-a-boxplot). Every boxplot consists of a 'box' and two whiskers (i.e. the lines leading away from the box). The distribution of data can be assessed by looking at different ranges:
 
-`[insert boxplot explanation figure here]`
+-   `MINIMUM` to `Q1` represents the bottom 25% of our observations,
+
+-   `Q1` to `Q3`, also known as the `interquartile range` (IQR) defines the middle 50% of our observations, and
+
+-   `Q3` to `MAXIMUM`, contains the top 25% of all our data.
+
+Thus, with the help of a boxplot, we can assess whether our data is evenly distributed across these ranges or not. If observations fall outside a certain range (i.e. `1.5 IQR`) they are classified as outliers. We cover outliers in great detail in Chapter \@ref(dealing-with-outliers).
+
+```{r anatomy of a boxplot, fig.cap = "Anatomy of a Boxplot", label = "anatomy-of-a-boxplot", echo=FALSE}
+knitr::include_graphics("images/chapter_08_img/boxplot_anatomy-02.png")
+```
 
 The boxplot shows that we have one observation that is an outlier, which is likely `Avengers: Endgame`, but what happened to the over Avengers movie? Is it not an outlier as well? It seems we need some more information. We can overlay another `geom_` on top to visualise where precisely each movie lies on this boxplot. We can represent each movie as a point by using `geom_point()`. This function requires us to define the values for the x and y-axis. Here it makes sense to set `y = 0,` which aligns all the dots in the middle of the boxplot.
 
@@ -349,11 +360,15 @@ As we can see from our visualisation, both movies would also count as outliers i
 
 Another frequently used approach to show the spread (or distribution) of data is the histogram. The histogram easily gets confused with a bar plot. However, you would be very mistaken to assume that they are the same. Some key differences between these two types of plots is summarised in Table \@ref(tab:histogram-vs-bar-plot).
 
++----------------------------------------------------------------------+--------------------------------------------------------------------+
 | Histogram                                                            | Bar plot                                                           |
-|----------------------------------------------------------------------|--------------------------------------------------------------------|
++======================================================================+====================================================================+
 | Used to show the distribution of non-categorical data                | Used for showing the frequency of categorical data, i.e. `factor`s |
++----------------------------------------------------------------------+--------------------------------------------------------------------+
 | Each bar (also called 'bin') represents a group of observations.     | Each bar represents one category (or level) in our `factor`.       |
++----------------------------------------------------------------------+--------------------------------------------------------------------+
 | The order of the bars is important and cannot/should not be changed. | The order of bars is arbitrary and can be reordered if meaningful. |
++----------------------------------------------------------------------+--------------------------------------------------------------------+
 
 : (\#tab:histogram-vs-bar-plot) Histogram vs bar plot
 

@@ -5,6 +5,7 @@ fig:folder-structure
 fig:mapping-missing-data
 fig:missing-data-per-variable
 fig:mnar-example
+fig:anatomy-of-a-boxplot
 fig:a-boxplot
 tab:histogram-vs-bar-plot
 fig:normal-distribution

@@ -1,4 +1,4 @@
-# Data Wrangling {#data-wrangling}
+# Data Wrangling and Cleaning {#data-wrangling}
 
 You collected your data over months (and sometimes years), and all you want to know is whether your data makes sense and reveals something nobody would have ever expected. However, before we can truly go ahead with our analysis, it is essential to understand whether our data is 'tidy'. Very often, the data we receive is everything else but clean, and we need to check whether our data is fit for analysis and ensure it is in a format that is easy to handle. For small datasets, this is usually a brief exercise. However, I found myself cleaning data for a month because the dataset was spread out into multiple spreadsheets (no pun intended) with different numbers of columns and odd column names. Thus, data cleaning or data wrangling is an essential first step in any data analysis. It is a step that cannot be skipped and has to be performed on every new dataset.
 
@@ -123,9 +123,17 @@ library(r4np)
 wvs
 ```
 
-The result is a series of rows and columns. The first information we receive is: `A tibble: 69,578 x 9`. This indicates that our dataset has 69,578 observations (i.e. rows) and 9 columns (i.e. variables). This rectangular format is the one we encounter most frequently in Social Sciences (and probably beyond). If you ever worked in Microsoft Excel, this format will look familiar.
+The result is a series of rows and columns. The first information we receive is: `A tibble: 69,578 x 9`. This indicates that our dataset has 69,578 observations (i.e. rows) and 9 columns (i.e. variables). This rectangular format is the one we encounter most frequently in Social Sciences (and probably beyond). If you ever worked in Microsoft Excel, this format will look familiar. However, rectangular data is not necessarily `tidy` data. @wickham2014tidy (p. 4) defined tidy data as follows:
 
-Even though it might be nice to look at a dataset in this way, it is not particularly useful. Depending on your monitor size, you might only see a small number of columns, and therefore we do not get to see a complete list of all variables. In short, we hardly ever will find much use in inspecting data this way. Luckily other functions can help us.
+<br>
+
+> 1.  Each variable forms a column.
+> 2.  Each observation forms a row.
+> 3.  Each type of observational unit forms a table.
+
+<br>
+
+Even though it might be nice to look at a tibble in the console, it is not particularly useful. Depending on your monitor size, you might only see a small number of columns, and therefore we do not get to see a complete list of all variables. In short, we hardly ever will find much use in inspecting data this way. Luckily other functions can help us.
 
 If you want to see each variable covered in the dataset and their data types, you can use the function `glimpse()` from the `dplyr` package (loaded as part of the `tidyverse` package).
 
@@ -592,6 +600,7 @@ Compared to dealing with missing data, this is a fairly straightforward task. Ho
 By far, the most common approach to assessing reliability (or more accurately 'internal consistency') of latent variables is Cronbach's $\alpha$. This indicator looks at how strongly a set of items (i.e. questions in your questionnaire) are related to each other. For example, the stronger the relationship of all items starting with `si_` to each other, the more likely we achieve a higher Cronbach's $\alpha$. The psych package has a suitable function to compute it for us.
 
 Instead of listing all the items by hand, I use the function `starts_with()` to pick only the variables whose names start with `si_`. It certainly pays off to think about your variable names more thoroughly in advance to benefit from such shortcuts (see also Chapter \@ref(colnames-cleaning).
+
 ```{r Compute Cronbachs alpha for si, echo=TRUE}
 gep %>%
   select(starts_with("si_")) %>%
