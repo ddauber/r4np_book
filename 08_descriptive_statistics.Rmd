@@ -271,7 +271,7 @@ To interpret this boxplot consider Figure \@ref(fig:anatomy-of-a-boxplot). Every
 Thus, with the help of a boxplot, we can assess whether our data is evenly distributed across these ranges or not. If observations fall outside a certain range (i.e. `1.5 IQR`) they are classified as outliers. We cover outliers in great detail in Chapter \@ref(dealing-with-outliers).
 
 ```{r anatomy of a boxplot, fig.cap = "Anatomy of a Boxplot", label = "anatomy-of-a-boxplot", echo=FALSE}
-knitr::include_graphics("images/chapter_08_img/boxplot_anatomy-02.png")
+knitr::include_graphics("images/chapter_08_img/boxplot_anatomy.png")
 ```
 
 The boxplot shows that we have one observation that is an outlier, which is likely `Avengers: Endgame`, but what happened to the over Avengers movie? Is it not an outlier as well? It seems we need some more information. We can overlay another `geom_` on top to visualise where precisely each movie lies on this boxplot. We can represent each movie as a point by using `geom_point()`. This function requires us to define the values for the x and y-axis. Here it makes sense to set `y = 0,` which aligns all the dots in the middle of the boxplot.
