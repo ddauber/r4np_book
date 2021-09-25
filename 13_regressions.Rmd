@@ -444,7 +444,7 @@ As before, we want to know which observations fall beyond the threshold.
 ```{r Determine observations above average leverage, echo=TRUE}
 new_outliers <-
   m1_outliers %>%
-  mutate(avglvg = ifelse(.hat = 3 * avg_lvg, "TRUE", "FALSE")) %>%
+  mutate(avglvg = ifelse(.hat > 3 * avg_lvg, "TRUE", "FALSE")) %>%
   select(rowname, avglvg)
 
 # Add new results to our reference list

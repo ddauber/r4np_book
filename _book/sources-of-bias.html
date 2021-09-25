@@ -587,41 +587,44 @@ Figure 9.4: Outlier detection via MAD using <code>2.5 * MAD</code> as a threshol
 <div id="iqr-formula" align="center">
 <p><span class="math inline">\(IQR = Q_{3}-Q_{1}\)</span></p>
 </div>
-<p>Therefore, we can create new thresholds for the detection of outliers. For IQR, it is common to use <span class="math inline">\(\pm 1.5 * IQR\)</span> as the lower and upper thresholds measured from <span class="math inline">\(Q_1\)</span> and <span class="math inline">\(Q3\)</span> respectively.</p>
-<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="sources-of-bias.html#cb113-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute the median and thresholds</span></span>
-<span id="cb113-2"><a href="sources-of-bias.html#cb113-2" aria-hidden="true" tabindex="-1"></a>runtime_quantiles <span class="ot">&lt;-</span> <span class="fu">quantile</span>(imdb_top_250<span class="sc">$</span>runtime_min)</span>
-<span id="cb113-3"><a href="sources-of-bias.html#cb113-3" aria-hidden="true" tabindex="-1"></a>iqr_upper <span class="ot">&lt;-</span> runtime_quantiles[<span class="dv">4</span>] <span class="sc">+</span> <span class="fl">1.5</span> <span class="sc">*</span> <span class="fu">IQR</span>(imdb_top_250<span class="sc">$</span>runtime_min)</span>
-<span id="cb113-4"><a href="sources-of-bias.html#cb113-4" aria-hidden="true" tabindex="-1"></a>iqr_lower <span class="ot">&lt;-</span> runtime_quantiles[<span class="dv">1</span>] <span class="sc">-</span> <span class="fl">1.5</span> <span class="sc">*</span> <span class="fu">IQR</span>(imdb_top_250<span class="sc">$</span>runtime_min)</span>
-<span id="cb113-5"><a href="sources-of-bias.html#cb113-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb113-6"><a href="sources-of-bias.html#cb113-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Create our plot</span></span>
-<span id="cb113-7"><a href="sources-of-bias.html#cb113-7" aria-hidden="true" tabindex="-1"></a>imdb_top_250 <span class="sc">%&gt;%</span></span>
-<span id="cb113-8"><a href="sources-of-bias.html#cb113-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(title, runtime_min) <span class="sc">%&gt;%</span></span>
-<span id="cb113-9"><a href="sources-of-bias.html#cb113-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(title, runtime_min), <span class="at">y =</span> runtime_min)) <span class="sc">+</span></span>
-<span id="cb113-10"><a href="sources-of-bias.html#cb113-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">124</span>) <span class="sc">+</span></span>
-<span id="cb113-11"><a href="sources-of-bias.html#cb113-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="fu">aes</span>(<span class="at">yintercept =</span> runtime_median, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>),</span>
-<span id="cb113-12"><a href="sources-of-bias.html#cb113-12" aria-hidden="true" tabindex="-1"></a>             <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb113-13"><a href="sources-of-bias.html#cb113-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="fu">aes</span>(<span class="at">yintercept =</span> iqr_upper, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>),</span>
-<span id="cb113-14"><a href="sources-of-bias.html#cb113-14" aria-hidden="true" tabindex="-1"></a>             <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb113-15"><a href="sources-of-bias.html#cb113-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="fu">aes</span>(<span class="at">yintercept =</span> iqr_lower, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>),</span>
-<span id="cb113-16"><a href="sources-of-bias.html#cb113-16" aria-hidden="true" tabindex="-1"></a>             <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb113-17"><a href="sources-of-bias.html#cb113-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb113-18"><a href="sources-of-bias.html#cb113-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb113-19"><a href="sources-of-bias.html#cb113-19" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.grid.major =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb113-20"><a href="sources-of-bias.html#cb113-20" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.background =</span> <span class="fu">element_blank</span>()</span>
-<span id="cb113-21"><a href="sources-of-bias.html#cb113-21" aria-hidden="true" tabindex="-1"></a>        ) <span class="sc">+</span></span>
-<span id="cb113-22"><a href="sources-of-bias.html#cb113-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;run time&quot;</span>) <span class="sc">+</span></span>
-<span id="cb113-23"><a href="sources-of-bias.html#cb113-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;movies&quot;</span>)</span></code></pre></div>
+<p>Therefore, we can create new thresholds for the detection of outliers. For IQR, it is common to use <span class="math inline">\(\pm 1.5 * IQR\)</span> as the lower and upper thresholds measured from <span class="math inline">\(Q_1\)</span> and <span class="math inline">\(Q3\)</span> respectively. To compute the quartiles we can use the function <code>quantile()</code>, which returns <span class="math inline">\(Minimum, Q_1, Q_2, Q_3, and\ Q_4\)</span></p>
+<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="sources-of-bias.html#cb113-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute the quartiles</span></span>
+<span id="cb113-2"><a href="sources-of-bias.html#cb113-2" aria-hidden="true" tabindex="-1"></a>(runtime_quantiles <span class="ot">&lt;-</span> <span class="fu">quantile</span>(imdb_top_250<span class="sc">$</span>runtime_min))</span>
+<span id="cb113-3"><a href="sources-of-bias.html#cb113-3" aria-hidden="true" tabindex="-1"></a><span class="do">##     0%    25%    50%    75%   100% </span></span>
+<span id="cb113-4"><a href="sources-of-bias.html#cb113-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  45.00 107.00 126.00 145.75 321.00</span></span>
+<span id="cb113-5"><a href="sources-of-bias.html#cb113-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute the thresholds</span></span>
+<span id="cb113-6"><a href="sources-of-bias.html#cb113-6" aria-hidden="true" tabindex="-1"></a>iqr_upper <span class="ot">&lt;-</span> runtime_quantiles[<span class="dv">4</span>] <span class="sc">+</span> <span class="fl">1.5</span> <span class="sc">*</span> <span class="fu">IQR</span>(imdb_top_250<span class="sc">$</span>runtime_min)</span>
+<span id="cb113-7"><a href="sources-of-bias.html#cb113-7" aria-hidden="true" tabindex="-1"></a>iqr_lower <span class="ot">&lt;-</span> runtime_quantiles[<span class="dv">2</span>] <span class="sc">-</span> <span class="fl">1.5</span> <span class="sc">*</span> <span class="fu">IQR</span>(imdb_top_250<span class="sc">$</span>runtime_min)</span>
+<span id="cb113-8"><a href="sources-of-bias.html#cb113-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb113-9"><a href="sources-of-bias.html#cb113-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Create our plot</span></span>
+<span id="cb113-10"><a href="sources-of-bias.html#cb113-10" aria-hidden="true" tabindex="-1"></a>imdb_top_250 <span class="sc">%&gt;%</span></span>
+<span id="cb113-11"><a href="sources-of-bias.html#cb113-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(title, runtime_min) <span class="sc">%&gt;%</span></span>
+<span id="cb113-12"><a href="sources-of-bias.html#cb113-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(title, runtime_min), <span class="at">y =</span> runtime_min)) <span class="sc">+</span></span>
+<span id="cb113-13"><a href="sources-of-bias.html#cb113-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">124</span>) <span class="sc">+</span></span>
+<span id="cb113-14"><a href="sources-of-bias.html#cb113-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="fu">aes</span>(<span class="at">yintercept =</span> runtime_median, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>),</span>
+<span id="cb113-15"><a href="sources-of-bias.html#cb113-15" aria-hidden="true" tabindex="-1"></a>             <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb113-16"><a href="sources-of-bias.html#cb113-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="fu">aes</span>(<span class="at">yintercept =</span> iqr_upper, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>),</span>
+<span id="cb113-17"><a href="sources-of-bias.html#cb113-17" aria-hidden="true" tabindex="-1"></a>             <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb113-18"><a href="sources-of-bias.html#cb113-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="fu">aes</span>(<span class="at">yintercept =</span> iqr_lower, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>),</span>
+<span id="cb113-19"><a href="sources-of-bias.html#cb113-19" aria-hidden="true" tabindex="-1"></a>             <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb113-20"><a href="sources-of-bias.html#cb113-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb113-21"><a href="sources-of-bias.html#cb113-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb113-22"><a href="sources-of-bias.html#cb113-22" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.grid.major =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb113-23"><a href="sources-of-bias.html#cb113-23" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.background =</span> <span class="fu">element_blank</span>()</span>
+<span id="cb113-24"><a href="sources-of-bias.html#cb113-24" aria-hidden="true" tabindex="-1"></a>        ) <span class="sc">+</span></span>
+<span id="cb113-25"><a href="sources-of-bias.html#cb113-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;run time&quot;</span>) <span class="sc">+</span></span>
+<span id="cb113-26"><a href="sources-of-bias.html#cb113-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;movies&quot;</span>)</span></code></pre></div>
 <p><img src="r_for_non_programmers_files/figure-html/IQR%20as%20a%20threshold%20for%20outliers-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>As we can tell, the IQR detects much more outliers for our data than any of the previous methods. The outliers we find here are the same as shown in Figure <a href="descriptive-statistics.html#fig:a-boxplot">8.2</a>.</p>
-<p>For our data, I would argue that the MAD by <span class="citation"><a href="#ref-leys2013detecting" role="doc-biblioref">Leys et al.</a> (<a href="#ref-leys2013detecting" role="doc-biblioref">2013</a>)</span> produced the ‘best’ selection. However, we have to acknowledge that these classifications will always be subjective because how we position the thresholds depends on the researcher’s choice. Still, the computation is standardised, and we can plausibly explain the process of identifying outliers.</p>
+<p>As we can tell, the IQR method detects about the same outliers for our data as the median absolute deviation (MAD) approach. The outliers we find here are the same as shown in Figure <a href="descriptive-statistics.html#fig:a-boxplot">8.2</a>.</p>
+<p>For our data, I would argue that the IQR and MAD method by <span class="citation"><a href="#ref-leys2013detecting" role="doc-biblioref">Leys et al.</a> (<a href="#ref-leys2013detecting" role="doc-biblioref">2013</a>)</span> produced the ‘best’ selection of outliers. However, we have to acknowledge that these classifications will always be subjective because how we position the thresholds depends on the researcher’s choice. Still, the computation is standardised, and we can plausibly explain the process of identifying outliers.</p>
 </div>
 <div id="removing-or-replacing-outliers" class="section level3" number="9.5.3">
 <h3><span class="header-section-number">9.5.3</span> Removing or replacing outliers</h3>
 <p>Now that we have identified our outliers, we are confronted with the question of what we should do with them. Like missing data (see Chapter <a href="data-wrangling.html#dealing-with-missing-data">7.6</a>), we can either remove them or replace them with other values. While removal is a relatively simple task, replacing it with other ‘reasonable’ values implies finding techniques to create such values. As you may remember, we were confronted with a similar problem before when we looked into missing data (Chapter <a href="data-wrangling.html#dealing-with-missing-data">7.6</a>. The same techniques, especially multiple imputation <span class="citation">(see <a href="#ref-cousineau2010outliers" role="doc-biblioref">Cousineau and Chartier 2010</a>)</span>, can also be used for such scenarios.</p>
-<p>Irrespective of whether we remove or replace outliers, we somehow need to single them out of the crowd. Since the MAD strategy worked well for our data, we can use the thresholds we defined before, i.e. <code>mad_upper</code> and <code>mad_lower</code>. Therefore, an observation (i.e. a movie) is considered an outlier if</p>
+<p>Irrespective of whether we remove or replace outliers, we somehow need to single them out of the crowd. Since the IQR strategy worked well for our data, we can use the thresholds we defined before, i.e. <code>iqr_upper</code> and <code>iqr_lower</code>. Therefore, an observation (i.e. a movie) is considered an outlier if</p>
 <ul>
-<li><p>its value lies above <code>mad_upper</code>, or</p></li>
-<li><p>its value lies below <code>mad_lower</code></p></li>
+<li><p>its value lies above <code>iqr_upper</code>, or</p></li>
+<li><p>its value lies below <code>iqr_lower</code></p></li>
 </ul>
 <p>It becomes clear that we somehow need to define a condition because if it is an outlier, it should be labelled as one. Ideally, we want a new column in our dataset which indicates whether a movie is an outlier (i.e. outlier = TRUE) or not (outlier = FALSE). R offers a way for us to express such conditions with the function <code>ifelse()</code>. It has the following structure:</p>
 <div id="ifelse-function" align="center">
@@ -629,42 +632,42 @@ Figure 9.4: Outlier detection via MAD using <code>2.5 * MAD</code> as a threshol
 </div>
 <p>Let’s formulate a sentence that describes our scenario as an <code>ifelse()</code> function:</p>
 <ul>
-<li><p>If a movie’s <code>runtime_min</code> is longer than <code>mad_upper</code>, <u>or</u></p></li>
-<li><p>if a movie’s <code>runtime_min</code> is lower than <code>mad_lower</code>,</p></li>
+<li><p>If a movie’s <code>runtime_min</code> is longer than <code>iqr_upper</code>, <u>or</u></p></li>
+<li><p>if a movie’s <code>runtime_min</code> is lower than <code>iqr_lower</code>,</p></li>
 <li><p>classify this movie as an outlier (i.e. <code>TRUE</code>),</p></li>
 <li><p>otherwise, classify this movie as not being an outlier (i.e. <code>FALSE</code>).</p></li>
 </ul>
 <p>We already know from Chapter <a href="r-basics-the-very-fundamentals.html#basic-computations-in-r">5.1</a> how to use logical and arithmetic operators. All we have to do is put them together in one function call.</p>
 <div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="sources-of-bias.html#cb114-1" aria-hidden="true" tabindex="-1"></a>imdb_top_250 <span class="ot">&lt;-</span> imdb_top_250 <span class="sc">%&gt;%</span></span>
-<span id="cb114-2"><a href="sources-of-bias.html#cb114-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">outlier =</span> <span class="fu">ifelse</span>(runtime_min <span class="sc">&gt;</span> mad_upper <span class="sc">|</span> runtime_min <span class="sc">&lt;</span> mad_lower,</span>
+<span id="cb114-2"><a href="sources-of-bias.html#cb114-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">outlier =</span> <span class="fu">ifelse</span>(runtime_min <span class="sc">&gt;</span> iqr_upper <span class="sc">|</span> runtime_min <span class="sc">&lt;</span> iqr_lower,</span>
 <span id="cb114-3"><a href="sources-of-bias.html#cb114-3" aria-hidden="true" tabindex="-1"></a>                          <span class="cn">TRUE</span>, <span class="cn">FALSE</span>))</span></code></pre></div>
 <p>Since we have a classification, we can more thoroughly inspect our outliers and see which movies are the ones that are lying outside our defined norm. We can <code>arrange()</code> them by <code>runtime_min</code>.</p>
 <div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="sources-of-bias.html#cb115-1" aria-hidden="true" tabindex="-1"></a>imdb_top_250 <span class="sc">%&gt;%</span></span>
 <span id="cb115-2"><a href="sources-of-bias.html#cb115-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(outlier <span class="sc">==</span> <span class="st">&quot;TRUE&quot;</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb115-3"><a href="sources-of-bias.html#cb115-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(title, runtime_min, outlier) <span class="sc">%&gt;%</span></span>
 <span id="cb115-4"><a href="sources-of-bias.html#cb115-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(runtime_min)</span>
-<span id="cb115-5"><a href="sources-of-bias.html#cb115-5" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 10 × 3</span></span>
-<span id="cb115-6"><a href="sources-of-bias.html#cb115-6" aria-hidden="true" tabindex="-1"></a><span class="do">##    title                                         runtime_min outlier</span></span>
-<span id="cb115-7"><a href="sources-of-bias.html#cb115-7" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;chr&gt;                                               &lt;dbl&gt; &lt;lgl&gt;  </span></span>
-<span id="cb115-8"><a href="sources-of-bias.html#cb115-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 Sherlock Jr.                                           45 TRUE   </span></span>
-<span id="cb115-9"><a href="sources-of-bias.html#cb115-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 The Lord of the Rings: The Return of the King         201 TRUE   </span></span>
-<span id="cb115-10"><a href="sources-of-bias.html#cb115-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 The Godfather: Part II                                202 TRUE   </span></span>
-<span id="cb115-11"><a href="sources-of-bias.html#cb115-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 Andrei Rublev                                         205 TRUE   </span></span>
-<span id="cb115-12"><a href="sources-of-bias.html#cb115-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 Seven Samurai                                         207 TRUE   </span></span>
-<span id="cb115-13"><a href="sources-of-bias.html#cb115-13" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 Ben-Hur                                               212 TRUE   </span></span>
-<span id="cb115-14"><a href="sources-of-bias.html#cb115-14" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 Lawrence of Arabia                                    228 TRUE   </span></span>
-<span id="cb115-15"><a href="sources-of-bias.html#cb115-15" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 Once Upon a Time in America                           229 TRUE   </span></span>
-<span id="cb115-16"><a href="sources-of-bias.html#cb115-16" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 Gone with the Wind                                    238 TRUE   </span></span>
-<span id="cb115-17"><a href="sources-of-bias.html#cb115-17" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 Gangs of Wasseypur                                    321 TRUE</span></span></code></pre></div>
+<span id="cb115-5"><a href="sources-of-bias.html#cb115-5" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 8 × 3</span></span>
+<span id="cb115-6"><a href="sources-of-bias.html#cb115-6" aria-hidden="true" tabindex="-1"></a><span class="do">##   title                       runtime_min outlier</span></span>
+<span id="cb115-7"><a href="sources-of-bias.html#cb115-7" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;chr&gt;                             &lt;dbl&gt; &lt;lgl&gt;  </span></span>
+<span id="cb115-8"><a href="sources-of-bias.html#cb115-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 Sherlock Jr.                         45 TRUE   </span></span>
+<span id="cb115-9"><a href="sources-of-bias.html#cb115-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 Andrei Rublev                       205 TRUE   </span></span>
+<span id="cb115-10"><a href="sources-of-bias.html#cb115-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 Seven Samurai                       207 TRUE   </span></span>
+<span id="cb115-11"><a href="sources-of-bias.html#cb115-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 4 Ben-Hur                             212 TRUE   </span></span>
+<span id="cb115-12"><a href="sources-of-bias.html#cb115-12" aria-hidden="true" tabindex="-1"></a><span class="do">## 5 Lawrence of Arabia                  228 TRUE   </span></span>
+<span id="cb115-13"><a href="sources-of-bias.html#cb115-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 6 Once Upon a Time in America         229 TRUE   </span></span>
+<span id="cb115-14"><a href="sources-of-bias.html#cb115-14" aria-hidden="true" tabindex="-1"></a><span class="do">## 7 Gone with the Wind                  238 TRUE   </span></span>
+<span id="cb115-15"><a href="sources-of-bias.html#cb115-15" aria-hidden="true" tabindex="-1"></a><span class="do">## 8 Gangs of Wasseypur                  321 TRUE</span></span></code></pre></div>
 <p>The list of movies contains some of the most iconic Hollywood films ever shown on screen. However, I think we can agree that most of them are truly outside the norm of regular movies, not just in terms of runtime.</p>
 <p>From here, it is simple to remove these movies (i.e. keep the movies that are not outliers) or set their values to <code>NA</code>. If we replace the values with <code>NA</code>, we can continue with one of the techniques demonstrated for missing values in Chapter <a href="data-wrangling.html#dealing-with-missing-data">7.6</a>. Both approaches are shown in the following code chunk.</p>
 <div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb116-1"><a href="sources-of-bias.html#cb116-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Keep all movies that are not outliers</span></span>
 <span id="cb116-2"><a href="sources-of-bias.html#cb116-2" aria-hidden="true" tabindex="-1"></a>imdb_top_250 <span class="sc">%&gt;%</span></span>
-<span id="cb116-3"><a href="sources-of-bias.html#cb116-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(outlier <span class="sc">==</span> <span class="st">&quot;FALSE&quot;</span>)</span>
-<span id="cb116-4"><a href="sources-of-bias.html#cb116-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb116-5"><a href="sources-of-bias.html#cb116-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Replace values with NA</span></span>
-<span id="cb116-6"><a href="sources-of-bias.html#cb116-6" aria-hidden="true" tabindex="-1"></a>imdb_top_250 <span class="sc">%&gt;%</span></span>
-<span id="cb116-7"><a href="sources-of-bias.html#cb116-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">runtime_min =</span> <span class="fu">replace</span>(runtime_min, outlier <span class="sc">==</span> <span class="st">&quot;TRUE&quot;</span>, <span class="cn">NA</span>))</span></code></pre></div>
+<span id="cb116-3"><a href="sources-of-bias.html#cb116-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(outlier <span class="sc">==</span> <span class="st">&quot;FALSE&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb116-4"><a href="sources-of-bias.html#cb116-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(title, outlier)</span>
+<span id="cb116-5"><a href="sources-of-bias.html#cb116-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb116-6"><a href="sources-of-bias.html#cb116-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Replace values with NA</span></span>
+<span id="cb116-7"><a href="sources-of-bias.html#cb116-7" aria-hidden="true" tabindex="-1"></a>imdb_top_250 <span class="sc">%&gt;%</span></span>
+<span id="cb116-8"><a href="sources-of-bias.html#cb116-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">runtime_min =</span> <span class="fu">replace</span>(runtime_min, outlier <span class="sc">==</span> <span class="st">&quot;TRUE&quot;</span>, <span class="cn">NA</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb116-9"><a href="sources-of-bias.html#cb116-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(title, runtime_min)</span></code></pre></div>
 <p>The <code>replace()</code> function is very intuitive to use. It first needs to know where you want to replace a value (<code>runtime_min</code>), then what the condition for replacing is (<code>outlier == "TRUE"</code>), and lastly, which value should be put instead of the original one (<code>NA</code>).</p>
 <p>As you hopefully noticed, understanding your data requires some effort, but it is important to know your data well before proceeding to any further analysis. You can experiment with different data visualisations and design them in a way that best reflects the message you want to get across. For example, because we have now a separate variable that classifies outliers, we can do more with our data visualisation than before and dress it up more nicely.</p>
 <div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="sources-of-bias.html#cb117-1" aria-hidden="true" tabindex="-1"></a>imdb_top_250 <span class="sc">%&gt;%</span></span>
@@ -683,7 +686,7 @@ Figure 9.4: Outlier detection via MAD using <code>2.5 * MAD</code> as a threshol
 <span id="cb118-3"><a href="sources-of-bias.html#cb118-3" aria-hidden="true" tabindex="-1"></a>imdb_top_250 <span class="sc">%&gt;%</span></span>
 <span id="cb118-4"><a href="sources-of-bias.html#cb118-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(genre_01, runtime_min),</span>
 <span id="cb118-5"><a href="sources-of-bias.html#cb118-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> runtime_min,</span>
-<span id="cb118-6"><a href="sources-of-bias.html#cb118-6" aria-hidden="true" tabindex="-1"></a>             colgenre_01)</span>
+<span id="cb118-6"><a href="sources-of-bias.html#cb118-6" aria-hidden="true" tabindex="-1"></a>             <span class="at">col =</span> genre_01)</span>
 <span id="cb118-7"><a href="sources-of-bias.html#cb118-7" aria-hidden="true" tabindex="-1"></a>         ) <span class="sc">+</span></span>
 <span id="cb118-8"><a href="sources-of-bias.html#cb118-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">alpha =</span> <span class="dv">0</span>,</span>
 <span id="cb118-9"><a href="sources-of-bias.html#cb118-9" aria-hidden="true" tabindex="-1"></a>               <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>

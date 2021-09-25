@@ -635,9 +635,15 @@ div.csl-indent {
 <span id="cb86-3"><a href="descriptive-statistics.html#cb86-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(gross_in_m)) <span class="sc">+</span></span>
 <span id="cb86-4"><a href="descriptive-statistics.html#cb86-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code></pre></div>
 <p><img src="r_for_non_programmers_files/figure-html/Boxplot%20for%20action%20movies-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>To interpret this boxplot consider Figure <a href="descriptive-statistics.html#fig:anatomy-of-a-boxplot">8.1</a>.</p>
+<p>To interpret this boxplot consider Figure <a href="descriptive-statistics.html#fig:anatomy-of-a-boxplot">8.1</a>. Every boxplot consists of a ‘box’ and two whiskers (i.e. the lines leading away from the box). The distribution of data can be assessed by looking at different ranges:</p>
+<ul>
+<li><p><code>MINIMUM</code> to <code>Q1</code> represents the bottom 25% of our observations,</p></li>
+<li><p><code>Q1</code> to <code>Q3</code>, also known as the <code>interquartile range</code> (IQR) defines the middle 50% of our observations, and</p></li>
+<li><p><code>Q3</code> to <code>MAXIMUM</code>, contains the top 25% of all our data.</p></li>
+</ul>
+<p>Thus, with the help of a boxplot, we can assess whether our data is evenly distributed across these ranges or not. If observations fall outside a certain range (i.e. <code>1.5 IQR</code>) they are classified as outliers. We cover outliers in great detail in Chapter <a href="sources-of-bias.html#dealing-with-outliers">9.5</a>.</p>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:anatomy-of-a-boxplot"></span>
-<img src="images/chapter_08_img/boxplot_anatomy-02.png" alt="Anatomy of a Boxplot" width="4000" />
+<img src="images/chapter_08_img/boxplot_anatomy.png" alt="Anatomy of a Boxplot" width="4000" />
 <p class="caption">
 Figure 8.1: Anatomy of a Boxplot
 </p>
