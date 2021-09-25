@@ -123,7 +123,8 @@ power_df <- tibble(r = seq(from = 0.1,
                            by = 0.01))
 
 # We need to compute sample size for each effect size level
-power_df <- power_df %>%
+power_df <-
+  power_df %>%
   rowwise() %>%
   mutate(n_0.01 =
            broom::tidy(pwr::pwr.r.test(r = r,

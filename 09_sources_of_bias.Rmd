@@ -22,7 +22,8 @@ The assumption of linearity postulates that the relationship of variables repres
 data <- tibble(x = seq(from = -10,
                        to = 10))
 
-p1 <- data %>%
+p1 <-
+  data %>%
   ggplot(aes(x = x, y = x)) +
   geom_point() +
   geom_smooth(method = "lm",
@@ -34,7 +35,8 @@ p1 <- data %>%
         axis.title.y = element_blank()) +
   ggtitle("y = x")
 
-p2 <- data %>%
+p2 <-
+  data %>%
   mutate(zz = x^2) %>%
   ggplot(aes(x = x, y = zz)) +
   geom_point() +
@@ -48,7 +50,8 @@ p2 <- data %>%
   ggtitle("y = x^2")
 
 
-p3 <- data %>%
+p3 <-
+  data %>%
   mutate(zz = x^3) %>%
   ggplot(aes(x = x, y = zz)) +
   geom_point() +
@@ -61,7 +64,8 @@ p3 <- data %>%
         axis.title.y = element_blank()) +
   ggtitle("y = x^3")
 
-p4 <- data %>%
+p4 <-
+  data %>%
   mutate(zz = x^4) %>%
   ggplot(aes(x = x, y = zz)) +
   geom_point() +
@@ -133,7 +137,8 @@ data <- tribble(
   1950
   )
 
-p1 <- data %>%
+p1 <-
+  data %>%
   ggplot(aes(income)) +
   geom_density(bw = 80) +
   geom_vline(aes(xintercept = mean(income), color = "red")) +
@@ -172,7 +177,8 @@ data2 <- tribble(
   3500
   )
 
-p2 <- data2 %>%
+p2 <-
+  data2 %>%
   ggplot(aes(income)) +
   geom_density(bw = 80) +
   geom_vline(aes(xintercept = mean(income), color = "red")) +
@@ -209,7 +215,8 @@ data3 <- tribble(
   1950
   )
 
-p3 <- data3 %>%
+p3 <-
+  data3 %>%
   ggplot(aes(income)) +
   geom_density(bw = 80) +
   geom_vline(aes(xintercept = mean(income), color = "red")) +
@@ -263,16 +270,19 @@ data4 <- tribble(
   ) %>%
   mutate(gender = as_factor(gender))
 
-p1 <- data4 %>%
+p1 <-
+  data4 %>%
   ggplot(aes(income)) +
   geom_density(bw = 80) +
   ggtitle("Bimodal distribution)")
 
-group_means <- data4 %>%
+group_means <-
+  data4 %>%
   group_by(gender) %>%
   summarise(mean = mean(income))
 
-p2 <- data4 %>%
+p2 <-
+  data4 %>%
   ggplot(aes(income, group = gender, color = gender)) +
   geom_density(bw = 80) +
   ggtitle("Normal distribution for each group") +
@@ -557,8 +567,10 @@ Let's formulate a sentence that describes our scenario as an `ifelse()` function
 We already know from Chapter \@ref(basic-computations-in-r) how to use logical and arithmetic operators. All we have to do is put them together in one function call.
 
 ```{r Classifying outliers with IQR, echo=TRUE}
-imdb_top_250 <- imdb_top_250 %>%
-  mutate(outlier = ifelse(runtime_min > iqr_upper | runtime_min < iqr_lower,
+imdb_top_250 <-
+  imdb_top_250 %>%
+  mutate(outlier = ifelse(runtime_min > iqr_upper |
+                            runtime_min < iqr_lower,
                           TRUE, FALSE))
 ```
 

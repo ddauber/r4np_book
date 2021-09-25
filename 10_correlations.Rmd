@@ -10,13 +10,19 @@ Sometimes counting and measuring means, medians, and standard deviations is not 
 
 There are many different ways to compute the correlation, and it partially depends on the type of data you want to relate to each other. The 'Pearson's correlation' is by far the most frequently used correlation technique for normally distributed data. On the other hand, if data is not normally distributed, we can opt for the 'Spearman's rank' correlation. One could argue that the relationship between these two correlations is like the mean (Pearson) to the median (Spearman). Both approaches require numeric values to be computed correctly. If our data is ordinal, or worse dichotomous (like a logical variable), we have to choose different options.
 
++-----------------+-------------------------------------------------------------------------+
 | Correlation     | Used                                                                    |
-|-----------------|-------------------------------------------------------------------------|
++=================+=========================================================================+
 | *Pearson*       | Requires variables to be parametric and therefore numeric               |
++-----------------+-------------------------------------------------------------------------+
 | *Spearman*      | Used when data is non-parametric and requires numeric variables         |
++-----------------+-------------------------------------------------------------------------+
 | *Polychoric*    | Used when investigating two ordinal variables                           |
++-----------------+-------------------------------------------------------------------------+
 | *Tetrachoric*   | Used when both variables are dichotomous, e.g. 'yes/no', 'True/False'.  |
++-----------------+-------------------------------------------------------------------------+
 | *Rank-biserial* | Used when one variable is dichotomous and the other variable is ordinal |
++-----------------+-------------------------------------------------------------------------+
 
 : (\#tab:different-correlations) Different ways of computing correlations
 
@@ -56,7 +62,9 @@ data <- as_tibble(MASS::mvrnorm(n = 100, mu = means, Sigma = cm)) %>%
   rename("x" = `1`,
          "y" = `2`)
 
-p1 <- data %>% ggplot(aes(x, y)) + geom_point() + ggtitle("r = 0.89") +
+p1 <- 
+  data %>%
+  ggplot(aes(x, y)) + geom_point() + ggtitle("r = 0.89") +
   see::theme_modern()
 
 # Positive correlation of 0.30
@@ -71,8 +79,10 @@ data <- as_tibble(MASS::mvrnorm(n = 100, mu = means, Sigma = cm)) %>%
   rename("x" = `1`,
          "y" = `2`)
 
-p2 <- data %>% ggplot(aes(x, y)) + geom_point() + ggtitle("r = 0.30") +
-    see::theme_modern()
+p2 <-
+  data %>%
+  ggplot(aes(x, y)) + geom_point() + ggtitle("r = 0.30") +
+  see::theme_modern()
 
 # Negative correlation of -0.75
 cm <- tribble(
@@ -86,8 +96,10 @@ data <- as_tibble(MASS::mvrnorm(n = 100, mu = means, Sigma = cm)) %>%
   rename("x" = `1`,
          "y" = `2`)
 
-p3 <- data %>% ggplot(aes(x, y)) + geom_point() + ggtitle("r = -0.75") +
-    see::theme_modern()
+p3 <-
+  data %>%
+  ggplot(aes(x, y)) + geom_point() + ggtitle("r = -0.75") +
+  see::theme_modern()
 
 # Negative correlation of -0.42
 cm <- tribble(
@@ -101,7 +113,9 @@ data <- as_tibble(MASS::mvrnorm(n = 100, mu = means, Sigma = cm)) %>%
   rename("x" = `1`,
          "y" = `2`)
 
-p4 <- data %>% ggplot(aes(x, y)) + geom_point()  + ggtitle("r = -0.42") +
+p4 <-
+  data %>%
+  ggplot(aes(x, y)) + geom_point()  + ggtitle("r = -0.42") +
   see::theme_modern()
 
 
@@ -117,7 +131,9 @@ data <- as_tibble(MASS::mvrnorm(n = 100, mu = means, Sigma = cm)) %>%
   rename("x" = `1`,
          "y" = `2`)
 
-p5 <- data %>% ggplot(aes(x, y)) + geom_point()  + ggtitle("r = -1") +
+p5 <-
+  data %>%
+  ggplot(aes(x, y)) + geom_point()  + ggtitle("r = -1") +
   see::theme_modern()
 
 # Negative correlation of 1
@@ -132,7 +148,9 @@ data <- as_tibble(MASS::mvrnorm(n = 100, mu = means, Sigma = cm)) %>%
   rename("x" = `1`,
          "y" = `2`)
 
-p6 <- data %>% ggplot(aes(x, y)) + geom_point()  + ggtitle("r = 1") +
+p6 <-
+  data %>%
+  ggplot(aes(x, y)) + geom_point()  + ggtitle("r = 1") +
   see::theme_modern()
 
 
@@ -181,7 +199,8 @@ Indeed, our analysis reveals that the effect size is very small (r = 0.08 \< 0.1
 We can answer this question with the tools we already know. We create a new variable to subtract the `metascore` from the `imdb_rating` and plot it. We have to make sure both scales are the same length. The variable `imdb_rating` ranges from 0-10, but the `metascore` ranges from 0-100. I used the percentile score instead by dividing the scores by 10 and 100, respectively. Since plotting 250 movies would have been too much and would also not help us find the answer to our question, I chose arbitrary values to pick only those movies with the highest differences in scores. Feel free to adjust the filter to your liking to see more or fewer movies.
 
 ```{r Biggest discrepancy in movie ratings, echo=TRUE}
-plot <- imdb_top_250 %>%
+plot <-
+  imdb_top_250 %>%
   mutate(r_diff = imdb_rating / 10 - metascore / 100) %>%
   filter(!is.na(r_diff) & r_diff >= 0.25 | r_diff <= -0.165)
 

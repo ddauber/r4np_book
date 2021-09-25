@@ -204,8 +204,11 @@ Now that `janitor` has done its magic, we suddenly have easy to read variable na
 If for whatever reason, the variable names are still not looking the way you want, you can use the function `rename()` from the `dplyr` package to manually assign new variable names.
 
 ```{r Use rename() function, echo=TRUE}
-wvs <- wvs %>% rename(satisfaction = satisfaction_with_life,
-                      country = country_name)
+wvs <- 
+  wvs %>%
+  rename(satisfaction = satisfaction_with_life,
+         country = country_name)
+
 glimpse(wvs)
 ```
 
@@ -280,12 +283,13 @@ To perform the conversion, we need to use two new functions from `dplyr`:
 If we want to convert all variables in one go, we can put them into the same function, separated by a `,`.
 
 ```{r Convert dataypes, echo=TRUE}
-wvs <- wvs %>%
+wvs <-
+  wvs %>%
   mutate(country = as_factor(country),
          gender = as_factor(gender),
          relationship_status = as_factor(relationship_status),
          participant_id = as_factor(participant_id)
-  )
+         )
 
 glimpse(wvs)
 ```
@@ -315,14 +319,18 @@ It certainly would be easier to replace the `0`s and `1`s with their correspondi
 ```{r Recode gender, echo=TRUE}
 wvs <-
   wvs %>%
-  mutate(gender = fct_recode(gender, "male" = "0", "female" = "1"))
+  mutate(gender = fct_recode(gender,
+                             "male" = "0",
+                             "female" = "1"))
 ```
 
 If you have been following along very carefully, you might spot one oddity in this code: `"0"` and `"1"`. You likely recall that in Chapter \@ref(r-basics-the-very-fundamentals), I mentioned that we use `""` for `character` values but not for numbers. So what happens if we run the code and remove `""`.
 
 ```{r Recode gender without quotation marks, echo=TRUE, error=TRUE}
 wvs %>%
-  mutate(gender = fct_recode(gender, "male" = 0, "female" = 1))
+  mutate(gender = fct_recode(gender,
+                             "male" = 0,
+                             "female" = 1))
 ```
 
 The error message is easy to understand: `fct_recode()` only expects `strings` as input and not numbers. R recognises `0` and `1` as numbers, but `fct_recode()` converts a `factor` value into another `factor` value. To refer to a factor level (i.e. one of the categories in our factor), we have to use `""`. In other words, data types matter and are often a source of problems with your code. Thus, always pay close attention to it.
@@ -357,7 +365,8 @@ wvs %>%
 I use the value `15` arbitrarily after some trial and error. You can change the value and see which other countries would show up with a lower threshold. However, this number seems to do the trick and returns three countries that seem to have longer labels. All we have to do is replace these categories with new ones the same way we recoded `gender`. You probably can guess already what we have to do to achieve this.
 
 ```{r Recoding country names, echo=TRUE}
-wvs <- wvs %>%
+wvs <-
+  wvs %>%
   mutate(country = fct_recode(country,
                               "Bolivia" = "Bolivia, Plurinational State of",
                               "Iran" = "Iran, Islamic Republic of",
@@ -386,6 +395,7 @@ Every study that intends to be rigorous will have to identify how much data is m
 
 ```{r Missing data matrix with naniar, fig.cap="Mapping missing data with naniar", label = "mapping-missing-data", echo=TRUE}
 library(naniar)
+
 vis_miss(wvs)
 ```
 
@@ -521,7 +531,8 @@ Besides multiple imputation, there is also the option for single imputation. The
 If we apply this function to our dataset, we have to write the following:
 
 ```{r Use KNN imputation via simputation package, echo=TRUE}
-wvs_nona <- wvs %>%
+wvs_nona <-
+  wvs %>%
   select(-participant_id) %>%
   # Transforms our tibble into a data frame
   as.data.frame() %>%
@@ -531,7 +542,8 @@ wvs_nona <- wvs %>%
 glimpse(wvs_nona)
 
 # Let's fix this
-wvs_nona <- wvs_nona %>%
+wvs_nona <-
+  wvs_nona %>%
   mutate(age = as.numeric(age),
          freedom_of_choice = as.numeric(freedom_of_choice),
          satisfaction = as.numeric(satisfaction))
@@ -573,7 +585,8 @@ The same is true for communication skills (`cs_imp` and `cs_exp`). We can comput
 
 ```{r Compute latent variables, echo=TRUE}
 # Compute the scores for the latent variable 'si' and 'cs'
-gep <- gep %>%
+gep <-
+  gep %>%
   rowwise() %>%
   mutate(si = mean(c(si_socialise_with_people_exp,
                      si_supportive_friends_exp,
@@ -610,7 +623,8 @@ gep %>%
 The function `alpha()` returns a lot of information. The most important part, though, is shown at the very beginning:
 
 ```{r Output from alpha(), echo=FALSE}
-si_alpha <- gep %>%
+si_alpha <-
+  gep %>%
   select(starts_with("si_")) %>%
   psych::alpha()
 

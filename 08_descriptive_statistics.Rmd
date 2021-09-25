@@ -326,11 +326,13 @@ For example, we might be interested to know how long most movies run. Our gut fe
 
 ```{r Box plot, fig.cap="A boxplot", label="a-boxplot", echo=TRUE}
 # Text for annotations
-longest_movie <- imdb_top_250 %>%
+longest_movie <-
+  imdb_top_250 %>%
   filter(runtime_min == max(runtime_min)) %>%
   select(title)
 
-shortest_movie <- imdb_top_250 %>%
+shortest_movie <-
+  imdb_top_250 %>%
   filter(runtime_min == min(runtime_min)) %>%
   select(title)
 
@@ -412,26 +414,30 @@ imdb_top_250 %>%
 ```
 
 ```{r Histogram with different bins output, echo=FALSE}
-p1 <- imdb_top_250 %>%
+p1 <-
+  imdb_top_250 %>%
   ggplot(aes(runtime_min)) +
   geom_histogram(bins = 5) +
   geom_bar(aes(fill = "red"), show.legend = FALSE) +
   ggtitle("bins = 5")
 
-p2 <- imdb_top_250 %>%
+p2 <-
+  imdb_top_250 %>%
   ggplot(aes(runtime_min)) +
   geom_histogram(bins = 20) +
   geom_bar(aes(fill = "red"), show.legend = FALSE) +
   ggtitle("bins = 20")
 
-p3 <- imdb_top_250 %>%
+p3 <-
+  imdb_top_250 %>%
   ggplot(aes(runtime_min)) +
   geom_histogram(bins = 60) +
   geom_bar(aes(fill = "red"), show.legend = FALSE) +
   ggtitle("bins = 60")
 
 
-p4 <- imdb_top_250 %>%
+p4 <-
+  imdb_top_250 %>%
   ggplot(aes(runtime_min)) +
   geom_histogram(bins = 300) +
   geom_bar(aes(fill = "red"), show.legend = FALSE) +
@@ -546,7 +552,8 @@ imdb_top_250 %>%
 
 ```{r Illustration of different bw settings using patchwork to stich together, echo=FALSE}
 # bw = 18
-p1 <- imdb_top_250 %>%
+p1 <-
+  imdb_top_250 %>%
   ggplot(aes(runtime_min)) +
   geom_density(bw = 18) +
   geom_function(fun = dnorm,
@@ -558,7 +565,8 @@ p1 <- imdb_top_250 %>%
 
 
 # bw = 3
-p2 <- imdb_top_250 %>%
+p2 <-
+  imdb_top_250 %>%
   ggplot(aes(runtime_min)) +
   geom_density(bw = 3) +
   geom_function(fun = dnorm,

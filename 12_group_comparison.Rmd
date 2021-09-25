@@ -38,7 +38,8 @@ For example, we might wish to compare female and male Egyptians (see Chapter \@r
 
 ```{r Comparability of Egyptians, echo=TRUE, message=FALSE}
 # Only select participants from 'Egypt'
-comp <- wvs_nona %>%
+comp <-
+  wvs_nona %>%
   filter(country == "Egypt")
 
 comp %>%
@@ -70,7 +71,8 @@ We first can compare these two groups using our trusty `geom_boxplot()` (or any 
 
 ```{r Two unpaired groups visualisation, echo=TRUE}
 # Compute the mean for and size of each group
-group_means <- comp %>%
+group_means <-
+  comp %>%
   group_by(gender) %>%
   summarise(mean = mean(freedom_of_choice),
             n = n())
@@ -139,15 +141,19 @@ No matter which test we run, it appears as if the difference is significant. How
 
 ```{r Computation of effect size of two unpaired groups, echo=TRUE}
 # After parametric test
-(d <- comp %>% cohens_d(freedom_of_choice ~ gender,
-                  var.equal = TRUE,
-                  ci = TRUE))
+(d <-
+    comp %>%
+    cohens_d(freedom_of_choice ~ gender,
+             var.equal = TRUE,
+             ci = TRUE))
 
 effectsize::interpret_d(d$effsize)
 
 # After non-parametric test
-(wr <- comp %>% wilcox_effsize(freedom_of_choice ~ gender,
-                        ci = TRUE))
+(wr <-
+    comp %>%
+    wilcox_effsize(freedom_of_choice ~ gender,
+                   ci = TRUE))
 
 effectsize::interpret_r(wr$effsize)
 ```
@@ -200,8 +206,10 @@ dir_mov %>%
   ggplot(aes(x = movie, y = imdb_rating, coldirector)) +
   geom_point() +
   geom_line(aes(group = director)) +
+  
   # Remove the legend
   theme(legend.position = "none") +
+  
   # Manuall define the y axis range
   ylim(0, 10)
 ```
@@ -245,8 +253,10 @@ As expected, the paired tests reveal that the differences in rating between the 
 effectsize::interpret_d(d$effsize)
 
 # After Wilcoxon Signed Rank Test
-(wr <- dir_mov %>% wilcox_effsize(imdb_rating ~ movie,
-                              paired = TRUE, ci = TRUE))
+(wr <-
+    dir_mov %>%
+    wilcox_effsize(imdb_rating ~ movie,
+                   paired = TRUE, ci = TRUE))
 
 effectsize::interpret_r(wr$effsize, rules = "cohen1988")
 ```
@@ -262,7 +272,8 @@ Often we find ourselves in situations where comparing two groups is not enough. 
 Have you ever been wondering whether people in different countries are equally satisfied with their lives? You might have a rough guess that it is not the case because the social, economic and political environment might play an important role. For example, if you live in a country affected by social conflicts, one's life satisfaction might be drastically lower. In the following, we take a look at three countries `Iraq`, `Japan` and `Korea`. I chose these countries out of personal interest and because they nicely demonstrate the purpose of the chapter, i.e. finding out whether there are differences in the perception of `satisfaction` across three countries. At any time, feel free to remove the `filter()` function to gain the results of all countries in the dataset, but prepare for slightly longer computations. We first create the dataset, which only contains the three desired countries.
 
 ```{r create dataset for multiple unpaired group comparison, echo=TRUE}
-mcomp <- wvs_nona %>%
+mcomp <-
+  wvs_nona %>%
   filter(country == "Iraq" |
            country == "Japan" |
            country == "Korea")
@@ -317,13 +328,12 @@ mcomp %>%
 
 ## Equal variances not assumed
 (oneway_test <- oneway.test(satisfaction ~ country,
-            data = mcomp,
-            var.equal = FALSE))
+                            data = mcomp,
+                            var.equal = FALSE))
 
 # Kruskall-Wallis test
 ## Perform comparison
-mcomp %>%
-  kruskal_test(satisfaction ~ country)
+mcomp %>% kruskal_test(satisfaction ~ country)
 ```
 
 While `anova_test()` does provide the effect size automatically, i.e. generalised eta squared (`ges`), this is not the case for the other two approaches. Therefore, we have to use the `effectsize` package to help us out. Packages often can get you a long way and make your life easier, but it is good to know alternatives if a single package does not give you what you need.
@@ -430,7 +440,8 @@ Let's add the differences between measures for each participant based on these p
 
 ```{r Sphericity example p2, echo=TRUE}
 # Compute the differences across all three pairs of measurements
-differences <- acculturation %>%
+differences <-
+  acculturation %>%
   mutate(m1_m4 = m1 - m4,
          m4_m8 = m4 - m8,
          m1_m8 = m1 - m8)
@@ -486,7 +497,8 @@ Let's start by visualising the data across all measures using a `geom_boxplot()`
 
 ```{r Visualise multiple paired groups, echo=TRUE}
 # Compute the mean for each wave
-wave_means <- wvs_waves %>%
+wave_means <-
+  wvs_waves %>%
   group_by(wave) %>%
   summarise(w_mean = mean(satisfaction))
 
@@ -575,7 +587,8 @@ For example, we might recode our previous dependent variable `satisfaction` into
 
 ```{r Recode satisfaction as a dichotomous variable, echo=TRUE}
 # Create a dichotomous/binary variable for satisfaction
-wvs_nona <- wvs_nona %>%
+wvs_nona <-
+  wvs_nona %>%
   mutate(satisfaction_bin = as_factor(ifelse(satisfaction > 5,
                                              "satisfied",
                                              "unsatisfied"))
@@ -646,7 +659,8 @@ In the introduction to this chapter, we covered a classic example of an unpaired
 ```{r Visualising a contingency table with bars, echo=TRUE, fig.cap="Three ways to plot frequencies", label="three-plots-satisfaction-gender"}
 
 # Plot with absolute frequencies (stacked)
-absolute_stacked <- wvs_nona %>%
+absolute_stacked <-
+  wvs_nona %>%
   ggplot(aes(x = satisfaction_bin,
              fill = gender)) +
   geom_bar() +
@@ -654,7 +668,8 @@ absolute_stacked <- wvs_nona %>%
   theme(legend.position = "none")
 
 # Plot with absolute frequencies (grouped)
-absolute_grouped <- wvs_nona %>%
+absolute_grouped <-
+  wvs_nona %>%
   ggplot(aes(x = satisfaction_bin,
              fill = gender)) +
   geom_bar(position = "dodge") +
@@ -662,7 +677,8 @@ absolute_grouped <- wvs_nona %>%
   theme(legend.position = "none")
 
 # Plot with relative frequencies
-relative <- wvs_nona %>%
+relative <-
+  wvs_nona %>%
   ggplot(aes(x = satisfaction_bin,
              fill = gender)) +
   geom_bar(position = "fill") +
@@ -789,7 +805,8 @@ Next, we compute the numbers underpinning this plot, comparing the absolute dist
 
 ```{r Contingency tables unpaired computation relationship_status and gender, echo=TRUE}
 # Check whether we fulfill the criteria
-rel_gen <- wvs_nona %>%
+rel_gen <-
+  wvs_nona %>%
   count(relationship_status, gender)
 
 rel_gen
@@ -852,7 +869,8 @@ The current dataset includes two rows for each participant. Therefore, if we wan
 
 ```{r Convert dataset to enable paired contingency table, echo=TRUE}
 # Creating data frame reflecting paired responses
-paired_data <- ic_training %>%
+paired_data <-
+  ic_training %>%
   pivot_wider(id_cols = name,
               names_from = test,
               values_from = communication2)
@@ -936,17 +954,20 @@ There are many other combinations of contingency tables. For example, the McNema
 Admittedly, I hardly ever find studies in the field of Social Sciences which work with primarily categorical data. Political Science might be an exception because working, for example, with polling data often implies working with categorical data. A reason you likely will not find yourself in the situation to work with such data and analytical techniques is measurement accuracy. If you look at the `ic_training`, the variable `communication2` was artificially created to turn `numeric` data into a `factor`. This is usually not good practice because you lose measurement accuracy, and it can exaggerate differences between groups. Consider the following plots:
 
 ```{r Comparing categorical vs numeric one, echo=TRUE}
-p1 <- ic_training %>%
+p1 <-
+  ic_training %>%
   ggplot(aes(x = communication)) +
   geom_bar() +
   ggtitle("Full scale")
 
-p2 <- ic_training %>%
+p2 <-
+  ic_training %>%
   ggplot(aes(x = communication3)) +
   geom_bar() +
   ggtitle("Category with 3 levels")
 
-p3 <- ic_training %>%
+p3 <-
+  ic_training %>%
   ggplot(aes(x = communication2)) +
   geom_bar() +
   ggtitle("Category with 2 levels")

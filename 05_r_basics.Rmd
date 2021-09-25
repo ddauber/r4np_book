@@ -117,7 +117,13 @@ Let's concatenate some more friends into our `friends` object.
 
 ```{r Concatenate function, echo=TRUE}
 # Adding some more friends to my life
-friends <- c("Fiona", "Ida", "Lukas", "Georg", "Daniel", "Pavel", "Tigger")
+friends <- c("Fiona",
+             "Ida",
+             "Lukas",
+             "Georg",
+             "Daniel",
+             "Pavel",
+             "Tigger")
 
 # Here are all my friends
 friends
@@ -138,7 +144,7 @@ You can also concatenate numbers, and if you add `()` around it, you can automat
 milestones_of_my_life <- c(1982, 2006, 2011, 2018, 2020)
 milestones_of_my_life
 
-# The same as above, but we don't need the second line of code
+# The same as above - no second line of code needed
 (milestones_of_my_life <- c(1982, 2006, 2011, 2018, 2020))
 ```
 
@@ -182,10 +188,16 @@ In Chapter \@ref(basic-computations-in-r), I mentioned that we should avoid usin
 
 ```{r Using the two assign operators, echo=TRUE}
 # DO
-(avengers1 <- c("Iron Man", "Captain America", "Black Widow", "Vision"))
+(avengers1 <- c("Iron Man",
+                "Captain America",
+                "Black Widow",
+                "Vision"))
 
 # DON'T
-(avengers2 = c("Iron Man", "Captain America", "Black Widow", "Vision"))
+(avengers2 = c("Iron Man",
+               "Captain America",
+               "Black Widow",
+               "Vision"))
 ```
 
 On a final note, naming your objects is limited. You cannot chose any name. First, every name needs to start with a letter. Second, you can only use letters, numbers `_` and `.` as valid components of the names for your objects [see also @wickham2016r, Chapter 4.2.]. I recommend to establish a naming convention that you adhere to. Personally I prefer to only user lower letters and `_` to separate/connect words. You want to keep names informative, succinct and precise. Here are some examples of what some might consider good and bad choices for names.
@@ -266,7 +278,7 @@ Sometimes you will also get a message from R that states `NaN`. `NaN` stands for
 
 ```{r NaN example: Division by zero, echo=TRUE, error=TRUE, purl=FALSE}
 # Example 1
-0/0
+0 / 0
 
 # Example 2
 sqrt(-9)
@@ -381,7 +393,7 @@ library(tidyverse)
 library(jtools)
 model1 <- lm(covid_cases_per_1m ~ idv, data = df)
 summ(model1, scale = TRUE, transform.response = TRUE, vifs = TRUE)
-df %>% ggplot(aes(covid_cases_per_1m, idv, coleurope, label = country))+
+df %>% ggplot(aes(x = covid_cases_per_1m, y = idv, col = europe, label = country))+
 theme_minimal()+ geom_label(nudge_y = 2) + geom_point()
 mod_model2 <- lm(cases_per_1m ~ idv + uai + idv*europe + uai*europe, data = df)
 summ(mod_model2, scale = TRUE, transform.response = TRUE, vifs = TRUE)
@@ -403,22 +415,32 @@ library(jtools)
 model1 <- lm(covid_cases_per_1m ~ idv, data = df)
 
 ## Retrieve the summary statistics of model1
-summ(model1, scale = TRUE, transform.response = TRUE, vifs = TRUE)
+summ(model1,
+     scale = TRUE,
+     transform.response = TRUE,
+     vifs = TRUE)
 
 # Does is matter whether a country lies in Europe?
 
 ## Visualise rel. of covid cases, idv and being a European country
 df %>%
-  ggplot(aes(covid_cases_per_1m, idv, coleurope, label = country))+
-  theme_minimal()+
+  ggplot(aes(x = covid_cases_per_1m,
+             y = idv,
+             col = europe,
+             label = country)) +
+  theme_minimal() +
   geom_label(nudge_y = 2) +
   geom_point()
 
 ## Specify and run a revised regression
-mod_model2 <- lm(cases_per_1m ~ idv + uai + idv*europe + uai*europe, data = df)
+mod_model2 <- lm(cases_per_1m ~ idv + uai + idv*europe + uai*europe,
+                 data = df)
 
 ## Retrieve the summary statistics of model2
-summ(mod_model2, scale = TRUE, transform.response = TRUE, vifs = TRUE)
+summ(mod_model2,
+     scale = TRUE,
+     transform.response = TRUE,
+     vifs = TRUE)
 
 ## Test whether model2 is an improvement over model1
 anova(mod_model1, mod_model2)
@@ -456,9 +478,9 @@ RStudio helps a lot with keeping your coding tidy and properly formatted. Howeve
     ```{r Function exercise, echo=TRUE, results='hide'}
 
     x_x <- function(number1, number2){
-      result1 <- number1*number2
+      result1 <- number1 * number2
       result2 <- sqrt(number1)
-      result3 <- number1-number2
+      result3 <- number1 - number2
       return(c(result1, result2, result3))
     } 
     ```

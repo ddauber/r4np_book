@@ -77,7 +77,8 @@ If everything so far sounds all awfully theoretical, let's try to fit a regressi
 ```{r Finding a regression equation by hand p1, echo=TRUE}
 # We only select most recent numbers, i.e. "2021-08-26"
 # and countries which have COVID cases
-covid_sample <- covid %>%
+covid_sample <-
+  covid %>%
   filter(date_reported == "2021-08-26" &
            cumulative_cases != 0)
 
@@ -101,7 +102,8 @@ covid_sample %>%
 As a result, the scatterplot is now easier to read, and the dots are more spread out. This reveals that there is quite a strong relationship between `cumulative_cases` and `cumulative_deaths`. However, similar to before, we should avoid outliers when performing our analysis. For the sake of simplicity, I will limit the number of countries included in our analysis, which also removes the requirement of using `scale_x_continuous()` and `scale_y_continuous()`.
 
 ```{r Finding a regression equation by hand p3, echo=TRUE, warning=FALSE}
-covid_sample <- covid_sample %>%
+covid_sample <-
+  covid_sample %>%
   filter(date_reported == "2021-08-26" &
            cumulative_cases >= 2500 &
            cumulative_cases <= 150000 &
@@ -224,7 +226,8 @@ First, we create a dataset that only contains information from the `United Kingd
 [^regressions-1]: Germany is called 'Deutschland' in German, hence the abbreivation 'DEU' according to the [ISO country code](https://www.iso.org/obp/ui/#iso:code:3166:DE "ISO country code"){target="blank"}.
 
 ```{r MR filter out UK and DEU as a sample}
-covid_uk_ger <- covid %>%
+covid_uk_ger <-
+  covid %>%
   filter(iso3 == "GBR" | iso3 == "DEU")
 ```
 
@@ -243,7 +246,8 @@ We can add these variables by using the `+` symbol in the `lm()` function.
 
 ```{r Multiple regression, echo=TRUE}
 # Create our model
-m0 <- lm(new_cases ~ masks + movements + gatherings + schools + businesses + travel,
+m0 <- lm(new_cases ~ masks + movements + gatherings +
+           schools + businesses + travel,
          data = covid_uk_ger)
 
 # Inspect the model specifications
@@ -345,12 +349,17 @@ First, we need to compute the residuals for our model as a new column in our dat
 
 ```{r Compute externally studentised residuals, echo=TRUE}
 # Create a tibble with some pre-computed stats
-m1_outliers <- fortify(m1) %>% as_tibble()
+m1_outliers <-
+  fortify(m1) %>%
+  as_tibble()
+
 glimpse(m1_outliers)
 
 # Add the externally studentised residuals
-m1_outliers <- m1_outliers %>%
+m1_outliers <-
+  m1_outliers %>%
   mutate(.studresid = rstudent(m1))
+
 glimpse(m1_outliers)
 ```
 
@@ -568,17 +577,21 @@ For demonstration purposes, I will pick `movements` to check for outliers. If th
 
 ```{r Check for outliers using DFBETAS, echo=TRUE}
 # Check whether values exceed the threshold
-dfbetas_check <- m1_dfbetas %>%
+dfbetas_check <-
+  m1_dfbetas %>%
   mutate(dfbetas_movements = ifelse(abs(movements) > dfbetas_th,
                                 "TRUE",
                                 "FALSE")) %>%
   select(rowname, dfbetas_movements)
 
 # Add result to our outliers object
-outliers <- outliers %>% left_join(dfbetas_check, by = "rowname")
+outliers <-
+  outliers %>%
+  left_join(dfbetas_check, by = "rowname")
 
 # some housekeeping, i.e. making all columns <lgl> except for rowname
-outliers <- outliers %>%
+outliers <-
+  outliers %>%
   mutate(rowname = as_factor(rowname)) %>%
   mutate_if(is.character, as.logical)
 ```
@@ -674,7 +687,8 @@ data %>%
 Et voilà. We now counted the number of times an observation was detected by all the different measures we used. This is scalable to more than two measures. Thus, we can apply it to our data as well.
 
 ```{r Reviewing the outliers, echo=TRUE}
-outliers_true <- outliers %>%
+outliers_true <-
+  outliers %>%
   pivot_longer(!rowname,
                names_to = "measure",
                values_to = "is.outlier") %>%
@@ -704,7 +718,8 @@ For now, I settle on removing outliers entirely. The easiest way to remove these
 
 ```{r Remove outliers from dataset for multiple regression, echo=TRUE}
 # Include outliers which were detected by multiple methods
-outliers_select <- outliers_true %>%
+outliers_select <-
+  outliers_true %>%
   filter(n > 1)
 
 # Keep only columns which are NOT included in outliers_select
@@ -766,7 +781,8 @@ In multiple regressions, we often use variables that are measured in different w
 data <- tibble(x = c(1, 2, 3, 4))
 
 # Compute z-scores
-data <- data %>%
+data <-
+  data %>%
   mutate(x_scaled = scale(x))
 
 # Compare the mean and sd for each variable
@@ -900,7 +916,8 @@ However, I should probably explain what the purpose of entering variables in a s
 Let's put these steps into action and start with formulating our first model. I choose `country` as a control variable because we have sufficient evidence that clustered data could be a reason for the high autocorrelation of residuals we found in Chapter \@ref(multicollinearity-the-dilemma-of-highly-correlated-independent-variables). For all computations in this section, we use the original dataset, i.e. `covid_uk_ger`, because we changed the model and therefore would have to revisit outliers from scratch, which we shall skip. We also have to remove observations with missing data to allow comparisons of models and ensure they have the same degrees of freedom (i.e. the same number of observations). So, we begin by selecting our variables of interest and then remove missing data.
 
 ```{r Hierarchical regression data prep, echo=TRUE}
-hr_data <- covid_uk_ger %>%
+hr_data <-
+  covid_uk_ger %>%
   select(new_cases, country, schools, businesses) %>%
   droplevels() %>%
   na.omit()
@@ -932,7 +949,8 @@ The column reflects the coding and the rows represent the levels of our factor. 
 If our control variable has more than two levels, for example, by adding `Italy`, the dummy coding will change to the following:
 
 ```{r showing contrasts for categorical variables with more levels, echo=TRUE}
-hr_uk_ger_ita <- covid %>%
+hr_uk_ger_ita <-
+  covid %>%
   filter(country == "United Kingdom" |
            country == "Germany" |
            country == "Italy") %>%
