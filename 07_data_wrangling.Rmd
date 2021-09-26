@@ -343,7 +343,7 @@ wvs %>% count(gender)
 
 Another benefit of going through the trouble of recoding your factors is the readability of your plots. For example, we could quickly generate a bar plot based on the above table and have appropriate labels instead of `0` and `1`.
 
-```{r Barplot for gender, echo=TRUE}
+```{r Barplot for gender, echo=TRUE, fig.cap="A bar plot of the factor levels 'male' and `female`", label = "gender-bar-plot"}
 wvs %>%
   count(gender) %>%
   ggplot(aes(gender, n)) +
@@ -375,9 +375,46 @@ wvs <-
 
 ### Reordering factor levels {#reordering-factor-levels}
 
-`TODO: CONTINUE FROM HERE`
+Besides changing factor levels, it is also common that we want to reconsider the arrangement of these levels. To inspect the order of factor levels, we can use the function `fct_unique()` from the `forcats` package and provide a factor variable, e.g. `gender`, in the `wvs` dataset.
 
--   Consider whether this should happen here or later. Probably later, actually when we talk about descriptive statistics. This is not really data cleaning at this point. Too much stuff already. Move to descriptive statistics section.
+```{r Show factor levels of gender, echo=TRUE}
+fct_unique(wvs$gender)
+```
+
+A reason for changing the order of factor levels could be to arrange how factor levels are displayed in plots. For example, Figure \@ref(fig:gender-bar-plot) shows the bar of `male` participants first, but instead, we might want to show `female` participants first. The `forcats` package offers several options to rearrange factor levels based on different conditions. Depending on the circumstances, one or the other function might be more efficient. Three of [these functions](https://forcats.tidyverse.org/reference/index.html "forcats functions to change order of factor levels"){target="blank"} I tend to use fairly frequently:
+
+-   `fct_relevel()`: To reorder factor levels by hand.
+
+-   `fct_reorder()`: To reorder factor levels based on another variable of interest.
+
+-   `fct_rev()`: To reverse the order of factor levels.
+
+Each function requires slightly different arguments. If we wanted to change the order of our factor levels, we could use all three of them to achieve the same result (in our case):
+
+```{r Reorder factor levels using forcats, echo=TRUE}
+# Reorder by hand
+wvs %>%
+  count(gender) %>%
+  ggplot(aes(x = fct_relevel(gender, "female", "male"),
+             y = n)) +
+  geom_col()
+
+# Reorder by another variable, e.g. the frequency 'n'
+wvs %>%
+  count(gender) %>%
+  ggplot(aes(x = fct_reorder(gender, n, .desc = TRUE),
+             y = n)) +
+  geom_col()
+
+# Reverse the order of factor levels
+wvs %>%
+  count(gender) %>%
+  ggplot(aes(x = fct_rev(gender),
+             y = n)) +
+  geom_col()
+```
+
+There are many ways to rearrange factors, and it very much depends on the data you have and what you wish to achieve. For most of my plots, I tend to revert to a basic R function, i.e. `reorder()`, which is much shorter to type and does essentially the same as `fct_reorder()`. There is no right or wrong in this regard, just personal taste.
 
 ## Dealing with missing data {#dealing-with-missing-data}
 
