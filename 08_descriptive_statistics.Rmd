@@ -715,7 +715,7 @@ However, we must be aware that this score is also influenced by the outliers we 
 
 ## Packages to compute descriptive statistics
 
-There is no one right way of how you can approach the computation of descriptive statistics. There are only differences in conveniences and whether you have intentions to use the output from descriptive statistics to plot them or use them in other ways. Often, we only want to take a quick look at our data to understand it better. If this is the case, I would like to introduce you to two packages that are essential in computing descriptive statistics and constitute an excellent starting point to understanding your data:
+There is no one right way of how you can approach the computation of descriptive statistics. There are only differences concerning convenience and whether you have intentions to use the output from descriptive statistics to plot them or use them in other ways. Often, we only want to take a quick look at our data to understand it better. If this is the case, I would like to introduce you to two packages that are essential in computing descriptive statistics and constitute an excellent starting point to understanding your data:
 
 -   `psych`
 
@@ -723,15 +723,15 @@ There is no one right way of how you can approach the computation of descriptive
 
 ### The `psych` package for descriptive statistics
 
-The `psych` package, as its name indicates, is strongly influenced by how research is conducted in the field of Psychology. The package is very useful in many respects and we already used it in Chapter \@ref(latent-constructs) to compute Cronbach's $\alpha$.
+As its name indicates, the `psych` package is strongly influenced by how research is conducted in the field of Psychology. The package is useful in many respects, and we already used it in Chapter \@ref(latent-constructs) to compute Cronbach's $\alpha$.
 
-Another useful function is `describe()`. We can use this functions to compute summary statistics for a variable. For example, we might wish to inspect the descriptive statistics for `runtime_min`.
+Another useful function is `describe()`. We can use this function to compute summary statistics for a variable. For example, we might wish to inspect the descriptive statistics for `runtime_min`.
 
 ```{r Compute summary statistics for runtime_min with psych, echo=TRUE}
 psych::describe(imdb_top_250$runtime_min)
 ```
 
-If we want to see descriptive statistics per group, we can do so by using `describeBy()`, which takes a factor as a second argument. For example, we could compute the descriptive statistics for `runtime_min` separately for each `genre_01`.
+If we want to see descriptive statistics per group, we use `describeBy()`, which takes a factor as a second argument. So, for example, we could compute the descriptive statistics for `runtime_min` separately for each `genre_01`.
 
 ```{r Compute summary statistics by groups with psych, echo=TRUE}
 descriptives <- psych::describeBy(imdb_top_250$runtime_min,
@@ -741,16 +741,18 @@ descriptives <- psych::describeBy(imdb_top_250$runtime_min,
 descriptives[1:3]
 ```
 
-The advantage of using `psych` is clearly the convenience of retrieving several descriptive statistics with just one function.
+The advantage of using `psych` is the convenience of retrieving several descriptive statistics with just one function.
 
 ### The `skimr` package for descriptive statistics
 
-While the `psych` package returns descriptive statistics for a single numeric variable, `skimr` takes this idea further and allows us to generate descriptive statistics for all variables of all types in a data frame. The function `skim()` makes this possible.
+While the `psych` package returns descriptive statistics for a single numeric variable, `skimr` takes this idea further and allows us to generate descriptive statistics for all variables of all types in a data frame with just one function, i.e. `skim()`.
 
-```{r Descriptive statistics with skimr, echo=TRUE}
+```{r Descriptive statistics with skimr, echo=TRUE, results='hide'}
 skimr::skim(imdb_top_250)
 ```
 
-In addition to providing descriptive statistics, `skim()` sorts the variables by data type and provides different descriptive statistics which are meaningful for each type. Apart from that, the column `n_missing` can be helpful in spotting missing data. Lastly, we also find a histogram in the very last column for `numeric` data, which I find particularly useful.
+![](images/chapter_08_img/output_skim.png)
 
-When just starting to work on a new dataset, the `psych` and the `skimr` package are solid starting points to get an overview of the main characteristics of your data, especially in larger datasets. On your R journey you will encounter many other packages which provide helpful functions like these.
+In addition to providing descriptive statistics, `skim()` sorts the variables by data type and provides different descriptive statistics meaningful to each kind. Apart from that, the column `n_missing` can be help spot missing data. Lastly, we also find a histogram in the last column for `numeric` data, which I find particularly useful.
+
+When just starting to work on a new dataset, the `psych` and the `skimr` package are solid starting points to get an overview of the main characteristics of your data, especially in larger datasets. On your R journey, you will encounter many other packages which provide useful functions like these.
