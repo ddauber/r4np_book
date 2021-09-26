@@ -1,5 +1,5 @@
 book_filename: "r_for_non_programmers"
-delete_merged_file: true
+delete_merged_file: TRUE
 language:
   ui:
     chapter_name: ""

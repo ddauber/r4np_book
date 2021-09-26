@@ -10,27 +10,27 @@
 
   <meta property="og:title" content="11 Power: You either have it or you don’t | R for Non-Programmers: A Guide for Social Scientists" />
   <meta property="og:type" content="book" />
-  
-  
+  <meta property="og:url" content="http://danieldauber.com" />
+  <meta property="og:image" content="http://danieldauber.com/images/cover_art_icons/r4np_icon_white_bg_favicon.png" />
   <meta property="og:description" content="11 Power: You either have it or you don’t | R for Non-Programmers: A Guide for Social Scientists is a springboard into the world of R without having to become a full-fledged R programmer or possess abundant knowledge in other programming languages. This book guides you through the most common challenges in empirical research in the Social Sciences and offers practical and efficient solutions. Each chapter is dedicated to a common task we have to achieve to answer our research questions. In addition, it provides plenty of exercises and in-depth case studies based on actual data." />
-  
+  <meta name="github-repo" content="ddauber/r4np_book" />
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="11 Power: You either have it or you don’t | R for Non-Programmers: A Guide for Social Scientists" />
   
   <meta name="twitter:description" content="11 Power: You either have it or you don’t | R for Non-Programmers: A Guide for Social Scientists is a springboard into the world of R without having to become a full-fledged R programmer or possess abundant knowledge in other programming languages. This book guides you through the most common challenges in empirical research in the Social Sciences and offers practical and efficient solutions. Each chapter is dedicated to a common task we have to achieve to answer our research questions. In addition, it provides plenty of exercises and in-depth case studies based on actual data." />
-  
+  <meta name="twitter:image" content="http://danieldauber.com/images/cover_art_icons/r4np_icon_white_bg_favicon.png" />
 
 <meta name="author" content="Daniel Dauber" />
 
 
-<meta name="date" content="2021-09-24" />
+<meta name="date" content="2021-09-25" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
-  
+  <link rel="shortcut icon" href="images/cover_art_icons/r4np_icon_favicon.svg" type="image/x-icon" />
 <link rel="prev" href="correlations.html"/>
 <link rel="next" href="comparing-groups.html"/>
 <script src="libs/header-attrs-2.11/header-attrs.js"></script>
@@ -550,44 +550,45 @@ div.csl-indent {
 <span id="cb138-4"><a href="power-analysis.html#cb138-4" aria-hidden="true" tabindex="-1"></a>                           <span class="at">by =</span> <span class="fl">0.01</span>))</span>
 <span id="cb138-5"><a href="power-analysis.html#cb138-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb138-6"><a href="power-analysis.html#cb138-6" aria-hidden="true" tabindex="-1"></a><span class="co"># We need to compute sample size for each effect size level</span></span>
-<span id="cb138-7"><a href="power-analysis.html#cb138-7" aria-hidden="true" tabindex="-1"></a>power_df <span class="ot">&lt;-</span> power_df <span class="sc">%&gt;%</span></span>
-<span id="cb138-8"><a href="power-analysis.html#cb138-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rowwise</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb138-9"><a href="power-analysis.html#cb138-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">n_0.01 =</span></span>
-<span id="cb138-10"><a href="power-analysis.html#cb138-10" aria-hidden="true" tabindex="-1"></a>           broom<span class="sc">::</span><span class="fu">tidy</span>(pwr<span class="sc">::</span><span class="fu">pwr.r.test</span>(<span class="at">r =</span> r,</span>
-<span id="cb138-11"><a href="power-analysis.html#cb138-11" aria-hidden="true" tabindex="-1"></a>                                       <span class="at">sig.level =</span> <span class="fl">0.01</span>,</span>
-<span id="cb138-12"><a href="power-analysis.html#cb138-12" aria-hidden="true" tabindex="-1"></a>                                       <span class="at">power =</span> <span class="fl">0.8</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb138-13"><a href="power-analysis.html#cb138-13" aria-hidden="true" tabindex="-1"></a>           <span class="fu">first</span>(),</span>
-<span id="cb138-14"><a href="power-analysis.html#cb138-14" aria-hidden="true" tabindex="-1"></a>         <span class="at">n_0.05 =</span></span>
-<span id="cb138-15"><a href="power-analysis.html#cb138-15" aria-hidden="true" tabindex="-1"></a>           broom<span class="sc">::</span><span class="fu">tidy</span>(pwr<span class="sc">::</span><span class="fu">pwr.r.test</span>(<span class="at">r =</span> r,</span>
-<span id="cb138-16"><a href="power-analysis.html#cb138-16" aria-hidden="true" tabindex="-1"></a>                                       <span class="at">sig.level =</span> <span class="fl">0.05</span>,</span>
-<span id="cb138-17"><a href="power-analysis.html#cb138-17" aria-hidden="true" tabindex="-1"></a>                                       <span class="at">power =</span> <span class="fl">0.8</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb138-18"><a href="power-analysis.html#cb138-18" aria-hidden="true" tabindex="-1"></a>           <span class="fu">first</span>())</span>
-<span id="cb138-19"><a href="power-analysis.html#cb138-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb138-20"><a href="power-analysis.html#cb138-20" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(power_df)</span>
-<span id="cb138-21"><a href="power-analysis.html#cb138-21" aria-hidden="true" tabindex="-1"></a><span class="do">## Rows: 81</span></span>
-<span id="cb138-22"><a href="power-analysis.html#cb138-22" aria-hidden="true" tabindex="-1"></a><span class="do">## Columns: 3</span></span>
-<span id="cb138-23"><a href="power-analysis.html#cb138-23" aria-hidden="true" tabindex="-1"></a><span class="do">## Rowwise: </span></span>
-<span id="cb138-24"><a href="power-analysis.html#cb138-24" aria-hidden="true" tabindex="-1"></a><span class="do">## $ r      &lt;dbl&gt; 0.10, 0.11, 0.12, 0.13, 0.14, 0.15, 0.16, 0.17, 0.18, 0.19, 0.2…</span></span>
-<span id="cb138-25"><a href="power-analysis.html#cb138-25" aria-hidden="true" tabindex="-1"></a><span class="do">## $ n_0.01 &lt;dbl&gt; 1162.56417, 959.87066, 805.70532, 685.72827, 590.52987, 513.728…</span></span>
-<span id="cb138-26"><a href="power-analysis.html#cb138-26" aria-hidden="true" tabindex="-1"></a><span class="do">## $ n_0.05 &lt;dbl&gt; 781.75156, 645.53169, 541.92525, 461.29509, 397.31753, 345.7036…</span></span>
-<span id="cb138-27"><a href="power-analysis.html#cb138-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the effect sizes against the sample size</span></span>
-<span id="cb138-28"><a href="power-analysis.html#cb138-28" aria-hidden="true" tabindex="-1"></a>power_df <span class="sc">%&gt;%</span></span>
-<span id="cb138-29"><a href="power-analysis.html#cb138-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb138-30"><a href="power-analysis.html#cb138-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb138-31"><a href="power-analysis.html#cb138-31" aria-hidden="true" tabindex="-1"></a>  <span class="co"># the points for p = 0.01</span></span>
-<span id="cb138-32"><a href="power-analysis.html#cb138-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> r,</span>
-<span id="cb138-33"><a href="power-analysis.html#cb138-33" aria-hidden="true" tabindex="-1"></a>                <span class="at">y =</span> n_0<span class="fl">.01</span>,</span>
-<span id="cb138-34"><a href="power-analysis.html#cb138-34" aria-hidden="true" tabindex="-1"></a>                <span class="at">col =</span> <span class="st">&quot;p = 0.01&quot;</span>)) <span class="sc">+</span></span>
-<span id="cb138-35"><a href="power-analysis.html#cb138-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb138-36"><a href="power-analysis.html#cb138-36" aria-hidden="true" tabindex="-1"></a>  <span class="co"># the points for p = 0.05</span></span>
-<span id="cb138-37"><a href="power-analysis.html#cb138-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> r,</span>
-<span id="cb138-38"><a href="power-analysis.html#cb138-38" aria-hidden="true" tabindex="-1"></a>                <span class="at">y =</span> n_0<span class="fl">.05</span>,</span>
-<span id="cb138-39"><a href="power-analysis.html#cb138-39" aria-hidden="true" tabindex="-1"></a>                <span class="at">col =</span> <span class="st">&quot;p = 0.05&quot;</span>)) <span class="sc">+</span></span>
-<span id="cb138-40"><a href="power-analysis.html#cb138-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb138-41"><a href="power-analysis.html#cb138-41" aria-hidden="true" tabindex="-1"></a>  <span class="co"># add nice labels</span></span>
-<span id="cb138-42"><a href="power-analysis.html#cb138-42" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">col =</span> <span class="st">&quot;Sig. levels&quot;</span>,</span>
-<span id="cb138-43"><a href="power-analysis.html#cb138-43" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">&quot;r&quot;</span>,</span>
-<span id="cb138-44"><a href="power-analysis.html#cb138-44" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;n&quot;</span>)</span></code></pre></div>
+<span id="cb138-7"><a href="power-analysis.html#cb138-7" aria-hidden="true" tabindex="-1"></a>power_df <span class="ot">&lt;-</span></span>
+<span id="cb138-8"><a href="power-analysis.html#cb138-8" aria-hidden="true" tabindex="-1"></a>  power_df <span class="sc">%&gt;%</span></span>
+<span id="cb138-9"><a href="power-analysis.html#cb138-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rowwise</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb138-10"><a href="power-analysis.html#cb138-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">n_0.01 =</span></span>
+<span id="cb138-11"><a href="power-analysis.html#cb138-11" aria-hidden="true" tabindex="-1"></a>           broom<span class="sc">::</span><span class="fu">tidy</span>(pwr<span class="sc">::</span><span class="fu">pwr.r.test</span>(<span class="at">r =</span> r,</span>
+<span id="cb138-12"><a href="power-analysis.html#cb138-12" aria-hidden="true" tabindex="-1"></a>                                       <span class="at">sig.level =</span> <span class="fl">0.01</span>,</span>
+<span id="cb138-13"><a href="power-analysis.html#cb138-13" aria-hidden="true" tabindex="-1"></a>                                       <span class="at">power =</span> <span class="fl">0.8</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb138-14"><a href="power-analysis.html#cb138-14" aria-hidden="true" tabindex="-1"></a>           <span class="fu">first</span>(),</span>
+<span id="cb138-15"><a href="power-analysis.html#cb138-15" aria-hidden="true" tabindex="-1"></a>         <span class="at">n_0.05 =</span></span>
+<span id="cb138-16"><a href="power-analysis.html#cb138-16" aria-hidden="true" tabindex="-1"></a>           broom<span class="sc">::</span><span class="fu">tidy</span>(pwr<span class="sc">::</span><span class="fu">pwr.r.test</span>(<span class="at">r =</span> r,</span>
+<span id="cb138-17"><a href="power-analysis.html#cb138-17" aria-hidden="true" tabindex="-1"></a>                                       <span class="at">sig.level =</span> <span class="fl">0.05</span>,</span>
+<span id="cb138-18"><a href="power-analysis.html#cb138-18" aria-hidden="true" tabindex="-1"></a>                                       <span class="at">power =</span> <span class="fl">0.8</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb138-19"><a href="power-analysis.html#cb138-19" aria-hidden="true" tabindex="-1"></a>           <span class="fu">first</span>())</span>
+<span id="cb138-20"><a href="power-analysis.html#cb138-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb138-21"><a href="power-analysis.html#cb138-21" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(power_df)</span>
+<span id="cb138-22"><a href="power-analysis.html#cb138-22" aria-hidden="true" tabindex="-1"></a><span class="do">## Rows: 81</span></span>
+<span id="cb138-23"><a href="power-analysis.html#cb138-23" aria-hidden="true" tabindex="-1"></a><span class="do">## Columns: 3</span></span>
+<span id="cb138-24"><a href="power-analysis.html#cb138-24" aria-hidden="true" tabindex="-1"></a><span class="do">## Rowwise: </span></span>
+<span id="cb138-25"><a href="power-analysis.html#cb138-25" aria-hidden="true" tabindex="-1"></a><span class="do">## $ r      &lt;dbl&gt; 0.10, 0.11, 0.12, 0.13, 0.14, 0.15, 0.16, 0.17, 0.18, 0.19, 0.2…</span></span>
+<span id="cb138-26"><a href="power-analysis.html#cb138-26" aria-hidden="true" tabindex="-1"></a><span class="do">## $ n_0.01 &lt;dbl&gt; 1162.56417, 959.87066, 805.70532, 685.72827, 590.52987, 513.728…</span></span>
+<span id="cb138-27"><a href="power-analysis.html#cb138-27" aria-hidden="true" tabindex="-1"></a><span class="do">## $ n_0.05 &lt;dbl&gt; 781.75156, 645.53169, 541.92525, 461.29509, 397.31753, 345.7036…</span></span>
+<span id="cb138-28"><a href="power-analysis.html#cb138-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the effect sizes against the sample size</span></span>
+<span id="cb138-29"><a href="power-analysis.html#cb138-29" aria-hidden="true" tabindex="-1"></a>power_df <span class="sc">%&gt;%</span></span>
+<span id="cb138-30"><a href="power-analysis.html#cb138-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb138-31"><a href="power-analysis.html#cb138-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb138-32"><a href="power-analysis.html#cb138-32" aria-hidden="true" tabindex="-1"></a>  <span class="co"># the points for p = 0.01</span></span>
+<span id="cb138-33"><a href="power-analysis.html#cb138-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> r,</span>
+<span id="cb138-34"><a href="power-analysis.html#cb138-34" aria-hidden="true" tabindex="-1"></a>                <span class="at">y =</span> n_0<span class="fl">.01</span>,</span>
+<span id="cb138-35"><a href="power-analysis.html#cb138-35" aria-hidden="true" tabindex="-1"></a>                <span class="at">col =</span> <span class="st">&quot;p = 0.01&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb138-36"><a href="power-analysis.html#cb138-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb138-37"><a href="power-analysis.html#cb138-37" aria-hidden="true" tabindex="-1"></a>  <span class="co"># the points for p = 0.05</span></span>
+<span id="cb138-38"><a href="power-analysis.html#cb138-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> r,</span>
+<span id="cb138-39"><a href="power-analysis.html#cb138-39" aria-hidden="true" tabindex="-1"></a>                <span class="at">y =</span> n_0<span class="fl">.05</span>,</span>
+<span id="cb138-40"><a href="power-analysis.html#cb138-40" aria-hidden="true" tabindex="-1"></a>                <span class="at">col =</span> <span class="st">&quot;p = 0.05&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb138-41"><a href="power-analysis.html#cb138-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb138-42"><a href="power-analysis.html#cb138-42" aria-hidden="true" tabindex="-1"></a>  <span class="co"># add nice labels</span></span>
+<span id="cb138-43"><a href="power-analysis.html#cb138-43" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">col =</span> <span class="st">&quot;Sig. levels&quot;</span>,</span>
+<span id="cb138-44"><a href="power-analysis.html#cb138-44" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">&quot;r&quot;</span>,</span>
+<span id="cb138-45"><a href="power-analysis.html#cb138-45" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;n&quot;</span>)</span></code></pre></div>
 <p><img src="r_for_non_programmers_files/figure-html/Plotting%20required%20sample%20sizes-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>The results reveal that the relationship between <code>n</code> and <code>r</code> is logarithmic and not linear. Thus, the smaller the effect size, the more difficult it is to reach reliable results.</p>
 <p>The code features <code>broom::tidy()</code> and <code>first()</code>. The function <code>tidy()</code> from the <code>broom</code> package converts the result from <code>pwr.r.test()</code> from a list to a tibble, and the function <code>first()</code> picks the first entry in this tibble, i.e. our sample sizes. Don’t worry if this is confusing at this stage. We will return to <code>tidy()</code> in later chapters, where its use becomes more apparent.</p>
@@ -657,7 +658,7 @@ gitbook.start({
 "options": null
 },
 "toc": {
-"collapse": "subsection"
+"collapse": "section"
 }
 });
 });

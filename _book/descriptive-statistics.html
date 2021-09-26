@@ -10,27 +10,27 @@
 
   <meta property="og:title" content="8 Descriptive Statistics | R for Non-Programmers: A Guide for Social Scientists" />
   <meta property="og:type" content="book" />
-  
-  
+  <meta property="og:url" content="http://danieldauber.com" />
+  <meta property="og:image" content="http://danieldauber.com/images/cover_art_icons/r4np_icon_white_bg_favicon.png" />
   <meta property="og:description" content="8 Descriptive Statistics | R for Non-Programmers: A Guide for Social Scientists is a springboard into the world of R without having to become a full-fledged R programmer or possess abundant knowledge in other programming languages. This book guides you through the most common challenges in empirical research in the Social Sciences and offers practical and efficient solutions. Each chapter is dedicated to a common task we have to achieve to answer our research questions. In addition, it provides plenty of exercises and in-depth case studies based on actual data." />
-  
+  <meta name="github-repo" content="ddauber/r4np_book" />
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="8 Descriptive Statistics | R for Non-Programmers: A Guide for Social Scientists" />
   
   <meta name="twitter:description" content="8 Descriptive Statistics | R for Non-Programmers: A Guide for Social Scientists is a springboard into the world of R without having to become a full-fledged R programmer or possess abundant knowledge in other programming languages. This book guides you through the most common challenges in empirical research in the Social Sciences and offers practical and efficient solutions. Each chapter is dedicated to a common task we have to achieve to answer our research questions. In addition, it provides plenty of exercises and in-depth case studies based on actual data." />
-  
+  <meta name="twitter:image" content="http://danieldauber.com/images/cover_art_icons/r4np_icon_white_bg_favicon.png" />
 
 <meta name="author" content="Daniel Dauber" />
 
 
-<meta name="date" content="2021-09-24" />
+<meta name="date" content="2021-09-25" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
-  
+  <link rel="shortcut icon" href="images/cover_art_icons/r4np_icon_favicon.svg" type="image/x-icon" />
 <link rel="prev" href="data-wrangling.html"/>
 <link rel="next" href="sources-of-bias.html"/>
 <script src="libs/header-attrs-2.11/header-attrs.js"></script>
@@ -698,30 +698,32 @@ Figure 8.1: Anatomy of a Boxplot
 <p>The boxplot is a staple in visualising descriptive statistics. It offers so much information in just a single plot that it might not take much to convince you that it has become a very popular way to show the spread of data.</p>
 <p>For example, we might be interested to know how long most movies run. Our gut feeling might tell us that most movies are probably around 2 hours long. One approach to finding out is a boxplot, which we used before.</p>
 <div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="descriptive-statistics.html#cb90-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Text for annotations</span></span>
-<span id="cb90-2"><a href="descriptive-statistics.html#cb90-2" aria-hidden="true" tabindex="-1"></a>longest_movie <span class="ot">&lt;-</span> imdb_top_250 <span class="sc">%&gt;%</span></span>
-<span id="cb90-3"><a href="descriptive-statistics.html#cb90-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(runtime_min <span class="sc">==</span> <span class="fu">max</span>(runtime_min)) <span class="sc">%&gt;%</span></span>
-<span id="cb90-4"><a href="descriptive-statistics.html#cb90-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(title)</span>
-<span id="cb90-5"><a href="descriptive-statistics.html#cb90-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-6"><a href="descriptive-statistics.html#cb90-6" aria-hidden="true" tabindex="-1"></a>shortest_movie <span class="ot">&lt;-</span> imdb_top_250 <span class="sc">%&gt;%</span></span>
-<span id="cb90-7"><a href="descriptive-statistics.html#cb90-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(runtime_min <span class="sc">==</span> <span class="fu">min</span>(runtime_min)) <span class="sc">%&gt;%</span></span>
-<span id="cb90-8"><a href="descriptive-statistics.html#cb90-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(title)</span>
-<span id="cb90-9"><a href="descriptive-statistics.html#cb90-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-10"><a href="descriptive-statistics.html#cb90-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the pot</span></span>
-<span id="cb90-11"><a href="descriptive-statistics.html#cb90-11" aria-hidden="true" tabindex="-1"></a>imdb_top_250 <span class="sc">%&gt;%</span></span>
-<span id="cb90-12"><a href="descriptive-statistics.html#cb90-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(runtime_min)) <span class="sc">+</span></span>
-<span id="cb90-13"><a href="descriptive-statistics.html#cb90-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
-<span id="cb90-14"><a href="descriptive-statistics.html#cb90-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">&quot;text&quot;</span>,</span>
-<span id="cb90-15"><a href="descriptive-statistics.html#cb90-15" aria-hidden="true" tabindex="-1"></a>           <span class="at">label =</span> glue<span class="sc">::</span><span class="fu">glue</span>(<span class="st">&quot;{longest_movie}</span></span>
-<span id="cb90-16"><a href="descriptive-statistics.html#cb90-16" aria-hidden="true" tabindex="-1"></a><span class="st">                              ({max(imdb_top_250$runtime_min)} min)&quot;</span>),</span>
-<span id="cb90-17"><a href="descriptive-statistics.html#cb90-17" aria-hidden="true" tabindex="-1"></a>           <span class="at">x =</span> <span class="dv">310</span>,</span>
-<span id="cb90-18"><a href="descriptive-statistics.html#cb90-18" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> <span class="fl">0.05</span>,</span>
-<span id="cb90-19"><a href="descriptive-statistics.html#cb90-19" aria-hidden="true" tabindex="-1"></a>           <span class="at">size =</span> <span class="fl">2.5</span>) <span class="sc">+</span></span>
-<span id="cb90-20"><a href="descriptive-statistics.html#cb90-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">&quot;text&quot;</span>,</span>
-<span id="cb90-21"><a href="descriptive-statistics.html#cb90-21" aria-hidden="true" tabindex="-1"></a>           <span class="at">label =</span> glue<span class="sc">::</span><span class="fu">glue</span>(<span class="st">&quot;{shortest_movie}</span></span>
-<span id="cb90-22"><a href="descriptive-statistics.html#cb90-22" aria-hidden="true" tabindex="-1"></a><span class="st">                              ({min(imdb_top_250$runtime_min)} min)&quot;</span>),</span>
-<span id="cb90-23"><a href="descriptive-statistics.html#cb90-23" aria-hidden="true" tabindex="-1"></a>           <span class="at">x =</span> <span class="dv">45</span>,</span>
-<span id="cb90-24"><a href="descriptive-statistics.html#cb90-24" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> <span class="fl">0.05</span>,</span>
-<span id="cb90-25"><a href="descriptive-statistics.html#cb90-25" aria-hidden="true" tabindex="-1"></a>           <span class="at">size =</span> <span class="fl">2.5</span>)</span></code></pre></div>
+<span id="cb90-2"><a href="descriptive-statistics.html#cb90-2" aria-hidden="true" tabindex="-1"></a>longest_movie <span class="ot">&lt;-</span></span>
+<span id="cb90-3"><a href="descriptive-statistics.html#cb90-3" aria-hidden="true" tabindex="-1"></a>  imdb_top_250 <span class="sc">%&gt;%</span></span>
+<span id="cb90-4"><a href="descriptive-statistics.html#cb90-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(runtime_min <span class="sc">==</span> <span class="fu">max</span>(runtime_min)) <span class="sc">%&gt;%</span></span>
+<span id="cb90-5"><a href="descriptive-statistics.html#cb90-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(title)</span>
+<span id="cb90-6"><a href="descriptive-statistics.html#cb90-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-7"><a href="descriptive-statistics.html#cb90-7" aria-hidden="true" tabindex="-1"></a>shortest_movie <span class="ot">&lt;-</span></span>
+<span id="cb90-8"><a href="descriptive-statistics.html#cb90-8" aria-hidden="true" tabindex="-1"></a>  imdb_top_250 <span class="sc">%&gt;%</span></span>
+<span id="cb90-9"><a href="descriptive-statistics.html#cb90-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(runtime_min <span class="sc">==</span> <span class="fu">min</span>(runtime_min)) <span class="sc">%&gt;%</span></span>
+<span id="cb90-10"><a href="descriptive-statistics.html#cb90-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(title)</span>
+<span id="cb90-11"><a href="descriptive-statistics.html#cb90-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-12"><a href="descriptive-statistics.html#cb90-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the pot</span></span>
+<span id="cb90-13"><a href="descriptive-statistics.html#cb90-13" aria-hidden="true" tabindex="-1"></a>imdb_top_250 <span class="sc">%&gt;%</span></span>
+<span id="cb90-14"><a href="descriptive-statistics.html#cb90-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(runtime_min)) <span class="sc">+</span></span>
+<span id="cb90-15"><a href="descriptive-statistics.html#cb90-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb90-16"><a href="descriptive-statistics.html#cb90-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">&quot;text&quot;</span>,</span>
+<span id="cb90-17"><a href="descriptive-statistics.html#cb90-17" aria-hidden="true" tabindex="-1"></a>           <span class="at">label =</span> glue<span class="sc">::</span><span class="fu">glue</span>(<span class="st">&quot;{longest_movie}</span></span>
+<span id="cb90-18"><a href="descriptive-statistics.html#cb90-18" aria-hidden="true" tabindex="-1"></a><span class="st">                              ({max(imdb_top_250$runtime_min)} min)&quot;</span>),</span>
+<span id="cb90-19"><a href="descriptive-statistics.html#cb90-19" aria-hidden="true" tabindex="-1"></a>           <span class="at">x =</span> <span class="dv">310</span>,</span>
+<span id="cb90-20"><a href="descriptive-statistics.html#cb90-20" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> <span class="fl">0.05</span>,</span>
+<span id="cb90-21"><a href="descriptive-statistics.html#cb90-21" aria-hidden="true" tabindex="-1"></a>           <span class="at">size =</span> <span class="fl">2.5</span>) <span class="sc">+</span></span>
+<span id="cb90-22"><a href="descriptive-statistics.html#cb90-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">&quot;text&quot;</span>,</span>
+<span id="cb90-23"><a href="descriptive-statistics.html#cb90-23" aria-hidden="true" tabindex="-1"></a>           <span class="at">label =</span> glue<span class="sc">::</span><span class="fu">glue</span>(<span class="st">&quot;{shortest_movie}</span></span>
+<span id="cb90-24"><a href="descriptive-statistics.html#cb90-24" aria-hidden="true" tabindex="-1"></a><span class="st">                              ({min(imdb_top_250$runtime_min)} min)&quot;</span>),</span>
+<span id="cb90-25"><a href="descriptive-statistics.html#cb90-25" aria-hidden="true" tabindex="-1"></a>           <span class="at">x =</span> <span class="dv">45</span>,</span>
+<span id="cb90-26"><a href="descriptive-statistics.html#cb90-26" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> <span class="fl">0.05</span>,</span>
+<span id="cb90-27"><a href="descriptive-statistics.html#cb90-27" aria-hidden="true" tabindex="-1"></a>           <span class="at">size =</span> <span class="fl">2.5</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:a-boxplot"></span>
 <img src="r_for_non_programmers_files/figure-html/a-boxplot-1.png" alt="A boxplot" width="672" />
 <p class="caption">
@@ -1029,7 +1031,7 @@ gitbook.start({
 "options": null
 },
 "toc": {
-"collapse": "subsection"
+"collapse": "section"
 }
 });
 });

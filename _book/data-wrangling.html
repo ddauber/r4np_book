@@ -10,27 +10,27 @@
 
   <meta property="og:title" content="7 Data Wrangling and Cleaning | R for Non-Programmers: A Guide for Social Scientists" />
   <meta property="og:type" content="book" />
-  
-  
+  <meta property="og:url" content="http://danieldauber.com" />
+  <meta property="og:image" content="http://danieldauber.com/images/cover_art_icons/r4np_icon_white_bg_favicon.png" />
   <meta property="og:description" content="7 Data Wrangling and Cleaning | R for Non-Programmers: A Guide for Social Scientists is a springboard into the world of R without having to become a full-fledged R programmer or possess abundant knowledge in other programming languages. This book guides you through the most common challenges in empirical research in the Social Sciences and offers practical and efficient solutions. Each chapter is dedicated to a common task we have to achieve to answer our research questions. In addition, it provides plenty of exercises and in-depth case studies based on actual data." />
-  
+  <meta name="github-repo" content="ddauber/r4np_book" />
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="7 Data Wrangling and Cleaning | R for Non-Programmers: A Guide for Social Scientists" />
   
   <meta name="twitter:description" content="7 Data Wrangling and Cleaning | R for Non-Programmers: A Guide for Social Scientists is a springboard into the world of R without having to become a full-fledged R programmer or possess abundant knowledge in other programming languages. This book guides you through the most common challenges in empirical research in the Social Sciences and offers practical and efficient solutions. Each chapter is dedicated to a common task we have to achieve to answer our research questions. In addition, it provides plenty of exercises and in-depth case studies based on actual data." />
-  
+  <meta name="twitter:image" content="http://danieldauber.com/images/cover_art_icons/r4np_icon_white_bg_favicon.png" />
 
 <meta name="author" content="Daniel Dauber" />
 
 
-<meta name="date" content="2021-09-24" />
+<meta name="date" content="2021-09-25" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
-  
+  <link rel="shortcut icon" href="images/cover_art_icons/r4np_icon_favicon.svg" type="image/x-icon" />
 <link rel="prev" href="starting-your-r-projects.html"/>
 <link rel="next" href="descriptive-statistics.html"/>
 <script src="libs/header-attrs-2.11/header-attrs.js"></script>
@@ -559,18 +559,21 @@ div.csl-indent {
 <span id="cb40-11"><a href="data-wrangling.html#cb40-11" aria-hidden="true" tabindex="-1"></a><span class="do">## $ satisfaction_with_life &lt;dbl&gt; 10, 9, 9, 8, 7, 10, 5, 8, 8, 10, 8, 8, 10, 7, 1…</span></span></code></pre></div>
 <p>Now that <code>janitor</code> has done its magic, we suddenly have easy to read variable names that are consistent with the ‘Tidyverse style guide’ <span class="citation">(<a href="#ref-wickham-2021" role="doc-biblioref">Wickham 2021</a>)</span>.</p>
 <p>If for whatever reason, the variable names are still not looking the way you want, you can use the function <code>rename()</code> from the <code>dplyr</code> package to manually assign new variable names.</p>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="data-wrangling.html#cb41-1" aria-hidden="true" tabindex="-1"></a>wvs <span class="ot">&lt;-</span> wvs <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="at">satisfaction =</span> satisfaction_with_life,</span>
-<span id="cb41-2"><a href="data-wrangling.html#cb41-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">country =</span> country_name)</span>
-<span id="cb41-3"><a href="data-wrangling.html#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(wvs)</span>
-<span id="cb41-4"><a href="data-wrangling.html#cb41-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Rows: 69,578</span></span>
-<span id="cb41-5"><a href="data-wrangling.html#cb41-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Columns: 7</span></span>
-<span id="cb41-6"><a href="data-wrangling.html#cb41-6" aria-hidden="true" tabindex="-1"></a><span class="do">## $ participant_id      &lt;dbl&gt; 20070001, 20070002, 20070003, 20070004, 20070005, …</span></span>
-<span id="cb41-7"><a href="data-wrangling.html#cb41-7" aria-hidden="true" tabindex="-1"></a><span class="do">## $ country             &lt;chr&gt; &quot;Andorra&quot;, &quot;Andorra&quot;, &quot;Andorra&quot;, &quot;Andorra&quot;, &quot;Andor…</span></span>
-<span id="cb41-8"><a href="data-wrangling.html#cb41-8" aria-hidden="true" tabindex="-1"></a><span class="do">## $ gender              &lt;dbl&gt; 1, 0, 0, 1, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0,…</span></span>
-<span id="cb41-9"><a href="data-wrangling.html#cb41-9" aria-hidden="true" tabindex="-1"></a><span class="do">## $ age                 &lt;dbl&gt; 60, 47, 48, 62, 49, 51, 33, 55, 40, 38, 54, 39, 44…</span></span>
-<span id="cb41-10"><a href="data-wrangling.html#cb41-10" aria-hidden="true" tabindex="-1"></a><span class="do">## $ relationship_status &lt;chr&gt; &quot;married&quot;, &quot;living together as married&quot;, &quot;separate…</span></span>
-<span id="cb41-11"><a href="data-wrangling.html#cb41-11" aria-hidden="true" tabindex="-1"></a><span class="do">## $ freedom_of_choice   &lt;dbl&gt; 10, 9, 9, 9, 8, 10, 10, 8, 8, 10, 9, 8, 10, 7, 10,…</span></span>
-<span id="cb41-12"><a href="data-wrangling.html#cb41-12" aria-hidden="true" tabindex="-1"></a><span class="do">## $ satisfaction        &lt;dbl&gt; 10, 9, 9, 8, 7, 10, 5, 8, 8, 10, 8, 8, 10, 7, 10, …</span></span></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="data-wrangling.html#cb41-1" aria-hidden="true" tabindex="-1"></a>wvs <span class="ot">&lt;-</span> </span>
+<span id="cb41-2"><a href="data-wrangling.html#cb41-2" aria-hidden="true" tabindex="-1"></a>  wvs <span class="sc">%&gt;%</span></span>
+<span id="cb41-3"><a href="data-wrangling.html#cb41-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">satisfaction =</span> satisfaction_with_life,</span>
+<span id="cb41-4"><a href="data-wrangling.html#cb41-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">country =</span> country_name)</span>
+<span id="cb41-5"><a href="data-wrangling.html#cb41-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-6"><a href="data-wrangling.html#cb41-6" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(wvs)</span>
+<span id="cb41-7"><a href="data-wrangling.html#cb41-7" aria-hidden="true" tabindex="-1"></a><span class="do">## Rows: 69,578</span></span>
+<span id="cb41-8"><a href="data-wrangling.html#cb41-8" aria-hidden="true" tabindex="-1"></a><span class="do">## Columns: 7</span></span>
+<span id="cb41-9"><a href="data-wrangling.html#cb41-9" aria-hidden="true" tabindex="-1"></a><span class="do">## $ participant_id      &lt;dbl&gt; 20070001, 20070002, 20070003, 20070004, 20070005, …</span></span>
+<span id="cb41-10"><a href="data-wrangling.html#cb41-10" aria-hidden="true" tabindex="-1"></a><span class="do">## $ country             &lt;chr&gt; &quot;Andorra&quot;, &quot;Andorra&quot;, &quot;Andorra&quot;, &quot;Andorra&quot;, &quot;Andor…</span></span>
+<span id="cb41-11"><a href="data-wrangling.html#cb41-11" aria-hidden="true" tabindex="-1"></a><span class="do">## $ gender              &lt;dbl&gt; 1, 0, 0, 1, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0,…</span></span>
+<span id="cb41-12"><a href="data-wrangling.html#cb41-12" aria-hidden="true" tabindex="-1"></a><span class="do">## $ age                 &lt;dbl&gt; 60, 47, 48, 62, 49, 51, 33, 55, 40, 38, 54, 39, 44…</span></span>
+<span id="cb41-13"><a href="data-wrangling.html#cb41-13" aria-hidden="true" tabindex="-1"></a><span class="do">## $ relationship_status &lt;chr&gt; &quot;married&quot;, &quot;living together as married&quot;, &quot;separate…</span></span>
+<span id="cb41-14"><a href="data-wrangling.html#cb41-14" aria-hidden="true" tabindex="-1"></a><span class="do">## $ freedom_of_choice   &lt;dbl&gt; 10, 9, 9, 9, 8, 10, 10, 8, 8, 10, 9, 8, 10, 7, 10,…</span></span>
+<span id="cb41-15"><a href="data-wrangling.html#cb41-15" aria-hidden="true" tabindex="-1"></a><span class="do">## $ satisfaction        &lt;dbl&gt; 10, 9, 9, 8, 7, 10, 5, 8, 8, 10, 8, 8, 10, 7, 10, …</span></span></code></pre></div>
 <p>You are probably wondering what <code>%&gt;%</code> stands for. This symbol is called a <em>‘piping operator’</em> , and it allows us to chain multiple functions together by considering the output of the previous function. So, do not confuse <code>&lt;-</code> with <code>%&gt;%</code>. Each operator serves a different purpose. The <code>%&gt;%</code> has become synonymous with the <code>tidyverse</code> approach to R programming and is the chosen approach for this book. Many functions from the <code>tidyverse</code> are designed to be chained together.</p>
 <p>If we wanted to spell out what we just did, we could say:</p>
 <ol style="list-style-type: decimal">
@@ -625,23 +628,24 @@ div.csl-indent {
 <li><p><code>as_factor()</code>: Converts data from one type into a <code>factor</code>.</p></li>
 </ul>
 <p>If we want to convert all variables in one go, we can put them into the same function, separated by a <code>,</code>.</p>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="data-wrangling.html#cb44-1" aria-hidden="true" tabindex="-1"></a>wvs <span class="ot">&lt;-</span> wvs <span class="sc">%&gt;%</span></span>
-<span id="cb44-2"><a href="data-wrangling.html#cb44-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">country =</span> <span class="fu">as_factor</span>(country),</span>
-<span id="cb44-3"><a href="data-wrangling.html#cb44-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">gender =</span> <span class="fu">as_factor</span>(gender),</span>
-<span id="cb44-4"><a href="data-wrangling.html#cb44-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">relationship_status =</span> <span class="fu">as_factor</span>(relationship_status),</span>
-<span id="cb44-5"><a href="data-wrangling.html#cb44-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">participant_id =</span> <span class="fu">as_factor</span>(participant_id)</span>
-<span id="cb44-6"><a href="data-wrangling.html#cb44-6" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb44-7"><a href="data-wrangling.html#cb44-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-8"><a href="data-wrangling.html#cb44-8" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(wvs)</span>
-<span id="cb44-9"><a href="data-wrangling.html#cb44-9" aria-hidden="true" tabindex="-1"></a><span class="do">## Rows: 69,578</span></span>
-<span id="cb44-10"><a href="data-wrangling.html#cb44-10" aria-hidden="true" tabindex="-1"></a><span class="do">## Columns: 7</span></span>
-<span id="cb44-11"><a href="data-wrangling.html#cb44-11" aria-hidden="true" tabindex="-1"></a><span class="do">## $ participant_id      &lt;fct&gt; 20070001, 20070002, 20070003, 20070004, 20070005, …</span></span>
-<span id="cb44-12"><a href="data-wrangling.html#cb44-12" aria-hidden="true" tabindex="-1"></a><span class="do">## $ country             &lt;fct&gt; &quot;Andorra&quot;, &quot;Andorra&quot;, &quot;Andorra&quot;, &quot;Andorra&quot;, &quot;Andor…</span></span>
-<span id="cb44-13"><a href="data-wrangling.html#cb44-13" aria-hidden="true" tabindex="-1"></a><span class="do">## $ gender              &lt;fct&gt; 1, 0, 0, 1, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0,…</span></span>
-<span id="cb44-14"><a href="data-wrangling.html#cb44-14" aria-hidden="true" tabindex="-1"></a><span class="do">## $ age                 &lt;dbl&gt; 60, 47, 48, 62, 49, 51, 33, 55, 40, 38, 54, 39, 44…</span></span>
-<span id="cb44-15"><a href="data-wrangling.html#cb44-15" aria-hidden="true" tabindex="-1"></a><span class="do">## $ relationship_status &lt;fct&gt; married, living together as married, separated, li…</span></span>
-<span id="cb44-16"><a href="data-wrangling.html#cb44-16" aria-hidden="true" tabindex="-1"></a><span class="do">## $ freedom_of_choice   &lt;dbl&gt; 10, 9, 9, 9, 8, 10, 10, 8, 8, 10, 9, 8, 10, 7, 10,…</span></span>
-<span id="cb44-17"><a href="data-wrangling.html#cb44-17" aria-hidden="true" tabindex="-1"></a><span class="do">## $ satisfaction        &lt;dbl&gt; 10, 9, 9, 8, 7, 10, 5, 8, 8, 10, 8, 8, 10, 7, 10, …</span></span></code></pre></div>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="data-wrangling.html#cb44-1" aria-hidden="true" tabindex="-1"></a>wvs <span class="ot">&lt;-</span></span>
+<span id="cb44-2"><a href="data-wrangling.html#cb44-2" aria-hidden="true" tabindex="-1"></a>  wvs <span class="sc">%&gt;%</span></span>
+<span id="cb44-3"><a href="data-wrangling.html#cb44-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">country =</span> <span class="fu">as_factor</span>(country),</span>
+<span id="cb44-4"><a href="data-wrangling.html#cb44-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">gender =</span> <span class="fu">as_factor</span>(gender),</span>
+<span id="cb44-5"><a href="data-wrangling.html#cb44-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">relationship_status =</span> <span class="fu">as_factor</span>(relationship_status),</span>
+<span id="cb44-6"><a href="data-wrangling.html#cb44-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">participant_id =</span> <span class="fu">as_factor</span>(participant_id)</span>
+<span id="cb44-7"><a href="data-wrangling.html#cb44-7" aria-hidden="true" tabindex="-1"></a>         )</span>
+<span id="cb44-8"><a href="data-wrangling.html#cb44-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-9"><a href="data-wrangling.html#cb44-9" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(wvs)</span>
+<span id="cb44-10"><a href="data-wrangling.html#cb44-10" aria-hidden="true" tabindex="-1"></a><span class="do">## Rows: 69,578</span></span>
+<span id="cb44-11"><a href="data-wrangling.html#cb44-11" aria-hidden="true" tabindex="-1"></a><span class="do">## Columns: 7</span></span>
+<span id="cb44-12"><a href="data-wrangling.html#cb44-12" aria-hidden="true" tabindex="-1"></a><span class="do">## $ participant_id      &lt;fct&gt; 20070001, 20070002, 20070003, 20070004, 20070005, …</span></span>
+<span id="cb44-13"><a href="data-wrangling.html#cb44-13" aria-hidden="true" tabindex="-1"></a><span class="do">## $ country             &lt;fct&gt; &quot;Andorra&quot;, &quot;Andorra&quot;, &quot;Andorra&quot;, &quot;Andorra&quot;, &quot;Andor…</span></span>
+<span id="cb44-14"><a href="data-wrangling.html#cb44-14" aria-hidden="true" tabindex="-1"></a><span class="do">## $ gender              &lt;fct&gt; 1, 0, 0, 1, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0,…</span></span>
+<span id="cb44-15"><a href="data-wrangling.html#cb44-15" aria-hidden="true" tabindex="-1"></a><span class="do">## $ age                 &lt;dbl&gt; 60, 47, 48, 62, 49, 51, 33, 55, 40, 38, 54, 39, 44…</span></span>
+<span id="cb44-16"><a href="data-wrangling.html#cb44-16" aria-hidden="true" tabindex="-1"></a><span class="do">## $ relationship_status &lt;fct&gt; married, living together as married, separated, li…</span></span>
+<span id="cb44-17"><a href="data-wrangling.html#cb44-17" aria-hidden="true" tabindex="-1"></a><span class="do">## $ freedom_of_choice   &lt;dbl&gt; 10, 9, 9, 9, 8, 10, 10, 8, 8, 10, 9, 8, 10, 7, 10,…</span></span>
+<span id="cb44-18"><a href="data-wrangling.html#cb44-18" aria-hidden="true" tabindex="-1"></a><span class="do">## $ satisfaction        &lt;dbl&gt; 10, 9, 9, 8, 7, 10, 5, 8, 8, 10, 8, 8, 10, 7, 10, …</span></span></code></pre></div>
 <p>The output in the console shows that we successfully performed the transformation and our data types are as we intended them to be. Mission accomplished.</p>
 <p>If you need to convert all <code>&lt;chr&gt;</code> columns you can use <code>mutate_if(is.character, as.factor)</code> instead. This function will look at each column and if it is a <code>character</code> type variable, it will convert it into a <code>factor</code>. However, use this function only if you are certain that all <code>character</code> columns need converting.</p>
 </div>
@@ -662,13 +666,17 @@ div.csl-indent {
 <p>It certainly would be easier to replace the <code>0</code>s and <code>1</code>s with their corresponding labels. This can be achieved with a simple function called <code>fct_recode()</code> from <code>forcats</code>. However, since we ‘mutate’ a variable into something else, we also have to use the <code>mutate()</code> function.</p>
 <div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="data-wrangling.html#cb46-1" aria-hidden="true" tabindex="-1"></a>wvs <span class="ot">&lt;-</span></span>
 <span id="cb46-2"><a href="data-wrangling.html#cb46-2" aria-hidden="true" tabindex="-1"></a>  wvs <span class="sc">%&gt;%</span></span>
-<span id="cb46-3"><a href="data-wrangling.html#cb46-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">gender =</span> <span class="fu">fct_recode</span>(gender, <span class="st">&quot;male&quot;</span> <span class="ot">=</span> <span class="st">&quot;0&quot;</span>, <span class="st">&quot;female&quot;</span> <span class="ot">=</span> <span class="st">&quot;1&quot;</span>))</span></code></pre></div>
+<span id="cb46-3"><a href="data-wrangling.html#cb46-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">gender =</span> <span class="fu">fct_recode</span>(gender,</span>
+<span id="cb46-4"><a href="data-wrangling.html#cb46-4" aria-hidden="true" tabindex="-1"></a>                             <span class="st">&quot;male&quot;</span> <span class="ot">=</span> <span class="st">&quot;0&quot;</span>,</span>
+<span id="cb46-5"><a href="data-wrangling.html#cb46-5" aria-hidden="true" tabindex="-1"></a>                             <span class="st">&quot;female&quot;</span> <span class="ot">=</span> <span class="st">&quot;1&quot;</span>))</span></code></pre></div>
 <p>If you have been following along very carefully, you might spot one oddity in this code: <code>"0"</code> and <code>"1"</code>. You likely recall that in Chapter <a href="r-basics-the-very-fundamentals.html#r-basics-the-very-fundamentals">5</a>, I mentioned that we use <code>""</code> for <code>character</code> values but not for numbers. So what happens if we run the code and remove <code>""</code>.</p>
 <div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="data-wrangling.html#cb47-1" aria-hidden="true" tabindex="-1"></a>wvs <span class="sc">%&gt;%</span></span>
-<span id="cb47-2"><a href="data-wrangling.html#cb47-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">gender =</span> <span class="fu">fct_recode</span>(gender, <span class="st">&quot;male&quot;</span> <span class="ot">=</span> <span class="dv">0</span>, <span class="st">&quot;female&quot;</span> <span class="ot">=</span> <span class="dv">1</span>))</span>
-<span id="cb47-3"><a href="data-wrangling.html#cb47-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Error: Problem with `mutate()` column `gender`.</span></span>
-<span id="cb47-4"><a href="data-wrangling.html#cb47-4" aria-hidden="true" tabindex="-1"></a><span class="do">## ℹ `gender = fct_recode(gender, male = 0, female = 1)`.</span></span>
-<span id="cb47-5"><a href="data-wrangling.html#cb47-5" aria-hidden="true" tabindex="-1"></a><span class="do">## x Each input to fct_recode must be a single named string. Problems at positions: 1, 2</span></span></code></pre></div>
+<span id="cb47-2"><a href="data-wrangling.html#cb47-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">gender =</span> <span class="fu">fct_recode</span>(gender,</span>
+<span id="cb47-3"><a href="data-wrangling.html#cb47-3" aria-hidden="true" tabindex="-1"></a>                             <span class="st">&quot;male&quot;</span> <span class="ot">=</span> <span class="dv">0</span>,</span>
+<span id="cb47-4"><a href="data-wrangling.html#cb47-4" aria-hidden="true" tabindex="-1"></a>                             <span class="st">&quot;female&quot;</span> <span class="ot">=</span> <span class="dv">1</span>))</span>
+<span id="cb47-5"><a href="data-wrangling.html#cb47-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Error: Problem with `mutate()` column `gender`.</span></span>
+<span id="cb47-6"><a href="data-wrangling.html#cb47-6" aria-hidden="true" tabindex="-1"></a><span class="do">## ℹ `gender = fct_recode(gender, male = 0, female = 1)`.</span></span>
+<span id="cb47-7"><a href="data-wrangling.html#cb47-7" aria-hidden="true" tabindex="-1"></a><span class="do">## x Each input to fct_recode must be a single named string. Problems at positions: 1, 2</span></span></code></pre></div>
 <p>The error message is easy to understand: <code>fct_recode()</code> only expects <code>strings</code> as input and not numbers. R recognises <code>0</code> and <code>1</code> as numbers, but <code>fct_recode()</code> converts a <code>factor</code> value into another <code>factor</code> value. To refer to a factor level (i.e. one of the categories in our factor), we have to use <code>""</code>. In other words, data types matter and are often a source of problems with your code. Thus, always pay close attention to it.</p>
 <p>If we rerun our analysis and generate a frequency table for <code>gender</code>, we now get a much more readable output.</p>
 <div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="data-wrangling.html#cb48-1" aria-hidden="true" tabindex="-1"></a>wvs <span class="sc">%&gt;%</span> <span class="fu">count</span>(gender)</span>
@@ -697,11 +705,12 @@ div.csl-indent {
 <span id="cb50-8"><a href="data-wrangling.html#cb50-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 Iran, Islamic Republic of        1499</span></span>
 <span id="cb50-9"><a href="data-wrangling.html#cb50-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 Korea, Republic of               1245</span></span></code></pre></div>
 <p>I use the value <code>15</code> arbitrarily after some trial and error. You can change the value and see which other countries would show up with a lower threshold. However, this number seems to do the trick and returns three countries that seem to have longer labels. All we have to do is replace these categories with new ones the same way we recoded <code>gender</code>. You probably can guess already what we have to do to achieve this.</p>
-<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="data-wrangling.html#cb51-1" aria-hidden="true" tabindex="-1"></a>wvs <span class="ot">&lt;-</span> wvs <span class="sc">%&gt;%</span></span>
-<span id="cb51-2"><a href="data-wrangling.html#cb51-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">country =</span> <span class="fu">fct_recode</span>(country,</span>
-<span id="cb51-3"><a href="data-wrangling.html#cb51-3" aria-hidden="true" tabindex="-1"></a>                              <span class="st">&quot;Bolivia&quot;</span> <span class="ot">=</span> <span class="st">&quot;Bolivia, Plurinational State of&quot;</span>,</span>
-<span id="cb51-4"><a href="data-wrangling.html#cb51-4" aria-hidden="true" tabindex="-1"></a>                              <span class="st">&quot;Iran&quot;</span> <span class="ot">=</span> <span class="st">&quot;Iran, Islamic Republic of&quot;</span>,</span>
-<span id="cb51-5"><a href="data-wrangling.html#cb51-5" aria-hidden="true" tabindex="-1"></a>                              <span class="st">&quot;Korea&quot;</span> <span class="ot">=</span> <span class="st">&quot;Korea, Republic of&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="data-wrangling.html#cb51-1" aria-hidden="true" tabindex="-1"></a>wvs <span class="ot">&lt;-</span></span>
+<span id="cb51-2"><a href="data-wrangling.html#cb51-2" aria-hidden="true" tabindex="-1"></a>  wvs <span class="sc">%&gt;%</span></span>
+<span id="cb51-3"><a href="data-wrangling.html#cb51-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">country =</span> <span class="fu">fct_recode</span>(country,</span>
+<span id="cb51-4"><a href="data-wrangling.html#cb51-4" aria-hidden="true" tabindex="-1"></a>                              <span class="st">&quot;Bolivia&quot;</span> <span class="ot">=</span> <span class="st">&quot;Bolivia, Plurinational State of&quot;</span>,</span>
+<span id="cb51-5"><a href="data-wrangling.html#cb51-5" aria-hidden="true" tabindex="-1"></a>                              <span class="st">&quot;Iran&quot;</span> <span class="ot">=</span> <span class="st">&quot;Iran, Islamic Republic of&quot;</span>,</span>
+<span id="cb51-6"><a href="data-wrangling.html#cb51-6" aria-hidden="true" tabindex="-1"></a>                              <span class="st">&quot;Korea&quot;</span> <span class="ot">=</span> <span class="st">&quot;Korea, Republic of&quot;</span>))</span></code></pre></div>
 </div>
 <div id="reordering-factor-levels" class="section level3" number="7.5.2">
 <h3><span class="header-section-number">7.5.2</span> Reordering factor levels</h3>
@@ -723,7 +732,8 @@ div.csl-indent {
 <h3><span class="header-section-number">7.6.1</span> Mapping missing data</h3>
 <p>Every study that intends to be rigorous will have to identify how much data is missing. In R, this can be achieved in multiple ways, but using a specialised package like <code>naniar</code> does help us to do this very quickly and systematically. First, we have to load the <code>naniar</code> package, and then we use the function <code>vis_miss()</code> to visualise how much and where exactly data is missing.</p>
 <div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="data-wrangling.html#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(naniar)</span>
-<span id="cb52-2"><a href="data-wrangling.html#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="fu">vis_miss</span>(wvs)</span></code></pre></div>
+<span id="cb52-2"><a href="data-wrangling.html#cb52-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-3"><a href="data-wrangling.html#cb52-3" aria-hidden="true" tabindex="-1"></a><span class="fu">vis_miss</span>(wvs)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:mapping-missing-data"></span>
 <img src="r_for_non_programmers_files/figure-html/mapping-missing-data-1.png" alt="Mapping missing data with naniar" width="672" />
 <p class="caption">
@@ -855,27 +865,29 @@ Figure 7.3: MNAR pattern in a dataset due to ‘page-drop-offs’
 </ul>
 <p>Besides multiple imputation, there is also the option for single imputation. The <code>simputation</code> package offers a great variety of imputation functions, one of which also fits our data quite well <code>impute_knn()</code>. This function makes use of a clustering technique called ‘K-nearest neighbour.’ In this case, the function will look for observations closest to the one with missing data and take the value of that observation. In other words, it looks for similar participants who answered the questionnaire in a very similar way. The great convenience of this approach is that it can handle all kinds of data types simultaneously, which is not true for all imputation techniques.</p>
 <p>If we apply this function to our dataset, we have to write the following:</p>
-<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="data-wrangling.html#cb60-1" aria-hidden="true" tabindex="-1"></a>wvs_nona <span class="ot">&lt;-</span> wvs <span class="sc">%&gt;%</span></span>
-<span id="cb60-2"><a href="data-wrangling.html#cb60-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>participant_id) <span class="sc">%&gt;%</span></span>
-<span id="cb60-3"><a href="data-wrangling.html#cb60-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Transforms our tibble into a data frame</span></span>
-<span id="cb60-4"><a href="data-wrangling.html#cb60-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb60-5"><a href="data-wrangling.html#cb60-5" aria-hidden="true" tabindex="-1"></a>  simputation<span class="sc">::</span><span class="fu">impute_knn</span>(. <span class="sc">~</span> .)</span>
-<span id="cb60-6"><a href="data-wrangling.html#cb60-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb60-7"><a href="data-wrangling.html#cb60-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Be aware that our new dataframe has different datatypes</span></span>
-<span id="cb60-8"><a href="data-wrangling.html#cb60-8" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(wvs_nona)</span>
-<span id="cb60-9"><a href="data-wrangling.html#cb60-9" aria-hidden="true" tabindex="-1"></a><span class="do">## Rows: 69,578</span></span>
-<span id="cb60-10"><a href="data-wrangling.html#cb60-10" aria-hidden="true" tabindex="-1"></a><span class="do">## Columns: 6</span></span>
-<span id="cb60-11"><a href="data-wrangling.html#cb60-11" aria-hidden="true" tabindex="-1"></a><span class="do">## $ country             &lt;fct&gt; Andorra, Andorra, Andorra, Andorra, Andorra, Andor…</span></span>
-<span id="cb60-12"><a href="data-wrangling.html#cb60-12" aria-hidden="true" tabindex="-1"></a><span class="do">## $ gender              &lt;fct&gt; female, male, male, female, male, female, female, …</span></span>
-<span id="cb60-13"><a href="data-wrangling.html#cb60-13" aria-hidden="true" tabindex="-1"></a><span class="do">## $ age                 &lt;chr&gt; &quot;60&quot;, &quot;47&quot;, &quot;48&quot;, &quot;62&quot;, &quot;49&quot;, &quot;51&quot;, &quot;33&quot;, &quot;55&quot;, &quot;4…</span></span>
-<span id="cb60-14"><a href="data-wrangling.html#cb60-14" aria-hidden="true" tabindex="-1"></a><span class="do">## $ relationship_status &lt;fct&gt; married, living together as married, separated, li…</span></span>
-<span id="cb60-15"><a href="data-wrangling.html#cb60-15" aria-hidden="true" tabindex="-1"></a><span class="do">## $ freedom_of_choice   &lt;chr&gt; &quot;10&quot;, &quot;9&quot;, &quot;9&quot;, &quot;9&quot;, &quot;8&quot;, &quot;10&quot;, &quot;10&quot;, &quot;8&quot;, &quot;8&quot;, &quot;1…</span></span>
-<span id="cb60-16"><a href="data-wrangling.html#cb60-16" aria-hidden="true" tabindex="-1"></a><span class="do">## $ satisfaction        &lt;chr&gt; &quot;10&quot;, &quot;9&quot;, &quot;9&quot;, &quot;8&quot;, &quot;7&quot;, &quot;10&quot;, &quot;5&quot;, &quot;8&quot;, &quot;8&quot;, &quot;10…</span></span>
-<span id="cb60-17"><a href="data-wrangling.html#cb60-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Let&#39;s fix this</span></span>
-<span id="cb60-18"><a href="data-wrangling.html#cb60-18" aria-hidden="true" tabindex="-1"></a>wvs_nona <span class="ot">&lt;-</span> wvs_nona <span class="sc">%&gt;%</span></span>
-<span id="cb60-19"><a href="data-wrangling.html#cb60-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">age =</span> <span class="fu">as.numeric</span>(age),</span>
-<span id="cb60-20"><a href="data-wrangling.html#cb60-20" aria-hidden="true" tabindex="-1"></a>         <span class="at">freedom_of_choice =</span> <span class="fu">as.numeric</span>(freedom_of_choice),</span>
-<span id="cb60-21"><a href="data-wrangling.html#cb60-21" aria-hidden="true" tabindex="-1"></a>         <span class="at">satisfaction =</span> <span class="fu">as.numeric</span>(satisfaction))</span></code></pre></div>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="data-wrangling.html#cb60-1" aria-hidden="true" tabindex="-1"></a>wvs_nona <span class="ot">&lt;-</span></span>
+<span id="cb60-2"><a href="data-wrangling.html#cb60-2" aria-hidden="true" tabindex="-1"></a>  wvs <span class="sc">%&gt;%</span></span>
+<span id="cb60-3"><a href="data-wrangling.html#cb60-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>participant_id) <span class="sc">%&gt;%</span></span>
+<span id="cb60-4"><a href="data-wrangling.html#cb60-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Transforms our tibble into a data frame</span></span>
+<span id="cb60-5"><a href="data-wrangling.html#cb60-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb60-6"><a href="data-wrangling.html#cb60-6" aria-hidden="true" tabindex="-1"></a>  simputation<span class="sc">::</span><span class="fu">impute_knn</span>(. <span class="sc">~</span> .)</span>
+<span id="cb60-7"><a href="data-wrangling.html#cb60-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-8"><a href="data-wrangling.html#cb60-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Be aware that our new dataframe has different datatypes</span></span>
+<span id="cb60-9"><a href="data-wrangling.html#cb60-9" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(wvs_nona)</span>
+<span id="cb60-10"><a href="data-wrangling.html#cb60-10" aria-hidden="true" tabindex="-1"></a><span class="do">## Rows: 69,578</span></span>
+<span id="cb60-11"><a href="data-wrangling.html#cb60-11" aria-hidden="true" tabindex="-1"></a><span class="do">## Columns: 6</span></span>
+<span id="cb60-12"><a href="data-wrangling.html#cb60-12" aria-hidden="true" tabindex="-1"></a><span class="do">## $ country             &lt;fct&gt; Andorra, Andorra, Andorra, Andorra, Andorra, Andor…</span></span>
+<span id="cb60-13"><a href="data-wrangling.html#cb60-13" aria-hidden="true" tabindex="-1"></a><span class="do">## $ gender              &lt;fct&gt; female, male, male, female, male, female, female, …</span></span>
+<span id="cb60-14"><a href="data-wrangling.html#cb60-14" aria-hidden="true" tabindex="-1"></a><span class="do">## $ age                 &lt;chr&gt; &quot;60&quot;, &quot;47&quot;, &quot;48&quot;, &quot;62&quot;, &quot;49&quot;, &quot;51&quot;, &quot;33&quot;, &quot;55&quot;, &quot;4…</span></span>
+<span id="cb60-15"><a href="data-wrangling.html#cb60-15" aria-hidden="true" tabindex="-1"></a><span class="do">## $ relationship_status &lt;fct&gt; married, living together as married, separated, li…</span></span>
+<span id="cb60-16"><a href="data-wrangling.html#cb60-16" aria-hidden="true" tabindex="-1"></a><span class="do">## $ freedom_of_choice   &lt;chr&gt; &quot;10&quot;, &quot;9&quot;, &quot;9&quot;, &quot;9&quot;, &quot;8&quot;, &quot;10&quot;, &quot;10&quot;, &quot;8&quot;, &quot;8&quot;, &quot;1…</span></span>
+<span id="cb60-17"><a href="data-wrangling.html#cb60-17" aria-hidden="true" tabindex="-1"></a><span class="do">## $ satisfaction        &lt;chr&gt; &quot;10&quot;, &quot;9&quot;, &quot;9&quot;, &quot;8&quot;, &quot;7&quot;, &quot;10&quot;, &quot;5&quot;, &quot;8&quot;, &quot;8&quot;, &quot;10…</span></span>
+<span id="cb60-18"><a href="data-wrangling.html#cb60-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Let&#39;s fix this</span></span>
+<span id="cb60-19"><a href="data-wrangling.html#cb60-19" aria-hidden="true" tabindex="-1"></a>wvs_nona <span class="ot">&lt;-</span></span>
+<span id="cb60-20"><a href="data-wrangling.html#cb60-20" aria-hidden="true" tabindex="-1"></a>  wvs_nona <span class="sc">%&gt;%</span></span>
+<span id="cb60-21"><a href="data-wrangling.html#cb60-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">age =</span> <span class="fu">as.numeric</span>(age),</span>
+<span id="cb60-22"><a href="data-wrangling.html#cb60-22" aria-hidden="true" tabindex="-1"></a>         <span class="at">freedom_of_choice =</span> <span class="fu">as.numeric</span>(freedom_of_choice),</span>
+<span id="cb60-23"><a href="data-wrangling.html#cb60-23" aria-hidden="true" tabindex="-1"></a>         <span class="at">satisfaction =</span> <span class="fu">as.numeric</span>(satisfaction))</span></code></pre></div>
 <p>The function <code>impute_knn(. ~ .)</code> might look like a combination of text with an emoji <code>(. ~ .)</code>. This imputation function requires us to specify a model to impute the data. Since we want to impute all missing values in the dataset and use all variables available, we put <code>.</code> on both sides of the equation, separated by a <code>~</code>. The <code>.</code> reflects that we do not specify a specific variable but instead tell the function to use all variables that are not mentioned. In our case, we did not mention any variables at all, and therefore it chooses all of them. For example, if we wanted to impute only <code>freedom_of_choice</code>, we would have to put <code>impute_knn(freedom_of_choice ~ .)</code>. We will elaborate more on how to specify models when we cover regression models (see Chapter <a href="regression.html#regression">13</a>).</p>
 <p>As you will have noticed, we also had to convert our <code>tibble</code> into a <code>data frame</code> using <code>as.data.frame()</code>. As mentioned in Chapter <a href="r-basics-the-very-fundamentals.html#functions">5.3</a>, some functions require a specific data type or format. The <code>simputation</code> package works with <code>dplyr</code>, but it prefers <code>data frame</code>s. Based on my experiences, the wrong data type or format is one of the most frequent causes of errors that novice R programmers report. So, keep an eye on it and read the documentation carefully. Also, once you inspect the new data frame, you will notice that some of our double variables have now turned into character values. Therefore, I strongly recommend checking your newly created data frames to avoid any surprises further down the line of your analysis.</p>
 <p>Be aware that imputation of any kind can take a long time. For example, my MacBook Pro took about 4.22 seconds to complete <code>impute_knn()</code> with the <code>wvs</code> dataset. If we used multiple imputation, this would have taken considerably longer, i.e. several minutes and more.</p>
@@ -914,44 +926,45 @@ Figure 7.3: MNAR pattern in a dataset due to ‘page-drop-offs’
 </ul>
 <p>The same is true for communication skills (<code>cs_imp</code> and <code>cs_exp</code>). We can compute all three variables in one go. For each variable, we compute <code>mean()</code> and use <code>c()</code> to list all the variables that we want to include in the mean:</p>
 <div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="data-wrangling.html#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute the scores for the latent variable &#39;si&#39; and &#39;cs&#39;</span></span>
-<span id="cb63-2"><a href="data-wrangling.html#cb63-2" aria-hidden="true" tabindex="-1"></a>gep <span class="ot">&lt;-</span> gep <span class="sc">%&gt;%</span></span>
-<span id="cb63-3"><a href="data-wrangling.html#cb63-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rowwise</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb63-4"><a href="data-wrangling.html#cb63-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">si =</span> <span class="fu">mean</span>(<span class="fu">c</span>(si_socialise_with_people_exp,</span>
-<span id="cb63-5"><a href="data-wrangling.html#cb63-5" aria-hidden="true" tabindex="-1"></a>                     si_supportive_friends_exp,</span>
-<span id="cb63-6"><a href="data-wrangling.html#cb63-6" aria-hidden="true" tabindex="-1"></a>                     si_time_socialising_exp</span>
-<span id="cb63-7"><a href="data-wrangling.html#cb63-7" aria-hidden="true" tabindex="-1"></a>                     )</span>
-<span id="cb63-8"><a href="data-wrangling.html#cb63-8" aria-hidden="true" tabindex="-1"></a>                   ),</span>
-<span id="cb63-9"><a href="data-wrangling.html#cb63-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">cs_imp =</span> <span class="fu">mean</span>(<span class="fu">c</span>(cs_explain_ideas_imp,</span>
-<span id="cb63-10"><a href="data-wrangling.html#cb63-10" aria-hidden="true" tabindex="-1"></a>                         cs_find_clarification_imp,</span>
-<span id="cb63-11"><a href="data-wrangling.html#cb63-11" aria-hidden="true" tabindex="-1"></a>                         cs_learn_different_styles_imp</span>
-<span id="cb63-12"><a href="data-wrangling.html#cb63-12" aria-hidden="true" tabindex="-1"></a>                         )</span>
-<span id="cb63-13"><a href="data-wrangling.html#cb63-13" aria-hidden="true" tabindex="-1"></a>                       ),</span>
-<span id="cb63-14"><a href="data-wrangling.html#cb63-14" aria-hidden="true" tabindex="-1"></a>         <span class="at">cs_exp =</span> <span class="fu">mean</span>(<span class="fu">c</span>(cs_explain_ideas_exp,</span>
-<span id="cb63-15"><a href="data-wrangling.html#cb63-15" aria-hidden="true" tabindex="-1"></a>                         cs_find_clarification_exp,</span>
-<span id="cb63-16"><a href="data-wrangling.html#cb63-16" aria-hidden="true" tabindex="-1"></a>                         cs_learn_different_styles_exp</span>
-<span id="cb63-17"><a href="data-wrangling.html#cb63-17" aria-hidden="true" tabindex="-1"></a>                         )</span>
-<span id="cb63-18"><a href="data-wrangling.html#cb63-18" aria-hidden="true" tabindex="-1"></a>                       )</span>
-<span id="cb63-19"><a href="data-wrangling.html#cb63-19" aria-hidden="true" tabindex="-1"></a>         )</span>
-<span id="cb63-20"><a href="data-wrangling.html#cb63-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb63-21"><a href="data-wrangling.html#cb63-21" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(gep)</span>
-<span id="cb63-22"><a href="data-wrangling.html#cb63-22" aria-hidden="true" tabindex="-1"></a><span class="do">## Rows: 300</span></span>
-<span id="cb63-23"><a href="data-wrangling.html#cb63-23" aria-hidden="true" tabindex="-1"></a><span class="do">## Columns: 15</span></span>
-<span id="cb63-24"><a href="data-wrangling.html#cb63-24" aria-hidden="true" tabindex="-1"></a><span class="do">## Rowwise: </span></span>
-<span id="cb63-25"><a href="data-wrangling.html#cb63-25" aria-hidden="true" tabindex="-1"></a><span class="do">## $ age                           &lt;dbl&gt; 22, 26, 21, 23, 25, 27, 24, 23, 21, 24, …</span></span>
-<span id="cb63-26"><a href="data-wrangling.html#cb63-26" aria-hidden="true" tabindex="-1"></a><span class="do">## $ gender                        &lt;chr&gt; &quot;Female&quot;, &quot;Female&quot;, &quot;Female&quot;, &quot;Female&quot;, …</span></span>
-<span id="cb63-27"><a href="data-wrangling.html#cb63-27" aria-hidden="true" tabindex="-1"></a><span class="do">## $ level_of_study                &lt;chr&gt; &quot;UG&quot;, &quot;PGT&quot;, &quot;UG&quot;, &quot;UG&quot;, &quot;PGT&quot;, &quot;PGT&quot;, &quot;…</span></span>
-<span id="cb63-28"><a href="data-wrangling.html#cb63-28" aria-hidden="true" tabindex="-1"></a><span class="do">## $ si_socialise_with_people_exp  &lt;dbl&gt; 6, 3, 4, 3, 4, 2, 5, 1, 6, 6, 3, 3, 4, 5…</span></span>
-<span id="cb63-29"><a href="data-wrangling.html#cb63-29" aria-hidden="true" tabindex="-1"></a><span class="do">## $ si_supportive_friends_exp     &lt;dbl&gt; 4, 4, 5, 4, 4, 2, 5, 1, 6, 6, 3, 3, 4, 6…</span></span>
-<span id="cb63-30"><a href="data-wrangling.html#cb63-30" aria-hidden="true" tabindex="-1"></a><span class="do">## $ si_time_socialising_exp       &lt;dbl&gt; 5, 2, 4, 4, 3, 2, 6, 3, 6, 6, 3, 2, 4, 6…</span></span>
-<span id="cb63-31"><a href="data-wrangling.html#cb63-31" aria-hidden="true" tabindex="-1"></a><span class="do">## $ cs_explain_ideas_imp          &lt;dbl&gt; 6, 5, 5, 5, 5, 5, 4, 5, 6, 6, 5, 5, 4, 6…</span></span>
-<span id="cb63-32"><a href="data-wrangling.html#cb63-32" aria-hidden="true" tabindex="-1"></a><span class="do">## $ cs_find_clarification_imp     &lt;dbl&gt; 4, 5, 5, 6, 6, 5, 4, 6, 6, 6, 5, 5, 4, 5…</span></span>
-<span id="cb63-33"><a href="data-wrangling.html#cb63-33" aria-hidden="true" tabindex="-1"></a><span class="do">## $ cs_learn_different_styles_imp &lt;dbl&gt; 6, 5, 6, 4, 4, 4, 4, 6, 6, 6, 4, 5, 5, 5…</span></span>
-<span id="cb63-34"><a href="data-wrangling.html#cb63-34" aria-hidden="true" tabindex="-1"></a><span class="do">## $ cs_explain_ideas_exp          &lt;dbl&gt; 6, 5, 2, 5, 6, 5, 6, 6, 6, 6, 4, 4, 3, 6…</span></span>
-<span id="cb63-35"><a href="data-wrangling.html#cb63-35" aria-hidden="true" tabindex="-1"></a><span class="do">## $ cs_find_clarification_exp     &lt;dbl&gt; 6, 5, 4, 6, 6, 5, 6, 6, 6, 6, 2, 5, 4, 5…</span></span>
-<span id="cb63-36"><a href="data-wrangling.html#cb63-36" aria-hidden="true" tabindex="-1"></a><span class="do">## $ cs_learn_different_styles_exp &lt;dbl&gt; 6, 4, 5, 4, 6, 3, 5, 6, 6, 6, 2, 4, 2, 5…</span></span>
-<span id="cb63-37"><a href="data-wrangling.html#cb63-37" aria-hidden="true" tabindex="-1"></a><span class="do">## $ si                            &lt;dbl&gt; 5.000000, 3.000000, 4.333333, 3.666667, …</span></span>
-<span id="cb63-38"><a href="data-wrangling.html#cb63-38" aria-hidden="true" tabindex="-1"></a><span class="do">## $ cs_imp                        &lt;dbl&gt; 5.333333, 5.000000, 5.333333, 5.000000, …</span></span>
-<span id="cb63-39"><a href="data-wrangling.html#cb63-39" aria-hidden="true" tabindex="-1"></a><span class="do">## $ cs_exp                        &lt;dbl&gt; 6.000000, 4.666667, 3.666667, 5.000000, …</span></span></code></pre></div>
+<span id="cb63-2"><a href="data-wrangling.html#cb63-2" aria-hidden="true" tabindex="-1"></a>gep <span class="ot">&lt;-</span></span>
+<span id="cb63-3"><a href="data-wrangling.html#cb63-3" aria-hidden="true" tabindex="-1"></a>  gep <span class="sc">%&gt;%</span></span>
+<span id="cb63-4"><a href="data-wrangling.html#cb63-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rowwise</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb63-5"><a href="data-wrangling.html#cb63-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">si =</span> <span class="fu">mean</span>(<span class="fu">c</span>(si_socialise_with_people_exp,</span>
+<span id="cb63-6"><a href="data-wrangling.html#cb63-6" aria-hidden="true" tabindex="-1"></a>                     si_supportive_friends_exp,</span>
+<span id="cb63-7"><a href="data-wrangling.html#cb63-7" aria-hidden="true" tabindex="-1"></a>                     si_time_socialising_exp</span>
+<span id="cb63-8"><a href="data-wrangling.html#cb63-8" aria-hidden="true" tabindex="-1"></a>                     )</span>
+<span id="cb63-9"><a href="data-wrangling.html#cb63-9" aria-hidden="true" tabindex="-1"></a>                   ),</span>
+<span id="cb63-10"><a href="data-wrangling.html#cb63-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">cs_imp =</span> <span class="fu">mean</span>(<span class="fu">c</span>(cs_explain_ideas_imp,</span>
+<span id="cb63-11"><a href="data-wrangling.html#cb63-11" aria-hidden="true" tabindex="-1"></a>                         cs_find_clarification_imp,</span>
+<span id="cb63-12"><a href="data-wrangling.html#cb63-12" aria-hidden="true" tabindex="-1"></a>                         cs_learn_different_styles_imp</span>
+<span id="cb63-13"><a href="data-wrangling.html#cb63-13" aria-hidden="true" tabindex="-1"></a>                         )</span>
+<span id="cb63-14"><a href="data-wrangling.html#cb63-14" aria-hidden="true" tabindex="-1"></a>                       ),</span>
+<span id="cb63-15"><a href="data-wrangling.html#cb63-15" aria-hidden="true" tabindex="-1"></a>         <span class="at">cs_exp =</span> <span class="fu">mean</span>(<span class="fu">c</span>(cs_explain_ideas_exp,</span>
+<span id="cb63-16"><a href="data-wrangling.html#cb63-16" aria-hidden="true" tabindex="-1"></a>                         cs_find_clarification_exp,</span>
+<span id="cb63-17"><a href="data-wrangling.html#cb63-17" aria-hidden="true" tabindex="-1"></a>                         cs_learn_different_styles_exp</span>
+<span id="cb63-18"><a href="data-wrangling.html#cb63-18" aria-hidden="true" tabindex="-1"></a>                         )</span>
+<span id="cb63-19"><a href="data-wrangling.html#cb63-19" aria-hidden="true" tabindex="-1"></a>                       )</span>
+<span id="cb63-20"><a href="data-wrangling.html#cb63-20" aria-hidden="true" tabindex="-1"></a>         )</span>
+<span id="cb63-21"><a href="data-wrangling.html#cb63-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb63-22"><a href="data-wrangling.html#cb63-22" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(gep)</span>
+<span id="cb63-23"><a href="data-wrangling.html#cb63-23" aria-hidden="true" tabindex="-1"></a><span class="do">## Rows: 300</span></span>
+<span id="cb63-24"><a href="data-wrangling.html#cb63-24" aria-hidden="true" tabindex="-1"></a><span class="do">## Columns: 15</span></span>
+<span id="cb63-25"><a href="data-wrangling.html#cb63-25" aria-hidden="true" tabindex="-1"></a><span class="do">## Rowwise: </span></span>
+<span id="cb63-26"><a href="data-wrangling.html#cb63-26" aria-hidden="true" tabindex="-1"></a><span class="do">## $ age                           &lt;dbl&gt; 22, 26, 21, 23, 25, 27, 24, 23, 21, 24, …</span></span>
+<span id="cb63-27"><a href="data-wrangling.html#cb63-27" aria-hidden="true" tabindex="-1"></a><span class="do">## $ gender                        &lt;chr&gt; &quot;Female&quot;, &quot;Female&quot;, &quot;Female&quot;, &quot;Female&quot;, …</span></span>
+<span id="cb63-28"><a href="data-wrangling.html#cb63-28" aria-hidden="true" tabindex="-1"></a><span class="do">## $ level_of_study                &lt;chr&gt; &quot;UG&quot;, &quot;PGT&quot;, &quot;UG&quot;, &quot;UG&quot;, &quot;PGT&quot;, &quot;PGT&quot;, &quot;…</span></span>
+<span id="cb63-29"><a href="data-wrangling.html#cb63-29" aria-hidden="true" tabindex="-1"></a><span class="do">## $ si_socialise_with_people_exp  &lt;dbl&gt; 6, 3, 4, 3, 4, 2, 5, 1, 6, 6, 3, 3, 4, 5…</span></span>
+<span id="cb63-30"><a href="data-wrangling.html#cb63-30" aria-hidden="true" tabindex="-1"></a><span class="do">## $ si_supportive_friends_exp     &lt;dbl&gt; 4, 4, 5, 4, 4, 2, 5, 1, 6, 6, 3, 3, 4, 6…</span></span>
+<span id="cb63-31"><a href="data-wrangling.html#cb63-31" aria-hidden="true" tabindex="-1"></a><span class="do">## $ si_time_socialising_exp       &lt;dbl&gt; 5, 2, 4, 4, 3, 2, 6, 3, 6, 6, 3, 2, 4, 6…</span></span>
+<span id="cb63-32"><a href="data-wrangling.html#cb63-32" aria-hidden="true" tabindex="-1"></a><span class="do">## $ cs_explain_ideas_imp          &lt;dbl&gt; 6, 5, 5, 5, 5, 5, 4, 5, 6, 6, 5, 5, 4, 6…</span></span>
+<span id="cb63-33"><a href="data-wrangling.html#cb63-33" aria-hidden="true" tabindex="-1"></a><span class="do">## $ cs_find_clarification_imp     &lt;dbl&gt; 4, 5, 5, 6, 6, 5, 4, 6, 6, 6, 5, 5, 4, 5…</span></span>
+<span id="cb63-34"><a href="data-wrangling.html#cb63-34" aria-hidden="true" tabindex="-1"></a><span class="do">## $ cs_learn_different_styles_imp &lt;dbl&gt; 6, 5, 6, 4, 4, 4, 4, 6, 6, 6, 4, 5, 5, 5…</span></span>
+<span id="cb63-35"><a href="data-wrangling.html#cb63-35" aria-hidden="true" tabindex="-1"></a><span class="do">## $ cs_explain_ideas_exp          &lt;dbl&gt; 6, 5, 2, 5, 6, 5, 6, 6, 6, 6, 4, 4, 3, 6…</span></span>
+<span id="cb63-36"><a href="data-wrangling.html#cb63-36" aria-hidden="true" tabindex="-1"></a><span class="do">## $ cs_find_clarification_exp     &lt;dbl&gt; 6, 5, 4, 6, 6, 5, 6, 6, 6, 6, 2, 5, 4, 5…</span></span>
+<span id="cb63-37"><a href="data-wrangling.html#cb63-37" aria-hidden="true" tabindex="-1"></a><span class="do">## $ cs_learn_different_styles_exp &lt;dbl&gt; 6, 4, 5, 4, 6, 3, 5, 6, 6, 6, 2, 4, 2, 5…</span></span>
+<span id="cb63-38"><a href="data-wrangling.html#cb63-38" aria-hidden="true" tabindex="-1"></a><span class="do">## $ si                            &lt;dbl&gt; 5.000000, 3.000000, 4.333333, 3.666667, …</span></span>
+<span id="cb63-39"><a href="data-wrangling.html#cb63-39" aria-hidden="true" tabindex="-1"></a><span class="do">## $ cs_imp                        &lt;dbl&gt; 5.333333, 5.000000, 5.333333, 5.000000, …</span></span>
+<span id="cb63-40"><a href="data-wrangling.html#cb63-40" aria-hidden="true" tabindex="-1"></a><span class="do">## $ cs_exp                        &lt;dbl&gt; 6.000000, 4.666667, 3.666667, 5.000000, …</span></span></code></pre></div>
 <p>Compared to dealing with missing data, this is a fairly straightforward task. However, there is a caveat. Before we can compute the mean across all these variables, we need to know and understand whether all these scores reliably contribute to one single latent variable. If not, we would be in trouble and make a significant mistake.</p>
 <p>By far, the most common approach to assessing reliability (or more accurately ‘internal consistency’) of latent variables is Cronbach’s <span class="math inline">\(\alpha\)</span>. This indicator looks at how strongly a set of items (i.e. questions in your questionnaire) are related to each other. For example, the stronger the relationship of all items starting with <code>si_</code> to each other, the more likely we achieve a higher Cronbach’s <span class="math inline">\(\alpha\)</span>. The psych package has a suitable function to compute it for us.</p>
 <p>Instead of listing all the items by hand, I use the function <code>starts_with()</code> to pick only the variables whose names start with <code>si_</code>. It certainly pays off to think about your variable names more thoroughly in advance to benefit from such shortcuts (see also Chapter <a href="data-wrangling.html#colnames-cleaning">7.3</a>.</p>
@@ -1294,7 +1307,7 @@ gitbook.start({
 "options": null
 },
 "toc": {
-"collapse": "subsection"
+"collapse": "section"
 }
 });
 });

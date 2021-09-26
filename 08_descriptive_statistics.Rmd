@@ -88,10 +88,13 @@ imdb_top_250 %>%
 
   # Use geom_col() instead of geom_bar()
   geom_col() +
-
+  
+  # Add titles for plot
   ggtitle("Most popular movie genres") +
   xlab("movie genre") +
   ylab("frequency") +
+  
+  # Rotate plot by 180 degrees
   coord_flip()
 
 #Step 3: Sort the plot by frequency, i.e. by 'n'

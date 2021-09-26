@@ -10,27 +10,27 @@
 
   <meta property="og:title" content="5 R Basics: The very fundamentals | R for Non-Programmers: A Guide for Social Scientists" />
   <meta property="og:type" content="book" />
-  
-  
+  <meta property="og:url" content="http://danieldauber.com" />
+  <meta property="og:image" content="http://danieldauber.com/images/cover_art_icons/r4np_icon_white_bg_favicon.png" />
   <meta property="og:description" content="5 R Basics: The very fundamentals | R for Non-Programmers: A Guide for Social Scientists is a springboard into the world of R without having to become a full-fledged R programmer or possess abundant knowledge in other programming languages. This book guides you through the most common challenges in empirical research in the Social Sciences and offers practical and efficient solutions. Each chapter is dedicated to a common task we have to achieve to answer our research questions. In addition, it provides plenty of exercises and in-depth case studies based on actual data." />
-  
+  <meta name="github-repo" content="ddauber/r4np_book" />
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="5 R Basics: The very fundamentals | R for Non-Programmers: A Guide for Social Scientists" />
   
   <meta name="twitter:description" content="5 R Basics: The very fundamentals | R for Non-Programmers: A Guide for Social Scientists is a springboard into the world of R without having to become a full-fledged R programmer or possess abundant knowledge in other programming languages. This book guides you through the most common challenges in empirical research in the Social Sciences and offers practical and efficient solutions. Each chapter is dedicated to a common task we have to achieve to answer our research questions. In addition, it provides plenty of exercises and in-depth case studies based on actual data." />
-  
+  <meta name="twitter:image" content="http://danieldauber.com/images/cover_art_icons/r4np_icon_white_bg_favicon.png" />
 
 <meta name="author" content="Daniel Dauber" />
 
 
-<meta name="date" content="2021-09-24" />
+<meta name="date" content="2021-09-25" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
-  
+  <link rel="shortcut icon" href="images/cover_art_icons/r4np_icon_favicon.svg" type="image/x-icon" />
 <link rel="prev" href="the-rstudio-interface.html"/>
 <link rel="next" href="starting-your-r-projects.html"/>
 <script src="libs/header-attrs-2.11/header-attrs.js"></script>
@@ -501,11 +501,17 @@ div.csl-indent {
 </blockquote>
 <p>Let’s concatenate some more friends into our <code>friends</code> object.</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="r-basics-the-very-fundamentals.html#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Adding some more friends to my life</span></span>
-<span id="cb10-2"><a href="r-basics-the-very-fundamentals.html#cb10-2" aria-hidden="true" tabindex="-1"></a>friends <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Fiona&quot;</span>, <span class="st">&quot;Ida&quot;</span>, <span class="st">&quot;Lukas&quot;</span>, <span class="st">&quot;Georg&quot;</span>, <span class="st">&quot;Daniel&quot;</span>, <span class="st">&quot;Pavel&quot;</span>, <span class="st">&quot;Tigger&quot;</span>)</span>
-<span id="cb10-3"><a href="r-basics-the-very-fundamentals.html#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-4"><a href="r-basics-the-very-fundamentals.html#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Here are all my friends</span></span>
-<span id="cb10-5"><a href="r-basics-the-very-fundamentals.html#cb10-5" aria-hidden="true" tabindex="-1"></a>friends</span>
-<span id="cb10-6"><a href="r-basics-the-very-fundamentals.html#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;Fiona&quot;  &quot;Ida&quot;    &quot;Lukas&quot;  &quot;Georg&quot;  &quot;Daniel&quot; &quot;Pavel&quot;  &quot;Tigger&quot;</span></span></code></pre></div>
+<span id="cb10-2"><a href="r-basics-the-very-fundamentals.html#cb10-2" aria-hidden="true" tabindex="-1"></a>friends <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Fiona&quot;</span>,</span>
+<span id="cb10-3"><a href="r-basics-the-very-fundamentals.html#cb10-3" aria-hidden="true" tabindex="-1"></a>             <span class="st">&quot;Ida&quot;</span>,</span>
+<span id="cb10-4"><a href="r-basics-the-very-fundamentals.html#cb10-4" aria-hidden="true" tabindex="-1"></a>             <span class="st">&quot;Lukas&quot;</span>,</span>
+<span id="cb10-5"><a href="r-basics-the-very-fundamentals.html#cb10-5" aria-hidden="true" tabindex="-1"></a>             <span class="st">&quot;Georg&quot;</span>,</span>
+<span id="cb10-6"><a href="r-basics-the-very-fundamentals.html#cb10-6" aria-hidden="true" tabindex="-1"></a>             <span class="st">&quot;Daniel&quot;</span>,</span>
+<span id="cb10-7"><a href="r-basics-the-very-fundamentals.html#cb10-7" aria-hidden="true" tabindex="-1"></a>             <span class="st">&quot;Pavel&quot;</span>,</span>
+<span id="cb10-8"><a href="r-basics-the-very-fundamentals.html#cb10-8" aria-hidden="true" tabindex="-1"></a>             <span class="st">&quot;Tigger&quot;</span>)</span>
+<span id="cb10-9"><a href="r-basics-the-very-fundamentals.html#cb10-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-10"><a href="r-basics-the-very-fundamentals.html#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Here are all my friends</span></span>
+<span id="cb10-11"><a href="r-basics-the-very-fundamentals.html#cb10-11" aria-hidden="true" tabindex="-1"></a>friends</span>
+<span id="cb10-12"><a href="r-basics-the-very-fundamentals.html#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;Fiona&quot;  &quot;Ida&quot;    &quot;Lukas&quot;  &quot;Georg&quot;  &quot;Daniel&quot; &quot;Pavel&quot;  &quot;Tigger&quot;</span></span></code></pre></div>
 <p>To concatenate values into a single object, we need to use a comma <code>,</code> to separate each value. Otherwise, R will report an error back.</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="r-basics-the-very-fundamentals.html#cb11-1" aria-hidden="true" tabindex="-1"></a>friends <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Fiona&quot;</span> <span class="st">&quot;Ida&quot;</span>)</span>
 <span id="cb11-2"><a href="r-basics-the-very-fundamentals.html#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Error: &lt;text&gt;:1:22: unexpected string constant</span></span>
@@ -517,7 +523,7 @@ div.csl-indent {
 <span id="cb12-2"><a href="r-basics-the-very-fundamentals.html#cb12-2" aria-hidden="true" tabindex="-1"></a>milestones_of_my_life <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1982</span>, <span class="dv">2006</span>, <span class="dv">2011</span>, <span class="dv">2018</span>, <span class="dv">2020</span>)</span>
 <span id="cb12-3"><a href="r-basics-the-very-fundamentals.html#cb12-3" aria-hidden="true" tabindex="-1"></a>milestones_of_my_life</span>
 <span id="cb12-4"><a href="r-basics-the-very-fundamentals.html#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 1982 2006 2011 2018 2020</span></span>
-<span id="cb12-5"><a href="r-basics-the-very-fundamentals.html#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co"># The same as above, but we don&#39;t need the second line of code</span></span>
+<span id="cb12-5"><a href="r-basics-the-very-fundamentals.html#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co"># The same as above - no second line of code needed</span></span>
 <span id="cb12-6"><a href="r-basics-the-very-fundamentals.html#cb12-6" aria-hidden="true" tabindex="-1"></a>(milestones_of_my_life <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1982</span>, <span class="dv">2006</span>, <span class="dv">2011</span>, <span class="dv">2018</span>, <span class="dv">2020</span>))</span>
 <span id="cb12-7"><a href="r-basics-the-very-fundamentals.html#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 1982 2006 2011 2018 2020</span></span></code></pre></div>
 <p>Finally, we can also concatenate numbers and character values into one object:</p>
@@ -554,11 +560,17 @@ Figure 5.1: The environment pane showing our objects and our list <code>x_files<
 </div>
 <p>In Chapter <a href="r-basics-the-very-fundamentals.html#basic-computations-in-r">5.1</a>, I mentioned that we should avoid using the <code>=</code> operator and explained that it is used to assign values to objects. You can, if you want, use <code>=</code> instead of <code>&lt;-</code>. They fulfil the same purpose. However, as mentioned before, it is not wise to do so. Here is an example that shows that, in principle, it is possible.</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="r-basics-the-very-fundamentals.html#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># DO</span></span>
-<span id="cb15-2"><a href="r-basics-the-very-fundamentals.html#cb15-2" aria-hidden="true" tabindex="-1"></a>(avengers1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Iron Man&quot;</span>, <span class="st">&quot;Captain America&quot;</span>, <span class="st">&quot;Black Widow&quot;</span>, <span class="st">&quot;Vision&quot;</span>))</span>
-<span id="cb15-3"><a href="r-basics-the-very-fundamentals.html#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;Iron Man&quot;        &quot;Captain America&quot; &quot;Black Widow&quot;     &quot;Vision&quot;</span></span>
-<span id="cb15-4"><a href="r-basics-the-very-fundamentals.html#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co"># DON&#39;T</span></span>
-<span id="cb15-5"><a href="r-basics-the-very-fundamentals.html#cb15-5" aria-hidden="true" tabindex="-1"></a>(<span class="at">avengers2 =</span> <span class="fu">c</span>(<span class="st">&quot;Iron Man&quot;</span>, <span class="st">&quot;Captain America&quot;</span>, <span class="st">&quot;Black Widow&quot;</span>, <span class="st">&quot;Vision&quot;</span>))</span>
-<span id="cb15-6"><a href="r-basics-the-very-fundamentals.html#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;Iron Man&quot;        &quot;Captain America&quot; &quot;Black Widow&quot;     &quot;Vision&quot;</span></span></code></pre></div>
+<span id="cb15-2"><a href="r-basics-the-very-fundamentals.html#cb15-2" aria-hidden="true" tabindex="-1"></a>(avengers1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Iron Man&quot;</span>,</span>
+<span id="cb15-3"><a href="r-basics-the-very-fundamentals.html#cb15-3" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;Captain America&quot;</span>,</span>
+<span id="cb15-4"><a href="r-basics-the-very-fundamentals.html#cb15-4" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;Black Widow&quot;</span>,</span>
+<span id="cb15-5"><a href="r-basics-the-very-fundamentals.html#cb15-5" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;Vision&quot;</span>))</span>
+<span id="cb15-6"><a href="r-basics-the-very-fundamentals.html#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;Iron Man&quot;        &quot;Captain America&quot; &quot;Black Widow&quot;     &quot;Vision&quot;</span></span>
+<span id="cb15-7"><a href="r-basics-the-very-fundamentals.html#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="co"># DON&#39;T</span></span>
+<span id="cb15-8"><a href="r-basics-the-very-fundamentals.html#cb15-8" aria-hidden="true" tabindex="-1"></a>(<span class="at">avengers2 =</span> <span class="fu">c</span>(<span class="st">&quot;Iron Man&quot;</span>,</span>
+<span id="cb15-9"><a href="r-basics-the-very-fundamentals.html#cb15-9" aria-hidden="true" tabindex="-1"></a>               <span class="st">&quot;Captain America&quot;</span>,</span>
+<span id="cb15-10"><a href="r-basics-the-very-fundamentals.html#cb15-10" aria-hidden="true" tabindex="-1"></a>               <span class="st">&quot;Black Widow&quot;</span>,</span>
+<span id="cb15-11"><a href="r-basics-the-very-fundamentals.html#cb15-11" aria-hidden="true" tabindex="-1"></a>               <span class="st">&quot;Vision&quot;</span>))</span>
+<span id="cb15-12"><a href="r-basics-the-very-fundamentals.html#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;Iron Man&quot;        &quot;Captain America&quot; &quot;Black Widow&quot;     &quot;Vision&quot;</span></span></code></pre></div>
 <p>On a final note, naming your objects is limited. You cannot chose any name. First, every name needs to start with a letter. Second, you can only use letters, numbers <code>_</code> and <code>.</code> as valid components of the names for your objects <span class="citation">(see also <a href="#ref-wickham2016r" role="doc-biblioref">Wickham and Grolemund 2016</a>, Chapter 4.2.)</span>. I recommend to establish a naming convention that you adhere to. Personally I prefer to only user lower letters and <code>_</code> to separate/connect words. You want to keep names informative, succinct and precise. Here are some examples of what some might consider good and bad choices for names.</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="r-basics-the-very-fundamentals.html#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Good choices</span></span>
 <span id="cb16-2"><a href="r-basics-the-very-fundamentals.html#cb16-2" aria-hidden="true" tabindex="-1"></a>income_per_annum</span>
@@ -615,7 +627,7 @@ Figure 5.1: The environment pane showing our objects and our list <code>x_files<
 <p><code>NA</code> refers to a value that is <em>‘not available’</em>. In this case, R tries to compute the mean, but the result is not available, because the values are not <code>numeric</code> but a <code>character</code>. In your dataset, you might find cells that are <code>NA</code>, which means there is data missing. Remember: If a function attempts a computation that includes even just a single value that is <code>NA</code>, R will return <code>NA</code>. However, there is a way to fix this. You will learn more about how to deal with <code>NA</code> values in Chapter @ref().</p>
 <p>Sometimes you will also get a message from R that states <code>NaN</code>. <code>NaN</code> stands for <em>‘not a number’</em> and is returned when something is not possible to compute, for example:</p>
 <div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="r-basics-the-very-fundamentals.html#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example 1</span></span>
-<span id="cb21-2"><a href="r-basics-the-very-fundamentals.html#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="dv">0</span><span class="sc">/</span><span class="dv">0</span></span>
+<span id="cb21-2"><a href="r-basics-the-very-fundamentals.html#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="dv">0</span> <span class="sc">/</span> <span class="dv">0</span></span>
 <span id="cb21-3"><a href="r-basics-the-very-fundamentals.html#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] NaN</span></span>
 <span id="cb21-4"><a href="r-basics-the-very-fundamentals.html#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Example 2</span></span>
 <span id="cb21-5"><a href="r-basics-the-very-fundamentals.html#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="sc">-</span><span class="dv">9</span>)</span>
@@ -700,7 +712,7 @@ Figure 5.2: The R package documentation for ‘ggplot2’
 <span id="cb26-4"><a href="r-basics-the-very-fundamentals.html#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(jtools)</span>
 <span id="cb26-5"><a href="r-basics-the-very-fundamentals.html#cb26-5" aria-hidden="true" tabindex="-1"></a>model1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(covid_cases_per_1m <span class="sc">~</span> idv, <span class="at">data =</span> df)</span>
 <span id="cb26-6"><a href="r-basics-the-very-fundamentals.html#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summ</span>(model1, <span class="at">scale =</span> <span class="cn">TRUE</span>, <span class="at">transform.response =</span> <span class="cn">TRUE</span>, <span class="at">vifs =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb26-7"><a href="r-basics-the-very-fundamentals.html#cb26-7" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(covid_cases_per_1m, idv, coleurope, <span class="at">label =</span> country))<span class="sc">+</span></span>
+<span id="cb26-7"><a href="r-basics-the-very-fundamentals.html#cb26-7" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> covid_cases_per_1m, <span class="at">y =</span> idv, <span class="at">col =</span> europe, <span class="at">label =</span> country))<span class="sc">+</span></span>
 <span id="cb26-8"><a href="r-basics-the-very-fundamentals.html#cb26-8" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_minimal</span>()<span class="sc">+</span> <span class="fu">geom_label</span>(<span class="at">nudge_y =</span> <span class="dv">2</span>) <span class="sc">+</span> <span class="fu">geom_point</span>()</span>
 <span id="cb26-9"><a href="r-basics-the-very-fundamentals.html#cb26-9" aria-hidden="true" tabindex="-1"></a>mod_model2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(cases_per_1m <span class="sc">~</span> idv <span class="sc">+</span> uai <span class="sc">+</span> idv<span class="sc">*</span>europe <span class="sc">+</span> uai<span class="sc">*</span>europe, <span class="at">data =</span> df)</span>
 <span id="cb26-10"><a href="r-basics-the-very-fundamentals.html#cb26-10" aria-hidden="true" tabindex="-1"></a><span class="fu">summ</span>(mod_model2, <span class="at">scale =</span> <span class="cn">TRUE</span>, <span class="at">transform.response =</span> <span class="cn">TRUE</span>, <span class="at">vifs =</span> <span class="cn">TRUE</span>)</span>
@@ -718,25 +730,35 @@ Figure 5.2: The R package documentation for ‘ggplot2’
 <span id="cb27-10"><a href="r-basics-the-very-fundamentals.html#cb27-10" aria-hidden="true" tabindex="-1"></a>model1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(covid_cases_per_1m <span class="sc">~</span> idv, <span class="at">data =</span> df)</span>
 <span id="cb27-11"><a href="r-basics-the-very-fundamentals.html#cb27-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb27-12"><a href="r-basics-the-very-fundamentals.html#cb27-12" aria-hidden="true" tabindex="-1"></a><span class="do">## Retrieve the summary statistics of model1</span></span>
-<span id="cb27-13"><a href="r-basics-the-very-fundamentals.html#cb27-13" aria-hidden="true" tabindex="-1"></a><span class="fu">summ</span>(model1, <span class="at">scale =</span> <span class="cn">TRUE</span>, <span class="at">transform.response =</span> <span class="cn">TRUE</span>, <span class="at">vifs =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb27-14"><a href="r-basics-the-very-fundamentals.html#cb27-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-15"><a href="r-basics-the-very-fundamentals.html#cb27-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Does is matter whether a country lies in Europe?</span></span>
-<span id="cb27-16"><a href="r-basics-the-very-fundamentals.html#cb27-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-17"><a href="r-basics-the-very-fundamentals.html#cb27-17" aria-hidden="true" tabindex="-1"></a><span class="do">## Visualise rel. of covid cases, idv and being a European country</span></span>
-<span id="cb27-18"><a href="r-basics-the-very-fundamentals.html#cb27-18" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span></span>
-<span id="cb27-19"><a href="r-basics-the-very-fundamentals.html#cb27-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(covid_cases_per_1m, idv, coleurope, <span class="at">label =</span> country))<span class="sc">+</span></span>
-<span id="cb27-20"><a href="r-basics-the-very-fundamentals.html#cb27-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()<span class="sc">+</span></span>
-<span id="cb27-21"><a href="r-basics-the-very-fundamentals.html#cb27-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_label</span>(<span class="at">nudge_y =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb27-22"><a href="r-basics-the-very-fundamentals.html#cb27-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span>
-<span id="cb27-23"><a href="r-basics-the-very-fundamentals.html#cb27-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-24"><a href="r-basics-the-very-fundamentals.html#cb27-24" aria-hidden="true" tabindex="-1"></a><span class="do">## Specify and run a revised regression</span></span>
-<span id="cb27-25"><a href="r-basics-the-very-fundamentals.html#cb27-25" aria-hidden="true" tabindex="-1"></a>mod_model2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(cases_per_1m <span class="sc">~</span> idv <span class="sc">+</span> uai <span class="sc">+</span> idv<span class="sc">*</span>europe <span class="sc">+</span> uai<span class="sc">*</span>europe, <span class="at">data =</span> df)</span>
-<span id="cb27-26"><a href="r-basics-the-very-fundamentals.html#cb27-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-27"><a href="r-basics-the-very-fundamentals.html#cb27-27" aria-hidden="true" tabindex="-1"></a><span class="do">## Retrieve the summary statistics of model2</span></span>
-<span id="cb27-28"><a href="r-basics-the-very-fundamentals.html#cb27-28" aria-hidden="true" tabindex="-1"></a><span class="fu">summ</span>(mod_model2, <span class="at">scale =</span> <span class="cn">TRUE</span>, <span class="at">transform.response =</span> <span class="cn">TRUE</span>, <span class="at">vifs =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb27-13"><a href="r-basics-the-very-fundamentals.html#cb27-13" aria-hidden="true" tabindex="-1"></a><span class="fu">summ</span>(model1,</span>
+<span id="cb27-14"><a href="r-basics-the-very-fundamentals.html#cb27-14" aria-hidden="true" tabindex="-1"></a>     <span class="at">scale =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb27-15"><a href="r-basics-the-very-fundamentals.html#cb27-15" aria-hidden="true" tabindex="-1"></a>     <span class="at">transform.response =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb27-16"><a href="r-basics-the-very-fundamentals.html#cb27-16" aria-hidden="true" tabindex="-1"></a>     <span class="at">vifs =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb27-17"><a href="r-basics-the-very-fundamentals.html#cb27-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-18"><a href="r-basics-the-very-fundamentals.html#cb27-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Does is matter whether a country lies in Europe?</span></span>
+<span id="cb27-19"><a href="r-basics-the-very-fundamentals.html#cb27-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-20"><a href="r-basics-the-very-fundamentals.html#cb27-20" aria-hidden="true" tabindex="-1"></a><span class="do">## Visualise rel. of covid cases, idv and being a European country</span></span>
+<span id="cb27-21"><a href="r-basics-the-very-fundamentals.html#cb27-21" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span></span>
+<span id="cb27-22"><a href="r-basics-the-very-fundamentals.html#cb27-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> covid_cases_per_1m,</span>
+<span id="cb27-23"><a href="r-basics-the-very-fundamentals.html#cb27-23" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> idv,</span>
+<span id="cb27-24"><a href="r-basics-the-very-fundamentals.html#cb27-24" aria-hidden="true" tabindex="-1"></a>             <span class="at">col =</span> europe,</span>
+<span id="cb27-25"><a href="r-basics-the-very-fundamentals.html#cb27-25" aria-hidden="true" tabindex="-1"></a>             <span class="at">label =</span> country)) <span class="sc">+</span></span>
+<span id="cb27-26"><a href="r-basics-the-very-fundamentals.html#cb27-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb27-27"><a href="r-basics-the-very-fundamentals.html#cb27-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_label</span>(<span class="at">nudge_y =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb27-28"><a href="r-basics-the-very-fundamentals.html#cb27-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span>
 <span id="cb27-29"><a href="r-basics-the-very-fundamentals.html#cb27-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-30"><a href="r-basics-the-very-fundamentals.html#cb27-30" aria-hidden="true" tabindex="-1"></a><span class="do">## Test whether model2 is an improvement over model1</span></span>
-<span id="cb27-31"><a href="r-basics-the-very-fundamentals.html#cb27-31" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(mod_model1, mod_model2)</span></code></pre></div>
+<span id="cb27-30"><a href="r-basics-the-very-fundamentals.html#cb27-30" aria-hidden="true" tabindex="-1"></a><span class="do">## Specify and run a revised regression</span></span>
+<span id="cb27-31"><a href="r-basics-the-very-fundamentals.html#cb27-31" aria-hidden="true" tabindex="-1"></a>mod_model2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(cases_per_1m <span class="sc">~</span> idv <span class="sc">+</span> uai <span class="sc">+</span> idv<span class="sc">*</span>europe <span class="sc">+</span> uai<span class="sc">*</span>europe,</span>
+<span id="cb27-32"><a href="r-basics-the-very-fundamentals.html#cb27-32" aria-hidden="true" tabindex="-1"></a>                 <span class="at">data =</span> df)</span>
+<span id="cb27-33"><a href="r-basics-the-very-fundamentals.html#cb27-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-34"><a href="r-basics-the-very-fundamentals.html#cb27-34" aria-hidden="true" tabindex="-1"></a><span class="do">## Retrieve the summary statistics of model2</span></span>
+<span id="cb27-35"><a href="r-basics-the-very-fundamentals.html#cb27-35" aria-hidden="true" tabindex="-1"></a><span class="fu">summ</span>(mod_model2,</span>
+<span id="cb27-36"><a href="r-basics-the-very-fundamentals.html#cb27-36" aria-hidden="true" tabindex="-1"></a>     <span class="at">scale =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb27-37"><a href="r-basics-the-very-fundamentals.html#cb27-37" aria-hidden="true" tabindex="-1"></a>     <span class="at">transform.response =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb27-38"><a href="r-basics-the-very-fundamentals.html#cb27-38" aria-hidden="true" tabindex="-1"></a>     <span class="at">vifs =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb27-39"><a href="r-basics-the-very-fundamentals.html#cb27-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-40"><a href="r-basics-the-very-fundamentals.html#cb27-40" aria-hidden="true" tabindex="-1"></a><span class="do">## Test whether model2 is an improvement over model1</span></span>
+<span id="cb27-41"><a href="r-basics-the-very-fundamentals.html#cb27-41" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(mod_model1, mod_model2)</span></code></pre></div>
 <p>I hope we can agree that the second example is much easier to read and understand even though you probably do not understand most of it yet. For once, I separated the different analytical steps from each other like paragraphs in a report. Apart from that, I added comments with <code>#</code> to provide more context to my code for someone else who wants to understand my analysis. Admittedly, this example is a little excessive. Usually, you might have fewer comments. Commenting is an integral part of programming because it allows you to remember what you did. Ideally, you want to strike a good balance between commenting on and writing your code. How many comments you need will likely change throughout your R programming journey. Think of comments as headers for your programming script that give it structure..</p>
 <p>We can use <code>#</code> not only to write comments but also to tell R not to run particular code. This is very helpful if you want to keep some code but do not want to use it yet. There is also a handy keyboard shortcut you can use to ‘deactivate’ multiple lines of code at once. Select whatever you want to ‘comment out’ in your script and press <code>Ctrl+Shift+C</code> (PC) or <code>Cmd+Shift+C</code> (Mac).</p>
 <div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="r-basics-the-very-fundamentals.html#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># mean(pocket_money) # R will NOT run this code</span></span>
@@ -758,9 +780,9 @@ Figure 5.2: The R package documentation for ‘ggplot2’
 </ul></li>
 <li><p>Copy and paste the function below into your RStudio console and run it. What does the function do when you use it?</p>
 <div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="r-basics-the-very-fundamentals.html#cb29-1" aria-hidden="true" tabindex="-1"></a>x_x <span class="ot">&lt;-</span> <span class="cf">function</span>(number1, number2){</span>
-<span id="cb29-2"><a href="r-basics-the-very-fundamentals.html#cb29-2" aria-hidden="true" tabindex="-1"></a>  result1 <span class="ot">&lt;-</span> number1<span class="sc">*</span>number2</span>
+<span id="cb29-2"><a href="r-basics-the-very-fundamentals.html#cb29-2" aria-hidden="true" tabindex="-1"></a>  result1 <span class="ot">&lt;-</span> number1 <span class="sc">*</span> number2</span>
 <span id="cb29-3"><a href="r-basics-the-very-fundamentals.html#cb29-3" aria-hidden="true" tabindex="-1"></a>  result2 <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(number1)</span>
-<span id="cb29-4"><a href="r-basics-the-very-fundamentals.html#cb29-4" aria-hidden="true" tabindex="-1"></a>  result3 <span class="ot">&lt;-</span> number1<span class="sc">-</span>number2</span>
+<span id="cb29-4"><a href="r-basics-the-very-fundamentals.html#cb29-4" aria-hidden="true" tabindex="-1"></a>  result3 <span class="ot">&lt;-</span> number1 <span class="sc">-</span> number2</span>
 <span id="cb29-5"><a href="r-basics-the-very-fundamentals.html#cb29-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">c</span>(result1, result2, result3))</span>
 <span id="cb29-6"><a href="r-basics-the-very-fundamentals.html#cb29-6" aria-hidden="true" tabindex="-1"></a>} </span></code></pre></div></li>
 <li><p>What are the three steps to use a new R package that you found on CRAN?</p></li>
@@ -838,7 +860,7 @@ gitbook.start({
 "options": null
 },
 "toc": {
-"collapse": "subsection"
+"collapse": "section"
 }
 });
 });

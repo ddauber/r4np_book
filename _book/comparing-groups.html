@@ -10,27 +10,27 @@
 
   <meta property="og:title" content="12 Comparing groups | R for Non-Programmers: A Guide for Social Scientists" />
   <meta property="og:type" content="book" />
-  
-  
+  <meta property="og:url" content="http://danieldauber.com" />
+  <meta property="og:image" content="http://danieldauber.com/images/cover_art_icons/r4np_icon_white_bg_favicon.png" />
   <meta property="og:description" content="12 Comparing groups | R for Non-Programmers: A Guide for Social Scientists is a springboard into the world of R without having to become a full-fledged R programmer or possess abundant knowledge in other programming languages. This book guides you through the most common challenges in empirical research in the Social Sciences and offers practical and efficient solutions. Each chapter is dedicated to a common task we have to achieve to answer our research questions. In addition, it provides plenty of exercises and in-depth case studies based on actual data." />
-  
+  <meta name="github-repo" content="ddauber/r4np_book" />
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="12 Comparing groups | R for Non-Programmers: A Guide for Social Scientists" />
   
   <meta name="twitter:description" content="12 Comparing groups | R for Non-Programmers: A Guide for Social Scientists is a springboard into the world of R without having to become a full-fledged R programmer or possess abundant knowledge in other programming languages. This book guides you through the most common challenges in empirical research in the Social Sciences and offers practical and efficient solutions. Each chapter is dedicated to a common task we have to achieve to answer our research questions. In addition, it provides plenty of exercises and in-depth case studies based on actual data." />
-  
+  <meta name="twitter:image" content="http://danieldauber.com/images/cover_art_icons/r4np_icon_white_bg_favicon.png" />
 
 <meta name="author" content="Daniel Dauber" />
 
 
-<meta name="date" content="2021-09-24" />
+<meta name="date" content="2021-09-25" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
-  
+  <link rel="shortcut icon" href="images/cover_art_icons/r4np_icon_favicon.svg" type="image/x-icon" />
 <link rel="prev" href="power-analysis.html"/>
 <link rel="next" href="regression.html"/>
 <script src="libs/header-attrs-2.11/header-attrs.js"></script>
@@ -413,14 +413,15 @@ div.csl-indent {
 <p>When we compare groups, we want to minimise the systematic differences that are not the primary focus of our study. Using the right sampling technique can help with this matter. For example, using a random sample and performing a random allocation to groups can help achieve comparable groups and remove systematic differences in a way no other sampling strategy can. However, there is still no guarantee that they will be comparable (see also @altman1985comparability and @berger2006review). Besides, we also face the challenge that in Social Sciences, we do not have the option of random sampling. For example, International Business studies heavily rely on lists provided by others, e.g. the European Union, Fortune 500, etc., personal judgement and convenience sampling, and only a small proportion perform probability sampling [@yang2006-IBmethods]. In short, there is no reason to worry if your sampling technique is not random. However, it emphasises the need to understand your sample and your groups thoroughly.To inspect characteristics of groups we wish to compare, we can use descriptive statistics as we covered them in Chapter <a href="descriptive-statistics.html#descriptive-statistics">8</a>. However, this time, we apply these techniques to subsets of our data and not the entire dataset.</p>
 <p>For example, we might wish to compare female and male Egyptians (see Chapter <a href="comparing-groups.html#two-unpaired-groups">12.2.1</a>). If we wanted to make sure these two groups can be compared, we might have to check (among other characteristics) whether their age is distributed similarly. We can use the functions we already know to create a plot to investigate this matter. We could either use a boxplot or, a bit more accurate, a density plot using the <code>ggridges</code> package.</p>
 <div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="comparing-groups.html#cb139-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Only select participants from &#39;Egypt&#39;</span></span>
-<span id="cb139-2"><a href="comparing-groups.html#cb139-2" aria-hidden="true" tabindex="-1"></a>comp <span class="ot">&lt;-</span> wvs_nona <span class="sc">%&gt;%</span></span>
-<span id="cb139-3"><a href="comparing-groups.html#cb139-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(country <span class="sc">==</span> <span class="st">&quot;Egypt&quot;</span>)</span>
-<span id="cb139-4"><a href="comparing-groups.html#cb139-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb139-5"><a href="comparing-groups.html#cb139-5" aria-hidden="true" tabindex="-1"></a>comp <span class="sc">%&gt;%</span></span>
-<span id="cb139-6"><a href="comparing-groups.html#cb139-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> age,</span>
-<span id="cb139-7"><a href="comparing-groups.html#cb139-7" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> gender,</span>
-<span id="cb139-8"><a href="comparing-groups.html#cb139-8" aria-hidden="true" tabindex="-1"></a>             <span class="at">fill =</span> gender)) <span class="sc">+</span></span>
-<span id="cb139-9"><a href="comparing-groups.html#cb139-9" aria-hidden="true" tabindex="-1"></a>  ggridges<span class="sc">::</span><span class="fu">geom_density_ridges</span>(<span class="at">bandwidth =</span> <span class="dv">4</span>)</span></code></pre></div>
+<span id="cb139-2"><a href="comparing-groups.html#cb139-2" aria-hidden="true" tabindex="-1"></a>comp <span class="ot">&lt;-</span></span>
+<span id="cb139-3"><a href="comparing-groups.html#cb139-3" aria-hidden="true" tabindex="-1"></a>  wvs_nona <span class="sc">%&gt;%</span></span>
+<span id="cb139-4"><a href="comparing-groups.html#cb139-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(country <span class="sc">==</span> <span class="st">&quot;Egypt&quot;</span>)</span>
+<span id="cb139-5"><a href="comparing-groups.html#cb139-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb139-6"><a href="comparing-groups.html#cb139-6" aria-hidden="true" tabindex="-1"></a>comp <span class="sc">%&gt;%</span></span>
+<span id="cb139-7"><a href="comparing-groups.html#cb139-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> age,</span>
+<span id="cb139-8"><a href="comparing-groups.html#cb139-8" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> gender,</span>
+<span id="cb139-9"><a href="comparing-groups.html#cb139-9" aria-hidden="true" tabindex="-1"></a>             <span class="at">fill =</span> gender)) <span class="sc">+</span></span>
+<span id="cb139-10"><a href="comparing-groups.html#cb139-10" aria-hidden="true" tabindex="-1"></a>  ggridges<span class="sc">::</span><span class="fu">geom_density_ridges</span>(<span class="at">bandwidth =</span> <span class="dv">4</span>)</span></code></pre></div>
 <p><img src="r_for_non_programmers_files/figure-html/Comparability%20of%20Egyptians-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>As we can see, the distribution of <code>age</code> across both <code>gender</code> groups is fairly similar and likely not different between groups. Of course, we could also statistically explore this using a suitable test before performing the main group comparison. However, we first have to understand how we can perform such tests.</p>
 <p>In the following chapters, we will primarily rely on the package <code>rstatix</code>, which offers a pipe-friendly approach to using the built-in functions of R to perform our group comparisons. However, you are welcome to try the basic functions, which you can find in Chapter <a href="appendix.html#appendix"><strong>??</strong></a>.</p>
@@ -443,27 +444,28 @@ div.csl-indent {
 <p>Our first comparison will be participants from <code>Egypt</code>, and we want to understand whether male and female citizens in this country perceive their <code>freedom_of_choice</code> differently or equally.</p>
 <p>We first can compare these two groups using our trusty <code>geom_boxplot()</code> (or any variation) and use different <code>fill</code> colours for each group.</p>
 <div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb141-1"><a href="comparing-groups.html#cb141-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute the mean for and size of each group</span></span>
-<span id="cb141-2"><a href="comparing-groups.html#cb141-2" aria-hidden="true" tabindex="-1"></a>group_means <span class="ot">&lt;-</span> comp <span class="sc">%&gt;%</span></span>
-<span id="cb141-3"><a href="comparing-groups.html#cb141-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(gender) <span class="sc">%&gt;%</span></span>
-<span id="cb141-4"><a href="comparing-groups.html#cb141-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean =</span> <span class="fu">mean</span>(freedom_of_choice),</span>
-<span id="cb141-5"><a href="comparing-groups.html#cb141-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">n =</span> <span class="fu">n</span>())</span>
-<span id="cb141-6"><a href="comparing-groups.html#cb141-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb141-7"><a href="comparing-groups.html#cb141-7" aria-hidden="true" tabindex="-1"></a>group_means</span>
-<span id="cb141-8"><a href="comparing-groups.html#cb141-8" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 2 × 3</span></span>
-<span id="cb141-9"><a href="comparing-groups.html#cb141-9" aria-hidden="true" tabindex="-1"></a><span class="do">##   gender  mean     n</span></span>
-<span id="cb141-10"><a href="comparing-groups.html#cb141-10" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;fct&gt;  &lt;dbl&gt; &lt;int&gt;</span></span>
-<span id="cb141-11"><a href="comparing-groups.html#cb141-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 male    6.82   621</span></span>
-<span id="cb141-12"><a href="comparing-groups.html#cb141-12" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 female  6.20   579</span></span>
-<span id="cb141-13"><a href="comparing-groups.html#cb141-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Create our data visualisation</span></span>
-<span id="cb141-14"><a href="comparing-groups.html#cb141-14" aria-hidden="true" tabindex="-1"></a>comp <span class="sc">%&gt;%</span></span>
-<span id="cb141-15"><a href="comparing-groups.html#cb141-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> gender, <span class="at">y =</span> freedom_of_choice, <span class="at">fill =</span> gender)) <span class="sc">+</span></span>
-<span id="cb141-16"><a href="comparing-groups.html#cb141-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
-<span id="cb141-17"><a href="comparing-groups.html#cb141-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb141-18"><a href="comparing-groups.html#cb141-18" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add the mean for each group</span></span>
-<span id="cb141-19"><a href="comparing-groups.html#cb141-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> group_means,</span>
-<span id="cb141-20"><a href="comparing-groups.html#cb141-20" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x =</span> gender, <span class="at">y =</span> mean),</span>
-<span id="cb141-21"><a href="comparing-groups.html#cb141-21" aria-hidden="true" tabindex="-1"></a>             <span class="at">shape =</span> <span class="dv">3</span>,</span>
-<span id="cb141-22"><a href="comparing-groups.html#cb141-22" aria-hidden="true" tabindex="-1"></a>             <span class="at">size =</span> <span class="dv">2</span>)</span></code></pre></div>
+<span id="cb141-2"><a href="comparing-groups.html#cb141-2" aria-hidden="true" tabindex="-1"></a>group_means <span class="ot">&lt;-</span></span>
+<span id="cb141-3"><a href="comparing-groups.html#cb141-3" aria-hidden="true" tabindex="-1"></a>  comp <span class="sc">%&gt;%</span></span>
+<span id="cb141-4"><a href="comparing-groups.html#cb141-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(gender) <span class="sc">%&gt;%</span></span>
+<span id="cb141-5"><a href="comparing-groups.html#cb141-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean =</span> <span class="fu">mean</span>(freedom_of_choice),</span>
+<span id="cb141-6"><a href="comparing-groups.html#cb141-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">n =</span> <span class="fu">n</span>())</span>
+<span id="cb141-7"><a href="comparing-groups.html#cb141-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb141-8"><a href="comparing-groups.html#cb141-8" aria-hidden="true" tabindex="-1"></a>group_means</span>
+<span id="cb141-9"><a href="comparing-groups.html#cb141-9" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 2 × 3</span></span>
+<span id="cb141-10"><a href="comparing-groups.html#cb141-10" aria-hidden="true" tabindex="-1"></a><span class="do">##   gender  mean     n</span></span>
+<span id="cb141-11"><a href="comparing-groups.html#cb141-11" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;fct&gt;  &lt;dbl&gt; &lt;int&gt;</span></span>
+<span id="cb141-12"><a href="comparing-groups.html#cb141-12" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 male    6.82   621</span></span>
+<span id="cb141-13"><a href="comparing-groups.html#cb141-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 female  6.23   579</span></span>
+<span id="cb141-14"><a href="comparing-groups.html#cb141-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Create our data visualisation</span></span>
+<span id="cb141-15"><a href="comparing-groups.html#cb141-15" aria-hidden="true" tabindex="-1"></a>comp <span class="sc">%&gt;%</span></span>
+<span id="cb141-16"><a href="comparing-groups.html#cb141-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> gender, <span class="at">y =</span> freedom_of_choice, <span class="at">fill =</span> gender)) <span class="sc">+</span></span>
+<span id="cb141-17"><a href="comparing-groups.html#cb141-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb141-18"><a href="comparing-groups.html#cb141-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb141-19"><a href="comparing-groups.html#cb141-19" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add the mean for each group</span></span>
+<span id="cb141-20"><a href="comparing-groups.html#cb141-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> group_means,</span>
+<span id="cb141-21"><a href="comparing-groups.html#cb141-21" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x =</span> gender, <span class="at">y =</span> mean),</span>
+<span id="cb141-22"><a href="comparing-groups.html#cb141-22" aria-hidden="true" tabindex="-1"></a>             <span class="at">shape =</span> <span class="dv">3</span>,</span>
+<span id="cb141-23"><a href="comparing-groups.html#cb141-23" aria-hidden="true" tabindex="-1"></a>             <span class="at">size =</span> <span class="dv">2</span>)</span></code></pre></div>
 <p><img src="r_for_non_programmers_files/figure-html/Two%20unpaired%20groups%20visualisation-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>While the distribution looks similar, we notice that the median and the mean (marked by the cross inside the boxplot) are slightly higher for <code>male</code> participants. Thus, we can suspect some differences between these two groups, but we do not know whether these differences are significant or not. Therefore, to consider the significance (remember Chapter <a href="correlations.html#significance">10.3</a>) and the effect size (see Table <a href="correlations.html#tab:effect-size-cohen">10.2</a>), we have to perform statistical tests.</p>
 <p>Table <a href="comparing-groups.html#tab:comparing-two-groups-unpaired">12.1</a> summarises the different tests and functions to perform the group comparison computationally. It is important to note that the parametric test compares the means of two groups, while the non-parametric test compares medians. All of these tests turn significant if the differences between groups are large enough. Thus, significant results can be read as ‘these groups are significantly different from each other.’ Of course, if the test is not significant, the groups are considered to be not different. For parametric tests, i.e. <code>t.test(),</code> it is also essetnial to indicate whether the variances between these two groups are equal or not. Remember, the equality of variances was one of the assumptions for parametric tests. The Welch t-test can be used if the variances are not equal, but all other criteria for normality are met. By setting <code>var.equal = TRUE</code>, a regular T-Test would be performed. By default, <code>t.test()</code> assumes that variances are not equal. Make sure you test for homogeneity of variance before making your decision (see Chapter <a href="sources-of-bias.html#homogeneity-of-variance">9.4</a>.</p>
@@ -512,19 +514,19 @@ div.csl-indent {
 <span id="cb142-5"><a href="comparing-groups.html#cb142-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span>
 <span id="cb142-6"><a href="comparing-groups.html#cb142-6" aria-hidden="true" tabindex="-1"></a><span class="do">## Rows: 1</span></span>
 <span id="cb142-7"><a href="comparing-groups.html#cb142-7" aria-hidden="true" tabindex="-1"></a><span class="do">## Columns: 15</span></span>
-<span id="cb142-8"><a href="comparing-groups.html#cb142-8" aria-hidden="true" tabindex="-1"></a><span class="do">## $ estimate    &lt;dbl&gt; 0.61769</span></span>
-<span id="cb142-9"><a href="comparing-groups.html#cb142-9" aria-hidden="true" tabindex="-1"></a><span class="do">## $ estimate1   &lt;dbl&gt; 6.818035</span></span>
-<span id="cb142-10"><a href="comparing-groups.html#cb142-10" aria-hidden="true" tabindex="-1"></a><span class="do">## $ estimate2   &lt;dbl&gt; 6.200345</span></span>
+<span id="cb142-8"><a href="comparing-groups.html#cb142-8" aria-hidden="true" tabindex="-1"></a><span class="do">## $ estimate    &lt;dbl&gt; 0.5899393</span></span>
+<span id="cb142-9"><a href="comparing-groups.html#cb142-9" aria-hidden="true" tabindex="-1"></a><span class="do">## $ estimate1   &lt;dbl&gt; 6.819646</span></span>
+<span id="cb142-10"><a href="comparing-groups.html#cb142-10" aria-hidden="true" tabindex="-1"></a><span class="do">## $ estimate2   &lt;dbl&gt; 6.229706</span></span>
 <span id="cb142-11"><a href="comparing-groups.html#cb142-11" aria-hidden="true" tabindex="-1"></a><span class="do">## $ .y.         &lt;chr&gt; &quot;freedom_of_choice&quot;</span></span>
 <span id="cb142-12"><a href="comparing-groups.html#cb142-12" aria-hidden="true" tabindex="-1"></a><span class="do">## $ group1      &lt;chr&gt; &quot;male&quot;</span></span>
 <span id="cb142-13"><a href="comparing-groups.html#cb142-13" aria-hidden="true" tabindex="-1"></a><span class="do">## $ group2      &lt;chr&gt; &quot;female&quot;</span></span>
 <span id="cb142-14"><a href="comparing-groups.html#cb142-14" aria-hidden="true" tabindex="-1"></a><span class="do">## $ n1          &lt;int&gt; 621</span></span>
 <span id="cb142-15"><a href="comparing-groups.html#cb142-15" aria-hidden="true" tabindex="-1"></a><span class="do">## $ n2          &lt;int&gt; 579</span></span>
-<span id="cb142-16"><a href="comparing-groups.html#cb142-16" aria-hidden="true" tabindex="-1"></a><span class="do">## $ statistic   &lt;dbl&gt; 4.789197</span></span>
-<span id="cb142-17"><a href="comparing-groups.html#cb142-17" aria-hidden="true" tabindex="-1"></a><span class="do">## $ p           &lt;dbl&gt; 1.88e-06</span></span>
+<span id="cb142-16"><a href="comparing-groups.html#cb142-16" aria-hidden="true" tabindex="-1"></a><span class="do">## $ statistic   &lt;dbl&gt; 4.590574</span></span>
+<span id="cb142-17"><a href="comparing-groups.html#cb142-17" aria-hidden="true" tabindex="-1"></a><span class="do">## $ p           &lt;dbl&gt; 4.89e-06</span></span>
 <span id="cb142-18"><a href="comparing-groups.html#cb142-18" aria-hidden="true" tabindex="-1"></a><span class="do">## $ df          &lt;dbl&gt; 1198</span></span>
-<span id="cb142-19"><a href="comparing-groups.html#cb142-19" aria-hidden="true" tabindex="-1"></a><span class="do">## $ conf.low    &lt;dbl&gt; 0.3646466</span></span>
-<span id="cb142-20"><a href="comparing-groups.html#cb142-20" aria-hidden="true" tabindex="-1"></a><span class="do">## $ conf.high   &lt;dbl&gt; 0.8707334</span></span>
+<span id="cb142-19"><a href="comparing-groups.html#cb142-19" aria-hidden="true" tabindex="-1"></a><span class="do">## $ conf.low    &lt;dbl&gt; 0.3378076</span></span>
+<span id="cb142-20"><a href="comparing-groups.html#cb142-20" aria-hidden="true" tabindex="-1"></a><span class="do">## $ conf.high   &lt;dbl&gt; 0.842071</span></span>
 <span id="cb142-21"><a href="comparing-groups.html#cb142-21" aria-hidden="true" tabindex="-1"></a><span class="do">## $ method      &lt;chr&gt; &quot;T-test&quot;</span></span>
 <span id="cb142-22"><a href="comparing-groups.html#cb142-22" aria-hidden="true" tabindex="-1"></a><span class="do">## $ alternative &lt;chr&gt; &quot;two.sided&quot;</span></span>
 <span id="cb142-23"><a href="comparing-groups.html#cb142-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Welch t-test (var.equal = FALSE by default)</span></span>
@@ -534,19 +536,19 @@ div.csl-indent {
 <span id="cb142-27"><a href="comparing-groups.html#cb142-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span>
 <span id="cb142-28"><a href="comparing-groups.html#cb142-28" aria-hidden="true" tabindex="-1"></a><span class="do">## Rows: 1</span></span>
 <span id="cb142-29"><a href="comparing-groups.html#cb142-29" aria-hidden="true" tabindex="-1"></a><span class="do">## Columns: 15</span></span>
-<span id="cb142-30"><a href="comparing-groups.html#cb142-30" aria-hidden="true" tabindex="-1"></a><span class="do">## $ estimate    &lt;dbl&gt; 0.61769</span></span>
-<span id="cb142-31"><a href="comparing-groups.html#cb142-31" aria-hidden="true" tabindex="-1"></a><span class="do">## $ estimate1   &lt;dbl&gt; 6.818035</span></span>
-<span id="cb142-32"><a href="comparing-groups.html#cb142-32" aria-hidden="true" tabindex="-1"></a><span class="do">## $ estimate2   &lt;dbl&gt; 6.200345</span></span>
+<span id="cb142-30"><a href="comparing-groups.html#cb142-30" aria-hidden="true" tabindex="-1"></a><span class="do">## $ estimate    &lt;dbl&gt; 0.5899393</span></span>
+<span id="cb142-31"><a href="comparing-groups.html#cb142-31" aria-hidden="true" tabindex="-1"></a><span class="do">## $ estimate1   &lt;dbl&gt; 6.819646</span></span>
+<span id="cb142-32"><a href="comparing-groups.html#cb142-32" aria-hidden="true" tabindex="-1"></a><span class="do">## $ estimate2   &lt;dbl&gt; 6.229706</span></span>
 <span id="cb142-33"><a href="comparing-groups.html#cb142-33" aria-hidden="true" tabindex="-1"></a><span class="do">## $ .y.         &lt;chr&gt; &quot;freedom_of_choice&quot;</span></span>
 <span id="cb142-34"><a href="comparing-groups.html#cb142-34" aria-hidden="true" tabindex="-1"></a><span class="do">## $ group1      &lt;chr&gt; &quot;male&quot;</span></span>
 <span id="cb142-35"><a href="comparing-groups.html#cb142-35" aria-hidden="true" tabindex="-1"></a><span class="do">## $ group2      &lt;chr&gt; &quot;female&quot;</span></span>
 <span id="cb142-36"><a href="comparing-groups.html#cb142-36" aria-hidden="true" tabindex="-1"></a><span class="do">## $ n1          &lt;int&gt; 621</span></span>
 <span id="cb142-37"><a href="comparing-groups.html#cb142-37" aria-hidden="true" tabindex="-1"></a><span class="do">## $ n2          &lt;int&gt; 579</span></span>
-<span id="cb142-38"><a href="comparing-groups.html#cb142-38" aria-hidden="true" tabindex="-1"></a><span class="do">## $ statistic   &lt;dbl&gt; 4.789432</span></span>
-<span id="cb142-39"><a href="comparing-groups.html#cb142-39" aria-hidden="true" tabindex="-1"></a><span class="do">## $ p           &lt;dbl&gt; 1.88e-06</span></span>
-<span id="cb142-40"><a href="comparing-groups.html#cb142-40" aria-hidden="true" tabindex="-1"></a><span class="do">## $ df          &lt;dbl&gt; 1192.372</span></span>
-<span id="cb142-41"><a href="comparing-groups.html#cb142-41" aria-hidden="true" tabindex="-1"></a><span class="do">## $ conf.low    &lt;dbl&gt; 0.3646578</span></span>
-<span id="cb142-42"><a href="comparing-groups.html#cb142-42" aria-hidden="true" tabindex="-1"></a><span class="do">## $ conf.high   &lt;dbl&gt; 0.8707222</span></span>
+<span id="cb142-38"><a href="comparing-groups.html#cb142-38" aria-hidden="true" tabindex="-1"></a><span class="do">## $ statistic   &lt;dbl&gt; 4.592083</span></span>
+<span id="cb142-39"><a href="comparing-groups.html#cb142-39" aria-hidden="true" tabindex="-1"></a><span class="do">## $ p           &lt;dbl&gt; 4.85e-06</span></span>
+<span id="cb142-40"><a href="comparing-groups.html#cb142-40" aria-hidden="true" tabindex="-1"></a><span class="do">## $ df          &lt;dbl&gt; 1193.599</span></span>
+<span id="cb142-41"><a href="comparing-groups.html#cb142-41" aria-hidden="true" tabindex="-1"></a><span class="do">## $ conf.low    &lt;dbl&gt; 0.3378895</span></span>
+<span id="cb142-42"><a href="comparing-groups.html#cb142-42" aria-hidden="true" tabindex="-1"></a><span class="do">## $ conf.high   &lt;dbl&gt; 0.8419892</span></span>
 <span id="cb142-43"><a href="comparing-groups.html#cb142-43" aria-hidden="true" tabindex="-1"></a><span class="do">## $ method      &lt;chr&gt; &quot;T-test&quot;</span></span>
 <span id="cb142-44"><a href="comparing-groups.html#cb142-44" aria-hidden="true" tabindex="-1"></a><span class="do">## $ alternative &lt;chr&gt; &quot;two.sided&quot;</span></span>
 <span id="cb142-45"><a href="comparing-groups.html#cb142-45" aria-hidden="true" tabindex="-1"></a><span class="co"># Mann-Withney U test</span></span>
@@ -556,16 +558,16 @@ div.csl-indent {
 <span id="cb142-49"><a href="comparing-groups.html#cb142-49" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span>
 <span id="cb142-50"><a href="comparing-groups.html#cb142-50" aria-hidden="true" tabindex="-1"></a><span class="do">## Rows: 1</span></span>
 <span id="cb142-51"><a href="comparing-groups.html#cb142-51" aria-hidden="true" tabindex="-1"></a><span class="do">## Columns: 12</span></span>
-<span id="cb142-52"><a href="comparing-groups.html#cb142-52" aria-hidden="true" tabindex="-1"></a><span class="do">## $ estimate    &lt;dbl&gt; 0.9999397</span></span>
+<span id="cb142-52"><a href="comparing-groups.html#cb142-52" aria-hidden="true" tabindex="-1"></a><span class="do">## $ estimate    &lt;dbl&gt; 0.9999102</span></span>
 <span id="cb142-53"><a href="comparing-groups.html#cb142-53" aria-hidden="true" tabindex="-1"></a><span class="do">## $ .y.         &lt;chr&gt; &quot;freedom_of_choice&quot;</span></span>
 <span id="cb142-54"><a href="comparing-groups.html#cb142-54" aria-hidden="true" tabindex="-1"></a><span class="do">## $ group1      &lt;chr&gt; &quot;male&quot;</span></span>
 <span id="cb142-55"><a href="comparing-groups.html#cb142-55" aria-hidden="true" tabindex="-1"></a><span class="do">## $ group2      &lt;chr&gt; &quot;female&quot;</span></span>
 <span id="cb142-56"><a href="comparing-groups.html#cb142-56" aria-hidden="true" tabindex="-1"></a><span class="do">## $ n1          &lt;int&gt; 621</span></span>
 <span id="cb142-57"><a href="comparing-groups.html#cb142-57" aria-hidden="true" tabindex="-1"></a><span class="do">## $ n2          &lt;int&gt; 579</span></span>
-<span id="cb142-58"><a href="comparing-groups.html#cb142-58" aria-hidden="true" tabindex="-1"></a><span class="do">## $ statistic   &lt;dbl&gt; 209652.5</span></span>
-<span id="cb142-59"><a href="comparing-groups.html#cb142-59" aria-hidden="true" tabindex="-1"></a><span class="do">## $ p           &lt;dbl&gt; 4.83e-07</span></span>
-<span id="cb142-60"><a href="comparing-groups.html#cb142-60" aria-hidden="true" tabindex="-1"></a><span class="do">## $ conf.low    &lt;dbl&gt; 7.71844e-05</span></span>
-<span id="cb142-61"><a href="comparing-groups.html#cb142-61" aria-hidden="true" tabindex="-1"></a><span class="do">## $ conf.high   &lt;dbl&gt; 0.9999816</span></span>
+<span id="cb142-58"><a href="comparing-groups.html#cb142-58" aria-hidden="true" tabindex="-1"></a><span class="do">## $ statistic   &lt;dbl&gt; 208715</span></span>
+<span id="cb142-59"><a href="comparing-groups.html#cb142-59" aria-hidden="true" tabindex="-1"></a><span class="do">## $ p           &lt;dbl&gt; 1.09e-06</span></span>
+<span id="cb142-60"><a href="comparing-groups.html#cb142-60" aria-hidden="true" tabindex="-1"></a><span class="do">## $ conf.low    &lt;dbl&gt; 6.463085e-05</span></span>
+<span id="cb142-61"><a href="comparing-groups.html#cb142-61" aria-hidden="true" tabindex="-1"></a><span class="do">## $ conf.high   &lt;dbl&gt; 0.9999974</span></span>
 <span id="cb142-62"><a href="comparing-groups.html#cb142-62" aria-hidden="true" tabindex="-1"></a><span class="do">## $ method      &lt;chr&gt; &quot;Wilcoxon&quot;</span></span>
 <span id="cb142-63"><a href="comparing-groups.html#cb142-63" aria-hidden="true" tabindex="-1"></a><span class="do">## $ alternative &lt;chr&gt; &quot;two.sided&quot;</span></span></code></pre></div>
 <p>You might notice that the notation within the functions for group tests looks somewhat different to what we are used to, i.e. we use the <code>~</code> (‘tilde’) symbol. This is because some functions take a formula as their attribute, and to distinguish the dependent and independent variables from each other, we use <code>~</code>. A more generic notation of how formulas in functions work is shown below, where <code>DV</code> stands for ‘dependent variable’ and <code>IV</code> stands for ‘independent variable’:</p>
@@ -575,26 +577,30 @@ div.csl-indent {
 <p>Even for multiple groups, group comparisons usually only have one independent variable, i.e. the grouping variable. Grouping variables are generally of the type <code>factor</code>. In the case of two groups, we have two levels present in this factor. For example, our variable <code>gender</code> contains two levels: <code>female</code> and <code>male</code>. If there are multiple groups, the factor comprises various levels, e.g. the variable <code>country</code> includes levels of 48 countries.</p>
 <p>No matter which test we run, it appears as if the difference is significant. However, how big/important is the difference? The effect size provides the answer to this. The interpretation the effect size follows the explanations in Chapter <a href="correlations.html#correlations">10</a>, where we looked at the strength of the correlation of two variables. However, different effect size measures imply that we have to use different benchmarks. To help us with the interpretation, we can use the <code>effectsize</code> package and their set of <code>interpret_...()</code> functions (see also <a href="https://easystats.github.io/effectsize/articles/interpret.html" target="blank" title="Indices of Effect Size">Indices of Effect Sizes</a>). Sometimes, there are even more than one way of computing the effect size. For example, we can choose between the classic Wilcoxon R or the rank-biserial correlation coefficient for the Mann-Whitney test. In practice, you have to be explicit about how you computed the effect size. The differences between the two measures are often marginal and a matter of taste (or should I say: Your reviewers’ taste). Throughout this chapter, I will rely on the effect sizes most commonly found in Social Sciences publications. However, feel free to explore other indices as well, especially those offered in the <code>effectsize</code> package.</p>
 <div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="comparing-groups.html#cb143-1" aria-hidden="true" tabindex="-1"></a><span class="co"># After parametric test</span></span>
-<span id="cb143-2"><a href="comparing-groups.html#cb143-2" aria-hidden="true" tabindex="-1"></a>(d <span class="ot">&lt;-</span> comp <span class="sc">%&gt;%</span> <span class="fu">cohens_d</span>(freedom_of_choice <span class="sc">~</span> gender,</span>
-<span id="cb143-3"><a href="comparing-groups.html#cb143-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">var.equal =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb143-4"><a href="comparing-groups.html#cb143-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">ci =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb143-5"><a href="comparing-groups.html#cb143-5" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 1 × 9</span></span>
-<span id="cb143-6"><a href="comparing-groups.html#cb143-6" aria-hidden="true" tabindex="-1"></a><span class="do">##   .y.               group1 group2 effsize    n1    n2 conf.low conf.high magnitude</span></span>
-<span id="cb143-7"><a href="comparing-groups.html#cb143-7" aria-hidden="true" tabindex="-1"></a><span class="do">## * &lt;chr&gt;             &lt;chr&gt;  &lt;chr&gt;    &lt;dbl&gt; &lt;int&gt; &lt;int&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;ord&gt;    </span></span>
-<span id="cb143-8"><a href="comparing-groups.html#cb143-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 freedom_of_choice male   female   0.277   621   579     0.17      0.39 small</span></span>
-<span id="cb143-9"><a href="comparing-groups.html#cb143-9" aria-hidden="true" tabindex="-1"></a>effectsize<span class="sc">::</span><span class="fu">interpret_d</span>(d<span class="sc">$</span>effsize)</span>
-<span id="cb143-10"><a href="comparing-groups.html#cb143-10" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;small&quot;</span></span>
-<span id="cb143-11"><a href="comparing-groups.html#cb143-11" aria-hidden="true" tabindex="-1"></a><span class="do">## (Rules: cohen1988)</span></span>
-<span id="cb143-12"><a href="comparing-groups.html#cb143-12" aria-hidden="true" tabindex="-1"></a><span class="co"># After non-parametric test</span></span>
-<span id="cb143-13"><a href="comparing-groups.html#cb143-13" aria-hidden="true" tabindex="-1"></a>(wr <span class="ot">&lt;-</span> comp <span class="sc">%&gt;%</span> <span class="fu">wilcox_effsize</span>(freedom_of_choice <span class="sc">~</span> gender,</span>
-<span id="cb143-14"><a href="comparing-groups.html#cb143-14" aria-hidden="true" tabindex="-1"></a>                        <span class="at">ci =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb143-15"><a href="comparing-groups.html#cb143-15" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 1 × 9</span></span>
-<span id="cb143-16"><a href="comparing-groups.html#cb143-16" aria-hidden="true" tabindex="-1"></a><span class="do">##   .y.               group1 group2 effsize    n1    n2 conf.low conf.high magnitude</span></span>
-<span id="cb143-17"><a href="comparing-groups.html#cb143-17" aria-hidden="true" tabindex="-1"></a><span class="do">## * &lt;chr&gt;             &lt;chr&gt;  &lt;chr&gt;    &lt;dbl&gt; &lt;int&gt; &lt;int&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;ord&gt;    </span></span>
-<span id="cb143-18"><a href="comparing-groups.html#cb143-18" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 freedom_of_choice male   female   0.145   621   579     0.09       0.2 small</span></span>
-<span id="cb143-19"><a href="comparing-groups.html#cb143-19" aria-hidden="true" tabindex="-1"></a>effectsize<span class="sc">::</span><span class="fu">interpret_r</span>(wr<span class="sc">$</span>effsize)</span>
-<span id="cb143-20"><a href="comparing-groups.html#cb143-20" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;small&quot;</span></span>
-<span id="cb143-21"><a href="comparing-groups.html#cb143-21" aria-hidden="true" tabindex="-1"></a><span class="do">## (Rules: funder2019)</span></span></code></pre></div>
+<span id="cb143-2"><a href="comparing-groups.html#cb143-2" aria-hidden="true" tabindex="-1"></a>(d <span class="ot">&lt;-</span></span>
+<span id="cb143-3"><a href="comparing-groups.html#cb143-3" aria-hidden="true" tabindex="-1"></a>    comp <span class="sc">%&gt;%</span></span>
+<span id="cb143-4"><a href="comparing-groups.html#cb143-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cohens_d</span>(freedom_of_choice <span class="sc">~</span> gender,</span>
+<span id="cb143-5"><a href="comparing-groups.html#cb143-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">var.equal =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb143-6"><a href="comparing-groups.html#cb143-6" aria-hidden="true" tabindex="-1"></a>             <span class="at">ci =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb143-7"><a href="comparing-groups.html#cb143-7" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 1 × 9</span></span>
+<span id="cb143-8"><a href="comparing-groups.html#cb143-8" aria-hidden="true" tabindex="-1"></a><span class="do">##   .y.               group1 group2 effsize    n1    n2 conf.low conf.high magnitude</span></span>
+<span id="cb143-9"><a href="comparing-groups.html#cb143-9" aria-hidden="true" tabindex="-1"></a><span class="do">## * &lt;chr&gt;             &lt;chr&gt;  &lt;chr&gt;    &lt;dbl&gt; &lt;int&gt; &lt;int&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;ord&gt;    </span></span>
+<span id="cb143-10"><a href="comparing-groups.html#cb143-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 freedom_of_choice male   female   0.265   621   579     0.16      0.38 small</span></span>
+<span id="cb143-11"><a href="comparing-groups.html#cb143-11" aria-hidden="true" tabindex="-1"></a>effectsize<span class="sc">::</span><span class="fu">interpret_d</span>(d<span class="sc">$</span>effsize)</span>
+<span id="cb143-12"><a href="comparing-groups.html#cb143-12" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;small&quot;</span></span>
+<span id="cb143-13"><a href="comparing-groups.html#cb143-13" aria-hidden="true" tabindex="-1"></a><span class="do">## (Rules: cohen1988)</span></span>
+<span id="cb143-14"><a href="comparing-groups.html#cb143-14" aria-hidden="true" tabindex="-1"></a><span class="co"># After non-parametric test</span></span>
+<span id="cb143-15"><a href="comparing-groups.html#cb143-15" aria-hidden="true" tabindex="-1"></a>(wr <span class="ot">&lt;-</span></span>
+<span id="cb143-16"><a href="comparing-groups.html#cb143-16" aria-hidden="true" tabindex="-1"></a>    comp <span class="sc">%&gt;%</span></span>
+<span id="cb143-17"><a href="comparing-groups.html#cb143-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">wilcox_effsize</span>(freedom_of_choice <span class="sc">~</span> gender,</span>
+<span id="cb143-18"><a href="comparing-groups.html#cb143-18" aria-hidden="true" tabindex="-1"></a>                   <span class="at">ci =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb143-19"><a href="comparing-groups.html#cb143-19" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 1 × 9</span></span>
+<span id="cb143-20"><a href="comparing-groups.html#cb143-20" aria-hidden="true" tabindex="-1"></a><span class="do">##   .y.               group1 group2 effsize    n1    n2 conf.low conf.high magnitude</span></span>
+<span id="cb143-21"><a href="comparing-groups.html#cb143-21" aria-hidden="true" tabindex="-1"></a><span class="do">## * &lt;chr&gt;             &lt;chr&gt;  &lt;chr&gt;    &lt;dbl&gt; &lt;int&gt; &lt;int&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;ord&gt;    </span></span>
+<span id="cb143-22"><a href="comparing-groups.html#cb143-22" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 freedom_of_choice male   female   0.141   621   579     0.08       0.2 small</span></span>
+<span id="cb143-23"><a href="comparing-groups.html#cb143-23" aria-hidden="true" tabindex="-1"></a>effectsize<span class="sc">::</span><span class="fu">interpret_r</span>(wr<span class="sc">$</span>effsize)</span>
+<span id="cb143-24"><a href="comparing-groups.html#cb143-24" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;small&quot;</span></span>
+<span id="cb143-25"><a href="comparing-groups.html#cb143-25" aria-hidden="true" tabindex="-1"></a><span class="do">## (Rules: funder2019)</span></span></code></pre></div>
 <p>Looking at our test results, the female Egyptians perceive <code>freedom_of_choice</code> differently from their male counterparts. This is in line with our boxplots. However, the effect sizes tend to be small, which means the differences between the two groups is marginal. Similar to correlations, group comparisons need to be analysed in two stages, answering two questions:</p>
 <ol style="list-style-type: decimal">
 <li><p>Is the difference between groups significant?</p></li>
@@ -643,10 +649,12 @@ div.csl-indent {
 <span id="cb147-2"><a href="comparing-groups.html#cb147-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> movie, <span class="at">y =</span> imdb_rating, coldirector)) <span class="sc">+</span></span>
 <span id="cb147-3"><a href="comparing-groups.html#cb147-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
 <span id="cb147-4"><a href="comparing-groups.html#cb147-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">group =</span> director)) <span class="sc">+</span></span>
-<span id="cb147-5"><a href="comparing-groups.html#cb147-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Remove the legend</span></span>
-<span id="cb147-6"><a href="comparing-groups.html#cb147-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>) <span class="sc">+</span></span>
-<span id="cb147-7"><a href="comparing-groups.html#cb147-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Manuall define the y axis range</span></span>
-<span id="cb147-8"><a href="comparing-groups.html#cb147-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="dv">10</span>)</span></code></pre></div>
+<span id="cb147-5"><a href="comparing-groups.html#cb147-5" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb147-6"><a href="comparing-groups.html#cb147-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Remove the legend</span></span>
+<span id="cb147-7"><a href="comparing-groups.html#cb147-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>) <span class="sc">+</span></span>
+<span id="cb147-8"><a href="comparing-groups.html#cb147-8" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb147-9"><a href="comparing-groups.html#cb147-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Manuall define the y axis range</span></span>
+<span id="cb147-10"><a href="comparing-groups.html#cb147-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="dv">10</span>)</span></code></pre></div>
 <p><img src="r_for_non_programmers_files/figure-html/Comparing%20two%20paired%20groups%20data%20visualisation%20line%20plot%20and%20full%20y%20scale-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Considering the revised plot, we likely can predict what the statistical test will show. Table <a href="comparing-groups.html#tab:comparing-two-groups-paired">12.2</a> summarises which tests and functions need to be performed when our data is parametric or non-parametric. In both cases, the functions are the same as those of the unpaired group comparisons, but we need to add the attribute <code>paired = TRUE</code>. Still, the interpretations between the unpaired and paired tests remain the same. Also, be aware that some tests have changed in name, e.g. the Mann-Whitney U test has become the Wilcoxon Signed Rank Test. Even though we use the same functions as before, by changing the attributed of <code>paired</code> to <code>TRUE</code>, we also change the computational technique to obtain the results. Thus, remember that the same function can perform different computations.</p>
 <table>
@@ -727,15 +735,17 @@ div.csl-indent {
 <span id="cb149-11"><a href="comparing-groups.html#cb149-11" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;very small&quot;</span></span>
 <span id="cb149-12"><a href="comparing-groups.html#cb149-12" aria-hidden="true" tabindex="-1"></a><span class="do">## (Rules: cohen1988)</span></span>
 <span id="cb149-13"><a href="comparing-groups.html#cb149-13" aria-hidden="true" tabindex="-1"></a><span class="co"># After Wilcoxon Signed Rank Test</span></span>
-<span id="cb149-14"><a href="comparing-groups.html#cb149-14" aria-hidden="true" tabindex="-1"></a>(wr <span class="ot">&lt;-</span> dir_mov <span class="sc">%&gt;%</span> <span class="fu">wilcox_effsize</span>(imdb_rating <span class="sc">~</span> movie,</span>
-<span id="cb149-15"><a href="comparing-groups.html#cb149-15" aria-hidden="true" tabindex="-1"></a>                              <span class="at">paired =</span> <span class="cn">TRUE</span>, <span class="at">ci =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb149-16"><a href="comparing-groups.html#cb149-16" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 1 × 9</span></span>
-<span id="cb149-17"><a href="comparing-groups.html#cb149-17" aria-hidden="true" tabindex="-1"></a><span class="do">##   .y.         group1 group2 effsize    n1    n2 conf.low conf.high magnitude</span></span>
-<span id="cb149-18"><a href="comparing-groups.html#cb149-18" aria-hidden="true" tabindex="-1"></a><span class="do">## * &lt;chr&gt;       &lt;chr&gt;  &lt;chr&gt;    &lt;dbl&gt; &lt;int&gt; &lt;int&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;ord&gt;    </span></span>
-<span id="cb149-19"><a href="comparing-groups.html#cb149-19" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 imdb_rating 1      2       0.0448    43    43   0.0066      0.34 small</span></span>
-<span id="cb149-20"><a href="comparing-groups.html#cb149-20" aria-hidden="true" tabindex="-1"></a>effectsize<span class="sc">::</span><span class="fu">interpret_r</span>(wr<span class="sc">$</span>effsize, <span class="at">rules =</span> <span class="st">&quot;cohen1988&quot;</span>)</span>
-<span id="cb149-21"><a href="comparing-groups.html#cb149-21" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;very small&quot;</span></span>
-<span id="cb149-22"><a href="comparing-groups.html#cb149-22" aria-hidden="true" tabindex="-1"></a><span class="do">## (Rules: cohen1988)</span></span></code></pre></div>
+<span id="cb149-14"><a href="comparing-groups.html#cb149-14" aria-hidden="true" tabindex="-1"></a>(wr <span class="ot">&lt;-</span></span>
+<span id="cb149-15"><a href="comparing-groups.html#cb149-15" aria-hidden="true" tabindex="-1"></a>    dir_mov <span class="sc">%&gt;%</span></span>
+<span id="cb149-16"><a href="comparing-groups.html#cb149-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">wilcox_effsize</span>(imdb_rating <span class="sc">~</span> movie,</span>
+<span id="cb149-17"><a href="comparing-groups.html#cb149-17" aria-hidden="true" tabindex="-1"></a>                   <span class="at">paired =</span> <span class="cn">TRUE</span>, <span class="at">ci =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb149-18"><a href="comparing-groups.html#cb149-18" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 1 × 9</span></span>
+<span id="cb149-19"><a href="comparing-groups.html#cb149-19" aria-hidden="true" tabindex="-1"></a><span class="do">##   .y.         group1 group2 effsize    n1    n2 conf.low conf.high magnitude</span></span>
+<span id="cb149-20"><a href="comparing-groups.html#cb149-20" aria-hidden="true" tabindex="-1"></a><span class="do">## * &lt;chr&gt;       &lt;chr&gt;  &lt;chr&gt;    &lt;dbl&gt; &lt;int&gt; &lt;int&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;ord&gt;    </span></span>
+<span id="cb149-21"><a href="comparing-groups.html#cb149-21" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 imdb_rating 1      2       0.0448    43    43   0.0066      0.34 small</span></span>
+<span id="cb149-22"><a href="comparing-groups.html#cb149-22" aria-hidden="true" tabindex="-1"></a>effectsize<span class="sc">::</span><span class="fu">interpret_r</span>(wr<span class="sc">$</span>effsize, <span class="at">rules =</span> <span class="st">&quot;cohen1988&quot;</span>)</span>
+<span id="cb149-23"><a href="comparing-groups.html#cb149-23" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;very small&quot;</span></span>
+<span id="cb149-24"><a href="comparing-groups.html#cb149-24" aria-hidden="true" tabindex="-1"></a><span class="do">## (Rules: cohen1988)</span></span></code></pre></div>
 <p>As expected, the effect sizes are tiny, irrespective of whether we treat our data as parametric or non-parametric. After all, being a successful director ranked in the IMDb top 250 seems to imply that other movies are equally successful, but remember the limitations of our dataset before drawing your conclusions.</p>
 </div>
 </div>
@@ -745,10 +755,11 @@ div.csl-indent {
 <div id="multiple-unpaired-groups" class="section level3" number="12.3.1">
 <h3><span class="header-section-number">12.3.1</span> Multiple unpaired groups</h3>
 <p>Have you ever been wondering whether people in different countries are equally satisfied with their lives? You might have a rough guess that it is not the case because the social, economic and political environment might play an important role. For example, if you live in a country affected by social conflicts, one’s life satisfaction might be drastically lower. In the following, we take a look at three countries <code>Iraq</code>, <code>Japan</code> and <code>Korea</code>. I chose these countries out of personal interest and because they nicely demonstrate the purpose of the chapter, i.e. finding out whether there are differences in the perception of <code>satisfaction</code> across three countries. At any time, feel free to remove the <code>filter()</code> function to gain the results of all countries in the dataset, but prepare for slightly longer computations. We first create the dataset, which only contains the three desired countries.</p>
-<div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb150-1"><a href="comparing-groups.html#cb150-1" aria-hidden="true" tabindex="-1"></a>mcomp <span class="ot">&lt;-</span> wvs_nona <span class="sc">%&gt;%</span></span>
-<span id="cb150-2"><a href="comparing-groups.html#cb150-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(country <span class="sc">==</span> <span class="st">&quot;Iraq&quot;</span> <span class="sc">|</span></span>
-<span id="cb150-3"><a href="comparing-groups.html#cb150-3" aria-hidden="true" tabindex="-1"></a>           country <span class="sc">==</span> <span class="st">&quot;Japan&quot;</span> <span class="sc">|</span></span>
-<span id="cb150-4"><a href="comparing-groups.html#cb150-4" aria-hidden="true" tabindex="-1"></a>           country <span class="sc">==</span> <span class="st">&quot;Korea&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb150-1"><a href="comparing-groups.html#cb150-1" aria-hidden="true" tabindex="-1"></a>mcomp <span class="ot">&lt;-</span></span>
+<span id="cb150-2"><a href="comparing-groups.html#cb150-2" aria-hidden="true" tabindex="-1"></a>  wvs_nona <span class="sc">%&gt;%</span></span>
+<span id="cb150-3"><a href="comparing-groups.html#cb150-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(country <span class="sc">==</span> <span class="st">&quot;Iraq&quot;</span> <span class="sc">|</span></span>
+<span id="cb150-4"><a href="comparing-groups.html#cb150-4" aria-hidden="true" tabindex="-1"></a>           country <span class="sc">==</span> <span class="st">&quot;Japan&quot;</span> <span class="sc">|</span></span>
+<span id="cb150-5"><a href="comparing-groups.html#cb150-5" aria-hidden="true" tabindex="-1"></a>           country <span class="sc">==</span> <span class="st">&quot;Korea&quot;</span>)</span></code></pre></div>
 <p>Similar to before, we can use the <code>ggridges</code> package to draw density plots for each group. This has the added benefit that we can compare the distribution of data for each group and see whether the assumption of normality is likely met or not. On the other hand, we lose the option to identify any outliers quickly. You win some, and you lose some.</p>
 <div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb151-1"><a href="comparing-groups.html#cb151-1" aria-hidden="true" tabindex="-1"></a>mcomp <span class="sc">%&gt;%</span></span>
 <span id="cb151-2"><a href="comparing-groups.html#cb151-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(country) <span class="sc">%&gt;%</span></span>
@@ -814,25 +825,24 @@ div.csl-indent {
 <span id="cb152-5"><a href="comparing-groups.html#cb152-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">detailed =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb152-6"><a href="comparing-groups.html#cb152-6" aria-hidden="true" tabindex="-1"></a><span class="do">## ANOVA Table (type II tests)</span></span>
 <span id="cb152-7"><a href="comparing-groups.html#cb152-7" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb152-8"><a href="comparing-groups.html#cb152-8" aria-hidden="true" tabindex="-1"></a><span class="do">##    Effect     SSn      SSd DFn  DFd       F         p p&lt;.05   ges</span></span>
-<span id="cb152-9"><a href="comparing-groups.html#cb152-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 country 4265.68 11354.09   2 3795 712.882 1.43e-263     * 0.273</span></span>
+<span id="cb152-8"><a href="comparing-groups.html#cb152-8" aria-hidden="true" tabindex="-1"></a><span class="do">##    Effect      SSn      SSd DFn  DFd       F         p p&lt;.05   ges</span></span>
+<span id="cb152-9"><a href="comparing-groups.html#cb152-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 country 4277.492 11319.88   2 3795 717.017 7.07e-265     * 0.274</span></span>
 <span id="cb152-10"><a href="comparing-groups.html#cb152-10" aria-hidden="true" tabindex="-1"></a><span class="do">## Equal variances not assumed</span></span>
 <span id="cb152-11"><a href="comparing-groups.html#cb152-11" aria-hidden="true" tabindex="-1"></a>(oneway_test <span class="ot">&lt;-</span> <span class="fu">oneway.test</span>(satisfaction <span class="sc">~</span> country,</span>
-<span id="cb152-12"><a href="comparing-groups.html#cb152-12" aria-hidden="true" tabindex="-1"></a>            <span class="at">data =</span> mcomp,</span>
-<span id="cb152-13"><a href="comparing-groups.html#cb152-13" aria-hidden="true" tabindex="-1"></a>            <span class="at">var.equal =</span> <span class="cn">FALSE</span>))</span>
+<span id="cb152-12"><a href="comparing-groups.html#cb152-12" aria-hidden="true" tabindex="-1"></a>                            <span class="at">data =</span> mcomp,</span>
+<span id="cb152-13"><a href="comparing-groups.html#cb152-13" aria-hidden="true" tabindex="-1"></a>                            <span class="at">var.equal =</span> <span class="cn">FALSE</span>))</span>
 <span id="cb152-14"><a href="comparing-groups.html#cb152-14" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
 <span id="cb152-15"><a href="comparing-groups.html#cb152-15" aria-hidden="true" tabindex="-1"></a><span class="do">##  One-way analysis of means (not assuming equal variances)</span></span>
 <span id="cb152-16"><a href="comparing-groups.html#cb152-16" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
 <span id="cb152-17"><a href="comparing-groups.html#cb152-17" aria-hidden="true" tabindex="-1"></a><span class="do">## data:  satisfaction and country</span></span>
-<span id="cb152-18"><a href="comparing-groups.html#cb152-18" aria-hidden="true" tabindex="-1"></a><span class="do">## F = 663.48, num df = 2.0, denom df = 2422.1, p-value &lt; 2.2e-16</span></span>
+<span id="cb152-18"><a href="comparing-groups.html#cb152-18" aria-hidden="true" tabindex="-1"></a><span class="do">## F = 664.98, num df = 2.0, denom df = 2422.7, p-value &lt; 2.2e-16</span></span>
 <span id="cb152-19"><a href="comparing-groups.html#cb152-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Kruskall-Wallis test</span></span>
 <span id="cb152-20"><a href="comparing-groups.html#cb152-20" aria-hidden="true" tabindex="-1"></a><span class="do">## Perform comparison</span></span>
-<span id="cb152-21"><a href="comparing-groups.html#cb152-21" aria-hidden="true" tabindex="-1"></a>mcomp <span class="sc">%&gt;%</span></span>
-<span id="cb152-22"><a href="comparing-groups.html#cb152-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kruskal_test</span>(satisfaction <span class="sc">~</span> country)</span>
-<span id="cb152-23"><a href="comparing-groups.html#cb152-23" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 1 × 6</span></span>
-<span id="cb152-24"><a href="comparing-groups.html#cb152-24" aria-hidden="true" tabindex="-1"></a><span class="do">##   .y.              n statistic    df         p method        </span></span>
-<span id="cb152-25"><a href="comparing-groups.html#cb152-25" aria-hidden="true" tabindex="-1"></a><span class="do">## * &lt;chr&gt;        &lt;int&gt;     &lt;dbl&gt; &lt;int&gt;     &lt;dbl&gt; &lt;chr&gt;         </span></span>
-<span id="cb152-26"><a href="comparing-groups.html#cb152-26" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 satisfaction  3798     1063.     2 1.74e-231 Kruskal-Wallis</span></span></code></pre></div>
+<span id="cb152-21"><a href="comparing-groups.html#cb152-21" aria-hidden="true" tabindex="-1"></a>mcomp <span class="sc">%&gt;%</span> <span class="fu">kruskal_test</span>(satisfaction <span class="sc">~</span> country)</span>
+<span id="cb152-22"><a href="comparing-groups.html#cb152-22" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 1 × 6</span></span>
+<span id="cb152-23"><a href="comparing-groups.html#cb152-23" aria-hidden="true" tabindex="-1"></a><span class="do">##   .y.              n statistic    df         p method        </span></span>
+<span id="cb152-24"><a href="comparing-groups.html#cb152-24" aria-hidden="true" tabindex="-1"></a><span class="do">## * &lt;chr&gt;        &lt;int&gt;     &lt;dbl&gt; &lt;int&gt;     &lt;dbl&gt; &lt;chr&gt;         </span></span>
+<span id="cb152-25"><a href="comparing-groups.html#cb152-25" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 satisfaction  3798     1066.     2 3.40e-232 Kruskal-Wallis</span></span></code></pre></div>
 <p>While <code>anova_test()</code> does provide the effect size automatically, i.e. generalised eta squared (<code>ges</code>), this is not the case for the other two approaches. Therefore, we have to use the <code>effectsize</code> package to help us out. Packages often can get you a long way and make your life easier, but it is good to know alternatives if a single package does not give you what you need.</p>
 <div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb153-1"><a href="comparing-groups.html#cb153-1" aria-hidden="true" tabindex="-1"></a><span class="co"># After ANOVA with var.equal = FALSE</span></span>
 <span id="cb153-2"><a href="comparing-groups.html#cb153-2" aria-hidden="true" tabindex="-1"></a>effectsize<span class="sc">::</span><span class="fu">eta_squared</span>(oneway_test)</span>
@@ -848,7 +858,7 @@ div.csl-indent {
 <span id="cb153-12"><a href="comparing-groups.html#cb153-12" aria-hidden="true" tabindex="-1"></a>effectsize<span class="sc">::</span><span class="fu">rank_epsilon_squared</span>(mcomp<span class="sc">$</span>satisfaction <span class="sc">~</span> mcomp<span class="sc">$</span>gender)</span>
 <span id="cb153-13"><a href="comparing-groups.html#cb153-13" aria-hidden="true" tabindex="-1"></a><span class="do">## Epsilon2 (rank) |       95% CI</span></span>
 <span id="cb153-14"><a href="comparing-groups.html#cb153-14" aria-hidden="true" tabindex="-1"></a><span class="do">## ------------------------------</span></span>
-<span id="cb153-15"><a href="comparing-groups.html#cb153-15" aria-hidden="true" tabindex="-1"></a><span class="do">## 1.97e-03        | [0.00, 1.00]</span></span>
+<span id="cb153-15"><a href="comparing-groups.html#cb153-15" aria-hidden="true" tabindex="-1"></a><span class="do">## 2.00e-03        | [0.00, 1.00]</span></span>
 <span id="cb153-16"><a href="comparing-groups.html#cb153-16" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
 <span id="cb153-17"><a href="comparing-groups.html#cb153-17" aria-hidden="true" tabindex="-1"></a><span class="do">## - One-sided CIs: upper bound fixed at (1).</span></span></code></pre></div>
 <p>The results show that there is a significant and large difference between these groups. You might argue that this is not quite true. Considering our plot, we know that Japan and Korea do not look as if they are significantly different. Multiple group comparisons only consider differences across all three groups. Therefore, if one group differs from the other groups, the test will turn significant and even provide a large enough effect size to consider it essential. However, these tests do not provide information on which differences between groups are significant. To gain more clarification about this, we need to incorporate another step called ‘post-hoc tests.’ These tests compare two groups at a time, which is why they are also known as ‘pairwise comparisons.’ Compared to regular two-sample tests, these perform corrections of the <code>p</code>-values for multiple testing, which is necessary. However, there are many different ‘post-hoc’ tests you can choose. <span class="citation"><a href="#ref-field2013discovering" role="doc-biblioref">Field</a> (<a href="#ref-field2013discovering" role="doc-biblioref">2013</a>)</span> (p.459) nicely outlines the different scenarios and provides recommendations to navigate this slightly complex field of post-hoc tests to follow-up a one-way ANOVA. Table <a href="comparing-groups.html#tab:post-hoc-tests">12.4</a> provides an overview of his suggestions.</p>
@@ -940,26 +950,26 @@ div.csl-indent {
 <span id="cb154-18"><a href="comparing-groups.html#cb154-18" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 3 × 9</span></span>
 <span id="cb154-19"><a href="comparing-groups.html#cb154-19" aria-hidden="true" tabindex="-1"></a><span class="do">##   term    group1 group2 null.value estimate conf.low conf.high        p.adj</span></span>
 <span id="cb154-20"><a href="comparing-groups.html#cb154-20" aria-hidden="true" tabindex="-1"></a><span class="do">## * &lt;chr&gt;   &lt;chr&gt;  &lt;chr&gt;       &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;        &lt;dbl&gt;</span></span>
-<span id="cb154-21"><a href="comparing-groups.html#cb154-21" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 country Iraq   Japan           0   2.30      2.13      2.46  0.0000000141</span></span>
+<span id="cb154-21"><a href="comparing-groups.html#cb154-21" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 country Iraq   Japan           0   2.30      2.14      2.46  0.0000000141</span></span>
 <span id="cb154-22"><a href="comparing-groups.html#cb154-22" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 country Iraq   Korea           0   2.26      2.10      2.43  0.0000000141</span></span>
-<span id="cb154-23"><a href="comparing-groups.html#cb154-23" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 country Japan  Korea           0  -0.0336   -0.193     0.126 0.874       </span></span>
+<span id="cb154-23"><a href="comparing-groups.html#cb154-23" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 country Japan  Korea           0  -0.0395   -0.199     0.119 0.829       </span></span>
 <span id="cb154-24"><a href="comparing-groups.html#cb154-24" aria-hidden="true" tabindex="-1"></a><span class="do">## # … with 1 more variable: p.adj.signif &lt;chr&gt;</span></span>
 <span id="cb154-25"><a href="comparing-groups.html#cb154-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Games-Howell</span></span>
 <span id="cb154-26"><a href="comparing-groups.html#cb154-26" aria-hidden="true" tabindex="-1"></a>mcomp <span class="sc">%&gt;%</span> <span class="fu">games_howell_test</span>(satisfaction <span class="sc">~</span> country)</span>
 <span id="cb154-27"><a href="comparing-groups.html#cb154-27" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 3 × 8</span></span>
 <span id="cb154-28"><a href="comparing-groups.html#cb154-28" aria-hidden="true" tabindex="-1"></a><span class="do">##   .y.          group1 group2 estimate conf.low conf.high    p.adj p.adj.signif</span></span>
 <span id="cb154-29"><a href="comparing-groups.html#cb154-29" aria-hidden="true" tabindex="-1"></a><span class="do">## * &lt;chr&gt;        &lt;chr&gt;  &lt;chr&gt;     &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;       </span></span>
-<span id="cb154-30"><a href="comparing-groups.html#cb154-30" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 satisfaction Iraq   Japan    2.30      2.12      2.47  0        ****        </span></span>
+<span id="cb154-30"><a href="comparing-groups.html#cb154-30" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 satisfaction Iraq   Japan    2.30      2.12      2.48  0        ****        </span></span>
 <span id="cb154-31"><a href="comparing-groups.html#cb154-31" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 satisfaction Iraq   Korea    2.26      2.11      2.42  5.92e-11 ****        </span></span>
-<span id="cb154-32"><a href="comparing-groups.html#cb154-32" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 satisfaction Japan  Korea   -0.0336   -0.182     0.115 8.57e- 1 ns</span></span>
+<span id="cb154-32"><a href="comparing-groups.html#cb154-32" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 satisfaction Japan  Korea   -0.0395   -0.188     0.109 8.07e- 1 ns</span></span>
 <span id="cb154-33"><a href="comparing-groups.html#cb154-33" aria-hidden="true" tabindex="-1"></a><span class="co"># POST-HOC </span><span class="al">TEST</span><span class="co"> FOR NON-PARAMETRIC DATA</span></span>
 <span id="cb154-34"><a href="comparing-groups.html#cb154-34" aria-hidden="true" tabindex="-1"></a>mcomp <span class="sc">%&gt;%</span> <span class="fu">dunn_test</span>(satisfaction <span class="sc">~</span> country)</span>
 <span id="cb154-35"><a href="comparing-groups.html#cb154-35" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 3 × 9</span></span>
 <span id="cb154-36"><a href="comparing-groups.html#cb154-36" aria-hidden="true" tabindex="-1"></a><span class="do">##   .y.          group1 group2    n1    n2 statistic         p     p.adj p.adj.signif</span></span>
 <span id="cb154-37"><a href="comparing-groups.html#cb154-37" aria-hidden="true" tabindex="-1"></a><span class="do">## * &lt;chr&gt;        &lt;chr&gt;  &lt;chr&gt;  &lt;int&gt; &lt;int&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;       </span></span>
-<span id="cb154-38"><a href="comparing-groups.html#cb154-38" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 satisfaction Iraq   Japan   1200  1353     29.2  4.39e-187 1.32e-186 ****        </span></span>
-<span id="cb154-39"><a href="comparing-groups.html#cb154-39" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 satisfaction Iraq   Korea   1200  1245     27.6  1.63e-167 3.25e-167 ****        </span></span>
-<span id="cb154-40"><a href="comparing-groups.html#cb154-40" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 satisfaction Japan  Korea   1353  1245     -1.04 2.99e-  1 2.99e-  1 ns</span></span>
+<span id="cb154-38"><a href="comparing-groups.html#cb154-38" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 satisfaction Iraq   Japan   1200  1353     29.3  3.38e-188 1.01e-187 ****        </span></span>
+<span id="cb154-39"><a href="comparing-groups.html#cb154-39" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 satisfaction Iraq   Korea   1200  1245     27.6  2.09e-167 4.18e-167 ****        </span></span>
+<span id="cb154-40"><a href="comparing-groups.html#cb154-40" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 satisfaction Japan  Korea   1353  1245     -1.14 2.56e-  1 2.56e-  1 ns</span></span>
 <span id="cb154-41"><a href="comparing-groups.html#cb154-41" aria-hidden="true" tabindex="-1"></a><span class="co"># or</span></span>
 <span id="cb154-42"><a href="comparing-groups.html#cb154-42" aria-hidden="true" tabindex="-1"></a><span class="fu">pairwise.wilcox.test</span>(mcomp<span class="sc">$</span>satisfaction,</span>
 <span id="cb154-43"><a href="comparing-groups.html#cb154-43" aria-hidden="true" tabindex="-1"></a>                     mcomp<span class="sc">$</span>country,</span>
@@ -969,9 +979,9 @@ div.csl-indent {
 <span id="cb154-47"><a href="comparing-groups.html#cb154-47" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
 <span id="cb154-48"><a href="comparing-groups.html#cb154-48" aria-hidden="true" tabindex="-1"></a><span class="do">## data:  mcomp$satisfaction and mcomp$country </span></span>
 <span id="cb154-49"><a href="comparing-groups.html#cb154-49" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb154-50"><a href="comparing-groups.html#cb154-50" aria-hidden="true" tabindex="-1"></a><span class="do">##       Iraq   Japan</span></span>
-<span id="cb154-51"><a href="comparing-groups.html#cb154-51" aria-hidden="true" tabindex="-1"></a><span class="do">## Japan &lt;2e-16 -    </span></span>
-<span id="cb154-52"><a href="comparing-groups.html#cb154-52" aria-hidden="true" tabindex="-1"></a><span class="do">## Korea &lt;2e-16 8e-04</span></span>
+<span id="cb154-50"><a href="comparing-groups.html#cb154-50" aria-hidden="true" tabindex="-1"></a><span class="do">##       Iraq    Japan  </span></span>
+<span id="cb154-51"><a href="comparing-groups.html#cb154-51" aria-hidden="true" tabindex="-1"></a><span class="do">## Japan &lt; 2e-16 -      </span></span>
+<span id="cb154-52"><a href="comparing-groups.html#cb154-52" aria-hidden="true" tabindex="-1"></a><span class="do">## Korea &lt; 2e-16 0.00054</span></span>
 <span id="cb154-53"><a href="comparing-groups.html#cb154-53" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
 <span id="cb154-54"><a href="comparing-groups.html#cb154-54" aria-hidden="true" tabindex="-1"></a><span class="do">## P value adjustment method: holm</span></span></code></pre></div>
 <p>As we can see, no matter which function we use, the interpretation of the results remain the same on this occasion.</p>
@@ -1000,29 +1010,30 @@ div.csl-indent {
 </ul>
 <p>Let’s add the differences between measures for each participant based on these pairs and compute the variances across these values.</p>
 <div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb156-1"><a href="comparing-groups.html#cb156-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute the differences across all three pairs of measurements</span></span>
-<span id="cb156-2"><a href="comparing-groups.html#cb156-2" aria-hidden="true" tabindex="-1"></a>differences <span class="ot">&lt;-</span> acculturation <span class="sc">%&gt;%</span></span>
-<span id="cb156-3"><a href="comparing-groups.html#cb156-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">m1_m4 =</span> m1 <span class="sc">-</span> m4,</span>
-<span id="cb156-4"><a href="comparing-groups.html#cb156-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">m4_m8 =</span> m4 <span class="sc">-</span> m8,</span>
-<span id="cb156-5"><a href="comparing-groups.html#cb156-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">m1_m8 =</span> m1 <span class="sc">-</span> m8)</span>
-<span id="cb156-6"><a href="comparing-groups.html#cb156-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb156-7"><a href="comparing-groups.html#cb156-7" aria-hidden="true" tabindex="-1"></a>differences</span>
-<span id="cb156-8"><a href="comparing-groups.html#cb156-8" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 5 × 7</span></span>
-<span id="cb156-9"><a href="comparing-groups.html#cb156-9" aria-hidden="true" tabindex="-1"></a><span class="do">##   name        m1    m4    m8 m1_m4 m4_m8 m1_m8</span></span>
-<span id="cb156-10"><a href="comparing-groups.html#cb156-10" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span></span>
-<span id="cb156-11"><a href="comparing-groups.html#cb156-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 Waylene      2     3     5    -1    -2    -3</span></span>
-<span id="cb156-12"><a href="comparing-groups.html#cb156-12" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 Nicole       1     3     6    -2    -3    -5</span></span>
-<span id="cb156-13"><a href="comparing-groups.html#cb156-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 Mikayla      2     3     5    -1    -2    -3</span></span>
-<span id="cb156-14"><a href="comparing-groups.html#cb156-14" aria-hidden="true" tabindex="-1"></a><span class="do">## 4 Valeria      1     3     5    -2    -2    -4</span></span>
-<span id="cb156-15"><a href="comparing-groups.html#cb156-15" aria-hidden="true" tabindex="-1"></a><span class="do">## 5 Giavanni     1     3     5    -2    -2    -4</span></span>
-<span id="cb156-16"><a href="comparing-groups.html#cb156-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute the variance for each pair</span></span>
-<span id="cb156-17"><a href="comparing-groups.html#cb156-17" aria-hidden="true" tabindex="-1"></a>differences <span class="sc">%&gt;%</span></span>
-<span id="cb156-18"><a href="comparing-groups.html#cb156-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">m1_m4_var =</span> <span class="fu">var</span>(m1_m4),</span>
-<span id="cb156-19"><a href="comparing-groups.html#cb156-19" aria-hidden="true" tabindex="-1"></a>            <span class="at">m4_m8_var =</span> <span class="fu">var</span>(m4_m8),</span>
-<span id="cb156-20"><a href="comparing-groups.html#cb156-20" aria-hidden="true" tabindex="-1"></a>            <span class="at">m1_m8_var =</span> <span class="fu">var</span>(m1_m8))</span>
-<span id="cb156-21"><a href="comparing-groups.html#cb156-21" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 1 × 3</span></span>
-<span id="cb156-22"><a href="comparing-groups.html#cb156-22" aria-hidden="true" tabindex="-1"></a><span class="do">##   m1_m4_var m4_m8_var m1_m8_var</span></span>
-<span id="cb156-23"><a href="comparing-groups.html#cb156-23" aria-hidden="true" tabindex="-1"></a><span class="do">##       &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;</span></span>
-<span id="cb156-24"><a href="comparing-groups.html#cb156-24" aria-hidden="true" tabindex="-1"></a><span class="do">## 1       0.3       0.2       0.7</span></span></code></pre></div>
+<span id="cb156-2"><a href="comparing-groups.html#cb156-2" aria-hidden="true" tabindex="-1"></a>differences <span class="ot">&lt;-</span></span>
+<span id="cb156-3"><a href="comparing-groups.html#cb156-3" aria-hidden="true" tabindex="-1"></a>  acculturation <span class="sc">%&gt;%</span></span>
+<span id="cb156-4"><a href="comparing-groups.html#cb156-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">m1_m4 =</span> m1 <span class="sc">-</span> m4,</span>
+<span id="cb156-5"><a href="comparing-groups.html#cb156-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">m4_m8 =</span> m4 <span class="sc">-</span> m8,</span>
+<span id="cb156-6"><a href="comparing-groups.html#cb156-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">m1_m8 =</span> m1 <span class="sc">-</span> m8)</span>
+<span id="cb156-7"><a href="comparing-groups.html#cb156-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb156-8"><a href="comparing-groups.html#cb156-8" aria-hidden="true" tabindex="-1"></a>differences</span>
+<span id="cb156-9"><a href="comparing-groups.html#cb156-9" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 5 × 7</span></span>
+<span id="cb156-10"><a href="comparing-groups.html#cb156-10" aria-hidden="true" tabindex="-1"></a><span class="do">##   name        m1    m4    m8 m1_m4 m4_m8 m1_m8</span></span>
+<span id="cb156-11"><a href="comparing-groups.html#cb156-11" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span></span>
+<span id="cb156-12"><a href="comparing-groups.html#cb156-12" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 Waylene      2     3     5    -1    -2    -3</span></span>
+<span id="cb156-13"><a href="comparing-groups.html#cb156-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 Nicole       1     3     6    -2    -3    -5</span></span>
+<span id="cb156-14"><a href="comparing-groups.html#cb156-14" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 Mikayla      2     3     5    -1    -2    -3</span></span>
+<span id="cb156-15"><a href="comparing-groups.html#cb156-15" aria-hidden="true" tabindex="-1"></a><span class="do">## 4 Valeria      1     3     5    -2    -2    -4</span></span>
+<span id="cb156-16"><a href="comparing-groups.html#cb156-16" aria-hidden="true" tabindex="-1"></a><span class="do">## 5 Giavanni     1     3     5    -2    -2    -4</span></span>
+<span id="cb156-17"><a href="comparing-groups.html#cb156-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute the variance for each pair</span></span>
+<span id="cb156-18"><a href="comparing-groups.html#cb156-18" aria-hidden="true" tabindex="-1"></a>differences <span class="sc">%&gt;%</span></span>
+<span id="cb156-19"><a href="comparing-groups.html#cb156-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">m1_m4_var =</span> <span class="fu">var</span>(m1_m4),</span>
+<span id="cb156-20"><a href="comparing-groups.html#cb156-20" aria-hidden="true" tabindex="-1"></a>            <span class="at">m4_m8_var =</span> <span class="fu">var</span>(m4_m8),</span>
+<span id="cb156-21"><a href="comparing-groups.html#cb156-21" aria-hidden="true" tabindex="-1"></a>            <span class="at">m1_m8_var =</span> <span class="fu">var</span>(m1_m8))</span>
+<span id="cb156-22"><a href="comparing-groups.html#cb156-22" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 1 × 3</span></span>
+<span id="cb156-23"><a href="comparing-groups.html#cb156-23" aria-hidden="true" tabindex="-1"></a><span class="do">##   m1_m4_var m4_m8_var m1_m8_var</span></span>
+<span id="cb156-24"><a href="comparing-groups.html#cb156-24" aria-hidden="true" tabindex="-1"></a><span class="do">##       &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;</span></span>
+<span id="cb156-25"><a href="comparing-groups.html#cb156-25" aria-hidden="true" tabindex="-1"></a><span class="do">## 1       0.3       0.2       0.7</span></span></code></pre></div>
 <p>We can tell that the differences across groups are relatively small when comparing <code>m1_m4_var</code> and <code>m4_m8_var</code>. However, the value for <code>m1_m8_var</code> appears bigger. So, how can we be sure whether the assumption of sphericity is violated or not? Similar to many of the other assumptions we covered, a significance test provides the answer to this question. For multiple paired groups, we use Mauchly’s Test of Sphericity. If the test is significant, the variances across groups are not equal. In other words, a significant Mauchly test implies a violation of sphericity. The <code>rstatix</code> package includes Mauchly’s Test of Sphericity in its <code>anova_test()</code>. Thus, we get both with one function. However, our data in this example is not tidy. So, we first need to convert it into a tidy dataset.</p>
 <div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb157-1"><a href="comparing-groups.html#cb157-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert into tidy data</span></span>
 <span id="cb157-2"><a href="comparing-groups.html#cb157-2" aria-hidden="true" tabindex="-1"></a>acc_long <span class="ot">&lt;-</span></span>
@@ -1108,33 +1119,34 @@ div.csl-indent {
 <p>Instead of using a fictional example as we did in the previous chapter, let’s draw on real observations using the dataset <code>wvs_waves</code>. This dataset contains similar data to <code>wvs</code> but offers multiple measures as indicated by the variable <code>wave</code>. For example, we might be interested to know whether <code>satisfaction</code> changed over the years.</p>
 <p>Let’s start by visualising the data across all measures using a <code>geom_boxplot()</code>. I also added the mean for each wave since this is what we will eventually compare in our repeated-measures ANOVA.</p>
 <div class="sourceCode" id="cb158"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb158-1"><a href="comparing-groups.html#cb158-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute the mean for each wave</span></span>
-<span id="cb158-2"><a href="comparing-groups.html#cb158-2" aria-hidden="true" tabindex="-1"></a>wave_means <span class="ot">&lt;-</span> wvs_waves <span class="sc">%&gt;%</span></span>
-<span id="cb158-3"><a href="comparing-groups.html#cb158-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(wave) <span class="sc">%&gt;%</span></span>
-<span id="cb158-4"><a href="comparing-groups.html#cb158-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">w_mean =</span> <span class="fu">mean</span>(satisfaction))</span>
-<span id="cb158-5"><a href="comparing-groups.html#cb158-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb158-6"><a href="comparing-groups.html#cb158-6" aria-hidden="true" tabindex="-1"></a>wave_means</span>
-<span id="cb158-7"><a href="comparing-groups.html#cb158-7" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 7 × 2</span></span>
-<span id="cb158-8"><a href="comparing-groups.html#cb158-8" aria-hidden="true" tabindex="-1"></a><span class="do">##   wave  w_mean</span></span>
-<span id="cb158-9"><a href="comparing-groups.html#cb158-9" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;fct&gt;  &lt;dbl&gt;</span></span>
-<span id="cb158-10"><a href="comparing-groups.html#cb158-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 w1      7.14</span></span>
-<span id="cb158-11"><a href="comparing-groups.html#cb158-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 w2      6.83</span></span>
-<span id="cb158-12"><a href="comparing-groups.html#cb158-12" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 w3      7.11</span></span>
-<span id="cb158-13"><a href="comparing-groups.html#cb158-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 4 w4      7.46</span></span>
-<span id="cb158-14"><a href="comparing-groups.html#cb158-14" aria-hidden="true" tabindex="-1"></a><span class="do">## 5 w5      7.54</span></span>
-<span id="cb158-15"><a href="comparing-groups.html#cb158-15" aria-hidden="true" tabindex="-1"></a><span class="do">## 6 w6      7.44</span></span>
-<span id="cb158-16"><a href="comparing-groups.html#cb158-16" aria-hidden="true" tabindex="-1"></a><span class="do">## 7 w7      7.60</span></span>
-<span id="cb158-17"><a href="comparing-groups.html#cb158-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the boxplots</span></span>
-<span id="cb158-18"><a href="comparing-groups.html#cb158-18" aria-hidden="true" tabindex="-1"></a>wvs_waves <span class="sc">%&gt;%</span></span>
-<span id="cb158-19"><a href="comparing-groups.html#cb158-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> wave,</span>
-<span id="cb158-20"><a href="comparing-groups.html#cb158-20" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> satisfaction,</span>
-<span id="cb158-21"><a href="comparing-groups.html#cb158-21" aria-hidden="true" tabindex="-1"></a>             <span class="at">fill =</span> wave)) <span class="sc">+</span></span>
-<span id="cb158-22"><a href="comparing-groups.html#cb158-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
-<span id="cb158-23"><a href="comparing-groups.html#cb158-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb158-24"><a href="comparing-groups.html#cb158-24" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add the means</span></span>
-<span id="cb158-25"><a href="comparing-groups.html#cb158-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> wave_means,</span>
-<span id="cb158-26"><a href="comparing-groups.html#cb158-26" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x =</span> wave,</span>
-<span id="cb158-27"><a href="comparing-groups.html#cb158-27" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y =</span> w_mean),</span>
-<span id="cb158-28"><a href="comparing-groups.html#cb158-28" aria-hidden="true" tabindex="-1"></a>             <span class="at">shape =</span> <span class="dv">4</span>)</span></code></pre></div>
+<span id="cb158-2"><a href="comparing-groups.html#cb158-2" aria-hidden="true" tabindex="-1"></a>wave_means <span class="ot">&lt;-</span></span>
+<span id="cb158-3"><a href="comparing-groups.html#cb158-3" aria-hidden="true" tabindex="-1"></a>  wvs_waves <span class="sc">%&gt;%</span></span>
+<span id="cb158-4"><a href="comparing-groups.html#cb158-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(wave) <span class="sc">%&gt;%</span></span>
+<span id="cb158-5"><a href="comparing-groups.html#cb158-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">w_mean =</span> <span class="fu">mean</span>(satisfaction))</span>
+<span id="cb158-6"><a href="comparing-groups.html#cb158-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb158-7"><a href="comparing-groups.html#cb158-7" aria-hidden="true" tabindex="-1"></a>wave_means</span>
+<span id="cb158-8"><a href="comparing-groups.html#cb158-8" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 7 × 2</span></span>
+<span id="cb158-9"><a href="comparing-groups.html#cb158-9" aria-hidden="true" tabindex="-1"></a><span class="do">##   wave  w_mean</span></span>
+<span id="cb158-10"><a href="comparing-groups.html#cb158-10" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;fct&gt;  &lt;dbl&gt;</span></span>
+<span id="cb158-11"><a href="comparing-groups.html#cb158-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 w1      7.14</span></span>
+<span id="cb158-12"><a href="comparing-groups.html#cb158-12" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 w2      6.83</span></span>
+<span id="cb158-13"><a href="comparing-groups.html#cb158-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 w3      7.11</span></span>
+<span id="cb158-14"><a href="comparing-groups.html#cb158-14" aria-hidden="true" tabindex="-1"></a><span class="do">## 4 w4      7.46</span></span>
+<span id="cb158-15"><a href="comparing-groups.html#cb158-15" aria-hidden="true" tabindex="-1"></a><span class="do">## 5 w5      7.54</span></span>
+<span id="cb158-16"><a href="comparing-groups.html#cb158-16" aria-hidden="true" tabindex="-1"></a><span class="do">## 6 w6      7.44</span></span>
+<span id="cb158-17"><a href="comparing-groups.html#cb158-17" aria-hidden="true" tabindex="-1"></a><span class="do">## 7 w7      7.60</span></span>
+<span id="cb158-18"><a href="comparing-groups.html#cb158-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the boxplots</span></span>
+<span id="cb158-19"><a href="comparing-groups.html#cb158-19" aria-hidden="true" tabindex="-1"></a>wvs_waves <span class="sc">%&gt;%</span></span>
+<span id="cb158-20"><a href="comparing-groups.html#cb158-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> wave,</span>
+<span id="cb158-21"><a href="comparing-groups.html#cb158-21" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> satisfaction,</span>
+<span id="cb158-22"><a href="comparing-groups.html#cb158-22" aria-hidden="true" tabindex="-1"></a>             <span class="at">fill =</span> wave)) <span class="sc">+</span></span>
+<span id="cb158-23"><a href="comparing-groups.html#cb158-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb158-24"><a href="comparing-groups.html#cb158-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb158-25"><a href="comparing-groups.html#cb158-25" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add the means</span></span>
+<span id="cb158-26"><a href="comparing-groups.html#cb158-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> wave_means,</span>
+<span id="cb158-27"><a href="comparing-groups.html#cb158-27" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x =</span> wave,</span>
+<span id="cb158-28"><a href="comparing-groups.html#cb158-28" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y =</span> w_mean),</span>
+<span id="cb158-29"><a href="comparing-groups.html#cb158-29" aria-hidden="true" tabindex="-1"></a>             <span class="at">shape =</span> <span class="dv">4</span>)</span></code></pre></div>
 <p><img src="r_for_non_programmers_files/figure-html/Visualise%20multiple%20paired%20groups-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>In total, we plotted seven boxplots that represent each wave of data collection. We can tell that <code>satisfaction</code> with life has improved slightly, especially from wave 3 (<code>w3</code>) to wave 4 (<code>w4</code>).</p>
 <p>Next, we would have to check the assumptions for parametric tests. Since we have covered this in Chapter <a href="sources-of-bias.html#sources-of-bias">9</a>, we only consider Mauchly’s Test of Sphericity by running <code>anova_test()</code>.</p>
@@ -1251,23 +1263,24 @@ div.csl-indent {
 <p>So far, our dependent variable was always a numeric one. However, what if both independent and dependent variables are categorical? In such cases, we can only count the number of occurrences for each combination of the categories.</p>
 <p>For example, we might recode our previous dependent variable <code>satisfaction</code> into a dichotomous one, i.e. participants are either happy or not. This is also known as a binary/logical variable (see Chapter <a href="data-wrangling.html#change-data-types">7.4</a>). Since the original scale ranges from 1-10, we assume that participants who scored higher than <code>5</code> are <code>satisfied</code> with their lives, while those who scored lower are categorised as <code>unsatisfied</code>.</p>
 <div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb162-1"><a href="comparing-groups.html#cb162-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a dichotomous/binary variable for satisfaction</span></span>
-<span id="cb162-2"><a href="comparing-groups.html#cb162-2" aria-hidden="true" tabindex="-1"></a>wvs_nona <span class="ot">&lt;-</span> wvs_nona <span class="sc">%&gt;%</span></span>
-<span id="cb162-3"><a href="comparing-groups.html#cb162-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">satisfaction_bin =</span> <span class="fu">as_factor</span>(<span class="fu">ifelse</span>(satisfaction <span class="sc">&gt;</span> <span class="dv">5</span>,</span>
-<span id="cb162-4"><a href="comparing-groups.html#cb162-4" aria-hidden="true" tabindex="-1"></a>                                             <span class="st">&quot;satisfied&quot;</span>,</span>
-<span id="cb162-5"><a href="comparing-groups.html#cb162-5" aria-hidden="true" tabindex="-1"></a>                                             <span class="st">&quot;unsatisfied&quot;</span>))</span>
-<span id="cb162-6"><a href="comparing-groups.html#cb162-6" aria-hidden="true" tabindex="-1"></a>         )</span></code></pre></div>
+<span id="cb162-2"><a href="comparing-groups.html#cb162-2" aria-hidden="true" tabindex="-1"></a>wvs_nona <span class="ot">&lt;-</span></span>
+<span id="cb162-3"><a href="comparing-groups.html#cb162-3" aria-hidden="true" tabindex="-1"></a>  wvs_nona <span class="sc">%&gt;%</span></span>
+<span id="cb162-4"><a href="comparing-groups.html#cb162-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">satisfaction_bin =</span> <span class="fu">as_factor</span>(<span class="fu">ifelse</span>(satisfaction <span class="sc">&gt;</span> <span class="dv">5</span>,</span>
+<span id="cb162-5"><a href="comparing-groups.html#cb162-5" aria-hidden="true" tabindex="-1"></a>                                             <span class="st">&quot;satisfied&quot;</span>,</span>
+<span id="cb162-6"><a href="comparing-groups.html#cb162-6" aria-hidden="true" tabindex="-1"></a>                                             <span class="st">&quot;unsatisfied&quot;</span>))</span>
+<span id="cb162-7"><a href="comparing-groups.html#cb162-7" aria-hidden="true" tabindex="-1"></a>         )</span></code></pre></div>
 <p>Your first intuition is likely to ask: Are there more <code>satisfied</code> or <code>unsatisfied</code> people in my sample?</p>
 <div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb163-1"><a href="comparing-groups.html#cb163-1" aria-hidden="true" tabindex="-1"></a>wvs_nona <span class="sc">%&gt;%</span> <span class="fu">count</span>(satisfaction_bin)</span>
 <span id="cb163-2"><a href="comparing-groups.html#cb163-2" aria-hidden="true" tabindex="-1"></a><span class="do">##   satisfaction_bin     n</span></span>
-<span id="cb163-3"><a href="comparing-groups.html#cb163-3" aria-hidden="true" tabindex="-1"></a><span class="do">## 1        satisfied 52575</span></span>
-<span id="cb163-4"><a href="comparing-groups.html#cb163-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 2      unsatisfied 17003</span></span></code></pre></div>
+<span id="cb163-3"><a href="comparing-groups.html#cb163-3" aria-hidden="true" tabindex="-1"></a><span class="do">## 1        satisfied 52582</span></span>
+<span id="cb163-4"><a href="comparing-groups.html#cb163-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 2      unsatisfied 16996</span></span></code></pre></div>
 <p>The results reveal that considerably more people are satisfied with their life than there are unsatisfied people. In the spirit of group comparisons, we might wonder whether <code>gender</code> differences might exist among the <code>satisfied</code> and <code>unsatisfied</code> group of people. Thus, we want to split the <code>satisfied</code> and <code>unsatisfied</code> responses into male and female groups. We can do this by adding a second argument to the function <code>count()</code>.</p>
 <div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb164-1"><a href="comparing-groups.html#cb164-1" aria-hidden="true" tabindex="-1"></a>wvs_nona <span class="sc">%&gt;%</span> <span class="fu">count</span>(satisfaction_bin, gender)</span>
 <span id="cb164-2"><a href="comparing-groups.html#cb164-2" aria-hidden="true" tabindex="-1"></a><span class="do">##   satisfaction_bin gender     n</span></span>
-<span id="cb164-3"><a href="comparing-groups.html#cb164-3" aria-hidden="true" tabindex="-1"></a><span class="do">## 1        satisfied   male 24907</span></span>
-<span id="cb164-4"><a href="comparing-groups.html#cb164-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 2        satisfied female 27668</span></span>
-<span id="cb164-5"><a href="comparing-groups.html#cb164-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 3      unsatisfied   male  8162</span></span>
-<span id="cb164-6"><a href="comparing-groups.html#cb164-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 4      unsatisfied female  8841</span></span></code></pre></div>
+<span id="cb164-3"><a href="comparing-groups.html#cb164-3" aria-hidden="true" tabindex="-1"></a><span class="do">## 1        satisfied   male 24913</span></span>
+<span id="cb164-4"><a href="comparing-groups.html#cb164-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 2        satisfied female 27669</span></span>
+<span id="cb164-5"><a href="comparing-groups.html#cb164-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 3      unsatisfied   male  8160</span></span>
+<span id="cb164-6"><a href="comparing-groups.html#cb164-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 4      unsatisfied female  8836</span></span></code></pre></div>
 <p>This <code>tibble</code> reveals that there are more <code>female</code> participants who are satisfied than <code>male</code> ones. However, the same is true for the category <code>unsatisfied</code>. Using absolute values is not very meaningful when the sample size of each group is not equal. Thus, it is better to use the relative frequency instead, adding it as a new variable.</p>
 <div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb165-1"><a href="comparing-groups.html#cb165-1" aria-hidden="true" tabindex="-1"></a>ct <span class="ot">&lt;-</span> wvs_nona <span class="sc">%&gt;%</span></span>
 <span id="cb165-2"><a href="comparing-groups.html#cb165-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(satisfaction_bin, gender) <span class="sc">%&gt;%</span></span>
@@ -1279,10 +1292,10 @@ div.csl-indent {
 <span id="cb165-8"><a href="comparing-groups.html#cb165-8" aria-hidden="true" tabindex="-1"></a><span class="do">## # Groups:   gender [2]</span></span>
 <span id="cb165-9"><a href="comparing-groups.html#cb165-9" aria-hidden="true" tabindex="-1"></a><span class="do">##   satisfaction_bin gender     n  perc</span></span>
 <span id="cb165-10"><a href="comparing-groups.html#cb165-10" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;fct&gt;            &lt;fct&gt;  &lt;int&gt; &lt;dbl&gt;</span></span>
-<span id="cb165-11"><a href="comparing-groups.html#cb165-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 satisfied        male   24907 0.753</span></span>
-<span id="cb165-12"><a href="comparing-groups.html#cb165-12" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 satisfied        female 27668 0.758</span></span>
-<span id="cb165-13"><a href="comparing-groups.html#cb165-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 unsatisfied      male    8162 0.247</span></span>
-<span id="cb165-14"><a href="comparing-groups.html#cb165-14" aria-hidden="true" tabindex="-1"></a><span class="do">## 4 unsatisfied      female  8841 0.242</span></span></code></pre></div>
+<span id="cb165-11"><a href="comparing-groups.html#cb165-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 satisfied        male   24913 0.753</span></span>
+<span id="cb165-12"><a href="comparing-groups.html#cb165-12" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 satisfied        female 27669 0.758</span></span>
+<span id="cb165-13"><a href="comparing-groups.html#cb165-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 unsatisfied      male    8160 0.247</span></span>
+<span id="cb165-14"><a href="comparing-groups.html#cb165-14" aria-hidden="true" tabindex="-1"></a><span class="do">## 4 unsatisfied      female  8836 0.242</span></span></code></pre></div>
 <p>The relative frequency (<code>perc</code>) reveals that <code>female</code> and <code>male</code> participants are equally satisfied and unsatisfied. In other words, we could argue that gender does not explain satisfaction with life because the proportion of <code>male</code> and <code>female</code> participants is almost identical.</p>
 <p>A more common and compact way to show such dependencies between categorical variables is a contingency table. To convert our current table into a contingency table, we need to map the levels of <code>satisfaction_bin</code> as rows (i.e. <code>satisfied</code> and <code>unsatisfied</code>), and for <code>gender</code>, we want each level represented as a column (i.e. <code>male</code> and <code>female</code>). This can be achieved with the function <code>pivot_wider()</code>. It turns our ‘long’ data frame into a ‘wide’ one. However, this means that our data is not ‘tidy’ anymore. Let’s take a look at the output first to understand better what we try to achieve.</p>
 <div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb166-1"><a href="comparing-groups.html#cb166-1" aria-hidden="true" tabindex="-1"></a>ct <span class="sc">%&gt;%</span> <span class="fu">pivot_wider</span>(<span class="at">id_cols =</span> satisfaction_bin,</span>
@@ -1306,8 +1319,8 @@ div.csl-indent {
 <span id="cb167-4"><a href="comparing-groups.html#cb167-4" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 2 × 5</span></span>
 <span id="cb167-5"><a href="comparing-groups.html#cb167-5" aria-hidden="true" tabindex="-1"></a><span class="do">##   satisfaction_bin perc_male perc_female n_male n_female</span></span>
 <span id="cb167-6"><a href="comparing-groups.html#cb167-6" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;fct&gt;                &lt;dbl&gt;       &lt;dbl&gt;  &lt;int&gt;    &lt;int&gt;</span></span>
-<span id="cb167-7"><a href="comparing-groups.html#cb167-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 satisfied            0.753       0.758  24907    27668</span></span>
-<span id="cb167-8"><a href="comparing-groups.html#cb167-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 unsatisfied          0.247       0.242   8162     8841</span></span></code></pre></div>
+<span id="cb167-7"><a href="comparing-groups.html#cb167-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 satisfied            0.753       0.758  24913    27669</span></span>
+<span id="cb167-8"><a href="comparing-groups.html#cb167-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 unsatisfied          0.247       0.242   8160     8836</span></span></code></pre></div>
 <p>The table has become even wider because we have two more columns to show the absolute frequency per <code>gender</code> and <code>satisfaction_bin</code>.</p>
 <p>As you probably expect, there are also situations where we want to turn a ‘wide’ data frame into a long one. An example with in-depth explanations is shown in Chapter <a href="regression.html#reviewing-the-outliers">13.2.1.5</a>.</p>
 <p>Contingency tables are like plots: They provide an excellent overview of our data structure and relationships between variables. However, they provide no certainty about the strength of relationships. Therefore, we need to draw on a set of statistical tests to gain further insights.</p>
@@ -1316,31 +1329,34 @@ div.csl-indent {
 <h3><span class="header-section-number">12.4.1</span> Unpaired groups of categorical variables</h3>
 <p>In the introduction to this chapter, we covered a classic example of an unpaired comparison of two groups (<code>male</code> and <code>female</code>) regarding another categorical variable, i.e. <code>satisfaction_bin</code>. The tables we produced offered detailed insights into the distribution of these categories. However, it is always helpful to have a visual representation. Plotting two categorical variables (i.e. factors) in <code>ggplot2</code> can be achieved in many different ways. Three commonly used options are shown in Figure <a href="comparing-groups.html#fig:three-plots-satisfaction-gender">12.1</a>.</p>
 <div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb168-1"><a href="comparing-groups.html#cb168-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot with absolute frequencies (stacked)</span></span>
-<span id="cb168-2"><a href="comparing-groups.html#cb168-2" aria-hidden="true" tabindex="-1"></a>absolute_stacked <span class="ot">&lt;-</span> wvs_nona <span class="sc">%&gt;%</span></span>
-<span id="cb168-3"><a href="comparing-groups.html#cb168-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> satisfaction_bin,</span>
-<span id="cb168-4"><a href="comparing-groups.html#cb168-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">fill =</span> gender)) <span class="sc">+</span></span>
-<span id="cb168-5"><a href="comparing-groups.html#cb168-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
-<span id="cb168-6"><a href="comparing-groups.html#cb168-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Stacked absolute frequency&quot;</span>) <span class="sc">+</span></span>
-<span id="cb168-7"><a href="comparing-groups.html#cb168-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span>
-<span id="cb168-8"><a href="comparing-groups.html#cb168-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb168-9"><a href="comparing-groups.html#cb168-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot with absolute frequencies (grouped)</span></span>
-<span id="cb168-10"><a href="comparing-groups.html#cb168-10" aria-hidden="true" tabindex="-1"></a>absolute_grouped <span class="ot">&lt;-</span> wvs_nona <span class="sc">%&gt;%</span></span>
-<span id="cb168-11"><a href="comparing-groups.html#cb168-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> satisfaction_bin,</span>
-<span id="cb168-12"><a href="comparing-groups.html#cb168-12" aria-hidden="true" tabindex="-1"></a>             <span class="at">fill =</span> gender)) <span class="sc">+</span></span>
-<span id="cb168-13"><a href="comparing-groups.html#cb168-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">&quot;dodge&quot;</span>) <span class="sc">+</span></span>
-<span id="cb168-14"><a href="comparing-groups.html#cb168-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Grouped absolute frequency&quot;</span>) <span class="sc">+</span></span>
-<span id="cb168-15"><a href="comparing-groups.html#cb168-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span>
-<span id="cb168-16"><a href="comparing-groups.html#cb168-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb168-17"><a href="comparing-groups.html#cb168-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot with relative frequencies</span></span>
-<span id="cb168-18"><a href="comparing-groups.html#cb168-18" aria-hidden="true" tabindex="-1"></a>relative <span class="ot">&lt;-</span> wvs_nona <span class="sc">%&gt;%</span></span>
-<span id="cb168-19"><a href="comparing-groups.html#cb168-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> satisfaction_bin,</span>
-<span id="cb168-20"><a href="comparing-groups.html#cb168-20" aria-hidden="true" tabindex="-1"></a>             <span class="at">fill =</span> gender)) <span class="sc">+</span></span>
-<span id="cb168-21"><a href="comparing-groups.html#cb168-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">&quot;fill&quot;</span>) <span class="sc">+</span></span>
-<span id="cb168-22"><a href="comparing-groups.html#cb168-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Relative frequency&quot;</span>) <span class="sc">+</span></span>
-<span id="cb168-23"><a href="comparing-groups.html#cb168-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span>
-<span id="cb168-24"><a href="comparing-groups.html#cb168-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb168-25"><a href="comparing-groups.html#cb168-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot all three plots with &#39;patchwork&#39;</span></span>
-<span id="cb168-26"><a href="comparing-groups.html#cb168-26" aria-hidden="true" tabindex="-1"></a>absolute_stacked <span class="sc">+</span> absolute_grouped <span class="sc">+</span> relative <span class="sc">+</span> <span class="fu">plot_spacer</span>()</span></code></pre></div>
+<span id="cb168-2"><a href="comparing-groups.html#cb168-2" aria-hidden="true" tabindex="-1"></a>absolute_stacked <span class="ot">&lt;-</span></span>
+<span id="cb168-3"><a href="comparing-groups.html#cb168-3" aria-hidden="true" tabindex="-1"></a>  wvs_nona <span class="sc">%&gt;%</span></span>
+<span id="cb168-4"><a href="comparing-groups.html#cb168-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> satisfaction_bin,</span>
+<span id="cb168-5"><a href="comparing-groups.html#cb168-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">fill =</span> gender)) <span class="sc">+</span></span>
+<span id="cb168-6"><a href="comparing-groups.html#cb168-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
+<span id="cb168-7"><a href="comparing-groups.html#cb168-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Stacked absolute frequency&quot;</span>) <span class="sc">+</span></span>
+<span id="cb168-8"><a href="comparing-groups.html#cb168-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span>
+<span id="cb168-9"><a href="comparing-groups.html#cb168-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb168-10"><a href="comparing-groups.html#cb168-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot with absolute frequencies (grouped)</span></span>
+<span id="cb168-11"><a href="comparing-groups.html#cb168-11" aria-hidden="true" tabindex="-1"></a>absolute_grouped <span class="ot">&lt;-</span></span>
+<span id="cb168-12"><a href="comparing-groups.html#cb168-12" aria-hidden="true" tabindex="-1"></a>  wvs_nona <span class="sc">%&gt;%</span></span>
+<span id="cb168-13"><a href="comparing-groups.html#cb168-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> satisfaction_bin,</span>
+<span id="cb168-14"><a href="comparing-groups.html#cb168-14" aria-hidden="true" tabindex="-1"></a>             <span class="at">fill =</span> gender)) <span class="sc">+</span></span>
+<span id="cb168-15"><a href="comparing-groups.html#cb168-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">&quot;dodge&quot;</span>) <span class="sc">+</span></span>
+<span id="cb168-16"><a href="comparing-groups.html#cb168-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Grouped absolute frequency&quot;</span>) <span class="sc">+</span></span>
+<span id="cb168-17"><a href="comparing-groups.html#cb168-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span>
+<span id="cb168-18"><a href="comparing-groups.html#cb168-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb168-19"><a href="comparing-groups.html#cb168-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot with relative frequencies</span></span>
+<span id="cb168-20"><a href="comparing-groups.html#cb168-20" aria-hidden="true" tabindex="-1"></a>relative <span class="ot">&lt;-</span></span>
+<span id="cb168-21"><a href="comparing-groups.html#cb168-21" aria-hidden="true" tabindex="-1"></a>  wvs_nona <span class="sc">%&gt;%</span></span>
+<span id="cb168-22"><a href="comparing-groups.html#cb168-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> satisfaction_bin,</span>
+<span id="cb168-23"><a href="comparing-groups.html#cb168-23" aria-hidden="true" tabindex="-1"></a>             <span class="at">fill =</span> gender)) <span class="sc">+</span></span>
+<span id="cb168-24"><a href="comparing-groups.html#cb168-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">&quot;fill&quot;</span>) <span class="sc">+</span></span>
+<span id="cb168-25"><a href="comparing-groups.html#cb168-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Relative frequency&quot;</span>) <span class="sc">+</span></span>
+<span id="cb168-26"><a href="comparing-groups.html#cb168-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span>
+<span id="cb168-27"><a href="comparing-groups.html#cb168-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb168-28"><a href="comparing-groups.html#cb168-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot all three plots with &#39;patchwork&#39;</span></span>
+<span id="cb168-29"><a href="comparing-groups.html#cb168-29" aria-hidden="true" tabindex="-1"></a>absolute_stacked <span class="sc">+</span> absolute_grouped <span class="sc">+</span> relative <span class="sc">+</span> <span class="fu">plot_spacer</span>()</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:three-plots-satisfaction-gender"></span>
 <img src="r_for_non_programmers_files/figure-html/three-plots-satisfaction-gender-1.png" alt="Three ways to plot frequencies" width="672" />
 <p class="caption">
@@ -1426,8 +1442,8 @@ Figure 12.2: A mosaic plot which visualises the relationship of two categorical 
 <span id="cb171-4"><a href="comparing-groups.html#cb171-4" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 2 × 3</span></span>
 <span id="cb171-5"><a href="comparing-groups.html#cb171-5" aria-hidden="true" tabindex="-1"></a><span class="do">##   satisfaction_bin  male female</span></span>
 <span id="cb171-6"><a href="comparing-groups.html#cb171-6" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;fct&gt;            &lt;int&gt;  &lt;int&gt;</span></span>
-<span id="cb171-7"><a href="comparing-groups.html#cb171-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 satisfied        24907  27668</span></span>
-<span id="cb171-8"><a href="comparing-groups.html#cb171-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 unsatisfied       8162   8841</span></span></code></pre></div>
+<span id="cb171-7"><a href="comparing-groups.html#cb171-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 satisfied        24913  27669</span></span>
+<span id="cb171-8"><a href="comparing-groups.html#cb171-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 unsatisfied       8160   8836</span></span></code></pre></div>
 <p>We easily satisfy the requirement for a regular Chi-squared test with Yate’s continuity correction because each row has at least a value of 10. However, for demonstration purposes, I will show how to compute both the Chi-squared test and the Fisher’s Exact test for the same contingency table.</p>
 <div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb172-1"><a href="comparing-groups.html#cb172-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fisher&#39;s Exact Test</span></span>
 <span id="cb172-2"><a href="comparing-groups.html#cb172-2" aria-hidden="true" tabindex="-1"></a><span class="fu">fisher.test</span>(wvs_nona<span class="sc">$</span>satisfaction_bin, wvs_nona<span class="sc">$</span>gender) <span class="sc">%&gt;%</span></span>
@@ -1436,17 +1452,17 @@ Figure 12.2: A mosaic plot which visualises the relationship of two categorical 
 <span id="cb172-5"><a href="comparing-groups.html#cb172-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span>
 <span id="cb172-6"><a href="comparing-groups.html#cb172-6" aria-hidden="true" tabindex="-1"></a><span class="do">## Rows: 1</span></span>
 <span id="cb172-7"><a href="comparing-groups.html#cb172-7" aria-hidden="true" tabindex="-1"></a><span class="do">## Columns: 6</span></span>
-<span id="cb172-8"><a href="comparing-groups.html#cb172-8" aria-hidden="true" tabindex="-1"></a><span class="do">## $ estimate    &lt;dbl&gt; 0.9750911</span></span>
-<span id="cb172-9"><a href="comparing-groups.html#cb172-9" aria-hidden="true" tabindex="-1"></a><span class="do">## $ p.value     &lt;dbl&gt; 0.1549877</span></span>
-<span id="cb172-10"><a href="comparing-groups.html#cb172-10" aria-hidden="true" tabindex="-1"></a><span class="do">## $ conf.low    &lt;dbl&gt; 0.9417838</span></span>
-<span id="cb172-11"><a href="comparing-groups.html#cb172-11" aria-hidden="true" tabindex="-1"></a><span class="do">## $ conf.high   &lt;dbl&gt; 1.009579</span></span>
+<span id="cb172-8"><a href="comparing-groups.html#cb172-8" aria-hidden="true" tabindex="-1"></a><span class="do">## $ estimate    &lt;dbl&gt; 0.974978</span></span>
+<span id="cb172-9"><a href="comparing-groups.html#cb172-9" aria-hidden="true" tabindex="-1"></a><span class="do">## $ p.value     &lt;dbl&gt; 0.15239</span></span>
+<span id="cb172-10"><a href="comparing-groups.html#cb172-10" aria-hidden="true" tabindex="-1"></a><span class="do">## $ conf.low    &lt;dbl&gt; 0.9416691</span></span>
+<span id="cb172-11"><a href="comparing-groups.html#cb172-11" aria-hidden="true" tabindex="-1"></a><span class="do">## $ conf.high   &lt;dbl&gt; 1.00947</span></span>
 <span id="cb172-12"><a href="comparing-groups.html#cb172-12" aria-hidden="true" tabindex="-1"></a><span class="do">## $ method      &lt;chr&gt; &quot;Fisher&#39;s Exact Test for Count Data&quot;</span></span>
 <span id="cb172-13"><a href="comparing-groups.html#cb172-13" aria-hidden="true" tabindex="-1"></a><span class="do">## $ alternative &lt;chr&gt; &quot;two.sided&quot;</span></span>
 <span id="cb172-14"><a href="comparing-groups.html#cb172-14" aria-hidden="true" tabindex="-1"></a><span class="do">## Effect size</span></span>
 <span id="cb172-15"><a href="comparing-groups.html#cb172-15" aria-hidden="true" tabindex="-1"></a>(phi <span class="ot">&lt;-</span> effectsize<span class="sc">::</span><span class="fu">phi</span>(wvs_nona<span class="sc">$</span>satisfaction_bin, wvs_nona<span class="sc">$</span>gender))</span>
 <span id="cb172-16"><a href="comparing-groups.html#cb172-16" aria-hidden="true" tabindex="-1"></a><span class="do">## Phi      |       95% CI</span></span>
 <span id="cb172-17"><a href="comparing-groups.html#cb172-17" aria-hidden="true" tabindex="-1"></a><span class="do">## -----------------------</span></span>
-<span id="cb172-18"><a href="comparing-groups.html#cb172-18" aria-hidden="true" tabindex="-1"></a><span class="do">## 5.41e-03 | [0.00, 1.00]</span></span>
+<span id="cb172-18"><a href="comparing-groups.html#cb172-18" aria-hidden="true" tabindex="-1"></a><span class="do">## 5.44e-03 | [0.00, 1.00]</span></span>
 <span id="cb172-19"><a href="comparing-groups.html#cb172-19" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
 <span id="cb172-20"><a href="comparing-groups.html#cb172-20" aria-hidden="true" tabindex="-1"></a><span class="do">## - One-sided CIs: upper bound fixed at (1).</span></span>
 <span id="cb172-21"><a href="comparing-groups.html#cb172-21" aria-hidden="true" tabindex="-1"></a>effectsize<span class="sc">::</span><span class="fu">interpret_r</span>(phi<span class="sc">$</span>phi, <span class="at">rules =</span> <span class="st">&quot;cohen1988&quot;</span>)</span>
@@ -1458,12 +1474,12 @@ Figure 12.2: A mosaic plot which visualises the relationship of two categorical 
 <span id="cb172-27"><a href="comparing-groups.html#cb172-27" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 1 × 3</span></span>
 <span id="cb172-28"><a href="comparing-groups.html#cb172-28" aria-hidden="true" tabindex="-1"></a><span class="do">##   statistic chisq_df p_value</span></span>
 <span id="cb172-29"><a href="comparing-groups.html#cb172-29" aria-hidden="true" tabindex="-1"></a><span class="do">##       &lt;dbl&gt;    &lt;int&gt;   &lt;dbl&gt;</span></span>
-<span id="cb172-30"><a href="comparing-groups.html#cb172-30" aria-hidden="true" tabindex="-1"></a><span class="do">## 1      2.01        1   0.156</span></span>
+<span id="cb172-30"><a href="comparing-groups.html#cb172-30" aria-hidden="true" tabindex="-1"></a><span class="do">## 1      2.03        1   0.154</span></span>
 <span id="cb172-31"><a href="comparing-groups.html#cb172-31" aria-hidden="true" tabindex="-1"></a><span class="do">## Effect size</span></span>
 <span id="cb172-32"><a href="comparing-groups.html#cb172-32" aria-hidden="true" tabindex="-1"></a>(cv <span class="ot">&lt;-</span> effectsize<span class="sc">::</span><span class="fu">cramers_v</span>(wvs_nona<span class="sc">$</span>satisfaction_bin, wvs_nona<span class="sc">$</span>gender))</span>
 <span id="cb172-33"><a href="comparing-groups.html#cb172-33" aria-hidden="true" tabindex="-1"></a><span class="do">## Cramer&#39;s V |       95% CI</span></span>
 <span id="cb172-34"><a href="comparing-groups.html#cb172-34" aria-hidden="true" tabindex="-1"></a><span class="do">## -------------------------</span></span>
-<span id="cb172-35"><a href="comparing-groups.html#cb172-35" aria-hidden="true" tabindex="-1"></a><span class="do">## 5.41e-03   | [0.00, 1.00]</span></span>
+<span id="cb172-35"><a href="comparing-groups.html#cb172-35" aria-hidden="true" tabindex="-1"></a><span class="do">## 5.44e-03   | [0.00, 1.00]</span></span>
 <span id="cb172-36"><a href="comparing-groups.html#cb172-36" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
 <span id="cb172-37"><a href="comparing-groups.html#cb172-37" aria-hidden="true" tabindex="-1"></a><span class="do">## - One-sided CIs: upper bound fixed at (1).</span></span>
 <span id="cb172-38"><a href="comparing-groups.html#cb172-38" aria-hidden="true" tabindex="-1"></a>effectsize<span class="sc">::</span><span class="fu">interpret_r</span>(cv<span class="sc">$</span>Cramers_v, <span class="at">rules =</span> <span class="st">&quot;cohen1988&quot;</span>)</span>
@@ -1482,46 +1498,47 @@ Figure 12.2: A mosaic plot which visualises the relationship of two categorical 
 <p>While this plot is a lot more colourful than our previous ones, it still suggests that differences across categories are not particularly large. Especially the category <code>married</code> seems to indicate that <code>male</code> and <code>female</code> participants do not differ by much, i.e. their relative frequency is very similar. The only more considerable difference can be found for <code>widowed</code> and <code>single</code>. Apparently, <code>female</code> participants more frequently indicated being <code>widowed</code> while more <code>male</code> participants indicated that they are <code>single</code>.</p>
 <p>Next, we compute the numbers underpinning this plot, comparing the absolute distribution to check our conditions and the relative distribution to interpret the contingency table correctly.</p>
 <div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb174-1"><a href="comparing-groups.html#cb174-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check whether we fulfill the criteria</span></span>
-<span id="cb174-2"><a href="comparing-groups.html#cb174-2" aria-hidden="true" tabindex="-1"></a>rel_gen <span class="ot">&lt;-</span> wvs_nona <span class="sc">%&gt;%</span></span>
-<span id="cb174-3"><a href="comparing-groups.html#cb174-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(relationship_status, gender)</span>
-<span id="cb174-4"><a href="comparing-groups.html#cb174-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb174-5"><a href="comparing-groups.html#cb174-5" aria-hidden="true" tabindex="-1"></a>rel_gen</span>
-<span id="cb174-6"><a href="comparing-groups.html#cb174-6" aria-hidden="true" tabindex="-1"></a><span class="do">##           relationship_status gender     n</span></span>
-<span id="cb174-7"><a href="comparing-groups.html#cb174-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 1                     married   male 19440</span></span>
-<span id="cb174-8"><a href="comparing-groups.html#cb174-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 2                     married female 20828</span></span>
-<span id="cb174-9"><a href="comparing-groups.html#cb174-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 3  living together as married   male  2131</span></span>
-<span id="cb174-10"><a href="comparing-groups.html#cb174-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 4  living together as married female  2522</span></span>
-<span id="cb174-11"><a href="comparing-groups.html#cb174-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 5                   separated   male   627</span></span>
-<span id="cb174-12"><a href="comparing-groups.html#cb174-12" aria-hidden="true" tabindex="-1"></a><span class="do">## 6                   separated female   948</span></span>
-<span id="cb174-13"><a href="comparing-groups.html#cb174-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 7                     widowed   male   824</span></span>
-<span id="cb174-14"><a href="comparing-groups.html#cb174-14" aria-hidden="true" tabindex="-1"></a><span class="do">## 8                     widowed female  3065</span></span>
-<span id="cb174-15"><a href="comparing-groups.html#cb174-15" aria-hidden="true" tabindex="-1"></a><span class="do">## 9                      single   male  9063</span></span>
-<span id="cb174-16"><a href="comparing-groups.html#cb174-16" aria-hidden="true" tabindex="-1"></a><span class="do">## 10                     single female  7381</span></span>
-<span id="cb174-17"><a href="comparing-groups.html#cb174-17" aria-hidden="true" tabindex="-1"></a><span class="do">## 11                   divorced   male   984</span></span>
-<span id="cb174-18"><a href="comparing-groups.html#cb174-18" aria-hidden="true" tabindex="-1"></a><span class="do">## 12                   divorced female  1765</span></span>
-<span id="cb174-19"><a href="comparing-groups.html#cb174-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute relative frequency</span></span>
-<span id="cb174-20"><a href="comparing-groups.html#cb174-20" aria-hidden="true" tabindex="-1"></a>rel_gen <span class="sc">%&gt;%</span></span>
-<span id="cb174-21"><a href="comparing-groups.html#cb174-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(gender) <span class="sc">%&gt;%</span></span>
-<span id="cb174-22"><a href="comparing-groups.html#cb174-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">perc =</span> <span class="fu">round</span>(n <span class="sc">/</span> <span class="fu">sum</span>(n), <span class="dv">3</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb174-23"><a href="comparing-groups.html#cb174-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">id_cols =</span> relationship_status,</span>
-<span id="cb174-24"><a href="comparing-groups.html#cb174-24" aria-hidden="true" tabindex="-1"></a>              <span class="at">names_from =</span> gender,</span>
-<span id="cb174-25"><a href="comparing-groups.html#cb174-25" aria-hidden="true" tabindex="-1"></a>              <span class="at">values_from =</span> perc)</span>
-<span id="cb174-26"><a href="comparing-groups.html#cb174-26" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 6 × 3</span></span>
-<span id="cb174-27"><a href="comparing-groups.html#cb174-27" aria-hidden="true" tabindex="-1"></a><span class="do">##   relationship_status         male female</span></span>
-<span id="cb174-28"><a href="comparing-groups.html#cb174-28" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;fct&gt;                      &lt;dbl&gt;  &lt;dbl&gt;</span></span>
-<span id="cb174-29"><a href="comparing-groups.html#cb174-29" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 married                    0.588  0.57 </span></span>
-<span id="cb174-30"><a href="comparing-groups.html#cb174-30" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 living together as married 0.064  0.069</span></span>
-<span id="cb174-31"><a href="comparing-groups.html#cb174-31" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 separated                  0.019  0.026</span></span>
-<span id="cb174-32"><a href="comparing-groups.html#cb174-32" aria-hidden="true" tabindex="-1"></a><span class="do">## 4 widowed                    0.025  0.084</span></span>
-<span id="cb174-33"><a href="comparing-groups.html#cb174-33" aria-hidden="true" tabindex="-1"></a><span class="do">## 5 single                     0.274  0.202</span></span>
-<span id="cb174-34"><a href="comparing-groups.html#cb174-34" aria-hidden="true" tabindex="-1"></a><span class="do">## 6 divorced                   0.03   0.048</span></span></code></pre></div>
+<span id="cb174-2"><a href="comparing-groups.html#cb174-2" aria-hidden="true" tabindex="-1"></a>rel_gen <span class="ot">&lt;-</span></span>
+<span id="cb174-3"><a href="comparing-groups.html#cb174-3" aria-hidden="true" tabindex="-1"></a>  wvs_nona <span class="sc">%&gt;%</span></span>
+<span id="cb174-4"><a href="comparing-groups.html#cb174-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(relationship_status, gender)</span>
+<span id="cb174-5"><a href="comparing-groups.html#cb174-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb174-6"><a href="comparing-groups.html#cb174-6" aria-hidden="true" tabindex="-1"></a>rel_gen</span>
+<span id="cb174-7"><a href="comparing-groups.html#cb174-7" aria-hidden="true" tabindex="-1"></a><span class="do">##           relationship_status gender     n</span></span>
+<span id="cb174-8"><a href="comparing-groups.html#cb174-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 1                     married   male 19448</span></span>
+<span id="cb174-9"><a href="comparing-groups.html#cb174-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 2                     married female 20826</span></span>
+<span id="cb174-10"><a href="comparing-groups.html#cb174-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 3  living together as married   male  2135</span></span>
+<span id="cb174-11"><a href="comparing-groups.html#cb174-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 4  living together as married female  2521</span></span>
+<span id="cb174-12"><a href="comparing-groups.html#cb174-12" aria-hidden="true" tabindex="-1"></a><span class="do">## 5                   separated   male   624</span></span>
+<span id="cb174-13"><a href="comparing-groups.html#cb174-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 6                   separated female   950</span></span>
+<span id="cb174-14"><a href="comparing-groups.html#cb174-14" aria-hidden="true" tabindex="-1"></a><span class="do">## 7                     widowed   male   826</span></span>
+<span id="cb174-15"><a href="comparing-groups.html#cb174-15" aria-hidden="true" tabindex="-1"></a><span class="do">## 8                     widowed female  3060</span></span>
+<span id="cb174-16"><a href="comparing-groups.html#cb174-16" aria-hidden="true" tabindex="-1"></a><span class="do">## 9                      single   male  9061</span></span>
+<span id="cb174-17"><a href="comparing-groups.html#cb174-17" aria-hidden="true" tabindex="-1"></a><span class="do">## 10                     single female  7384</span></span>
+<span id="cb174-18"><a href="comparing-groups.html#cb174-18" aria-hidden="true" tabindex="-1"></a><span class="do">## 11                   divorced   male   979</span></span>
+<span id="cb174-19"><a href="comparing-groups.html#cb174-19" aria-hidden="true" tabindex="-1"></a><span class="do">## 12                   divorced female  1764</span></span>
+<span id="cb174-20"><a href="comparing-groups.html#cb174-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute relative frequency</span></span>
+<span id="cb174-21"><a href="comparing-groups.html#cb174-21" aria-hidden="true" tabindex="-1"></a>rel_gen <span class="sc">%&gt;%</span></span>
+<span id="cb174-22"><a href="comparing-groups.html#cb174-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(gender) <span class="sc">%&gt;%</span></span>
+<span id="cb174-23"><a href="comparing-groups.html#cb174-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">perc =</span> <span class="fu">round</span>(n <span class="sc">/</span> <span class="fu">sum</span>(n), <span class="dv">3</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb174-24"><a href="comparing-groups.html#cb174-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">id_cols =</span> relationship_status,</span>
+<span id="cb174-25"><a href="comparing-groups.html#cb174-25" aria-hidden="true" tabindex="-1"></a>              <span class="at">names_from =</span> gender,</span>
+<span id="cb174-26"><a href="comparing-groups.html#cb174-26" aria-hidden="true" tabindex="-1"></a>              <span class="at">values_from =</span> perc)</span>
+<span id="cb174-27"><a href="comparing-groups.html#cb174-27" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 6 × 3</span></span>
+<span id="cb174-28"><a href="comparing-groups.html#cb174-28" aria-hidden="true" tabindex="-1"></a><span class="do">##   relationship_status         male female</span></span>
+<span id="cb174-29"><a href="comparing-groups.html#cb174-29" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;fct&gt;                      &lt;dbl&gt;  &lt;dbl&gt;</span></span>
+<span id="cb174-30"><a href="comparing-groups.html#cb174-30" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 married                    0.588  0.57 </span></span>
+<span id="cb174-31"><a href="comparing-groups.html#cb174-31" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 living together as married 0.065  0.069</span></span>
+<span id="cb174-32"><a href="comparing-groups.html#cb174-32" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 separated                  0.019  0.026</span></span>
+<span id="cb174-33"><a href="comparing-groups.html#cb174-33" aria-hidden="true" tabindex="-1"></a><span class="do">## 4 widowed                    0.025  0.084</span></span>
+<span id="cb174-34"><a href="comparing-groups.html#cb174-34" aria-hidden="true" tabindex="-1"></a><span class="do">## 5 single                     0.274  0.202</span></span>
+<span id="cb174-35"><a href="comparing-groups.html#cb174-35" aria-hidden="true" tabindex="-1"></a><span class="do">## 6 divorced                   0.03   0.048</span></span></code></pre></div>
 <p>The contingency table with the relative frequencies confirms what we suspected. The differences are very minimal between <code>male</code> and <code>female</code> participants. In a final step, we need to perform a Chi-squared test to see whether the differences are significant or not.</p>
 <div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb175-1"><a href="comparing-groups.html#cb175-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform Chi-squared test</span></span>
 <span id="cb175-2"><a href="comparing-groups.html#cb175-2" aria-hidden="true" tabindex="-1"></a>wvs_nona <span class="sc">%&gt;%</span> infer<span class="sc">::</span><span class="fu">chisq_test</span>(relationship_status <span class="sc">~</span> gender)</span>
 <span id="cb175-3"><a href="comparing-groups.html#cb175-3" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 1 × 3</span></span>
 <span id="cb175-4"><a href="comparing-groups.html#cb175-4" aria-hidden="true" tabindex="-1"></a><span class="do">##   statistic chisq_df p_value</span></span>
 <span id="cb175-5"><a href="comparing-groups.html#cb175-5" aria-hidden="true" tabindex="-1"></a><span class="do">##       &lt;dbl&gt;    &lt;int&gt;   &lt;dbl&gt;</span></span>
-<span id="cb175-6"><a href="comparing-groups.html#cb175-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 1     1665.        5       0</span></span>
+<span id="cb175-6"><a href="comparing-groups.html#cb175-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 1     1661.        5       0</span></span>
 <span id="cb175-7"><a href="comparing-groups.html#cb175-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute effect size</span></span>
 <span id="cb175-8"><a href="comparing-groups.html#cb175-8" aria-hidden="true" tabindex="-1"></a>(cv <span class="ot">&lt;-</span> effectsize<span class="sc">::</span><span class="fu">cramers_v</span>(wvs_nona<span class="sc">$</span>relationship_status,</span>
 <span id="cb175-9"><a href="comparing-groups.html#cb175-9" aria-hidden="true" tabindex="-1"></a>                            wvs_nona<span class="sc">$</span>gender))</span>
@@ -1564,26 +1581,27 @@ Figure 12.2: A mosaic plot which visualises the relationship of two categorical 
 <p>This contingency table reflects the mosaic plot we created, but it does not show paired answers. If we sum the frequencies in each cell, we receive a score of <code>96</code>, which equals the number of observations in <code>ic_training</code>. However, since we have two observations per person (i.e. paired responses), we only have 48 participants. Thus, this frequency table treats the pre and post-training group as independent from each other, which is obviously incorrect.</p>
 <p>The current dataset includes two rows for each participant. Therefore, if we want to create a contingency table with paired scores, we first need to convert our data so that each participant is reflected by one row only, i.e. we need to make our data frame wider with <code>pivot_wider()</code>.</p>
 <div class="sourceCode" id="cb178"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb178-1"><a href="comparing-groups.html#cb178-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Creating data frame reflecting paired responses</span></span>
-<span id="cb178-2"><a href="comparing-groups.html#cb178-2" aria-hidden="true" tabindex="-1"></a>paired_data <span class="ot">&lt;-</span> ic_training <span class="sc">%&gt;%</span></span>
-<span id="cb178-3"><a href="comparing-groups.html#cb178-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">id_cols =</span> name,</span>
-<span id="cb178-4"><a href="comparing-groups.html#cb178-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">names_from =</span> test,</span>
-<span id="cb178-5"><a href="comparing-groups.html#cb178-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">values_from =</span> communication2)</span>
-<span id="cb178-6"><a href="comparing-groups.html#cb178-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb178-7"><a href="comparing-groups.html#cb178-7" aria-hidden="true" tabindex="-1"></a>paired_data</span>
-<span id="cb178-8"><a href="comparing-groups.html#cb178-8" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 48 × 3</span></span>
-<span id="cb178-9"><a href="comparing-groups.html#cb178-9" aria-hidden="true" tabindex="-1"></a><span class="do">##    name                       pre_training post_training</span></span>
-<span id="cb178-10"><a href="comparing-groups.html#cb178-10" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;chr&gt;                      &lt;fct&gt;        &lt;fct&gt;        </span></span>
-<span id="cb178-11"><a href="comparing-groups.html#cb178-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 Hamlin, Christiana         no           no           </span></span>
-<span id="cb178-12"><a href="comparing-groups.html#cb178-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 Horblit, Timothy           no           yes          </span></span>
-<span id="cb178-13"><a href="comparing-groups.html#cb178-13" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 Grady, Justin              no           yes          </span></span>
-<span id="cb178-14"><a href="comparing-groups.html#cb178-14" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 Grossetete-Alfaro, Giovana no           yes          </span></span>
-<span id="cb178-15"><a href="comparing-groups.html#cb178-15" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 Dingae, Lori               no           yes          </span></span>
-<span id="cb178-16"><a href="comparing-groups.html#cb178-16" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 el-Sabir, Saamyya          no           yes          </span></span>
-<span id="cb178-17"><a href="comparing-groups.html#cb178-17" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 Reynolds, Tylor            no           yes          </span></span>
-<span id="cb178-18"><a href="comparing-groups.html#cb178-18" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 Aslami, Andrew             no           yes          </span></span>
-<span id="cb178-19"><a href="comparing-groups.html#cb178-19" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 Alexander, Kiri            no           yes          </span></span>
-<span id="cb178-20"><a href="comparing-groups.html#cb178-20" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 Guzman Pineda, Timothy     no           yes          </span></span>
-<span id="cb178-21"><a href="comparing-groups.html#cb178-21" aria-hidden="true" tabindex="-1"></a><span class="do">## # … with 38 more rows</span></span></code></pre></div>
+<span id="cb178-2"><a href="comparing-groups.html#cb178-2" aria-hidden="true" tabindex="-1"></a>paired_data <span class="ot">&lt;-</span></span>
+<span id="cb178-3"><a href="comparing-groups.html#cb178-3" aria-hidden="true" tabindex="-1"></a>  ic_training <span class="sc">%&gt;%</span></span>
+<span id="cb178-4"><a href="comparing-groups.html#cb178-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">id_cols =</span> name,</span>
+<span id="cb178-5"><a href="comparing-groups.html#cb178-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">names_from =</span> test,</span>
+<span id="cb178-6"><a href="comparing-groups.html#cb178-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">values_from =</span> communication2)</span>
+<span id="cb178-7"><a href="comparing-groups.html#cb178-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb178-8"><a href="comparing-groups.html#cb178-8" aria-hidden="true" tabindex="-1"></a>paired_data</span>
+<span id="cb178-9"><a href="comparing-groups.html#cb178-9" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 48 × 3</span></span>
+<span id="cb178-10"><a href="comparing-groups.html#cb178-10" aria-hidden="true" tabindex="-1"></a><span class="do">##    name                       pre_training post_training</span></span>
+<span id="cb178-11"><a href="comparing-groups.html#cb178-11" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;chr&gt;                      &lt;fct&gt;        &lt;fct&gt;        </span></span>
+<span id="cb178-12"><a href="comparing-groups.html#cb178-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 Hamlin, Christiana         no           no           </span></span>
+<span id="cb178-13"><a href="comparing-groups.html#cb178-13" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 Horblit, Timothy           no           yes          </span></span>
+<span id="cb178-14"><a href="comparing-groups.html#cb178-14" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 Grady, Justin              no           yes          </span></span>
+<span id="cb178-15"><a href="comparing-groups.html#cb178-15" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 Grossetete-Alfaro, Giovana no           yes          </span></span>
+<span id="cb178-16"><a href="comparing-groups.html#cb178-16" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 Dingae, Lori               no           yes          </span></span>
+<span id="cb178-17"><a href="comparing-groups.html#cb178-17" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 el-Sabir, Saamyya          no           yes          </span></span>
+<span id="cb178-18"><a href="comparing-groups.html#cb178-18" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 Reynolds, Tylor            no           yes          </span></span>
+<span id="cb178-19"><a href="comparing-groups.html#cb178-19" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 Aslami, Andrew             no           yes          </span></span>
+<span id="cb178-20"><a href="comparing-groups.html#cb178-20" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 Alexander, Kiri            no           yes          </span></span>
+<span id="cb178-21"><a href="comparing-groups.html#cb178-21" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 Guzman Pineda, Timothy     no           yes          </span></span>
+<span id="cb178-22"><a href="comparing-groups.html#cb178-22" aria-hidden="true" tabindex="-1"></a><span class="do">## # … with 38 more rows</span></span></code></pre></div>
 <p>In simple terms, we converted the column <code>communication2</code> into two columns based on the factor levels of <code>test</code>, i.e. <code>pre-training</code> and <code>post-training</code>. If we now use these two columns to create a contingency table and mosaic plot, we understand of how the paired distributions between <code>pre-training</code> and <code>post-training</code> look like.</p>
 <div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb179-1"><a href="comparing-groups.html#cb179-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Contignency table with paired values</span></span>
 <span id="cb179-2"><a href="comparing-groups.html#cb179-2" aria-hidden="true" tabindex="-1"></a>ct_paired <span class="ot">&lt;-</span> paired_data <span class="sc">%&gt;%</span></span>
@@ -1663,23 +1681,26 @@ Figure 12.2: A mosaic plot which visualises the relationship of two categorical 
 <div id="a-final-remark-about-comparing-groups-based-on-categorical-data" class="section level3" number="12.4.3">
 <h3><span class="header-section-number">12.4.3</span> A final remark about comparing groups based on categorical data</h3>
 <p>Admittedly, I hardly ever find studies in the field of Social Sciences which work with primarily categorical data. Political Science might be an exception because working, for example, with polling data often implies working with categorical data. A reason you likely will not find yourself in the situation to work with such data and analytical techniques is measurement accuracy. If you look at the <code>ic_training</code>, the variable <code>communication2</code> was artificially created to turn <code>numeric</code> data into a <code>factor</code>. This is usually not good practice because you lose measurement accuracy, and it can exaggerate differences between groups. Consider the following plots:</p>
-<div class="sourceCode" id="cb183"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb183-1"><a href="comparing-groups.html#cb183-1" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> ic_training <span class="sc">%&gt;%</span></span>
-<span id="cb183-2"><a href="comparing-groups.html#cb183-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> communication)) <span class="sc">+</span></span>
-<span id="cb183-3"><a href="comparing-groups.html#cb183-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
-<span id="cb183-4"><a href="comparing-groups.html#cb183-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Full scale&quot;</span>)</span>
-<span id="cb183-5"><a href="comparing-groups.html#cb183-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb183-6"><a href="comparing-groups.html#cb183-6" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> ic_training <span class="sc">%&gt;%</span></span>
-<span id="cb183-7"><a href="comparing-groups.html#cb183-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> communication3)) <span class="sc">+</span></span>
-<span id="cb183-8"><a href="comparing-groups.html#cb183-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
-<span id="cb183-9"><a href="comparing-groups.html#cb183-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Category with 3 levels&quot;</span>)</span>
-<span id="cb183-10"><a href="comparing-groups.html#cb183-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb183-11"><a href="comparing-groups.html#cb183-11" aria-hidden="true" tabindex="-1"></a>p3 <span class="ot">&lt;-</span> ic_training <span class="sc">%&gt;%</span></span>
-<span id="cb183-12"><a href="comparing-groups.html#cb183-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> communication2)) <span class="sc">+</span></span>
-<span id="cb183-13"><a href="comparing-groups.html#cb183-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
-<span id="cb183-14"><a href="comparing-groups.html#cb183-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Category with 2 levels&quot;</span>)</span>
-<span id="cb183-15"><a href="comparing-groups.html#cb183-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb183-16"><a href="comparing-groups.html#cb183-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Create plot with &#39;patchwork&#39;</span></span>
-<span id="cb183-17"><a href="comparing-groups.html#cb183-17" aria-hidden="true" tabindex="-1"></a>p1 <span class="sc">+</span> p2 <span class="sc">+</span> p3 <span class="sc">+</span> <span class="fu">plot_spacer</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb183"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb183-1"><a href="comparing-groups.html#cb183-1" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span></span>
+<span id="cb183-2"><a href="comparing-groups.html#cb183-2" aria-hidden="true" tabindex="-1"></a>  ic_training <span class="sc">%&gt;%</span></span>
+<span id="cb183-3"><a href="comparing-groups.html#cb183-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> communication)) <span class="sc">+</span></span>
+<span id="cb183-4"><a href="comparing-groups.html#cb183-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
+<span id="cb183-5"><a href="comparing-groups.html#cb183-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Full scale&quot;</span>)</span>
+<span id="cb183-6"><a href="comparing-groups.html#cb183-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb183-7"><a href="comparing-groups.html#cb183-7" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span></span>
+<span id="cb183-8"><a href="comparing-groups.html#cb183-8" aria-hidden="true" tabindex="-1"></a>  ic_training <span class="sc">%&gt;%</span></span>
+<span id="cb183-9"><a href="comparing-groups.html#cb183-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> communication3)) <span class="sc">+</span></span>
+<span id="cb183-10"><a href="comparing-groups.html#cb183-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
+<span id="cb183-11"><a href="comparing-groups.html#cb183-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Category with 3 levels&quot;</span>)</span>
+<span id="cb183-12"><a href="comparing-groups.html#cb183-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb183-13"><a href="comparing-groups.html#cb183-13" aria-hidden="true" tabindex="-1"></a>p3 <span class="ot">&lt;-</span></span>
+<span id="cb183-14"><a href="comparing-groups.html#cb183-14" aria-hidden="true" tabindex="-1"></a>  ic_training <span class="sc">%&gt;%</span></span>
+<span id="cb183-15"><a href="comparing-groups.html#cb183-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> communication2)) <span class="sc">+</span></span>
+<span id="cb183-16"><a href="comparing-groups.html#cb183-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
+<span id="cb183-17"><a href="comparing-groups.html#cb183-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Category with 2 levels&quot;</span>)</span>
+<span id="cb183-18"><a href="comparing-groups.html#cb183-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb183-19"><a href="comparing-groups.html#cb183-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Create plot with &#39;patchwork&#39;</span></span>
+<span id="cb183-20"><a href="comparing-groups.html#cb183-20" aria-hidden="true" tabindex="-1"></a>p1 <span class="sc">+</span> p2 <span class="sc">+</span> p3 <span class="sc">+</span> <span class="fu">plot_spacer</span>()</span></code></pre></div>
 <p><img src="r_for_non_programmers_files/figure-html/Comparing%20categorical%20vs%20numeric%20one-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>The more we aggregate the data into fewer categories, the more likely we increase differences between groups. For example, the plot <code>Category with 3 levels</code> shows that most participants fall into the category <code>medium</code>. However, reducing the categories to two, some participants are classified as <code>yes</code> and some as <code>no</code>. Thus, some respondents who were classified as <code>medium</code> are now in the <code>no</code> category. In reality, we know from our non-categorical measures that several participants will still have improved in confidence but are considered with those who have not improved. This is a major problem because it seems more people are not confident about communicating with people from different cultural backgrounds than there actually are. The accuracy of our measurement scale is poor.</p>
 <p>In short, I recommend to only use the techniques outlines in this chapter if your data is truly categorical in nature. Thus, when designing your data collection tool, you might also wish to abstain from measuring quantitative variables as categories, for example <code>age</code>, which is very popular choice among my own students. While it might be sometimes more appropriate to offer categories, it is always good to use multiple categories and not just two. Every additional level in your factor will increase measurement accuracy and provides access to more advance analytical techniques. Remember: it is always possible to convert <code>numeric</code> data into a <code>factor</code>, but not the other way around.</p>
@@ -1784,7 +1805,7 @@ gitbook.start({
 "options": null
 },
 "toc": {
-"collapse": "subsection"
+"collapse": "section"
 }
 });
 });

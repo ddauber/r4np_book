@@ -10,27 +10,27 @@
 
   <meta property="og:title" content="9 Sources of bias: Outliers, normality and other ‘conundrums’ | R for Non-Programmers: A Guide for Social Scientists" />
   <meta property="og:type" content="book" />
-  
-  
+  <meta property="og:url" content="http://danieldauber.com" />
+  <meta property="og:image" content="http://danieldauber.com/images/cover_art_icons/r4np_icon_white_bg_favicon.png" />
   <meta property="og:description" content="9 Sources of bias: Outliers, normality and other ‘conundrums’ | R for Non-Programmers: A Guide for Social Scientists is a springboard into the world of R without having to become a full-fledged R programmer or possess abundant knowledge in other programming languages. This book guides you through the most common challenges in empirical research in the Social Sciences and offers practical and efficient solutions. Each chapter is dedicated to a common task we have to achieve to answer our research questions. In addition, it provides plenty of exercises and in-depth case studies based on actual data." />
-  
+  <meta name="github-repo" content="ddauber/r4np_book" />
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="9 Sources of bias: Outliers, normality and other ‘conundrums’ | R for Non-Programmers: A Guide for Social Scientists" />
   
   <meta name="twitter:description" content="9 Sources of bias: Outliers, normality and other ‘conundrums’ | R for Non-Programmers: A Guide for Social Scientists is a springboard into the world of R without having to become a full-fledged R programmer or possess abundant knowledge in other programming languages. This book guides you through the most common challenges in empirical research in the Social Sciences and offers practical and efficient solutions. Each chapter is dedicated to a common task we have to achieve to answer our research questions. In addition, it provides plenty of exercises and in-depth case studies based on actual data." />
-  
+  <meta name="twitter:image" content="http://danieldauber.com/images/cover_art_icons/r4np_icon_white_bg_favicon.png" />
 
 <meta name="author" content="Daniel Dauber" />
 
 
-<meta name="date" content="2021-09-24" />
+<meta name="date" content="2021-09-25" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
-  
+  <link rel="shortcut icon" href="images/cover_art_icons/r4np_icon_favicon.svg" type="image/x-icon" />
 <link rel="prev" href="descriptive-statistics.html"/>
 <link rel="next" href="correlations.html"/>
 <script src="libs/header-attrs-2.11/header-attrs.js"></script>
@@ -638,9 +638,11 @@ Figure 9.4: Outlier detection via MAD using <code>2.5 * MAD</code> as a threshol
 <li><p>otherwise, classify this movie as not being an outlier (i.e. <code>FALSE</code>).</p></li>
 </ul>
 <p>We already know from Chapter <a href="r-basics-the-very-fundamentals.html#basic-computations-in-r">5.1</a> how to use logical and arithmetic operators. All we have to do is put them together in one function call.</p>
-<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="sources-of-bias.html#cb114-1" aria-hidden="true" tabindex="-1"></a>imdb_top_250 <span class="ot">&lt;-</span> imdb_top_250 <span class="sc">%&gt;%</span></span>
-<span id="cb114-2"><a href="sources-of-bias.html#cb114-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">outlier =</span> <span class="fu">ifelse</span>(runtime_min <span class="sc">&gt;</span> iqr_upper <span class="sc">|</span> runtime_min <span class="sc">&lt;</span> iqr_lower,</span>
-<span id="cb114-3"><a href="sources-of-bias.html#cb114-3" aria-hidden="true" tabindex="-1"></a>                          <span class="cn">TRUE</span>, <span class="cn">FALSE</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="sources-of-bias.html#cb114-1" aria-hidden="true" tabindex="-1"></a>imdb_top_250 <span class="ot">&lt;-</span></span>
+<span id="cb114-2"><a href="sources-of-bias.html#cb114-2" aria-hidden="true" tabindex="-1"></a>  imdb_top_250 <span class="sc">%&gt;%</span></span>
+<span id="cb114-3"><a href="sources-of-bias.html#cb114-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">outlier =</span> <span class="fu">ifelse</span>(runtime_min <span class="sc">&gt;</span> iqr_upper <span class="sc">|</span></span>
+<span id="cb114-4"><a href="sources-of-bias.html#cb114-4" aria-hidden="true" tabindex="-1"></a>                            runtime_min <span class="sc">&lt;</span> iqr_lower,</span>
+<span id="cb114-5"><a href="sources-of-bias.html#cb114-5" aria-hidden="true" tabindex="-1"></a>                          <span class="cn">TRUE</span>, <span class="cn">FALSE</span>))</span></code></pre></div>
 <p>Since we have a classification, we can more thoroughly inspect our outliers and see which movies are the ones that are lying outside our defined norm. We can <code>arrange()</code> them by <code>runtime_min</code>.</p>
 <div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="sources-of-bias.html#cb115-1" aria-hidden="true" tabindex="-1"></a>imdb_top_250 <span class="sc">%&gt;%</span></span>
 <span id="cb115-2"><a href="sources-of-bias.html#cb115-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(outlier <span class="sc">==</span> <span class="st">&quot;TRUE&quot;</span>) <span class="sc">%&gt;%</span></span>
@@ -772,7 +774,7 @@ gitbook.start({
 "options": null
 },
 "toc": {
-"collapse": "subsection"
+"collapse": "section"
 }
 });
 });

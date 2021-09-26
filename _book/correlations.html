@@ -10,27 +10,27 @@
 
   <meta property="og:title" content="10 Correlations | R for Non-Programmers: A Guide for Social Scientists" />
   <meta property="og:type" content="book" />
-  
-  
+  <meta property="og:url" content="http://danieldauber.com" />
+  <meta property="og:image" content="http://danieldauber.com/images/cover_art_icons/r4np_icon_white_bg_favicon.png" />
   <meta property="og:description" content="10 Correlations | R for Non-Programmers: A Guide for Social Scientists is a springboard into the world of R without having to become a full-fledged R programmer or possess abundant knowledge in other programming languages. This book guides you through the most common challenges in empirical research in the Social Sciences and offers practical and efficient solutions. Each chapter is dedicated to a common task we have to achieve to answer our research questions. In addition, it provides plenty of exercises and in-depth case studies based on actual data." />
-  
+  <meta name="github-repo" content="ddauber/r4np_book" />
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="10 Correlations | R for Non-Programmers: A Guide for Social Scientists" />
   
   <meta name="twitter:description" content="10 Correlations | R for Non-Programmers: A Guide for Social Scientists is a springboard into the world of R without having to become a full-fledged R programmer or possess abundant knowledge in other programming languages. This book guides you through the most common challenges in empirical research in the Social Sciences and offers practical and efficient solutions. Each chapter is dedicated to a common task we have to achieve to answer our research questions. In addition, it provides plenty of exercises and in-depth case studies based on actual data." />
-  
+  <meta name="twitter:image" content="http://danieldauber.com/images/cover_art_icons/r4np_icon_white_bg_favicon.png" />
 
 <meta name="author" content="Daniel Dauber" />
 
 
-<meta name="date" content="2021-09-24" />
+<meta name="date" content="2021-09-25" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
-  
+  <link rel="shortcut icon" href="images/cover_art_icons/r4np_icon_favicon.svg" type="image/x-icon" />
 <link rel="prev" href="sources-of-bias.html"/>
 <link rel="next" href="power-analysis.html"/>
 <script src="libs/header-attrs-2.11/header-attrs.js"></script>
@@ -397,8 +397,8 @@ div.csl-indent {
 <table>
 <caption><span id="tab:different-correlations">Table 10.1: </span> Different ways of computing correlations</caption>
 <colgroup>
-<col width="18%" />
-<col width="81%" />
+<col width="19%" />
+<col width="80%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -512,28 +512,29 @@ div.csl-indent {
 <span id="cb120-26"><a href="correlations.html#cb120-26" aria-hidden="true" tabindex="-1"></a><span class="do">## Observations: 216</span></span></code></pre></div>
 <p>Indeed, our analysis reveals that the effect size is very small (r = 0.08 &lt; 0.1). Therefore, critics appear to rate movies differently than regular movie viewers, irrespective of which method we use. This mistmatch of ratings triggers an interesting follow-up question: Which movie is the most controversial, i.e. where is the difference between <code>imdb_rating</code> and <code>metascore</code> the highest?</p>
 <p>We can answer this question with the tools we already know. We create a new variable to subtract the <code>metascore</code> from the <code>imdb_rating</code> and plot it. We have to make sure both scales are the same length. The variable <code>imdb_rating</code> ranges from 0-10, but the <code>metascore</code> ranges from 0-100. I used the percentile score instead by dividing the scores by 10 and 100, respectively. Since plotting 250 movies would have been too much and would also not help us find the answer to our question, I chose arbitrary values to pick only those movies with the highest differences in scores. Feel free to adjust the filter to your liking to see more or fewer movies.</p>
-<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="correlations.html#cb121-1" aria-hidden="true" tabindex="-1"></a>plot <span class="ot">&lt;-</span> imdb_top_250 <span class="sc">%&gt;%</span></span>
-<span id="cb121-2"><a href="correlations.html#cb121-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">r_diff =</span> imdb_rating <span class="sc">/</span> <span class="dv">10</span> <span class="sc">-</span> metascore <span class="sc">/</span> <span class="dv">100</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb121-3"><a href="correlations.html#cb121-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(r_diff) <span class="sc">&amp;</span> r_diff <span class="sc">&gt;=</span> <span class="fl">0.25</span> <span class="sc">|</span> r_diff <span class="sc">&lt;=</span> <span class="sc">-</span><span class="fl">0.165</span>)</span>
-<span id="cb121-4"><a href="correlations.html#cb121-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb121-5"><a href="correlations.html#cb121-5" aria-hidden="true" tabindex="-1"></a>plot <span class="sc">%&gt;%</span></span>
-<span id="cb121-6"><a href="correlations.html#cb121-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(title, r_diff), <span class="at">y =</span> r_diff, <span class="at">label =</span> title)) <span class="sc">+</span></span>
-<span id="cb121-7"><a href="correlations.html#cb121-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="fu">aes</span>(<span class="at">fill =</span> <span class="fu">ifelse</span>(r_diff <span class="sc">&gt;</span> <span class="dv">0</span>, <span class="st">&quot;Viewers&quot;</span>, <span class="st">&quot;Critics&quot;</span>))) <span class="sc">+</span></span>
-<span id="cb121-8"><a href="correlations.html#cb121-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb121-9"><a href="correlations.html#cb121-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">x =</span> title, <span class="at">y =</span> <span class="dv">0</span>,</span>
-<span id="cb121-10"><a href="correlations.html#cb121-10" aria-hidden="true" tabindex="-1"></a>            <span class="at">label =</span> title),</span>
-<span id="cb121-11"><a href="correlations.html#cb121-11" aria-hidden="true" tabindex="-1"></a>            <span class="at">size =</span> <span class="fl">2.5</span>,</span>
-<span id="cb121-12"><a href="correlations.html#cb121-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb121-13"><a href="correlations.html#cb121-13" aria-hidden="true" tabindex="-1"></a>            <span class="co"># to adjust the labels of the plot</span></span>
-<span id="cb121-14"><a href="correlations.html#cb121-14" aria-hidden="true" tabindex="-1"></a>            <span class="at">vjust =</span> <span class="fu">ifelse</span>(plot<span class="sc">$</span>r_diff <span class="sc">&gt;=</span> <span class="dv">0</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span>),</span>
-<span id="cb121-15"><a href="correlations.html#cb121-15" aria-hidden="true" tabindex="-1"></a>            <span class="at">hjust =</span> <span class="fu">ifelse</span>(plot<span class="sc">$</span>r_diff <span class="sc">&gt;=</span> <span class="dv">0</span>, <span class="fl">1.05</span>, <span class="sc">-</span><span class="fl">0.05</span>)</span>
-<span id="cb121-16"><a href="correlations.html#cb121-16" aria-hidden="true" tabindex="-1"></a>            ) <span class="sc">+</span></span>
-<span id="cb121-17"><a href="correlations.html#cb121-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
-<span id="cb121-18"><a href="correlations.html#cb121-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb121-19"><a href="correlations.html#cb121-19" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Cleaning up the plot to make it look more readable and colourful</span></span>
-<span id="cb121-20"><a href="correlations.html#cb121-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;#FFCE7D&quot;</span>, <span class="st">&quot;#7DC0FF&quot;</span>)) <span class="sc">+</span></span>
-<span id="cb121-21"><a href="correlations.html#cb121-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>() <span class="sc">+</span></span>
-<span id="cb121-22"><a href="correlations.html#cb121-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.title =</span> <span class="fu">element_blank</span>())</span></code></pre></div>
+<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="correlations.html#cb121-1" aria-hidden="true" tabindex="-1"></a>plot <span class="ot">&lt;-</span></span>
+<span id="cb121-2"><a href="correlations.html#cb121-2" aria-hidden="true" tabindex="-1"></a>  imdb_top_250 <span class="sc">%&gt;%</span></span>
+<span id="cb121-3"><a href="correlations.html#cb121-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">r_diff =</span> imdb_rating <span class="sc">/</span> <span class="dv">10</span> <span class="sc">-</span> metascore <span class="sc">/</span> <span class="dv">100</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb121-4"><a href="correlations.html#cb121-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(r_diff) <span class="sc">&amp;</span> r_diff <span class="sc">&gt;=</span> <span class="fl">0.25</span> <span class="sc">|</span> r_diff <span class="sc">&lt;=</span> <span class="sc">-</span><span class="fl">0.165</span>)</span>
+<span id="cb121-5"><a href="correlations.html#cb121-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb121-6"><a href="correlations.html#cb121-6" aria-hidden="true" tabindex="-1"></a>plot <span class="sc">%&gt;%</span></span>
+<span id="cb121-7"><a href="correlations.html#cb121-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(title, r_diff), <span class="at">y =</span> r_diff, <span class="at">label =</span> title)) <span class="sc">+</span></span>
+<span id="cb121-8"><a href="correlations.html#cb121-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="fu">aes</span>(<span class="at">fill =</span> <span class="fu">ifelse</span>(r_diff <span class="sc">&gt;</span> <span class="dv">0</span>, <span class="st">&quot;Viewers&quot;</span>, <span class="st">&quot;Critics&quot;</span>))) <span class="sc">+</span></span>
+<span id="cb121-9"><a href="correlations.html#cb121-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb121-10"><a href="correlations.html#cb121-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">x =</span> title, <span class="at">y =</span> <span class="dv">0</span>,</span>
+<span id="cb121-11"><a href="correlations.html#cb121-11" aria-hidden="true" tabindex="-1"></a>            <span class="at">label =</span> title),</span>
+<span id="cb121-12"><a href="correlations.html#cb121-12" aria-hidden="true" tabindex="-1"></a>            <span class="at">size =</span> <span class="fl">2.5</span>,</span>
+<span id="cb121-13"><a href="correlations.html#cb121-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb121-14"><a href="correlations.html#cb121-14" aria-hidden="true" tabindex="-1"></a>            <span class="co"># to adjust the labels of the plot</span></span>
+<span id="cb121-15"><a href="correlations.html#cb121-15" aria-hidden="true" tabindex="-1"></a>            <span class="at">vjust =</span> <span class="fu">ifelse</span>(plot<span class="sc">$</span>r_diff <span class="sc">&gt;=</span> <span class="dv">0</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span>),</span>
+<span id="cb121-16"><a href="correlations.html#cb121-16" aria-hidden="true" tabindex="-1"></a>            <span class="at">hjust =</span> <span class="fu">ifelse</span>(plot<span class="sc">$</span>r_diff <span class="sc">&gt;=</span> <span class="dv">0</span>, <span class="fl">1.05</span>, <span class="sc">-</span><span class="fl">0.05</span>)</span>
+<span id="cb121-17"><a href="correlations.html#cb121-17" aria-hidden="true" tabindex="-1"></a>            ) <span class="sc">+</span></span>
+<span id="cb121-18"><a href="correlations.html#cb121-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb121-19"><a href="correlations.html#cb121-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb121-20"><a href="correlations.html#cb121-20" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Cleaning up the plot to make it look more readable and colourful</span></span>
+<span id="cb121-21"><a href="correlations.html#cb121-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;#FFCE7D&quot;</span>, <span class="st">&quot;#7DC0FF&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb121-22"><a href="correlations.html#cb121-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>() <span class="sc">+</span></span>
+<span id="cb121-23"><a href="correlations.html#cb121-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.title =</span> <span class="fu">element_blank</span>())</span></code></pre></div>
 <p><img src="r_for_non_programmers_files/figure-html/Biggest%20discrepancy%20in%20movie%20ratings-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Another question we posed at the beginning was: Do higher-ranked movies receive more votes from users than lower-ranked ones? Our intuition might say ‘yes.’ If movies are ranked higher, they are likely seen by more people, which makes them more popular. Consequently, the more people have seen a movie, the more likely they might vote for this movie. For lower ranked movies, the opposite should be true. Let’s create another scatterplot to find out.</p>
 <div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="correlations.html#cb122-1" aria-hidden="true" tabindex="-1"></a>imdb_top_250 <span class="sc">%&gt;%</span></span>
@@ -865,7 +866,7 @@ gitbook.start({
 "options": null
 },
 "toc": {
-"collapse": "subsection"
+"collapse": "section"
 }
 });
 });

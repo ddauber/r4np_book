@@ -2,7 +2,7 @@ bookdown::gitbook:
   css: style.css
   config:
     toc:
-      collapse: subsection
+      collapse: section
       before: |
         <li><a href="./">R for Non-Programmers</a></li>
       after: |
