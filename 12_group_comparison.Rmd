@@ -216,13 +216,10 @@ dir_mov %>%
 
 Considering the revised plot, we likely can predict what the statistical test will show. Table \@ref(tab:comparing-two-groups-paired) summarises which tests and functions need to be performed when our data is parametric or non-parametric. In both cases, the functions are the same as those of the unpaired group comparisons, but we need to add the attribute `paired = TRUE`. Still, the interpretations between the unpaired and paired tests remain the same. Also, be aware that some tests have changed in name, e.g. the Mann-Whitney U test has become the Wilcoxon Signed Rank Test. Even though we use the same functions as before, by changing the attributed of `paired` to `TRUE`, we also change the computational technique to obtain the results. Thus, remember that the same function can perform different computations.
 
-+----------------+---------------------------+------------------------------+-------------+---------------------+
 | Assumption     | Test                      | Function                     | Effect size | Function            |
-+================+===========================+==============================+=============+=====================+
+|----------------|---------------------------|------------------------------|-------------|---------------------|
 | Parametric     | T-Test                    | `t_test(paired = TRUE)`      | Cohen's d   | `cohens_d()`        |
-+----------------+---------------------------+------------------------------+-------------+---------------------+
 | Non-parametric | Wilcoxon Signed Rank Test | `wilcox_test(paired = TRUE)` | Wilcoxon r  | `wilcoxonPairedR()` |
-+----------------+---------------------------+------------------------------+-------------+---------------------+
 
 : (\#tab:comparing-two-groups-paired)Comparing two unpaired groups (effect size functions from package `effectsize`, except for `wilcoxonPairedR()` from `rcompanion`)
 
@@ -563,19 +560,13 @@ effectsize::interpret_kendalls_w(kw$Kendalls_W)
 
 The non-parametric test confirms the parametric test from before. However, the interpretation of the effect size `Kendall's W` requires some explanation. First, the effect size for Kendall's W can range from 0 (small effect size) to 1 (large effect size). Usually, this effect size is considered when comparing inter-rater agreement, for example, the level of agreement of a jury in ice skating during the Olympic games. Thus, the interpretation offered by the function `itnerpret_kendalls_w()` follows this logic. As such, it is worth considering a slightly amended interpretation of Kendall's W if our data is not based on ratings. This is shown in Table \@ref(tab:effect-size-kendalls-w) based on @landis1977measurement (p. 165). Thus, we could report that the effect size of the significant differences is 'very small'.
 
-+-------------+-----------------------------------------+----------------------------+
 | Kendall's W | Interpretation [@landis1977measurement] | Alternative interpretation |
-+=============+=========================================+============================+
+|-------------|-----------------------------------------|----------------------------|
 | 0.00-0.02   | Slight agreement                        | Very small                 |
-+-------------+-----------------------------------------+----------------------------+
 | 0.21-0.40   | Fair agreement                          | Small                      |
-+-------------+-----------------------------------------+----------------------------+
 | 0.41-0.60   | Moderate agreement                      | Moderate                   |
-+-------------+-----------------------------------------+----------------------------+
 | 0.61-0.80   | Substantial agreement                   | Large                      |
-+-------------+-----------------------------------------+----------------------------+
 | 0.81-1.00   | Almost perfect agreement                | Very large                 |
-+-------------+-----------------------------------------+----------------------------+
 
 : (\#tab:effect-size-kendalls-w)Interpretation benchmarks for the effect size Kendall's W
 
@@ -727,15 +718,11 @@ Throughout the remaining chapters, I will use the mosaic plot to illustrate dist
 
 When it comes to the computational side of things, we have to distinguish whether our two variables create a 2-by-2 matrix, i.e. both variables only have two levels. Depending on which scenario applies to our analysis, a different statistical test has to be performed. For some tests, a minimum frequency for each value in our contingency table (i.e. cells) also needs to be achieved. This is usually a matter of sample size and diversity in a sample. Table \@ref(tab:statistical-tests-unpaired-cat-variables) provides an overview of the different scenarios and indicates the functions we have to use to conduct our analysis in R.
 
-+--------+---------------------+----------------------------------------------------+----------------------------------------------------------+---------------+
 | Matrix | Condition           | Test                                               | Function in R                                            | Effect size   |
-+========+=====================+====================================================+==========================================================+===============+
+|--------|---------------------|----------------------------------------------------|----------------------------------------------------------|---------------|
 | 2x2    | \< 10 obs.          | Fisher's Exact Test                                | `fisher.test()`                                          | `phi()`       |
-+--------+---------------------+----------------------------------------------------+----------------------------------------------------------+---------------+
 | 2x2    | \> 10 obs.          | Chi-squared Test with Yate's Continuity Correction | `infer::chisq_test(correct = TRUE)`[^group_comparison-3] | `cramers_v()` |
-+--------+---------------------+----------------------------------------------------+----------------------------------------------------------+---------------+
 | n x n  | \> 5 (80% of cells) | Chi-squared Test                                   | `infer::chisq_test()`                                    | `cramers_v()` |
-+--------+---------------------+----------------------------------------------------+----------------------------------------------------------+---------------+
 
 : (\#tab:statistical-tests-unpaired-cat-variables)Statistical tests to compare two unpaired categorical variables. Effect sizes are computed using the `effectsize` package.
 

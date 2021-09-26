@@ -1,11 +1,5 @@
 # Regression: Creating models to predict future observations {#regression}
 
-```{r echo=FALSE, message=FALSE}
-library(tidyverse)
-library(r4np)
-library(patchwork)
-```
-
 Regressions are an exciting area of data analysis since it enables us to make very specific predictions, incorporating different variables simultaneously. As the name implies, regressions 'regress', i.e., draw on past observations to make predictions about future observations. Thus, any analysis incorporating a regression makes the implicit assumption that the past best explains the future.
 
 I once heard someone refer to regressions as driving a car by looking at the rear-view mirror. As long as the road is straight, we will be able to navigate the car successfully. However, if there is a sudden turn, we might drive into the abyss. This makes it very clear when and how regressions can be helpful.Regressions are also a machine learning method, which falls under models with supervised learning. If you find machine learning fascinating, you might find the book "Hands-on Machine Learning with R" [\@boehmke2019hands] very insightful and engaging.
@@ -397,7 +391,7 @@ out_detect %>% count(pm_35)
 out_detect %>% count(pm_4)
 ```
 
-The results indicate we could have as many as 56 outliers and as little as 9. It becomes apparent that choosing the right threshold is a tricky undertaking. Let's plot the data again to make it easier to read and add some of the thresholds. I skip `3.5` since it is very close to `3`. I also reorder the observations (i.e. the x-axis) based on `.studresid` using `reorder()`.
+The results indicate we could have as many as 56 outliers and as little as 9. It becomes apparent that choosing the right threshold is a tricky undertaking. Let's plot the data again to make it easier to read and add some of the thresholds. I skip `3.5` since it is very close to `3`. I also reorder the observations (i.e. the x-axis) based on `.studresid` using `reorder()`. The function `reorder()` work similarly to `fct_reorder()` from the `forcats` package, which we used in Chapter \@ref(reordering-factor-levels).
 
 ```{r Plotting the number of outliers externally studentised residuals, echo=TRUE}
 m1_outliers %>%
@@ -542,7 +536,7 @@ qf(p = 0.5,
 
 This score would also imply that we have no particular outliers to consider, because the highest value in `.cooksd` is `r round(max(m1_outliers$.cooksd),2)` computed via \``max(m1_outliers$.cooksd)`\`.
 
-We might be led to believe that our work is done here, but \@cohen2014applied recommends that any larger deviation is worth inspecting. We do notice that relative to other observations, some cases appear extreme. Ideally, one would further investigate these cases and compare the regression results by removing such extreme cases iteratively. This way, one can assess whether the extreme observations genuinely affect the overall estimates of our model. This would imply repeating steps we already covered earlier when performing multiple regressions with and without outliers. Thus, I will forgo this step here.
+We might be led to believe that our work is done here, but @cohen2014applied recommends that any larger deviation is worth inspecting. We do notice that relative to other observations, some cases appear extreme. Ideally, one would further investigate these cases and compare the regression results by removing such extreme cases iteratively. This way, one can assess whether the extreme observations genuinely affect the overall estimates of our model. This would imply repeating steps we already covered earlier when performing multiple regressions with and without outliers. Thus, I will forgo this step here.
 
 In the last chapter about outliers (Chapter \@ref(reviewing-the-outliers), we will rerun the regression without outliers to see how this affects our model estimates. However, before we can do this, we have to cover one more method of detecting outliers.
 
@@ -657,7 +651,7 @@ data <- tribble(
 data
 ```
 
-We now want to turn this dataset into a dataset with two columns. One column captures the `rowname`, and the other one the outlier detection method. Thus, for every row in this dataset, we have two values recorded. For example, the first observation has the values `studresid == FALSE` and `mhnbs == FALSE`. If we want to combine these two observations, we need to have two rows with the `rowname` `1` to ensure that each row still only contains one observation, i.e. a tidy dataset. Therefore, we end up with more rows than our original dataset, hence, a 'longer' dataset. Here is how we can do this automatically:
+We now want to turn this data frame into a dataset with two columns. One column captures the `rowname`, and the other one the outlier detection method. Thus, for every row in this dataset, we have two values recorded. For example, the first observation has the values `studresid == FALSE` and `mhnbs == FALSE`. If we want to combine these two observations, we need to have two rows with the `rowname` `1` to ensure that each row still only contains one observation, i.e. a tidy dataset. Therefore, we end up with more rows than our original dataset, hence, a 'longer' dataset. This is the opposite procedure to `widening` a dataframe as we did in Chapter \@ref(chi-squared-test). Here is how we can do this automatically:
 
 ```{r outlier data after pivoting, echo=TRUE}
 data <- data %>%
@@ -742,8 +736,8 @@ m2 <- lm(new_cases ~ movements + schools + businesses + travel,
          data = m1_no_outliers)
 
 # Compare the parameters between models
-# I added quite some reformatting, because
-# I prefer a regular tibble over pre-formatted
+# I added some reformatting, because
+# I prefer a regular tibble over a pre-formatted
 # table. Technially you only need the first line.
 parameters::compare_parameters(m1, m2) %>%
   as_tibble() %>%
