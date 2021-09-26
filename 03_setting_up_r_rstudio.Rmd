@@ -8,7 +8,7 @@ or
 
 -   Run RStudio in a browser via [RStudio Cloud](https://rstudio.cloud "RStudio Cloud"){target="_blank"}
 
-While installing *R* and Studio requires more time and effort, I strongly recommend it, especially if you want to work offline or make good use of your computer's CPU. However, if you are not sure yet whether you enjoy learning *R*, you might wish to look at RStudio Cloud first. Either way, you can follow the examples of this book no matter which choice you make.
+While installing *R* and Studio requires more time and effort, I strongly recommend it, especially if you want to work offline or make good use of your computer's CPU. However, if you are not sure yet whether you enjoy learning *R*, you might wish to look at RStudio Cloud first. Either way, you can follow the examples of this book no matter which choice you make.
 
 ## Installing R {#installing-r}
 
@@ -38,7 +38,7 @@ This was relatively easy. You now have *R* installed. Technically you can start 
 
 ## Installing RStudio {#installing-rstudio}
 
-*R* by itself is just the \*'beating heart'\* of *R* programming, but it has no particular user interface. If you want buttons to click and actually 'see' what you are doing, there is no better way than RStudio. RStudio is an *integrated development environment* (IDE) and will be our primary tool to interact with *R*. It is the only software you need to do all the fun parts and, of course, to follow along with the examples of this book. To install RStudio perform the following steps:
+*R* by itself is just the 'beating heart' of *R* programming, but it has no particular user interface. If you want buttons to click and actually 'see' what you are doing, there is no better way than RStudio. RStudio is an *integrated development environment* (IDE) and will be our primary tool to interact with *R*. It is the only software you need to do all the fun parts and, of course, to follow along with the examples of this book. To install RStudio perform the following steps:
 
 1.  Go to [www.rstudio.com](https://www.rstudio.com%5D(https://www.rstudio.com) "www.rstudio.com"){target="_blank"}.
 
@@ -84,8 +84,40 @@ Of course, if you wish to customise your workspace further, you can do so. The v
 
 While not strictly something that helps you become a better programmer, this advice might come in handy to avoid turning into a frustrated programmer. When you update your software, you need to update R and RStudio separately from each other. While both R and RStudio work closely with each other, they still constitute separate pieces of software. Thus, it is essential to keep in mind that updating RStudio will not automatically update R. This can become problematic if specific packages you installed via RStudio (like a fancy learning algorithm) might not be compatible with earlier versions of R. Also, additional R packages developed by other people are separate pieces and are updated too, independently from R and RStudio.
 
-I know what you are thinking: This already sounds complicated and cumbersome. However, rest assured, we take a look at how you can easily update all your packages with RStudio. Thus, all you need to remember is: *R* needs to be updated separately from everything else.
+I know what you are thinking: This already sounds complicated and cumbersome. However, rest assured, we take a look at how you can easily update all your packages with RStudio. Thus, all you need to remember is: *R* needs to be updated separately from everything else.
 
 ## RStudio Cloud {#rstudio-cloud}
 
-`to be completed`
+RStudio Cloud is an application that runs in your web browser. It allows you to write and access R code wherever you go. It even works on your tablet because it does not require installation. However, do expect it to run slower if your internet connection is not fast or stable. To work with RStudio Cloud, you also need an internet connection. However, there are many benefits to using RStudio in the cloud, such as running time-consuming scripts while not at your computer. Also, it is much easier to collaborate with others, and since no installation is required, you can work on projects on any device as long as you are connected to the internet. However, RStudio Cloud's most significant advantage is that you can get started with programming within seconds compared to a desktop installation. Still, I prefer my locally-run offline version of RStudio, because I appreciate working offline as much as online. Still, I recommend setting up an account because you never know.
+
+To get started with RStudio Cloud, we need to undertake a couple of steps:
+
+1.  Open your web browser of choice and navigate to <https://rstudio.cloud>.
+
+    ![](images/chapter_03_img/rstudio_cloud/01_rstudio_cloud.png)
+
+2.  Click on `Sign Up` to create your account.
+
+3.  On the next page, make sure you have the free plan select and click on `Sign up`.
+
+    ![](images/chapter_03_img/rstudio_cloud/02_rstudio_cloud.png)
+
+4.  To finalise the registration process, you are required to provide your credentials.
+
+    ![](images/chapter_03_img/rstudio_cloud/03_rstudio_cloud.png)
+
+5.  Once you complete your registration, you are redirected to `Your Workspace`, the central hub for all your projects. As you can tell, I already added another workspace called `R for Non-Programmers`. However, it is fine to use the default one.
+
+    ![](images/chapter_03_img/rstudio_cloud/05_rstudio_cloud.png)
+
+6.  To start a new R project, you can click on `New Project > New RStudio Project`. This will open R Studio in the Cloud, which looks identical to the desktop version. You can start writing your code. The example below aims to compute a plot.[^setting_up_r_rstudio-1]
+
+    ![](images/chapter_03_img/rstudio_cloud/06_rstudio_cloud.png)
+
+7.  Now we can execute the code as we would on the desktop version.
+
+    ![](images/chapter_03_img/rstudio_cloud/07_rstudio_cloud.png)
+
+[^setting_up_r_rstudio-1]: RStudio and RStudio Cloud warn you if you need to install certain R packages to successfully run code. More about R packages and what they are can be found in Chapter \@ref(r-packages).
+
+No matter whether you choose to use a desktop version of RStudio or RStudio Cloud, you will be able to follow along in this book with no problem.
