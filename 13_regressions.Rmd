@@ -766,7 +766,7 @@ performance::model_performance(m3)
 
 Similar to before, after removing the insignificant predictors, we end up with an equally good model (in terms of $adjusted\ R^2$, but we need fewer variables to explain the same amount of variance in `new_cases`. Our model `m3` is a parsimonious and less complex model.
 
-### Standardised beta ($\beta$) vs. unstandardised beta ($B$)
+### Standardised beta ($\beta$) vs. unstandardised beta ($B$) {#standardised-beta-vs-unstandardised-beta}
 
 In multiple regressions, we often use variables that are measured in different ways and which use different measurement units, e.g. currency, age, etc. Thus, it is fairly difficult to compare their regression coefficients without standardising the measurement units. Standardised scores (also called *z-scores*) imply that each variable has a distribution where the mean equals 0 and the standard deviation equals 1. By transforming your variables to z-scores, they become 'unit free' [@cohen2014applied, p.25] and, therefore, we can easily compare them irrespective of their actual measurement units. Here is an example with a simplified dataset:
 
@@ -1077,6 +1077,95 @@ anova(m0, m4)
 The moderation effect is quite strong. Compared to our baseline model `m0`, which only contains `businesses` and `schools` as predictors, our new model `m4` considerably outperforms it with an $adjusted\ R^2 = 0.307$. Our previous model with country as a control variable achieved an $adjusted\ R^2 = 0.255$. I would argue this is quite an improvement.
 
 While significant moderation effects help us make better predictions with our model, they come with a caveat: Interpreting the relative importance of the main effects becomes considerably more difficult because their impact depends on the level of our moderation variable. As such, you cannot interpret the main effects without considering the moderation variable as well. You might have noticed that our variable `schools` is not significant anymore. However, this does not imply it is not essential because its significance depends on the level of our moderator, i.e. whether we look at `Germany` or the `United Kingdom`.
+
+### Centering predictors: Making $\beta$s more interpretable {#centering-predictors}
+
+In Chapter \@ref(standardised-beta-vs-unstandardised-beta), we covered procedures to standardise $\beta$ coefficients, which allow us to compare independent variables based on different measurement units or if we want to compare coefficients across multiple models. Whenever we perform a regression with an interaction term, for example, the moderation regression in the previous chapter, we often have to make similar adjustments called 'centering'.
+
+To explain why we might need centering, we should look at an example. Let's consider a simple model using the `wvs_nona` dataset. Assume we want to know whether `freedom_of_choice` can predict `satisfaction` with life, moderated by `age`. If we formulate this as a model, we can write the following:
+
+```{r Regression for centering, echo=TRUE}
+model <- lm(formula = satisfaction ~
+              freedom_of_choice +
+              freedom_of_choice * age,
+            data = wvs_nona)
+
+parameters::model_parameters(model) %>%
+  as_tibble() %>%
+  select(Parameter, Coefficient, t, df_error, p)
+
+performance::model_performance(model)
+```
+
+The $\beta$ score of `freedom_of_choice` unfolds the most substantial effect on `satisfaction`, but assumes that `age = 0`. In regressions with interaction terms, the coefficient \$\\beta\$ of a variable reflects the change in the dependent variables if other variables are set to zero. If this is a logical value for the variables, then no further steps are required. However, if a score of zero on any predictor is not meaningful, it is recommended to engage in centering variables [e.g. @cohen2014applied, @field2013discovering]. In our model, the coefficient of `freedom_of_choice` assumes that `age` is equal to `0`. However, no participant in our sample will have been of age `0`, which renders any interpretation of the $\beta$ coefficient meaningless. Instead, it is more meaningful to retrieve a $\beta$ score which is based on the average `age` of people in our sample. This is what centering can achieve.
+
+There are mainly two very commonly used techniques in the Social Sciences to center variables: grand mean centering and group mean centering. The difference between these two approaches lies in their reference sample. For group mean centering, we compute means for each group independently and for grand mean centering, we calculate the mean for all observations irrespective of any groupings. Centered scores are almost the same as z-scores, but without using standard deviation as a measurement unit. If we divided centered scores by the standard deviation, we would have computed z-scores. The following formula summarises the computation of centered variables:
+
+::: {#centering-formula align="center"}
+$x_{n_{centered}} = x_n - \overline{x}$
+:::
+
+In other words, to achieve a centered variable ($x_{n_{centered}}$), we have to take the original observation ($x_n$) and subtract the mean of the variable ($\bar{x}$). How we define $\bar{x}$ determines whether we perform grand mean centering (using the entire dataset) or group mean centering (using subsets of our data, i.e. groups). In R, we already know all the functions needed to compute centered variables. Since the `age` of `0` is not meaningful in our study, we should center this variable around its mean[^regressions-4].
+
+[^regressions-4]: It is not required to choose the mean as a way to center variables. Any value that is meaningful can be used.
+
+```{r Centering by mean and by group, echo=TRUE}
+# Grand mean centering
+wvs_nona_c <-
+  wvs_nona %>%
+  mutate(age_c = age - mean(age))
+
+wvs_nona_c %>%
+  select(age, age_c) %>%
+  head()
+
+# Group mean centering by country
+wvs_nona %>%
+  group_by(country) %>%
+  mutate(age_c = age - mean(age)) %>%
+  
+  select(age, age_c) %>%
+  sample_n(1)
+
+## The group means used
+wvs_nona %>%
+  group_by(country) %>%
+  summarise(mean = round(mean(age), 0))
+```
+
+The `mutate()` function is the same for both approaches. However, we used `group_by()` to compute the mean for each `country` and then centered the scores accordingly for group mean centering. Thus, observations from `Australia` will be centered around the mean score of `54`, while observations from `Myanmar` will be centered around the mean value of `40`.
+
+Returning to our investigation, we can use our newly centered variable in the regression to see the impact it had on our $\beta$s.
+
+```{r Regression with centered variable, echo=TRUE}
+model_c <- lm(formula = satisfaction ~
+                freedom_of_choice +
+                freedom_of_choice * age_c,
+              data = wvs_nona_c)
+
+parameters::compare_parameters(model, model_c) %>%
+  as_tibble() %>%
+  select(Parameter, Coefficient.model, p.model, Coefficient.model_c, p.model_c) %>%
+  mutate(across(where(is.double), round, 3))
+```
+
+In contrast to standardising the coefficients, it is not necessary to center all predictors in your dataset. For example, we only centered `age` and not `freedom_of_choice` in our case, because a value of `0` for the latter variable seems plausible. As we can tell from the output, the $\beta$ for `freedom_of_choice` has changed, but all other coefficients remained the same. In general, grand mean centering has the following effects:
+
+-   centering does not affect the $\beta$ of the centered variable (i.e. `age`), because we subtract a constant (i.e. the mean) from all observations equally,
+
+-   centering does not affect the interaction term (i.e. `freedom_of_choice * age_c)`, which is also known as the 'higher-order' predictor,
+
+-   centering changes the $\beta$ of the independent variable in the interaction term (also known as 'lower-order predictor), (i.e. `freedom_of_choice`)
+
+-   centering does not change $\beta$s of other variables that are not interacting with a centered variable.
+
+-   centering any of the predictors changes the intercept.
+
+To conclude, centering plays a crucial role if the interpretation of $\beta$ coefficients is essential. If this is true, we should center all variables where a value of `0` is not meaningful. However, keep in mind that we do not change the model itself, i.e. we cannot improve the performance of a model by centering certain variables. Thus, if we are only interested in the performance of our model, centering does not matter.
+
+```{r Impact of centering on model performance, echo=TRUE}
+performance::compare_performance(model, model_c)
+```
 
 ## Other regression models: Alternatives to OLS
 
