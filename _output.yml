@@ -1,5 +1,5 @@
 bookdown::gitbook:
-  css: style.css
+  css: r4np.css
   config:
     toc:
       collapse: section
@@ -19,6 +19,7 @@ bookdown::gitbook:
       vk: false
       whatsapp: false
       all: ['facebook', 'twitter', 'linkedin', 'weibo', 'instapaper']
+  highlight: default
 
 # bookdown::pdf_book:
 #   includes:
