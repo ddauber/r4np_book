@@ -1,6 +1,6 @@
-# Mixed-methods research: Analysing qualitative in R {#mixed-methods-research}
+# Mixed-methods research: Analysing qualitative in *R* {#mixed-methods-research}
 
-Conducting mixed-methods research is challenging for everyone. It requires an understanding of different methods and data types and particular knowledge in determining how one can mix different methods to improve the insights compared to a single method approach. This chapter looks at one possibility of conducting mixed-methods research in R. It is likely the most evident use of computational software for qualitative data.
+Conducting mixed-methods research is challenging for everyone. It requires an understanding of different methods and data types and particular knowledge in determining how one can mix different methods to improve the insights compared to a single method approach. This chapter looks at one possibility of conducting mixed-methods research in *R*. It is likely the most evident use of computational software for qualitative data.
 
 While I consider myself comfortable in qualitative and quantitative research paradigms, this chapter could be somewhat uncomfortable if you are used to only one or the other approach, i.e. only quantitative or only qualitative research. However, with advancements in big data science, it is impossible to code, for example, two million tweets qualitatively. Thus, the presented methodologies should not be considered in isolation from other forms of analysis. For some, they might serve as a screening tool to sift through large amounts of data and find those nuggets of most significant interest that deserve more in-depth analysis. For others, these tools constitute the primary research design to allow to generalise to a larger population. In short: the purpose of your research will dictate the approach.
 
@@ -14,7 +14,7 @@ This chapter will cover two analytical approaches for textual data:
 
 ## The tidy process of working with textual data {#tidy-process-for-textual-data}
 
-Before we dive head-first into this exciting facet of research, we first need to understand how we can represent and work with qualitative data in R. Similar to working with tidy quantitative data, we also want to work with tidy qualitative data. This book adopts the notion of tidy text data from @silge2017text, which follows the terminology used in Corpus Linguistics:
+Before we dive head-first into this exciting facet of research, we first need to understand how we can represent and work with qualitative data in *R*. Similar to working with tidy quantitative data, we also want to work with tidy qualitative data. This book adopts the notion of tidy text data from @silge2017text, which follows the terminology used in Corpus Linguistics:
 
 > We [...] define the tidy text format as being **a table with one-token-per-row.** A token is a meaningful unit of text, such as a word, that we are interested in using for analysis, and tokenization is the process of splitting text into tokens.
 
@@ -41,9 +41,9 @@ library(tidytext)
                                       input = text))
 ```
 
-If you paid careful attention, one element in our data got lost in the process of tokenization: the `.` and `,` are no longer included. In most cases, commas and full stops are of less interest because they tend to carry no particular meaning when performing such an analysis. The function `unnest_tokens()` conveniently drops them for us and also removes any capitalisation.
+If you paid careful attention, two elements got lost in our data during the process of tokenization: the `.` and `,` are no longer included. In most cases, commas and full stops are of less interest because they tend to carry no particular meaning when performing such an analysis. The function `unnest_tokens()` conveniently removes them for us and also converts all letters to lower-case.
 
-We find ourselves in more familiar territory from here onwards because the variable `word` looks like any other character variable we encountered before. For example, we can `count()` the number of occurrences for each word.
+From here onwards we find ourselves in more familiar territory because the variable `word` looks like any other character variable we encountered before. For example, we can `count()` the number of occurrences for each word.
 
 ```{r Count words, echo=TRUE}
 df_text %>% count(word)
@@ -63,11 +63,11 @@ Once we have converted our data into a data frame, all the techniques we covered
 
 ## Stop words: Removing noise in the data
 
-In the previous example, we already performed an important data wrangling process, i.e. tokenization. However, besides changing the text format, we also need to take care of other components in our data that are usually not important, for example, removing 'stop words'. To showcase this step (and a little more), I will draw on the `imdb_top_250` dataset.
+In the previous example, we already performed an important data wrangling process, i.e. tokenization. However, besides changing the text format, we also need to take care of other components in our data that are usually not important, for example, removing *'stop words'*. To showcase this step (and a little more), I will draw on the `imdb_top_250` dataset.
 
-In marketing, finding the right product name is a laborious task and requires careful attention. After all, our first impression of a product is partially informed by its name. Consequently, when promoting a movie, one might wonder whether more popular words in movie titles can lead to greater success, i.e. a higher ranking on IMDb. With the help of the `imdb_top_250` dataset, we can empirically investigate this matter. However, we first have to tidy the data and then clean it. An essential step in this process is the removal of 'stop words'.
+In marketing, finding the right product name is a laborious task and requires careful attention. After all, our first impression of a product is partially informed by its name. Consequently, when promoting a movie, one might wonder whether more popular words in movie titles can lead to greater success, i.e. a higher ranking on IMDb. With the help of the `imdb_top_250` dataset, we can empirically investigate this matter. However, we first have to tidy the data and then clean it. An essential step in this process is the removal of *'stop words'*.
 
-'Stop words' are words that we want to exclude from our analysis. The `tidytext` package comes with a data frame that contains common stop words in English.
+*'Stop words'* are words that we want to exclude from our analysis, because they carry no particular meaning. The `tidytext` package comes with a data frame that contains common stop words in English.
 
 ```{r List of stop words, echo=TRUE}
 stop_words
@@ -86,7 +86,7 @@ titles <-
 titles
 ```
 
-Our new data frame has considerably more rows, i.e. 712, which hints at around 3 words per title on average. If you are the curious type, like me, we already can peek at the frequency of words in our dataset.
+Our new data frame has considerably more rows, i.e. `712`, which hints at around 3 words per title on average. If you are the curious type, like me, we already can peek at the frequency of words in our dataset.
 
 ```{r Frequency of words pre stop word removal, echo=TRUE}
 titles %>%
@@ -112,7 +112,7 @@ titles_no_sw <- anti_join(titles, stop_words,
 titles_no_sw
 ```
 
-The dataset shrank from 712 rows to 443 rows. Thus, almost 38% of our data was actually noise. With this cleaner dataset, we can now look at the frequency count again.
+The dataset shrank from `712` rows to `443` rows. Thus, almost 38% of our data was actually noise. With this cleaner dataset, we can now look at the frequency count again.
 
 ```{r Word frequency after removal of stop words, echo=TRUE}
 titles_no_sw %>%
@@ -162,9 +162,9 @@ Considering our correlation analysis, we find that more frequently used words te
 
 ## N-grams: Exploring correlations of words {#n-grams}
 
-Besides looking at words in isolation, it is often more interesting to understand combinations of words to provide much-needed context. For example, the difference between 'like' and 'not like' can be crucial when trying to understand sentiments in data. The co-occurrence of words follows the same idea as correlations, i.e. how often one word appears together with another. If the frequency of word pairs is high, the relationship between these two words is strong. The technical term for looking at tokens that represent pairs for words is 'bigram'. If we look at more than two words, we would consider them as 'n-grams', where the 'n' stands for the number of words.
+Besides looking at words in isolation, it is often more interesting to understand combinations of words to provide much-needed context. For example, the difference between 'like' and 'not like' can be crucial when trying to understand sentiments in data. The co-occurrence of words follows the same idea as correlations, i.e. how often one word appears together with another. If the frequency of word pairs is high, the relationship between these two words is strong. The technical term for looking at tokens that represent pairs for words is *'bigram'*. If we look at more than two words, we would consider them as *'n-gram'*, where the *'n'* stands for the number of words.
 
-Creating a bigram is relatively simple in R and follows similar steps as counting word frequencies:
+Creating a bigram is relatively simple in *R* and follows similar steps as counting word frequencies:
 
 1.  Turn text into a data frame.
 2.  Tokenize the variable that holds the text, i.e. `unnest_tokens()`,
@@ -173,7 +173,7 @@ Creating a bigram is relatively simple in R and follows similar steps as countin
 5.  Merge columns `word1` and `word2` into one column again, i.e. `unite()` them. (optional)
 6.  Count the frequency of bigrams, i.e. `count()`.
 
-There are a lot of new functions covered in this part. However, by now, you likely understand how they function already. Let's proceed step-by-step. For this final example about mixed-methods research, we will look at the `synopsis` of movies provided by IMDb. Since we already have the text in our data frame, we can skip step one. Next, we need to engage in tokenization. While we use the same function as before, we need to provide different arguments to retrieve bigrams. As before, we need to define an `output` column and an `input` column. In addition, we also have to provide the correct type of tokenization, i.e. determine `token`, which we need to set to `"ngrams"`. We also need to define the `n` in 'ngrams', which will be `2` for bigrams. After this, we apply `count()` to our variable `bigram`, and we achieved our task. If we turn this into R code, we get the following:
+There are a lot of new functions covered in this part. However, by now, you likely understand how they function already. Let's proceed step-by-step. For this final example about mixed-methods research, we will look at the `synopsis` of movies provided by IMDb. Since we already have the text in our data frame, we can skip step one. Next, we need to engage in tokenization. While we use the same function as before, we need to provide different arguments to retrieve bigrams. As before, we need to define an `output` column and an `input` column. In addition, we also have to provide the correct type of tokenization, i.e. determine `token`, which we need to set to `"ngrams"`. We also need to define the `n` in 'ngrams', which will be `2` for bigrams. After this, we apply `count()` to our variable `bigram`, and we achieved our task. If we turn this into *R* code, we get the following (with considerably less characters than its explanation):
 
 ```{r Tokenizing for ngrams, echo=TRUE}
 # Create bigrams from variable synopsis
@@ -210,7 +210,7 @@ work <- tibble(name = c("Fiona", "Katharina", "Daniel"))
 family$name == work$name
 ```
 
-All but one value in `family` and `work` are not equal, i.e. they are `FALSE`. This is because `==` compares the values in order. If we changed the order, some of the `FALSE` would turn `TRUE`. In addition, we get a warning telling us that these two objects are not equally long because `family` holds four names, while `work` contains only three names. Lastly, the results are not what we expected because `Fiona` and `Daniel` appear in both objects. In short, `==` is not the right choice to compare these two objects.
+All but one value in `family` and `work` are not equal, i.e. they are `FALSE`. This is because `==` compares the values in order. If we changed the order, some of the `FALSE` values would turn `TRUE`. In addition, we get a warning telling us that these two objects are not equally long because `family` holds four names, while `work` contains only three names. Lastly, the results are not what we expected because `Fiona` and `Daniel` appear in both objects. Therefore we would expect that there should be two `TRUE` values. In short, `==` is not the right choice to compare these two objects.
 
 If we use `%in%` instead, we can test whether each name appears in both objects, irrespective of their length and the order of the values.
 
@@ -219,14 +219,14 @@ If we use `%in%` instead, we can test whether each name appears in both objects,
 family$name %in% work$name
 ```
 
-If we want R to return the values that are the same across both objects, we can ask: `which()` names are the same?
+If we want *R* to return the values that are the same across both objects, we can ask: `which()` names are the same?
 
 ```{r Example of the use of in operator p3, echo=TRUE}
 # Compare the two objects using '%in%'
-same_names <- which(family$name %in% work$name)
+(same_names <- which(family$name %in% work$name))
 ```
 
-The numbers returned by `which()` refer to the position of the value in our object. In our case, the first value in `family` is `Fiona`, and the fourth value is `Daniel`. If you have many values that overlap in a large dataset, you might not want to know the row number but retrieve the actual values. This can be achieved by `slice()`ing our dataset.
+The numbers returned by `which()` refer to the position of the value in our object. In our case, the first value in `family` is `Fiona`, and the fourth value is `Daniel`. It is `TRUE` that these two names appear in both objects. If you have many values that overlap in a large dataset, you might not want to know the row number but retrieve the actual values. This can be achieved by `slice()`ing our dataset, i.e. filtering our data frame by providing row numbers.
 
 ```{r Example of the use of in operator p4, echo=TRUE}
 # Retrieve the values which exist in both objects
@@ -234,7 +234,7 @@ family %>%
   slice(same_names)
 ```
 
-While this might be a nice little exercise, it is important to understand how %in% can help us remove stop words. Technically, we try to achieve the opposite, i.e. we want to keep the values in `word1` and `word2` that are not a word in `stop_words`. If we use the language of `dplyr`, we `filter()` based on whether a word in `bigram_split` is not `%in%` the data frame `stop_words`. Be aware that `%in%` requires a variable and not an entire data frame to work as we intended.
+While this might be a nice little exercise, it is important to understand how `%in%` can help us remove stop words. Technically, we try to achieve the opposite, i.e. we want to keep the values in `word1` and `word2` that are not a word in `stop_words`. If we use the language of `dplyr`, we `filter()` based on whether a word in `bigram_split` is not `%in%` the data frame `stop_words`. Be aware that `%in%` requires a variable and not an entire data frame to work as we intend.
 
 ```{r Removing stop words from bigram, echo=TRUE}
 bigram_cleaned <-
@@ -263,11 +263,11 @@ bigram_cleaned %>%
 
 So far, we primarily looked at frequencies as numbers in tables or as bar plots. However, it is possible to create network plots of words with bigrams by drawing a line between `word1` and `word2`. Since there will be overlaps across bigrams, they would mutually connect and create a network of linked words.
 
-I am sure you have seen visualisations of networks before but might not have engaged with them on a more analytical level. A network plot consists of 'nodes', which represent observations in our data, and 'edges', which represent the link between 'nodes'. We need to define both to create a network.
+I am sure you have seen visualisations of networks before but might not have engaged with them on a more analytical level. A network plot consists of *'nodes'*, which represent observations in our data, and *'edges'*, which represent the link between nodes. We need to define both to create a network.
 
-Unfortunately, `ggplot2` does not enable us to create network plots, but the package `ggraph` offers such features using the familiar `ggplot2` syntax. Network plots are usually made using random algorithms to arrange values in a network efficiently. Thus, if you want your plots to be reproducible, you have to `set.seed()` in advance.
+Unfortunately, `ggplot2` does not enable us to easily create network plots, but the package `ggraph` offers such features using the familiar `ggplot2` syntax. Network plots are usually made using specific algorithms to arrange values in a network efficiently. Thus, if you want your plots to be reproducible, you have to `set.seed()` in advance. This way, random aspects of some algorithms are set constant.
 
-There is one more complication, but with a simple solution. The function `ggraph()`, which is an equivalent to `ggplot()`, requires us to create a graph object that can be used to plot networks. The package `igraph` has a convenient function that produces a `graph_from_data_frame()`.
+There is one more complication, but with a simple solution. The function `ggraph()`, which is an equivalent to `ggplot()`, requires us to create a `graph` object that can be used to plot networks. The package `igraph` has a convenient function that produces a `graph_from_data_frame()`. As a final step we need to choose a layout for the network. This requires some experimentation. Details about different layouts and more for the `ggraph` package can be found on its [website](https://ggraph.data-imaginist.com "ggraph website"){target="blank"}.
 
 ```{r Visualising ngrams as network plots p1, echo=TRUE}
 library(ggraph)
@@ -280,12 +280,12 @@ graph <- igraph::graph_from_data_frame(bigram_cleaned)
 
 # Plot the network graph
 graph %>%
-  ggraph(layout = "kk") +
-  geom_edge_link() +    # Draw lines between nodes
-  geom_node_point()     # Add node points
+  ggraph(layout = "kk") +  # Choose a layout
+  geom_edge_link() +       # Draw lines between nodes
+  geom_node_point()        # Add node points
 ```
 
-The result looks like a piece of modern art. Still, it is not easy to understand what the plot shows. Thus, we need to remove some bigrams that are not so frequent. For example, we could remove those that only appear once.
+The result looks like a piece of modern art. Still, it is not easy to understand what the plot shows us. Thus, we need to remove some bigrams that are not so frequent. For example, we could remove those that only appear once.
 
 ```{r Visualising ngrams as network plots p2, echo=TRUE}
 # Filter bigrams
@@ -300,7 +300,7 @@ network_plot %>%
   geom_node_point()
 ```
 
-It seems that many bigrams appeared only once in our dataset. Thus, the network plot looks much smaller and less busy. Nevertheless, we cannot fully understand what this visualisation shows because there are no labels for each node. We can add them using `geom_node_text()`. I also recommend offsetting the labels with `vjust` (vertical adjustment) and `hjust` (horizontal adjustment), making them easier to read. To enhance the network visualisation further, we could colour the edges based on the frequency of each token.
+It seems that many bigrams were removed. Thus, the network plot looks much smaller and less busy. Nevertheless, we cannot fully understand what this visualisation shows because there are no labels for each node. We can add them using `geom_node_text()`. I also recommend offsetting the labels with `vjust` (vertical adjustment) and `hjust` (horizontal adjustment), making them easier to read. To enhance the network visualisation further, we could colour the edges based on the frequency of each token.
 
 ```{r Visualising ngrams as network plots p3, echo=TRUE}
 # Plot network plot
@@ -315,18 +315,18 @@ network_plot %>%
 
 The final plot shows that `war` and other military aspects, e.g. `soldiers`, `army` are very prevalent in our dataset. Besides, we also find some famous movie characters in our visualisation, such as `darth` `vader`, `luke` `skywalker` or `indiana` `jones`.
 
-Our example is a simple analysis based on a relatively small 'corpus', i.e. a small dataset. However, the application of n-grams in larger datasets can reveal topic areas and links between them. There are more approaches to exploring topics in large datasets, for example, ['topic modelling'](https://www.tidytextmining.com/topicmodeling.html), but these techniques are also more complex.
+Our example is a simple analysis based on a relatively small 'corpus', i.e. a small dataset. However, the application of n-grams in larger datasets can reveal topic areas and links between them. There are more approaches to exploring topics in large datasets, for example, ['topic modelling'](https://www.tidytextmining.com/topicmodeling.html), which are far more complex, but offer more sophisticated analytical insights.
 
-## Exploring more mixed-methods research approaches in R
+## Exploring more mixed-methods research approaches in *R*
 
-This chapter can only be considered a teaser for mixed-methods research in R. There is much more to know and much more to learn. If this type of work is of interest, especially when working with social media data or historical text documents, there are several R packages I can recommend:
+This chapter can only be considered a teaser for mixed-methods research in *R*. There is much more to know and much more to learn. If this type of work is of interest, especially when working with social media data or historical text documents, there are several *R* packages I can recommend:
 
--   `tm`: [This text mining package](http://tm.r-forge.r-project.org) includes many functions that help to explore documents systematically.
+-   `tm`: This [text mining package](http://tm.r-forge.r-project.org) includes many functions that help to explore documents systematically.
 
--   `quanteda`: [This package](https://quanteda.io) offers natural language processing features and incorporates functions that are commonly seen in corpus analysis. It also provides tools to visualise frequencies of text, for example, wordclouds.
+-   `quanteda`: This [package](https://quanteda.io) offers natural language processing features and incorporates functions that are commonly seen in corpus analysis. It also provides tools to visualise frequencies of text, for example, wordclouds.
 
--   `topicmodels`: To analyse topics in large datasets, it is necessary to use special Natural Language Processing techniques. [This package](https://cran.r-project.org/web/packages/topicmodels/index.html) offers ways to perform Latent Dirichlet Allocation (LDA) and Correlated Topic Models (CTM). Both are exciting and promising pathways to large-scale text analysis.
+-   `topicmodels`: To analyse topics in large datasets, it is necessary to use special Natural Language Processing techniques. This [package](https://cran.r-project.org/web/packages/topicmodels/index.html) offers ways to perform *Latent Dirichlet Allocation (LDA)* and *Correlated Topic Models (CTM)*. Both are exciting and promising pathways to large-scale text analysis.
 
-Finally, it is worth mentioning that the `tidytext` package we used above also has a lot more to offer than what we covered, for example, performing sentiment analyses.
+Finally, it is worth mentioning that the `tidytext` package we used above also has a lot more to offer than what we covered, for example, performing *sentiment analyses*.
 
-I hope I managed to showcase the versatility of R to some degree in this chapter. Needless to say, there is also a lot I still have to learn, which makes using R exciting and, more than once, has inspired me to approach my data in unconventional ways.
+I hope I managed to showcase the versatility of *R* to some degree in this chapter. Needless to say, there is also a lot I still have to learn, which makes using *R* exciting and, more than once, has inspired me to approach my data in unconventional ways.

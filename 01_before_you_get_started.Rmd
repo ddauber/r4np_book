@@ -28,7 +28,7 @@ As you likely know, every language has its flavours in the form of dialects. Thi
 
 ## Understanding the formatting of this book {#formatting-of-this-book}
 
-The formatting of this book carries special meaning. For example, you will find actual R code in boxes like these.
+The formatting of this book carries special meaning. For example, you will find actual *R* code in boxes like these.
 
 ```{r Example of R code with output, echo=TRUE}
 name <- "Daniel"

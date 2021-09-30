@@ -211,15 +211,16 @@ plot_data %>%
   geom_col(aes(fill = ifelse(r_diff > 0, "Viewers", "Critics"))) +
   
   # Add movie titles
-  geom_text(aes(x = title, y = 0,
-            label = title),
+  geom_text(aes(x = title,
+                y = 0,
+                label = title),
             size = 2.5,
 
             # Align the labels of the plot
-            hjust = ifelse(plot$r_diff >= 0, "right", "left"),
-            nudge_y = ifelse(plot$r_diff >= 0, -.008, 0.008)
+            hjust = ifelse(plot_data$r_diff >= 0, "right", "left"),
+            nudge_y = ifelse(plot_data$r_diff >= 0, -0.008, 0.008)
             ) +
-  
+
   coord_flip() +
 
   # Cleaning up the plot to make it look more readable and colourful
