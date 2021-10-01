@@ -182,7 +182,7 @@ For this investigation, we use the modified dataset `dir_mov`, which only contai
 
 We can use boxplots to compare earlier movies (i.e. `1`) with later movies (i.e. `2`) across all directors. Thus, each director is reflected in both groups with one of their movies. Therefore, the same directors can be found in each group. As a measure of success, we use the `imdb_rating`.
 
-```{r Comparing two paired groups data visualisation boxplot, echo=TRUE}
+```{r Com two paired groups boxplot, echo=TRUE}
 dir_mov %>%
   ggplot(aes(x = movie, y = imdb_rating, fill = movie)) +
   geom_boxplot()
@@ -190,7 +190,7 @@ dir_mov %>%
 
 The boxplots look almost identical, suggesting that the ratings of movies in both groups have not changed significantly. However, the boxplot can only show a summary statistic for each group. Thus, it only implies that the movies in group `1` have about the same ratings as those in group `2`. If we want to visualise how the ratings have changed for each director from the first to the second movie, we can create a point plot and draw lines with `geom_line()` to connect the movies in each group. A line that moves up indicates that the second movie was rated higher than the first one for a particular director and vice versa.
 
-```{r Comparing two paired groups data visualisation line plot, echo=TRUE}
+```{r Comp two paired groups line plot, echo=TRUE}
 dir_mov %>%
   ggplot(aes(x = movie, y = imdb_rating, col = director)) +
   geom_point() +
@@ -201,7 +201,7 @@ dir_mov %>%
 
 Based on this plot, we have to revise our interpretation slightly. Directors who received exceptionally high ratings on their first movie (i.e. the top 3 in group `1`) scored much lower on the second movie. First, we can notice from our boxplots that these movies count as outliers, and second, obtaining such high scores on a movie is tough to replicate. Very highly rated movies are rare (unfortunately). Needless to say, all these movies are rated as very good; otherwise, they would not be on this list. It is worth noting that the way the y-axis is scaled emphasises differences. Thus, a difference between a rating of 9 and 8.5 appears large. If we change the range of the y-axis to '0-10', the differences appear marginal, but it reflects (1) the possible length of the scale (IMDb ratings range from 1-10) and (2) the magnitude in change relative to the full scale. More often than not, this 'zoom-in' effect is sometimes used to create the illusion of significant differences where there are none. Be aware when you present your findings not to develop visualisations that could be misleading. Similarly, always pay attention to the axis in visualisations presented by others.
 
-```{r Comparing two paired groups data visualisation line plot and full y scale, echo=TRUE}
+```{r Comp two paired groups line plot full y scale, echo=TRUE}
 dir_mov %>%
   ggplot(aes(x = movie, y = imdb_rating, col = director)) +
   geom_point() +

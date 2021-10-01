@@ -562,7 +562,7 @@ n_plot +
   ggtitle("bw = 18")
 ```
 
-```{r Illustration of different bw settings using patchwork to stich together, echo=FALSE}
+```{r Illustration of different bw settings, echo=FALSE}
 # bw = 18
 p1 <-
   n_plot +

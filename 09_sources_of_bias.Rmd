@@ -338,7 +338,7 @@ data4 %>%
 
 Judging by eye, we could argue that most values lie around the mean for each respective group. However, some observations are a bit further off. Still, using this visualisation, it is tough to judge whether the spread is about the same. However, boxplots can help with this, or even better, a boxplot reflected by a bar. The package `ggdist` has an excellent plotting function called `stat_interval()`, which allows us to show a boxplot in the form of a bar.
 
-```{r Homogeneity and no homogeneity of variance alternative visualisation, echo=TRUE}
+```{r H and no H of var alt vis, echo=TRUE}
 data4 %>%
   ggplot(aes(x = gender, y = income, group = gender)) +
   ggdist::stat_interval(aes(y = income),
