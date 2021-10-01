@@ -1,6 +1,6 @@
 book_filename: "r4np_book"
 delete_merged_file: TRUE
-new_session: yes
+new_session: no
 
 rmd_files: [
   "index.Rmd",
