@@ -1,5 +1,32 @@
 book_filename: "r4np_book"
 delete_merged_file: TRUE
-language:
-  ui:
-    chapter_name: ""
+new_session: yes
+
+rmd_files: [
+  "index.Rmd",
+  
+  "00_acknowledgements.Rmd",
+  
+  "01_before_you_get_started.Rmd",
+  "02_why_start_learning_a_programming_language.Rmd",
+  
+  "03_setting_up_r_rstudio.Rmd",
+  "04_rstudio_interface.Rmd",
+  "05_r_basics.Rmd",
+  "06_starting_r_projects.Rmd",
+  
+  "07_data_wrangling.Rmd",
+  
+  "08_descriptive_statistics.Rmd",
+  "09_sources_of_bias.Rmd",
+  "10_correlations.Rmd",
+  "11_power_analysis.Rmd",
+  "12_group_comparison.Rmd",
+  "13_regressions.Rmd",
+  
+  "14_mixed_methods.Rmd",
+  
+  "15_next_steps.Rmd",
+
+  "16_epilogue.Rmd"
+]
