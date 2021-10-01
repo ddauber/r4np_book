@@ -1,0 +1,45 @@
+# Why learn a programming language as a non-programmer? {#why-learn-a-programming-language-as-a-non-programmer}
+
+*'R'*, it is not just a letter you learn in primary school, but a powerful programming language. While it is used for a lot of quantitative data analysis, it has grown over the years to become a powerful tool that excels (\#no-pun-intended) in handling data and performing customised computations with quantitative and qualitative data.
+
+*R* is now one of my core tools to perform various types of work, for example,
+
+-   Statistical analysis,
+-   Corpus analysis,
+-   Development of online dashboards for interactive data visualisations and exploration,
+-   Connection to social media APIs for data collection,
+-   Creation of reporting systems to provide individualised feedback to research participants,
+-   Writing research articles, books, and blog posts,
+-   etc.
+
+</br>
+
+> *Learning R is like learning a foreign language. If you enjoy learning languages, then 'R' is just another one.*
+
+</br>
+
+While *R* has become a comprehensive tool for data scientists, it has yet to find its way into the mainstream field of Social Sciences. Why? Well, learning programming languages is not necessarily something that feels comfortable to everyone. It is not like Microsoft Word, where you can open the software and explore it through trial and error. Learning a programming language is like learning a foreign language: You have to learn vocabulary, grammar and syntax. Similar to learning a new language, programming languages also have steep learning curves and require quite some commitment.
+
+For this reason, most people do not even dare to learn it because it is time-consuming and often not considered a *'core method'* in Social Sciences disciplines. Apart from that, tools like SPSS have very intuitive interfaces, which seem much easier to use (or not?). However, the feeling of having *'mastered'* *R* (although one might never be able to claim this) can be extremely rewarding.
+
+I guess this introduction was not necessarily helpful in convincing you to learn any programming language. However, despite those initial hurdles, there are a series of advantages to consider. Below I list some good reasons to learn a programming language as they pertain to my own experiences.
+
+## Learning new tools to analyse your data is always essential {#learning-new-tools-to-analyse-your-data-is-always-essential}
+
+Theories change over time, and new insights into certain social phenomena are published every day. Thus, your knowledge might get outdated quite quickly. This is not so much the case for research methods knowledge. Typically, analytical techniques remain over many years. We still use the mean, mode, quartiles, standard deviation, etc., to describe our quantitative data. However, there are always new computational methods that help us to crunch the numbers even more. *R* is a tool that allows you to venture into new analytical territory because it is open source. Thousands of developers provide cutting-edge research methods free of charge for you to try with your data. You can find them on platforms like [GitHub](https://github.com "GitHub"){target="_blank"}. *R* is like a giant supermarket, where all products are available for free. However, to read the labels on the product packaging and understand what they are, you have to learn the language used in this supermarket.
+
+## Programming languages enhance your conceptual thinking {#programming-languages-enhance-your-conceptual-thinking}
+
+While I have no empirical evidence for this, I am very certain it is true. I would argue that my conceptual thinking is quite good, but I would not necessarily say that I was born with it. Programming languages are very logical. Any error in your code will make you fail to execute it properly. Sometimes you face challenges in creating the correct code to solve a problem. Through creative abstract thinking (I should copyright this term), you start to approach your problems differently, whether it is a coding problem or a problem in any other context. For example, I know many students enjoy the process of qualitative coding. However, they often struggle to detach their insights from the actual data and synthesise ideas on an abstract and more generic level. Qualitative researchers might refer to this as challenges in '*second-order deconstruction of meaning'*. This process of abstraction is a skill that needs to be honed, nurtured and practised. From my experience, programming languages are one way to achieve this, but they might not be recognised for this just yet. Programming languages, especially functions (see Chapter \@ref(functions), require us to generalise from a particular case to a generic one. This mental mechanism is also helpful in other areas of research or work in general.
+
+## Programming languages allow you to look at your data from a different angle {#programming-languages-allow-you-to-look-at-your-data-from-a-different-angle}
+
+There are commonly known and well-established techniques regarding how you should analyse your data rigorously. However, it can be quite some fun to try techniques outside your discipline. This does not only apply to programming languages, of course. Sometimes, learning about a new research method enables you to look at your current tools in very different ways too. One of the biggest challenges for any researcher is to reflect on one's own work. Learning new and maybe even *'strange'* tools can help with this. Admittedly, sometimes you might find out that some new tools are also a dead-end. Still, you likely have learned something valuable through the process of engaging with your data differently. So shake off the rust of your analytical routine and blow some fresh air into your research methods.
+
+## Learning any programming language will help you learn other programming languages. {#learning-any-programming-language-will-help-you-learn-other-programming-languages.}
+
+Once you understand the logic of one language, you will find it relatively easy to understand new programming languages. Of course, if you wanted to, you could become the next '*Neo'* (from ['The Matrix')](https://www.imdb.com/title/tt0133093/?ref_=ext_shr_lnk "'The Matrix'"){target="_blank"} and change the reality of your research forever. On a more serious note, though, if you know any programming language already, learning *R* will be easier because you have accrued some basic understanding of these particular types of languages.
+
+</br>
+
+Having considered everything of the above, do you feel ready for your next foreign language?

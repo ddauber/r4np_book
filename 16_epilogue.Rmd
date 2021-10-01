@@ -1,0 +1,7 @@
+# Epilogue {#epilogue .unnumbered}
+
+Congratulations! You made it through the book, or you started reading it from the back. Either way, I hope that spending your valuable time with this book was/is enjoyable, insightful and hopefully helpful in whatever grand or small questions you intend to answer through your research.
+
+For my part, it has been a very enjoyable experience to put these materials together for those who need them. I also learned several new aspects about *R* I did not know before, for example, how to use `bookdown` to write this book. My biggest hope is to convince more researchers in the Social Sciences to try something new that can enrich their work. Whether you decide to adopt `R` for all your work, intend to move on to other languages like Python, or give up on it entirely, it does not matter. At least you tried, and you are more knowledgeable. Whenever we learn something new, it requires us to push ourselves out of our comfort zone, and I hope this book helped with that.
+
+Whichever path you choose, I hope your research will have an impact, which, of course, does not depend on the tools you use.

@@ -1,0 +1,63 @@
+---
+title: "R for Non-Programmers: A Guide for Social Scientists"
+author: "Daniel Dauber"
+date: "`r Sys.Date()`"
+description: "R for Non-Programmers: A Guide for Social Scientists is a springboard into the world of R without having to become a full-fledged R programmer or possess abundant knowledge in other programming languages. This book  guides you through the most common challenges in empirical research in the Social Sciences and offers practical and efficient solutions. Each chapter is dedicated to a common task we have to achieve to answer our research questions. In addition, it provides plenty of exercises and in-depth case studies based on actual data."
+url: "http://danieldauber.com"
+site: bookdown::bookdown_site
+cover-image: "images/cover_art_icons/r4np_icon_white_bg_favicon.png"
+favicon: "images/cover_art_icons/r4np_icon_favicon.svg"
+github-repo: ddauber/r4np_book
+documentclass: book
+bibliography: book.bib
+biblio-style: apa
+link-citations: yes
+always_allow_html: true
+---
+
+# Welcome {#welcome .unnumbered}
+
+```{r include=FALSE}
+
+# load required packages
+library(tidyverse)
+library(r4np)
+
+# Format code chunks
+knitr::opts_chunk$set(
+  comment = "#>",
+  class.source = "customCodeChunk",
+  collapse = TRUE,
+  fig.align = "center"
+  )
+
+# automatically create a bib database for R packages
+knitr::write_bib(c(
+  .packages(), 'bookdown', 'knitr', 'rmarkdown'
+), 'packages.bib')
+
+# Use this code to truncate output, specified as 'out.lines = n'
+# save the built-in output hook
+hook_output <- knitr::knit_hooks$get("output")
+
+# set a new output hook to truncate text output
+knitr::knit_hooks$set(output = function(x, options) {
+  if (!is.null(n <- options$out.lines)) {
+    x <- xfun::split_lines(x)
+    if (length(x) > n) {
+      # truncate the output
+      x <- c(head(x, n), "....\n")
+    }
+    x <- paste(x, collapse = "\n")
+  }
+  hook_output(x, options)
+})
+```
+
+::: {style="float:right;position: relative; top: 0px;"}
+![](images/cover_art_icons/cover_art_book.png){width="200px"}
+:::
+
+Welcome to *R for Non-Programmers: A guide for Social Scientists* (R4NP). This book aims to help everyone who wishes to use R for their research projects. Each chapter conveys key concepts in data analysis in a comprehensive, compact and accessible manner. R4NP will guide you through your first steps on a possibly endless journey full of 'awe and wonder'.
+
+This book does not assume or expect any prior knowledge or skills in programming or statistical analysis. Instead, this book offers a comprehensive entry to R programming for novices and more experienced analysts wishing to migrate from other computational software.

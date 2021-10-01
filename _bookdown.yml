@@ -1,0 +1,5 @@
+book_filename: "r4np_book"
+delete_merged_file: TRUE
+language:
+  ui:
+    chapter_name: ""

@@ -1,0 +1,40 @@
+# Exercises: Solutions {#exercises-solutions}
+
+## Solutions for 5.6 {#exercises-solutions-5}
+
+Return to Chapter \@ref(exercises-chapter-5)
+
+```{r Solution for Chapter 5, echo=TRUE, collapse=TRUE}
+#1 ---------------
+sqrt(25 - 16) + 2 * 8 - 6
+
+#2 ---------------
+"Five" == 5
+
+#3 ---------------
+books <- list("Harry Potter and the Deathly Hallows",
+              "The Alchemist",
+              "The Davinci Code",
+              "R For Dummies")
+
+books
+
+# 4 ---------------
+x_x <- function(number1, number2) {    # Creates a function with 2 arguments
+  result1 <- number1 * number2         # Multiplies two arguments
+  result2 <- sqrt(number1)             # Computes squareroot of 1st argument
+  result3 <- number1 - number2         # Subtracts t2nd argument from 1st
+  return(c(result1, result2, result3)) # Prints all three results
+}
+
+x_x(2, 3)
+
+# 5 ---------------
+
+# First, install the package.
+
+# Second, load the package with 'library()'
+#         or use '::' to load only a particular function once.
+
+# Third, call the function you are interested in.
+```

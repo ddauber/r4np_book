@@ -1,0 +1,979 @@
+# Comparing groups {#comparing-groups}
+
+Social Sciences is about the study of human beings and their interactions. As such, we frequently want to compare two or more groups of human beings, organisations, teams, countries, etc., with each other to see whether they are similar or different from each other. Sometimes we also want to track individuals over time and see how they may have changed in some way or other. In short, comparing groups is an essential technique to make inferences and helps us better understand the diversity surrounding us.
+
+If we want to perform a group comparison, we have to consider which technique is most appropriate for our data. For example, some of it might be related to the type of data we have collected, and other aspects might be linked to the distribution of the data. More specifically, before we apply any statistical technique, we have to consider at least the following:
+
+-   missing data (see Chapter \@ref(dealing-with-missing-data)),
+
+-   outliers (see Chapter \@ref(dealing-with-outliers), and
+
+-   the assumptions made by analytical techniques about our data.
+
+While we covered missing data and outliers in previous chapters, we have yet to discuss assumptions. For group comparisons, there are three main questions we need to answer:
+
+-   Are the groups big enough to be compared, i.e. are they comparable?
+
+-   Is my data parametric or non-parametric? (see Chapter \@ref(parametric-or-non-parametric))
+
+-   How many groups do I wish to compare?
+
+-   Are these groups paired or unpaired?
+
+In the following, we will look at group comparisons for parametric and non-parametric data in each category and use the `wvs_nona` dataset, i.e. the `wvs` data frame after we performed imputation (see also Chapter \@ref(replacing-removing-missing-data)). Since we already covered how to test whether data is parametric or non-parametric, we will forgo this step out of pure convenience and remain succinct. We also ignore any potential outliers. The case studies at the end of the book provide complete example of performing group comparisons with a new set of data from start to finish (see Chapter \@ref()). Thus, parametric and non-parametric tests will be demonstrated with the same dataset and the same variables.
+
+## Comparability: Apples vs Oranges {#comparability-apples-vs-oranges}
+
+Before we can jump into group comparisons, we need to make ourselves aware of whether our groups can be compared in the first place. *'Comparability'* should not be confused with 'are the groups equal'. In many cases, we don't want groups to be equal in terms of participants, e.g. between-subject studies. On the other hand, we might wish for groups to be perfectly equal when we perform within-subject studies. Thus, asking whether groups are comparable is unrelated to whether the subjects in our study are the same. Instead, we are looking at the characteristics of our groups. Some commonly considered features include:
+
+-   *Size*: Are the groups about equally large?
+
+-   *Time*: Was the data collected around the same time?
+
+-   *Exogenous variables*: Is the distribution of characteristics we are not interested in approximately the same across groups?
+
+When we compare groups, we want to minimise the systematic differences that are not the primary focus of our study. Using the right sampling technique can help with this matter. For example, using a random sample and performing a random allocation to groups can help achieve comparable groups and remove systematic differences in a way no other sampling strategy can. However, there is still no guarantee that they will be comparable (see also @altman1985comparability and @berger2006review). Besides, we also face the challenge that in Social Sciences, we do not always have the option of random sampling. For example, International Business studies heavily rely on lists provided by others (e.g. the European Union, Fortune 500, etc.), personal judgement and convenience sampling. Only a small proportion perform probability sampling [@yang2006-IBmethods]. In short, there is no reason to worry if your sampling technique is not random. However, it emphasises the need to understand your sample and your groups thoroughly. To inspect characteristics of groups we wish to compare, we can use descriptive statistics as we covered them in Chapter \@ref(descriptive-statistics). However, this time, we apply these techniques to subsets of our data and not the entire dataset.
+
+For example, we might wish to compare `female` and `male` Egyptians (see Chapter \@ref(two-unpaired-groups)). If we wanted to make sure these two groups can be compared, we might have to check (among other characteristics) whether their `age` is distributed similarly. We can use the functions we already know to create a plot to investigate this matter. We could either use a boxplot or, a bit more accurate, a density plot using the `ggridges` package.
+
+```{r Comparability of Egyptians, echo=TRUE, message=FALSE}
+# Only select participants from 'Egypt'
+comp <-
+  wvs_nona %>%
+  filter(country == "Egypt")
+
+comp %>%
+  ggplot(aes(x = age,
+             y = gender,
+             fill = gender)) +
+  ggridges::geom_density_ridges(bandwidth = 4)
+```
+
+As we can see, the distribution of `age` across both `gender` groups is fairly similar and likely not different between groups. Of course, we could also statistically explore this using a suitable test before performing the main group comparison. However, we first have to understand how we can perform such tests.
+
+In the following chapters, we will primarily rely on the package `rstatix`, which offers a pipe-friendly approach to using the built-in functions of *R* to perform our group comparisons. However, you are welcome to try the basic functions, which you can find in Chapter \@ref(appendix).
+
+```{r Load package rstatix, echo=TRUE}
+library(rstatix)
+```
+
+## Comparing two groups {#comparing-two-groups}
+
+The simplest of comparisons is the one where you only have two groups. These groups could either consist of different people (unpaired) or represent two measurements of the same individuals (paired). We will cover scenarios in the following chapter because they require slightly different computational techniques.
+
+### Two unpaired groups {#two-unpaired-groups}
+
+An unpaired group test assumes that the observations in each group are not related to each other, for example, observations in each group are collected from different individuals.
+
+Our first comparison will be participants from `Egypt`, and we want to understand whether `male` and `female` citizens in this country perceive their `freedom_of_choice` differently or equally.
+
+We first can compare these two groups using our trusty `geom_boxplot()` (or any variation) and use different `fill` colours for each group.
+
+```{r Two unpaired groups visualisation, echo=TRUE}
+# Compute the mean for and size of each group
+group_means <-
+  comp %>%
+  group_by(gender) %>%
+  summarise(mean = mean(freedom_of_choice),
+            n = n())
+
+group_means
+
+# Create our data visualisation
+comp %>%
+  ggplot(aes(x = gender, y = freedom_of_choice, fill = gender)) +
+  geom_boxplot() +
+
+  # Add the mean for each group
+  geom_point(data = group_means,
+             aes(x = gender, y = mean),
+             shape = 3,
+             size = 2)
+```
+
+While the distribution looks similar, we notice that the median and the mean (marked by the cross inside the boxplot) are slightly higher for `male` participants. Thus, we can suspect some differences between these two groups, but we do not know whether these differences are significant or not. Therefore, to consider the significance (remember Chapter \@ref(significance)) and the effect size (see Table \@ref(tab:effect-size-cohen)), we have to perform statistical tests.
+
+Table \@ref(tab:comparing-two-groups-unpaired) summarises the different tests and functions to perform the group comparison computationally. It is important to note that the parametric test compares the means of two groups, while the non-parametric test compares medians. All of these tests turn significant if the differences between groups are large enough. Thus, significant results can be read as 'these groups are significantly different from each other'. Of course, if the test is not significant, the groups are considered to be not different. For parametric tests, i.e. `t.test(),` it is also essential to indicate whether the variances between these two groups are equal or not. Remember, the equality of variances was one of the assumptions for parametric tests. The *Welch t-test* can be used if the variances are not equal, but all other criteria for normality are met. By setting `var.equal = TRUE`, a regular *T-Test* would be performed. By default, `t.test()` assumes that variances are not equal. Make sure you test for *homogeneity of variance* before making your decision (see Chapter \@ref(homogeneity-of-variance).
+
++----------------+----------------+-------------------------------+-------------+---------------+
+| Assumption     | Test           | Function                      | Effect size | Function      |
++================+================+===============================+=============+===============+
+| Parametric     | T-Test         | `t_test(var.equal = TRUE)`    | Cohen's d   | `cohens_d()`  |
+|                |                |                               |             |               |
+|                | Welch T-Test   | `t_test(var.equal = FALSE)`   |             |               |
++----------------+----------------+-------------------------------+-------------+---------------+
+| Non-parametric | Mann-Whitney U | `wilcox_test(paired = FALSE)` | Wilcoxon R  | `wilcoxonR()` |
++----------------+----------------+-------------------------------+-------------+---------------+
+
+: (\#tab:comparing-two-groups-unpaired)Comparing two unpaired groups (effect size functions from package `effectsize`, except for `wilcoxonR()` from `rcompanion`
+
+With this information in hand, we can start comparing the `female` Egyptians with the `male` ones using both the parametric and the non-parametric test for illustration purposes only. By setting `detailed = TRUE`, we can obtain the maximum amount of information for certain comparisons. In such cases, it is advisable to use `glimpse()`. This will make the output (a `tibble`) easier to read because each row presents one piece of information, rather than having one row with many columns.
+
+```{r Computation two unpaired groups, echo=TRUE}
+# T-Test
+comp %>% t_test(freedom_of_choice ~ gender,
+                var.equal = TRUE,
+                detailed = TRUE) %>%
+  glimpse()
+
+# Welch t-test (var.equal = FALSE by default)
+comp %>% t_test(freedom_of_choice ~ gender,
+                var.equal = FALSE,
+                detailed = TRUE) %>%
+  glimpse()
+
+# Mann-Withney U test
+comp %>%
+  wilcox_test(freedom_of_choice ~ gender,
+              detailed = TRUE) %>%
+  glimpse()
+```
+
+You might notice that the notation within the functions for group tests looks somewhat different to what we are used to, i.e. we use the `~` ('tilde') symbol. This is because some functions take a formula as their attribute, and to distinguish the dependent and independent variables from each other, we use `~`. A more generic notation of how formulas in functions work is shown below, where `DV` stands for *'dependent variable'* and `IV` stands for *'independent variable'*:
+
+::: {#formulas-in-functions align="center"}
+function(formula = DV \~ IV)
+:::
+
+Even for multiple groups, group comparisons usually only have one independent variable, i.e. the grouping variable. Grouping variables are generally of the type `factor`. In the case of two groups, we have two levels present in this factor. For example, our variable `gender` contains two levels: `female` and `male`. If there are multiple groups, the factor comprises various levels, e.g. the variable `country` includes levels of 48 countries.
+
+No matter which test we run, it appears as if the difference is significant. However, how big/important is the difference? The effect size provides the answer to this. The interpretation of the effect size follows the explanations in Chapter \@ref(correlations), where we looked at the strength of the correlation of two variables. However, different analytical techniques require different effect size measures, implying that we have to use different benchmarks. To help us with the interpretation, we can use the `effectsize` package and their set of `interpret_*()` functions (see also [Indices of Effect Sizes](https://easystats.github.io/effectsize/articles/interpret.html "Indices of Effect Size"){target="blank"}). Sometimes, there are even more than one way of computing the effect size. For example, we can choose between the classic Wilcoxon R or the rank-biserial correlation coefficient for the Mann-Whitney test. In practice, you have to be explicit about how you computed the effect size. The differences between the two measures are often marginal and a matter of taste (or should I say: Your reviewers' taste). Throughout this chapter, I will rely on the effect sizes most commonly found in Social Sciences publications. However, feel free to explore other indices as well, especially those offered in the `effectsize` package.
+
+```{r Computation of effect size of two unpaired groups, echo=TRUE}
+# After parametric test
+(d <-
+    comp %>%
+    cohens_d(freedom_of_choice ~ gender,
+             var.equal = TRUE,
+             ci = TRUE))
+
+effectsize::interpret_d(d$effsize)
+
+# After non-parametric test
+(wr <-
+    comp %>%
+    wilcox_effsize(freedom_of_choice ~ gender,
+                   ci = TRUE))
+
+effectsize::interpret_r(wr$effsize)
+```
+
+Looking at our test results, the `female` Egyptians perceive `freedom_of_choice` differently from their `male` counterparts. This is in line with our boxplots. However, the effect sizes tend to be small, which means the differences between the two groups is marginal. Similar to correlations, group comparisons need to be analysed in two stages, answering two questions:
+
+1.  Is the difference between groups significant?
+
+2.  If it is significant, is the difference small, medium or large?
+
+Combining both analytical steps gives us a comprehensive answer to our research question and enables us to derive meaningful conclusions. This applies to all group comparisons covered in this book.
+
+### Two paired groups {#two-paired-groups}
+
+Sometimes, we are not interested in the difference between subjects, but within them, i.e. we want to know whether the same person provides similar or different responses at two different times. Thus, it becomes evident that observations need to be somehow linked to each other. Paired groups are frequently used in longitudinal and experimental studies (e.g. pre-test vs post-test). For example, if we look at our `imdb_top_250` dataset, we can see that some directors have more than one movie in the top 250. Therefore, we could be curious to know whether earlier movies of directors have been significantly more successful than their later ones.
+
+```{r Directors and their movies, echo=TRUE}
+# Number of movies directed by a particular person
+imdb_top_250 %>%
+  group_by(director) %>%
+  summarise(n = n()) %>%
+  arrange(desc(n))
+```
+
+For this investigation, we use the modified dataset `dir_mov`, which only contains movies of directors who have two or more movies listed in the IMDb Top 250s. Where directors had more than two movies, I randomly sampled two movies. Thus, there is a certain limitation to our dataset.
+
+We can use boxplots to compare earlier movies (i.e. `1`) with later movies (i.e. `2`) across all directors. Thus, each director is reflected in both groups with one of their movies. Therefore, the same directors can be found in each group. As a measure of success, we use the `imdb_rating`.
+
+```{r Comparing two paired groups data visualisation boxplot, echo=TRUE}
+dir_mov %>%
+  ggplot(aes(x = movie, y = imdb_rating, fill = movie)) +
+  geom_boxplot()
+```
+
+The boxplots look almost identical, suggesting that the ratings of movies in both groups have not changed significantly. However, the boxplot can only show a summary statistic for each group. Thus, it only implies that the movies in group `1` have about the same ratings as those in group `2`. If we want to visualise how the ratings have changed for each director from the first to the second movie, we can create a point plot and draw lines with `geom_line()` to connect the movies in each group. A line that moves up indicates that the second movie was rated higher than the first one for a particular director and vice versa.
+
+```{r Comparing two paired groups data visualisation line plot, echo=TRUE}
+dir_mov %>%
+  ggplot(aes(x = movie, y = imdb_rating, col = director)) +
+  geom_point() +
+  geom_line(aes(group = director)) +
+  # Remove the legend
+  theme(legend.position = "none")
+```
+
+Based on this plot, we have to revise our interpretation slightly. Directors who received exceptionally high ratings on their first movie (i.e. the top 3 in group `1`) scored much lower on the second movie. First, we can notice from our boxplots that these movies count as outliers, and second, obtaining such high scores on a movie is tough to replicate. Very highly rated movies are rare (unfortunately). Needless to say, all these movies are rated as very good; otherwise, they would not be on this list. It is worth noting that the way the y-axis is scaled emphasises differences. Thus, a difference between a rating of 9 and 8.5 appears large. If we change the range of the y-axis to '0-10', the differences appear marginal, but it reflects (1) the possible length of the scale (IMDb ratings range from 1-10) and (2) the magnitude in change relative to the full scale. More often than not, this 'zoom-in' effect is sometimes used to create the illusion of significant differences where there are none. Be aware when you present your findings not to develop visualisations that could be misleading. Similarly, always pay attention to the axis in visualisations presented by others.
+
+```{r Comparing two paired groups data visualisation line plot and full y scale, echo=TRUE}
+dir_mov %>%
+  ggplot(aes(x = movie, y = imdb_rating, col = director)) +
+  geom_point() +
+  geom_line(aes(group = director)) +
+  
+  # Remove the legend
+  theme(legend.position = "none") +
+  
+  # Manuall define the y axis range
+  ylim(0, 10)
+```
+
+Considering the revised plot, we likely can predict what the statistical test will show, i.e. no significant results. Table \@ref(tab:comparing-two-groups-paired) summarises which tests and functions need to be performed when our data is parametric or non-parametric. In both cases, the functions are the same as those of the unpaired group comparisons, but we need to add the attribute `paired = TRUE`. Still, the interpretations between the unpaired and paired tests remain the same. Also, be aware that some tests have changed in name, e.g. the Mann-Whitney U test has become the Wilcoxon Signed Rank Test. Even though we use the same functions as before, by changing the attribute `paired` to `TRUE`, we also change the computational technique to obtain the results. Thus, remember that the same function can perform different computations which are not comparable.
+
+| Assumption     | Test                      | Function                     | Effect size | Function            |
+|----------------|---------------------------|------------------------------|-------------|---------------------|
+| Parametric     | T-Test                    | `t_test(paired = TRUE)`      | Cohen's d   | `cohens_d()`        |
+| Non-parametric | Wilcoxon Signed Rank Test | `wilcox_test(paired = TRUE)` | Wilcoxon r  | `wilcoxonPairedR()` |
+
+: (\#tab:comparing-two-groups-paired)Comparing two unpaired groups (effect size functions from package `effectsize`, except for `wilcoxonPairedR()` from `rcompanion`)
+
+Let's apply these functions to find out whether the differences we can see in our plots matter.
+
+```{r Comparing two paired groups data computation, echo=TRUE, warning=FALSE}
+# Paired T-Test
+dir_mov %>% t_test(imdb_rating ~ movie,
+                   paired = TRUE,
+                   var.equal = TRUE,
+                   detailed = TRUE) %>%
+  glimpse()
+
+## Wilcoxon Signed Rank Test
+dir_mov %>% wilcox_test(imdb_rating ~ movie,
+                         paired = TRUE) %>%
+  glimpse()
+```
+
+As expected, the paired tests reveal that the differences in rating between the first and second movies are not significant. Usually, there would be no reason to follow this up with the computation of effect sizes because we only need to do this if the differences are statistically significant. However, nothing can stop us from doing so (for demonstration purposes).
+
+```{r Comparing two paired groups data effec sizes, echo=TRUE}
+## After T-Test
+d <- cohens_d(imdb_rating ~ movie,
+               data = dir_mov,
+               paired = TRUE,
+               var.equal = TRUE)
+
+glimpse(d)
+
+effectsize::interpret_d(d$effsize)
+
+# After Wilcoxon Signed Rank Test
+wr <-
+  dir_mov %>%
+  wilcox_effsize(imdb_rating ~ movie,
+                   paired = TRUE, ci = TRUE)
+
+glimpse(wr)
+
+effectsize::interpret_r(wr$effsize, rules = "cohen1988")
+```
+
+As expected, the effect sizes are tiny, irrespective of whether we treat our data as parametric or non-parametric. After all, being a successful director ranked in the IMDb top 250 seems to imply that other movies are equally successful, but remember the limitations of our dataset before drawing your final conclusions.
+
+## Comparing more than two groups {#comparing-more-than-two-groups}
+
+Often we find ourselves in situations where comparing two groups is not enough. Instead, we might be faced with three or more groups reasonably quickly. For example, the `wvs_nona` dataset allows us to look at 48 different countries, all of which we could compare very effectively with just a few lines of code. In the following chapters, we look at how we can perform the same type of analysis as before, but with multiple unpaired and paired groups using *R*. Similarly to the two-samples group comparison, we cover the parametric and non-parametric approaches.
+
+### Multiple unpaired groups {#multiple-unpaired-groups}
+
+Have you ever been wondering whether people in different countries are equally satisfied with their lives? You might have a rough guess that it is not the case because the social, economic and political environment might play an important role. For example, if you live in a country affected by social conflicts, one's life satisfaction might be drastically lower. In the following, we take a look at three countries `Iraq`, `Japan` and `Korea`. I chose these countries out of personal interest and because they nicely demonstrate the purpose of the chapter, i.e. finding out whether there are differences in the perception of `satisfaction` across three countries. At any time, feel free to remove the `filter()` function to gain the results of all countries in the dataset, but prepare for slightly longer computation times. We first create the dataset, which only contains the three desired countries.
+
+```{r create dataset for multiple unpaired group comparison, echo=TRUE}
+mcomp <-
+  wvs_nona %>%
+  filter(country == "Iraq" |
+           country == "Japan" |
+           country == "Korea")
+```
+
+Similar to before, we can use the `ggridges` package to draw density plots for each group. This has the added benefit that we can compare the distribution of data for each group and see whether the assumption of normality is likely met or not. On the other hand, we lose the option to identify any outliers quickly. You win some, and you lose some.
+
+```{r Multiple unpaired groups data visualisation, echo=TRUE}
+mcomp %>%
+  group_by(country) %>%
+  ggplot(aes(x = satisfaction,
+             y = reorder(country, satisfaction),
+             fill = country)) +
+  ggridges::stat_density_ridges(bandwidth = 0.6,
+                                quantile_lines = TRUE,   # adds median indicator
+                                quantiles = (0.5)) +
+  # Remove legend
+  theme(legend.position = "none")
+```
+
+The plot shows us that `Japan` and `Korea` appear to be very similar, if not identical (based on the median), but `Iraq` appears to be different from the other two groups. When performing a multiple group comparison, we can follow similar steps as before with two groups, i.e.
+
+-   perform the comparison,
+
+-   determine the effect size, and
+
+-   interpret the effect size.
+
+Table \@ref(tab:comparing-multiple-groups-unpaired) summarises which test needs to be chosen to compare multiple unpaired groups and their corresponding effect size measures.
+
++----------------+----------------------+--------------------------------------------+------------------------+-----------------------------------------------+
+| Assumption     | Test                 | Function for test                          | Effect size            | Function for effect size[^group_comparison-1] |
++================+======================+============================================+========================+===============================================+
+| Parametric     | ANOVA                | -   `anova_test` (assumes equal variances) | Eta squared            | `eta_squared()`                               |
+|                |                      | -   `oneway.test(var.equal = TRUE/FALSE)`  |                        |                                               |
++----------------+----------------------+--------------------------------------------+------------------------+-----------------------------------------------+
+| Non-parametric | Kruskall-Wallis test | `kruskal_test()`                           | Epsilon squared (rank) | `rank_epsilon_squared()`                      |
++----------------+----------------------+--------------------------------------------+------------------------+-----------------------------------------------+
+
+: (\#tab:comparing-multiple-groups-unpaired)Comparing multiple unpaired groups (effect size functions from package `effectsize`)
+
+[^group_comparison-1]: These functions are taken from the `effectsize` package.
+
+Let's begin by conducting the group comparison. As you will notice, `rstatix` currently does not support a parametric test where `var.equal = FALSE`. Therefore we need to fall back to the underlying function `oneway.test(var.equal = FALSE)`
+
+```{r Multiple unpaired groups computation, echo=TRUE, message=FALSE}
+# ANOVA
+## equal variances assumed
+mcomp %>%
+  anova_test(satisfaction ~ country,
+              detailed = TRUE)
+
+## Equal variances not assumed
+(oneway_test <- oneway.test(satisfaction ~ country,
+                            data = mcomp,
+                            var.equal = FALSE))
+
+# Kruskall-Wallis test
+## Perform comparison
+mcomp %>% kruskal_test(satisfaction ~ country)
+```
+
+While `anova_test()` does provide the effect size automatically, i.e. generalised eta squared (`ges`), this is not the case for the other two approaches. Therefore, we have to use the `effectsize` package to help us out. Packages often can get you a long way and make your life easier, but it is good to know alternatives if a single package does not give you what you need.
+
+```{r Multiple unpaired groups effect sizes, echo=TRUE, message=FALSE}
+# After ANOVA with var.equal = FALSE
+effectsize::eta_squared(oneway_test)
+
+# effect size rank epsilon squared
+effectsize::rank_epsilon_squared(mcomp$satisfaction ~ mcomp$gender)
+```
+
+The results show that there is a significant and large difference between these groups. You might argue that this is not quite true. Considering our plot, we know that Japan and Korea do not look as if they are significantly different. Multiple group comparisons only consider differences across all three groups. Therefore, if one group differs from the other groups, the test will turn significant and even provide a large enough effect size to consider it essential. However, these tests do not provide information on which differences between groups are significant. To gain more clarification about this, we need to incorporate another step called *'post-hoc tests'*. These tests compare two groups at a time, which is why they are also known as *'pairwise comparisons'*. Compared to regular two-sample tests, these perform corrections of the `p`-values for multiple testing, which is necessary. However, there are many different *'post-hoc' tests* you can choose. @field2013discovering (p.459) nicely outlines the different scenarios and provides recommendations to navigate this slightly complex field of *post-hoc tests*. Table \@ref(tab:post-hoc-tests) provides an overview of his suggestions.
+
++----------------------------------+-----------------+--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Equal sample size                | Equal variances | Post-hot tests     | Functions in R                                                                                                                                                                                   |
++==================================+=================+====================+==================================================================================================================================================================================================+
+| YES                              | YES             | -   REGWQ,         | -   `mutoss::regwq()`[^group_comparison-2]                                                                                                                                                       |
+|                                  |                 |                    |                                                                                                                                                                                                  |
+|                                  |                 | -   Tukey,         | -   `rstatix::tukey_hsd()`                                                                                                                                                                       |
+|                                  |                 |                    |                                                                                                                                                                                                  |
+|                                  |                 | -   Bonferroni     | -   `pairwise.t.test(p.adjust.method = "bonferroni")`                                                                                                                                            |
++----------------------------------+-----------------+--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| NO (slightly different)          | YES             | -   Gabriel        |                                                                                                                                                                                                  |
++----------------------------------+-----------------+--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| YES                              | YES             | -   Hochberg's GT2 | -   Not available in R and should not be confused with `pairwise.t.test(p.adjust.method = "hochberg")`, which is based on @hochberg1988sharper. The GT2, however, is based on @hochberg1974some. |
++----------------------------------+-----------------+--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| NO (not ideal for small samples) | NO              | -   Games-Howell   | -   `rstatix::games_howell_test()`                                                                                                                                                               |
++----------------------------------+-----------------+--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+: (\#tab:post-hoc-tests) Different post-hoc tests for different scenarios (parametric)
+
+[^group_comparison-2]: In order to use this package, it is necessary to install a series of other packages found on [bioconductor.org](https://www.bioconductor.org "bioconductor.org"){target="blank"}
+
+You might be surprised to see that there are also *post-hoc tests* for parametric group comparisons when equal variances are not assumed. Would we not have to use a non-parametric test for our group comparison instead? Well, empirical studies have demonstrated that ANOVAs tend to produce robust results, even if the assumption of normality (e.g. @blanca2017non) is not given, or there is some degree of heterogeneity of variance between groups [@tomarken1986comparison]. In other words, there can be some lenieancy (or flexibility?) when it comes to the violation of parametric assumptions. If you want to reside on the save side, you should ensure you know your data and its properties. If in doubt, non-parametric tests are also available.
+
+If we want to follow up the Kruskal-Wallis test, i.e. the non-parametric equivalent to the one-way ANOVA, we can make use of two *post-hoc tests*:
+
+-   Dunn Test: `rstatix::dunn_test()` [@dinno2015nonparametric]
+-   Pairwise comparison with Bonferroni (and other) correction: `pairwise.wilcox.test()`.
+
+Below are some examples of how you would use these functions in your project. However, be aware that some of the *post-hoc tests* are not well implemented yet in *R*. Here, I show the most important ones that likely serve you in 95% of the cases.
+
+```{r Multiple group comparison post-hoc tests, echo=TRUE}
+# POST_HOC TEST FOR PARAMETRIC DATA
+# Bonferroni
+pairwise.t.test(mcomp$satisfaction,
+                mcomp$country,
+                p.adjust.method = "bonferroni")
+
+# Tukey
+mcomp %>% tukey_hsd(satisfaction ~ country)
+
+# Games-Howell
+mcomp %>% games_howell_test(satisfaction ~ country)
+
+# POST-HOC TEST FOR NON-PARAMETRIC DATA
+mcomp %>% dunn_test(satisfaction ~ country)
+# or
+pairwise.wilcox.test(mcomp$satisfaction,
+                     mcomp$country,
+                     p.adjust.method = "holm")
+```
+
+As we can see, no matter which function we use, the interpretation of the results remain the same on this occasion. This is, of course reassuring to know, because it implies that the method chosen does not change the outcome.
+
+### Multiple paired groups {#multiple-paired-groups}
+
+When comparing multiple paired groups, matters become slightly more complicated. On the one hand, our groups are not really groups anymore because our data refer to the same group of people, usually over an extended period of time. In experimental studies, this can also refer to different *'treatments'* or *'conditions'*. This is similar to comparing two paired groups. On the other hand, we also have to deal with yet another assumption: *Sphericity*.
+
+#### Testing the assumption of sphericity {#sphericity}
+
+Sphericity assumes that the variance of covariate pairs (i.e. any combination of the groups/treatments) are roughly equal. This might sound familiar to the assumption of *homogeneity of variance* in between-subject ANOVAs, only that we look at differences between pairs and not between two different participant groups. Thus, it seems less surprising that the parametric test to compare multiple paired groups is also called *'repeated measures ANOVA'*.
+
+To illustrate the concept of *sphericity*, let's look at an example. Assume we conduct a longitudinal study that involves five university students who started their studies in a foreign country. We ask them to complete a survey that tests their level of integration into the local community at three points in time: month 1 (`m1`), month 4 (`m4`) and month 8 (`m8)`. This gives us the following data set:
+
+```{r Sphericity example data, echo=FALSE}
+set.seed(1234)
+
+acculturation <-
+  tibble(name = randomNames::randomNames(5,
+                                         ethnicity = c(1, 2, 3, 4, 5),
+                                         which.names = "first"),
+         m1 = rnorm(5, mean = 1.7, sd = 0.3),
+         m4 = rnorm(5, mean = 3.0, sd = 0.2),
+         m8 = rnorm(5, mean = 5, sd = 0.5)
+         ) %>%
+  mutate(across(where(is.double), round, 0))
+```
+
+```{r Sphericity example p1, echo=TRUE}
+acculturation
+```
+
+If each month measured a different group of participants, we would compare the differences between each month regarding homogeneity. However, since we look at paired data, we need to consider the differences in pairs of measures. In this study, the following combinations are possible:
+
+-   `m1` and `m4`
+
+-   `m4` and `m8`
+
+-   `m1` and `m8`
+
+Let's add the differences between measures for each participant based on these pairs and compute the variances across these values using the function `var()`.
+
+```{r Sphericity example p2, echo=TRUE}
+# Compute the differences across all three pairs of measurements
+differences <-
+  acculturation %>%
+  mutate(m1_m4 = m1 - m4,
+         m4_m8 = m4 - m8,
+         m1_m8 = m1 - m8)
+
+differences
+
+# Compute the variance for each pair
+differences %>%
+  summarise(m1_m4_var = var(m1_m4),
+            m4_m8_var = var(m4_m8),
+            m1_m8_var = var(m1_m8))
+```
+
+We can tell that the differences across groups are relatively small when comparing `m1_m4_var` and `m4_m8_var`. However, the value for `m1_m8_var` appears bigger. So, how can we be sure whether the assumption of sphericity is violated or not? Similar to many of the other assumptions we covered, a significance test provides the answer to this question. For multiple paired groups, we use *Mauchly's Test of Sphericity*. If the test is significant, the variances across groups are not equal. In other words, a significant Mauchly test implies a violation of sphericity. The `rstatix` package includes Mauchly's Test of Sphericity in its `anova_test()`. Thus, we get both with one function. However, our data in this example is not tidy (remember the definition from Chapter @ref(inspecting-raw-data)), because there are multiple observation per row for each individual and the same variable. Instead, we need to ensure that each observation for a given variable has its own row. In short, we first need to convert it into a tidy dataset using the function `pivot_longer()`. Feel free to ignore this part for now, because we will cover pivoting datasets in greater detail in Chapter \@ref(chi-squared-test).
+
+```{r Testing for sphericity, echo=TRUE}
+# Convert into tidy data
+acc_long <-
+  acculturation %>%
+  pivot_longer(cols = c(m1, m4, m8),
+               names_to = "month",
+               values_to = "integration")
+
+acc_long
+
+# Perform repeated-measures ANOVA
+# plus Mauchly's Test of Sphericity
+acc_long %>%
+  rstatix::anova_test(dv = integration,
+                      wid = name,
+                      within = month,
+                      detailed = TRUE)
+```
+
+Not only do the results show that the differences across measures are significant, but that our Mauchly's Test of Sphericity is not significant. Good news on all fronts.
+
+The output from `anova_test()` also provides information about `Sphericity Corrections`. We need to consider these scores if the sphericity assumption is violated, i.e. Mauchly's Test of Sphericity is significant. We commonly use two methods to correct the degrees of freedom in our analysis which will change the p-value of our tests: *Greenhouse-Geisser correction* [@greenhouse1959methods] and *Huynh-Field correction* [@huynh1976estimation]. @field2013discovering explains that if the Greenhouse-Geisser estimate (i.e. `GGe`) is greater than `0.74`, it is advisable to use the Huynh-Field correction instead. For each correction, the `anova_test()` provides corrected p-values. In our example, we do not have to worry about corrections, though. Still, it is very convenient that this function delivers the corrected results as well.
+
+#### Visualising and computing multiple paired group comparisons {#visualising-computing-multiple-paired-group-comparisons}
+
+So far, we blindly assumed that our data are parametric. If our assumptions for parametric tests are violated, we can draw on a non-parametric equivalent called `Friedman Test`. Table \@ref(tab:comparing-multiple-groups-paired) summarises the parametric and non-parametric tests as well as their respective effect sizes.
+
+| Assumption     | Test                    | Function          | Effect size | Function        |
+|----------------|-------------------------|-------------------|-------------|-----------------|
+| Parametric     | Repeated measures ANOVA | `anova_test()`    | Eta squared | `eta_squared()` |
+| Non-parametric | Friedman Test           | `friedman_test()` | Kendall's R | `kendalls_w()`  |
+
+: (\#tab:comparing-multiple-groups-paired)Comparing multiple paired groups (effect size functions from package `effectsize`)
+
+Instead of using a fictional example as we did in the previous chapter, let's draw on real observations using the dataset `wvs_waves`. This dataset contains similar data to `wvs` but offers multiple measures as indicated by the variable `wave` for several countries. For example, we might be interested to know whether `satisfaction` changed over the years. This time, our unit of analysis is not individuals, but countries. Therefore, we compare the same countries (not individuals) over time.
+
+Let's start by visualising the data across all time periods using `geom_boxplot()`. I also added the mean for each wave since this is what we will eventually compare in our repeated-measures ANOVA.
+
+```{r Visualise multiple paired groups, echo=TRUE}
+# Compute the mean for each wave
+wave_means <-
+  wvs_waves %>%
+  group_by(wave) %>%
+  summarise(w_mean = mean(satisfaction))
+
+wave_means
+
+# Plot the boxplots
+wvs_waves %>%
+  ggplot(aes(x = wave,
+             y = satisfaction,
+             fill = wave)) +
+  geom_boxplot() +
+
+  # Add the means
+  geom_point(data = wave_means,
+             aes(x = wave,
+                 y = w_mean),
+             shape = 4)
+```
+
+In total, we plotted seven boxplots that represent each wave of data collection. We can tell that `satisfaction` with life has improved slightly, especially from wave 3 (`w3`) to wave 4 (`w4`).
+
+Next, we would have to check the assumptions for parametric tests. Since we have covered this in Chapter \@ref(sources-of-bias), we only consider Mauchly's Test of Sphericity by running `anova_test()`.
+
+```{r Repeated measures ANOVA, echo=TRUE}
+# Compute repeated measures ANOVA and
+# Mauchly's Test of Sphericity
+wvs_waves %>%
+  rstatix::anova_test(dv = satisfaction,
+                      wid = id,
+                      within = wave)
+```
+
+We first look at the sphericity assumption which we did not violate, i.e. $p > 0.05$. Thus, using the ANOVA test is appropriate. Next, we inspect the ANOVA test results and find that the differences are significant as well, i.e. $p < 0.05$. Still, the effect size `ges` is small.
+
+From our plot, we know that some of the waves are fairly similar, and we need to determine which pair of waves are significantly different from each other. Therefore, we need a post-hoc test that allows us to perform pairwise comparisons. By now, this should sound familiar (see also Table \@ref(tab:post-hoc-tests).
+
+Since we assume our data is parametric and the groups are equally large for each wave ($n = 300$), we can use T-Tests with a Bonferroni correction.
+
+```{r Post-hoc test for paired multiple groups, echo=TRUE}
+pairwise.t.test(wvs_waves$satisfaction,
+                wvs_waves$wave,
+                p.adjust.method = "bonferroni",
+                paired = TRUE)
+```
+
+Based on these insights, we find that mainly `w2` shows significant differences with other waves. This is not a coincidence because `w2` has the lowest mean of all waves. Similarly, `w7`, which reports the highest mean for satisfaction, also reports several significant differences with other groups.
+
+Given the above, we can confirm that our people's `satisfaction` with life in each country has changed positively, but the change is minimal (statistically).
+
+To finish this chapter, I want to share the non-parametric version of this test: the Friedman test and its function `friedman_test()` from the `rstatix` package.
+
+```{r Friedman test, echo=TRUE, warning=FALSE}
+# NON=PARAMETRIC COMPARISON
+wvs_waves %>% rstatix::friedman_test(satisfaction ~ wave | id)
+
+# Effect size
+(kw <- effectsize::kendalls_w(satisfaction ~ wave | id,
+                       data = wvs_waves))
+
+effectsize::interpret_kendalls_w(kw$Kendalls_W)
+```
+
+The non-parametric test confirms the parametric test from before. However, the interpretation of the effect size `Kendall's W` requires some explanation. First, the effect size for Kendall's W can range from `0` (small effect size) to `1` (large effect size). Usually, this effect size is considered when comparing inter-rater agreement, for example, the level of agreement of a jury in ice skating during the Olympic games. Thus, the interpretation offered by the function `interpret_kendalls_w()` follows this logic. As such, it is worth considering a slightly amended interpretation of Kendall's W if our data is not based on ratings. This is shown in Table \@ref(tab:effect-size-kendalls-w) based on @landis1977measurement (p. 165). Thus, we could report that the effect size of the significant differences is 'very small'.
+
+| Kendall's W | Interpretation [@landis1977measurement] | Alternative interpretation |
+|-------------|-----------------------------------------|----------------------------|
+| 0.00-0.02   | Slight agreement                        | Very small                 |
+| 0.21-0.40   | Fair agreement                          | Small                      |
+| 0.41-0.60   | Moderate agreement                      | Moderate                   |
+| 0.61-0.80   | Substantial agreement                   | Large                      |
+| 0.81-1.00   | Almost perfect agreement                | Very large                 |
+
+: (\#tab:effect-size-kendalls-w)Interpretation benchmarks for the effect size Kendall's W
+
+## Comparing groups based on factors: Contingency tables {#chi-squared-test}
+
+So far, our dependent variable was always a numeric one. However, what if both independent and dependent variables are categorical? In such cases, we can only count the number of occurrences for each combination of the categories.
+
+For example, we might recode our previous dependent variable `satisfaction` into a dichotomous one, i.e. participants are either happy or not. This is also known as a binary/logical variable (see Chapter \@ref(change-data-types)). Since the original scale ranges from 1-10, we assume that participants who scored higher than `5` are `satisfied` with their lives, while those who scored lower are categorised as `unsatisfied`.
+
+```{r Recode satisfaction as a dichotomous variable, echo=TRUE}
+# Create a dichotomous/binary variable for satisfaction
+wvs_nona <-
+  wvs_nona %>%
+  mutate(satisfaction_bin = as_factor(ifelse(satisfaction > 5,
+                                             "satisfied",
+                                             "unsatisfied"))
+         )
+```
+
+Your first intuition is likely to ask: Are there more `satisfied` or `unsatisfied` people in my sample?
+
+```{r frequencies of satisfaction binary, echo=TRUE}
+wvs_nona %>% count(satisfaction_bin)
+```
+
+The results reveal that considerably more people are `satisfied` with their life than there are `unsatisfied` people. In the spirit of group comparisons, we might wonder whether `gender` differences might exist among the `satisfied` and `unsatisfied` group of people. Thus, we want to split the `satisfied` and `unsatisfied` responses into `male` and `female` groups. We can do this by adding a second argument to the function `count()`.
+
+```{r Contigency table satisfaction_bin with gender, echo=TRUE}
+wvs_nona %>% count(satisfaction_bin, gender)
+```
+
+This `tibble` reveals that there are more `female` participants who are satisfied than `male` ones. However, the same is true for the category `unsatisfied`. Using absolute values is not very meaningful when the sample sizes of each group are not equal. Thus, it is better to use the relative frequency instead and adding it as a new variable.
+
+```{r Contigency table relative satisfaction_bin with gender, echo=TRUE}
+ct <-
+  wvs_nona %>%
+  count(satisfaction_bin, gender) %>%
+  group_by(gender) %>%
+  mutate(perc = round(n / sum(n), 3))
+
+ct
+```
+
+The relative frequency (`perc`) reveals that `female` and `male` participants are equally satisfied and unsatisfied. In other words, we could argue that gender does not explain satisfaction with life because the proportion of `male` and `female` participants is almost identical.
+
+A more common and compact way to show such dependencies between categorical variables is a contingency table. To convert our current table into a contingency table, we need to map the levels of `satisfaction_bin` as rows (i.e. `satisfied` and `unsatisfied`), and for `gender`, we want each level represented as a column (i.e. `male` and `female`). This can be achieved with the function `pivot_wider()`. It turns our 'long' data frame into a 'wide' one. Therefore, we basically perform the opposite of what the function `pivot_longer()` did earlier. However, this means that our data is not 'tidy' anymore. Let's take a look at the output first to understand better what we try to achieve.
+
+```{r Contigency table relative satisfaction_bin with gender wide, echo=TRUE}
+ct %>% pivot_wider(id_cols = satisfaction_bin,
+                   names_from = gender,
+                   values_from = perc)
+```
+
+The resulting `tibble` looks like a table as we know it from Excel. It is much more compact than the long format. However, what are the different arguments I passed to the function `pivot_wider()`? Here is a more detailed explanation of what we just did:
+
+-   `id_cols` refers to one or more columns that define the groups for each row. In our case, we wanted to group observations based on whether these reflect the state of `satisfied` or `unsatisfied`. Thus, each group is only represented once in this column. The underlying concept is comparable to using the function `group_by()` together with `summarise()`, which happens to be the same as using `count()`.
+
+-   `names_from` defines which variable should be translated into separate columns. In other words, we replace the column `gender` and create a new column for each level of the factor, i.e. `male` and `female`.
+
+-   `values_from` requires us to specify which variable holds the values that should be entered into our table. Since we want our percentages included in the final output, we use `perc`.
+
+It is essential to note that we did not change any values but rearranged them. However, we lost one variable, i.e. `n`. Where has it gone? When using `pivot_wider()` we have to make sure we include all variables of interest. By default, the function will drop any other variables not mentioned. If we want to keep `n`, we can include it as another variable that is added to `values_from`.
+
+```{r Contigency table relative and absolute satisfaction_bin with gender, echo=TRUE}
+ct %>% pivot_wider(id_cols = satisfaction_bin,
+                   names_from = gender,
+                   values_from = c(perc, n))
+```
+
+The table has become even wider because we have two more columns to show the absolute frequency per `gender` and `satisfaction_bin`.
+
+As you already know, there are situations where we want to turn a 'wide' data frame into a 'long' one. We performed such a step earlier and there is an in-depth example provided in Chapter \@ref(reviewing-the-outliers). Knowing how to pivot dataset is an essential data wrangling skill and something you should definitely practice to perfection.
+
+Contingency tables are like plots: They provide an excellent overview of our data structure and relationships between variables. However, they provide no certainty about the strength of relationships. Therefore, we need to draw on a set of statistical tests to gain further insights.
+
+Similar to previous group comparisons, we can distinguish between paired and unpaired groups. I will cover each comparison in turn and allude to plotting two or more categories in a `ggplot()`.
+
+### Unpaired groups of categorical variables {#unpaired-groups-categorical-variables}
+
+In the introduction to this chapter, we covered a classic example of an unpaired comparison of two groups (`male` and `female`) regarding another categorical variable, i.e. `satisfaction_bin`. The tables we produced offered detailed insights into the distribution of these categories. However, it is always helpful to have a visual representation. Plotting two categorical variables (i.e. factors) in `ggplot2` can be achieved in many different ways. Three commonly used options are shown in Figure \@ref(fig:three-plots-satisfaction-gender).
+
+```{r Visualising a contingency table with bars, echo=TRUE, fig.cap="Three ways to plot frequencies", label="three-plots-satisfaction-gender"}
+
+# Plot with absolute frequencies (stacked)
+absolute_stacked <-
+  wvs_nona %>%
+  ggplot(aes(x = satisfaction_bin,
+             fill = gender)) +
+  geom_bar() +
+  ggtitle("Stacked absolute frequency") +
+  theme(legend.position = "none")
+
+# Plot with absolute frequencies (grouped)
+absolute_grouped <-
+  wvs_nona %>%
+  ggplot(aes(x = satisfaction_bin,
+             fill = gender)) +
+  geom_bar(position = "dodge") +
+  ggtitle("Grouped absolute frequency") +
+  theme(legend.position = "none")
+
+# Plot with relative frequencies
+relative <-
+  wvs_nona %>%
+  ggplot(aes(x = satisfaction_bin,
+             fill = gender)) +
+  geom_bar(position = "fill") +
+  ggtitle("Relative frequency") +
+  theme(legend.position = "none")
+
+# Plot all three plots with 'patchwork'
+absolute_stacked + absolute_grouped + relative + plot_spacer()
+```
+
+A more elegant and compact way of visualising frequencies across two or more categories are *mosaic plots*. These visualise relative frequencies for both variables in one plot. For example, consider the following mosaic plot created with the package `ggmosaic` and the function `geom_mosaic()`.
+
+```{r Visualising a contingency table with mosaics, echo=TRUE, message=FALSE, fig.cap="A mosaic plot which visualises the relationship of two categorical variables", label="mosaic-plot"}
+library(ggmosaic)
+wvs_nona %>%
+  ggplot() +
+  geom_mosaic(aes(x = product(satisfaction_bin, gender),
+                            fill = gender)) +
+  theme_mosaic()
+```
+
+It might not be evident from our data, but frequencies of each variable determine the bars' height and width. In other words, the width of the bars (i.e. x-axis) is determined by the relative frequency of `female` and `male` participants in our sample. On the other hand, the height of each bar (i.e. the y-axis) is specified by the relative frequency of `satisfied` and `unsatisfied`. This results in a square block that is divided by the respective relative distributions. Let me share an example where it is more apparent what a mosaic plot aims to achieve.
+
+```{r Showcasing a mosaic plot data, echo=FALSE}
+data <- tibble(gender = c("male", "male", "male",
+                        "male", "male", "male",
+                        "male", "female", "female",
+                        "female"),
+               married = c("yes", "no", "no",
+                           "NA", "no", "no",
+                           "yes", "no", "NA",
+                           "yes"))
+```
+
+```{r Showcasing a mosaic plot, echo=TRUE}
+data %>%
+  ggplot() +
+  geom_mosaic(aes(x = product(married, gender),
+                  fill = married)) +
+  theme_mosaic()
+```
+
+In this example, we can tell that there were more `male` participants than females because the bar for `male` is much wider. Apart from that, we notice that `female` participants have more missing values `NA` for the variable `married`. However, more `female` participants reported that they are `married`, i.e. answered with `yes`. While mosaic plots make for impressive visualisations, we must be mindful that more complex visualisations are always more challenging to understand. Thus, it is wise to plan the usage of such plots carefully depending on your audience.
+
+Throughout the remaining chapters, I will use the mosaic plot to illustrate distributions. The main difference to regular bar plots is the function `product()`, which allows us to define different variables of interest instead of using `x` and `y` in the `aes()` of `ggplot()`. It is this function that enables a mosaic visualisation. Apart from that, the same `ggplot2` syntax applies.
+
+When it comes to the computational side of things, we have to distinguish whether our two variables create a 2-by-2 matrix, i.e. both variables only have two levels. Depending on which scenario applies to our analysis, a different statistical test has to be performed. For some tests, a minimum frequency for each value in our contingency table (i.e. cells) also needs to be achieved. This is usually a matter of sample size and diversity in a sample. Table \@ref(tab:statistical-tests-unpaired-cat-variables) provides an overview of the different scenarios and indicates the functions we have to use to conduct our analysis in *R*.
+
+| Matrix | Condition                | Test                                               | Function in R                                            | Effect size   |
+|--------|--------------------------|----------------------------------------------------|----------------------------------------------------------|---------------|
+| 2x2    | \< 10 obs.               | Fisher's Exact Test                                | `fisher.test()`                                          | `phi()`       |
+| 2x2    | \> 10 obs.               | Chi-squared Test with Yate's Continuity Correction | `infer::chisq_test(correct = TRUE)`[^group_comparison-3] | `cramers_v()` |
+| n x n  | \> 5 obs. (80% of cells) | Chi-squared Test                                   | `infer::chisq_test()`                                    | `cramers_v()` |
+
+: (\#tab:statistical-tests-unpaired-cat-variables)Statistical tests to compare two unpaired categorical variables. Effect sizes are computed using the `effectsize` package.
+
+[^group_comparison-3]: `infer` is an R package which is part of `tidymodels`.
+
+To cut a long story short, we only need to be worried about 2x2 contingency tables where the values in some (or all) cells are lower than 10. In those cases, we need to rely on the *Fisher's Exact Test*. In all other cases, we can depend on the *Pearson Chi-squared Test* to do our bidding. The function `infer::chisq_test()` is based on the function `chisq.test()`, which automatically applies the required *Yate's Continuity Correction* if necessary.
+
+For every test that involves two categorical variables, we have to perform three steps:
+
+1.  Compute a contingency table and check the conditions outlined in Table \@ref(tab:statistical-tests-unpaired-cat-variables).
+
+2.  Conduct the appropriate statistical test.
+
+3.  If the test is significant, compute the effect size and interpret its value.
+
+Considering our example from the beginning of the chapter, we are confronted with a 2x2 table that has the following distribution:
+
+```{r Recap contigency table of satisfaction_bin and gender, echo=TRUE}
+ct %>% pivot_wider(id_cols = satisfaction_bin,
+                   names_from = gender,
+                   values_from = n)
+```
+
+We easily satisfy the requirement for a regular Chi-squared test with Yate's Continuity Correction because each row has at least a value of 10. However, for demonstration purposes, I will show how to compute both the Chi-squared test and the Fisher's Exact test for the same contingency table.
+
+```{r Fisher exact test, echo=TRUE}
+# Fisher's Exact Test
+fisher.test(wvs_nona$satisfaction_bin, wvs_nona$gender) %>%
+  # Make output more readable
+  broom::tidy() %>%
+  glimpse()
+
+## Effect size
+(phi <- effectsize::phi(wvs_nona$satisfaction_bin, wvs_nona$gender))
+effectsize::interpret_r(phi$phi, rules = "cohen1988")
+
+# Chi-squared test with Yate's continuity correction
+wvs_nona %>% infer::chisq_test(satisfaction_bin ~ gender,
+                               correct = TRUE)
+
+## Effect size
+(cv <- effectsize::cramers_v(wvs_nona$satisfaction_bin, wvs_nona$gender))
+effectsize::interpret_r(cv$Cramers_v, rules = "cohen1988")
+```
+
+Both tests reveal that the relationship between our variables is not significant ($p > 0.05$), and the effect sizes are very small. This result aligns with our visualisation shown in Figure \@ref(fig:mosaic-plot) because everything looks very symmetrical.
+
+Contingency tables do not always come as 2x2 matrices. Therefore, it makes sense to look at one more example where we have a much larger matrix. Bear in mind that the larger your matrix, the larger your dataset has to be to produce reliable results.
+
+Let's explore an example for a contingency table that is a 6x2 matrix. Imagine yourself at a soirée[^group_comparison-4], and someone might raise the question: Is it true that men are less likely to be married than women? To give you an edge over others at this French evening party, we can take a closer look at this matter with our `wvs_nona` dataset. We can create a mosaic plot and contingency table which feature `relationship_status` and `gender`.
+
+[^group_comparison-4]: A fancy way of saying 'evening party' in French.
+
+As usual, let's start with a plot first. We create a mosaic plot to visualise all six levels of the factor `relationship_status` against the two levels of `gender`.
+
+```{r Plot contigency table relationship_status and gender, echo=TRUE}
+wvs_nona %>%
+  ggplot() +
+  geom_mosaic(aes(x = product(relationship_status, gender),
+                  fill = relationship_status)) +
+  theme_mosaic()
+```
+
+While this plot is a lot more colourful than our previous ones, it still suggests that differences across categories are not particularly large. Especially the category `married` seems to indicate that `male` and `female` participants do not differ by much, i.e. their relative frequency is very similar. The only more considerable difference can be found for `widowed` and `single`. Apparently, `female` participants more frequently indicated being `widowed` while more `male` participants indicated that they are `single`.
+
+Next, we compute the numbers underpinning this plot, comparing the absolute distribution to check our conditions and the relative distribution to interpret the contingency table correctly.
+
+```{r Contingency tables unpaired computation relationship_status and gender, echo=TRUE}
+# Check whether we fulfill the criteria
+rel_gen <-
+  wvs_nona %>%
+  count(relationship_status, gender)
+
+rel_gen
+
+# Compute relative frequency
+rel_gen %>%
+  group_by(gender) %>%
+  mutate(perc = round(n / sum(n), 3)) %>%
+  pivot_wider(id_cols = relationship_status,
+              names_from = gender,
+              values_from = perc)
+```
+
+The contingency table with the relative frequencies confirms what we suspected. The differences are very minimal between `male` and `female` participants. In a final step, we need to perform a Chi-squared test to see whether the differences are significant or not.
+
+```{r Chi squared test for relationship_status and gender, echo=TRUE}
+# Perform Chi-squared test
+wvs_nona %>% infer::chisq_test(relationship_status ~ gender)
+
+# Compute effect size
+(cv <- effectsize::cramers_v(wvs_nona$relationship_status,
+                            wvs_nona$gender))
+effectsize::interpret_r(cv$Cramers_v, rules = "cohen1988")
+```
+
+The statistical results further confirm that the relationship between `relationship_status` and `gender` is weak but significant. Therefore, at your next soirée, you can confidently say: "This is bogus. The World Value Survey, which covers 48 different countries, shows that such a relationship is weak considering responses from over 69,000 individuals." \#cheers-to-that
+
+### Paired groups of categorical variables {#paired-groups-categorical-variables}
+
+Similar to paired group comparisons, contingency tables may show paired data. For example, we could be interested in knowing whether an intercultural training we delivered improved participants skills (or at least their personal perception of having improved).
+
+The dataset `ic_training` looks at participants' confidence in `communication` with people from diverse cultural backgrounds before and after an intercultural training session. Thus, we might be curious to know whether the training was effective. The dataset contains multiple versions of the same variable measured in different ways. Let's begin with the variable `communication2`, which measures improvement as a factor with only two levels, i.e. `yes` and `no`. We can start by plotting a mosaic plot.
+
+```{r Contigency table paired comparison 2by2 mosaic plot, echo=TRUE}
+ic_training %>%
+  ggplot() +
+  geom_mosaic(aes(x = product(test, communication2),
+                  fill = test)) +
+  theme_mosaic()
+```
+
+The mosaic plot shows that more participants indicate to be more confident in communicating with culturally others `post-training`. There were only very few participants who indicated that they have not become more confident.
+
+In the next step, we want to compute the contingency table. However, there is one aspect we need to account for: The responses are paired, and therefore we need a contingency table of paired responses. This requires some modification of our data. Let's start with a classic contingency table as we did for unpaired data.
+
+```{r Contigency table paired comparison 2by2 before pairing , echo=TRUE}
+# Unpaired contingency table
+ic_training %>%
+  count(test, communication2) %>%
+  group_by(test) %>%
+  pivot_wider(id_cols = test,
+              names_from = communication2,
+              values_from = n) %>%
+  mutate(across(where(is.double), round, 2))
+```
+
+This contingency table reflects the mosaic plot we created, but it does not show paired answers. If we sum the frequencies in each cell, we receive a score of `96`, which equals the number of observations in `ic_training`. However, since we have two observations per person (i.e. paired responses), we only have 48 participants. Thus, this frequency table treats the pre and post-training group as independent from each other, which is obviously incorrect.
+
+The current dataset includes two rows for each participant. Therefore, if we want to create a contingency table with paired scores, we first need to convert our data so that each participant is reflected by one row only, i.e. we need to make our data frame wider with `pivot_wider()`.
+
+```{r Convert dataset to enable paired contingency table, echo=TRUE}
+# Creating data frame reflecting paired responses
+paired_data <-
+  ic_training %>%
+  pivot_wider(id_cols = name,
+              names_from = test,
+              values_from = communication2)
+
+paired_data
+```
+
+In simple terms, we converted the column `communication2` into two columns based on the factor levels of `test`, i.e. `pre-training` and `post-training`. If we now use these two columns to create a contingency table and mosaic plot, we understand of how the paired distributions between `pre-training` and `post-training` look like.
+
+```{r Contigency table paired comparison 2by2 and mosaic plot, echo=TRUE}
+# Contignency table with paired values
+ct_paired <-
+  paired_data %>%
+  count(pre_training, post_training) %>%
+  pivot_wider(names_from = post_training,
+              names_prefix = "post_training_",
+              values_from = n,
+              values_fill = 0) # fill empty cells with '0'
+ct_paired
+
+# Contigency table with paired percentage values
+ct_paired %>%
+  mutate(post_training_yes = post_training_yes / nrow(paired_data),
+         post_training_no = post_training_no / nrow(paired_data)) %>%
+  mutate(across(where(is.double), round, 2))
+  
+  
+# Mosaic plot with paired values
+paired_data %>%
+  ggplot() +
+  geom_mosaic(aes(x = product(pre_training, post_training),
+                  fill = post_training)
+              ) +
+  theme_mosaic()
+```
+
+With these insights, we can refine our interpretation and state the following:
+
+-   There were 19 participants (40%) for whom the training caused no change, i.e. before and after the training their response was still `yes` or `no`.
+
+-   However, for the other 29 participants (60%), the training helped them change from `no` to `yes`. This is an excellent result.
+
+-   We notice that no participant scored `no` after the training was delivered, which is also a great achievement.
+
+Lastly, we need to perform a statistical test to confirm our suspicion that the training significantly impacted participants. For paired 2x2 contingency tables, we have to use *McNemar's Test*, using the function `mcnemar.test()`. To determine the effect size, we have to compute *Cohen's g* and use the function `cohens_g()` from the `effectsize` package to compute it. Be aware that we have to use the `paired_data` as our data frame and not `ic_training`.
+
+```{r Contigency tables paired computation, echo=TRUE}
+#McNemar's test
+mcnemar.test(paired_data$pre_training, paired_data$post_training)
+
+# Effect size
+effectsize::cohens_g(paired_data$pre_training, paired_data$post_training)
+```
+
+To correctly interpret the effect size @cohen1988statistical suggest the following benchmarks:
+
+-   $g < 0.05 = negligible$,
+
+-   $0.05 \leq g < 0.15 = small$,
+
+-   $0.15 \leq g < 0.25 = medium$,
+
+-   $0.25 \leq g = large$.
+
+Thus, our effect size is very large, and we can genuinely claim that the intercultural training had a significant impact on the participants. Well, there is only one flaw in our analysis. An eager eye will have noticed that one of our cells was empty, i.e. the top-right cell in the contingency table. The conditions to run such a test are similar to the Chi-squared test. Thus, using the McNemar test is not entirely appropriate in our case. Instead, we need to use the *'exact McNemar test'*, which compares the results against a binomial distribution and not a chi-squared one. More important than remembering the name or the distribution is to understand that the exact test produces more accurate results for smaller samples. However, we have to draw on a different package to compute it, i.e. `exact2x2` and its function `mcnemar.exact()`.
+
+```{r Compute exact McNemar test, message=FALSE}
+library(exact2x2)
+mcnemar.exact(paired_data$pre_training, paired_data$post_training)
+```
+
+```{r Deatch exact2x2, echo=TRUE}
+detach("package:exact2x2", unload = TRUE)
+```
+
+Even after using a more robust computation for our data, the results are still significant. Thus, there is no doubt that the intercultural training helped participants to improve.
+
+There are many other combinations of contingency tables. For example, the McNemar test can be extended to a 3x3 or higher matrix, but the rows and columns must be the same length. If you want to compare multiple categorical variables which do not follow a square matrix, it would be necessary to look into a loglinear analysis. While this book does not cover this technique, an excellent starting point is provided by @field2013discovering (p. 732ff).
+
+### A final remark about comparing groups based on categorical data
+
+Admittedly, I hardly ever find studies in the field of Social Sciences which work with primarily categorical data. Political Science might be an exception because working, for example, with polling data often implies working with categorical data. A reason you likely will not find yourself in the situation to work with such data and analytical techniques is measurement accuracy. If you look at the dataset `ic_training`, the variable `communication2` was artificially created to turn `numeric` data into a `factor`. This is usually not good practice because you lose measurement accuracy, and it can exaggerate differences between groups. Consider the following plots:
+
+```{r Comparing categorical vs numeric one, echo=TRUE}
+p1 <-
+  ic_training %>%
+  ggplot(aes(x = communication)) +
+  geom_bar() +
+  ggtitle("Full scale")
+
+p2 <-
+  ic_training %>%
+  ggplot(aes(x = communication3)) +
+  geom_bar() +
+  ggtitle("Category with 3 levels")
+
+p3 <-
+  ic_training %>%
+  ggplot(aes(x = communication2)) +
+  geom_bar() +
+  ggtitle("Category with 2 levels")
+
+# Create plot with 'patchwork'
+p1 + p2 + p3 + plot_spacer()
+```
+
+The more we aggregate the data into fewer categories, the more likely we increase differences between groups. For example, the plot `Category with 3 levels` shows that most participants fall into the category `medium`. However, reducing the categories to two, some participants are classified as `yes` and some as `no`. Thus, some respondents who were classified as `medium` are now in the `no` category. In reality, we know from our non-categorical measures that several participants will still have improved in confidence but are considered with those who have not improved. This is a major problem because it seems more people are not confident about communicating with people from different cultural backgrounds than there actually are. The accuracy of our measurement scale is poor.
+
+In short, I recommend to only use the techniques outlines in this chapter if your data is truly categorical in nature. Thus, when designing your data collection tool, you might also wish to abstain from measuring quantitative variables as categories, for example `age`, which is very popular choice among my students. While it might be sometimes more appropriate to offer categories, it is always good to use multiple categories and not just two. Every additional level in your factor will increase measurement accuracy and provides access to more advanced analytical techniques. Remember, it is always possible to convert `numeric` data into a `factor`, but not the other way around.
+
+## Reviewing group comparisons {#reviewing-group-comparisons}
+
+In Social Sciences, we often compare individuals against each other or with themselves over time. As such, understanding how to compare groups of participants is an essential analytical skill. The techniques outlined in this chapter merely provide a solid starting point and likely cover about 90% of the datasets you will encounter or collect. For the other 10% of cases, you might have to look further for more niche approaches to comparing groups. There is also more to know about these techniques from a theoretical and conceptual angle. However, as far as the computation in *R* is concerned, you should be able to tackle your research projects confidently.
