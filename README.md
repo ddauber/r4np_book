@@ -1,6 +1,6 @@
 # Welcome to R For Non-Programmers: A Guide for Social Scientists
 
-"R for Non-Programmers: A Guide for Social Scientists is a springboard into the world of R without having to become a full-fledged R programmer or possess abundant knowledge in other programming languages. This book guides you through the most common challenges in empirical research in the Social Sciences and offers practical and efficient solutions. Each chapter is dedicated to a common task we have to achieve to answer our research questions. In addition, it provides plenty of exercises and in-depth case studies based on actual data.
+_R for Non-Programmers: A Guide for Social Scientists_ is a springboard into the world of _R_ without having to become a full-fledged programmer or possess abundant knowledge in other programming languages. This book guides you through the most common challenges in empirical research in the Social Sciences and offers practical and efficient solutions. Each chapter is dedicated to a common task we have to achieve to answer our research questions. In addition, it provides plenty of exercises and in-depth case studies based on actual data.
 
 ## Install the companion package
 
