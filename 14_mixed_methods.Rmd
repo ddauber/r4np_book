@@ -1,4 +1,4 @@
-# Mixed-methods research: Analysing qualitative in *R* {#mixed-methods-research}
+# Mixed-methods research: Analysing qualitative data in *R* {#mixed-methods-research}
 
 Conducting mixed-methods research is challenging for everyone. It requires an understanding of different methods and data types and particular knowledge in determining how one can mix different methods to improve the insights compared to a single method approach. This chapter looks at one possibility of conducting mixed-methods research in *R*. It is likely the most evident use of computational software for qualitative data.
 
