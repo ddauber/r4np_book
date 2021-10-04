@@ -359,7 +359,7 @@ The only real downside of using the packages pane is that you cannot install pac
 
 Now that you have a nice collection of *R* packages, the next step would be to use them. While you only have to install *R* packages once, you have to 'activate' them every time you start an new session in RStudio. This process is also called 'loading an R package'. Once an *R* package is loaded, you can use all its functions. To load an *R* package, we have to use the function `library()`.
 
-```{r Loading an R package, echo=TRUE, warning=FALSE}
+```{r Loading an R package, echo=TRUE, warning=FALSE, message=FALSE}
 library(tidyverse)
 ```
 

@@ -10,7 +10,8 @@ favicon: "images/cover_art_icons/r4np_icon_favicon.svg"
 github-repo: ddauber/r4np_book
 documentclass: book
 bibliography: book.bib
-biblio-style: apa
+# biblio-style: apa
+csl: apa-6th-edition.csl
 link-citations: yes
 always_allow_html: true
 ---
