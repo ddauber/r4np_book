@@ -78,7 +78,9 @@ The problem you encounter when rearranging a `geom_bar()` with only one variable
 # Step 1: The frequency table only
 imdb_top_250 %>%
   count(genre_01)
+```
 
+```{r}
 # Step 2: Plotting a barplot based on the frequency table
 imdb_top_250 %>%
   count(genre_01) %>%
@@ -94,8 +96,10 @@ imdb_top_250 %>%
   
   # Rotate plot by 180 degrees
   coord_flip()
+```
 
-#Step 3: Sort the plot by frequency, i.e. by 'n'
+```{r}
+#Step 3: reorder() genre_01 by frequency, i.e. by 'n'
 imdb_top_250 %>%
   count(genre_01) %>%
   ggplot(aes(x = reorder(genre_01, n), y = n)) +  # Use 'reorder()'
@@ -132,11 +136,14 @@ Assume we are curious to know how successful movies are in each of the genres. T
 
 ```{r Plotting the mean of movie genre earnings, echo=TRUE}
 imdb_top_250 %>%
+  
   # Group data by genre
   group_by(genre_01) %>%
+  
   # Compute the mean for each group (remove NAs via na.rm = TRUE)
   summarise(mean_earnings_in_m = mean(gross_in_m, na.rm = TRUE)) %>%
-# Create the plot
+  
+  # Create the plot
   ggplot(aes(x = reorder(genre_01, mean_earnings_in_m), y = mean_earnings_in_m)) +
   geom_col() +
   coord_flip()
@@ -148,12 +155,16 @@ You will have noticed that we use the function `summarise()` instead of `mutate(
 # Create a simple dataset from scratch with tibble()
 (data <- tibble(number = c(1, 2, 3, 4, 5),
                group = factor(c("A", "B", "A", "B", "A"))))
+```
 
+```{r}
 # Return the group value for each observation/row
 data %>%
   group_by(group) %>%
   mutate(sum = sum(number))
+```
 
+```{r}
 # Returns the group value once for each group
 data %>%
   group_by(group) %>%
@@ -177,7 +188,9 @@ Based on this result, we might believe that `Action` and `Animation` movies are 
 # Assume there are 2 Action movies in the top 250
 # both of which earn 203 million
 2 * 203
+```
 
+```{r}
 # Assume there are 10 Drama movies in the top 25
 # each of which earns 53 million
 10 * 53
@@ -245,7 +258,9 @@ imdb_top_250 %>%
 imdb_top_250 %>%
   filter(genre_01 == "Action") %>%
   summarise(mean = mean(gross_in_m, na.rm = TRUE))
+```
 
+```{r}
 # Mean earnings for Action genre with Avengers movies
 imdb_top_250 %>%
   filter(genre_01 == "Action" &
@@ -261,7 +276,9 @@ The result is striking. Without these two movies, the `Action` genre would have 
 imdb_top_250 %>%
   filter(genre_01 == "Action") %>%
   summarise(median = median(gross_in_m, na.rm = TRUE))
+```
 
+```{r}
 # Median earnings for Action genre with Avengers movies
 imdb_top_250 %>%
   filter(genre_01 == "Action" &
@@ -509,8 +526,8 @@ imdb_top_250 %>%
   ggplot(aes(runtime_min)) +
   geom_histogram(aes(y = ..density..), bins = 30) +
 
-  # This part creates a normal curve based on the mean
-  # and standard deviation of our data
+  # The following part creates a normal curve based on
+  # the mean and standard deviation of our data
 
   geom_function(fun = dnorm,
                 n = 103,

@@ -194,6 +194,7 @@ You are probably thinking: "This is easy. I just open the dataset in Excel and c
 
 ```{r Cleaning column names with janitor, echo=TRUE}
 wvs <- janitor::clean_names(wvs)
+
 glimpse(wvs)
 ```
 
@@ -582,7 +583,9 @@ wvs_nona <-
 
 # Be aware that our new dataframe has different datatypes
 glimpse(wvs_nona)
+```
 
+```{r}
 # Let's fix this
 wvs_nona <-
   wvs_nona %>%
@@ -722,7 +725,9 @@ Thus, we end up computing the Cronbach's $\alpha$ for both variables in the foll
 gep %>%
   select(starts_with("cs_") & ends_with("_imp"), -cs_imp) %>%
   psych::alpha()
+```
 
+```{r}
 gep %>%
   select(starts_with("cs_") & ends_with("_exp"), -cs_exp) %>%
   psych::alpha()

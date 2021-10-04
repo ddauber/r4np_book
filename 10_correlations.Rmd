@@ -192,7 +192,9 @@ library(correlation)
 imdb_top_250 %>%
   select(imdb_rating, metascore) %>%
   correlation()
+```
 
+```{r}
 # Spearman correlation
 imdb_top_250 %>%
   select(imdb_rating, metascore) %>%
@@ -268,7 +270,9 @@ Another problem we face with this plot (and correlations) are extreme values, i.
 imdb_top_250 %>%
   select(imdb_rating, votes) %>%
   correlation()
+```
 
+```{r}
 # Compute quartiles
 votes_quantiles <- quantile(imdb_top_250$votes)
 rating_quantiles <- quantile(imdb_top_250$imdb_rating)
@@ -452,7 +456,9 @@ Let's consider a practical example. We found that `votes` and `gross_in_m` are p
 imdb_top_250 %>%
   select(votes, gross_in_m, year) %>%
   correlation()
+```
 
+```{r}
 # Correlation between variables, considering partial correlations
 imdb_top_250 %>%
   select(votes, gross_in_m, year) %>%
@@ -476,7 +482,9 @@ simpson %>%
               formula = y ~ x,
               se = FALSE,
               color = "red")
+```
 
+```{r}
 simpson %>%
   select(performance, happiness) %>%
   correlation()
@@ -500,7 +508,9 @@ simpson %>%
 
   # Choose custom colours for the dots
   scale_color_manual(values = c("#42BDFF", "#FF5C67", "#B3AF25"))
+```
 
+```{r}
 simpson %>%
   group_by(group) %>%
   correlation()

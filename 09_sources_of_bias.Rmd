@@ -105,7 +105,6 @@ There is no statistical measurement or plot that can tell us whether observation
 We touched upon the notion of *'normality'* and *'normal distributions'* before in Chapter \@ref(spread-of-data) because it refers to the spread of our data. Figure \@ref(fig:normal-distribution2) should look familiar by now.
 
 ```{r Normal distribution 2, fig.cap="A normal distribution", echo=FALSE, label="normal-distribution2"}
-
 data <- tribble(~x, -5, 5)
 
 data %>% ggplot(aes(x)) +
@@ -557,7 +556,9 @@ From here, it is simple to remove these movies (i.e. keep the movies that are no
 imdb_top_250 %>%
   filter(outlier == "FALSE") %>%
   select(title, outlier)
+```
 
+```{r}
 # Replace values with NA
 imdb_top_250 %>%
   mutate(runtime_min = replace(runtime_min, outlier == "TRUE", NA)) %>%
@@ -585,6 +586,8 @@ imdb_top_250 %>%
 To round things off, let me share with you one more visualisation, which demonstrates that outliers might also have to be defined based on specific groupings of your data, e.g. movie genres. Thus, it might be essential to consider outliers in light of sub-samples of your data rather than the entire dataset, especially when comparing groups (see Chapter \@ref(comparing-groups)).
 
 ```{r Final plot to show outliers, echo=TRUE, warning=FALSE}
+# The wesanderson package can make your plots look more
+# 'Wes Anderson'
 colour_pal <- wesanderson::wes_palette("Darjeeling1", 11, type = "continuous")
 
 imdb_top_250 %>%
