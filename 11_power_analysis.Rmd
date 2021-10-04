@@ -1,5 +1,11 @@
 # Power: You either have it or you don't {#power-analysis}
 
+```{r}
+library(tidyverse)
+library(correlation)
+library(r4np)
+```
+
 The most frequently asked question by my students is: How much data do I have to collect? My answer is always the same: *'It depends'*. From a student's perspective, this must be one of the most frustrating answers. Usually, I follow this sentence up with something more helpful to guide students on their way. For example, there is a way to determine how large your sample has to be to detect specific relationships reliably. This procedure is called *power analysis*.
 
 While *power analysis* can be performed before and after data collection, it seems rather pointless to do it afterwards when collecting more data is not only challenging but sometimes impossible. Thus, my explanations in this chapter will primarily focus on the question: How much data is enough to detect relationships between variables reliably.
@@ -12,7 +18,7 @@ We already know that sample size matters, for example, to assume normality when 
 
 +-----------+-----------------------------------------------------------------------------------------------------------------------------------------------------+
 | Error     | Meaning                                                                                                                                             |
-+===========+=====================================================================================================================================================+
++:=========:+=====================================================================================================================================================+
 | *Type I*  | -   We assume a relationship exists between variables where there is none in the population.                                                        |
 |           |                                                                                                                                                     |
 |           | -   We also refer to this as *'false positive'*.                                                                                                    |
@@ -50,23 +56,23 @@ As I mentioned earlier, it makes more sense to use a *power analysis* to determi
 
 So, how exactly can we compute the right sample size, and how do we find all the numbers for these ingredients without empirical data at our disposal? First, we need a function that can compute it because computing a power analysis manually is quite challenging. The package `pwr` was developed to do precisely that for different kinds of statistical tests. Table \@ref(tab:power-analysis-pwr) provides an overview of functions needed to perform power analysis for various tests covered in this book.
 
-+--------------------+-----------------------------------------------+---------------------------------------------+
-| Statistical method | Chapter                                       | function in `pwr`                           |
-+====================+===============================================+=============================================+
-| Correlation        | Chapter \@ref(correlations)                   | `pwr.r.test()`                              |
-+--------------------+-----------------------------------------------+---------------------------------------------+
-| T-test             | Chapter \@ref(comparing-groups)               | `pwr.t.test()`                              |
-|                    |                                               |                                             |
-|                    |                                               | `pwr.t2n.test()` (for unequal sample sizes) |
-+--------------------+-----------------------------------------------+---------------------------------------------+
-| ANOVA              | Chapter \@ref(comparing-more-than-two-groups) | `pwr.anova.test()`                          |
-+--------------------+-----------------------------------------------+---------------------------------------------+
-| Chi-squared test   | Chapter \@ref(chi-squared-test)               | `pwr.chisq.test()`                          |
-+--------------------+-----------------------------------------------+---------------------------------------------+
-| Linear regression  | Chapter \@ref(regression)                     | `pwr.f2.test()`                             |
-+--------------------+-----------------------------------------------+---------------------------------------------+
++---------------------------------------------+-----------------------------------------------+---------------------------------------------------------------------------------------+
+| Statistical method                          | Chapter                                       | function in `pwr`                                                                     |
++:============================================+:==============================================+:======================================================================================+
+| Correlation                                 | Chapter \@ref(correlations)                   | `pwr.r.test()`                                                                        |
++---------------------------------------------+-----------------------------------------------+---------------------------------------------------------------------------------------+
+| T-test                                      | Chapter \@ref(comparing-groups)               | `pwr.t.test()`                                                                        |
+|                                             |                                               |                                                                                       |
+|                                             |                                               | `pwr.t2n.test()` (for unequal sample sizes)                                           |
++---------------------------------------------+-----------------------------------------------+---------------------------------------------------------------------------------------+
+| ANOVA                                       | Chapter \@ref(comparing-more-than-two-groups) | `pwr.anova.test()`                                                                    |
++---------------------------------------------+-----------------------------------------------+---------------------------------------------------------------------------------------+
+| Chi-squared test                            | Chapter \@ref(chi-squared-test)               | `pwr.chisq.test()`                                                                    |
++---------------------------------------------+-----------------------------------------------+---------------------------------------------------------------------------------------+
+| Linear regression                           | Chapter \@ref(regression)                     | `pwr.f2.test()`                                                                       |
++---------------------------------------------+-----------------------------------------------+---------------------------------------------------------------------------------------+
 
-: (\#tab:power-analysis-pwr)Power analysis via the package\`pwr\` for different methods covered in this book
+: (\#tab:power-analysis-pwr)Power analysis via the package \`pwr\` for different methods covered in this book
 
 Since all functions work essentially the same, I will provide an example of last chapter's correlation analysis. You likely remember that we looked at whether the number of votes a movie receives on IMDb can predict its earnings. Below is the partial correlation that revealed a relationship in our sample based on the top 250 movies. This is just a sample, and it is not representative of all movies listed on IMDb because it only includes the best movies of all time. As of June 2021, IMDb offers information about [8 million movie titles](https://www.imdb.com/pressroom/stats/).
 

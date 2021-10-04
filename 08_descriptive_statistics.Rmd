@@ -467,9 +467,6 @@ p4 <-
   geom_bar(aes(fill = "red"), show.legend = FALSE) +
   ggtitle("bins = 300")
 
-
-library(patchwork)
-
 p1 + p2 + p3 + p4
 ```
 
@@ -590,7 +587,7 @@ imdb_top_250 %>%
   geom_violin()
 ```
 
-Looking at our plot, it becomes evident where the violin plot got its name from, i.e. its shape. The reason why it is also a twin of the density plot becomes clear when we only plot half of the violin with `geom_violinghalf` from the `see` package.
+Looking at our plot, it becomes evident where the violin plot got its name from, i.e. its shape. The reason why it is also a twin of the density plot becomes clear when we only plot half of the violin with `geom_violinghalf()` from the `see` package.
 
 ```{r Half violin plot, echo=TRUE}
 imdb_top_250 %>%
@@ -601,7 +598,7 @@ imdb_top_250 %>%
 
 It looks exactly like the density plot we plotted earlier (see Figure \@ref(fig:density-vs-normal). The interpretation largely remains the same to a density plot as well. The relationship between the boxplot and the violin plot lies in the symmetry of the violin plot.
 
-At this point, it is fair to say that we enter 'fashion' territory. It is really up to your taste which visualisation you prefer because they are largely similar but offer nuances that some data sets might require. Each visualisation, though, comes with caveats, which results in the emergence of new plot types. For example, *'sina'* plots which address the following problem: A boxplot by itself will never be able to show bimodal distributions like a density plot. On the other hand, a density plot can show observations that do not exist, because they are smoothed. The package `ggforce` enables us to draw a 'sina' plot which combines a violin plot with a dot plot. Here is an example of overlaying a sina plot (black dots) and a violin plot (faded blue violin plot).
+At this point, it is fair to say that we enter 'fashion' territory. It is really up to your taste which visualisation you prefer because they are largely similar but offer nuances that some data sets might require. Each visualisation, though, comes with caveats, which results in the emergence of new plot types. For example, *'sina'* plots which address the following problem: A boxplot by itself will never be able to show bimodal distributions like a density plot. On the other hand, a density plot can show observations that do not exist, because they are smoothed. The package `ggforce` enables us to draw a *'sina'* plot which combines a violin plot with a dot plot. Here is an example of overlaying a sina plot (black dots) and a violin plot (faded blue violin plot).
 
 ```{r Creating sina plots, echo=TRUE}
 imdb_top_250 %>%

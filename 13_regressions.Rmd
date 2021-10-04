@@ -231,7 +231,7 @@ In the last section, we wanted to know how many people will likely not recover f
 
 First, we create a dataset that only contains information from the `United Kingdom` and `Germany`[^regressions-1], using `filter()`.
 
-[^regressions-1]: Germany is called 'Deutschland' in German, hence the abbreivation 'DEU' according to the [ISO country code](https://www.iso.org/obp/ui/#iso:code:3166:DE "ISO country code"){target="blank"}.
+[^regressions-1]: Germany is called 'Deutschland' in German, hence the abbreviation 'DEU' according to the [ISO country code](https://www.iso.org/obp/ui/#iso:code:3166:DE "ISO country code"){target="blank"}.
 
 ```{r MR filter out UK and DEU as a sample}
 covid_uk_ger <-

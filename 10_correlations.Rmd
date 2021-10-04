@@ -167,12 +167,17 @@ A correlation can be either positive or negative, and its value (i.e. `r` in cas
 
 In other words, the further the score is away from `0`, the stronger is the relationship between variables. We also have benchmarks that we can use to assess the strength of a relationship, for example, the one by @cohen1988statistical. The strength of the relationship is also called *'effect size'*. Table \@ref(tab:effect-size-cohen) shows the relevant benchmarks. Note that effect sizes are always provided as absolute figures. Therefore, `-0.4` would also count as a moderate relationship.
 
-| effect size         | interpretation |
-|---------------------|----------------|
-| r \< 0.1            | very small     |
-| 0.1 $\leq$ r \< 0.3 | small          |
-| 0.3 $\leq$ r \< 0.5 | moderate       |
-| r $\geq$ 0.5        | large          |
++---------------------+----------------------+
+| effect size         | interpretation       |
++=====================+======================+
+| r \< 0.1            | very small           |
++---------------------+----------------------+
+| 0.1 $\leq$ r \< 0.3 | small                |
++---------------------+----------------------+
+| 0.3 $\leq$ r \< 0.5 | moderate             |
++---------------------+----------------------+
+| r $\geq$ 0.5        | large                |
++---------------------+----------------------+
 
 : (\#tab:effect-size-cohen) Assessing effect size of relationships according to Cohen (1988)
 

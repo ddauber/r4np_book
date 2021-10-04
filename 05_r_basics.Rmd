@@ -6,22 +6,32 @@ After a likely tedious installation of R and RStudio, as well as a somewhat deta
 
 The most basic computation you can do in R is arithmetic operations. In other words, addition, subtraction, multiplication, division, exponentiation and extraction of roots. In short, *R* can be used like your pocket calculator, or more likely the one you have on your phone. For example, in Chapter \@ref(the-console-window) we already performed an addition. Thus, it might not come as a surprise how their equivalents work in *R*. Let's take a look at the following examples:
 
-```{r Arithmetic examples, echo=TRUE}
+```{r}
 # Addition
 10 + 5
+```
 
+```{r}
 # Subtraction
 10 - 5
+```
 
+```{r}
 # Multiplication
 10 * 5
+```
 
+```{r}
 # Division
 10 / 5
+```
 
+```{r}
 # Exponentiation
 10 ^ 2
+```
 
+```{r}
 # Square root
 sqrt(10)
 ```
@@ -31,22 +41,28 @@ They all look fairly straightforward except for the extraction of roots. As you 
 Functions are an essential part of *R* and programming in general. You will learn more about them in Chapter \@ref(functions). Besides arithmetic operations, there are also logical queries you can perform. Logical queries always return either the value `TRUE` or `FALSE`. Here are some examples which make this clearer:
 
 ```{r Logical queries, echo=TRUE}
-
 #1 Is it TRUE or FALSE?
 1 == 1
+```
 
+```{r}
 #2 Is 45 bigger than 55?
 45 > 55
+```
 
+```{r}
 #3 Is 1982 bigger or equal to 1982?
 1982 >= 1982
+```
 
+```{r}
 #4 Are these two words NOT the same?
 "Friends" != "friends"
+```
 
+```{r}
 #5 Are these sentences the same?
 "I love statistics" == "I love statistícs"
-
 ```
 
 Reflecting on these examples, you might notice three important aspects of logical queries:
@@ -59,17 +75,32 @@ One of the most common mistakes of *R* novices is the confusion around the `==` 
 
 There are many different logical operations you can perform. Table \@ref(tab:logical-operators-r) lists the most frequently used logical operators for your reference. These will become important, for example when we filter our data for analysis, e.g. include only female or male participants.
 
-| Operator | Description            |
-|----------|------------------------|
-| ==       | is equal to            |
-| \>=      | is bigger or equal to  |
-| \<=      | is smaller of equal to |
-| !=       | is not equal to        |
-| a \| b   | a or b                 |
-| a & b    | a and b                |
-| !a       | is not a               |
+```{r, echo=FALSE}
+logical_ops <- hux(
+  Operator = c("==", "!=", ">=",
+               ">", "<=", "<",
+               "a | b", "a & b", "!a"),
+  Description = c("is equal to",
+                  "is bigger or equal to",
+                  "is bigger than",
+                  "is small or equal to",
+                  "is smaller than",
+                  "is not equal to",
+                  "a or b",
+                  "a and b",
+                  "is not a")
+  
+)
 
-: (\#tab:logical-operators-r) Logical Operators in R
+logical_ops %>%
+  set_caption("Logical operators in R") %>%
+  set_label("tab:logical-operators-r") %>%
+  set_col_width(c(0.3, 0.7)) %>%
+  set_width(0.5) %>%
+  map_align(by_cols("center", "left")) %>%
+  map_italic(by_cols(FALSE, TRUE)) %>%
+  set_bold(1, TRUE)
+```
 
 ## Assigning values to objects: '\<-' {#assigning-values-to-objects}
 
@@ -231,10 +262,14 @@ pocket_money <- c(0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89)
 #1 Manually compute the mean
 sum <- 0 + 1 + 1 + 2 + 3 + 5 + 8 + 13 + 21 + 34 + 55 + 89
 sum / 12 # There are 12 items in the object
+```
 
+```{r}
 #2 Use a function to compute the mean
 mean(pocket_money)
+```
 
+```{r}
 #3 Let's make sure #1 and #2 are actually the same
 sum / 12 == mean(pocket_money)
 ```
@@ -284,6 +319,9 @@ Sometimes you will also get a message from *R* that states `NaN`. `NaN` stands f
 # Example 1
 0 / 0
 
+```
+
+```{r}
 # Example 2
 sqrt(-9)
 ```

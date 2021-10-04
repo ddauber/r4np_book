@@ -22,7 +22,9 @@ always_allow_html: true
 
 # load required packages
 library(tidyverse)
+library(huxtable)
 library(r4np)
+library(patchwork)
 
 # Format code chunks
 knitr::opts_chunk$set(
@@ -53,6 +55,21 @@ knitr::knit_hooks$set(output = function(x, options) {
   }
   hook_output(x, options)
 })
+
+# # Collapse code chunk with empty line between source
+# # and output of code chunks
+# hook_chunk = knitr::knit_hooks$get('chunk')
+# 
+# knitr::knit_hooks$set(chunk = function(x, options) {
+#   regular_output = hook_chunk(x, options)
+#   # collapse with vspace if collapse_vspace is TRUE
+#   if (isTRUE(options$collapse_vspace))
+#     gsub("```\n\n```", "", regular_output)
+#   else
+#     regular_output
+# })
+# 
+# knitr::opts_chunk$set(collapse_vspace = TRUE)
 ```
 
 ::: {style="float:right;position: relative; top: 0px;"}
