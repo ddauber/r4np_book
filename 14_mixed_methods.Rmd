@@ -34,7 +34,9 @@ While the first part can be achieved using `tibble()`, we need a new function to
 ```{r Converting text into a data frame, echo=TRUE}
 # Convert text object into a data frame
 (df_text <- tibble(text = sentence))
+```
 
+```{r}
 # Tokenization
 library(tidytext)
 (df_text <- df_text %>% unnest_tokens(output = word,
@@ -139,13 +141,17 @@ With our data in place, it is time to perform our analysis. We want to know whet
 word_frequencies <-
   titles_no_sw %>%
   count(word)
+```
 
+```{r}
 # Combine word_frequencies with titles_no_sw
 titles_no_sw <- left_join(titles_no_sw, word_frequencies,
                           by = "word")
 
 titles_no_sw
+```
 
+```{r}
 # Compute the correlation of imdb_rating and n
 corr <-
   titles_no_sw %>%
@@ -153,7 +159,9 @@ corr <-
   correlation::correlation()
 
 corr
+```
 
+```{r}
 # Interpret the effect size
 effectsize::interpret_r(corr$r, rules = "cohen1988")
 ```
@@ -183,7 +191,9 @@ synopsis <-
   select(bigram)
 
 synopsis
+```
 
+```{r}
 # Inspect frequency of bigrams
 synopsis %>% count(bigram, sort = TRUE)
 ```

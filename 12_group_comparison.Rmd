@@ -78,7 +78,9 @@ group_means <-
             n = n())
 
 group_means
+```
 
+```{r}
 # Create our data visualisation
 comp %>%
   ggplot(aes(x = gender, y = freedom_of_choice, fill = gender)) +
@@ -115,13 +117,18 @@ comp %>% t_test(freedom_of_choice ~ gender,
                 var.equal = TRUE,
                 detailed = TRUE) %>%
   glimpse()
+```
+
+```{r}
 
 # Welch t-test (var.equal = FALSE by default)
 comp %>% t_test(freedom_of_choice ~ gender,
                 var.equal = FALSE,
                 detailed = TRUE) %>%
   glimpse()
+```
 
+```{r}
 # Mann-Withney U test
 comp %>%
   wilcox_test(freedom_of_choice ~ gender,
@@ -146,9 +153,13 @@ No matter which test we run, it appears as if the difference is significant. How
     cohens_d(freedom_of_choice ~ gender,
              var.equal = TRUE,
              ci = TRUE))
+```
 
+```{r}
 effectsize::interpret_d(d$effsize)
+```
 
+```{r}
 # After non-parametric test
 (wr <-
     comp %>%
@@ -195,6 +206,7 @@ dir_mov %>%
   ggplot(aes(x = movie, y = imdb_rating, col = director)) +
   geom_point() +
   geom_line(aes(group = director)) +
+  
   # Remove the legend
   theme(legend.position = "none")
 ```
@@ -216,10 +228,13 @@ dir_mov %>%
 
 Considering the revised plot, we likely can predict what the statistical test will show, i.e. no significant results. Table \@ref(tab:comparing-two-groups-paired) summarises which tests and functions need to be performed when our data is parametric or non-parametric. In both cases, the functions are the same as those of the unpaired group comparisons, but we need to add the attribute `paired = TRUE`. Still, the interpretations between the unpaired and paired tests remain the same. Also, be aware that some tests have changed in name, e.g. the Mann-Whitney U test has become the Wilcoxon Signed Rank Test. Even though we use the same functions as before, by changing the attribute `paired` to `TRUE`, we also change the computational technique to obtain the results. Thus, remember that the same function can perform different computations which are not comparable.
 
++----------------+---------------------------+------------------------------+-------------+---------------------+
 | Assumption     | Test                      | Function                     | Effect size | Function            |
-|----------------|---------------------------|------------------------------|-------------|---------------------|
++================+===========================+==============================+=============+=====================+
 | Parametric     | T-Test                    | `t_test(paired = TRUE)`      | Cohen's d   | `cohens_d()`        |
++----------------+---------------------------+------------------------------+-------------+---------------------+
 | Non-parametric | Wilcoxon Signed Rank Test | `wilcox_test(paired = TRUE)` | Wilcoxon r  | `wilcoxonPairedR()` |
++----------------+---------------------------+------------------------------+-------------+---------------------+
 
 : (\#tab:comparing-two-groups-paired)Comparing two unpaired groups (effect size functions from package `effectsize`, except for `wilcoxonPairedR()` from `rcompanion`)
 
@@ -232,8 +247,10 @@ dir_mov %>% t_test(imdb_rating ~ movie,
                    var.equal = TRUE,
                    detailed = TRUE) %>%
   glimpse()
+```
 
-## Wilcoxon Signed Rank Test
+```{r}
+# Wilcoxon Signed Rank Test
 dir_mov %>% wilcox_test(imdb_rating ~ movie,
                          paired = TRUE) %>%
   glimpse()
@@ -249,9 +266,13 @@ d <- cohens_d(imdb_rating ~ movie,
                var.equal = TRUE)
 
 glimpse(d)
+```
 
+```{r}
 effectsize::interpret_d(d$effsize)
+```
 
+```{r}
 # After Wilcoxon Signed Rank Test
 wr <-
   dir_mov %>%
@@ -259,7 +280,9 @@ wr <-
                    paired = TRUE, ci = TRUE)
 
 glimpse(wr)
+```
 
+```{r}
 effectsize::interpret_r(wr$effsize, rules = "cohen1988")
 ```
 
@@ -327,14 +350,17 @@ Let's begin by conducting the group comparison. As you will notice, `rstatix` cu
 mcomp %>%
   anova_test(satisfaction ~ country,
               detailed = TRUE)
+```
 
+```{r}
 ## Equal variances not assumed
 (oneway_test <- oneway.test(satisfaction ~ country,
                             data = mcomp,
                             var.equal = FALSE))
+```
 
+```{r}
 # Kruskall-Wallis test
-## Perform comparison
 mcomp %>% kruskal_test(satisfaction ~ country)
 ```
 
@@ -343,7 +369,9 @@ While `anova_test()` does provide the effect size automatically, i.e. generalise
 ```{r Multiple unpaired groups effect sizes, echo=TRUE, message=FALSE}
 # After ANOVA with var.equal = FALSE
 effectsize::eta_squared(oneway_test)
+```
 
+```{r}
 # effect size rank epsilon squared
 effectsize::rank_epsilon_squared(mcomp$satisfaction ~ mcomp$gender)
 ```
@@ -385,15 +413,24 @@ Below are some examples of how you would use these functions in your project. Ho
 pairwise.t.test(mcomp$satisfaction,
                 mcomp$country,
                 p.adjust.method = "bonferroni")
+```
 
+```{r}
 # Tukey
 mcomp %>% tukey_hsd(satisfaction ~ country)
+```
 
+```{r}
 # Games-Howell
 mcomp %>% games_howell_test(satisfaction ~ country)
+```
 
+```{r}
 # POST-HOC TEST FOR NON-PARAMETRIC DATA
 mcomp %>% dunn_test(satisfaction ~ country)
+```
+
+```{r}
 # or
 pairwise.wilcox.test(mcomp$satisfaction,
                      mcomp$country,
@@ -449,7 +486,9 @@ differences <-
          m1_m8 = m1 - m8)
 
 differences
+```
 
+```{r}
 # Compute the variance for each pair
 differences %>%
   summarise(m1_m4_var = var(m1_m4),
@@ -468,7 +507,9 @@ acc_long <-
                values_to = "integration")
 
 acc_long
+```
 
+```{r}
 # Perform repeated-measures ANOVA
 # plus Mauchly's Test of Sphericity
 acc_long %>%
@@ -505,7 +546,9 @@ wave_means <-
   summarise(w_mean = mean(satisfaction))
 
 wave_means
+```
 
+```{r}
 # Plot the boxplots
 wvs_waves %>%
   ggplot(aes(x = wave,
@@ -555,7 +598,9 @@ To finish this chapter, I want to share the non-parametric version of this test:
 ```{r Friedman test, echo=TRUE, warning=FALSE}
 # NON=PARAMETRIC COMPARISON
 wvs_waves %>% rstatix::friedman_test(satisfaction ~ wave | id)
+```
 
+```{r}
 # Effect size
 (kw <- effectsize::kendalls_w(satisfaction ~ wave | id,
                        data = wvs_waves))
@@ -565,13 +610,19 @@ effectsize::interpret_kendalls_w(kw$Kendalls_W)
 
 The non-parametric test confirms the parametric test from before. However, the interpretation of the effect size `Kendall's W` requires some explanation. First, the effect size for Kendall's W can range from `0` (small effect size) to `1` (large effect size). Usually, this effect size is considered when comparing inter-rater agreement, for example, the level of agreement of a jury in ice skating during the Olympic games. Thus, the interpretation offered by the function `interpret_kendalls_w()` follows this logic. As such, it is worth considering a slightly amended interpretation of Kendall's W if our data is not based on ratings. This is shown in Table \@ref(tab:effect-size-kendalls-w) based on @landis1977measurement (p. 165). Thus, we could report that the effect size of the significant differences is 'very small'.
 
++-------------+-----------------------------------------+----------------------------+
 | Kendall's W | Interpretation [@landis1977measurement] | Alternative interpretation |
-|-------------|-----------------------------------------|----------------------------|
++=============+=========================================+============================+
 | 0.00-0.02   | Slight agreement                        | Very small                 |
++-------------+-----------------------------------------+----------------------------+
 | 0.21-0.40   | Fair agreement                          | Small                      |
++-------------+-----------------------------------------+----------------------------+
 | 0.41-0.60   | Moderate agreement                      | Moderate                   |
++-------------+-----------------------------------------+----------------------------+
 | 0.61-0.80   | Substantial agreement                   | Large                      |
++-------------+-----------------------------------------+----------------------------+
 | 0.81-1.00   | Almost perfect agreement                | Very large                 |
++-------------+-----------------------------------------+----------------------------+
 
 : (\#tab:effect-size-kendalls-w)Interpretation benchmarks for the effect size Kendall's W
 
@@ -654,7 +705,6 @@ Similar to previous group comparisons, we can distinguish between paired and unp
 In the introduction to this chapter, we covered a classic example of an unpaired comparison of two groups (`male` and `female`) regarding another categorical variable, i.e. `satisfaction_bin`. The tables we produced offered detailed insights into the distribution of these categories. However, it is always helpful to have a visual representation. Plotting two categorical variables (i.e. factors) in `ggplot2` can be achieved in many different ways. Three commonly used options are shown in Figure \@ref(fig:three-plots-satisfaction-gender).
 
 ```{r Visualising a contingency table with bars, echo=TRUE, fig.cap="Three ways to plot frequencies", label="three-plots-satisfaction-gender"}
-
 # Plot with absolute frequencies (stacked)
 absolute_stacked <-
   wvs_nona %>%
@@ -682,7 +732,7 @@ relative <-
   ggtitle("Relative frequency") +
   theme(legend.position = "none")
 
-# Plot all three plots with 'patchwork'
+# Plot all three plots with 'patchwork' package
 absolute_stacked + absolute_grouped + relative + plot_spacer()
 ```
 
@@ -724,11 +774,15 @@ Throughout the remaining chapters, I will use the mosaic plot to illustrate dist
 
 When it comes to the computational side of things, we have to distinguish whether our two variables create a 2-by-2 matrix, i.e. both variables only have two levels. Depending on which scenario applies to our analysis, a different statistical test has to be performed. For some tests, a minimum frequency for each value in our contingency table (i.e. cells) also needs to be achieved. This is usually a matter of sample size and diversity in a sample. Table \@ref(tab:statistical-tests-unpaired-cat-variables) provides an overview of the different scenarios and indicates the functions we have to use to conduct our analysis in *R*.
 
++--------+--------------------------+----------------------------------------------------+----------------------------------------------------------+---------------+
 | Matrix | Condition                | Test                                               | Function in R                                            | Effect size   |
-|--------|--------------------------|----------------------------------------------------|----------------------------------------------------------|---------------|
++========+==========================+====================================================+==========================================================+===============+
 | 2x2    | \< 10 obs.               | Fisher's Exact Test                                | `fisher.test()`                                          | `phi()`       |
++--------+--------------------------+----------------------------------------------------+----------------------------------------------------------+---------------+
 | 2x2    | \> 10 obs.               | Chi-squared Test with Yate's Continuity Correction | `infer::chisq_test(correct = TRUE)`[^group_comparison-3] | `cramers_v()` |
++--------+--------------------------+----------------------------------------------------+----------------------------------------------------------+---------------+
 | n x n  | \> 5 obs. (80% of cells) | Chi-squared Test                                   | `infer::chisq_test()`                                    | `cramers_v()` |
++--------+--------------------------+----------------------------------------------------+----------------------------------------------------------+---------------+
 
 : (\#tab:statistical-tests-unpaired-cat-variables)Statistical tests to compare two unpaired categorical variables. Effect sizes are computed using the `effectsize` package.
 
@@ -760,15 +814,21 @@ fisher.test(wvs_nona$satisfaction_bin, wvs_nona$gender) %>%
   # Make output more readable
   broom::tidy() %>%
   glimpse()
+```
 
+```{r}
 ## Effect size
 (phi <- effectsize::phi(wvs_nona$satisfaction_bin, wvs_nona$gender))
 effectsize::interpret_r(phi$phi, rules = "cohen1988")
+```
 
+```{r}
 # Chi-squared test with Yate's continuity correction
 wvs_nona %>% infer::chisq_test(satisfaction_bin ~ gender,
                                correct = TRUE)
+```
 
+```{r}
 ## Effect size
 (cv <- effectsize::cramers_v(wvs_nona$satisfaction_bin, wvs_nona$gender))
 effectsize::interpret_r(cv$Cramers_v, rules = "cohen1988")
@@ -803,7 +863,9 @@ rel_gen <-
   count(relationship_status, gender)
 
 rel_gen
+```
 
+```{r}
 # Compute relative frequency
 rel_gen %>%
   group_by(gender) %>%
@@ -818,10 +880,13 @@ The contingency table with the relative frequencies confirms what we suspected. 
 ```{r Chi squared test for relationship_status and gender, echo=TRUE}
 # Perform Chi-squared test
 wvs_nona %>% infer::chisq_test(relationship_status ~ gender)
+```
 
+```{r}
 # Compute effect size
 (cv <- effectsize::cramers_v(wvs_nona$relationship_status,
                             wvs_nona$gender))
+
 effectsize::interpret_r(cv$Cramers_v, rules = "cohen1988")
 ```
 
@@ -883,14 +948,17 @@ ct_paired <-
               values_from = n,
               values_fill = 0) # fill empty cells with '0'
 ct_paired
+```
 
+```{r}
 # Contigency table with paired percentage values
 ct_paired %>%
   mutate(post_training_yes = post_training_yes / nrow(paired_data),
          post_training_no = post_training_no / nrow(paired_data)) %>%
   mutate(across(where(is.double), round, 2))
-  
-  
+```
+
+```{r}
 # Mosaic plot with paired values
 paired_data %>%
   ggplot() +
@@ -913,7 +981,9 @@ Lastly, we need to perform a statistical test to confirm our suspicion that the 
 ```{r Contigency tables paired computation, echo=TRUE}
 #McNemar's test
 mcnemar.test(paired_data$pre_training, paired_data$post_training)
+```
 
+```{r}
 # Effect size
 effectsize::cohens_g(paired_data$pre_training, paired_data$post_training)
 ```
@@ -966,7 +1036,7 @@ p3 <-
   geom_bar() +
   ggtitle("Category with 2 levels")
 
-# Create plot with 'patchwork'
+# Create plot with 'patchwork' package
 p1 + p2 + p3 + plot_spacer()
 ```
 

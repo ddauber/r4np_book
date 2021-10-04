@@ -52,7 +52,9 @@ ggplot() +
   geom_function(fun = function(x) 0 + x * 2, col = "red") +
   geom_function(fun = function(x) 1 + x * 2, col = "blue") +
   see::theme_modern()  
+```
 
+```{r}
 # B: Two models with the same beta(0), but different beta(1)
 ggplot() +
   geom_function(fun = function(x) 0 + x * 2, col = "red") +
@@ -263,7 +265,9 @@ m0 <- lm(new_cases ~ masks + movements + gatherings +
 # do not prefer the scientific notation
 broom::tidy(m0) %>%
   mutate(p.value = round(p.value, 3))
+```
 
+```{r}
 # Evaluate the quality of our model
 performance::model_performance(m0)
 ```
@@ -288,7 +292,9 @@ m1 <- lm(new_cases ~ movements + schools + businesses + travel,
 
 broom::tidy(m1) %>%
   mutate(p.value = round(p.value, 3))
+```
 
+```{r}
 # Evaluate the quality of our model
 performance::model_performance(m1)
 ```
@@ -364,7 +370,9 @@ m1_outliers <-
   as_tibble()
 
 glimpse(m1_outliers)
+```
 
+```{r}
 # Add the externally studentised residuals
 m1_outliers <-
   m1_outliers %>%
@@ -402,8 +410,17 @@ out_detect <-
          pm_4 = ifelse(abs(.studresid) > 4, "TRUE", "FALSE"))
 
 out_detect %>% count(pm_2)
+```
+
+```{r}
 out_detect %>% count(pm_3)
+```
+
+```{r}
 out_detect %>% count(pm_35)
+```
+
+```{r}
 out_detect %>% count(pm_4)
 ```
 
@@ -486,6 +503,10 @@ mhnbs_outliers <-
 # Add new results to our reference list
 outliers <- left_join(outliers, mhnbs_outliers, by = "rowname")
 
+glimpse(outliers)
+```
+
+```{r}
 # We need to remove mahal.dist because it does not indicate
 # whether a value is an outlier #data-cleaning
 outliers <- outliers %>% select(-mahal.dist)
@@ -599,11 +620,17 @@ outliers <-
   outliers %>%
   left_join(dfbetas_check, by = "rowname")
 
+glimpse(outliers)
+```
+
+```{r}
 # some housekeeping, i.e. making all columns <lgl> except for rowname
 outliers <-
   outliers %>%
   mutate(rowname = as_factor(rowname)) %>%
   mutate_if(is.character, as.logical)
+
+glimpse(outliers)
 ```
 
 Of course, we can also visualise the outliers as we did before.
@@ -815,7 +842,9 @@ data %>%
   geom_smooth(method = "lm",
               formula = y ~ x,
               se = FALSE)
+```
 
+```{r}
 correlation::correlation(data)
 ```
 
@@ -831,14 +860,17 @@ m3_scaled <- lm(scale(new_cases) ~
                 data = m1_no_outliers)
 
 parameters::model_parameters(m3_scaled)
+```
 
+```{r}
 # Scaling using 'parameters' package with refit
 # This is equivalent to scaling 'by hand'
 parameters::model_parameters(m3, standardize = "refit")
+```
 
+```{r}
 # Scaling using `parameters` package without refitting the model
 parameters::model_parameters(m3, standardize = "posthoc")
-
 ```
 
 I prefer to standardise using the `parameters` package because it makes my life easier, and I need to write less code. I can also easily compare results before scaling my variables. The choice is yours, of course. Also, I tend to use `standardize = refit` in most regressions, since it is more in line with what most Social Scientists seem to report in their publications.
@@ -939,10 +971,14 @@ You find a new function called `droplevels()` in this code chunk. This function 
 ```{r How to drop levels of factors, echo=TRUE}
 # A factor with all levels
 (gender <- as_factor(c("female", "male", "NA")))
+```
 
+```{r}
 # Subset our data by picking the first two values only
 (gender2 <- gender[1:2])
+```
 
+```{r}
 # Dropping unused levels
 (gender3 <- gender[1:2] %>% droplevels())
 ```
@@ -979,6 +1015,9 @@ m1 <- lm(formula = new_cases ~ country,
          data = hr_data)
 
 parameters::model_parameters(m1, standardize = "refit")
+```
+
+```{r}
 performance::model_performance(m1)
 ```
 
@@ -995,7 +1034,9 @@ parameters::compare_parameters(m1, m2, standardize = "refit") %>%
   as_tibble() %>%
   select(Parameter, Coefficient.m1, p.m1, Coefficient.m2, p.m2) %>%
   mutate(across(where(is.double), round, 3))
+```
 
+```{r}
 performance::compare_performance(m1, m2)
 ```
 
@@ -1014,6 +1055,9 @@ m0 <- lm(formula = new_cases ~
          data = hr_data)
 
 performance::compare_performance(m0, m2)
+```
+
+```{r}
 anova(m0, m2)
 ```
 
@@ -1085,9 +1129,13 @@ parameters::compare_parameters(m0, m4, standardize = "refit") %>%
   as_tibble() %>%
   select(Parameter, Coefficient.m0, p.m0, Coefficient.m4, p.m4) %>%
   mutate(across(where(is.double), round, 3))
+```
 
+```{r}
 performance::compare_performance(m0, m4)
+```
 
+```{r}
 anova(m0, m4)
 ```
 
@@ -1110,7 +1158,9 @@ model <- lm(formula = satisfaction ~
 parameters::model_parameters(model) %>%
   as_tibble() %>%
   select(Parameter, Coefficient, t, df_error, p)
+```
 
+```{r}
 performance::model_performance(model)
 ```
 
@@ -1135,7 +1185,9 @@ wvs_nona_c <-
 wvs_nona_c %>%
   select(age, age_c) %>%
   head()
+```
 
+```{r}
 # Group mean centering by country
 wvs_nona %>%
   group_by(country) %>%
@@ -1143,7 +1195,9 @@ wvs_nona %>%
   
   select(age, age_c) %>%
   sample_n(1)
+```
 
+```{r}
 ## The group means used
 wvs_nona %>%
   group_by(country) %>%
