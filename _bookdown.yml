@@ -28,5 +28,7 @@ rmd_files: [
   
   "15_next_steps.Rmd",
 
-  "16_epilogue.Rmd"
+  "16_epilogue.Rmd",
+  
+  "99_references.Rmd"
 ]

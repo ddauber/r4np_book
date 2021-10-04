@@ -1,4 +1,7 @@
 # Data Wrangling and Cleaning {#data-wrangling}
+```{r}
+library(tidyverse)
+```
 
 You collected your data over months (and sometimes years), and all you want to know is whether your data makes sense and reveals something nobody would have ever expected. However, before we can truly go ahead with our analysis, it is essential to understand whether our data is 'tidy'. Very often, the data we receive is everything else but clean, and we need to check whether our data is fit for analysis and ensure it is in a format that is easy to handle. For small datasets, this is usually a brief exercise. However, I found myself cleaning data for a month because the dataset was spread out into multiple spreadsheets with different numbers of columns and odd column names. Thus, data cleaning and data wrangling is an essential first step in any data analysis. It is a step that cannot be skipped and has to be performed on every new dataset.
 
