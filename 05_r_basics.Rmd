@@ -1,5 +1,10 @@
 # R Basics: The very fundamentals {#r-basics-the-very-fundamentals}
 
+```{r, echo=FALSE, message=FALSE}
+library(huxtable)
+library(tidyverse)
+```
+
 After a likely tedious installation of R and RStudio, as well as a somewhat detailed introduction to the RStudio interface, you are finally ready to *'do'* things. By *'doing'*, I mean *'coding'*. The term *'coding'* in itself can instil fear in some of you, but you only need one skill to do it: Writing. As mentioned earlier, learning coding or programming means learning a new language. However, once you have the basic grammar down, you already can communicate quite a bit. In this section, we will explore the fundamentals of R. These build the foundation for everything that follows. After that, we dive right into some analysis.
 
 ## Basic computations in R {#basic-computations-in-r}

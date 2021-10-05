@@ -1,5 +1,10 @@
 # Regression: Creating models to predict future observations {#regression}
 
+```{r, include=FALSE}
+library(tidyverse)
+library(r4np)
+```
+
 Regressions are an exciting area of data analysis since it enables us to make very specific predictions, incorporating different variables simultaneously. As the name implies, regressions 'regress', i.e., draw on past observations to make predictions about future observations. Thus, any analysis incorporating a regression makes the implicit assumption that the past best explains the future.
 
 I once heard someone refer to regressions as driving a car by looking at the rear-view mirror. As long as the road is straight, we will be able to navigate the car successfully. However, if there is a sudden turn, we might drive into the abyss. This makes it very clear when and how regressions can be helpful. Regressions are also a machine learning method, which falls under *models with supervised learning*. If you find machine learning fascinating, you might find the book *"Hands-on Machine Learning with R"* [@boehmke2019hands] very insightful and engaging.

@@ -1,5 +1,9 @@
 # Data Wrangling and Cleaning {#data-wrangling}
 
+```{r echo=FALSE, message=FALSE}
+library(tidyverse)
+```
+
 You collected your data over months (and sometimes years), and all you want to know is whether your data makes sense and reveals something nobody would have ever expected. However, before we can truly go ahead with our analysis, it is essential to understand whether our data is 'tidy'. Very often, the data we receive is everything else but clean, and we need to check whether our data is fit for analysis and ensure it is in a format that is easy to handle. For small datasets, this is usually a brief exercise. However, I found myself cleaning data for a month because the dataset was spread out into multiple spreadsheets with different numbers of columns and odd column names. Thus, data cleaning and data wrangling is an essential first step in any data analysis. It is a step that cannot be skipped and has to be performed on every new dataset.
 
 Luckily, R provides many useful functions to make our lives easier. You will be in for a treat if you are like me and used to do this in Excel. It is a lot simpler using *R* to achieve a clean dataset.
@@ -121,7 +125,7 @@ library(r4np)
 wvs
 ```
 
-The result is a series of rows and columns. The first information we receive is: `A tibble: 69,578 x 9`. This indicates that our dataset has 69,578 observations (i.e. rows) and 9 columns (i.e. variables). This rectangular format is the one we encounter most frequently in Social Sciences (and probably beyond). If you ever worked in Microsoft Excel, this format will look familiar. However, rectangular data is not necessarily `tidy` data. @wickham2014tidy (p. 4) defines tidy data as follows:
+The result is a series of rows and columns. The first information we receive is: `A tibble: 69,578 x 7`. This indicates that our dataset has 69,578 observations (i.e. rows) and 9 columns (i.e. variables). This rectangular format is the one we encounter most frequently in Social Sciences (and probably beyond). If you ever worked in Microsoft Excel, this format will look familiar. However, rectangular data is not necessarily `tidy` data. @wickham2014tidy (p. 4) defines tidy data as follows:
 
 <br>
 
@@ -193,9 +197,9 @@ From Chapter \@ref(coding-etiquette), you will remember that being consistent in
 You are probably thinking: "This is easy. I just open the dataset in Excel and change all the column names." Indeed, it would be a viable and easy option, but it is not very efficient, especially with larger datasets with many more variables. Instead, we can make use of the `janitor` package. By definition, `janitor` is a package that helps to clean up whatever needs cleaning. In our case, we want to tidy our column names. We can use the function `clean_names()` to achieve this. We store the result in a new object called `wvs` to keep those changes. The object will also show up in our *Environment* pane.
 
 ```{r Cleaning column names with janitor, echo=TRUE}
-wvs <- janitor::clean_names(wvs)
+wvs_clean <- janitor::clean_names(wvs)
 
-glimpse(wvs)
+glimpse(wvs_clean)
 ```
 
 Now that `janitor` has done its magic, we suddenly have easy to read variable names that are consistent with the *'Tidyverse style guide'* [@wickham-2021].
@@ -203,12 +207,12 @@ Now that `janitor` has done its magic, we suddenly have easy to read variable na
 If, for whatever reason, the variable names are still not looking the way you want, you can use the function `rename()` from the `dplyr` package to manually assign new variable names.
 
 ```{r Use rename() function, echo=TRUE}
-wvs <- 
-  wvs %>%
+wvs_clean <- 
+  wvs_clean %>%
   rename(satisfaction = satisfaction_with_life,
          country = country_name)
 
-glimpse(wvs)
+glimpse(wvs_clean)
 ```
 
 You are probably wondering what `%>%` stands for. This symbol is called a *'piping operator'* , and it allows us to chain multiple functions together by considering the output of the previous function. So, do not confuse `<-` with `%>%`. Each operator serves a different purpose. The `%>%` has become synonymous with the `tidyverse` approach to *R* programming and is the chosen approach for this book. Many functions from the `tidyverse` are designed to be chained together.
@@ -225,10 +229,10 @@ Just for clarification, the following two lines of code accomplish the same task
 
 ```{r Renaming a column with %>% and without %>%, echo=TRUE, results='hide'}
 # Renaming a column using '%>%'
-wvs %>% rename(satisfaction_new = satisfaction)
+wvs_clean %>% rename(satisfaction_new = satisfaction)
 
 # Renaming a column without '%>%'
-rename(wvs, satisfaction_new = satisfaction)
+rename(wvs_clean, satisfaction_new = satisfaction)
 ```
 
 Since you will be using the pipe operator very frequently, it is a good idea to remember the keyboard shortcut for it: `Ctrl+Shift+M` for PC and `Cmd+Shift+M` for Mac.
@@ -268,7 +272,7 @@ R has a fine-grained categorisation of data types. The most important distinctio
 Now that we have a solid understanding of different data types, we can look at our dataset and see whether `readr` classified our variables correctly.
 
 ```{r Look at wvs again to check data types, echo=TRUE}
-glimpse(wvs)
+glimpse(wvs_clean)
 ```
 
 `readr` did a great job in identifying all the numeric variables. However, by default, `readr` imports all variables that include text as `<chr>`. It appears as if this is not entirely correct for our dataset. The variables `country`, `gender` and `relationship_status` specify a finite number of categories. Therefore they should be classified as a `factor`. The variable `participant_id` is represented by numbers, but its meaning is also rather categorical. We would not use the ID numbers of participants to perform additions or multiplications. This would make no sense. Therefore, it might be wise to turn them into a `factor`, even though we likely will not use it in our analysis and would make no difference. However, I am a stickler for those kinds of things.
@@ -282,15 +286,15 @@ To perform the conversion, we need to use two new functions from `dplyr`:
 If we want to convert all variables in one go, we can put them into the same function, separated by a `,`.
 
 ```{r Convert dataypes, echo=TRUE}
-wvs <-
-  wvs %>%
+wvs_clean <-
+  wvs_clean %>%
   mutate(country = as_factor(country),
          gender = as_factor(gender),
          relationship_status = as_factor(relationship_status),
          participant_id = as_factor(participant_id)
          )
 
-glimpse(wvs)
+glimpse(wvs_clean)
 ```
 
 The output in the console shows that we successfully performed the transformation and our data types are as we intended them to be. Mission accomplished.
@@ -314,7 +318,7 @@ Another common problem we have to tackle when working with data is their represe
 For example, we might be interested in knowing how many participants in the `wvs` were `male` and `female`. The function `count()` from `dplyr` does precisely that. We can sort the results, i.e. `n`, in descending order by including `sort = TRUE`. By default, `count()` arranges our variable `gender` in alphabetical order.
 
 ```{r Count male and female participants, echo=TRUE}
-wvs %>% count(gender, sort = TRUE)
+wvs_clean %>% count(gender, sort = TRUE)
 ```
 
 Now we know how many people were `male` and `female` and how many did not disclose their `gender`. Or do we? The issue here is that you would have to know what `0` and `1` stand for. Surely you would have a coding manual that gives you the answer, but it seems a bit of a complication. For `gender`, this might still be easy to remember, but can you recall the ID numbers for 48 countries?
@@ -322,8 +326,8 @@ Now we know how many people were `male` and `female` and how many did not disclo
 It certainly would be easier to replace the `0`s and `1`s with their corresponding labels. This can be achieved with a simple function called `fct_recode()` from `forcats`. However, since we 'mutate' a variable into something else, we also have to use the `mutate()` function.
 
 ```{r Recode gender, echo=TRUE}
-wvs <-
-  wvs %>%
+wvs_clean <-
+  wvs_clean %>%
   mutate(gender = fct_recode(gender,
                              "male" = "0",
                              "female" = "1"))
@@ -332,7 +336,7 @@ wvs <-
 If you have been following along very carefully, you might spot one oddity in this code: `"0"` and `"1"`. You likely recall that in Chapter \@ref(r-basics-the-very-fundamentals), I mentioned that we use `""` for `character` values but not for numbers. So what happens if we run the code and remove `""`.
 
 ```{r Recode gender without quotation marks, echo=TRUE, error=TRUE}
-wvs %>%
+wvs_clean %>%
   mutate(gender = fct_recode(gender,
                              "male" = 0,
                              "female" = 1))
@@ -343,13 +347,13 @@ The error message is easy to understand: `fct_recode()` only expects `strings` a
 If we rerun our analysis and generate a frequency table for `gender`, we now get a much more readable output.
 
 ```{r Frequency table for gender with proper labels, echo=TRUE}
-wvs %>% count(gender)
+wvs_clean %>% count(gender)
 ```
 
 Another benefit of going through the trouble of recoding your factors is the readability of your plots. For example, we could quickly generate a bar plot based on the above table and have appropriate labels instead of `0` and `1`.
 
 ```{r Barplot for gender, echo=TRUE, fig.cap="A bar plot of the factor levels 'male' and `female`", label = "gender-bar-plot"}
-wvs %>%
+wvs_clean %>%
   count(gender) %>%
   ggplot(aes(gender, n)) +
   geom_col()
@@ -362,7 +366,7 @@ Another use case for recoding factors could be for purely cosmetic reasons. For 
 First, we need to find out which country names are particularly long. There are 48 countries in this dataset, so it could take some time to look through them all. Instead, we could use the function `filter()` from `dplyr` to pick only countries with a long name. However, this poses another problem: How can we tell the filter function to pick only country names with a certain length? Ideally, we would want a function that does the counting for us. As you probably anticipated, there is a package called `stringr`, which also belongs to the `tidyverse,` and has a function that counts the number of characters that represent a value in our dataset: `str_length()`. This function takes any `character` variable and returns the length of it. This also works with `factors` because this function can 'coerce' it into a `character`, i.e. it just ignores that it is a `factor` and looks at it as if it was a regular `character` variable. Good news for us, because now we can put the puzzle pieces together.
 
 ```{r Listing selected country names, echo=TRUE}
-wvs %>%
+wvs_clean %>%
   filter(str_length(country) >= 15) %>%
   count(country)
 ```
@@ -370,8 +374,8 @@ wvs %>%
 I use the value `15` arbitrarily after some trial and error. You can change the value and see which other countries would show up with a lower threshold. However, this number seems to do the trick and returns three countries that seem to have longer labels. All we have to do is replace these categories with new ones the same way we recoded `gender`.
 
 ```{r Recoding country names, echo=TRUE}
-wvs <-
-  wvs %>%
+wvs_clean <-
+  wvs_clean %>%
   mutate(country = fct_recode(country,
                               "Bolivia" = "Bolivia, Plurinational State of",
                               "Iran" = "Iran, Islamic Republic of",
@@ -383,7 +387,7 @@ wvs <-
 Besides changing factor levels, it is also common that we want to reconsider the arrangement of these levels. To inspect the order of factor levels, we can use the function `fct_unique()` from the `forcats` package and provide a factor variable, e.g. `gender`, in the `wvs` dataset.
 
 ```{r Show factor levels of gender, echo=TRUE}
-fct_unique(wvs$gender)
+fct_unique(wvs_clean$gender)
 ```
 
 A reason for changing the order of factor levels could be to arrange how factor levels are displayed in plots. For example, Figure \@ref(fig:gender-bar-plot) shows the bar of `male` participants first, but instead, we might want to show `female` participants first. The `forcats` package offers several options to rearrange factor levels based on different conditions. Depending on the circumstances, one or the other function might be more efficient. Three of [these functions](https://forcats.tidyverse.org/reference/index.html "forcats functions to change order of factor levels"){target="blank"} I tend to use fairly frequently:
@@ -398,21 +402,21 @@ Each function requires slightly different arguments. If we wanted to change the 
 
 ```{r Reorder factor levels using forcats, echo=TRUE}
 # Reorder by hand
-wvs %>%
+wvs_clean %>%
   count(gender) %>%
   ggplot(aes(x = fct_relevel(gender, "female", "male"),
              y = n)) +
   geom_col()
 
 # Reorder by another variable, e.g. the frequency 'n'
-wvs %>%
+wvs_clean %>%
   count(gender) %>%
   ggplot(aes(x = fct_reorder(gender, n, .desc = TRUE),
              y = n)) +
   geom_col()
 
 # Reverse the order of factor levels
-wvs %>%
+wvs_clean %>%
   count(gender) %>%
   ggplot(aes(x = fct_rev(gender),
              y = n)) +
@@ -438,7 +442,7 @@ Every study that intends to be rigorous will have to identify how much data is m
 ```{r Missing data matrix with naniar, fig.cap="Mapping missing data with naniar", label = "mapping-missing-data", echo=TRUE}
 library(naniar)
 
-vis_miss(wvs)
+vis_miss(wvs_clean)
 ```
 
 `naniar` plays along nicely with the `tidyverse` approach of programming. As such, it would also be possible to write `wvs %>% vis_miss()`.
@@ -448,14 +452,14 @@ As we can see, 99,7% of our dataset is complete, and we are only missing 0.3%. T
 When working with larger datasets, it might also be helpful to rank variables by their degree of missing data to see where the most significant problems lie.
 
 ```{r Amount of missing data by variable, fig.cap="Missing data per variable", label = "missing-data-per-variable", warning=FALSE}
-gg_miss_var(wvs)
+gg_miss_var(wvs_clean)
 ```
 
 As we already know from the previous data visualisation, `freedom_of_choice` has the most missing data points, while `participant_id`, and `country_name` have no missing values. If you prefer to see the actual numbers instead, we can use a series of functions that start with `miss_` (for a complete list of all functions, see the [reference page of naniar](https://naniar.njtierney.com/reference/index.html "reference page of naniar"){target="blank"}). For example, to retrieve the numeric values which are reflected in the plot above, we can write the following:
 
 ```{r Missing data by variable in numbers, echo=TRUE}
 # Summarise the missingness in each variable
-miss_var_summary(wvs)
+miss_var_summary(wvs_clean)
 ```
 
 I tend to prefer data visualisations over numerical results for mapping missing data, especially in larger datasets with many variables. This also has the benefit that patterns of missing data can be more easily identified as well.
@@ -479,7 +483,7 @@ Missing completely at random (MCAR) means that neither observed nor missing data
 The `naniar` package comes with the very popular Little's MCAR test [@little-1988], which provides insights into whether our data is missing completely at random. Thus, we can call the function `mcar_test()` and inspect the result.
 
 ```{r Little-s MCAR test, echo=TRUE}
-wvs %>%
+wvs_clean %>%
   # Remove variables which do not reflect a response
   select(-participant_id) %>%
   mcar_test()
@@ -493,14 +497,14 @@ Since the `p.value` of the test is so small that it got rounded down to `0`, i.e
 
 Missing at random (MAR) refers to a situation where the observed data can explain missing data, but not any unobserved data. @dong-et-al-2013 (p. 2) provide a good example when this is the case:
 
-> *Let's suppose that students who scored low on the pre-test are more likely to drop out of the course, hence, their scores on the post-test are missing. If we assume that the probability of missing the post-test depends only on scores on the pre-test, then the missing mechanism on the post-test is MAR. In other words, for students who have the same pre-test score, the probability of [them] missing the post-test is random.*
+> *Let's suppose that students who scored low on the pre-test are more likely to drop out of the course, hence, their scores on the post-test are missing. If we assume that the probability of missing the post-test depends only on scores on the pre-test, then the missing mechanism on the post-test is MAR. In other words, for students who have the same pre-test score, the probability of \[them\] missing the post-test is random.*
 
 Thus, the main difference between MCAR and MAR data lies in the fact that we can observe some patterns of missing data if data is MAR. These patterns are only based on data we have, i.e. observed data. We also assume that no unobserved variables can explain these or other patterns.
 
 Accordingly, we first look into variables with no missing data and see whether they can explain our missing data in other variables. For example, we could investigate whether missing data in `freedom_of_choice` is attributed to specific countries. <a id="missing-data-by-country-table"></a>
 
 ```{r Check missing data by country, echo=TRUE}
-wvs %>%
+wvs_clean %>%
   group_by(country) %>%
   filter(is.na(freedom_of_choice)) %>%
   count(sort = TRUE)
@@ -511,7 +515,7 @@ It seems four countries have exceptionally high numbers of missing data for `fre
 Another way of understanding patterns of missing data can be achieved by looking at relationships between missing values, for example, the co-occurrence of missing values across different variables. This can be achieved by using upset plots. An upset plot consists of three parts: Set size, intersection size and a Venn diagram which defines the intersections.
 
 ```{r Upset plot, echo=TRUE}
-gg_miss_upset(wvs)
+gg_miss_upset(wvs_clean)
 ```
 
 The most frequent combination of missing data in our dataset occurs when only `freedom_of_choice` is missing (the first column), but nothing else. Similar results can be found for `relationships_status` and `age`. The first combination of missing data is defined by two variables: `satisfaction` and `freedom_of_choice`. In total, 107 participants had `satisfaction` and `freedom_of_choice` missing but nothing else.
@@ -544,10 +548,12 @@ If data is MCAR, we could remove missing data. This process is called *'listwise
 
 ```{r Example of removing all missing data points, echo=TRUE}
 # No more missing data in this plot
-wvs %>% na.omit() %>% vis_miss()
+wvs_clean %>% na.omit() %>% vis_miss()
+```
 
+```{r}
 # How much observations are left after we removed all missing data?
-wvs %>% na.omit() %>% count()
+wvs_clean %>% na.omit() %>% count()
 ```
 
 If you wanted to remove the missing data without the plot, you could use `wvs_no_na <- na.omit(wvs)`. However, I always recommend 'saving' the result in a new object to ensure we keep the original data available. This can be helpful when trying to compare how this decision affects my analysis, i.e. I can run the analysis with and without missing data removed. For the `wvs` dataset, using `na.omit()` does not seem to be the best option.
@@ -574,7 +580,7 @@ If we apply this function to our dataset, we have to write the following:
 
 ```{r Use KNN imputation via simputation package, echo=TRUE}
 wvs_nona <-
-  wvs %>%
+  wvs_clean %>%
   select(-participant_id) %>%
   
   # Transforms our tibble into a data frame
@@ -751,7 +757,7 @@ An example of exploratory factor analysis is presented in Chapter \@ref(). Since
 
 The code chunk below breaks down these steps in the context of the `lavaan` package.
 
-```{r CFA for gep dataset, echo=TRUE, warning=FALSE}
+```{r CFA for gep dataset, echo=TRUE, warning=FALSE, message=FALSE}
 library(lavaan)
 
 #1: Define the model which explains how items relate to latent variables

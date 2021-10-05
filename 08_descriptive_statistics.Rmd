@@ -1,5 +1,11 @@
 # Descriptive Statistics {#descriptive-statistics}
 
+```{r, include=FALSE}
+library(tidyverse)
+library(r4np)
+library(patchwork)
+```
+
 The best way to understand how participants in your study have responded to various questions or experimental treatments is to use *descriptive statistics*. As the name indicates, their main purpose is to 'describe'. Most of the time, we want to describe the composition of our sample and how the majority (or minority) of participants performed.
 
 In contrast, we use *inferential statistics* to make predictions. In Social Sciences, we are often interested in predicting how people will behave in certain situations and scenarios. We aim to develop models that help us navigate the complexity of social interactions that we all engage in but might not fully understand. We cover *inferential statistics* in later chapters of this book.

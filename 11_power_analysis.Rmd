@@ -1,5 +1,11 @@
 # Power: You either have it or you don't {#power-analysis}
 
+```{r, include=FALSE}
+library(tidyverse)
+library(correlation)
+library(r4np)
+```
+
 The most frequently asked question by my students is: How much data do I have to collect? My answer is always the same: *'It depends'*. From a student's perspective, this must be one of the most frustrating answers. Usually, I follow this sentence up with something more helpful to guide students on their way. For example, there is a way to determine how large your sample has to be to detect specific relationships reliably. This procedure is called *power analysis*.
 
 While *power analysis* can be performed before and after data collection, it seems rather pointless to do it afterwards when collecting more data is not only challenging but sometimes impossible. Thus, my explanations in this chapter will primarily focus on the question: How much data is enough to detect relationships between variables reliably.

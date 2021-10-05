@@ -18,60 +18,6 @@ always_allow_html: true
 
 # Welcome {#welcome .unnumbered}
 
-```{r include=FALSE}
-
-# load required packages
-library(tidyverse)
-library(huxtable)
-library(r4np)
-library(patchwork)
-
-# Format code chunks
-knitr::opts_chunk$set(
-  comment = "#>",
-  class.source = "customCodeChunk",
-  collapse = TRUE,
-  fig.align = "center"
-  )
-
-# automatically create a bib database for R packages
-knitr::write_bib(c(
-  .packages(), 'bookdown', 'knitr', 'rmarkdown'
-), 'packages.bib')
-
-# Use this code to truncate output, specified as 'out.lines = n'
-# save the built-in output hook
-hook_output <- knitr::knit_hooks$get("output")
-
-# set a new output hook to truncate text output
-knitr::knit_hooks$set(output = function(x, options) {
-  if (!is.null(n <- options$out.lines)) {
-    x <- xfun::split_lines(x)
-    if (length(x) > n) {
-      # truncate the output
-      x <- c(head(x, n), "....\n")
-    }
-    x <- paste(x, collapse = "\n")
-  }
-  hook_output(x, options)
-})
-
-# # Collapse code chunk with empty line between source
-# # and output of code chunks
-# hook_chunk = knitr::knit_hooks$get('chunk')
-# 
-# knitr::knit_hooks$set(chunk = function(x, options) {
-#   regular_output = hook_chunk(x, options)
-#   # collapse with vspace if collapse_vspace is TRUE
-#   if (isTRUE(options$collapse_vspace))
-#     gsub("```\n\n```", "", regular_output)
-#   else
-#     regular_output
-# })
-# 
-# knitr::opts_chunk$set(collapse_vspace = TRUE)
-```
-
 ::: {style="float:right;position: relative; top: 0px;"}
 ![](images/cover_art_icons/cover_art_book.png){width="200px"}
 :::

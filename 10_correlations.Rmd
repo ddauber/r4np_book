@@ -1,5 +1,12 @@
 # Correlations {#correlations}
 
+```{r, include=FALSE}
+library(tidyverse)
+library(correlation)
+library(r4np)
+library(patchwork)
+```
+
 Sometimes counting and measuring means, medians, and standard deviations is not enough because they are all based on a single variable. Instead, we might have questions related to the relationship of two or more variables. In this section, we will explore how correlations can (and kind of cannot - see Chapter \@ref(simpsons-paradox)) provide insights into the following questions:
 
 -   Do movie viewers agree with movie critics regarding the rating of movies?
