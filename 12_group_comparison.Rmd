@@ -414,7 +414,7 @@ If we want to follow up the Kruskal-Wallis test, i.e. the non-parametric equival
 Below are some examples of how you would use these functions in your project. However, be aware that some of the *post-hoc tests* are not well implemented yet in *R*. Here, I show the most important ones that likely serve you in 95% of the cases.
 
 ```{r Multiple group comparison post-hoc tests, echo=TRUE}
-# POST_HOC TEST FOR PARAMETRIC DATA
+# POST-HOC TEST FOR PARAMETRIC DATA
 # Bonferroni
 pairwise.t.test(mcomp$satisfaction,
                 mcomp$country,
@@ -606,7 +606,7 @@ To finish this chapter, I want to share the non-parametric version of this test:
 wvs_waves %>% rstatix::friedman_test(satisfaction ~ wave | id)
 ```
 
-```{r}
+```{r, warning=FALSE}
 # Effect size
 (kw <- effectsize::kendalls_w(satisfaction ~ wave | id,
                        data = wvs_waves))

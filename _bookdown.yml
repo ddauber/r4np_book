@@ -7,13 +7,13 @@ rmd_files: [
   
   "00_acknowledgements.Rmd",
 
-  # "01_before_you_get_started.Rmd",
-  # "02_why_start_learning_a_programming_language.Rmd",
-  # 
-  # "03_setting_up_r_rstudio.Rmd",
-  # "04_rstudio_interface.Rmd",
-  # "05_r_basics.Rmd",
-  # "06_starting_r_projects.Rmd",
+  "01_before_you_get_started.Rmd",
+  "02_why_start_learning_a_programming_language.Rmd",
+
+  "03_setting_up_r_rstudio.Rmd",
+  "04_rstudio_interface.Rmd",
+  "05_r_basics.Rmd",
+  "06_starting_r_projects.Rmd",
 
   # "07_data_wrangling.Rmd",
 
