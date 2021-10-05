@@ -2,6 +2,23 @@
 
 ```{r echo=FALSE, message=FALSE}
 library(tidyverse)
+
+# Truncate output, specified as 'out.lines = n'
+# save the built-in output hook
+hook_output <- knitr::knit_hooks$get("output")
+
+# set a new output hook to truncate text output
+knitr::knit_hooks$set(output = function(x, options) {
+  if (!is.null(n <- options$out.lines)) {
+    x <- xfun::split_lines(x)
+    if (length(x) > n) {
+      # truncate the output
+      x <- c(head(x, n), "....\n")
+    }
+    x <- paste(x, collapse = "\n")
+  }
+  hook_output(x, options)
+})
 ```
 
 You collected your data over months (and sometimes years), and all you want to know is whether your data makes sense and reveals something nobody would have ever expected. However, before we can truly go ahead with our analysis, it is essential to understand whether our data is 'tidy'. Very often, the data we receive is everything else but clean, and we need to check whether our data is fit for analysis and ensure it is in a format that is easy to handle. For small datasets, this is usually a brief exercise. However, I found myself cleaning data for a month because the dataset was spread out into multiple spreadsheets with different numbers of columns and odd column names. Thus, data cleaning and data wrangling is an essential first step in any data analysis. It is a step that cannot be skipped and has to be performed on every new dataset.
@@ -149,7 +166,7 @@ The output of glimpse shows us the name of each column/variable after the `$`, f
 wvs$relationship_status
 ```
 
-After the variable name, we find the recognised data type for each column in `<...>`, for example `<chr>`. We will return to data types in Chapter \@ref(change-data-types). Lastly, we get samples of the data included. This output is much more helpful.
+When using `glimpse()` we find the recognised data type for each column, i.e. each variable, in `<...>`, for example `<chr>`. We will return to data types in Chapter \@ref(change-data-types). Lastly, we get samples of the data included. This output is much more helpful.
 
 I use `glimpse()` very frequently for different purposes, for example:
 
@@ -206,7 +223,7 @@ Now that `janitor` has done its magic, we suddenly have easy to read variable na
 
 If, for whatever reason, the variable names are still not looking the way you want, you can use the function `rename()` from the `dplyr` package to manually assign new variable names.
 
-```{r Use rename() function, echo=TRUE}
+```{r Use rename function, echo=TRUE}
 wvs_clean <- 
   wvs_clean %>%
   rename(satisfaction = satisfaction_with_life,
@@ -227,7 +244,7 @@ If we wanted to spell out what we just did, we could say:
 
 Just for clarification, the following two lines of code accomplish the same task. The only difference is that with `%>%` we could chain another function right after it. So, you could say, it is a matter of taste which approach you prefer. However, in later chapters, it will become apparent why using `%>%` is very advantageous.
 
-```{r Renaming a column with %>% and without %>%, echo=TRUE, results='hide'}
+```{r Renaming a column with pipe and without pipe, echo=TRUE, eval=FALSE}
 # Renaming a column using '%>%'
 wvs_clean %>% rename(satisfaction_new = satisfaction)
 
@@ -352,7 +369,7 @@ wvs_clean %>% count(gender)
 
 Another benefit of going through the trouble of recoding your factors is the readability of your plots. For example, we could quickly generate a bar plot based on the above table and have appropriate labels instead of `0` and `1`.
 
-```{r Barplot for gender, echo=TRUE, fig.cap="A bar plot of the factor levels 'male' and `female`", label = "gender-bar-plot"}
+```{r Barplot for gender, echo=TRUE, fig.cap="A bar plot of the factor levels `male` and `female`", label = "gender-bar-plot"}
 wvs_clean %>%
   count(gender) %>%
   ggplot(aes(gender, n)) +
@@ -528,7 +545,7 @@ Our analysis also suggests that values are not completely randomly missing but t
 
 Lastly, missing not at random (MNAR) implies that data is missing systematically and that other variables or reasons exist that explain why data is missing. Still, they are not fully known to us. In questionnaire-based research, an easily overlooked reason that can explain missing data is the 'page-drop-off' phenomenon. In such cases, participants stop completing a questionnaire once they advance to another page. Figure \@ref(fig:mnar-example) shows this very clearly for a large scale project where an online questionnaire was used. After almost every page break in the questionnaire, some participants decided to discontinue. Finding these types of patterns is difficult when only working with numeric values. Thus, it is always advisable to visualise your data as well. Such missing data is linked to the design of the data collection tool.
 
-```{r fig.cap="MNAR pattern in a dataset due to 'page-drop-offs'", echo=FALSE, label="mnar-example"}
+```{r, fig.cap="MNAR pattern in a dataset due to 'page-drop-offs'", echo=FALSE, label="mnar-example"}
 knitr::include_graphics("images/chapter_07_img/03_missing_data/00_mnar_example.png")
 ```
 
@@ -562,7 +579,7 @@ Based on our analysis of the `wvs` dataset (by no means complete!), we could ass
 
 You might be thinking: "Why would it make data better if we 'make up' numbers? Is this not cheating?" Imputation of missing values is a science in itself. There is plenty to read about the process of handling missing data, which would reach far beyond the scope of this book. However, the seminal work of @van-buuren-2018, @dong-et-al-2013 and @jakobsen-et-al-2017 are excellent starting points. In short: Simply removing missing data can lead to biases in your data, e.g. if we removed missing data in our dataset, we would mainly exclude participants from Japan, Brazil, New Zealand, Russia and Bolivia (as we found out [earlier](#missing-data-by-country-table)). While imputation is not perfect, it can produce more reliable results than not using imputation at all, assuming our data meets the requirements for such imputation.
 
-Even though our dataset has only a minimal amount of missing data (relative to the entire size), we can still use imputation. There are many different ways to approach this task, one of which is 'multiple imputation'. As highlighted by @van2020rebutting, multiple imputation has not yet reached the same popularity as listwise deletion, despite its benefits. The main reason for this lies in the complexity of using this technique. Therefore, I included an example of how to use multiple imputation separately in Chapter \@ref(). There are many more approaches to imputation, and going through them all in detail would be impossible and distract from the book's main purpose. Still, I would like to share some interesting packages with you that use different imputation methods:
+Even though our dataset has only a minimal amount of missing data (relative to the entire size), we can still use imputation. There are many different ways to approach this task, one of which is 'multiple imputation'. As highlighted by @van2020rebutting, multiple imputation has not yet reached the same popularity as listwise deletion, despite its benefits. The main reason for this lies in the complexity of using this technique. Therefore, I included an example of how to use multiple imputation separately in Chapter ???. There are many more approaches to imputation, and going through them all in detail would be impossible and distract from the book's main purpose. Still, I would like to share some interesting packages with you that use different imputation methods:
 
 -   [mice](https://cran.r-project.org/web/packages/Amelia/index.html "mice"){target="blank"} (Multivariate Imputation via Chained Equations)
 
@@ -677,7 +694,7 @@ gep %>%
 
 The function `alpha()` returns a lot of information. The most important part, though, is shown at the very beginning:
 
-```{r Output from alpha(), echo=FALSE}
+```{r Output from alpha, echo=FALSE}
 si_alpha <-
   gep %>%
   select(starts_with("si_")) %>%
@@ -747,7 +764,7 @@ However, while Cronbach's $\alpha$ is very popular due to its simplicity, there 
 
 -   Confirmatory factor analysis (CFA): To confirm whether a set of items truly reflect a latent variable.
 
-An example of exploratory factor analysis is presented in Chapter \@ref(). Since the `gep` data is based on an established measurement tool, we perform a CFA. To perform a CFA, we use the popular `lavaan` ([*La*]{.ul}*tent [Va]{.ul}riable [An]{.ul}alysis*) package. The steps of running a CFA in *R* include:
+An example of exploratory factor analysis is presented in Chapter ???. Since the `gep` data is based on an established measurement tool, we perform a CFA. To perform a CFA, we use the popular `lavaan` ([*La*]{.ul}*tent [Va]{.ul}riable [An]{.ul}alysis*) package. The steps of running a CFA in *R* include:
 
 1.  Define which variables are supposed to measure a specific latent variable (i.e. creating a model).
 
@@ -795,7 +812,7 @@ broom::tidy(fit_indices) %>%
 
 The `broom` package is useful to clean output from all kinds of models, such as a CFA model. It allows us to convert the raw output into a `tibble`, which we can further manipulate using the functions we already know. However, it is not required to use `tidy()` to inspect the results. This can be done out of pure convenience. If we want to know where `names` and `x` came from we have to inspect the output from `broom::tidy(fit_indices)`.
 
-```{r Broom tidy() explained, echo=TRUE, warning=FALSE}
+```{r Broom tidy explained, echo=TRUE, warning=FALSE}
 broom::tidy(fit_indices)
 ```
 

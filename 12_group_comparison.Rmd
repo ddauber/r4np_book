@@ -12,7 +12,7 @@ If we want to perform a group comparison, we have to consider which technique is
 
 -   missing data (see Chapter \@ref(dealing-with-missing-data)),
 
--   outliers (see Chapter \@ref(dealing-with-outliers), and
+-   outliers (see Chapter \@ref(dealing-with-outliers)), and
 
 -   the assumptions made by analytical techniques about our data.
 
@@ -26,7 +26,7 @@ While we covered missing data and outliers in previous chapters, we have yet to 
 
 -   Are these groups paired or unpaired?
 
-In the following, we will look at group comparisons for parametric and non-parametric data in each category and use the `wvs_nona` dataset, i.e. the `wvs` data frame after we performed imputation (see also Chapter \@ref(replacing-removing-missing-data)). Since we already covered how to test whether data is parametric or non-parametric, we will forgo this step out of pure convenience and remain succinct. We also ignore any potential outliers. The case studies at the end of the book provide complete example of performing group comparisons with a new set of data from start to finish (see Chapter \@ref()). Thus, parametric and non-parametric tests will be demonstrated with the same dataset and the same variables.
+In the following, we will look at group comparisons for parametric and non-parametric data in each category and use the `wvs_nona` dataset, i.e. the `wvs` data frame after we performed imputation (see also Chapter \@ref(replacing-removing-missing-data)). Since we already covered how to test whether data is parametric or non-parametric, we will forgo this step out of pure convenience and remain succinct. We also ignore any potential outliers. The case studies at the end of the book provide complete example of performing group comparisons with a new set of data from start to finish (see Chapter). Thus, parametric and non-parametric tests will be demonstrated with the same dataset and the same variables.
 
 ## Comparability: Apples vs Oranges {#comparability-apples-vs-oranges}
 
@@ -404,7 +404,7 @@ The results show that there is a significant and large difference between these 
 
 [^group_comparison-2]: In order to use this package, it is necessary to install a series of other packages found on [bioconductor.org](https://www.bioconductor.org "bioconductor.org"){target="blank"}
 
-You might be surprised to see that there are also *post-hoc tests* for parametric group comparisons when equal variances are not assumed. Would we not have to use a non-parametric test for our group comparison instead? Well, empirical studies have demonstrated that ANOVAs tend to produce robust results, even if the assumption of normality (e.g. @blanca2017non) is not given, or there is some degree of heterogeneity of variance between groups [@tomarken1986comparison]. In other words, there can be some lenieancy (or flexibility?) when it comes to the violation of parametric assumptions. If you want to reside on the save side, you should ensure you know your data and its properties. If in doubt, non-parametric tests are also available.
+You might be surprised to see that there are also *post-hoc tests* for parametric group comparisons when equal variances are not assumed. Would we not have to use a non-parametric test for our group comparison instead? Well, empirical studies have demonstrated that ANOVAs tend to produce robust results, even if the assumption of normality [e.g. @blanca2017non] is not given, or there is some degree of heterogeneity of variance between groups [@tomarken1986comparison]. In other words, there can be some lenieancy (or flexibility?) when it comes to the violation of parametric assumptions. If you want to reside on the save side, you should ensure you know your data and its properties. If in doubt, non-parametric tests are also available.
 
 If we want to follow up the Kruskal-Wallis test, i.e. the non-parametric equivalent to the one-way ANOVA, we can make use of two *post-hoc tests*:
 
@@ -502,7 +502,7 @@ differences %>%
             m1_m8_var = var(m1_m8))
 ```
 
-We can tell that the differences across groups are relatively small when comparing `m1_m4_var` and `m4_m8_var`. However, the value for `m1_m8_var` appears bigger. So, how can we be sure whether the assumption of sphericity is violated or not? Similar to many of the other assumptions we covered, a significance test provides the answer to this question. For multiple paired groups, we use *Mauchly's Test of Sphericity*. If the test is significant, the variances across groups are not equal. In other words, a significant Mauchly test implies a violation of sphericity. The `rstatix` package includes Mauchly's Test of Sphericity in its `anova_test()`. Thus, we get both with one function. However, our data in this example is not tidy (remember the definition from Chapter @ref(inspecting-raw-data)), because there are multiple observation per row for each individual and the same variable. Instead, we need to ensure that each observation for a given variable has its own row. In short, we first need to convert it into a tidy dataset using the function `pivot_longer()`. Feel free to ignore this part for now, because we will cover pivoting datasets in greater detail in Chapter \@ref(chi-squared-test).
+We can tell that the differences across groups are relatively small when comparing `m1_m4_var` and `m4_m8_var`. However, the value for `m1_m8_var` appears bigger. So, how can we be sure whether the assumption of sphericity is violated or not? Similar to many of the other assumptions we covered, a significance test provides the answer to this question. For multiple paired groups, we use *Mauchly's Test of Sphericity*. If the test is significant, the variances across groups are not equal. In other words, a significant Mauchly test implies a violation of sphericity. The `rstatix` package includes Mauchly's Test of Sphericity in its `anova_test()`. Thus, we get both with one function. However, our data in this example is not tidy (remember the definition from Chapter \@ref(inspecting-raw-data)), because there are multiple observation per row for each individual and the same variable. Instead, we need to ensure that each observation for a given variable has its own row. In short, we first need to convert it into a tidy dataset using the function `pivot_longer()`. Feel free to ignore this part for now, because we will cover pivoting datasets in greater detail in Chapter \@ref(chi-squared-test).
 
 ```{r Testing for sphericity, echo=TRUE}
 # Convert into tidy data

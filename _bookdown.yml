@@ -15,7 +15,7 @@ rmd_files: [
   "05_r_basics.Rmd",
   "06_starting_r_projects.Rmd",
 
-  # "07_data_wrangling.Rmd",
+  "07_data_wrangling.Rmd",
 
   "08_descriptive_statistics.Rmd",
   "09_sources_of_bias.Rmd",
@@ -29,6 +29,8 @@ rmd_files: [
   "15_next_steps.Rmd",
 
   "16_epilogue.Rmd",
+
+  "99_appendix.Rmd",
 
   "99_references.Rmd"
 ]
