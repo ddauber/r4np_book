@@ -1,3 +1,5 @@
+# (PART) Setting the stage {-}
+
 # `Readme.` before you get started {#readme-before-you-get-started}
 
 ## A starting point and reference book {#a-starting-point-and-reference-book}

@@ -1,6 +1,6 @@
-# Appendix {.unnumbered}
+# (APPENDIX) Appendix {-}
 
-## Comparing two unpaired groups
+# Comparing two unpaired groups
 
 +----------------+----------------+-------------------------------+-----------------+-------------------+
 | Assumption     | Test           | Function                      | Effect size     | Function          |

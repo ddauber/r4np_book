@@ -1,3 +1,5 @@
+# (PART) Getting started {-}
+
 # Setting up R and RStudio {#setting-up-r-and-rstudio}
 
 Every journey starts with gathering the right equipment. This intellectual journey is not much different. The first step that every *R* novice has to face is to set everything up to get started. There are essentially two strategies:

@@ -1,3 +1,5 @@
+# (PART) Analysis {-}
+
 # Descriptive Statistics {#descriptive-statistics}
 
 ```{r, include=FALSE}
@@ -16,7 +18,7 @@ This book takes a 'visualised' approach to data analysis. Therefore, each sectio
 
 ## Plotting in *R* with `ggplot2` {#plotting-in-r-with-ggplot2}
 
-Plotting can appear intimidating at first but is very easy and quick once you understand the basics. The `ggplot2` package is a very popular package to generate plots in *R*, and many other packages are built upon it. This makes it a very flexible tool to create almost any data visualisation you could imagine. If you want to see what is possible with `ggplot2`, you might want to consider looking at [\#tidytuesday](https://twitter.com/search?q=%23tidytuesday "#tidytuesday"){target="blank"} on Twitter, where novices and veterans share their data visualisations every week.
+Plotting can appear intimidating at first but is very easy and quick once you understand the basics. The `ggplot2` package is a very popular package to generate plots in *R*, and many other packages are built upon it. This makes it a very flexible tool to create almost any data visualisation you could imagine. If you want to see what is possible with `ggplot2`, you might want to consider looking at [#tidytuesday](https://twitter.com/search?q=%23tidytuesday "#tidytuesday"){target="blank"} on Twitter, where novices and veterans share their data visualisations every week.
 
 To generate any plot, we need to define three components at least:
 
@@ -419,7 +421,7 @@ Another frequently used approach to show the spread (or distribution) of data is
 | The order of the bars is important and cannot/should not be changed. | The order of bars is arbitrary and can be reordered if meaningful. |
 +----------------------------------------------------------------------+--------------------------------------------------------------------+
 
-: (\#tab:histogram-vs-bar-plot) Histogram vs bar plot
+: (#tab:histogram-vs-bar-plot) Histogram vs bar plot
 
 Let's overlap a bar plot with a histogram for the same variable to make this difference even more apparent.
 
