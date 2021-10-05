@@ -202,7 +202,7 @@ We are presented with quite a number of performance indicators, and here is how 
 
 -   `RMSE` stands for *Root Mean Square Error* and indicates how small or large the prediction error of the model is. Conceptually, it aims to measure the average deviations of values from our model when we attempt predictions. The lower its score, the better, i.e. a score of 0 would imply that our model perfectly fits the data, which is likely never the case in the field of Social Sciences. The *RMSE* is particularly useful when trying to compare models.
 
--   `Sigma` stands for the standard deviation of our residuals (the difference between predicted and empirically observed values) and is a measure of prediction accuracy. `Sigma` is *'a measure of the average distance each observation falls from its prediction from the model'* [@gelman2020regression, p. 168].
+-   `Sigma` stands for the standard deviation of our residuals (the difference between predicted and empirically observed values) and is a measure of prediction accuracy. `Sigma` is *'a measure of the average distance each observation falls from its prediction from the model'* \[@gelman2020regression, p. 168\].
 
 Many of these indices will become more relevant when we compare models. However, $R^2$ can also be meaningfully interpreted without a reference model. We know that the bigger $R^2$, the better. In our case, it is `0.548`, which is very good considering that our model consists of only one predictor. It is not easy to interpret whether a particular $R^2$ value is good or bad. In our simple single linear regression, $R^2$ is literally *'r squared'*, which we already know from correlations and their effect sizes (see Table \@ref(tab:effect-size-cohen). Thus, if we take the square root of $R^2$ we can retrieve the correlation coefficient, i.e. $r = \sqrt{R^2} = \sqrt{0.548} = 0.740$. According to @cohen1988statistical, this would count as a large effect size.
 
@@ -234,7 +234,7 @@ DV = \beta_{0} + IV_{1} * \beta_{1} + IV_{2} * \beta_{2} + ... + IV_{n} * \beta_
 $$
 :::
 
-In the last section, we wanted to know how many people will likely not recover from COVID. However, it might be even more interesting to understand how we can predict new cases and prevent casualties from the outset. Since I live in the United Kingdom during the pandemic, I am curious whether specific COVID measures help reduce the number of new cases in this country. To keep it more interesting, I will also add Germany to the mix since it has shown to be very effective in handling the pandemic relative to other European countries. Of course, feel free to pick different countries (maybe the one you live in?) to follow along with my example. In Chapter \@ref(moderated-regressions) it will become apparent why I chose two countries (\#spoiler-alert).
+In the last section, we wanted to know how many people will likely not recover from COVID. However, it might be even more interesting to understand how we can predict new cases and prevent casualties from the outset. Since I live in the United Kingdom during the pandemic, I am curious whether specific COVID measures help reduce the number of new cases in this country. To keep it more interesting, I will also add Germany to the mix since it has shown to be very effective in handling the pandemic relative to other European countries. Of course, feel free to pick different countries (maybe the one you live in?) to follow along with my example. In Chapter \@ref(moderated-regressions) it will become apparent why I chose two countries (#spoiler-alert).
 
 First, we create a dataset that only contains information from the `United Kingdom` and `Germany`[^regressions-1], using `filter()`.
 
@@ -346,7 +346,7 @@ While it should be fairly clear by now why we need to handle outliers (remember 
 |                        | -   DFBETAS                          | -   `dfbetas()`                                                                 |
 +------------------------+--------------------------------------+---------------------------------------------------------------------------------+
 
-: (\#tab:outliers-in-multiple-regressions)Outlier detection in multiple regressions
+: (#tab:outliers-in-multiple-regressions)Outlier detection in multiple regressions
 
 [^regressions-3]: This function does not take the model as an attribute, but instead requires the data, the column means and the covariance. Thus, we have to specify this function in the following way: `mahalanobis(data, colMeans(data), cov(data))`
 
@@ -364,7 +364,7 @@ The approach taken is the same for the other outlier detection methods, but with
 
 #### Outliers in the dependent variable {#outliers-in-the-dependent-variable}
 
-Irrespective of whether we look at independent or dependent variables, we always want to know whether extreme values are present. Here I will use the externally studentised residual, which 'is the preferred statistic to use to identify cases whose [...] values are highly discrepant from their predicted values [@cohen2014applied, p.401].
+Irrespective of whether we look at independent or dependent variables, we always want to know whether extreme values are present. Here I will use the externally studentised residual, which 'is the preferred statistic to use to identify cases whose \[...\] values are highly discrepant from their predicted values \[@cohen2014applied, p.401\].
 
 First, we need to compute the residuals for our model as a new column in our dataset. Since we also want to use other methods to investigate outliers, we can use the function `fortify()`, which will add some of the later indicators and creates a `tibble` that only includes the variables from our model. This one handy function does a lot of things at once. In a second step, we add the studentised residuals using `rstudent()`.
 
@@ -817,7 +817,7 @@ Similar to before, after removing the insignificant predictors, we end up with a
 
 ### Standardised beta ($\beta$) vs. unstandardised beta ($B$) {#standardised-beta-vs-unstandardised-beta}
 
-In multiple regressions, we often use variables that are measured in different ways and which use different measurement units, e.g. currency, age, etc. Thus, it is fairly difficult to compare their regression coefficients without standardising the measurement units. Standardised scores (also called *z-scores*) imply that each variable has a distribution where the mean equals `0` and the standard deviation equals `1`. By transforming our variables to z-scores, they become 'unit free' [@cohen2014applied, p.25] and, therefore, we can easily compare them irrespective of their actual measurement units. Here is an example with a simplified dataset:
+In multiple regressions, we often use variables that are measured in different ways and which use different measurement units, e.g. currency, age, etc. Thus, it is fairly difficult to compare their regression coefficients without standardising the measurement units. Standardised scores (also called *z-scores*) imply that each variable has a distribution where the mean equals `0` and the standard deviation equals `1`. By transforming our variables to z-scores, they become 'unit free' \[@cohen2014applied, p.25\] and, therefore, we can easily compare them irrespective of their actual measurement units. Here is an example with a simplified dataset:
 
 ```{r Standardisation of a variable z scores, echo=TRUE}
 # Create some data
@@ -1169,7 +1169,7 @@ parameters::model_parameters(model) %>%
 performance::model_performance(model)
 ```
 
-The $\beta$ score of `freedom_of_choice` unfolds the most substantial effect on `satisfaction`, but assumes that `age = 0`. In regressions with interaction terms, the coefficient $\beta$ of a variable reflects the change in the dependent variables if other variables are set to zero. If this is a logical value for the variables, then no further steps are required. However, if a score of zero on any predictor is not meaningful, it is recommended to engage in centering variables [e.g. @cohen2014applied, @field2013discovering]. In our model, the coefficient of `freedom_of_choice` assumes that `age` is equal to `0`. However, no participant in our sample will have been of age `0`, which renders any interpretation of the $\beta$ coefficient meaningless. Instead, it is more meaningful to retrieve a $\beta$ score which is based on the average `age` of people in our sample. This is what centering can achieve.
+The $\beta$ score of `freedom_of_choice` unfolds the most substantial effect on `satisfaction`, but assumes that `age = 0`. In regressions with interaction terms, the coefficient $\beta$ of a variable reflects the change in the dependent variables if other variables are set to zero. If this is a logical value for the variables, then no further steps are required. However, if a score of zero on any predictor is not meaningful, it is recommended to engage in centering variables \[e.g. @cohen2014applied, @field2013discovering\]. In our model, the coefficient of `freedom_of_choice` assumes that `age` is equal to `0`. However, no participant in our sample will have been of age `0`, which renders any interpretation of the $\beta$ coefficient meaningless. Instead, it is more meaningful to retrieve a $\beta$ score which is based on the average `age` of people in our sample. This is what centering can achieve.
 
 There are mainly two very commonly used techniques in the Social Sciences to center variables: *grand mean centering* and *group mean centering*. The difference between these two approaches lies in their reference sample. For group mean centering, we compute means for each group independently and for grand mean centering, we calculate the mean for all observations irrespective of any groupings. Centered scores are almost the same as z-scores, but without using standard deviation as a measurement unit. If we divided centered scores by the standard deviation, we would have computed z-scores. The following formula summarises the computation of centered variables:
 
@@ -1251,4 +1251,4 @@ This book only covers linear regressions, which are considered *Ordinary Least S
 
 -   *Generalised Linear models*, such as *Logistic regressions* (when the predictor is a logical variable) or *Poisson regressions* (when we model count data, i.e. frequencies and contingency tables).
 
-These are specialised models, and learning them requires a more in-depth knowledge of their mechanics which would go beyond the scope of a book that intends to cover the basics of conducting statistical analysis in *R*. However, [@cohen2014applied] offers an excellent introduction to both approaches.
+These are specialised models, and learning them requires a more in-depth knowledge of their mechanics which would go beyond the scope of a book that intends to cover the basics of conducting statistical analysis in *R*. However, @cohen2014applied offers an excellent introduction to both approaches.

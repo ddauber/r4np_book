@@ -10,11 +10,11 @@ The most frequently asked question by my students is: How much data do I have to
 
 While *power analysis* can be performed before and after data collection, it seems rather pointless to do it afterwards when collecting more data is not only challenging but sometimes impossible. Thus, my explanations in this chapter will primarily focus on the question: How much data is enough to detect relationships between variables reliably.
 
-*Power analysis* is something that applies to all kinds of tests, such as correlations (Chapter \@ref(correlations), group comparisons (Chapter \@ref(comparing-groups)) and regressions (Chapter \@ref(regression). Therefore, it is important to know about it. There is nothing worse than presenting a model or result that is utterly 'underpowered', i.e. the sample is not large enough to detect the desired relationship between variables reliably. In anticipation of your question about whether your analysis can be 'overpowered', the answer is 'yes'. Usually, there are no particular statistical concerns of having an overpowered analysis - more power to you (\#pun-intended). However, collecting too much data can be an ethical concern. If we think of time as a scarce resource, we should not collect more data than we need. Participants' time is valuable and being economic during data collection is essential. We do not have to bother more people with our research than necessary because not everyone is as excited about your study as you are. Besides, if everyone conducts studies on many people, effects such as survey fatigue can set in, making it more difficult for others to carry out their research. Thus, being mindful of the required sample size is always important - I mean: essential.
+*Power analysis* is something that applies to all kinds of tests, such as correlations (Chapter \@ref(correlations), group comparisons (Chapter \@ref(comparing-groups)) and regressions (Chapter \@ref(regression). Therefore, it is important to know about it. There is nothing worse than presenting a model or result that is utterly 'underpowered', i.e. the sample is not large enough to detect the desired relationship between variables reliably. In anticipation of your question about whether your analysis can be 'overpowered', the answer is 'yes'. Usually, there are no particular statistical concerns of having an overpowered analysis - more power to you (#pun-intended). However, collecting too much data can be an ethical concern. If we think of time as a scarce resource, we should not collect more data than we need. Participants' time is valuable and being economic during data collection is essential. We do not have to bother more people with our research than necessary because not everyone is as excited about your study as you are. Besides, if everyone conducts studies on many people, effects such as survey fatigue can set in, making it more difficult for others to carry out their research. Thus, being mindful of the required sample size is always important - I mean: essential.
 
 ## Ingredients to achieve the power you deserve {#ingredients-power-analysis}
 
-We already know that sample size matters, for example, to assume normality when there is none in your sample (see Central Limit Theorem in Chapter \@ref(normality)). Also, we should not mistakenly assume that a relationship exists where there is none and vice versa. I am referring to so-called Type I and Type II errors (see Table \@ref(tab:type-one-and-type-two-error).
+We already know that sample size matters, for example, to assume normality when there is none in your sample (see Central Limit Theorem in Chapter \@ref(normality)). Also, we should not mistakenly assume that a relationship exists where there is none and vice versa. I am referring to so-called Type I and Type II errors (see Table \@ref(tab:type-one-and-type-two-error)).
 
 +-----------+-----------------------------------------------------------------------------------------------------------------------------------------------------+
 | Error     | Meaning                                                                                                                                             |
@@ -38,7 +38,7 @@ We already know that sample size matters, for example, to assume normality when 
 |           | -   Is represented by the Greek letter $\beta$ (beta).                                                                                              |
 +-----------+-----------------------------------------------------------------------------------------------------------------------------------------------------+
 
-: (\#tab:type-one-and-type-two-error)Type I and Type II error defined
+: (#tab:type-one-and-type-two-error)Type I and Type II error defined
 
 Power analysis aims to help us avoid type II errors and is defined as the opposite of it, i.e. $1 - \beta$, i.e. a 'true positive'. To perform such a power analysis, we need at least three of the following four ingredients:
 
@@ -72,7 +72,7 @@ So, how exactly can we compute the right sample size, and how do we find all the
 | Linear regression  | Chapter \@ref(regression)                     | `pwr.f2.test()`                             |
 +--------------------+-----------------------------------------------+---------------------------------------------+
 
-: (\#tab:power-analysis-pwr)Power analysis via the package \`pwr\` for different methods covered in this book
+: (#tab:power-analysis-pwr)Power analysis via the package \`pwr\` for different methods covered in this book
 
 Since all functions work essentially the same, I will provide an example of last chapter's correlation analysis. You likely remember that we looked at whether the number of votes a movie receives on IMDb can predict its earnings. Below is the partial correlation that revealed a relationship in our sample based on the top 250 movies. This is just a sample, and it is not representative of all movies listed on IMDb because it only includes the best movies of all time. As of June 2021, IMDb offers information about [8 million movie titles](https://www.imdb.com/pressroom/stats/).
 
