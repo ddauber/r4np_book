@@ -502,34 +502,19 @@ mean(pocket_money)   # R will run this code
 
 RStudio helps a lot with keeping your coding tidy and properly formatted. However, there are some additional aspects worth considering. If you want to find out more about coding style, I highly recommend to read through the [*'The tidyverse style guide'*](https://style.tidyverse.org "'The tidyverse style guide'"){target="blank"} [@wickham-2021].\
 
-## Exercises {#exercises-chapter-5}
+## Exercises {#exercises-r_basics}
 
-1.  What is the result of $\sqrt[2]{25-16}+2*8-6$?
+It is time to practice the newly acquired skills. The `r4np` package comes with interactive tutorials. In order to start them, you have two options. If you have installed the `r4np` package already you can use `Option 1`:
 
-2.  What does the console return if you execute the following code `"Five" == 5`?
+```{r}
+# Option 1:
+learnr::run_tutorial("ex_r_basics", package = "r4np")
+```
 
-3.  Create a list called `books` and include the following book titles in it:
+If you have not installed the `r4np` package, you will have to do this first using `Option 2`:
 
-    -   "Harry Potter and the Deathly Hallows",
-
-    -   "The Alchemist",
-
-    -   "The Davinci Code",
-
-    -   "R For Dummies"
-
-4.  Copy and paste the function below into your RStudio console and run it. What does the function do when you use it?
-
-    ```{r Function exercise, echo=TRUE, results='hide'}
-
-    x_x <- function(number1, number2){
-      result1 <- number1 * number2
-      result2 <- sqrt(number1)
-      result3 <- number1 - number2
-      return(c(result1, result2, result3))
-    } 
-    ```
-
-5.  What are the three steps to use a new R package that you found on CRAN?
-
-Check you answers: Solutions \@ref(exercises-solutions-5)
+```{r}
+# Option 2:
+devtools::install_github("ddauber/r4np")
+learnr::run_tutorial("ex_r_basics", package = "r4np")
+```
