@@ -125,9 +125,9 @@ Another common task you will perform is assigning values to an object. An object
 
 -   etc.
 
-In short, an object is an umbrella term for many different things which form part of your data analysis. For example, objects are handy when storing results that you want to process further in later analytical steps. Let's have a look at an example.
+In short, an object is an umbrella term for many different things which form part of your data analysis. For example, objects are handy when storing results that you want to process further in later analytical steps. We have to use the assign operator `<-` to do assign a value to an object. Let's have a look at an example.
 
-```{r Saving values in objects, echo=TRUE}
+```{r saving_values_inobjects, echo=TRUE}
 # I have a friend called "Fiona"
 friends <- "Fiona"
 ```
@@ -165,8 +165,12 @@ friends
 
 To concatenate values into a single object, we need to use a comma `,` to separate each value. Otherwise, *R* will report an error back.
 
-```{r Concatenate function error, echo=TRUE, error=TRUE, purl=FALSE}
+```{r concatenate-error, eval=FALSE}
 friends <- c("Fiona" "Ida")
+```
+
+```{r echo=FALSE}
+cat(crayon::red('Error: unexpected string constant in "friends <- c("Fiona" "Ida""'))
 ```
 
 *R*'s error messages tend to be very useful and give meaningful clues to what went wrong. In this case, we can see that something '*unexpected*' happened, and it shows where our mistake is. You can also concatenate numbers
@@ -506,14 +510,14 @@ RStudio helps a lot with keeping your coding tidy and properly formatted. Howeve
 
 It is time to practice the newly acquired skills. The `r4np` package comes with interactive tutorials. In order to start them, you have two options. If you have installed the `r4np` package already you can use `Option 1`:
 
-```{r}
+```{r exercises-option-1, eval=FALSE}
 # Option 1:
 learnr::run_tutorial("ex_r_basics", package = "r4np")
 ```
 
 If you have not installed the `r4np` package, you will have to do this first using `Option 2`:
 
-```{r}
+```{r exercises-option-2, eval=FALSE}
 # Option 2:
 devtools::install_github("ddauber/r4np")
 learnr::run_tutorial("ex_r_basics", package = "r4np")

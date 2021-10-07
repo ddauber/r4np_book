@@ -839,3 +839,20 @@ write_csv(wvs, "01_tidy_data/wvs_nona.csv")
 This chapter has been a reasonably long one. Nonetheless, it only covered the basics of what can and should be done when preparing data for analysis. These steps should not be rushed or skipped. It is essential to have the data cleaned appropriately. This process helps you familiarise yourself with the dataset in great depth, and it makes you aware of limitations or even problems of your data. In the spirit of [Open Science](https://osf.io "Open Science"){target="blank"}, using *R* also helps to document the steps you undertook to get from a raw dataset to a tidy one. This is also beneficial if you intend to publish your work later. Reproducibility has become an essential aspect of transparent and impactful research and should be a guiding principle of any empirical research.
 
 Now that we have learned the basics of data wrangling, we can finally start our data analysis.
+
+## Exercises
+
+If you would like to test your knowledge or simply practice what we covered in this chapter you can copy and paste the following code if you have the `r4np` installed already.
+
+```{r exercises-option-1, eval=FALSE}
+# Option 1:
+learnr::run_tutorial("ex_data_wrangling", package = "r4np")
+```
+
+If you have not yet installed the `r4np` package, you will have to do this first using by using this code chunk:
+
+```{r exercises-option-2, eval=FALSE}
+# Option 2:
+devtools::install_github("ddauber/r4np")
+learnr::run_tutorial("ex_data_wrangling", package = "r4np")
+```

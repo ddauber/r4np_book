@@ -5,6 +5,7 @@ knitr::opts_chunk$set(
   comment = "#>",
   class.source = "customCodeChunk",
   collapse = TRUE,
+  cache = TRUE,
   fig.align = "center"
 )
 
