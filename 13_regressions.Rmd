@@ -431,7 +431,7 @@ out_detect %>% count(pm_4)
 
 The results indicate we could have as many as `56` outliers and as little as `9`. It becomes apparent that choosing the right threshold is a tricky undertaking. Let's plot the data again to make it easier to read and add some of the thresholds. I skip `3.5` since it is very close to `3`. I also reorder the observations (i.e. the x-axis) based on `.studresid` using `reorder()`.
 
-```{r Plotting the number of outliers externally studentised residuals, echo=TRUE}
+```{r plot-outliers-ext-stud-resid, echo=TRUE}
 m1_outliers %>%
   ggplot(aes(x = reorder(rowname, .studresid),
              y = .studresid)) +

@@ -65,7 +65,7 @@ ggplot(imdb_top_250, aes(x = genre_01)) +
 
 When working with factors, the category names can be rather long. In this plot, we have lots of categories, and the labels `Adventure`, `Animation`, and `Biography` are a bit too close to each other for my taste. This might be an excellent opportunity to use `coord_flip()`, which rotates the entire plot by 90 degrees, i.e. turning the x-axis into the y-axis and vice versa. This makes the labels much easier to read.
 
-```{r Most popular genre with barplot and extras and formatting, echo=TRUE}
+```{r popular-genre-barplot-extras-formatted, echo=TRUE}
 ggplot(imdb_top_250, aes(x = genre_01)) +
   geom_bar() +
   ggtitle("Most popular movie genres") +
@@ -82,7 +82,7 @@ The problem you encounter when rearranging a `geom_bar()` with only one variable
 
 -   use this table to plot the genres by the frequency we computed
 
-```{r Most popular genre with barplot and extras step-by-step, echo=TRUE}
+```{r popular-genre-barplot-step-by-step, echo=TRUE}
 # Step 1: The frequency table only
 imdb_top_250 %>%
   count(genre_01)
@@ -572,7 +572,7 @@ n_plot +
 
 We can also define how big the `bins` are for density plots, which make the plot more or less smooth. After all, the density plot is a histogram, but the transitions from one bin to the next are 'smoothed'. Here is an example of how different `bw` settings affect the plot.
 
-```{r Density plot vs normal distribution with different bw settings, echo=TRUE, results='hide'}
+```{r density-vs-normal-bw-settings, echo=TRUE, results='hide'}
 # bw = 18
 n_plot +
   geom_density(bw = 18) +
@@ -584,7 +584,7 @@ n_plot +
   ggtitle("bw = 18")
 ```
 
-```{r Illustration of different bw settings, echo=FALSE}
+```{r illustration-bw settings, echo=FALSE}
 # bw = 18
 p1 <-
   n_plot +
