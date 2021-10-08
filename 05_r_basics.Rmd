@@ -244,7 +244,7 @@ In Chapter \@ref(basic-computations-in-r), I mentioned that we should avoid usin
                "Vision"))
 ```
 
-On a final note, naming your objects is limited. You cannot chose any name. First, every name needs to start with a letter. Second, you can only use letters, numbers `_` and `.` as valid components of the names for your objects \[see also @wickham2016r, Chapter 4.2.\]. I recommend to establish a naming convention that you adhere to. Personally I prefer to only user lower-case letters and `_` to separate/connect words. Ideally, you want to keep names informative, succinct and precise. Here are some examples of what some might consider good and bad choices for names.
+On a final note, naming your objects is limited. You cannot chose any name. First, every name needs to start with a letter. Second, you can only use letters, numbers `_` and `.` as valid components of the names for your objects [see also Chapter 4.2 in @wickham2016r]. I recommend to establish a naming convention that you adhere to. Personally I prefer to only user lower-case letters and `_` to separate/connect words. Ideally, you want to keep names informative, succinct and precise. Here are some examples of what some might consider good and bad choices for names.
 
 ```{r Naming your objects, echo=TRUE, eval=FALSE}
 # Good choices
