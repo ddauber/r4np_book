@@ -21,6 +21,6 @@ always_allow_html: true
 ![](images/cover_art_icons/cover_art_book.png){width="200px"}
 :::
 
-Welcome to *R for Non-Programmers: A guide for Social Scientists (R4NP)*. This book aims to help everyone who wishes to use R for their research projects. Each chapter conveys key concepts in data analysis in a comprehensive, compact and accessible manner. R4NP will guide you through your first steps on a possibly endless journey full of 'awe and wonder'.
+Welcome to *R for Non-Programmers: A guide for Social Scientists (R4NP)*. This book aims to help everyone who wishes to use *R* for their research projects. Each chapter conveys key concepts in data analysis in a comprehensive, compact and accessible manner. R4NP will guide you through your first steps on a possibly endless journey full of 'awe and wonder'.
 
-This book does not assume or expect any prior knowledge or skills in programming or statistical analysis. Instead, this book offers a comprehensive entry to R programming for novices and more experienced analysts wishing to migrate from other computational software.
+This book does not assume or expect any prior knowledge or skills in programming or statistical analysis. Instead, this book offers a comprehensive entry to *R* programming for novices and more experienced analysts wishing to migrate from other computational software.
