@@ -88,7 +88,7 @@ You probably noticed that my folders have numbers in front of them. I do this to
 
 Code quickly becomes long and complex. Thus, it is not very convenient to write it in the console. So, instead, we can write code into an *R* Script. An *R* Script is a document that RStudio recognises as *R* programming code. Files that are not *R* Scripts, like `.txt`, `.rtf` or `.md`, can also be opened in RStudio, but any code written in it will not be automatically recognised.
 
-When opening an *R* script or creating a new one, it will display in the *Source* window (see Chapter \@ref(the-source-window)). Some refer to this window as the 'script editor'. An *R* script starts as an empty file. Good coding etiquette (see Chapter \@ref(coding-etiquette) demands that we use the first line to indicate what this file does by using a comment `#`. Here is an example for a ['TidyTuesday'](https://www.tidytuesday.com "'TidyTuesday'"){target="blank"} *R* Project.
+When opening an *R* script or creating a new one, it will display in the *Source* window (see Chapter \@ref(the-source-window)). Some refer to this window as the 'script editor'. An *R* script starts as an empty file. Good coding etiquette (see Chapter \@ref(coding-etiquette)) demands that we use the first line to indicate what this file does by using a comment `#`. Here is an example for a ['TidyTuesday'](https://www.tidytuesday.com "'TidyTuesday'"){target="blank"} *R* Project.
 
 ![](images/chapter_06_img/02_r_script/00_r_script.png)
 

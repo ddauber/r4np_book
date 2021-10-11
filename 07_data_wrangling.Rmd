@@ -514,7 +514,7 @@ Since the `p.value` of the test is so small that it got rounded down to `0`, i.e
 
 Missing at random (MAR) refers to a situation where the observed data can explain missing data, but not any unobserved data. @dong-et-al-2013 (p. 2) provide a good example when this is the case:
 
-> *Let's suppose that students who scored low on the pre-test are more likely to drop out of the course, hence, their scores on the post-test are missing. If we assume that the probability of missing the post-test depends only on scores on the pre-test, then the missing mechanism on the post-test is MAR. In other words, for students who have the same pre-test score, the probability of \[them\] missing the post-test is random.*
+> *Let's suppose that students who scored low on the pre-test are more likely to drop out of the course, hence, their scores on the post-test are missing. If we assume that the probability of missing the post-test depends only on scores on the pre-test, then the missing mechanism on the post-test is MAR. In other words, for students who have the same pre-test score, the probability of (them) missing the post-test is random.*
 
 Thus, the main difference between MCAR and MAR data lies in the fact that we can observe some patterns of missing data if data is MAR. These patterns are only based on data we have, i.e. observed data. We also assume that no unobserved variables can explain these or other patterns.
 
@@ -537,7 +537,7 @@ gg_miss_upset(wvs_clean)
 
 The most frequent combination of missing data in our dataset occurs when only `freedom_of_choice` is missing (the first column), but nothing else. Similar results can be found for `relationships_status` and `age`. The first combination of missing data is defined by two variables: `satisfaction` and `freedom_of_choice`. In total, 107 participants had `satisfaction` and `freedom_of_choice` missing but nothing else.
 
-The 'set size' shown in the upset plot refers to the number of missing values for each variable in the diagram. This corresponds to what we have found when looking at Figure \@ref(fig:missing-data-per-variable)).
+The 'set size' shown in the upset plot refers to the number of missing values for each variable in the diagram. This corresponds to what we have found when looking at Figure \@ref(fig:missing-data-per-variable).
 
 Our analysis also suggests that values are not completely randomly missing but that we have data to help explain why they are missing.
 
@@ -561,7 +561,7 @@ Once you determined which pattern of missing data applies to your dataset, it is
 
 @jakobsen-et-al-2017 provide a rule of thumb of 5% where researchers can consider missing data as negligible, i.e. we can ignore the missing values because they won't affect our analysis in a significant way. They also argue that if the proportion of missing data exceeds 40%, we should also only work with our observed data. However, with such a large amount of missing data, it is questionable whether we can rely on our analysis as much as we want to. If the missing data lies somewhere in-between this range, we need to consider the missing data pattern at hand.
 
-If data is MCAR, we could remove missing data. This process is called *'listwise deletion'*, i.e. you remove all data from a participant with missing data. As just mentioned, removing missing values is only suitable if you have relatively few missing values in your dataset (see also @schafer-1999), as is the case with the `wvs` dataset. There are additional problems with deleting observations listwise, many of which are summarised by @van-buuren-2018 in his [introduction](https://stefvanbuuren.name/fimd/sec-simplesolutions.html "introduction"){target="blank"}. Usually, we try to avoid removing data as much as possible. If you wanted to perform listwise deletion, it can be done with a single function call: `na.omit()` from the built-in `stats` package. Here is an example of how we can apply this function.
+If data is MCAR, we could remove missing data. This process is called *'listwise deletion'*, i.e. you remove all data from a participant with missing data. As just mentioned, removing missing values is only suitable if you have relatively few missing values in your dataset [@schafer-1999], as is the case with the `wvs` dataset. There are additional problems with deleting observations listwise, many of which are summarised by @van-buuren-2018 in his [introduction](https://stefvanbuuren.name/fimd/sec-simplesolutions.html "introduction"){target="blank"}. Usually, we try to avoid removing data as much as possible. If you wanted to perform listwise deletion, it can be done with a single function call: `na.omit()` from the built-in `stats` package. Here is an example of how we can apply this function.
 
 ```{r Example of removing all missing data points, echo=TRUE}
 # No more missing data in this plot
@@ -684,7 +684,7 @@ Compared to dealing with missing data, this is a fairly straightforward task. Ho
 
 By far, the most common approach to assessing reliability (or more accurately *'internal consistency'*) of latent variables is Cronbach's $\alpha$. This indicator looks at how strongly a set of items (i.e. questions in your questionnaire) are related to each other. For example, the stronger the relationship of all items starting with `si_` to each other, the more likely we achieve a higher Cronbach's $\alpha$. The `psych` package has a suitable function to compute it for us.
 
-Instead of listing all the items by hand, I use the function `starts_with()` to pick only the variables whose names start with `si_`. It certainly pays off to think about your variable names more thoroughly in advance to benefit from such shortcuts (see also Chapter \@ref(colnames-cleaning).
+Instead of listing all the items by hand, I use the function `starts_with()` to pick only the variables whose names start with `si_`. It certainly pays off to think about your variable names more thoroughly in advance to benefit from such shortcuts (see also Chapter \@ref(colnames-cleaning)).
 
 ```{r Compute Cronbachs alpha for si, echo=TRUE}
 gep %>%

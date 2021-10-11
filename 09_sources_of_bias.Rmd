@@ -22,7 +22,7 @@ Lastly, @field2013discovering also mentions outliers as an important source of b
 
 ## Linearity and additivity {#additivity-and-linearity}
 
-The assumption of linearity postulates that the relationship of variables represents a straight line and not a curve or any other shape. Figure \@ref(fig:linear-nonlinear-relationship) depicts examples of how two variables could be related to each other. Only the first one demonstrates a linear relationship, and all other plots would represent a violation for parametric tests.
+The assumption of linearity postulates that the relationship of variables represents a straight line and not a curve or any other shape. Figure \@ref(fig:linear-nonlinear-relationships) depicts examples of how two variables could be related to each other. Only the first one demonstrates a linear relationship, and all other plots would represent a violation of linearity.
 
 ```{r Linearity visualised, fig.cap="Examples of linear and non-linear relationship of two variables", label = "linear-nonlinear-relationships", echo=FALSE}
 data <- tibble(x = seq(from = -10,
@@ -381,7 +381,7 @@ In a first step, we need to determine which values count as an outlier. @aguinis
 
 ### Detecting outliers using the standard deviation {#ouliers-standard_deviation}
 
-A very frequently used approach to detecting outliers is the use of the standard deviation. Usually, scholars use multiples of the standard deviation to determine thresholds. For example, a value that lies 3 standard deviations above or below the mean could be categorised as an outlier. Unfortunately, there is quite some variability regarding how many multiples of the standard deviation counts as an outlier. Some authors might use `3`, and others might settle for `2` (see also @leys2013detecting). Let's stick with the definition of `3` standard deviations to get us started. We can revisit our previous plot regarding `runtime_min` (See Figure \@ref(fig:runtime-movies-deviation) and add lines that show the thresholds above and below the mean. As before, I will create a base plot `outlier_plot` first so that we do not have to repeat the same code over and over again. We then use `outlier_plot` and add more layers as we see fit.
+A very frequently used approach to detecting outliers is the use of the standard deviation. Usually, scholars use multiples of the standard deviation to determine thresholds. For example, a value that lies 3 standard deviations above or below the mean could be categorised as an outlier. Unfortunately, there is quite some variability regarding how many multiples of the standard deviation counts as an outlier. Some authors might use `3`, and others might settle for `2` (see also @leys2013detecting). Let's stick with the definition of `3` standard deviations to get us started. We can revisit our previous plot regarding `runtime_min` (see Figure \@ref(fig:runtime-movies-deviation)) and add lines that show the thresholds above and below the mean. As before, I will create a base plot `outlier_plot` first so that we do not have to repeat the same code over and over again. We then use `outlier_plot` and add more layers as we see fit.
 
 ```{r Outlier detection usind 3 sd, echo=TRUE}
 # Compute the mean and the thresholds
@@ -438,7 +438,7 @@ As we would expect, we identify some more movies as being outliers, but the shor
 
 -   since we use the mean, we assume that our data is normally distributed, and
 
--   in smaller samples, this approach might result in not identifying outliers at all (despite their presence) (@leys2013detecting, p. 764)
+-   in smaller samples, this approach might result in not identifying outliers at all (despite their presence) [@leys2013detecting] (p. 764).
 
 @leys2013detecting propose an alternative approach because medians are much less vulnerable to outliers than the mean. Similarly to the standard deviation, it is possible to calculate thresholds using the *median absolute deviation* (MAD). Best of all, the function `mad()` in *R* does this automatically for us. @leys2013detecting suggest using `2.5` times the MAD as a threshold. However, if we want to compare how well this option performs against the standard deviation, we could use `3` as well.
 
@@ -510,7 +510,7 @@ As we can tell, the IQR method detects about the same outliers for our data as t
 
 ### Removing or replacing outliers {#removing-or-replacing-outliers}
 
-Now that we have identified our outliers, we are confronted with the question of what we should do with them. Like missing data (see Chapter \@ref(dealing-with-missing-data)), we can either remove them or replace them with other values. While removal is a relatively simple task, replacing it with other 'reasonable' values implies finding techniques to create such values. As you may remember, we were confronted with a similar problem before when we looked into missing data (Chapter \@ref(dealing-with-missing-data). The same techniques, especially multiple imputation [see @cousineau2010outliers], can be used for such scenarios.
+Now that we have identified our outliers, we are confronted with the question of what we should do with them. Like missing data (see Chapter \@ref(dealing-with-missing-data)), we can either remove them or replace them with other values. While removal is a relatively simple task, replacing it with other 'reasonable' values implies finding techniques to create such values. As you may remember, we were confronted with a similar problem before when we looked into missing data (Chapter \@ref(dealing-with-missing-data)). The same techniques, especially multiple imputation [see @cousineau2010outliers], can be used for such scenarios.
 
 Irrespective of whether we remove or replace outliers, we somehow need to single them out of the crowd. Since the IQR strategy worked well for our data, we can use the thresholds we defined before, i.e. `iqr_upper` and `iqr_lower`. Therefore, an observation (i.e. a movie) is considered an outlier if
 

@@ -9,7 +9,8 @@ github-repo: ddauber/r4np_book
 documentclass: book
 bibliography: book.bib
 # biblio-style: apa
-csl: apa-6th-edition.csl
+#csl: apa-6th-edition.csl
+csl: apa.csl
 link-citations: yes
 always_allow_html: true
 ---

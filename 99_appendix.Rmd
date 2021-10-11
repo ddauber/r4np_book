@@ -1,6 +1,8 @@
-# (APPENDIX) Appendix {-}
+# (APPENDIX) Appendix {.unnumbered}
 
-# Comparing two unpaired groups
+# Comparing groups {#appendix-comparing-groups}
+
+## Comparing two unpaired groups
 
 +----------------+----------------+-------------------------------+-----------------+-------------------+
 | Assumption     | Test           | Function                      | Effect size     | Function          |
@@ -16,7 +18,9 @@
 |                |                |                               | Wilcoxon R      | `wilcoxonR()`     |
 +----------------+----------------+-------------------------------+-----------------+-------------------+
 
-: (\#tab:comparing-two-groups-unpaired-baser)Comparing two unpaired groups (effect size functions from package `effectsize`, except for `wilcoxonR()` from `rcompanion`
+: (#tab:comparing-two-groups-unpaired-baser)Comparing two unpaired groups (effect size functions from package `effectsize`, except for `wilcoxonR()` from `rcompanion`
+
+## Comparing two paired groups
 
 +----------------+---------------------------+------------------------------+-----------------+--------------------------+
 | Assumption     | Test                      | Function for test            | Effect size     | Function for effect size |
@@ -30,7 +34,9 @@
 |                |                           |                              | Wilcoxon r      | `wilcoxonPairedR()`      |
 +----------------+---------------------------+------------------------------+-----------------+--------------------------+
 
-: (\#tab:comparing-two-groups-paired-baser)Comparing two unpaired groups (effect size functions from package `effectsize`, except for `wilcoxonPairedR()` from `rcompanion`)
+: (#tab:comparing-two-groups-paired-baser)Comparing two unpaired groups (effect size functions from package `effectsize`, except for `wilcoxonPairedR()` from `rcompanion`)
+
+## Comparing multiple unpaired groups
 
 +----------------+----------------------+-------------------------------------------+------------------------+--------------------------+
 | Assumption     | Test                 | Function for test                         | Effect size            | Function for effect size |
@@ -41,4 +47,4 @@
 | Non-parametric | Kruskall-Wallis test | `kruskal.test()`                          | Epsilon squared (rank) | `rank_epsilon_squared()` |
 +----------------+----------------------+-------------------------------------------+------------------------+--------------------------+
 
-: (\#tab:comparing-multiple-groups-unpaired-baser)Comparing multiple unpaired groups (effect size functions from package `effectsize`)
+: (#tab:comparing-multiple-groups-unpaired-baser)Comparing multiple unpaired groups (effect size functions from package `effectsize`)

@@ -74,7 +74,7 @@ ggplot(imdb_top_250, aes(x = genre_01)) +
   coord_flip()
 ```
 
-Our plot is almost perfect, but we should take one more step to make reading and understanding this plot even easier. At the moment, the bars are ordered alphabetically by movie genre. Unfortunately, this is hardly ever a useful way to order your data. Instead, we might want to sort the data by frequency, showing the most popular genre at the top. To achieve this, we could either sort the movies by hand (see Chapter \@ref(reordering-factor-levels) or slightly amend what we have coded so far.
+Our plot is almost perfect, but we should take one more step to make reading and understanding this plot even easier. At the moment, the bars are ordered alphabetically by movie genre. Unfortunately, this is hardly ever a useful way to order your data. Instead, we might want to sort the data by frequency, showing the most popular genre at the top. To achieve this, we could either sort the movies by hand (see Chapter \@ref(reordering-factor-levels)) or slightly amend what we have coded so far.
 
 The problem you encounter when rearranging a `geom_bar()` with only one variable is that we do not have an explicit value to indicate how we want to sort the bars. Our current code is based on the fact that `ggplot` does the counting for us. So, instead, we need to do two things:
 
@@ -295,7 +295,7 @@ imdb_top_250 %>%
   summarise(median = median(gross_in_m, na.rm = TRUE))
 ```
 
-Both medians are much closer to each other, showing how much better suited the median is in our case. In general, when we report means, it is advisable to report the median as well. If a mean and median differ substantially, it could imply that your data 'suffers' from outliers. So we have to detect them and think about whether we should remove them for further analysis (see Chapter \@ref(dealing-with-outliers).
+Both medians are much closer to each other, showing how much better suited the median is in our case. In general, when we report means, it is advisable to report the median as well. If a mean and median differ substantially, it could imply that your data 'suffers' from outliers. So we have to detect them and think about whether we should remove them for further analysis (see Chapter \@ref(dealing-with-outliers)).
 
 We can visualise medians using boxplots. Boxplots are a very effective tool to show how your data is distributed in one single data visualisation, and it offers more than just the mean. It also shows the spread of your data (see Chapter \@ref(spread-of-data)).
 
@@ -405,7 +405,7 @@ imdb_top_250 %>%
 
 The results indicate that most movies are between 100 to 150 minutes long. Our intuition was correct. We find that one movie is even over 300 minutes long, i.e. over 5 hours: `Gangs of Wasseypur`. In contrast, the shortest movie only lasts 45 minutes and is called `Sherlock Jr.`. I added annotations using `annotate()` to highlight these two movies in the plot. A very useful package for annotations is `glue`, which allows combining text with data to label your plots. So, instead of looking up the longest and shortest movie, I used the `filter()` and `select()` functions to find them automatically. This has the great advantage that if I wanted to update my data, the name of the longest movie might change. However, I do not have to look it up again by hand.
 
-As we can see from our visualisation, both movies would also count as outliers in our dataset (see Chapter \@ref(outliers-iqr).
+As we can see from our visualisation, both movies would also count as outliers in our dataset (see Chapter \@ref(outliers-iqr) for more information on the computation of such outliers).
 
 ### Histogram: Do not mistake it as a bar plot
 
@@ -497,7 +497,7 @@ p1 + p2 + p3 + p4
 
 As becomes evident, if we select a large enough number of bins, we can achieve the same result as a bar plot. This is the closest a bar plot can become to a histogram, i.e. if you define the number of `bins` so that each observation is captured by one `bin`. While theoretically possible, practically, this rarely makes much sense.
 
-We use histograms to judge whether our data is normally distributed. A normal distribution is often a requirement for assessing whether we can run certain types of analyses or not (for more details, see Chapter \@ref(normality). In short: It is imperative to know about it in advance. The shape of a normal distribution looks like a bell (see Figure \@ref(fig:normal-distribution)). If our data is equal to a normal distribution, we find that
+We use histograms to judge whether our data is normally distributed. A normal distribution is often a requirement for assessing whether we can run certain types of analyses or not (for more details, see Chapter \@ref(normality)). In short: It is imperative to know about it in advance. The shape of a normal distribution looks like a bell (see Figure \@ref(fig:normal-distribution)). If our data is equal to a normal distribution, we find that
 
 -   the mean and the median are the same value and we can conclude that
 
@@ -521,7 +521,7 @@ Let's see whether our data is normally distributed using the histogram we alread
 
 -   compute the `mean()` of our variable,
 
--   calculate the standard deviation `sd()` of our variable (see Chapter \@ref(standard-deviation),
+-   calculate the standard deviation `sd()` of our variable (see Chapter \@ref(standard-deviation)),
 
 -   use the function `geom_func()` to plot it and,
 
@@ -577,27 +577,13 @@ We can also define how big the `bins` are for density plots, which make the plot
 n_plot +
   geom_density(bw = 18) +
   ggtitle("bw = 18")
+```
 
+```{r}
 # bw = 3
 n_plot +
   geom_density(bw = 3) +
   ggtitle("bw = 18")
-```
-
-```{r illustration-bw settings, echo=FALSE}
-# bw = 18
-p1 <-
-  n_plot +
-  geom_density(bw = 18) +
-  ggtitle("bw = 18")
-
-# bw = 3
-p2 <-
-  n_plot +
-  geom_density(bw = 3) +
-  ggtitle("bw = 18")
-
-p1 / p2
 ```
 
 The benefits of the density plot in this situation are obvious: It is much easier to see whether our data is normally distributed or not when compared to a reference plot. However, we still might struggle to determine normality just by these plots because it depends on how high or low we set `bw`.
@@ -621,7 +607,7 @@ imdb_top_250 %>%
   coord_flip()
 ```
 
-It looks exactly like the density plot we plotted earlier (see Figure \@ref(fig:density-vs-normal). The interpretation largely remains the same to a density plot as well. The relationship between the boxplot and the violin plot lies in the symmetry of the violin plot.
+It looks exactly like the density plot we plotted earlier (see Figure \@ref(fig:density-vs-normal)). The interpretation largely remains the same to a density plot as well. The relationship between the boxplot and the violin plot lies in the symmetry of the violin plot.
 
 At this point, it is fair to say that we enter 'fashion' territory. It is really up to your taste which visualisation you prefer because they are largely similar but offer nuances that some data sets might require. Each visualisation, though, comes with caveats, which results in the emergence of new plot types. For example, *'sina'* plots which address the following problem: A boxplot by itself will never be able to show bimodal distributions like a density plot. On the other hand, a density plot can show observations that do not exist, because they are smoothed. The package `ggforce` enables us to draw a *'sina'* plot which combines a violin plot with a dot plot. Here is an example of overlaying a sina plot (black dots) and a violin plot (faded blue violin plot).
 

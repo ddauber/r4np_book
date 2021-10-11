@@ -20,7 +20,7 @@ While we covered missing data and outliers in previous chapters, we have yet to 
 
 -   Are the groups big enough to be compared, i.e. are they comparable?
 
--   Is my data parametric or non-parametric? (see Chapter \@ref(parametric-or-non-parametric))
+-   Is my data parametric or non-parametric? (see Chapter \@ref(sources-of-bias))
 
 -   How many groups do I wish to compare?
 
@@ -38,7 +38,7 @@ Before we can jump into group comparisons, we need to make ourselves aware of wh
 
 -   *Exogenous variables*: Is the distribution of characteristics we are not interested in approximately the same across groups?
 
-When we compare groups, we want to minimise the systematic differences that are not the primary focus of our study. Using the right sampling technique can help with this matter. For example, using a random sample and performing a random allocation to groups can help achieve comparable groups and remove systematic differences in a way no other sampling strategy can. However, there is still no guarantee that they will be comparable (see also @altman1985comparability and @berger2006review). Besides, we also face the challenge that in Social Sciences, we do not always have the option of random sampling. For example, International Business studies heavily rely on lists provided by others (e.g. the European Union, Fortune 500, etc.), personal judgement and convenience sampling. Only a small proportion perform probability sampling [@yang2006-IBmethods]. In short, there is no reason to worry if your sampling technique is not random. However, it emphasises the need to understand your sample and your groups thoroughly. To inspect characteristics of groups we wish to compare, we can use descriptive statistics as we covered them in Chapter \@ref(descriptive-statistics). However, this time, we apply these techniques to subsets of our data and not the entire dataset.
+When we compare groups, we want to minimise the systematic differences that are not the primary focus of our study. Using the right sampling technique can help with this matter. For example, using a random sample and performing a random allocation to groups can help achieve comparable groups and remove systematic differences in a way no other sampling strategy can. However, there is still no guarantee that they will be comparable [see also @altman1985comparability and @berger2006review\]. Besides, we also face the challenge that in Social Sciences, we do not always have the option of random sampling. For example, International Business studies heavily rely on lists provided by others (e.g. the European Union, Fortune 500, etc.), personal judgement and convenience sampling. Only a small proportion perform probability sampling \[@yang2006-IBmethods]. In short, there is no reason to worry if your sampling technique is not random. However, it emphasises the need to understand your sample and your groups thoroughly. To inspect characteristics of groups we wish to compare, we can use descriptive statistics as we covered them in Chapter \@ref(descriptive-statistics). However, this time, we apply these techniques to subsets of our data and not the entire dataset.
 
 For example, we might wish to compare `female` and `male` Egyptians (see Chapter \@ref(two-unpaired-groups)). If we wanted to make sure these two groups can be compared, we might have to check (among other characteristics) whether their `age` is distributed similarly. We can use the functions we already know to create a plot to investigate this matter. We could either use a boxplot or, a bit more accurate, a density plot using the `ggridges` package.
 
@@ -48,6 +48,7 @@ comp <-
   wvs_nona %>%
   filter(country == "Egypt")
 
+# Plot distributions
 comp %>%
   ggplot(aes(x = age,
              y = gender,
@@ -57,7 +58,7 @@ comp %>%
 
 As we can see, the distribution of `age` across both `gender` groups is fairly similar and likely not different between groups. Of course, we could also statistically explore this using a suitable test before performing the main group comparison. However, we first have to understand how we can perform such tests.
 
-In the following chapters, we will primarily rely on the package `rstatix`, which offers a pipe-friendly approach to using the built-in functions of *R* to perform our group comparisons. However, you are welcome to try the basic functions, which you can find in Chapter \@ref(appendix).
+In the following chapters, we will primarily rely on the package `rstatix`, which offers a pipe-friendly approach to using the built-in functions of *R* to perform our group comparisons. However, you are welcome to try the basic functions, which you can find in Appendix \@ref(appendix-comparing-groups).
 
 ```{r Load package rstatix, echo=TRUE}
 library(rstatix)
@@ -101,7 +102,7 @@ comp %>%
 
 While the distribution looks similar, we notice that the median and the mean (marked by the cross inside the boxplot) are slightly higher for `male` participants. Thus, we can suspect some differences between these two groups, but we do not know whether these differences are significant or not. Therefore, to consider the significance (remember Chapter \@ref(significance)) and the effect size (see Table \@ref(tab:effect-size-cohen)), we have to perform statistical tests.
 
-Table \@ref(tab:comparing-two-groups-unpaired) summarises the different tests and functions to perform the group comparison computationally. It is important to note that the parametric test compares the means of two groups, while the non-parametric test compares medians. All of these tests turn significant if the differences between groups are large enough. Thus, significant results can be read as 'these groups are significantly different from each other'. Of course, if the test is not significant, the groups are considered to be not different. For parametric tests, i.e. `t.test(),` it is also essential to indicate whether the variances between these two groups are equal or not. Remember, the equality of variances was one of the assumptions for parametric tests. The *Welch t-test* can be used if the variances are not equal, but all other criteria for normality are met. By setting `var.equal = TRUE`, a regular *T-Test* would be performed. By default, `t.test()` assumes that variances are not equal. Make sure you test for *homogeneity of variance* before making your decision (see Chapter \@ref(homogeneity-of-variance).
+Table \@ref(tab:comparing-two-groups-unpaired) summarises the different tests and functions to perform the group comparison computationally. It is important to note that the parametric test compares the means of two groups, while the non-parametric test compares medians. All of these tests turn significant if the differences between groups are large enough. Thus, significant results can be read as 'these groups are significantly different from each other'. Of course, if the test is not significant, the groups are considered to be not different. For parametric tests, i.e. `t.test(),` it is also essential to indicate whether the variances between these two groups are equal or not. Remember, the equality of variances was one of the assumptions for parametric tests. The *Welch t-test* can be used if the variances are not equal, but all other criteria for normality are met. By setting `var.equal = TRUE`, a regular *T-Test* would be performed. By default, `t.test()` assumes that variances are not equal. Make sure you test for *homogeneity of variance* before making your decision (see Chapter \@ref(homogeneity-of-variance)).
 
 +----------------+----------------+-------------------------------+-------------+---------------+
 | Assumption     | Test           | Function                      | Effect size | Function      |
@@ -113,7 +114,7 @@ Table \@ref(tab:comparing-two-groups-unpaired) summarises the different tests an
 | Non-parametric | Mann-Whitney U | `wilcox_test(paired = FALSE)` | Wilcoxon R  | `wilcoxonR()` |
 +----------------+----------------+-------------------------------+-------------+---------------+
 
-: (\#tab:comparing-two-groups-unpaired)Comparing two unpaired groups (effect size functions from package `effectsize`, except for `wilcoxonR()` from `rcompanion`
+: (#tab:comparing-two-groups-unpaired)Comparing two unpaired groups (effect size functions from package `effectsize`, except for `wilcoxonR()` from `rcompanion`
 
 With this information in hand, we can start comparing the `female` Egyptians with the `male` ones using both the parametric and the non-parametric test for illustration purposes only. By setting `detailed = TRUE`, we can obtain the maximum amount of information for certain comparisons. In such cases, it is advisable to use `glimpse()`. This will make the output (a `tibble`) easier to read because each row presents one piece of information, rather than having one row with many columns.
 
@@ -242,7 +243,7 @@ Considering the revised plot, we likely can predict what the statistical test wi
 | Non-parametric | Wilcoxon Signed Rank Test | `wilcox_test(paired = TRUE)` | Wilcoxon r  | `wilcoxonPairedR()` |
 +----------------+---------------------------+------------------------------+-------------+---------------------+
 
-: (\#tab:comparing-two-groups-paired)Comparing two unpaired groups (effect size functions from package `effectsize`, except for `wilcoxonPairedR()` from `rcompanion`)
+: (#tab:comparing-two-groups-paired)Comparing two unpaired groups (effect size functions from package `effectsize`, except for `wilcoxonPairedR()` from `rcompanion`)
 
 Let's apply these functions to find out whether the differences we can see in our plots matter.
 
@@ -344,7 +345,7 @@ Table \@ref(tab:comparing-multiple-groups-unpaired) summarises which test needs 
 | Non-parametric | Kruskall-Wallis test | `kruskal_test()`                           | Epsilon squared (rank) | `rank_epsilon_squared()`                      |
 +----------------+----------------------+--------------------------------------------+------------------------+-----------------------------------------------+
 
-: (\#tab:comparing-multiple-groups-unpaired)Comparing multiple unpaired groups (effect size functions from package `effectsize`)
+: (#tab:comparing-multiple-groups-unpaired)Comparing multiple unpaired groups (effect size functions from package `effectsize`)
 
 [^group_comparison-1]: These functions are taken from the `effectsize` package.
 
@@ -400,7 +401,7 @@ The results show that there is a significant and large difference between these 
 | NO (not ideal for small samples) | NO              | -   Games-Howell   | -   `rstatix::games_howell_test()`                                                                                                                                                               |
 +----------------------------------+-----------------+--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
-: (\#tab:post-hoc-tests) Different post-hoc tests for different scenarios (parametric)
+: (#tab:post-hoc-tests) Different post-hoc tests for different scenarios (parametric)
 
 [^group_comparison-2]: In order to use this package, it is necessary to install a series of other packages found on [bioconductor.org](https://www.bioconductor.org "bioconductor.org"){target="blank"}
 
@@ -538,7 +539,7 @@ So far, we blindly assumed that our data are parametric. If our assumptions for 
 | Parametric     | Repeated measures ANOVA | `anova_test()`    | Eta squared | `eta_squared()` |
 | Non-parametric | Friedman Test           | `friedman_test()` | Kendall's R | `kendalls_w()`  |
 
-: (\#tab:comparing-multiple-groups-paired)Comparing multiple paired groups (effect size functions from package `effectsize`)
+: (#tab:comparing-multiple-groups-paired)Comparing multiple paired groups (effect size functions from package `effectsize`)
 
 Instead of using a fictional example as we did in the previous chapter, let's draw on real observations using the dataset `wvs_waves`. This dataset contains similar data to `wvs` but offers multiple measures as indicated by the variable `wave` for several countries. For example, we might be interested to know whether `satisfaction` changed over the years. This time, our unit of analysis is not individuals, but countries. Therefore, we compare the same countries (not individuals) over time.
 
@@ -616,21 +617,21 @@ effectsize::interpret_kendalls_w(kw$Kendalls_W)
 
 The non-parametric test confirms the parametric test from before. However, the interpretation of the effect size `Kendall's W` requires some explanation. First, the effect size for Kendall's W can range from `0` (small effect size) to `1` (large effect size). Usually, this effect size is considered when comparing inter-rater agreement, for example, the level of agreement of a jury in ice skating during the Olympic games. Thus, the interpretation offered by the function `interpret_kendalls_w()` follows this logic. As such, it is worth considering a slightly amended interpretation of Kendall's W if our data is not based on ratings. This is shown in Table \@ref(tab:effect-size-kendalls-w) based on @landis1977measurement (p. 165). Thus, we could report that the effect size of the significant differences is 'very small'.
 
-+-------------+-----------------------------------------+----------------------------+
-| Kendall's W | Interpretation [@landis1977measurement] | Alternative interpretation |
-+=============+=========================================+============================+
-| 0.00-0.02   | Slight agreement                        | Very small                 |
-+-------------+-----------------------------------------+----------------------------+
-| 0.21-0.40   | Fair agreement                          | Small                      |
-+-------------+-----------------------------------------+----------------------------+
-| 0.41-0.60   | Moderate agreement                      | Moderate                   |
-+-------------+-----------------------------------------+----------------------------+
-| 0.61-0.80   | Substantial agreement                   | Large                      |
-+-------------+-----------------------------------------+----------------------------+
-| 0.81-1.00   | Almost perfect agreement                | Very large                 |
-+-------------+-----------------------------------------+----------------------------+
++--------------+-----------------------------------------+----------------------------+
+| Kendall's W  | Interpretation [@landis1977measurement] | Alternative interpretation |
++==============+=========================================+============================+
+| 0.00-0.02    | Slight agreement                        | Very small                 |
++--------------+-----------------------------------------+----------------------------+
+| 0.21-0.40    | Fair agreement                          | Small                      |
++--------------+-----------------------------------------+----------------------------+
+| 0.41-0.60    | Moderate agreement                      | Moderate                   |
++--------------+-----------------------------------------+----------------------------+
+| 0.61-0.80    | Substantial agreement                   | Large                      |
++--------------+-----------------------------------------+----------------------------+
+| 0.81-1.00    | Almost perfect agreement                | Very large                 |
++--------------+-----------------------------------------+----------------------------+
 
-: (\#tab:effect-size-kendalls-w)Interpretation benchmarks for the effect size Kendall's W
+: (#tab:effect-size-kendalls-w)Interpretation benchmarks for the effect size Kendall's W
 
 ## Comparing groups based on factors: Contingency tables {#chi-squared-test}
 
@@ -780,17 +781,17 @@ Throughout the remaining chapters, I will use the mosaic plot to illustrate dist
 
 When it comes to the computational side of things, we have to distinguish whether our two variables create a 2-by-2 matrix, i.e. both variables only have two levels. Depending on which scenario applies to our analysis, a different statistical test has to be performed. For some tests, a minimum frequency for each value in our contingency table (i.e. cells) also needs to be achieved. This is usually a matter of sample size and diversity in a sample. Table \@ref(tab:statistical-tests-unpaired-cat-variables) provides an overview of the different scenarios and indicates the functions we have to use to conduct our analysis in *R*.
 
-+--------+--------------------------+----------------------------------------------------+----------------------------------------------------------+---------------+
-| Matrix | Condition                | Test                                               | Function in R                                            | Effect size   |
-+========+==========================+====================================================+==========================================================+===============+
-| 2x2    | \< 10 obs.               | Fisher's Exact Test                                | `fisher.test()`                                          | `phi()`       |
-+--------+--------------------------+----------------------------------------------------+----------------------------------------------------------+---------------+
-| 2x2    | \> 10 obs.               | Chi-squared Test with Yate's Continuity Correction | `infer::chisq_test(correct = TRUE)`[^group_comparison-3] | `cramers_v()` |
-+--------+--------------------------+----------------------------------------------------+----------------------------------------------------------+---------------+
-| n x n  | \> 5 obs. (80% of cells) | Chi-squared Test                                   | `infer::chisq_test()`                                    | `cramers_v()` |
-+--------+--------------------------+----------------------------------------------------+----------------------------------------------------------+---------------+
++----------+--------------------------+----------------------------------------------------+----------------------------------------------------------+---------------+
+| Matrix   | Condition                | Test                                               | Function in R                                            | Effect size   |
++==========+==========================+====================================================+==========================================================+===============+
+| 2x2      | \< 10 obs.               | Fisher's Exact Test                                | `fisher.test()`                                          | `phi()`       |
++----------+--------------------------+----------------------------------------------------+----------------------------------------------------------+---------------+
+| 2x2      | \> 10 obs.               | Chi-squared Test with Yate's Continuity Correction | `infer::chisq_test(correct = TRUE)`[^group_comparison-3] | `cramers_v()` |
++----------+--------------------------+----------------------------------------------------+----------------------------------------------------------+---------------+
+| n x n    | \> 5 obs. (80% of cells) | Chi-squared Test                                   | `infer::chisq_test()`                                    | `cramers_v()` |
++----------+--------------------------+----------------------------------------------------+----------------------------------------------------------+---------------+
 
-: (\#tab:statistical-tests-unpaired-cat-variables)Statistical tests to compare two unpaired categorical variables. Effect sizes are computed using the `effectsize` package.
+: (#tab:statistical-tests-unpaired-cat-variables)Statistical tests to compare two unpaired categorical variables. Effect sizes are computed using the `effectsize` package.
 
 [^group_comparison-3]: `infer` is an R package which is part of `tidymodels`.
 
@@ -896,7 +897,7 @@ wvs_nona %>% infer::chisq_test(relationship_status ~ gender)
 effectsize::interpret_r(cv$Cramers_v, rules = "cohen1988")
 ```
 
-The statistical results further confirm that the relationship between `relationship_status` and `gender` is weak but significant. Therefore, at your next soirée, you can confidently say: "This is bogus. The World Value Survey, which covers 48 different countries, shows that such a relationship is weak considering responses from over 69,000 individuals." \#cheers-to-that
+The statistical results further confirm that the relationship between `relationship_status` and `gender` is weak but significant. Therefore, at your next soirée, you can confidently say: "This is bogus. The World Value Survey, which covers 48 different countries, shows that such a relationship is weak considering responses from over 69,000 individuals." #cheers-to-that
 
 ### Paired groups of categorical variables {#paired-groups-categorical-variables}
 

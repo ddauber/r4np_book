@@ -29,7 +29,7 @@ All our regressions will be performed using the `covid` dataset of the `r4np` pa
 
 ## Single linear regression {#single-linear-regression}
 
-A single linear regression looks very similar to a correlation (see Chapter \@ref(correlations), but it is different in that it defines which variable affects another variable, i.e. a directed relationship. I used the terms *dependent variable (DV)* and *independent variable (IV)* previously when comparing groups (see Chapter \@ref(comparing-groups)), and we will use them here again. In group comparisons, the independent variable was usually a `factor`, but in regressions, we can use data that is not a categorical variable, i.e. `integer`, `double`, etc.
+A single linear regression looks very similar to a correlation (see Chapter \@ref(correlations)), but it is different in that it defines which variable affects another variable, i.e. a directed relationship. I used the terms *dependent variable (DV)* and *independent variable (IV)* previously when comparing groups (see Chapter \@ref(comparing-groups)), and we will use them here again. In group comparisons, the independent variable was usually a `factor`, but in regressions, we can use data that is not a categorical variable, i.e. `integer`, `double`, etc.
 
 While I understand that mathematical equations can be confusing, they are fairly simple to understand with regressions. Also, when writing our models in *R*, we will continuously use a `formula` to specify our regression. Thus, it is advisable to understand them. For example, a single linear regression consists of one independent variable and one dependent variable:
 
@@ -178,7 +178,7 @@ plot +
     geom_function(fun = function(x) 88.1 + 0.01 * x, col = "blue")
 ```
 
-With our final model computed, we also need to check its quality in terms of predictive power based on how well it can explain our observed data. We tested models before when we looked at confirmatory factor analyses for latent variables (see Chapter \@ref(latent-constructs). This time we want to know how accurate our model is in explaining observed data and, therefore, how accurate it predicts future observations. The package `performance` offers a nice shortcut to compute many different indicators at once:
+With our final model computed, we also need to check its quality in terms of predictive power based on how well it can explain our observed data. We tested models before when we looked at confirmatory factor analyses for latent variables (see Chapter \@ref(latent-constructs)). This time we want to know how accurate our model is in explaining observed data and, therefore, how accurate it predicts future observations. The package `performance` offers a nice shortcut to compute many different indicators at once:
 
 -   `check_model()`: Checks for linearity, homogeneity, collinearity and outliers
 
@@ -202,9 +202,9 @@ We are presented with quite a number of performance indicators, and here is how 
 
 -   `RMSE` stands for *Root Mean Square Error* and indicates how small or large the prediction error of the model is. Conceptually, it aims to measure the average deviations of values from our model when we attempt predictions. The lower its score, the better, i.e. a score of 0 would imply that our model perfectly fits the data, which is likely never the case in the field of Social Sciences. The *RMSE* is particularly useful when trying to compare models.
 
--   `Sigma` stands for the standard deviation of our residuals (the difference between predicted and empirically observed values) and is a measure of prediction accuracy. `Sigma` is *'a measure of the average distance each observation falls from its prediction from the model'* \[@gelman2020regression, p. 168\].
+-   `Sigma` stands for the standard deviation of our residuals (the difference between predicted and empirically observed values) and is a measure of prediction accuracy. `Sigma` is *'a measure of the average distance each observation falls from its prediction from the model'* [@gelman2020regression] (p. 168).
 
-Many of these indices will become more relevant when we compare models. However, $R^2$ can also be meaningfully interpreted without a reference model. We know that the bigger $R^2$, the better. In our case, it is `0.548`, which is very good considering that our model consists of only one predictor. It is not easy to interpret whether a particular $R^2$ value is good or bad. In our simple single linear regression, $R^2$ is literally *'r squared'*, which we already know from correlations and their effect sizes (see Table \@ref(tab:effect-size-cohen). Thus, if we take the square root of $R^2$ we can retrieve the correlation coefficient, i.e. $r = \sqrt{R^2} = \sqrt{0.548} = 0.740$. According to @cohen1988statistical, this would count as a large effect size.
+Many of these indices will become more relevant when we compare models. However, $R^2$ can also be meaningfully interpreted without a reference model. We know that the bigger $R^2$, the better. In our case, it is `0.548`, which is very good considering that our model consists of only one predictor. It is not easy to interpret whether a particular $R^2$ value is good or bad. In our simple single linear regression, $R^2$ is literally *'r squared'*, which we already know from correlations and their effect sizes (see Table \@ref(tab:effect-size-cohen)). Thus, if we take the square root of $R^2$ we can retrieve the correlation coefficient, i.e. $r = \sqrt{R^2} = \sqrt{0.548} = 0.740$. According to @cohen1988statistical, this would count as a large effect size.
 
 However, the situation is slightly more complicated for multiple regressions, and we cannot use Cohen's reference table by taking the square root of $R^2$. Still, the meaning of $R^2$ and its adjusted version remain the same for our model.
 
@@ -234,7 +234,7 @@ DV = \beta_{0} + IV_{1} * \beta_{1} + IV_{2} * \beta_{2} + ... + IV_{n} * \beta_
 $$
 :::
 
-In the last section, we wanted to know how many people will likely not recover from COVID. However, it might be even more interesting to understand how we can predict new cases and prevent casualties from the outset. Since I live in the United Kingdom during the pandemic, I am curious whether specific COVID measures help reduce the number of new cases in this country. To keep it more interesting, I will also add Germany to the mix since it has shown to be very effective in handling the pandemic relative to other European countries. Of course, feel free to pick different countries (maybe the one you live in?) to follow along with my example. In Chapter \@ref(moderated-regressions) it will become apparent why I chose two countries (#spoiler-alert).
+In the last section, we wanted to know how many people will likely not recover from COVID. However, it might be even more interesting to understand how we can predict new cases and prevent casualties from the outset. Since I live in the United Kingdom during the pandemic, I am curious whether specific COVID measures help reduce the number of new cases in this country. To keep it more interesting, I will also add Germany to the mix since it has shown to be very effective in handling the pandemic relative to other European countries. Of course, feel free to pick different countries (maybe the one you live in?) to follow along with my example. In Chapter \@ref(moderated-regression) it will become apparent why I chose two countries (#spoiler-alert).
 
 First, we create a dataset that only contains information from the `United Kingdom` and `Germany`[^regressions-1], using `filter()`.
 
@@ -364,7 +364,7 @@ The approach taken is the same for the other outlier detection methods, but with
 
 #### Outliers in the dependent variable {#outliers-in-the-dependent-variable}
 
-Irrespective of whether we look at independent or dependent variables, we always want to know whether extreme values are present. Here I will use the externally studentised residual, which 'is the preferred statistic to use to identify cases whose \[...\] values are highly discrepant from their predicted values \[@cohen2014applied, p.401\].
+Irrespective of whether we look at independent or dependent variables, we always want to know whether extreme values are present. Here I will use the externally studentised residual, which 'is the preferred statistic to use to identify cases whose (...) values are highly discrepant from their predicted values [@cohen2014applied] (p.401).
 
 First, we need to compute the residuals for our model as a new column in our dataset. Since we also want to use other methods to investigate outliers, we can use the function `fortify()`, which will add some of the later indicators and creates a `tibble` that only includes the variables from our model. This one handy function does a lot of things at once. In a second step, we add the studentised residuals using `rstudent()`.
 
@@ -450,7 +450,7 @@ outliers <-
   rename(studresid = pm_3)
 ```
 
-There are still more diagnostic steps we have to take before deciding which observations we want to remove or deal with in other ways (see also Chapter \@ref(dealing-with-outliers).
+There are still more diagnostic steps we have to take before deciding which observations we want to remove or deal with in other ways (see also Chapter \@ref(dealing-with-outliers)).
 
 #### Outliers in independent variables {#outliers-in-the-independent-variables}
 
@@ -525,7 +525,7 @@ While it is very convenient that this function picks the cut-off point for us, i
                    lower.tail = FALSE))
 ```
 
-The `p`-value reflects the probability we are willing to accept that our result is significant/not significant (remember Type I error in Chapter \@ref(power-analysis). The value `df` refers to the degrees of freedom, which relates to the number of independent variables, i.e. `4`. Thus, it is fairly simple to identify a cut-off point yourself by choosing the `p`-value you consider most appropriate. The function `mahalanobis_distance()` assumes $p = 0.01$, which is certainly a good but strict choice.
+The `p`-value reflects the probability we are willing to accept that our result is significant/not significant (remember Type I error in Chapter \@ref(power-analysis)). The value `df` refers to the degrees of freedom, which relates to the number of independent variables, i.e. `4`. Thus, it is fairly simple to identify a cut-off point yourself by choosing the `p`-value you consider most appropriate. The function `mahalanobis_distance()` assumes $p = 0.01$, which is certainly a good but strict choice.
 
 If we want to plot outliers as before, we can reuse our code from above and replace it with the relevant new variables.
 
@@ -580,7 +580,7 @@ This score would also imply that we have no particular outliers to consider, bec
 
 We might be led to believe that our work is done here, but @cohen2014applied recommends that any larger deviation is worth inspecting. We do notice that relative to other observations, some cases appear extreme. Ideally, one would further investigate these cases and compare the regression results by removing such extreme cases iteratively. This way, one can assess whether the extreme observations genuinely affect the overall estimates of our model. This would imply repeating steps we already covered earlier when performing multiple regressions with and without outliers. Thus, I will forgo this step here.
 
-In the last chapter about outliers (Chapter \@ref(reviewing-the-outliers), we will rerun the regression without outliers to see how this affects our model estimates. However, before we can do this, we have to cover one more method of detecting outliers.
+In the last chapter about outliers (Chapter \@ref(reviewing-the-outliers)), we will rerun the regression without outliers to see how this affects our model estimates. However, before we can do this, we have to cover one more method of detecting outliers.
 
 #### Outlier detection considering the entire model: Specific measures {#outlier-detection-specific-measures}
 
@@ -755,7 +755,7 @@ outliers_true %>%
 
 A few observations were detected by three out of the four methods we used to detect outliers. There are some more which were detected by two different methods. However, there are also more than half of our outliers which were only detected by one method.
 
-As highlighted in Chapter \@ref(dealing-with-outliers), there are many ways we can go about outliers. To keep our analysis simple, I intend to remove those observations detected by multiple methods rather than only by one. Whether this approach is genuinely appropriate is a matter of further investigation. I take a very pragmatic approach with our sample data. However, it is worth reviewing the options available to transform data, as covered by \@field2013discovering (p.203). Data transformation can help to deal with outliers instead of removing or imputing them. Still, data transformation comes with severe drawbacks and in most cases, using a bootstrapping technique to account for violations of parametric conditions is often more advisable. Bootstrapping refers to the process of randomly resampling data from your dataset and rerun the same test multiple times, e.g. 2000 times. Thus, there will be some samples that do not include the outliers. The process is somewhat similar to multiple imputation (see Chapter \@ref(replacing-removing-missing-data). Still, instead of estimating a specific value in our dataset, we estimate statistical parameters, e.g. confidence intervals or regression coefficients (i.e. estimates). The package `rsample` allows implementing bootstrapping straightforwardly. For an example of a detailed look at a bootstrapped regression, see Chapter \@ref(case-study-bootstrapped-regression). However, bootstrapping comes at the cost of lower power because we are running the test so many times.
+As highlighted in Chapter \@ref(dealing-with-outliers), there are many ways we can go about outliers. To keep our analysis simple, I intend to remove those observations detected by multiple methods rather than only by one. Whether this approach is genuinely appropriate is a matter of further investigation. I take a very pragmatic approach with our sample data. However, it is worth reviewing the options available to transform data, as covered by \@field2013discovering (p.203). Data transformation can help to deal with outliers instead of removing or imputing them. Still, data transformation comes with severe drawbacks and in most cases, using a bootstrapping technique to account for violations of parametric conditions is often more advisable. Bootstrapping refers to the process of randomly resampling data from your dataset and rerun the same test multiple times, e.g. 2000 times. Thus, there will be some samples that do not include the outliers. The process is somewhat similar to multiple imputation (see Chapter \@ref(replacing-removing-missing-data)). Still, instead of estimating a specific value in our dataset, we estimate statistical parameters, e.g. confidence intervals or regression coefficients (i.e. estimates). The package `rsample` allows implementing bootstrapping straightforwardly. For an example of a detailed look at a bootstrapped regression, see Chapter ???. However, bootstrapping comes at the cost of lower power because we are running the test so many times.
 
 For now, I settle on removing outliers entirely. The easiest way to remove these outliers is to combine our `outliers` dataset with our regression (`m1_outliers`). Now you will notice that having `rowname` as an ID allows us to match the values of each table to each other. Otherwise, this would not be possible.
 
@@ -817,7 +817,7 @@ Similar to before, after removing the insignificant predictors, we end up with a
 
 ### Standardised beta ($\beta$) vs. unstandardised beta ($B$) {#standardised-beta-vs-unstandardised-beta}
 
-In multiple regressions, we often use variables that are measured in different ways and which use different measurement units, e.g. currency, age, etc. Thus, it is fairly difficult to compare their regression coefficients without standardising the measurement units. Standardised scores (also called *z-scores*) imply that each variable has a distribution where the mean equals `0` and the standard deviation equals `1`. By transforming our variables to z-scores, they become 'unit free' \[@cohen2014applied, p.25\] and, therefore, we can easily compare them irrespective of their actual measurement units. Here is an example with a simplified dataset:
+In multiple regressions, we often use variables that are measured in different ways and which use different measurement units, e.g. currency, age, etc. Thus, it is fairly difficult to compare their regression coefficients without standardising the measurement units. Standardised scores (also called *z-scores*) imply that each variable has a distribution where the mean equals `0` and the standard deviation equals `1`. By transforming our variables to z-scores, they become 'unit free' [@cohen2014applied] (p. 25) and, therefore, we can easily compare them irrespective of their actual measurement units. Here is an example with a simplified dataset:
 
 ```{r Standardisation of a variable z scores, echo=TRUE}
 # Create some data
@@ -884,7 +884,7 @@ I prefer to standardise using the `parameters` package because it makes my life 
 
 We finished fitting our model, and we are likely exhausted but also happy that we accomplished something. However, we are not yet done with our analysis. One of the essential post-tests for multiple regressions is a test for *multicollinearity* or sometimes referred to as *collinearity*. The phenomenon of multicollinearity defines a situation in which some of our independent variables can be explained by other independent variables in our regression model. In other words, there exists a substantial correlation (a linear relationship) between two or more independent variables. However, it is crucial to not confuse this with correlations between a dependent variable and independent variables. Remember, a regression reflects the linear relationship between the predictor variables and the outcome variable. As such, we do hope to find a correlation between these variables, just not among the independent variables.
 
-If we have evidence that multicollinearity exists in our data, we face some problems (see also @cohen2014applied, @field2013discovering, @sage-methods2004dbw):
+If we have evidence that multicollinearity exists in our data, we face some problems [@cohen2014applied; @field2013discovering; @sage-methods2004dbw]:
 
 -   We cannot trust our regression coefficients, i.e. our estimates ($\beta$).
 
@@ -1011,7 +1011,7 @@ hr_uk_ger_ita <-
 contrasts(hr_uk_ger_ita$country)
 ```
 
-With this new dataset of three countries, our regression would include more control variables because we create a new control variable for each level of the factor (minus one level!). For an example of such a scenario, please look at the case study in Chapter \@ref(bootstrapped-regression).
+With this new dataset of three countries, our regression would include more control variables because we create a new control variable for each level of the factor (minus one level!). For an example of such a scenario, please look at the case study in Chapter ???.
 
 Returning to our hierarchical regression, we can build our first model, i.e. `m1`, which only contains our control variable `country`.
 
@@ -1169,7 +1169,7 @@ parameters::model_parameters(model) %>%
 performance::model_performance(model)
 ```
 
-The $\beta$ score of `freedom_of_choice` unfolds the most substantial effect on `satisfaction`, but assumes that `age = 0`. In regressions with interaction terms, the coefficient $\beta$ of a variable reflects the change in the dependent variables if other variables are set to zero. If this is a logical value for the variables, then no further steps are required. However, if a score of zero on any predictor is not meaningful, it is recommended to engage in centering variables \[e.g. @cohen2014applied, @field2013discovering\]. In our model, the coefficient of `freedom_of_choice` assumes that `age` is equal to `0`. However, no participant in our sample will have been of age `0`, which renders any interpretation of the $\beta$ coefficient meaningless. Instead, it is more meaningful to retrieve a $\beta$ score which is based on the average `age` of people in our sample. This is what centering can achieve.
+The $\beta$ score of `freedom_of_choice` unfolds the most substantial effect on `satisfaction`, but assumes that `age = 0`. In regressions with interaction terms, the coefficient $\beta$ of a variable reflects the change in the dependent variables if other variables are set to zero. If this is a logical value for the variables, then no further steps are required. However, if a score of zero on any predictor is not meaningful, it is recommended to engage in centering variables [see @cohen2014applied; @field2013discovering]. In our model, the coefficient of `freedom_of_choice` assumes that `age` is equal to `0`. However, no participant in our sample will have been of age `0`, which renders any interpretation of the $\beta$ coefficient meaningless. Instead, it is more meaningful to retrieve a $\beta$ score which is based on the average `age` of people in our sample. This is what centering can achieve.
 
 There are mainly two very commonly used techniques in the Social Sciences to center variables: *grand mean centering* and *group mean centering*. The difference between these two approaches lies in their reference sample. For group mean centering, we compute means for each group independently and for grand mean centering, we calculate the mean for all observations irrespective of any groupings. Centered scores are almost the same as z-scores, but without using standard deviation as a measurement unit. If we divided centered scores by the standard deviation, we would have computed z-scores. The following formula summarises the computation of centered variables:
 

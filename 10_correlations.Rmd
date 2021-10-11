@@ -17,21 +17,15 @@ Sometimes counting and measuring means, medians, and standard deviations is not 
 
 There are many different ways to compute the correlation, and it partially depends on the type of data you want to relate to each other. The *'Pearson's correlation'* is by far the most frequently used correlation technique for normally distributed data. On the other hand, if data is not normally distributed, we can opt for the *'Spearman's rank'* correlation. One could argue that the relationship between these two correlations is like the mean (Pearson) to the median (Spearman). Both approaches require numeric values to be computed correctly. If our data is ordinal, or worse dichotomous (like a logical variable), we have to choose different options. Table \@ref(tab:different-correlations) summarises different methods depending on data type.
 
-+-----------------+-------------------------------------------------------------------+
 | Correlation     | Used when ...                                                     |
-+=================+===================================================================+
+|-----------------|-------------------------------------------------------------------|
 | *Pearson*       | ... variables are numeric and parametric                          |
-+-----------------+-------------------------------------------------------------------+
 | *Spearman*      | ... variables are numeric and non-parametric                      |
-+-----------------+-------------------------------------------------------------------+
 | *Polychoric*    | ... investigating two ordinal variables                           |
-+-----------------+-------------------------------------------------------------------+
 | *Tetrachoric*   | ... both variables are dichotomous, e.g. 'yes/no', 'True/False'.  |
-+-----------------+-------------------------------------------------------------------+
 | *Rank-biserial* | ... one variable is dichotomous and the other variable is ordinal |
-+-----------------+-------------------------------------------------------------------+
 
-: (\#tab:different-correlations) Different ways of computing correlations
+: (#tab:different-correlations) Different ways of computing correlations
 
 There are many more variations of correlations, which you can explore on the [package's website](https://easystats.github.io/correlation/articles/types.html "website of the package"){target="blank"} we will use in this chapter: `correlation`. However, we will primarily focus on Pearson and Spearman because they are the most commonly used correlation types in academic publications to understand the relationship between two variables. In addition, we also look at *'partial correlations'*, which allow us to introduce a third variable into this mix.
 
@@ -174,19 +168,14 @@ A correlation can be either positive or negative, and its value (i.e. `r` in cas
 
 In other words, the further the score is away from `0`, the stronger is the relationship between variables. We also have benchmarks that we can use to assess the strength of a relationship, for example, the one by @cohen1988statistical. The strength of the relationship is also called *'effect size'*. Table \@ref(tab:effect-size-cohen) shows the relevant benchmarks. Note that effect sizes are always provided as absolute figures. Therefore, `-0.4` would also count as a moderate relationship.
 
-+---------------------+----------------------+
-| effect size         | interpretation       |
-+=====================+======================+
-| r \< 0.1            | very small           |
-+---------------------+----------------------+
-| 0.1 $\leq$ r \< 0.3 | small                |
-+---------------------+----------------------+
-| 0.3 $\leq$ r \< 0.5 | moderate             |
-+---------------------+----------------------+
-| r $\geq$ 0.5        | large                |
-+---------------------+----------------------+
+| effect size         | interpretation |
+|---------------------|----------------|
+| r \< 0.1            | very small     |
+| 0.1 $\leq$ r \< 0.3 | small          |
+| 0.3 $\leq$ r \< 0.5 | moderate       |
+| r $\geq$ 0.5        | large          |
 
-: (\#tab:effect-size-cohen) Assessing effect size of relationships according to Cohen (1988)
+: (#tab:effect-size-cohen) Assessing effect size of relationships according to Cohen (1988)
 
 ## Computing correlations {#computing-correlations}
 
@@ -270,7 +259,7 @@ imdb_top_250 %>%
               col = "red")
 ```
 
-Another problem we face with this plot (and correlations) are extreme values, i.e. outliers. We already know that outliers tend to cause trouble for our analysis (see Chapter \@ref(dealing-with-outliers), and in correlations, they can affect the strength of relationships. However, the differences are very significant if we compute the Pearson correlation with and without outliers. Be aware that since we work with two variables simultaneously, we should consider outliers in both. The function `filter()` will have to include four conditions.
+Another problem we face with this plot (and correlations) are extreme values, i.e. outliers. We already know that outliers tend to cause trouble for our analysis (see Chapter \@ref(dealing-with-outliers)), and in correlations, they can affect the strength of relationships. However, the differences are very significant if we compute the Pearson correlation with and without outliers. Be aware that since we work with two variables simultaneously, we should consider outliers in both. The function `filter()` will have to include four conditions.
 
 ```{r Outliers in correlations, echo=TRUE}
 # The correlation with outliers
@@ -422,7 +411,7 @@ Correlations are helpful, but only to some extend. The three most common limitat
 
 ### Correlations are not causal relationships {#correlations-are-not-causal-relationships}
 
-Correlations do not offer insights into causality, i.e. whether a change in one variable causes change in the other variable. Correlations only provide insights into whether these two variables tend to change when one of them changes. Still, sometimes we can infer such causality by the nature of the variables. For example, in countries with heavy rain, more umbrellas are sold. Buying more umbrellas will not cause more rain, but if there is more rain in a country, we rightly assume a higher demand for umbrellas. If we can theorise the relationship between variables, we would rather opt for a regression model instead of a correlation (see Chapter \@ref(regression).
+Correlations do not offer insights into causality, i.e. whether a change in one variable causes change in the other variable. Correlations only provide insights into whether these two variables tend to change when one of them changes. Still, sometimes we can infer such causality by the nature of the variables. For example, in countries with heavy rain, more umbrellas are sold. Buying more umbrellas will not cause more rain, but if there is more rain in a country, we rightly assume a higher demand for umbrellas. If we can theorise the relationship between variables, we would rather opt for a regression model instead of a correlation (see Chapter \@ref(regression)).
 
 ### Correlations can be spurious {#correlations-can-be-spurious}
 
