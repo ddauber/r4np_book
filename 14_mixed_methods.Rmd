@@ -21,7 +21,7 @@ This chapter will cover two analytical approaches for textual data:
 
 Before we dive head-first into this exciting facet of research, we first need to understand how we can represent and work with qualitative data in *R*. Similar to working with tidy quantitative data, we also want to work with tidy qualitative data. This book adopts the notion of tidy text data from @silge2017text, which follows the terminology used in Corpus Linguistics:
 
-> We \[...\] define the tidy text format as being **a table with one-token-per-row.** A token is a meaningful unit of text, such as a word, that we are interested in using for analysis, and tokenization is the process of splitting text into tokens.
+> We (...) define the tidy text format as being **a table with one-token-per-row.** A token is a meaningful unit of text, such as a word, that we are interested in using for analysis, and tokenization is the process of splitting text into tokens.
 
 In other words, what used to be an 'observation' is now called a 'token'. Therefore, a token is the smallest chosen unit of analysis. The term 'word token' can easily be confused with 'word type'. The first one usually represents the instance of a 'type'. Thus, the frequency of a word type is determined by the number of its tokens. For example, consider the following sentence, which consists of five tokens, but only four types:
 

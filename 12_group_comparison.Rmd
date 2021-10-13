@@ -38,7 +38,7 @@ Before we can jump into group comparisons, we need to make ourselves aware of wh
 
 -   *Exogenous variables*: Is the distribution of characteristics we are not interested in approximately the same across groups?
 
-When we compare groups, we want to minimise the systematic differences that are not the primary focus of our study. Using the right sampling technique can help with this matter. For example, using a random sample and performing a random allocation to groups can help achieve comparable groups and remove systematic differences in a way no other sampling strategy can. However, there is still no guarantee that they will be comparable [see also @altman1985comparability and @berger2006review\]. Besides, we also face the challenge that in Social Sciences, we do not always have the option of random sampling. For example, International Business studies heavily rely on lists provided by others (e.g. the European Union, Fortune 500, etc.), personal judgement and convenience sampling. Only a small proportion perform probability sampling \[@yang2006-IBmethods]. In short, there is no reason to worry if your sampling technique is not random. However, it emphasises the need to understand your sample and your groups thoroughly. To inspect characteristics of groups we wish to compare, we can use descriptive statistics as we covered them in Chapter \@ref(descriptive-statistics). However, this time, we apply these techniques to subsets of our data and not the entire dataset.
+When we compare groups, we want to minimise the systematic differences that are not the primary focus of our study. Using the right sampling technique can help with this matter. For example, using a random sample and performing a random allocation to groups can help achieve comparable groups and remove systematic differences in a way no other sampling strategy can. However, there is still no guarantee that they will be comparable [see also @altman1985comparability and @berger2006review]. Besides, we also face the challenge that in Social Sciences, we do not always have the option of random sampling. For example, International Business studies heavily rely on lists provided by others (e.g. the European Union, Fortune 500, etc.), personal judgement and convenience sampling. Only a small proportion perform probability sampling [@yang2006-IBmethods]. In short, there is no reason to worry if your sampling technique is not random. However, it emphasises the need to understand your sample and your groups thoroughly. To inspect characteristics of groups we wish to compare, we can use descriptive statistics as we covered them in Chapter \@ref(descriptive-statistics). However, this time, we apply these techniques to subsets of our data and not the entire dataset.
 
 For example, we might wish to compare `female` and `male` Egyptians (see Chapter \@ref(two-unpaired-groups)). If we wanted to make sure these two groups can be compared, we might have to check (among other characteristics) whether their `age` is distributed similarly. We can use the functions we already know to create a plot to investigate this matter. We could either use a boxplot or, a bit more accurate, a density plot using the `ggridges` package.
 
@@ -617,19 +617,19 @@ effectsize::interpret_kendalls_w(kw$Kendalls_W)
 
 The non-parametric test confirms the parametric test from before. However, the interpretation of the effect size `Kendall's W` requires some explanation. First, the effect size for Kendall's W can range from `0` (small effect size) to `1` (large effect size). Usually, this effect size is considered when comparing inter-rater agreement, for example, the level of agreement of a jury in ice skating during the Olympic games. Thus, the interpretation offered by the function `interpret_kendalls_w()` follows this logic. As such, it is worth considering a slightly amended interpretation of Kendall's W if our data is not based on ratings. This is shown in Table \@ref(tab:effect-size-kendalls-w) based on @landis1977measurement (p. 165). Thus, we could report that the effect size of the significant differences is 'very small'.
 
-+--------------+-----------------------------------------+----------------------------+
-| Kendall's W  | Interpretation [@landis1977measurement] | Alternative interpretation |
-+==============+=========================================+============================+
-| 0.00-0.02    | Slight agreement                        | Very small                 |
-+--------------+-----------------------------------------+----------------------------+
-| 0.21-0.40    | Fair agreement                          | Small                      |
-+--------------+-----------------------------------------+----------------------------+
-| 0.41-0.60    | Moderate agreement                      | Moderate                   |
-+--------------+-----------------------------------------+----------------------------+
-| 0.61-0.80    | Substantial agreement                   | Large                      |
-+--------------+-----------------------------------------+----------------------------+
-| 0.81-1.00    | Almost perfect agreement                | Very large                 |
-+--------------+-----------------------------------------+----------------------------+
++---------------+-----------------------------------------+----------------------------+
+| Kendall's W   | Interpretation [@landis1977measurement] | Alternative interpretation |
++===============+=========================================+============================+
+| 0.00-0.02     | Slight agreement                        | Very small                 |
++---------------+-----------------------------------------+----------------------------+
+| 0.21-0.40     | Fair agreement                          | Small                      |
++---------------+-----------------------------------------+----------------------------+
+| 0.41-0.60     | Moderate agreement                      | Moderate                   |
++---------------+-----------------------------------------+----------------------------+
+| 0.61-0.80     | Substantial agreement                   | Large                      |
++---------------+-----------------------------------------+----------------------------+
+| 0.81-1.00     | Almost perfect agreement                | Very large                 |
++---------------+-----------------------------------------+----------------------------+
 
 : (#tab:effect-size-kendalls-w)Interpretation benchmarks for the effect size Kendall's W
 
@@ -786,7 +786,7 @@ When it comes to the computational side of things, we have to distinguish whethe
 +==========+==========================+====================================================+==========================================================+===============+
 | 2x2      | \< 10 obs.               | Fisher's Exact Test                                | `fisher.test()`                                          | `phi()`       |
 +----------+--------------------------+----------------------------------------------------+----------------------------------------------------------+---------------+
-| 2x2      | \> 10 obs.               | Chi-squared Test with Yate's Continuity Correction | `infer::chisq_test(correct = TRUE)`[^group_comparison-3] | `cramers_v()` |
+| 2x2      | \> 10 obs.               | Chi-squared Test with Yate's Continuity Correction | `infer::chisq_test(correct = TRUE)`[^group_comparison-3] | `phi()`       |
 +----------+--------------------------+----------------------------------------------------+----------------------------------------------------------+---------------+
 | n x n    | \> 5 obs. (80% of cells) | Chi-squared Test                                   | `infer::chisq_test()`                                    | `cramers_v()` |
 +----------+--------------------------+----------------------------------------------------+----------------------------------------------------------+---------------+
