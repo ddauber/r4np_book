@@ -1,4 +1,4 @@
-# (PART) Getting started {-}
+# (PART) Getting started {.unnumbered}
 
 # Setting up R and RStudio {#setting-up-r-and-rstudio}
 
@@ -22,7 +22,7 @@ The core module of our programming is *R* itself, and since it is an open-source
 
 2.  Click on `CRAN` where it says `Download`.
 
-3.  Choose a server in your country (all of them work, but downloads will perform quicker).
+3.  Choose a server in your country (all of them work, but downloads will perform quicker if you choose your country or one that is close to where you are).
 
     ![](images/chapter_03_img/r_project/01_r_project_cran_mirror.png)
 
@@ -84,13 +84,13 @@ Of course, if you wish to customise your workspace further, you can do so. The v
 
 ## Updating R and RStudio: Living at the pulse of innovation {#updating-r-and-rstudio}
 
-While not strictly something that helps you become a better programmer, this advice might come in handy to avoid turning into a frustrated programmer. When you update your software, you need to update *R* and RStudio separately from each other. While both *R* and RStudio work closely with each other, they still constitute separate pieces of software. Thus, it is essential to keep in mind that updating RStudio will not automatically update R. This can become problematic if specific tools you installed via RStudio (like a fancy learning algorithm) might not be compatible with earlier versions of *R*. Also, additional *R* packages (see Chapter \@ref(r-packages)) developed by other developers are separate pieces which required updating too, independently from *R* and RStudio.
+While not strictly something that helps you become a better programmer, this advice might come in handy to avoid turning into a frustrated programmer. When you update your software, you need to update *R* and RStudio separately from each other. While both *R* and RStudio work closely with each other, they still constitute separate pieces of software. Thus, it is essential to keep in mind that updating RStudio will not automatically update R. This can become problematic if specific tools you installed via RStudio (like a fancy learning algorithm) might not be compatible with earlier versions of *R*. Also, additional *R* packages (see Chapter \@ref(r-packages)) developed by other developers are separate pieces which require updating too, independently from *R* and RStudio.
 
 I know what you are thinking: This already sounds complicated and cumbersome. However, rest assured, we take a look at how you can easily update all your packages with RStudio. Thus, all you need to remember is: *R* needs to be updated separately from everything else.
 
 ## RStudio Cloud {#rstudio-cloud}
 
-RStudio Cloud is an application that runs in your web browser. It allows you to write and access R code wherever you go. It even works on your tablet because it does not require installation. However, do expect it to run slower if your internet connection is not fast or stable. To work with RStudio Cloud, you also need an internet connection. However, there are many benefits to using RStudio in the cloud, such as running time-consuming scripts without using your own device. Also, it is much easier to collaborate with others, and since no installation is required, you can work on projects on any device as long as you are connected to the internet. However, RStudio Cloud's most significant advantage is that you can get started with programming within seconds compared to a desktop installation. Still, I prefer my locally-run offline version of RStudio, because I appreciate working offline as much as online. Nevertheless, I recommend setting up an account because you never know when you need it.
+RStudio Cloud is an application that runs in your web browser. It allows you to write and access *R* code wherever you go. It even works on your tablet because it does not require installation. However, do expect it to run slower if your internet connection is not fast or stable. To work with RStudio Cloud, you also need an internet connection. However, there are many benefits to using RStudio in the cloud, such as running time-consuming scripts without using your own device. Also, it is much easier to collaborate with others, and since no installation is required, you can work on projects on any device as long as you are connected to the internet. However, RStudio Cloud's most significant advantage is that you can get started with programming within seconds compared to a desktop installation. Still, I prefer my locally-run offline version of RStudio, because I appreciate working offline as much as online. Nevertheless, I recommend setting up an account because you never know when you need it.
 
 To get started with RStudio Cloud, we have to undertake a couple of steps:
 

@@ -5,11 +5,11 @@ library(huxtable)
 library(tidyverse)
 ```
 
-After a likely tedious installation of R and RStudio, as well as a somewhat detailed introduction to the RStudio interface, you are finally ready to *'do'* things. By *'doing'*, I mean *'coding'*. The term *'coding'* in itself can instil fear in some of you, but you only need one skill to do it: Writing. As mentioned earlier, learning coding or programming means learning a new language. However, once you have the basic grammar down, you already can communicate quite a bit. In this section, we will explore the fundamentals of R. These build the foundation for everything that follows. After that, we dive right into some analysis.
+After a likely tedious installation of *R* and RStudio, as well as a somewhat detailed introduction to the RStudio interface, you are finally ready to *'do'* things. By *'doing'*, I mean *'coding'*. The term *'coding'* in itself can instil fear in some of you, but you only need one skill to do it: Writing. As mentioned earlier, learning coding or programming means learning a new language. However, once you have the basic grammar down, you already can communicate quite a bit. In this section, we will explore the fundamentals of *R*. These build the foundation for everything that follows. After that, we dive right into some analysis.
 
 ## Basic computations in R {#basic-computations-in-r}
 
-The most basic computation you can do in R is arithmetic operations. In other words, addition, subtraction, multiplication, division, exponentiation and extraction of roots. In short, *R* can be used like your pocket calculator, or more likely the one you have on your phone. For example, in Chapter \@ref(the-console-window) we already performed an addition. Thus, it might not come as a surprise how their equivalents work in *R*. Let's take a look at the following examples:
+The most basic computation you can do in *goog* is arithmetic operations. In other words, addition, subtraction, multiplication, division, exponentiation and extraction of roots. In short, *R* can be used like your pocket calculator, or more likely the one you have on your phone. For example, in Chapter \@ref(the-console-window) we already performed an addition. Thus, it might not come as a surprise how their equivalents work in *R*. Let's take a look at the following examples:
 
 ```{r}
 # Addition
@@ -41,7 +41,7 @@ The most basic computation you can do in R is arithmetic operations. In other wo
 sqrt(10)
 ```
 
-They all look fairly straightforward except for the extraction of roots. As you probably know, extracting the root would typically mean we use the symbol $\sqrt{}$ on your calculator. To compute the square root in *R*, we have to use a function instead to perform the computation. So we first put the name of the function `sqrt` and then the value `10` within parenthesis `()`. This results in the following code: `sqrt(10)`. If we were to write this down in our report, we would write $\sqrt[2]{10}$.
+They all look fairly straightforward except for the extraction of roots. As you probably know, extracting the root would typically mean we use the symbol $\sqrt{}$ on our calculator. To compute the square root in *R*, we have to use a function instead to perform the computation. So we first put the name of the function `sqrt` and then the value `10` within parenthesis `()`. This results in the following code: `sqrt(10)`. If we were to write this down in our report, we would write $\sqrt[2]{10}$.
 
 Functions are an essential part of *R* and programming in general. You will learn more about them in Chapter \@ref(functions). Besides arithmetic operations, there are also logical queries you can perform. Logical queries always return either the value `TRUE` or `FALSE`. Here are some examples which make this clearer:
 
@@ -125,7 +125,7 @@ Another common task you will perform is assigning values to an object. An object
 
 -   etc.
 
-In short, an object is an umbrella term for many different things which form part of your data analysis. For example, objects are handy when storing results that you want to process further in later analytical steps. We have to use the assign operator `<-` to do assign a value to an object. Let's have a look at an example.
+In short, an object is an umbrella term for many different things which form part of your data analysis. For example, objects are handy when storing results that you want to process further in later analytical steps. We have to use the assign operator `<-` to assign a value to an object. Let's have a look at an example.
 
 ```{r saving_values_inobjects, echo=TRUE}
 # I have a friend called "Fiona"
@@ -175,7 +175,7 @@ cat(crayon::red('Error: unexpected string constant in "friends <- c("Fiona" "Ida
 
 *R*'s error messages tend to be very useful and give meaningful clues to what went wrong. In this case, we can see that something '*unexpected*' happened, and it shows where our mistake is. You can also concatenate numbers
 
-Btw, if you add `()` around it your code, you can automatically print the content of the object to the console. Thus,
+Btw, if you add `()` around your code, you can automatically print the content of the object to the console. Thus,
 
 -   `(milestones_of_my_life <- c(1982, 2006, 2011, 2018, 2020))` is the same as
 
@@ -283,7 +283,7 @@ mean(pocket_money)
 sum / 12 == mean(pocket_money)
 ```
 
-If we manually compute the mean, we first calculate the sum of all values in the object `pocket_money`[^r_basics-1]. Then we divide it by the number of values in the object, which is `12`. This is the traditional way of computing the mean as we know it from primary school. However, by simply using the function `mean()`, we not only write considerably less code, but it is also much easier to understand because the word *'mean'* does precisely what we would expect. Which approach do you find easier: Using a the function `mean()` or compute it by hand?
+If we manually compute the mean, we first calculate the sum of all values in the object `pocket_money`[^r_basics-1]. Then we divide it by the number of values in the object, which is `12`. This is the traditional way of computing the mean as we know it from primary school. However, by simply using the function `mean()`, we not only write considerably less code, but it is also much easier to understand because the word *'mean'* does precisely what we would expect. Which approach do you find easier: Using the function `mean()` or compute it by hand?
 
 [^r_basics-1]: If you find the order of numbers suspicious, it is because it represents the famous [Fibonacci sequence](https://en.wikipedia.org/wiki/Fibonacci_number "Fibonacci sequence"){target="blank"}.
 
@@ -304,9 +304,9 @@ my_mean <- function(numbers){
 my_mean(pocket_money)
 ```
 
-Don't worry if half of this code does not make sense to you. Writing functions is an advanced R skill. However, it is good to know how functions look on the 'inside'. You certainly can see the similarities between the code we have written before, but instead of using actual numbers, we work with placeholders like `numbers`. This way, we can use a function for different data and do not have to rewrite it every time. Writing and using functions relates to the skill of abstraction mentioned in Chapter \@ref(programming-languages-enhance-your-conceptual-thinking).
+Don't worry if half of this code does not make sense to you. Writing functions is an advanced *R* skill. However, it is good to know how functions look on the 'inside'. You certainly can see the similarities between the code we have written before, but instead of using actual numbers, we work with placeholders like `numbers`. This way, we can use a function for different data and do not have to rewrite it every time. Writing and using functions relates to the skill of abstraction mentioned in Chapter \@ref(programming-languages-enhance-your-conceptual-thinking).
 
-All functions in R share the same structure. They have a `name` followed by `()`. Within these parentheses, we put `arguments`, which have specific `values`. For example, a generic structure of a function would look something like this:
+All functions in *R* share the same structure. They have a `name` followed by `()`. Within these parentheses, we put `arguments`, which have specific `values`. For example, a generic structure of a function would look something like this:
 
 ```{r Generic function, eval=FALSE, error=TRUE, purl=FALSE, results='hide'}
 name_of_function(argument_1 = value_1,
@@ -314,13 +314,13 @@ name_of_function(argument_1 = value_1,
                  argument_3 = value_3)
 ```
 
-How many arguments there are and what kind of values you can provide is very much dependent on the function you use. Thus, not every function takes every value. In the case of `mean()`, the function takes an object which holds a sequence of `numeric` values. It would make very little sense to compute the mean of our `friends` object, because it only contains names. R would return an error message:
+How many arguments there are and what kind of values you can provide is very much dependent on the function you use. Thus, not every function takes every value. In the case of `mean()`, the function takes an object which holds a sequence of `numeric` values. It would make very little sense to compute the mean of our `friends` object, because it only contains names. *R* would return an error message:
 
 ```{r Mean of an object with characters, echo=TRUE, error=TRUE, purl=FALSE}
 mean(friends)
 ```
 
-`NA` refers to a value that is *'not available'*. In this case, R tries to compute the mean, but the result is not available, because the values are not `numeric` but a `character`. In your dataset, you might find values that are `NA`, which means there is data missing. If a function attempts a computation that includes even just a single value that is `NA`, *R* will return `NA`. However, there is a way to fix this. You will learn more about how to deal with `NA` values in Chapter \@ref(dealing-with-missing-data).
+`NA` refers to a value that is *'not available'*. In this case, *R* tries to compute the mean, but the result is not available, because the values are not `numeric` but a `character`. In your dataset, you might find values that are `NA`, which means there is data missing. If a function attempts a computation that includes even just a single value that is `NA`, *R* will return `NA`. However, there is a way to fix this. You will learn more about how to deal with `NA` values in Chapter \@ref(dealing-with-missing-data).
 
 Sometimes you will also get a message from *R* that states `NaN`. `NaN` stands for *'not a number'* and is returned when something is not possible to compute, for example:
 
@@ -337,7 +337,7 @@ sqrt(-9)
 
 ## R packages {#r-packages}
 
-R has many built-in functions that we can use right away. However, some of the most interesting ones are developed by different programmers, data scientists and enthusiasts. To add more functions to your repertoire, you can install *R* packages. *R* packages are a collection of functions that you can download and use for your own analysis. Throughout this book, you will learn about and use many different *R* packages to accomplish various tasks. To give you another analogy,
+*R* has many built-in functions that we can use right away. However, some of the most interesting ones are developed by different programmers, data scientists and enthusiasts. To add more functions to your repertoire, you can install *R* packages. *R* packages are a collection of functions that you can download and use for your own analysis. Throughout this book, you will learn about and use many different *R* packages to accomplish various tasks. To give you another analogy,
 
 -   *R* is like a global supermarket where everyone can offer their products,
 
@@ -373,7 +373,7 @@ install.packages(c("tidyverse", "naniar", "psych"))
 
 If a package is not available from CRAN, chances are you can find them on [GitHub](https://github.com){target="blank"}. GitHub is probably the world's largest global platform for programmers from all walks of life, and many of them develop fantastic *R* packages that make programming and data analysis not just easier but a lot more fun. As you continue to work in *R*, you should seriously consider creating your own account to keep backups of your projects (see also Chapter \@ref(next-steps-github)).
 
-An essential companion for this book is `r4np`, which contains all datasets for this book and some useful functions to get you up and running in no time. Since it is currently only available on Github, you can use the following code snippet to install it. <a id="install-r4np"></a>
+<a id="install-r4np"></a>An essential companion for this book is `r4np`, which contains all datasets for this book and some useful functions to get you up and running in no time. Since it is currently only available on Github, you can use the following code snippet to install it.
 
 ```{r Installing R packages via functions from GitHub, eval=FALSE, echo=TRUE, results='hide'}
 # Install the 'r4np' pacakge from GitHub
@@ -382,7 +382,7 @@ devtools::install_github("ddauber/r4np")
 
 ### Installing packages via RStudio's package pane {#installing-packages-via-rstudio}
 
-RStudio offers a very convenient way of installing packages. In the packages pane, you cannot only see your installed packages, but you have two more buttons: `Install` and `Update`. The names are very self-explanatory. To install an R package you can follow the following steps:
+RStudio offers a very convenient way of installing packages. In the packages pane, you cannot only see your installed packages, but you have two more buttons: `Install` and `Update`. The names are very self-explanatory. To install an *R* package you can follow the following steps:
 
 1.  Click on `Install`.
 
@@ -402,9 +402,18 @@ RStudio offers a very convenient way of installing packages. In the packages pan
 
 The only real downside of using the packages pane is that you cannot install packages hosted on GitHub only. However, you can download them from there and install them directly from your computer using this option. This is particularly useful if you do not have an internet connection but you already downloaded the required packages onto a hard drive. However, in 99.9% of cases it is much easier to use the function `devtools::install_github()`.
 
-### Using R Packages {#using-r-packages}
+### Install all necessary *R* packages for this book {#install-all-r-packages}
 
-Now that you have a nice collection of *R* packages, the next step would be to use them. While you only have to install *R* packages once, you have to 'activate' them every time you start an new session in RStudio. This process is also called 'loading an R package'. Once an *R* package is loaded, you can use all its functions. To load an *R* package, we have to use the function `library()`.
+Lastly, if you would like to install all necessary packages to follow along with the examples in this book, the `r4np` package comes with a handy function to install them all at once. Of course, you need to have `r4np` installed first as shown [above](#install-r4np).
+
+```{r install-all-functions, eval=FALSE}
+# Install all R packages used in this book
+r4np::install_r4np()
+```
+
+### Using *R* Packages {#using-r-packages}
+
+Now that you have a nice collection of *R* packages, the next step would be to use them. While you only have to install *R* packages once, you have to 'activate' them every time you start a new session in RStudio. This process is also called 'loading an *R* package'. Once an *R* package is loaded, you can use all its functions. To load an *R* package, we have to use the function `library()`.
 
 ```{r Loading an R package, echo=TRUE, warning=FALSE, message=FALSE}
 library(tidyverse)
@@ -414,7 +423,7 @@ The `tidyverse` package is a special kind of package. It contains multiple packa
 
 I know what you are thinking. Can you use `c()` to load all your packages at once? Unfortunately not. However, there is a way to do this, but it goes beyond the scope of this book to fully explain this. If you are curious, you can take a peek at the code [here](https://stackoverflow.com/questions/8175912/load-multiple-packages-at-once "Loading multiple R packages at once"){target="blank"}).
 
-Besides, it is not always advisable to load all functions of an entire package. One reason could be that two packages contain a function with the same name but with a different purpose. Two functions with the same name create a conflict between these two packages, and one of the functions would not be usable. Another reason could be that you only need to use the function once, and loading the whole package to use only one specific function seems excessive. Instead, you can explicitly call functions from packages without loading the package. For example, we might want to use the `vis_miss()` function from the `naniar` package to show where data is missing in our dataset `airquality`. Writing the code this way is also much quicker than loading the package and then calling the function if you don't use it repeatedly. Copy the code and try it yourself. Make sure you have `naniar` installed (see [above](#install-packages-tidyverse-nanair-psych)). We will work with this package when we explore missing data in Chapter \@ref(dealing-with-missing-data). To use a function from an *R* package without loading it, we have to use `::` between the package's name and the function we want to use.
+Besides, it is not always advisable to load all functions of an entire package. One reason could be that two packages contain a function with the same name but with a different purpose. Two functions with the same name create a conflict between these two packages, and one of the functions would not be usable. Another reason could be that you only need to use the function once, and loading the whole package to use only one specific function seems excessive. Instead, you can explicitly call functions from packages without loading the package. For example, we might want to use the `vis_miss()` function from the `naniar` package to show where data is missing in our dataset `airquality`. Using functions without `library()` is also much quicker than loading the package and then calling the function if you don't use it repeatedly. Make sure you have `naniar` installed (see [above](#install-packages-tidyverse-nanair-psych)). We will work with this package when we explore missing data in Chapter \@ref(dealing-with-missing-data). To use a function from an *R* package without loading it, we have to use `::` between the package's name and the function we want to use. Copy the code below and try it yourself.
 
 ```{r Explicitly calling functions from R packages, echo=TRUE}
 # Here I use the dataset 'airquality', which comes with R
@@ -504,21 +513,27 @@ We can use `#` not only to write comments but also to tell R not to run particul
 mean(pocket_money)   # R will run this code
 ```
 
-RStudio helps a lot with keeping your coding tidy and properly formatted. However, there are some additional aspects worth considering. If you want to find out more about coding style, I highly recommend to read through the [*'The tidyverse style guide'*](https://style.tidyverse.org "'The tidyverse style guide'"){target="blank"} [@wickham-2021].\
+RStudio helps a lot with keeping your coding tidy and properly formatted. However, there are some additional aspects worth considering. If you want to find out more about coding style, I highly recommend to read through [*'The tidyverse style guide'*](https://style.tidyverse.org "'The tidyverse style guide'"){target="blank"} [@wickham-2021].\
 
 ## Exercises {#exercises-r_basics}
 
-It is time to practice the newly acquired skills. The `r4np` package comes with interactive tutorials. In order to start them, you have two options. If you have installed the `r4np` package already you can use `Option 1`:
+It is time to practice the newly acquired skills. The `r4np` package comes with interactive tutorials. In order to start them, you have two options. If you have installed the `r4np` package already and used the function `install_r4np()` you can use `Option 1`:
 
 ```{r exercises-option-1, eval=FALSE}
 # Option 1:
 learnr::run_tutorial("ex_r_basics", package = "r4np")
 ```
 
-If you have not installed the `r4np` package, you will have to do this first using `Option 2`:
+If you have not installed the `r4np` package and/or not run the function `install_r4np()`, you will have to do this first using `Option 2`:
 
 ```{r exercises-option-2, eval=FALSE}
 # Option 2:
+## Install 'r4np' package
 devtools::install_github("ddauber/r4np")
+
+## Install all relevant packages for this book
+r4np::install_r4np()
+
+## Start the tutorial for this chapter
 learnr::run_tutorial("ex_r_basics", package = "r4np")
 ```
