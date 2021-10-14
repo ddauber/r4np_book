@@ -373,10 +373,13 @@ install.packages(c("tidyverse", "naniar", "psych"))
 
 If a package is not available from CRAN, chances are you can find them on [GitHub](https://github.com){target="blank"}. GitHub is probably the world's largest global platform for programmers from all walks of life, and many of them develop fantastic *R* packages that make programming and data analysis not just easier but a lot more fun. As you continue to work in *R*, you should seriously consider creating your own account to keep backups of your projects (see also Chapter \@ref(next-steps-github)).
 
-<a id="install-r4np"></a>An essential companion for this book is `r4np`, which contains all datasets for this book and some useful functions to get you up and running in no time. Since it is currently only available on Github, you can use the following code snippet to install it.
+<a id="install-r4np"></a>An essential companion for this book is `r4np`, which contains all datasets for this book and some useful functions to get you up and running in no time. Since it is currently only available on Github, you can use the following code snippet to install it. However, you have to install the package `devtools` first to use the function `install_github()`.
 
 ```{r Installing R packages via functions from GitHub, eval=FALSE, echo=TRUE, results='hide'}
-# Install the 'r4np' pacakge from GitHub
+# Install the 'devtools' package first
+install.packages("devtools")
+
+# Then install the 'r4np' package from GitHub
 devtools::install_github("ddauber/r4np")
 ```
 
@@ -404,7 +407,7 @@ The only real downside of using the packages pane is that you cannot install pac
 
 ### Install all necessary *R* packages for this book {#install-all-r-packages}
 
-Lastly, if you would like to install all necessary packages to follow along with the examples in this book, the `r4np` package comes with a handy function to install them all at once. Of course, you need to have `r4np` installed first as shown [above](#install-r4np).
+Lastly, if you would like to install all necessary packages to follow the examples in this book, the `r4np` package comes with a handy function to install them all at once. Of course, you need to have `r4np` installed first, as shown [above](#install-r4np).
 
 ```{r install-all-functions, eval=FALSE}
 # Install all R packages used in this book
