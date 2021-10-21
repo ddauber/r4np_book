@@ -1,4 +1,4 @@
-# R Basics: The very fundamentals {#r-basics-the-very-fundamentals}
+# *R* Basics: The very fundamentals {#r-basics-the-very-fundamentals}
 
 ```{r, echo=FALSE, message=FALSE}
 library(huxtable)
@@ -7,9 +7,9 @@ library(tidyverse)
 
 After a likely tedious installation of *R* and RStudio, as well as a somewhat detailed introduction to the RStudio interface, you are finally ready to *'do'* things. By *'doing'*, I mean *'coding'*. The term *'coding'* in itself can instil fear in some of you, but you only need one skill to do it: Writing. As mentioned earlier, learning coding or programming means learning a new language. However, once you have the basic grammar down, you already can communicate quite a bit. In this section, we will explore the fundamentals of *R*. These build the foundation for everything that follows. After that, we dive right into some analysis.
 
-## Basic computations in R {#basic-computations-in-r}
+## Basic computations in *R* {#basic-computations-in-r}
 
-The most basic computation you can do in *goog* is arithmetic operations. In other words, addition, subtraction, multiplication, division, exponentiation and extraction of roots. In short, *R* can be used like your pocket calculator, or more likely the one you have on your phone. For example, in Chapter \@ref(the-console-window) we already performed an addition. Thus, it might not come as a surprise how their equivalents work in *R*. Let's take a look at the following examples:
+The most basic computation you can do in *R* is arithmetic operations. In other words, addition, subtraction, multiplication, division, exponentiation and extraction of roots. In short, *R* can be used like your pocket calculator, or more likely the one you have on your phone. For example, in Chapter \@ref(the-console-window) we already performed an addition. Thus, it might not come as a surprise how their equivalents work in *R*. Let's take a look at the following examples:
 
 ```{r}
 # Addition
@@ -347,7 +347,7 @@ sqrt(-9)
 
 Luckily, *R* packages are free to use, so I do not have to bring my credit card. For me, these additional functions, developed by some of the most outstanding scientists, is one of many reasons that keeps me addicted to performing my research in *R*.
 
-*R* packages do not only include functions but often include datasets and documentation of what each function does. This way, you can easily try every function right away, even without your own dataset and read through what each function in the package does. Figure \@ref(fig:img-r-package-documentation) show the documentation of an *R* package called `ggplot2`.
+*R* packages do not only include functions but often include datasets and documentation of what each function does. This way, you can easily try every function right away, even without your own dataset and read through what each function in the package does. Figure \@ref(fig:img-r-package-documentation) shows the documentation of an *R* package called `ggplot2`.
 
 ```{r, fig.cap = "The R package documentation for 'ggplot2'", label = "img-r-package-documentation", echo=FALSE}
 knitr::include_graphics("images/chapter_05_img/r_package_documentation.png")
@@ -397,7 +397,7 @@ RStudio offers a very convenient way of installing packages. In the packages pan
 
     ![](images/chapter_05_img/install_r_packages/02_install_r_packages.png)
 
-4.  I recommend NOT to change the option which says `Install to library.` The default library settings will suffice.
+4.  I recommend NOT to change the option which says `Install to library`. The default library settings will suffice.
 
 5.  Finally, I recommend to select `Install dependencies`, because some packages need other packages to function properly. This way, you do not have to do this manually.
 
@@ -407,7 +407,7 @@ The only real downside of using the packages pane is that you cannot install pac
 
 ### Install all necessary *R* packages for this book {#install-all-r-packages}
 
-Lastly, if you would like to install all necessary packages to follow the examples in this book, the `r4np` package comes with a handy function to install them all at once. Of course, you need to have `r4np` installed first, as shown [above](#install-r4np).
+Lastly, if you would like to install the necessary packages to follow the examples in this book, the `r4np` package comes with a handy function to install them all at once. Of course, you need to have `r4np` installed first, as shown [above](#install-r4np).
 
 ```{r install-all-functions, eval=FALSE}
 # Install all R packages used in this book
@@ -424,7 +424,7 @@ library(tidyverse)
 
 The `tidyverse` package is a special kind of package. It contains multiple packages and loads them all at once. Almost all included packages you will use at some point when working through this book.
 
-I know what you are thinking. Can you use `c()` to load all your packages at once? Unfortunately not. However, there is a way to do this, but it goes beyond the scope of this book to fully explain this. If you are curious, you can take a peek at the code [here](https://stackoverflow.com/questions/8175912/load-multiple-packages-at-once "Loading multiple R packages at once"){target="blank"}).
+I know what you are thinking. Can you use `c()` to load all your packages at once? Unfortunately not. However, there is a way to do this, but it goes beyond the scope of this book to fully explain this. If you are curious, you can take a peek at the code [here on stackoverflow.com](https://stackoverflow.com/questions/8175912/load-multiple-packages-at-once "Loading multiple R packages at once"){target="blank"}.
 
 Besides, it is not always advisable to load all functions of an entire package. One reason could be that two packages contain a function with the same name but with a different purpose. Two functions with the same name create a conflict between these two packages, and one of the functions would not be usable. Another reason could be that you only need to use the function once, and loading the whole package to use only one specific function seems excessive. Instead, you can explicitly call functions from packages without loading the package. For example, we might want to use the `vis_miss()` function from the `naniar` package to show where data is missing in our dataset `airquality`. Using functions without `library()` is also much quicker than loading the package and then calling the function if you don't use it repeatedly. Make sure you have `naniar` installed (see [above](#install-packages-tidyverse-nanair-psych)). We will work with this package when we explore missing data in Chapter \@ref(dealing-with-missing-data). To use a function from an *R* package without loading it, we have to use `::` between the package's name and the function we want to use. Copy the code below and try it yourself.
 

@@ -21,15 +21,15 @@ knitr::knit_hooks$set(output = function(x, options) {
 })
 ```
 
-You collected your data over months (and sometimes years), and all you want to know is whether your data makes sense and reveals something nobody would have ever expected. However, before we can truly go ahead with our analysis, it is essential to understand whether our data is 'tidy'. Very often, the data we receive is everything else but clean, and we need to check whether our data is fit for analysis and ensure it is in a format that is easy to handle. For small datasets, this is usually a brief exercise. However, I found myself cleaning data for a month because the dataset was spread out into multiple spreadsheets with different numbers of columns and odd column names. Thus, data cleaning and data wrangling is an essential first step in any data analysis. It is a step that cannot be skipped and has to be performed on every new dataset.
+You collected your data over months (and sometimes years), and all you want to know is whether your data makes sense and reveals something nobody would have ever expected. However, before we can truly go ahead with our analysis, it is essential to understand whether our data is 'tidy'. Very often, the data we receive is everything else but clean, and we need to check whether our data is fit for analysis and ensure it is in a format that is easy to handle. For small datasets, this is usually a brief exercise. However, I found myself cleaning data for a month because the dataset was spread out into multiple spreadsheets with different numbers of columns and odd column names. Thus, data cleaning and data wrangling is an essential first step in any data analysis. It is a step that cannot be skipped and has to be performed on every new dataset. If your background is in qualitative research, you likely conducted interviews which you had to transcribe. The process of creating transcriptions is comparable to data cleaning in quantitative datasets - and equally tedious.
 
-Luckily, R provides many useful functions to make our lives easier. You will be in for a treat if you are like me and used to do this in Excel. It is a lot simpler using *R* to achieve a clean dataset.
+Luckily, *R* provides many useful functions to make our lives easier. You will be in for a treat if you are like me and used to do this in Excel. It is a lot simpler using *R* to achieve a clean dataset.
 
 Here is an overview of the different steps we usually work through before starting with our primary analysis. This list is certainly not exhaustive:
 
 -   Import data,
 
--   Checkdata types,
+-   Check data types,
 
 -   Recode and arrange factors, i.e. categorical data, and
 
@@ -49,9 +49,9 @@ We will use the `readr` package or all three options. Using this package we can 
 
 ### Import data from the *Files* pane
 
-This approach is by far the easiest. Let's assume you have a dataset called `gender_age.csv` in your `00_raw_data folder`. If you wish to import it, you can do the following:
+This approach is by far the easiest. Let's assume you have a dataset called `gender_age.csv` in your `00_raw_data` folder. If you wish to import it, you can do the following:
 
-1.  Click on the name of the file
+1.  Click on the name of the file.
 
 2.  Select `Import Dataset`.
 
@@ -114,7 +114,7 @@ You might also be wondering what a *'delimiter'* is. When you record data in a p
     256female
     333male
 
-The first row we probably can still decipher as `id`, `age`, `gender`. However, the next row makes it difficult to understand which value represents the `id` of a participant and which value reflects the `age` of that participant. Like us, computer software would find it hard too to decide on this ambiguous content. Thus, we need to use delimiters to make it very clear which value belongs to which column. For example, In a `.csv` file, the data would be separated by a `,`.
+The first row we probably can still decipher as `id`, `age`, `gender`. However, the next row makes it difficult to understand which value represents the `id` of a participant and which value reflects the `age` of that participant. Like us, computer software would find it hard too to decide on this ambiguous content. Thus, we need to use delimiters to make it very clear which value belongs to which column. For example, in a `.csv` file, the data would be separated by a `,`.
 
     id,age,gender
     1,24,male
@@ -166,7 +166,7 @@ The output of glimpse shows us the name of each column/variable after the `$`, f
 wvs$relationship_status
 ```
 
-When using `glimpse()` we find the recognised data type for each column, i.e. each variable, in `<...>`, for example `<chr>`. We will return to data types in Chapter \@ref(change-data-types). Lastly, we get samples of the data included. This output is much more helpful.
+When using `glimpse()` we find the recognised data type for each column, i.e. each variable, in `<...>`, for example `<chr>`. We will return to data types in Chapter \@ref(change-data-types). Lastly, we get examples of the values included in each variable. This output is much more helpful.
 
 I use `glimpse()` very frequently for different purposes, for example:
 
@@ -204,12 +204,11 @@ Gender
 Age                   
 
 # Difficult to read
-YearOfBirth           
 Freedom.of.Choice     
 Satisfaction-with-life
 ```
 
-From Chapter \@ref(coding-etiquette), you will remember that being consistent in writing your code and naming your objects is essential. The same applies, of course, to variable names. *R* will not break using the existing names, but it will save you a lot of frustration if we take a minute to clean the names and make them more consistent. Since we will use column names in almost every line of code we write, it is best to standardise them and easier to read.
+From Chapter \@ref(coding-etiquette), you will remember that being consistent in writing your code and naming your objects is essential. The same applies, of course, to variable names. *R* will not break using the existing names, but it will save you a lot of frustration if we take a minute to clean the names and make them more consistent. Since we will use column names in almost every line of code we produce, it is best to standardise them and make them easier to read and write.
 
 You are probably thinking: "This is easy. I just open the dataset in Excel and change all the column names." Indeed, it would be a viable and easy option, but it is not very efficient, especially with larger datasets with many more variables. Instead, we can make use of the `janitor` package. By definition, `janitor` is a package that helps to clean up whatever needs cleaning. In our case, we want to tidy our column names. We can use the function `clean_names()` to achieve this. We store the result in a new object called `wvs` to keep those changes. The object will also show up in our *Environment* pane.
 
@@ -316,13 +315,18 @@ glimpse(wvs_clean)
 
 The output in the console shows that we successfully performed the transformation and our data types are as we intended them to be. Mission accomplished.
 
-If you need to convert all `<chr>` columns you can use `mutate_if(is.character, as.factor)` instead. This function will look at each column and if it is a `character` type variable, it will convert it into a `factor`. However, use this function only if you are certain that all `character` columns need converting. If this is the case, it can be a huge time-saver.
+If you need to convert all `<chr>` columns you can use `mutate_if(is.character, as.factor)` instead. This function will look at each column and if it is a `character` type variable, it will convert it into a `factor`. However, use this function only if you are certain that all `character` columns need converting. If this is the case, it can be a huge time-saver. Here is the corresponding code snippet:
+
+```{r using-mutate-if, eval=FALSE}
+wvs_clean %>%
+  mutate_if(is.character, as.factor)
+```
 
 ## Handling factors {#handling-factors}
 
 Factors are an essential way to classify observations in our data in different ways. In terms of data wrangling, there are usually two steps we take to prepare them for analysis:
 
--   Recording factors, and
+-   Recoding factors, and
 
 -   Reordering factor levels.
 
