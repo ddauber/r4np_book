@@ -324,7 +324,7 @@ wvs_clean %>%
 
 ## Handling factors {#handling-factors}
 
-Factors are an essential way to classify observations in our data in different ways. In terms of data wrangling, there are usually two steps we take to prepare them for analysis:
+Factors are an essential way to classify observations in our data in different ways. In terms of data wrangling, there are usually at least two steps we take to prepare them for analysis:
 
 -   Recoding factors, and
 
@@ -336,7 +336,7 @@ Another common problem we have to tackle when working with data is their represe
 
 [^data_wrangling-1]: A sophisticated research project would likely not rely on a dichotomous approach to gender, but appreciate the diversity in this regard.
 
-For example, we might be interested in knowing how many participants in the `wvs` were `male` and `female`. The function `count()` from `dplyr` does precisely that. We can sort the results, i.e. `n`, in descending order by including `sort = TRUE`. By default, `count()` arranges our variable `gender` in alphabetical order.
+For example, we might be interested in knowing how many participants in `wvs_clean` were `male` and `female`. The function `count()` from `dplyr` does precisely that. We can sort the results, i.e. `n`, in descending order by including `sort = TRUE`. By default, `count()` arranges our variable `gender` in alphabetical order.
 
 ```{r Count male and female participants, echo=TRUE}
 wvs_clean %>% count(gender, sort = TRUE)
@@ -363,9 +363,9 @@ wvs_clean %>%
                              "female" = 1))
 ```
 
-The error message is easy to understand: `fct_recode()` only expects `strings` as input and not numbers. R recognises `0` and `1` as numbers, but `fct_recode()` only converts a `factor` value into another `factor` value. To refer to a factor level (i.e. one of the categories in our factor), we have to use `""`. In other words, data types matter and are often a source of problems with your code. Thus, always pay close attention to them.
+The error message is easy to understand: `fct_recode()` only expects `strings` as input and not numbers. R recognises `0` and `1` as numbers, but `fct_recode()` only converts a `factor` value into another `factor` value and since we 'mutated' gender from a `numeric` variable to a `factor` variable, all values of gender are no longer numbers. To refer to a factor level (i.e. one of the categories in our factor), we have to use `""`. In other words, data types matter and are often a source of problems with your code. Thus, always pay close attention to them. For now, it is important to remember that factor levels are always string values, i.e. text.
 
-If we rerun our analysis and generate a frequency table for `gender`, we now get a much more readable output.
+Now that we have change the factor levels to our liking, we can rerun our analysis and generate a frequency table for `gender`. This time we receive a much more readable output.
 
 ```{r Frequency table for gender with proper labels, echo=TRUE}
 wvs_clean %>% count(gender)
@@ -380,7 +380,7 @@ wvs_clean %>%
   geom_col()
 ```
 
-Plots are an excellent way to explore your data and understand relationships between variables. More about this when we start to perform analytical steps on our data (see Chapter \@ref(descriptive-statistics) and beyond).
+Plots are an excellent way to explore your data and understand relationships between variables. We will learn more about this when we start to perform analytical steps on our data (see Chapter \@ref(descriptive-statistics) and beyond).
 
 Another use case for recoding factors could be for purely cosmetic reasons. For example, when looking through our dataset, we might notice that some country names are very long and do not look great in data visualisations or tables. Thus, we could consider shortening them which is a slightly more advanced process.
 
@@ -392,7 +392,7 @@ wvs_clean %>%
   count(country)
 ```
 
-I use the value `15` arbitrarily after some trial and error. You can change the value and see which other countries would show up with a lower threshold. However, this number seems to do the trick and returns three countries that seem to have longer labels. All we have to do is replace these categories with new ones the same way we recoded `gender`.
+I use the value `15` arbitrarily after some trial and error. You can change the value and see which other countries would show up with a lower threshold. However, this number seems to do the trick and returns three countries that seem to have longer names. All we have to do is replace these categories with new ones the same way we recoded `gender`.
 
 ```{r Recoding country names, echo=TRUE}
 wvs_clean <-
@@ -403,9 +403,11 @@ wvs_clean <-
                               "Korea" = "Korea, Republic of"))
 ```
 
+Now we have country names that nicely fit into tables and plots we want to create later and do not have to worry about it later.
+
 ### Reordering factor levels {#reordering-factor-levels}
 
-Besides changing factor levels, it is also common that we want to reconsider the arrangement of these levels. To inspect the order of factor levels, we can use the function `fct_unique()` from the `forcats` package and provide a factor variable, e.g. `gender`, in the `wvs` dataset.
+Besides changing factor levels, it is also common that we want to reconsider the arrangement of these levels. To inspect the order of factor levels, we can use the function `fct_unique()` from the `forcats` package and provide a factor variable, e.g. `gender`, in the `wvs_clean` dataset.
 
 ```{r Show factor levels of gender, echo=TRUE}
 fct_unique(wvs_clean$gender)
@@ -428,14 +430,18 @@ wvs_clean %>%
   ggplot(aes(x = fct_relevel(gender, "female", "male"),
              y = n)) +
   geom_col()
+```
 
+```{r}
 # Reorder by another variable, e.g. the frequency 'n'
 wvs_clean %>%
   count(gender) %>%
   ggplot(aes(x = fct_reorder(gender, n, .desc = TRUE),
              y = n)) +
   geom_col()
+```
 
+```{r}
 # Reverse the order of factor levels
 wvs_clean %>%
   count(gender) %>%
@@ -458,7 +464,7 @@ There is hardly any Social Sciences project where researchers do not have to dea
 
 ### Mapping missing data {#mapping-missing-data}
 
-Every study that intends to be rigorous will have to identify how much data is missing. In *R*, this can be achieved in multiple ways, but using a specialised package like `naniar` does help us to do this very quickly and systematically. First, we have to load the `naniar` package, and then we use the function `vis_miss()` to visualise how much and where exactly data is missing.
+Every study that intends to be rigorous will have to identify how much data is missing because it affects the interpretability of our available data. In *R*, this can be achieved in multiple ways, but using a specialised package like `naniar` does help us to do this very quickly and systematically. First, we have to load the `naniar` package, and then we use the function `vis_miss()` to visualise how much and where exactly data is missing.
 
 ```{r Missing data matrix with naniar, fig.cap="Mapping missing data with naniar", label = "mapping-missing-data", echo=TRUE}
 library(naniar)
@@ -487,9 +493,7 @@ I tend to prefer data visualisations over numerical results for mapping missing 
 
 ### Identifying patterns of missing data {#patterns-of-missing-data}
 
-If you find that your data 'suffers' from missing data, it is essential to answer another question: Is data missing systematically? This is quite an important diagnostic step since systematically missing data would imply that if we remove these observations from our dataset, we likely produce wrong results.
-
-We can distinguish missing data based on how it is missing, i.e.
+If you find that your data 'suffers' from missing data, it is essential to answer another question: Is data missing systematically? This is quite an important diagnostic step since systematically missing data would imply that if we remove these observations from our dataset, we likely produce wrong results. The following section elaborate on this aspect of missing data. In general, we can distinguish missing data based on how it is missing, i.e.
 
 -   missing completely at random (MCAR),
 
@@ -510,7 +514,7 @@ wvs_clean %>%
   mcar_test()
 ```
 
-When you run such a test, you have to ensure that variables that are not part of the data collection are removed. In our case, the `participant_id` is generated by the researcher and does not represent an actual response by the participants. As such, we need to remove it using `select()` before we can run the test. A `-` inverts the meaning of `select()`. While `select(participant_id)` would do what it says, i.e. include it as the only variable in the test, `select(-participant_id)` results in selecting everything but this variable in our test. You will find it is sometimes easier to remove a variable with `select()` rather than listing all the variables you want to keep.
+When you run such a test, you have to ensure that variables that are not part of the data collection process are removed. In our case, the `participant_id` is generated by the researcher and does not represent an actual response by the participants. As such, we need to remove it using `select()` before we can run the test. A `-` inverts the meaning of `select()`. While `select(participant_id)` would do what it says, i.e. include it as the only variable in the test, `select(-participant_id)` results in selecting everything but this variable in our test. You will find it is sometimes easier to remove a variable with `select()` rather than listing all the variables you want to keep.
 
 Since the `p.value` of the test is so small that it got rounded down to `0`, i.e. $p<0.0001$, we have to assume that our data is not missing completely at random. If we found that $p>0.05$, we would have confirmation that data are missing completely at random. We will cover p-values and significance tests in more detail in Chapter \@ref(significance).
 
@@ -533,7 +537,7 @@ wvs_clean %>%
 
 It seems four countries have exceptionally high numbers of missing data for `freedom_of_choice`: Japan, Brazil, New Zealand, Russia and Bolivia. Why this is the case lies beyond this dataset and is something only the researchers themselves could explain. Collecting data in different countries is particularly challenging, and one is quickly faced with different unfavourable conditions. Furthermore, the missing data is not completely random because we have some first evidence that the location of data collection might have affected its completeness.
 
-Another way of understanding patterns of missing data can be achieved by looking at relationships between missing values, for example, the co-occurrence of missing values across different variables. This can be achieved by using upset plots. An upset plot consists of three parts: Set size, intersection size and a Venn diagram which defines the intersections.
+Another way of understanding patterns of missing data can be achieved by looking at relationships between missing values, for example, the co-occurrence of missing values across different variables. This can be achieved by using *upset plots*. An *upset plot* consists of three parts: Set size, intersection size and a Venn diagram which defines the intersections.
 
 ```{r Upset plot, echo=TRUE}
 gg_miss_upset(wvs_clean)
@@ -583,7 +587,7 @@ Based on our analysis of the `wvs` dataset (by no means complete!), we could ass
 
 You might be thinking: "Why would it make data better if we 'make up' numbers? Is this not cheating?" Imputation of missing values is a science in itself. There is plenty to read about the process of handling missing data, which would reach far beyond the scope of this book. However, the seminal work of @van-buuren-2018, @dong-et-al-2013 and @jakobsen-et-al-2017 are excellent starting points. In short: Simply removing missing data can lead to biases in your data, e.g. if we removed missing data in our dataset, we would mainly exclude participants from Japan, Brazil, New Zealand, Russia and Bolivia (as we found out [earlier](#missing-data-by-country-table)). While imputation is not perfect, it can produce more reliable results than not using imputation at all, assuming our data meets the requirements for such imputation.
 
-Even though our dataset has only a minimal amount of missing data (relative to the entire size), we can still use imputation. There are many different ways to approach this task, one of which is 'multiple imputation'. As highlighted by @van2020rebutting, multiple imputation has not yet reached the same popularity as listwise deletion, despite its benefits. The main reason for this lies in the complexity of using this technique. Therefore, I included an example of how to use multiple imputation separately in Chapter ???. There are many more approaches to imputation, and going through them all in detail would be impossible and distract from the book's main purpose. Still, I would like to share some interesting packages with you that use different imputation methods:
+Even though our dataset has only a minimal amount of missing data (relative to the entire size), we can still use imputation. There are many different ways to approach this task, one of which is 'multiple imputation'. As highlighted by @van2020rebutting, multiple imputation has not yet reached the same popularity as listwise deletion, despite its benefits. The main reason for this lies in the complexity of using this technique. There are many more approaches to imputation, and going through them all in detail would be impossible and distract from the book's main purpose. Still, I would like to share some interesting packages with you that use different imputation methods:
 
 -   [mice](https://cran.r-project.org/web/packages/Amelia/index.html "mice"){target="blank"} (Multivariate Imputation via Chained Equations)
 
@@ -591,11 +595,11 @@ Even though our dataset has only a minimal amount of missing data (relative to t
 
 -   [missForest](https://cran.r-project.org/web/packages/missForest/index.html "missForest"){target="blank"} (Uses a random forest algorithm)
 
--   [Hmisc](https://cran.r-project.org/web/packages/Hmisc/index.html "Hmisc"){target="blank"} (Uses Additive Regression, Bootstrapping, and Predictive Mean Matching)
+-   [Hmisc](https://cran.r-project.org/web/packages/Hmisc/index.html "Hmisc"){target="blank"} (Uses additive regression, bootstrapping, and predictive mean matching)
 
 -   [mi](https://cran.r-project.org/web/packages/mi/index.html "mi"){target="blank"} (Uses posterior predictive distribution, predictive mean matching, mean-imputation, median-imputation, or conditional mean-imputation)
 
-Besides multiple imputation, there is also the option for single imputation. The `simputation` package offers a great variety of imputation functions, one of which also fits our data quite well `impute_knn()`. This function makes use of a clustering technique called *'K-nearest neighbour'*. In this case, the function will look for observations closest to the one with missing data and take the value of that observation. In other words, it looks for similar participants who answered the questionnaire in a very similar way. The great convenience of this approach is that it can handle all kinds of data types simultaneously, which is not true for all imputation techniques.
+Besides multiple imputation, there is also the option for single imputation. The `simputation` package offers a great variety of imputation functions, one of which also fits our data quite well `impute_knn()`. This function makes use of a clustering technique called *'K-nearest neighbour'*. In this case, the function will look for observations closest to the one with missing data and take the value of that observation. In other words, it looks for participants who answered the questionnaire in a very similar way. The great convenience of this approach is that it can handle all kinds of data types simultaneously, which is not true for all imputation techniques.
 
 If we apply this function to our dataset, we have to write the following:
 
@@ -604,10 +608,12 @@ wvs_nona <-
   wvs_clean %>%
   select(-participant_id) %>%
   
-  # Transforms our tibble into a data frame
+  # Transform our tibble into a data frame
   as.data.frame() %>%
   simputation::impute_knn(. ~ .)
+```
 
+```{r}
 # Be aware that our new dataframe has different datatypes
 glimpse(wvs_nona)
 ```
@@ -635,7 +641,7 @@ We now should have a dataset that is free of any missing values. To ensure this 
 vis_miss(wvs_nona)
 ```
 
-As the plot demonstrates, we managed to obtain a dataset which is now free of missing values and we can being our next steps of data wrangling or analysis.
+As the plot demonstrates, we managed to obtain a dataset which is now free of missing values and we can perform our next steps of data wrangling or analysis.
 
 ### Main takeaways regarding dealing with missing data {#main-takeaways-missing-data}
 
@@ -707,7 +713,7 @@ si_alpha <-
 round(si_alpha$total, 2)
 ```
 
-In most publications, researchers would primarily report the `raw_alpha` value. This is fine, but it is not a bad idea to include at least `std.alpha` and `G6(smc)`.
+In most publications, researchers would primarily report the `raw_alpha` value. This is fine, but it is not a bad idea to include at least `std.alpha` and `G6(smc)` as well.
 
 In terms of interpretation, Cronbrach's $\alpha$ scores can range from `0` to `1`. The closer the score to `1`, the higher we would judge its reliability. @nunally-1967 originally provided the following classification for Cronbach's $\alpha$:
 
@@ -760,15 +766,15 @@ gep %>%
   psych::alpha()
 ```
 
-Similarly, to `si`, `cs_imp` and `cs_exp` show very good internal consistency scores too: $\alpha_{cs\_imp} = 0.86$ and $\alpha_{cs\_exp} = 0.81$. Based on these results we could be confident to use our latent variables for further analysis.
+Similarly, to `si`, `cs_imp` and `cs_exp` show very good internal consistency scores: $\alpha_{cs\_imp} = 0.86$ and $\alpha_{cs\_exp} = 0.81$. Based on these results we could be confident to use our latent variables for further analysis.
 
 However, while Cronbach's $\alpha$ is very popular due to its simplicity, there is plenty of criticism. Therefore, it is often not enough to report the Cronbach's $\alpha$, but undertake additional steps. Depending on the stage of development of your measurement instrument (e.g. your questionnaire), you likely have to perform one of the following before computing the $\alpha$ scores:
 
--   Exploratory factor analysis (EFA): Generally used to identify latent variables in a set of questionnaire items.
+-   *Exploratory factor analysis (EFA)*: Generally used to identify latent variables in a set of questionnaire items.
 
--   Confirmatory factor analysis (CFA): To confirm whether a set of items truly reflect a latent variable.
+-   *Confirmatory factor analysis (CFA)*: To confirm whether a set of items truly reflect a latent variable.
 
-An example of exploratory factor analysis is presented in Chapter ???. Since the `gep` data is based on an established measurement tool, we perform a CFA. To perform a CFA, we use the popular `lavaan` ([*La*]{.ul}*tent [Va]{.ul}riable [An]{.ul}alysis*) package. The steps of running a CFA in *R* include:
+Since the `gep` data is based on an established measurement tool, we perform a CFA. To perform a CFA, we use the popular `lavaan` ([*La*]{.ul}*tent [Va]{.ul}riable [An]{.ul}alysis*) package. The steps of running a CFA in *R* include:
 
 1.  Define which variables are supposed to measure a specific latent variable (i.e. creating a model).
 
@@ -782,7 +788,7 @@ The code chunk below breaks down these steps in the context of the `lavaan` pack
 library(lavaan)
 
 #1: Define the model which explains how items relate to latent variables
-model <- "
+model <- '
 social_integration =~
 si_socialise_with_people_exp +
 si_supportive_friends_exp +
@@ -797,7 +803,7 @@ comm_skills_exp =~
 cs_explain_ideas_exp +
 cs_find_clarification_exp +
 cs_learn_different_styles_exp
-"
+'
 
 #2: Run the CFA to see how well this model fits our data
 fit <- cfa(model, data = gep)
@@ -805,39 +811,40 @@ fit <- cfa(model, data = gep)
 #3a: Extract the performance indicators
 fit_indices <- fitmeasures(fit)
 
-#3b: We tidy the results with the 'broom' package and
+#3b: We tidy the results with enframe() and
 #    pick only those indices we are most interested in
-broom::tidy(fit_indices) %>%
-  filter(names == "cfi" |
-         names == "srmr" |
-         names == "rmsea") %>%
-  mutate(x = round(x, 3))         # Round to 3 decimal places
+fit_indices %>%
+  enframe() %>%
+  filter(name == "cfi" |
+         name == "srmr" |
+         name == "rmsea") %>%
+  mutate(value = round(value, 3))   # Round to 3 decimal places
 ```
 
-The `broom` package is useful to clean output from all kinds of models, such as a CFA model. It allows us to convert the raw output into a `tibble`, which we can further manipulate using the functions we already know. However, it is not required to use `tidy()` to inspect the results. This can be done out of pure convenience. If we want to know where `names` and `x` came from we have to inspect the output from `broom::tidy(fit_indices)`.
+The `enframe()` function is useful to turn a named vector (i.e. a named sequence of values) into a `tibble`, which we can further manipulate using the functions we already know. However, it is not required to take this step to inspect the results. This can be done out of pure convenience. If we want to know where `name` and `value` came from we have to inspect the output from `enframe(fit_indices)`.
 
 ```{r Broom tidy explained, echo=TRUE, warning=FALSE}
-broom::tidy(fit_indices)
+enframe(fit_indices)
 ```
 
-These column names were generated when we called the function `tidy()`. I often find myself working through chains of analytical steps iteratively to see what the intermediary steps produce. This also makes it easier to spot any mistakes early on. Therefore, I recommend slowly building up your `dplyr` chains of function calls, especially when you just started learning *R* and the `tidyverse` approach of data analysis.
+These column names were generated when we called the function `enframe()`. I often find myself working through chains of analytical steps iteratively to see what the intermediary steps produce. This also makes it easier to spot any mistakes early on. Therefore, I recommend slowly building up your `dplyr` chains of function calls, especially when you just started learning *R* and the `tidyverse` approach of data analysis.
 
 The results of our CFA appear fairly promising:
 
 -   The `cfi` (*Comparative Fit Index*) lies above `0.95`,
 
--   The `rmsea` (*Root Mean Square Error of Approximation*) appears slightly higher than desirable, which usually is `0.6`. [@hu-bentler-1999cutoff], and
+-   The `rmsea` (*Root Mean Square Error of Approximation*) appears slightly higher than desirable, which usually is lower than `0.6`, and
 
--   The `srmr` (*Standardised Root Mean Square Residual*) lies well below `0.08`.
+-   The `srmr` (*Standardised Root Mean Square Residual*) lies well below `0.08` \[@west2012model; @hu-bentler-1999cutoff\].
 
 Overall, the model seems to suggest a good fit with our data. Combined with the computed Cronbach's $\alpha$, we can be reasonably confident in our latent variables and perform further analytical steps.
 
 ## Once you finished with data wrangling {#conclusion-data-wrangling}
 
-Once you finished your data cleaning, I recommend writing (i.e. exporting) your cleaned data out of *R* into your *'01_tidy_data'* folder. You can then use this dataset to continue with your analysis. This way, you do not have to run all your data wrangling and cleaning code every time you open your *R* project. To write your tidy dataset onto your hard drive of choice, we can use `readr` in the same way as we did at the [beginning](#importing-data-using-functions "Import your data using functions") to import data. However, instead of `read_csv()` we have to use another function that writes the file into a folder. The function `write_csv()` first takes the name of the object we want to save and then the folder and file name we want to save it to. We only made changes to the `wvs` dataset, so we should save it to our hard drive and name it, for example, `wvs_nona`, because it is not only clean, but also has *'no NA'*, i.e. no missing data.
+Once you finished your data cleaning, I recommend writing (i.e. exporting) your cleaned data out of *R* into your *'01_tidy_data'* folder. You can then use this dataset to continue with your analysis. This way, you do not have to run all your data wrangling and cleaning code every time you open your *R* project. To write your tidy dataset onto your hard drive of choice, we can use `readr` in the same way as we did at the [beginning](#importing-data-using-functions "Import your data using functions") to import data. However, instead of `read_csv()` we have to use another function that writes the file into a folder. The function `write_csv()` first takes the name of the object we want to save and then the folder and file name we want to save it to. We only made changes to the `wvs` dataset and after cleaning and dealing with missing data, we saved it in the object `wvs_nona`. So we should save it to our hard drive and name it, for example, `wvs_nona.csv`, because it is not only clean, but also has *'no NA'*, i.e. no missing data.
 
 ```{r Write tidy data into folder, eval=FALSE}
-write_csv(wvs, "01_tidy_data/wvs_nona.csv")
+write_csv(wvs_clean, "01_tidy_data/wvs_nona.csv")
 ```
 
 This chapter has been a reasonably long one. Nonetheless, it only covered the basics of what can and should be done when preparing data for analysis. These steps should not be rushed or skipped. It is essential to have the data cleaned appropriately. This process helps you familiarise yourself with the dataset in great depth, and it makes you aware of limitations or even problems of your data. In the spirit of [Open Science](https://osf.io "Open Science"){target="blank"}, using *R* also helps to document the steps you undertook to get from a raw dataset to a tidy one. This is also beneficial if you intend to publish your work later. Reproducibility has become an essential aspect of transparent and impactful research and should be a guiding principle of any empirical research.
