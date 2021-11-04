@@ -153,7 +153,10 @@ Besides *absolute frequencies*, i.e. the actual count of occurrences of a value,
 ```{r create-movie-ratings, include=FALSE}
 set.seed(1234)
 movie_ratings <- tibble(participant = LETTERS,
-                        gender = sample(c("male", "female"), 26, replace = TRUE),
+                        gender = sample(c("male", "female"),
+                                        26,
+                                        replace = TRUE,
+                                        prob = c(0.23, 0.77)),
                         rating = sample(1:10, 26, replace = TRUE))
 ```
 
