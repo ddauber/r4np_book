@@ -1,4 +1,4 @@
-# (PART) Analysis {-}
+# (PART) Analysis {.unnumbered}
 
 # Descriptive Statistics {#descriptive-statistics}
 
@@ -120,7 +120,7 @@ imdb_top_250 %>%
 
 Step 3 is the only code you need to create the desired plot. The other two steps only demonstrate how one can slowly build this plot, step-by-step. You might have noticed that I used `dplyr` to chain all these functions together (i.e. `%>%`), and therefore, it was not necessary to specify the dataset in `ggplot()`.
 
-There are also two new functions we had to use: `geom_col()` and `reorder()`. The functions `geom_col()` and `geom_bar()` can be confusing. The easiest way to remember how to use them is: If you use a frequency table to create your barplot, use `geom_col()`, if not, use `geom_bar()`. The function `geom_col()` requires that we specify a y-axis (our frequency scores), while `geom_bar()` does not.
+There are also two new functions we had to use: `geom_col()` and `reorder()`. The function `geom_col()` performs the same step as `geom_bar()` which can be confusing. The easiest way to remember how to use them is: If you use a frequency table to create your barplot, use `geom_col()`, if not, use `geom_bar()`. The function `geom_col()` requires that we specify an a-axis and a y-axis (our frequency scores), while `geom_bar()` works with one variable.
 
 In many cases, when creating plots, you have to perform two steps:
 
@@ -130,9 +130,51 @@ In many cases, when creating plots, you have to perform two steps:
 
 Now you have learned the fundamentals of plotting in *R*. We will create a lot more plots throughout the next chapters. They all share the same basic structure, but we will use different `geom_`s to describe our data. By the end of this book, you will have accrued enough experience in plotting in *R* that it will feel like second nature. If you want to deepen your knowledge of `ggplot`, you should take a look at the book ['ggplot: Elegant Graphics for Data Analysis'](https://ggplot2-book.org "'ggplot: Elegant Graphics for Data Analysis'"){target="blank"} or ['R Graphics Cookbook'](https://r-graphics.org "'R Graphics Cookbook'"){target="blank"} which moves beyond `ggplot2`. Apart from that, you can also find fantastic packages which extend the range of *'geoms'* you can use in the ['ggplot2 extensions gallery'](https://exts.ggplot2.tidyverse.org/gallery/ "'ggplot2 extensions gallery'"){target="blank"}.
 
+## Frequencies and relative frequencies: Counting categorical variables
+
+One of the most fundamental descriptive statistics includes counting. We often we find ourselves having data from different groups of participants, and we might be interested in knowing how many are in each group. For example, we might be interested to know which director produced most movies listed in the IMDb Top 250. Each director is a category in the variable `director`. We already used the required function to compute such a frequency when we looked at movie genres (see Chapter \@ref(plotting-in-r-with-ggplot2)), i.e. `count()`.
+
+```{r frequencies, echo=TRUE}
+imdb_top_250 %>% count(director)
+```
+
+The result indicates that 155 directors produced 250 movies. Thus, some movies have to be from the same director. As the frequency table shows, `Akira Kurosawa` directed `6` films, and `Alfred Hitchcock` also produced `6` movies. To keep the table more manageable, we can `filter()` our dataset and include only directors who made at least `6` movies because we know there are at least two already.
+
+```{r frequency-filtered, echo=TRUE}
+imdb_top_250 %>%
+  count(director) %>%
+  filter(n >= 6)
+```
+
+There are in total 6 directors who produced several excellent movies, and if you are a bit of a movie fan, all these names will sound familiar.
+
+Besides *absolute frequencies*, i.e. the actual count of occurrences of a category, we sometimes wish to compute *relative frequencies* to make it easier to compare categories more easily. *Relative frequencies* are more commonly known as *percentages*. Consider the following example, which reflects a study where participants were asked to rate a new movie after watching it.
+
+```{r create-movie-ratings, include=FALSE}
+movie_ratings <- tibble(participant = LETTERS,
+                        gender = sample(c("male", "female"), 26, replace = TRUE),
+                        rating = sample(1:10, 26, replace = TRUE))
+```
+
+```{r inspect-movie-ratings, echo=TRUE}
+glimpse(movie_ratings)
+```
+
+It might be interesting to know whether our movie ratings were mainly from `male` or `female` viewers. Thus, we can compute the absolute and relative frequencies at once by creating a new variable with `mutate()` and the formula to calculate percentages, i.e. `n / sum(n)`.
+
+```{r frequency-gender, echo=TRUE}
+movie_ratings %>%
+  count(gender) %>%
+  
+  # add the relative distributions, i.e. percentages
+  mutate(perc = n / sum(n))
+```
+
+It seems we have a very even distribution of `male` and `female` participants. Thus, our analysis would not be affected by having more participants from one or the other gender. However, if we found that most participants were `female` (e.g. 80%) then any further computation we perform with this dataset would reflect the opinion of female viewers more than male ones. This is important to know because it limits the representativeness of our results. The insights gained from primarily female participants in this study would be not helpful when trying to understand male audiences.
+
 ## Central tendency measures: Mean, Median, Mode {#central-tendency}
 
-The mean, median and mode (the 3 Ms) are all measures of central tendency, i.e. they provide insights into how our data is distributed. All three of these measures summarise our data/variable by a single score which can be helpful but sometimes also terribly misleading.
+The *mean*, *median* and *mode* (the 3 Ms) are all measures of central tendency, i.e. they provide insights into how our data is distributed. All three of these measures summarise our data/variable by a single score which can be helpful but sometimes also terribly misleading.
 
 ### Mean
 
