@@ -132,7 +132,7 @@ Now you have learned the fundamentals of plotting in *R*. We will create a lot m
 
 ## Frequencies and relative frequencies: Counting categorical variables {#frequency}
 
-One of the most fundamental descriptive statistics includes counting. We often we find ourselves having data from different groups of participants, and we might be interested in knowing how many are in each group. For example, we might be interested to know which director produced most movies listed in the IMDb Top 250. Each director is a category in the variable `director`. We already used the required function to compute such a frequency when we looked at movie genres (see Chapter \@ref(plotting-in-r-with-ggplot2)), i.e. `count()`.
+One of the most fundamental descriptive statistics includes frequencies, i.e. counting the number of occurrences of a factor level, string or numeric value. For example, we might be interested to know which director produced most movies listed in the IMDb Top 250. Therefore multiple movies might belong to the same value in our factor `director`. We already used the required function to compute such a frequency when we looked at movie genres (see Chapter \@ref(plotting-in-r-with-ggplot2)), i.e. `count()`.
 
 ```{r frequencies, echo=TRUE}
 imdb_top_250 %>% count(director)
@@ -148,9 +148,10 @@ imdb_top_250 %>%
 
 There are in total 6 directors who produced several excellent movies, and if you are a bit of a movie fan, all these names will sound familiar.
 
-Besides *absolute frequencies*, i.e. the actual count of occurrences of a category, we sometimes wish to compute *relative frequencies* to make it easier to compare categories more easily. *Relative frequencies* are more commonly known as *percentages*. Consider the following example, which reflects a study where participants were asked to rate a new movie after watching it.
+Besides *absolute frequencies*, i.e. the actual count of occurrences of a value, we sometimes wish to compute *relative frequencies* to make it easier to compare categories more easily. *Relative frequencies* are more commonly known as *percentages* which indicate the ratio or proportion of an occurrence relative to the total number of observations. Consider the following example, which reflects a study where participants were asked to rate a new movie after watching it.
 
 ```{r create-movie-ratings, include=FALSE}
+set.seed(1234)
 movie_ratings <- tibble(participant = LETTERS,
                         gender = sample(c("male", "female"), 26, replace = TRUE),
                         rating = sample(1:10, 26, replace = TRUE))
@@ -170,7 +171,7 @@ movie_ratings %>%
   mutate(perc = n / sum(n))
 ```
 
-It seems we have a very even distribution of `male` and `female` participants. Thus, our analysis would not be affected by having more participants from one or the other gender. However, if we found that most participants were `female` (e.g. 80%) then any further computation we perform with this dataset would reflect the opinion of female viewers more than male ones. This is important to know because it limits the representativeness of our results. The insights gained from primarily female participants in this study would be not helpful when trying to understand male audiences.
+It seems we have a very uneven distribution of `male` and `female` participants. Thus, our analysis is affected by having more `female` participants. Consequently, any further computation we perform with this dataset would reflect the opinion of `female` viewers more than those of `male` ones. This is important to know because it limits the representativeness of our results. The insights gained from primarily `female` participants in this study will not be helpful when trying to understand `male` audiences. Therefore, understanding who the participants are in your study is essential before undertaking any further analysis. Sometimes, it might even imply that we have to change the focus of our study entirely.
 
 ## Central tendency measures: Mean, Median, Mode {#central-tendency}
 
@@ -230,7 +231,7 @@ imdb_top_250 %>%
   arrange(desc(mean_earnings_in_m))
 ```
 
-In the last line, I used a new function called `arrange()`. It allows us to sort rows in our dataset by a specified variable (i.e. a column). By default, `arrange()` sorts values in ascending order, putting the top genre last. Therefore, we have to use another function to change the order to descending with `desc()`. So now the top-genre is listed at the top. The function `arrange()` works similarly to `reorder()` but is used for sorting variables in data frames and less so for plots.
+In the last line, I used a new function called `arrange()`. It allows us to sort rows in our dataset by a specified variable (i.e. a column). By default, `arrange()` sorts values in ascending order, putting the top genre last. Therefore, we have to use another function to change the order to descending with `desc()` to see the top-genre listed first. The function `arrange()` works similarly to `reorder()` but is used for sorting variables in data frames and less so for plots.
 
 Based on this result, we might believe that `Action` and `Animation` movies are the most successful genres. However, we have not taken into account how many movies there are in each genre. Consider the following example:
 
@@ -248,7 +249,7 @@ Based on this result, we might believe that `Action` and `Animation` movies are 
 
 Thus, the *'mean'* alone might not be a good indicator. It can tell us which genre is most successful based on a single movie, but we also should consider how many movies there are in each genre.
 
-Let's add the number of movies (`n`) in each genre to our table. We can achieve this by using the function `n()`.
+Let's add the number of movies (`n`) in each genre to our table. We can achieve this by using the function `n()`. Of course, we could also use the function `count()` first and then `summarise()` the earnings. There is hardly ever one single way to achieve the same result. This time it is truly a matter of personal taste.
 
 ```{r Earning by genre plus number of movies in each genre, echo=TRUE}
 imdb_top_250 %>%
