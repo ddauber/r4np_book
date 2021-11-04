@@ -130,7 +130,7 @@ In many cases, when creating plots, you have to perform two steps:
 
 Now you have learned the fundamentals of plotting in *R*. We will create a lot more plots throughout the next chapters. They all share the same basic structure, but we will use different `geom_`s to describe our data. By the end of this book, you will have accrued enough experience in plotting in *R* that it will feel like second nature. If you want to deepen your knowledge of `ggplot`, you should take a look at the book ['ggplot: Elegant Graphics for Data Analysis'](https://ggplot2-book.org "'ggplot: Elegant Graphics for Data Analysis'"){target="blank"} or ['R Graphics Cookbook'](https://r-graphics.org "'R Graphics Cookbook'"){target="blank"} which moves beyond `ggplot2`. Apart from that, you can also find fantastic packages which extend the range of *'geoms'* you can use in the ['ggplot2 extensions gallery'](https://exts.ggplot2.tidyverse.org/gallery/ "'ggplot2 extensions gallery'"){target="blank"}.
 
-## Frequencies and relative frequencies: Counting categorical variables
+## Frequencies and relative frequencies: Counting categorical variables {#frequency}
 
 One of the most fundamental descriptive statistics includes counting. We often we find ourselves having data from different groups of participants, and we might be interested in knowing how many are in each group. For example, we might be interested to know which director produced most movies listed in the IMDb Top 250. Each director is a category in the variable `director`. We already used the required function to compute such a frequency when we looked at movie genres (see Chapter \@ref(plotting-in-r-with-ggplot2)), i.e. `count()`.
 
