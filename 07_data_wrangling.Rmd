@@ -315,11 +315,45 @@ glimpse(wvs_clean)
 
 The output in the console shows that we successfully performed the transformation and our data types are as we intended them to be. Mission accomplished.
 
-If you need to convert all `<chr>` columns you can use `mutate_if(is.character, as.factor)` instead. This function will look at each column and if it is a `character` type variable, it will convert it into a `factor`. However, use this function only if you are certain that all `character` columns need converting. If this is the case, it can be a huge time-saver. Here is the corresponding code snippet:
+If you need to convert all `<chr>` columns you can use `mutate_if(is.character, as_factor)` instead. This function will look at each column and if it is a `character` type variable, it will convert it into a `factor`. However, use this function only if you are certain that all `character` columns need converting. If this is the case, it can be a huge time-saver. Here is the corresponding code snippet:
 
 ```{r using-mutate-if, eval=FALSE}
 wvs_clean %>%
-  mutate_if(is.character, as.factor)
+  mutate_if(is.character, as_factor)
+```
+
+Lastly, there might be occasions where you want to convert data into other formats than from `<chr>` to `<fct>`. Similar to `as_factor()` there are more functions available to transform your data into the correct format of your choice:
+
+-   `as.integer()`: Converts values into integers, i.e. without decimal places. Be aware that this function does not round values as you might expect. Instead, it removes any decimals as if they never existed.
+
+-   `as.numeric()`: Converts values into numbers with decimals if they are present.
+
+-   `as.character()`: Converts values to string values, even if they are numbers. If you use `readr` to import your data, you will not often use this function because `readr` imports unknown data types as `<chr>` by default.
+
+All these function can be used in the same as we did before. Here are three examples to illustrated their use.
+
+```{r convert-to-other-formats-1, echo=TRUE}
+# Conversion to character values
+converted_data <-
+  wvs_clean %>%
+  mutate(participant_id = as.character(participant_id),
+         age = as.character(age))
+
+glimpse(converted_data)
+```
+
+```{r convert-to-other-formats-2}
+# Conversion to numeric values
+converted_data %>%
+  mutate(age = as.numeric(age))
+```
+
+```{r convert-to-other-formats-3}
+# Convert numeric values to integers
+numeric_values <- tibble(values = c(1.3, 2.6, 3.8))
+
+numeric_values %>%
+  mutate(integers = as.integer(values))
 ```
 
 ## Handling factors {#handling-factors}
@@ -651,6 +685,8 @@ Handling missing data is hardly ever a simple process. Do not feel discouraged i
 
 Social Scientists commonly face the challenge that we want to measure something that cannot be measured directly. For example, *'happiness'* is a feeling that does not naturally occur as a number we can observe and measure. The opposite is true for *'temperature'* which is naturally measured in numbers. At the same time, *'happiness'* is much more complex of a variable than *'temperature'*, because *'happiness'* can unfold in various ways and be caused by different triggers (e.g. a joke, an unexpected present, tasty food, etc.). To account for this, we often work with *'latent variables'*. These are defined as variables that are not directly measured but are inferred from other variables. In practice, we often use multiple questions in a questionnaire to measure one latent variable, usually by computing the mean of those questions.
 
+### Computing latent variables {#computing-latent-variables}
+
 The `gep` dataset from the `r4np` package includes data about students' social integration experience (`si`) and communication skills development (`cs`). Data were obtained using the [Global Education Profiler (GEP)](https://warwick.ac.uk/gep "Global Education Profiler (GEP)"){target="blank"}. I extracted three different questions (also called *'items'*) from the questionnaire, which measure `si`, and three items that measure `cs`. This dataset only consists of a randomly chosen set of responses, i.e. 300 out of over 12,000.
 
 ```{r The structure of the gep dataset, echo=TRUE}
@@ -690,9 +726,11 @@ gep <-
 glimpse(gep)
 ```
 
-Compared to dealing with missing data, this is a fairly straightforward task. However, there is a caveat. Before we can compute the mean across all these variables, we need to know and understand whether all these scores reliably contribute to one single latent variable. If not, we would be in trouble and make a significant mistake.
+Compared to dealing with missing data, this is a fairly straightforward task. However, there is a caveat. Before we can compute the mean across all these variables, we need to know and understand whether all these scores reliably contribute to one single latent variable. If not, we would be in trouble and make a significant mistake. This is commonly known as *internal consistency* and is a measure of reliability, i.e. how much we can rely on the fact that multiple questions in a questionnaire measure the same underlying, i.e. latent, construct.
 
-By far, the most common approach to assessing reliability (or more accurately *'internal consistency'*) of latent variables is Cronbach's $\alpha$. This indicator looks at how strongly a set of items (i.e. questions in your questionnaire) are related to each other. For example, the stronger the relationship of all items starting with `si_` to each other, the more likely we achieve a higher Cronbach's $\alpha$. The `psych` package has a suitable function to compute it for us.
+### Checking internal consistency of items measuring a latent variable {#internal-consistency}
+
+By far, the most common approach to assessing *internal consistency* of latent variables is Cronbach's $\alpha$. This indicator looks at how strongly a set of items (i.e. questions in your questionnaire) are related to each other. For example, the stronger the relationship of all items starting with `si_` to each other, the more likely we achieve a higher Cronbach's $\alpha$. The `psych` package has a suitable function to compute it for us.
 
 Instead of listing all the items by hand, I use the function `starts_with()` to pick only the variables whose names start with `si_`. It certainly pays off to think about your variable names more thoroughly in advance to benefit from such shortcuts (see also Chapter \@ref(colnames-cleaning)).
 
@@ -768,11 +806,15 @@ gep %>%
 
 Similarly, to `si`, `cs_imp` and `cs_exp` show very good internal consistency scores: $\alpha_{cs\_imp} = 0.86$ and $\alpha_{cs\_exp} = 0.81$. Based on these results we could be confident to use our latent variables for further analysis.
 
+### Confirmatory factor analysis {#efa-and-cfa}
+
 However, while Cronbach's $\alpha$ is very popular due to its simplicity, there is plenty of criticism. Therefore, it is often not enough to report the Cronbach's $\alpha$, but undertake additional steps. Depending on the stage of development of your measurement instrument (e.g. your questionnaire), you likely have to perform one of the following before computing the $\alpha$ scores:
 
--   *Exploratory factor analysis (EFA)*: Generally used to identify latent variables in a set of questionnaire items.
+-   *Exploratory factor analysis (EFA)*: Generally used to identify latent variables in a set of questionnaire items. Often these latent variables are not yet known. This process is often referred to as *dimension reduction*.
 
--   *Confirmatory factor analysis (CFA)*: To confirm whether a set of items truly reflect a latent variable.
+-   *Confirmatory factor analysis (CFA)*: This approach is used to confirm whether a set of items truly reflect a latent variable which we defined ex-ante.
+
+During the development of a new questionnaire, researchers often perform EFA on a pilot dataset to see which factors would emerge without prior assumptions. Once this process has been completed, another round of data would be collected to perform a CFA. This CFA ideally confirms the results from the pilot study. It is also not unusual to split a larger dataset into two parts and then perform EFA and CFA on separate sub-samples. However, this latter approach has the disadvantage that researchers would not have the opportunity to improve the questionnaire between EFA and CFA.
 
 Since the `gep` data is based on an established measurement tool, we perform a CFA. To perform a CFA, we use the popular `lavaan` ([*La*]{.ul}*tent [Va]{.ul}riable [An]{.ul}alysis*) package. The steps of running a CFA in *R* include:
 
@@ -835,9 +877,81 @@ The results of our CFA appear fairly promising:
 
 -   The `rmsea` (*Root Mean Square Error of Approximation*) appears slightly higher than desirable, which usually is lower than `0.6`, and
 
--   The `srmr` (*Standardised Root Mean Square Residual*) lies well below `0.08` \[@west2012model; @hu-bentler-1999cutoff\].
+-   The `srmr` (*Standardised Root Mean Square Residual*) lies well below `0.08` [@west2012model; @hu-bentler-1999cutoff].
 
 Overall, the model seems to suggest a good fit with our data. Combined with the computed Cronbach's $\alpha$, we can be reasonably confident in our latent variables and perform further analytical steps.
+
+### Reversing items with opposite meaning {#reversing-items-with-opposite-meaning}
+
+Questionnaires like the `gep` consist of items that are all phrased in the 'same direction'. What I mean by this is that all questions are asked so that a high score would carry the same meaning. However, this is not always true. Consider the following three questions as an example:
+
+-   Q1: *'I enjoy talking to people I don't know.'*
+
+-   Q2: *'I prefer to stay at home.'*
+
+-   Q3: *'Making new friends is exciting.'*
+
+Q1 and Q3 both refer to aspects of socialising with or getting to know others. Q2, however, seems to ask for the opposite, i.e. not engaging with others and staying at home. Intuitively, we would assume that a participant who scores high on Q1 and Q2 would score low on Q3. Q3 is a so-called *reversed item*, i.e. the meaning of the question is reversed compared to other questions in this set.
+
+Suppose we work with a dataset containing reversed items. In that case, we have to recode the answers for each participant to reflect the same meaning as the other questions before computing the Cronbach's $\alpha$ or performing an EFA or CFA.
+
+Let's assume we ask some of our friends to rate Q1, Q2 and Q3 on a scale from 1-6. We likely obtain the following results:
+
+```{r create-reverse-coded-items, echo=TRUE}
+df_social <- tibble(name = c("Agatha Harkness", "Daren Cross", "Hela",
+                             "Aldrich Killian", "Malekith", "Ayesha"),
+                    q1 = c(6, 2, 4, 5, 5, 2),
+                    q2 = c(2, 5, 1, 2, 3, 6),
+                    q3 = c(5, 1, 5, 4, 5, 1))
+
+df_social
+```
+
+While, for example, `Agatha Harkness` and `Aldrich Killian` are both very social, `Ayesha` seems to be rather the opposite. For all of our respondents, we can notice a pattern that if the value of `q1` is high, usually `q3` is high too, but `q2` is low. We would be very disappointed and probably puzzled if we now computed the Cronbach's $\alpha$ of our latent variable `social`.
+
+```{r alpha-withouth-reverse-coding, echo=TRUE}
+# Cronbach's alpha without reverse coding q2
+df_social %>%
+  select(-name) %>%
+  psych::alpha()
+```
+
+The function `alpha()` is clever enough to make us aware that something went wrong. It even tells us that `Some items ( q2 ) were negatively correlated with the total scale and probably should be reversed`. Also, the Cronbach's $\alpha$ is now negative, which is another indicator that reversed items might be present in the dataset. To remedy this problem, we have to recode `q2` to reflect the opposite meaning. Inverting the coding usually implies we have to mirror the scores, i.e. the largest values become the smallest ones and vice versa. Since we use a 6-point Likert scale, we have to recode values in the following way:
+
+-   `6` -> `1`
+-   `5` -> `2`
+-   `4` -> `3`
+-   `3` -> `4`
+-   `2` -> `5`
+-   `1` -> `6`
+
+The function `recode()` is the one that can help us achieve this result. Conceptually, `recode()` functions similarly to `fct_recode()`, only that it can handle numbers and factors.
+
+```{r reverse-coding, echo=TRUE}
+df_social_r <-
+  df_social %>%
+  mutate(q2_r = recode(q2,
+                       "6" = "1",
+                       "5" = "2",
+                       "4" = "3",
+                       "3" = "4",
+                       "2" = "5",
+                       "1" = "6")
+         )
+
+df_social_r
+```
+
+As we can see, we successfully converted the scores from `q2` and stored them in a new variable `q2_r`. We can now perform the internal consistency analysis again and see that everything seems to make sense. The internal consistency is excellent, and we can assume that all three questions reflect one latent construct.
+
+```{r internal-consistency-recoded-data, echo=TRUE}
+# Cronbach's alpha after reverse coding q2
+df_social %>%
+  select(-name, -q2) %>%
+  psych::alpha()
+```
+
+From here, we can return to computing our latent variables (see Chapter \@ref(computing-latent-variables)) and continue with our analysis.
 
 ## Once you finished with data wrangling {#conclusion-data-wrangling}
 
