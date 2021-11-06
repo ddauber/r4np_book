@@ -40,9 +40,26 @@ Before we can jump into group comparisons, we need to make ourselves aware of wh
 
 When we compare groups, we want to minimise the systematic differences that are not the primary focus of our study. Using the right sampling technique can help with this matter. For example, using a random sample and performing a random allocation to groups can help achieve comparable groups and remove systematic differences in a way no other sampling strategy can. However, there is still no guarantee that they will be comparable [see also @altman1985comparability and @berger2006review]. Besides, we also face the challenge that in Social Sciences, we do not always have the option of random sampling. For example, International Business studies heavily rely on lists provided by others (e.g. the European Union, Fortune 500, etc.), personal judgement and convenience sampling. Only a small proportion perform probability sampling [@yang2006-IBmethods]. In short, there is no reason to worry if your sampling technique is not random. However, it emphasises the need to understand your sample and your groups thoroughly. To inspect characteristics of groups we wish to compare, we can use descriptive statistics as we covered them in Chapter \@ref(descriptive-statistics). However, this time, we apply these techniques to subsets of our data and not the entire dataset.
 
-For example, we might wish to compare `female` and `male` Egyptians (see Chapter \@ref(two-unpaired-groups)). If we wanted to make sure these two groups can be compared, we might have to check (among other characteristics) whether their `age` is distributed similarly. We can use the functions we already know to create a plot to investigate this matter. We could either use a boxplot or, a bit more accurate, a density plot using the `ggridges` package.
+For example, we might wish to compare `female` and `male` Egyptians (see Chapter \@ref(two-unpaired-groups)). If we wanted to make sure these two groups can be compared, we might have to check (among other characteristics) whether their `age` is distributed similarly. We can use the functions we already know to create a plot to investigate this matter and apply the function `facet_wrap()` at the end.
 
-```{r Comparability of Egyptians, echo=TRUE, message=FALSE}
+```{r comparability-of-egyptians-2, echo=TRUE}
+# Only select participants from 'Egypt'
+comp <-
+  wvs_nona %>%
+  filter(country == "Egypt")
+
+# Plot distribution using facet_warp()
+comp %>%
+  ggplot(aes(x = age)) +
+  geom_density() +
+  facet_wrap(~ gender)
+```
+
+The function `facet_wrap(~ gender)` allows us to create two plots based on a grouping variable, i.e. `gender`. We have to use a tilde (`~`) to indicate the group. This character is related to writing formulas in *R*, which we will cover in more detail in the following chapters. Being able to place plots next to each other can be very beneficial for comparison. This way, inspecting the normality across multiple groups can be done within seconds. On the other hand, creating separate plots for each group can take a long time, for example, comparing 48 countries.
+
+Alternatively, we could also create density plots using the `ggridges` package, which puts all the plots onto the same x-axis, making it even easier to see the differences across groups.
+
+```{r comparability-of-egyptians-2, echo=TRUE, message=FALSE}
 # Only select participants from 'Egypt'
 comp <-
   wvs_nona %>%
@@ -56,7 +73,7 @@ comp %>%
   ggridges::geom_density_ridges(bandwidth = 4)
 ```
 
-As we can see, the distribution of `age` across both `gender` groups is fairly similar and likely not different between groups. Of course, we could also statistically explore this using a suitable test before performing the main group comparison. However, we first have to understand how we can perform such tests.
+In light of both data visualisations, we can conclude that the distribution of `age` across both `gender` groups is fairly similar and likely not different between groups. Of course, we could also statistically explore this using a suitable test before performing the main group comparison. However, we first have to understand how we can perform such tests.
 
 In the following chapters, we will primarily rely on the package `rstatix`, which offers a pipe-friendly approach to using the built-in functions of *R* to perform our group comparisons. However, you are welcome to try the basic functions, which you can find in Appendix \@ref(appendix-comparing-groups).
 
