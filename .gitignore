@@ -5,4 +5,5 @@
 99_visual_assets
 _book
 _bookdown_files
-rsconnect
+rsconnect/
+r4np_book.rds
