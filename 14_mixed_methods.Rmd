@@ -330,18 +330,24 @@ network_plot %>%
 
 The final plot shows that `war` and other military aspects, e.g. `soldiers`, `army` are very prevalent in our dataset. Besides, we also find some famous movie characters in our visualisation, such as `darth` `vader`, `luke` `skywalker` or `indiana` `jones`.
 
-Our example is a simple analysis based on a relatively small 'corpus', i.e. a small dataset. However, the application of n-grams in larger datasets can reveal topic areas and links between them. There are more approaches to exploring topics in large datasets, for example, ['topic modelling'](https://www.tidytextmining.com/topicmodeling.html), which are far more complex, but offer more sophisticated analytical insights.
+Our example is a simple analysis based on a relatively small 'corpus', i.e. a small dataset. However, the application of n-grams in larger datasets can reveal topic areas and links between them. There are more approaches to exploring topics in large datasets, for example, ['topic modelling'](https://www.tidytextmining.com/topicmodeling.html "Topic Modeling"){target="blank"}, which are far more complex, but offer more sophisticated analytical insights.
 
 ## Exploring more mixed-methods research approaches in *R*
 
 This chapter can only be considered a teaser for mixed-methods research in *R*. There is much more to know and much more to learn. If this type of work is of interest, especially when working with social media data or historical text documents, there are several *R* packages I can recommend:
 
--   `tm`: This [text mining package](http://tm.r-forge.r-project.org) includes many functions that help to explore documents systematically.
+-   `tm`: This [text mining package](http://tm.r-forge.r-project.org "tm package"){target="blank"} includes many functions that help to explore documents systematically.
 
--   `quanteda`: This [package](https://quanteda.io) offers natural language processing features and incorporates functions that are commonly seen in corpus analysis. It also provides tools to visualise frequencies of text, for example, wordclouds.
+-   `quanteda`: This [package](https://quanteda.io "Quanteda"){target="blank"} offers natural language processing features and incorporates functions that are commonly seen in corpus analysis. It also provides tools to visualise frequencies of text, for example, wordclouds.
 
--   `topicmodels`: To analyse topics in large datasets, it is necessary to use special Natural Language Processing techniques. This [package](https://cran.r-project.org/web/packages/topicmodels/index.html) offers ways to perform *Latent Dirichlet Allocation (LDA)* and *Correlated Topic Models (CTM)*. Both are exciting and promising pathways to large-scale text analysis.
+-   `topicmodels`: To analyse topics in large datasets, it is necessary to use special Natural Language Processing techniques. This [package](https://cran.r-project.org/web/packages/topicmodels/index.html "topicmodels package"){target="blank"} offers ways to perform *Latent Dirichlet Allocation (LDA)* and *Correlated Topic Models (CTM)*. Both are exciting and promising pathways to large-scale text analysis.
 
-Finally, it is worth mentioning that the `tidytext` package we used above also has a lot more to offer than what we covered, for example, performing *sentiment analyses*.
+-   The `tidytext` package we used above also has a lot more to offer than what we covered, for example, performing *sentiment analyses*.
+
+If you want to explore the world of textual analysis in greater depth, there are two fantastic resources I wholeheartedly can recommend:
+
+-   [Text mining with tidy data principles](https://juliasilge.shinyapps.io/learntidytext/ "Text mining with tidy data principles"){target="blank"}: This free online course introduces additional use cases of the tidytext package by letting you work with data interactively right in your browser. Julia Silge developed these materials.
+
+-   [Supervised Machine Learning for Text Analysis in R](https://smltar.com "Supervised Machine Learning for Text Analysis in R"){target="blank"}: This book is the ideal follow-up resource if you worked your way through @silge2017text. It introduces the foundations of natural language analysis and covers advanced text analysis methods such as regression, classification, and deep learning.
 
 I hope I managed to showcase the versatility of *R* to some degree in this chapter. Needless to say, there is also a lot I still have to learn, which makes using *R* exciting and, more than once, has inspired me to approach my data in unconventional ways.
