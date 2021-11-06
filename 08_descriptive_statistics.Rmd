@@ -457,15 +457,11 @@ As we can see from our visualisation, both movies would also count as outliers i
 
 Another frequently used approach to show the spread (or distribution) of data is the histogram. The histogram easily gets confused with a bar plot. However, you would be very mistaken to assume that they are the same. Some key differences between these two types of plots is summarised in Table \@ref(tab:histogram-vs-bar-plot).
 
-+----------------------------------------------------------------------+--------------------------------------------------------------------+
 | Histogram                                                            | Bar plot                                                           |
-+======================================================================+====================================================================+
+|----------------------------------------------------------------------|--------------------------------------------------------------------|
 | Used to show the distribution of non-categorical data                | Used for showing the frequency of categorical data, i.e. `factor`s |
-+----------------------------------------------------------------------+--------------------------------------------------------------------+
 | Each bar (also called 'bin') represents a group of observations.     | Each bar represents one category (or level) in our `factor`.       |
-+----------------------------------------------------------------------+--------------------------------------------------------------------+
 | The order of the bars is important and cannot/should not be changed. | The order of bars is arbitrary and can be reordered if meaningful. |
-+----------------------------------------------------------------------+--------------------------------------------------------------------+
 
 : (#tab:histogram-vs-bar-plot) Histogram vs bar plot
 
