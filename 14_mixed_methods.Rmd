@@ -131,22 +131,48 @@ titles_no_sw %>%
   coord_flip()
 ```
 
-To keep the number of bars somewhat manageable, I filtered those words with more than `1` occurrence in the dataset. Some of the most frequently occurring words include, for example, `wild`, `wars`, `story`, `star`, `rings`, `lords`. If you know Hollywood movies of the past, you will notice that two movies likely cause this result: The 'Star Wars' and 'Lord of the Rings' series. We also have numbers included in our dataset. Sometimes these are worth removing, but in this case, the number `2` likely indicates a sequel to another movie. Thus, it provides essential information.
+To keep the number of bars somewhat manageable, I removed those words with more less than `1` occurrence in the dataset. Some of the most frequently occurring words include, for example, `wild`, `wars`, `story`, `star`, `rings`, `lords`. If you know Hollywood movies of the past, you will notice that two movies likely cause this result: The 'Star Wars' and 'Lord of the Rings' series. We also have numbers included in our dataset. Sometimes these are worth removing, but in this case, the number `2` likely indicates a sequel to another movie. Thus, it provides essential information.
 
-With our data in place, it is time to perform our analysis. We want to know whether certain words are associated with higher `imdb_rating`s. If we use the function `count()` we will lose the variable `imdb_rating()`. Thus, we have to do this in three steps:
+Another commonly used method for visualising word frequencies are word clouds. You likely have seen them before since they are very popular, especially for websites and poster presentations. Word clouds use the frequency of words to determine the font size of each word and arrange them so that it resembles the shape of a cloud. The package `wordcloud` and its function `wordcloud()` make this very easy. You can modify a word cloud in several ways. Here are some settings I frequently change for my data visualisations:
 
-1.  We create the frequencies for each word with `count()`.
+-   `random.order = FALSE`: This ensures that the most important words appear in the middle of the plot.
+
+-   `scale = c()`: This attribute determines the size difference between the most and least frequent words in the dataset.
+
+-   `min.freq`: This setting determines which words are included based on their frequency, which is helpful if you have many words to plot.
+
+-   `max.words`: This attribute limits the number of words that should be plotted and is also useful in cutting down on large datasets.
+
+-   `colors`: This setting allows you to provide custom colours for different frequencies of words. This substantially improves the readability of your data visualisation.
+
+To create a word cloud you have to provide at least a column with words and a column with their frequencies. All other settings are entirely customisable and optional. Here is an example based on the data we just used for our bar plot.
+
+```{r wordlcoud-plain, echo=TRUE}
+# Create a dataframe with the word count
+word_frequencies <-
+  titles_no_sw %>%
+  count(word)
+
+# Plot word cloud
+wordcloud::wordcloud(words = word_frequencies$word,
+                     freq = word_frequencies$n,
+                     random.order = FALSE,
+                     scale = c(2, 0.5),
+                     min.freq = 1,
+                     max.words = 100,
+                     colors = c("#6FA8F5",
+                                "#FF4D45",
+                                "#FFC85E")
+                     )
+```
+
+After preparing and visualising our data, it is time to perform our analysis. We want to know whether certain words are associated with higher `imdb_rating`s. If we use the function `count()` we will lose the variable `imdb_rating()`. Thus, we have to do this in three steps:
+
+1.  We create the frequencies for each word with `count()`, which we already did.
 
 2.  Then, we `left_join()` the word frequencies with the original dataset to add the word frequencies.
 
 3.  Compute a correlation using `correlation()` from the `correlation` package.
-
-```{r Compute relationship between imdb rating and word frequency, echo=TRUE}
-# Count the number of words
-word_frequencies <-
-  titles_no_sw %>%
-  count(word)
-```
 
 ```{r}
 # Combine word_frequencies with titles_no_sw
