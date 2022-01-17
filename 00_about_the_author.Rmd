@@ -1,0 +1,7 @@
+# About the author {#about-the-author .unnumbered}
+
+I am an Associate Professor at the University of Warwick. My research interfaces with multiple disciplines, such as International Management, Organisational Behaviour, Cross-cultural Psychology and Intercultural Communication. Most of my research investigates real-life issues in organisational contexts using a diagnostic angle with an emphasis to help improve organisational members' experiences and organisational performance.
+
+For more than 13 years, I enjoy teaching students how to turn data into meaningful recommendations for businesses, universities and the broader society by conveying relevant theory-driven knowledge as well as research methods skills. In addition, I am enthusiastic about new approaches to analysing data, whether it is quantitative or qualitative.
+
+My most recent publications can be found on [ResearchGate](https://www.researchgate.net/profile/Daniel-Dauber "ResearchGate Profile: Daniel Dauber"){target="_blank"}, and I regularly post tutorials about R, productivity and other hidden gems of academic life on my blog: [The Social Science Sofa](https://www.thesocialsciencesofa.com "Website: The Social Science Sofa"){target="_blank"}. If you like to connect with me, you can find me on [Twitter](https://twitter.com/daniel_dauber "Twitter profile: Daniel Dauber"){target="_blank"}.

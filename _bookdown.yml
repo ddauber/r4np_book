@@ -5,6 +5,8 @@ new_session: yes
 rmd_files: [
   "index.Rmd",
   
+  "00_about_the_author.Rmd",
+  
   "00_acknowledgements.Rmd",
 
   "01_before_you_get_started.Rmd",
