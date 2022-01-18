@@ -26,7 +26,7 @@ While we covered missing data and outliers in previous chapters, we have yet to 
 
 -   Are these groups paired or unpaired?
 
-In the following, we will look at group comparisons for parametric and non-parametric data in each category and use the `wvs_nona` dataset, i.e. the `wvs` data frame after we performed imputation (see also Chapter \@ref(replacing-removing-missing-data)). Since we already covered how to test whether data is parametric or non-parametric, we will forgo this step out of pure convenience and remain succinct. We also ignore any potential outliers. The case studies at the end of the book provide complete example of performing group comparisons with a new set of data from start to finish (see Chapter). Thus, parametric and non-parametric tests will be demonstrated with the same dataset and the same variables.
+In the following, we will look at group comparisons for parametric and non-parametric data in each category and use the `wvs_nona` dataset, i.e. the `wvs` data frame after we performed imputation (see also Chapter \@ref(replacing-removing-missing-data)). Since we already covered how to test whether data is parametric or non-parametric, we will forgo this step out of pure convenience and remain succinct. We also ignore any potential outliers. The case studies at the end of the book provide complete examples of performing group comparisons with a new set of data from start to finish (see Chapter ??). Thus, parametric and non-parametric tests will be demonstrated with the same dataset and the same variables.
 
 ## Comparability: Apples vs Oranges {#comparability-apples-vs-oranges}
 
