@@ -603,19 +603,24 @@ Once you determined which pattern of missing data applies to your dataset, it is
 
 @jakobsen-et-al-2017 provide a rule of thumb of 5% where researchers can consider missing data as negligible, i.e. we can ignore the missing values because they won't affect our analysis in a significant way. They also argue that if the proportion of missing data exceeds 40%, we should also only work with our observed data. However, with such a large amount of missing data, it is questionable whether we can rely on our analysis as much as we want to. If the missing data lies somewhere in-between this range, we need to consider the missing data pattern at hand.
 
-If data is MCAR, we could remove missing data. This process is called *'listwise deletion'*, i.e. you remove all data from a participant with missing data. As just mentioned, removing missing values is only suitable if you have relatively few missing values in your dataset [@schafer-1999], as is the case with the `wvs` dataset. There are additional problems with deleting observations listwise, many of which are summarised by @van-buuren-2018 in his [introduction](https://stefvanbuuren.name/fimd/sec-simplesolutions.html "introduction"){target="blank"}. Usually, we try to avoid removing data as much as possible. If you wanted to perform listwise deletion, it can be done with a single function call: `na.omit()` from the built-in `stats` package. Here is an example of how we can apply this function.
+If data is MCAR, we could remove missing data. This process is called *'listwise deletion'*, i.e. you remove all data from a participant with missing data. As just mentioned, removing missing values is only suitable if you have relatively few missing values in your dataset [@schafer-1999], as is the case with the `wvs` dataset. There are additional problems with deleting observations listwise, many of which are summarised by @van-buuren-2018 in his [introduction](https://stefvanbuuren.name/fimd/sec-simplesolutions.html "introduction"){target="blank"}. Usually, we try to avoid removing data as much as possible. If you wanted to perform listwise deletion, it can be done with a single function call: `na.omit()` from the built-in `stats` package Alternatively, you could also use `drop_na()` from the `tidyr` package, which is automatically loaded when used `library(tidyverse)`. Here is an example of how we can apply these two functions to achieve the same effect.
 
 ```{r Example of removing all missing data points, echo=TRUE}
 # No more missing data in this plot
 wvs_clean %>% na.omit() %>% vis_miss()
 ```
 
+```{r alternative-of-removing-all-missing-data-points, echo=TRUE}
+# Here is the alternative method with drop_na()
+wvs_clean %>% drop_na() %>% vis_miss()
+```
+
 ```{r}
-# How much observations are left after we removed all missing data?
+# How many observations are left after we removed all missing data?
 wvs_clean %>% na.omit() %>% count()
 ```
 
-If you wanted to remove the missing data without the plot, you could use `wvs_no_na <- na.omit(wvs)`. However, I always recommend 'saving' the result in a new object to ensure we keep the original data available. This can be helpful when trying to compare how this decision affects my analysis, i.e. I can run the analysis with and without missing data removed. For the `wvs` dataset, using `na.omit()` does not seem to be the best option.
+If you wanted to remove the missing data without the plot, you could use `wvs_no_na <- na.omit(wvs)` or `wvs_no_na <- drop_na()`. However, I always recommend 'saving' the result in a new object to ensure we keep the original data available. This can be helpful when trying to compare how this decision affects my analysis, i.e. I can run the analysis with and without missing data removed. For the `wvs` dataset, using `na.omit()` does not seem to be the best option.
 
 Based on our analysis of the `wvs` dataset (by no means complete!), we could assume that data is MAR. In such cases, it is possible to 'impute' the missing values, i.e. replacing the missing data with computed scores. This is possible because we can model the missing data based on variables we have. We cannot model missing data based on variables we have not measured in our study for obvious reasons.
 
@@ -676,6 +681,73 @@ vis_miss(wvs_nona)
 ```
 
 As the plot demonstrates, we managed to obtain a dataset which is now free of missing values and we can perform our next steps of data wrangling or analysis.
+
+### Two more methods of replacing missing data you hardly ever need {#two-more-methods-of-replacing-missing-data}
+
+There are two more options for replacing missing data[^data_wrangling-3], but these I would hardly ever recommend. Still, this section would not be complete without mentioning them, and they have their use-cases.
+
+[^data_wrangling-3]: Technically, there are many more options, but most of them work similar to the demonstrated techniques and are equally less needed in most scenarios.
+
+The first method involves the function `replaced_na()`. It allows you to replace any missing data with a value of your choice. For example, let's consider the following dataset which contains feedback from students regarding one of their lectures.
+
+```{r na-replacement-dataset, echo=TRUE}
+# The dataset which contains the feedback
+student_feedback <- tibble(name = c("Thomas", NA, "Helen", NA),
+                           feedback = as.numeric(c(6, 5, NA, 4)),
+                           overall = as_factor(c("excellent", "very good", NA, NA))
+                           )
+
+student_feedback
+```
+
+We have different types of data to deal with in `student_feedback,` and there are several missing data points in each column. We can use the `replace_na()` function to decide how to replace the missing data. For `feedback`, we might want to insert a number, for example, `0`. However, we might wish to add some string values for `name` and `overall`. We have to keep in mind that `replace_na()` requires a `chr` variable as input, which is not the case for `overall`, because it is a `factor`. Consequently, we need to go back to Chapter \@ref(change-data-types) and change the data type before replacing `NA`s. Here is how we can achieve all this in a few lines of code:
+
+```{r na-replacement-with-value, echo=TRUE}
+student_feedback %>%
+  mutate(name = replace_na(name, "Unkown"),
+         feedback = replace_na(feedback, 0),
+         overall = replace_na(as.character(overall), "unrated"),
+         overall = as_factor(overall)
+         )
+```
+
+We successfully replaced all the missing values with values of our choice. Only for `overall` we have to perform two steps. If you feel adventures, you could also warp the `as_factor()` function around the `replace_na()` one. This would result in using only one line of code for this variable.
+
+```{r na-replacement-with-value-alternative, echo=TRUE}
+student_feedback %>%
+  mutate(name = replace_na(name, "Unkown"),
+         feedback = replace_na(feedback, 0),
+         overall = as_factor(replace_na(as.character(overall), "unrated"))
+         )
+```
+
+This approach to handling missing data can be beneficial when addressing these values explicitly, e.g. in a plot. While one could keep the label of `NA`, it sometimes makes sense to use a different label that is more meaningful to your intended audience. Still, I would abstain from replacing `NA`s with an arbitrary value unless there is a good reason for it.
+
+The second method of replacing missing values is less arbitrary and requires the function `fill()`. It replaces missing values with the previous or next non-missing value. The [official help page](https://tidyr.tidyverse.org/reference/fill.html "Help page for the function 'fill()'"){target="_blank"} for this function offers some excellent examples of when one would need it, i.e. when specific values are only recorded once for a set of data points. For example, we might want to know how many students are taking certain lectures, but the module ID is only recorded for the first student on each module.
+
+```{r na-replacement-with-fill-data, echo=TRUE}
+# The dataset which contains student enrollment numbers
+student_enrollment <- tibble(module = c("Management", NA, NA,
+                                        NA, "Marketing", NA),
+                             name = c("Alberto", "Frances", "Martin",
+                                    "Alex", "Yuhui", "Himari")
+                             )
+student_enrollment
+```
+
+Here it is unnecessary to guess which values we have to insert because we know that `Alberto`, `Frances`, `Martin`, and `Alex` are taking the `Management` module. At the same time, `Yuhui` and `Himari` opted for Marketing. The `fill()` function can help us complete the missing values accordingly. By default, it completes values top-down, i.e. it takes the last value that was not missing and copies it down until we reach a non-missing value.
+
+```{r na-replacement-with-fill, echo=TRUE}
+student_enrollment %>% fill(module)
+```
+
+If you have to reverse the direction of how *R* should fill in the blank cells in your dataset, you can use `fill(.direction = "up")`. In our example, this would make not much sense, but for the sake of demonstration, here is what would happen:
+
+```{r na-replacement-with-fill-up}
+student_enrollment %>% fill(module, .direction = "up")
+```
+
+This method can be helpful if the system you use to collect or produce your data is only recording changes in values, i.e. it does not record all values for all observations in your dataset.
 
 ### Main takeaways regarding dealing with missing data {#main-takeaways-missing-data}
 
