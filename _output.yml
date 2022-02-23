@@ -12,7 +12,7 @@ bookdown::gitbook:
     download: null
     sharing:
       facebook: true
-      github: false
+      github: true
       twitter: true
       linkedin: true
       weibo: false
