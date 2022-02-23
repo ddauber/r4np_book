@@ -603,7 +603,7 @@ Once you determined which pattern of missing data applies to your dataset, it is
 
 @jakobsen-et-al-2017 provide a rule of thumb of 5% where researchers can consider missing data as negligible, i.e. we can ignore the missing values because they won't affect our analysis in a significant way. They also argue that if the proportion of missing data exceeds 40%, we should also only work with our observed data. However, with such a large amount of missing data, it is questionable whether we can rely on our analysis as much as we want to. If the missing data lies somewhere in-between this range, we need to consider the missing data pattern at hand.
 
-If data is MCAR, we could remove missing data. This process is called *'listwise deletion'*, i.e. you remove all data from a participant with missing data. As just mentioned, removing missing values is only suitable if you have relatively few missing values in your dataset [@schafer-1999], as is the case with the `wvs` dataset. There are additional problems with deleting observations listwise, many of which are summarised by @van-buuren-2018 in his [introduction](https://stefvanbuuren.name/fimd/sec-simplesolutions.html "introduction"){target="blank"}. Usually, we try to avoid removing data as much as possible. If you wanted to perform listwise deletion, it can be done with a single function call: `na.omit()` from the built-in `stats` package Alternatively, you could also use `drop_na()` from the `tidyr` package, which is automatically loaded when used `library(tidyverse)`. Here is an example of how we can apply these two functions to achieve the same effect.
+If data is MCAR, we could remove missing data. This process is called *'listwise deletion'*, i.e. you remove all data from a participant with missing data. As just mentioned, removing missing values is only suitable if you have relatively few missing values in your dataset [@schafer-1999], as is the case with the `wvs` dataset. There are additional problems with deleting observations listwise, many of which are summarised by @van-buuren-2018 in his [introduction](https://stefvanbuuren.name/fimd/sec-simplesolutions.html "introduction"){target="blank"}. Usually, we try to avoid removing data as much as possible. If you wanted to perform listwise deletion, it can be done with a single function call: `na.omit()` from the built-in `stats` package. Alternatively, you could also use `drop_na()` from the `tidyr` package, which is automatically loaded when used `library(tidyverse)`. Here is an example of how we can apply these two functions to achieve the same effect.
 
 ```{r Example of removing all missing data points, echo=TRUE}
 # No more missing data in this plot
@@ -628,7 +628,7 @@ You might be thinking: "Why would it make data better if we 'make up' numbers? I
 
 Even though our dataset has only a minimal amount of missing data (relative to the entire size), we can still use imputation. There are many different ways to approach this task, one of which is 'multiple imputation'. As highlighted by @van2020rebutting, multiple imputation has not yet reached the same popularity as listwise deletion, despite its benefits. The main reason for this lies in the complexity of using this technique. There are many more approaches to imputation, and going through them all in detail would be impossible and distract from the book's main purpose. Still, I would like to share some interesting packages with you that use different imputation methods:
 
--   [mice](https://cran.r-project.org/web/packages/Amelia/index.html "mice"){target="blank"} (Multivariate Imputation via Chained Equations)
+-   [mice](https://cran.r-project.org/web/packages/Amelia/index.html "mice"){target="blank"} (Uses multivariate imputation via chained equations)
 
 -   [Amelia](https://cran.r-project.org/web/packages/Amelia/index.html "Amelia"){target="blank"} (Uses a bootstrapped-based algorithm)
 
@@ -688,7 +688,7 @@ There are two more options for replacing missing data[^data_wrangling-3], but th
 
 [^data_wrangling-3]: Technically, there are many more options, but most of them work similar to the demonstrated techniques and are equally less needed in most scenarios.
 
-The first method involves the function `replaced_na()`. It allows you to replace any missing data with a value of your choice. For example, let's consider the following dataset which contains feedback from students regarding one of their lectures.
+The first method involves the function `replace_na()`. It allows you to replace any missing data with a value of your choice. For example, let's consider the following dataset which contains feedback from students regarding one of their lectures.
 
 ```{r na-replacement-dataset, echo=TRUE}
 # The dataset which contains the feedback
@@ -700,18 +700,18 @@ student_feedback <- tibble(name = c("Thomas", NA, "Helen", NA),
 student_feedback
 ```
 
-We have different types of data to deal with in `student_feedback,` and there are several missing data points in each column. We can use the `replace_na()` function to decide how to replace the missing data. For `feedback`, we might want to insert a number, for example, `0`. However, we might wish to add some string values for `name` and `overall`. We have to keep in mind that `replace_na()` requires a `chr` variable as input, which is not the case for `overall`, because it is a `factor`. Consequently, we need to go back to Chapter \@ref(change-data-types) and change the data type before replacing `NA`s. Here is how we can achieve all this in a few lines of code:
+We have different types of data to deal with in `student_feedback`, and there are several missing data points, i.e. `NA` in each column. We can use the `replace_na()` function to decide how to replace the missing data. For `feedback`, we might want to insert a number, for example, the average of all available ratings (`(6 + 5+ 4) / 3 = 5)`. However, we might wish to add some string values for `name` and `overall`. We have to keep in mind that `replace_na()` requires a `chr` variable as input, which is not the case for `overall`, because it is a `factor`. Consequently, we need to go back to Chapter \@ref(change-data-types) and change the data type before replacing `NA`s. Here is how we can achieve all this in a few lines of code:
 
 ```{r na-replacement-with-value, echo=TRUE}
 student_feedback %>%
   mutate(name = replace_na(name, "Unkown"),
-         feedback = replace_na(feedback, 0),
+         feedback = replace_na(feedback, 5),
          overall = replace_na(as.character(overall), "unrated"),
          overall = as_factor(overall)
          )
 ```
 
-We successfully replaced all the missing values with values of our choice. Only for `overall` we have to perform two steps. If you feel adventures, you could also warp the `as_factor()` function around the `replace_na()` one. This would result in using only one line of code for this variable.
+We successfully replaced all the missing values with values of our choice. Only for `overall` we have to perform two steps. If you feel adventurous, you could also warp the `as_factor()` function around the `replace_na()` one. This would result in using only one line of code for this variable.
 
 ```{r na-replacement-with-value-alternative, echo=TRUE}
 student_feedback %>%
@@ -735,7 +735,7 @@ student_enrollment <- tibble(module = c("Management", NA, NA,
 student_enrollment
 ```
 
-Here it is unnecessary to guess which values we have to insert because we know that `Alberto`, `Frances`, `Martin`, and `Alex` are taking the `Management` module. At the same time, `Yuhui` and `Himari` opted for Marketing. The `fill()` function can help us complete the missing values accordingly. By default, it completes values top-down, i.e. it takes the last value that was not missing and copies it down until we reach a non-missing value.
+Here it is unnecessary to guess which values we have to insert because we know that `Alberto`, `Frances`, `Martin`, and `Alex` are taking the `Management` lecture. At the same time, `Yuhui` and `Himari` opted for Marketing. The `fill()` function can help us complete the missing values accordingly. By default, it completes values top-down, i.e. it takes the last value that was not missing and copies it down until we reach a non-missing value.
 
 ```{r na-replacement-with-fill, echo=TRUE}
 student_enrollment %>% fill(module)

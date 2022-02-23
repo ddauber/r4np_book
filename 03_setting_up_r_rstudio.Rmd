@@ -68,7 +68,7 @@ Congratulations, you are all set up to learn *R*. From now on you only need to s
 
 ## When you first start RStudio {#when-you-first-start-rstudio}
 
-Before you start programming away, you might want to make some tweaks to your settings right away to have a better experience (in my humble opinion). I recommend at least the following two changes by clicking on `RStudio > Preferences` or press `Ctrl + ,` on a Windows computer or `⌘ + ,` if your are on a Mac.
+Before you start programming away, you might want to make some tweaks to your settings right away to have a better experience (in my humble opinion). I recommend at least the following changes by clicking on `RStudio > Preferences` or press `Ctrl + ,` on a Windows computer or `⌘ + ,` if your are on a Mac:
 
 1.  Already on the first tab, i.e. `General > Basic`, we should make one of the most significant changes. Deactivate every option that starts with `Restore`. This will ensure that every time you start RStudio, you begin with a clean slate. At first sight, it might sound counter-intuitive not to restart everything where you left off, but it is essential to make all your projects easily reproducible. Furthermore, if you work together with others, not restoring your personal settings also ensures that your programming works across different computers. Therefore, I recommend having the following unticked:
 
@@ -80,7 +80,7 @@ Before you start programming away, you might want to make some tweaks to your se
 
         ![](images/chapter_03_img/rstudio_preferences/00_rstudio_preferences_basic.png)
 
-2.  In the same tab under `Workspace`, select `Never` for the setting `Save workspace to .RData on exit`. One might think it is wise to keep intermediary results stored from one R session to another. However, I often found myself fixing issues due to this lazy method, and my code became less reliable and, therefore, reproducible. With experience, you will find that this avoids many headaches you could have.
+2.  In the same tab under `Workspace`, select `Never` for the setting `Save workspace to .RData on exit`. One might think it is wise to keep intermediary results stored from one R session to another. However, I often found myself fixing issues due to this lazy method, and my code became less reliable and, therefore, reproducible. With experience, you will find that this avoids many headaches.
 
 3.  In the `Code > Editing` tab, make sure to have at least the first five options ticked, especially the `Auto-indent code after paste`. This setting will save time when trying to format your coding appropriately, making it easier to read. Indentation is the primary way of making your code look more readable and less like a series of characters that appear almost random.
 
