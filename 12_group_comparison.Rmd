@@ -114,7 +114,7 @@ comp %>%
 
 While the distribution looks similar, we notice that the median and the mean (marked by the cross inside the boxplot) are slightly higher for `male` participants. Thus, we can suspect some differences between these two groups, but we do not know whether these differences are significant or not. Therefore, to consider the significance (remember Chapter \@ref(significance)) and the effect size (see Table \@ref(tab:effect-size-cohen)), we have to perform statistical tests.
 
-Table \@ref(tab:comparing-two-groups-unpaired) summarises the different tests and functions to perform the group comparison computationally. It is important to note that the parametric test compares the means of two groups, while the non-parametric test compares medians. All of these tests turn significant if the differences between groups are large enough. Thus, significant results can be read as 'these groups are significantly different from each other'. Of course, if the test is not significant, the groups are considered to be not different. For parametric tests, i.e. `t.test(),` it is also essential to indicate whether the variances between these two groups are equal or not. Remember, the equality of variances was one of the assumptions for parametric tests. The *Welch t-test* can be used if the variances are not equal, but all other criteria for normality are met. By setting `var.equal = TRUE`, a regular *T-Test* would be performed. By default, `t.test()` assumes that variances are not equal. Make sure you test for *homogeneity of variance* before making your decision (see Chapter \@ref(homogeneity-of-variance)).
+Table \@ref(tab:comparing-two-groups-unpaired) summarises the different tests and functions to perform the group comparison computationally. It is important to note that the parametric test compares the means of two groups, while the non-parametric test compares medians. All of these tests turn significant if the differences between groups are large enough. Thus, significant results can be read as 'these groups are significantly different from each other'. Of course, if the test is not significant, the groups are considered to be not different. For parametric tests, i.e. `t_test(),` it is also essential to indicate whether the variances between these two groups are equal or not. Remember, the equality of variances was one of the assumptions for parametric tests. The *Welch t-test* can be used if the variances are not equal, but all other criteria for normality are met. By setting `var.equal = TRUE`, a regular *T-Test* would be performed. By default, `t_test()` assumes that variances are not equal. Make sure you test for *homogeneity of variance* before making your decision (see Chapter \@ref(homogeneity-of-variance)).
 
 +----------------+----------------+-------------------------------+-------------+---------------+
 | Assumption     | Test           | Function                      | Effect size | Function      |
@@ -139,7 +139,6 @@ comp %>% t_test(freedom_of_choice ~ gender,
 ```
 
 ```{r}
-
 # Welch t-test (var.equal = FALSE by default)
 comp %>% t_test(freedom_of_choice ~ gender,
                 var.equal = FALSE,
@@ -175,7 +174,7 @@ No matter which test we run, it appears as if the difference is significant. How
 ```
 
 ```{r}
-effectsize::interpret_d(d$effsize)
+effectsize::interpret_cohens_d(d$effsize)
 ```
 
 ```{r}
@@ -288,7 +287,7 @@ glimpse(d)
 ```
 
 ```{r}
-effectsize::interpret_d(d$effsize)
+effectsize::interpret_cohens_d(d$effsize)
 ```
 
 ```{r}
@@ -1061,7 +1060,7 @@ p1 + p2 + p3 + plot_spacer()
 
 The more we aggregate the data into fewer categories, the more likely we increase differences between groups. For example, the plot `Category with 3 levels` shows that most participants fall into the category `medium`. However, reducing the categories to two, some participants are classified as `yes` and some as `no`. Thus, some respondents who were classified as `medium` are now in the `no` category. In reality, we know from our non-categorical measures that several participants will still have improved in confidence but are considered with those who have not improved. This is a major problem because it seems more people are not confident about communicating with people from different cultural backgrounds than there actually are. The accuracy of our measurement scale is poor.
 
-In short, I recommend to only use the techniques outlines in this chapter if your data is truly categorical in nature. Thus, when designing your data collection tool, you might also wish to abstain from measuring quantitative variables as categories, for example `age`, which is very popular choice among my students. While it might be sometimes more appropriate to offer categories, it is always good to use multiple categories and not just two. Every additional level in your factor will increase measurement accuracy and provides access to more advanced analytical techniques. Remember, it is always possible to convert `numeric` data into a `factor`, but not the other way around.
+In short, I recommend to only use the techniques outlined in this chapter if your data is truly categorical in nature. Thus, when designing your data collection tool, you might also wish to abstain from measuring quantitative variables as categories, for example `age`, which is a very popular choice among my students. While it might be sometimes more appropriate to offer categories, it is always good to use multiple categories and not just two or three. Every additional level in your factor will increase measurement accuracy and provides access to more advanced analytical techniques. Remember, it is always possible to convert `numeric` data into a `factor`, but not the other way around.
 
 ## Reviewing group comparisons {#reviewing-group-comparisons}
 
