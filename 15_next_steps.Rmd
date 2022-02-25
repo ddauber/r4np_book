@@ -24,6 +24,8 @@ If you are a qualitative researcher, you might be more interested in what else y
 
 *R* can do much more than just statistical computing and creating pretty graphs. For example, you can write your papers with it, even if you do not write a single line of code. From Chapter \@ref(r-markdown-and-r-notebooks), you might remember that I explained that *R* Markdown files are an alternative to writing R scripts. Suppose you want to deepen your knowledge in this area and finally let go of Microsoft Word, I encourage you to take a peek at the ['R Markdown Cookbook'](https://bookdown.org/yihui/rmarkdown-cookbook/ "Book: 'R Markdown Cookbook'"){target="_blank"} for individual markdown files and ['bookdown: Authoring Books and Technical Documents with R Markdown'](https://bookdown.org/yihui/bookdown/ "Book: 'bookdown: Authoring Books and Technical Documents with R Markdown'"){target="_blank"} for entire manuscripts, e.g. journal paper submissions or books. I almost entirely abandoned Microsoft Word, even though it served me well for so many years - thanks.
 
+Lastly, I want to make you aware of another open source book that covers [What They Forgot to Teach you About R](https://rstats.wtf "Book: What They Forgot to Teach you About R") by Jennifer Bryan and Jim Hester. It is an excellent resource to get some additional insights into how one should go about working in *R* and *RStudio*.
+
 ## Engage in regular online readings about *R* {#next-steps-online-readings}
 
 A lot of helpful information for novice and expert *R* users is not captured in books but online blogs. There are several that I find inspiring and an excellent learning platform, each focusing on different aspects.
