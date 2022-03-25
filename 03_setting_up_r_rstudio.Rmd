@@ -42,7 +42,7 @@ This was relatively easy. You now have *R* installed. Technically you can start 
 
 *R* by itself is just the '*beating heart*' of *R* programming, but it has no particular user interface. If you want buttons to click and actually '*see*' what you are doing, there is no better way than RStudio. RStudio is an *integrated development environment* (IDE) and will be our primary tool to interact with *R*. It is the only software you need to do all the fun parts and, of course, to follow along with the examples of this book. To install RStudio perform the following steps:
 
-1.  Go to [www.rstudio.com](https://www.rstudio.com%5D(https://www.rstudio.com) "www.rstudio.com"){target="_blank"}.
+1.  Go to [www.rstudio.com](https://www.rstudio.com "www.rstudio.com"){target="_blank"}.
 
     ![](images/chapter_03_img/rstudio/01_rstudio_main_page.png)
 
@@ -68,7 +68,13 @@ Congratulations, you are all set up to learn *R*. From now on you only need to s
 
 ## When you first start RStudio {#when-you-first-start-rstudio}
 
-Before you start programming away, you might want to make some tweaks to your settings right away to have a better experience (in my humble opinion). I recommend at least the following changes by clicking on `RStudio > Preferences` or press `Ctrl + ,` on a Windows computer or `⌘ + ,` if your are on a Mac:
+Before you start programming away, you might want to make some tweaks to your settings right away to have a better experience (in my humble opinion). To open the Rstudio settings you have to click on
+
+-   `RStudio > Preferences` or press `⌘ + ,` if you are on a Mac.
+
+-   `RStudio > Tools > Global Options` or press `Ctrl + ,` if you work on a Windows computer.
+
+I recommend to at least make the following changes to set yourself up for success right from the beginning:
 
 1.  Already on the first tab, i.e. `General > Basic`, we should make one of the most significant changes. Deactivate every option that starts with `Restore`. This will ensure that every time you start RStudio, you begin with a clean slate. At first sight, it might sound counter-intuitive not to restart everything where you left off, but it is essential to make all your projects easily reproducible. Furthermore, if you work together with others, not restoring your personal settings also ensures that your programming works across different computers. Therefore, I recommend having the following unticked:
 

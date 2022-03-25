@@ -492,7 +492,119 @@ There are many ways to rearrange factors, and it very much depends on the data y
 
 ## Handling dates, times and durations {#handling-dates-times-and-durations}
 
-\[tba\]
+There are many reasons why we encounter dates, times and durations in our research. The most apparent reason for handling dates and times is longitudinal studies that focus on change over time. Therefore, at least one of our variables would have to carry a timestamp. When it comes to data cleaning and wrangling, there are usually two tasks we need to perform:
+
+-   Convert data into a suitable format for further analysis, and
+
+-   Perform computations with dates and times, e.g. computing the duration between two time points.
+
+The following sections will provide some guidance on solving commonly occurring issues and how to solve them.
+
+### Converting dates and times for analysis {#converting-dates-and-times-for-analysis}
+
+No matter which data collection tool you use, you likely encounter differences in how various software report dates and times back to you. Not only is there a great variety in formats in which dates and times are reported, but there are also other issues that one has to take care of, e.g. time zone differences. Here are some examples of how dates could be reported in your data:
+
+    26 November 2022
+    26 Nov 2022
+    November, 26 2022
+    Nov, 26 2022
+    26/11/2022
+    11/26/2022
+    2022-11-26
+    20221126
+
+It would be nice if there was a standardised method of recording dates and times and, in fact, there is one: [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html "ISO 8601: A standard for reporting and recording dates and times"). But unfortunately, not every software, let alone scholar, necessarily adheres to this standard. Luckily there is a dedicated *R* package that solely deals with these issues called `lubridate`, which is also part of the `tidyverse`. It helps reformat data into a coherent format and takes care of other essential aspects, such as '*time zones, leap days, daylight savings times, and other time related quirks*' [@lubridate]. Here, we will primarily focus on the most common issues, but I highly recommend looking at the ['lubridate' website](https://lubridate.tidyverse.org/ "Website of the package 'lubridate'"){target="_blank"} to see what else the package has to offer.
+
+Let's consider the dates (i.e. the data type `date`) shown above and try to convert them all into the same format. To achieve this we can use three different functions, i.e. `dmy()`, `mdy()` and `ymd()`. It is probably very obvious what these letters stand for:
+
+-   `d` for day,
+
+-   `m` for month, and
+
+-   `y` for year.
+
+All we have to do is identify the order in which the dates are presented in your dataset, and the `lubridate` package will do its magic to standardise the format.
+
+```{r example-date-conversation, echo=TRUE, message=FALSE}
+library(lubridate)
+
+# All of the below will yield the same output
+dmy("26 November 2022")
+dmy("26 Nov 2022")
+mdy("November, 26 2022")
+mdy("Nov, 26 2022")
+dmy("26/11/2022")
+mdy("11/26/2022")
+ymd("2022-11-26")
+ymd("20221126")
+```
+
+Besides dates, we sometimes also have to deal with times. For example, when did someone start a survey and finish it. If you frequently work with software like Qualtrics, SurveyMonkey, etc., you are often provided with such information. From a diagnostic perspective, understanding how long it took someone to complete a questionnaire can provide valuable insights into survey optimisation and design or show whether certain participants properly engaged with your data collection tool. In *R*, we can use either `time` or `dttm` (date-time) as a data type to capture hours, minutes and seconds. The `lubridate` package handles `time` similarly to `date` with easily recognisable abbreviations:
+
+-   `h` for hour,
+
+-   `m` for minutes, and
+
+-   `s` for seconds.
+
+Here is a simple example that demonstrates how conveniently `lubridate` manages to handle even the most outrages ways of specifying times:
+
+```{r lubridate-time, echo=TRUE}
+dinner_time <- tibble(time = c("17:34:21",
+                               "17:::34:21",
+                               "17 34 21",
+                               "17 : 34 : 21")
+                      )
+
+dinner_time %>% mutate(time_new = hms(time))
+```
+
+Lastly, `dttm` data types combine both: `date` and `time`. To illustrate how we can work with this format we can look at some actual data from a questionnaire. For example, the `` `quest_time` `` dataset has information about questionnaire completion dates and times..
+
+```{r quest-time-data, echo=TRUE}
+quest_time
+```
+
+While it all looks neat and tidy, keeping dates and times as a `chr` is not ideal, especially if we want to use it to conduct further analysis. Therefore, it would be important to transform these variables into the appropriate `dttm` format. We can use the function `dmy_hm()` similar to previous functions we used.
+
+```{r quest-time-data-clean, echo=TRUE}
+quest_time_clean <-
+  quest_time %>%
+  mutate(start = dmy_hm(start),
+         end = dmy_hm(end)
+         )
+
+quest_time_clean
+```
+
+While the difference between this format and the previous one is relatively marginal and unimpressive, the main benefit of this conversation becomes apparent when we perform operations on these variables, e.g. computing the time it took participants to complete the questionnaire.
+
+### Computing durations with dates, times and date-time variables {#computation-dates-times}
+
+Once we have 'corrected' our variables to show as dates, times and date-times, we can perform further analysis and ask important questions about durations, periods and intervals of observations.
+
+Let's consider the `quest_time` dataset which we just prepared. As mentioned earlier, it is often essential to understand how long it took participants to complete a given questionnaire. Therefore we would want to compute the duration based on the `start` and `end` time.
+
+```{r compute-duration, echo=TRUE}
+df_duration <-
+  quest_time_clean %>%
+  mutate(duration = end - start)
+
+df_duration
+```
+
+From these results, it seems that some participants have either super-humanly fast reading skills or did not engage with the questionnaire. To get a better overview, we can plot `duration` to see the distribution better.
+
+```{r duration-boxplot, echo=TRUE}
+df_duration %>%
+  ggplot(aes(x = as.numeric(duration),
+             y = 0)) +
+  geom_jitter()
+```
+
+For now, you should not worry about what this code means but rather consider the interpretation of the plot, i.e. that most participants (represented by a black dot) needed less than 20 minutes to complete the questionnaire. Depending on the length of your data collection tool, this could either be good or bad news. Usually, the shorter the questionnaire can be, the higher the response rate, unless you have incentives for participants to complete a longer survey.
+
+in Chapter \@ref(descriptive-statistics), we will cover data visualisations like this boxplot in greater detail. If you cannot wait any longer and want to create your own visualisations, you are welcome to skip ahead. However, several data visualisations are awaiting you in the next chapter as well.
 
 ## Dealing with missing data {#dealing-with-missing-data}
 
@@ -971,11 +1083,11 @@ Questionnaires like the `gep` consist of items that are all phrased in the 'same
 
 -   Q3: *'Making new friends is exciting.'*
 
-Q1 and Q3 both refer to aspects of socialising with or getting to know others. Q2, however, seems to ask for the opposite, i.e. not engaging with others and staying at home. Intuitively, we would assume that a participant who scores high on Q1 and Q2 would score low on Q3. Q3 is a so-called *reversed item*, i.e. the meaning of the question is reversed compared to other questions in this set.
+Q1 and Q3 both refer to aspects of socialising with or getting to know others. Q2, however, seems to ask for the opposite, i.e. not engaging with others and staying at home. Intuitively, we would assume that a participant who scores high on Q1 and Q2 would score low on Q3. Q3 is a so-called *reversed item*, i.e. the meaning of the question is reversed compared to other questions in this set. This strategy is commonly used to test for respondents' engagement with a questionnaire and break a possible response pattern. For example, if a participant scores 5 out of 6 on Q1, Q2 and Q3, we have to assume that this person might not have paid much attention to the statements because someone who scores high on Q1 and Q3 would likely not score high on Q2. However, their usefulness is debated across disciplines. When designing your data collection tool, items must be easy to understand, short, not double-barreled and reflect a facet of a latent variable appropriately. These aspects are far more important than reversing the meaning of items.
 
 Suppose we work with a dataset containing reversed items. In that case, we have to recode the answers for each participant to reflect the same meaning as the other questions before computing the Cronbach's $\alpha$ or performing an EFA or CFA.
 
-Let's assume we ask some of our friends to rate Q1, Q2 and Q3 on a scale from 1-6. We likely obtain the following results:
+Let's assume we ask some of our friends to rate Q1, Q2 and Q3 on a scale from 1-6. We might obtain the following results:
 
 ```{r create-reverse-coded-items, echo=TRUE}
 df_social <- tibble(name = c("Agatha Harkness", "Daren Cross", "Hela",
@@ -996,7 +1108,7 @@ df_social %>%
   psych::alpha()
 ```
 
-The function `alpha()` is clever enough to make us aware that something went wrong. It even tells us that `Some items ( q2 ) were negatively correlated with the total scale and probably should be reversed`. Also, the Cronbach's $\alpha$ is now negative, which is another indicator that reversed items might be present in the dataset. To remedy this problem, we have to recode `q2` to reflect the opposite meaning. Inverting the coding usually implies we have to mirror the scores, i.e. the largest values become the smallest ones and vice versa. Since we use a 6-point Likert scale, we have to recode values in the following way:
+The function `alpha()` is clever enough to make us aware that something went wrong. It even tells us that `Some items ( q2 ) were negatively correlated with the total scale and probably should be reversed`. Also, the Cronbach's $\alpha$ is now negative, which is another indicator that reversed items might be present in the dataset. To remedy this problem, we have to recode `q2` to reflect the opposite meaning. Inverting the coding usually implies we have to mirror the scores, i.e. the largest value become the smallest one and vice versa. Since we use a 6-point Likert scale, we have to recode values in the following way:
 
 -   `6` -> `1`
 -   `5` -> `2`
@@ -1005,9 +1117,38 @@ The function `alpha()` is clever enough to make us aware that something went wro
 -   `2` -> `5`
 -   `1` -> `6`
 
-The function `recode()` is the one that can help us achieve this result. Conceptually, `recode()` functions similarly to `fct_recode()`, only that it can handle numbers and factors.
+As is so often the case in *R*, there is more than just one way of achieving this:
 
-```{r reverse-coding, echo=TRUE}
+-   Compute a new variable with `mutate()` only,
+
+-   Apply `recode()` to the variable in question, or
+
+-   Use the `psych` package.
+
+I will introduce you to all three methods, because each comes with their own benefits and drawbacks. Thus, for me, it is very context-specific.
+
+#### Reversing items with `mutate()` {#reversing-items-mutate}
+
+Let us begin with the method that is my favourite because it is very quick to execute and only requires one function. With `mutate()`, we can calculate the reversed score for an item by applying the following formula:$$score_{reversed} = score_{max} + score_{min} - score_{obs}$$
+
+In other words, the reversed score $score_{reversed}$ of an item equals the theoretical maximum score on a given scale $score_{max}$ plus the theoretical minimum score on this scale $score_{min}$, and then we subtract the observed score $score_{obs}$, i.e. the actual response by our participant. For example, if someone in our study scored a `5` on `q2`, we could compute the reversed score as follows: `6 + 1 - 5 = 2` because our Likert scale ranges from `1` to `6`. In *R*, we can apply this idea to achieve this for multiple observations at once.
+
+```{r reverse-coding-mutate, echo=TRUE}
+df_social_r <-
+  df_social %>%
+  mutate(q2_r = 7 - q2)
+
+df_social_r %>%
+  select(q2, q2_r)
+```
+
+This technique is simple, flexible and easy to read and understand. We can change this formula to fit any scale length and make adjustments accordingly. I strongly recommend starting with this approach before opting for one of the other two.
+
+#### Reversing items with `recode()` {#reversing-items-recode}
+
+Another option to reverse items is `recode()`. Conceptually, `recode()` functions similarly to `fct_recode()`, only that it can handle numbers and factors. Therefore, we can apply a similar strategy as we did before with factors (see Chapter \@ref(recoding-factors)).
+
+```{r reverse-coding-recode-01, echo=TRUE}
 df_social_r <-
   df_social %>%
   mutate(q2_r = recode(q2,
@@ -1022,16 +1163,60 @@ df_social_r <-
 df_social_r
 ```
 
-As we can see, we successfully converted the scores from `q2` and stored them in a new variable `q2_r`. We can now perform the internal consistency analysis again and see that everything seems to make sense. The internal consistency is excellent, and we can assume that all three questions reflect one latent construct.
+While this might seem convenient, it requires more coding and is, therefore, more prone to errors. If we had to do this for multiple items, this technique is not ideal. However, it is a great option whenever you need to change values to something entirely customised, e.g. every `6` needs to be come a `10` and every `3` needs to become a `6`. However, such cases are rather rare in my experience.
+
+Be aware, that after using `recode()`, your variable becomes a `chr`, and you likely have to convert it back to a numeric data type. We can adjust the above code to achieve recoding and converting in one step.
+
+```{r reverse-coding-recode-02, echo=TRUE}
+df_social_r <-
+  df_social %>%
+  mutate(q2_r = as.numeric(recode(q2,
+                                  "6" = "1",
+                                  "5" = "2",
+                                  "4" = "3",
+                                  "3" = "4",
+                                  "2" = "5",
+                                  "1" = "6"))
+  )
+
+df_social_r
+```
+
+#### Reversing items with the `psych` package {#reversing-items-psych}
+
+The last option I would like to share with you is with the `psych` package. This option can be helpful when reversing multiple items at once without having to create additional variables. The function `reverse.code()` takes a data set with items and requires the specification of a coding key, i.e. `keys`. This coding key indicates whether an item in this dataset should be reversed or not by using `1` for items that should not be reversed and `-1` for items you wish to reverse.
+
+```{r reverse-coding-psych, echo=TRUE}
+items <- df_social %>% select(-name)
+
+df_social_r <- psych::reverse.code(keys = c(1, -1, 1),
+                      items = items,
+                      mini = 1,
+                      maxi = 6)
+
+df_social_r
+```
+
+#### A final remark about reversing item scores {#reversing-items-final-remark}
+
+No matter which method we used, we successfully converted the scores from `q2` and stored them in a new variable `q2_r` or, in the case of the `psych` package, as `q2-`. We can now perform the internal consistency analysis again.
+
+```{r recreate-social-r, include=FALSE}
+df_social_r <-
+  df_social %>%
+  mutate(q2_r = 7 - q2)
+```
 
 ```{r internal-consistency-recoded-data, echo=TRUE}
 # Cronbach's alpha after reverse coding q2
-df_social %>%
+df_social_r %>%
   select(-name, -q2) %>%
   psych::alpha()
 ```
 
-From here, we can return to computing our latent variables (see Chapter \@ref(computing-latent-variables)) and continue with our analysis.
+Now everything seems to make sense, and the internal consistency is excellent. We can assume that all three questions reflect one latent construct. From here, we can return to computing our latent variables (see Chapter \@ref(computing-latent-variables)) and continue with our analysis.
+
+When working with datasets, especially those you have not generated yourself, it is always important to check whether any items are meant to be reverse coded. Missing this aspect will likely throw many surprising results and can completely ruin your analysis. I vividly remember my PhD supervisor's story about a viva where a student forgot about reversing their scores. The panellists noticed that the correlations presented were counter-intuitive, and only then it was revealed that the entire analysis had to be redone. Tiny mistakes can often have an enormous ripple effect. Make sure you have 'reversed items' on your checklist when performing data cleaning and wrangling.
 
 ## Once you finished with data wrangling {#conclusion-data-wrangling}
 
