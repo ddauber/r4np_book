@@ -42,27 +42,23 @@ This was relatively easy. You now have *R* installed. Technically you can start 
 
 *R* by itself is just the '*beating heart*' of *R* programming, but it has no particular user interface. If you want buttons to click and actually '*see*' what you are doing, there is no better way than RStudio. RStudio is an *integrated development environment* (IDE) and will be our primary tool to interact with *R*. It is the only software you need to do all the fun parts and, of course, to follow along with the examples of this book. To install RStudio perform the following steps:
 
-1.  Go to [www.rstudio.com](https://www.rstudio.com "www.rstudio.com"){target="_blank"}.
+1.  Go to [http://posit.co](http://posit.co "http://posit.co"){target="_blank"} and click on `DOWNLOAD RSTUDIO`.
 
-    ![](images/chapter_03_img/rstudio/01_rstudio_main_page.png)
+    ![](images/chapter_03_img/rstudio/01_posit_main_page.png)
 
-2.  Go to `Products > RStudio`.
+2.  Click on `DOWNLOAD RSTUDIO` on this page.
 
-    ![](images/chapter_03_img/rstudio/02_rstudio_main_page_menu.png)
+    ![](images/chapter_03_img/rstudio/02_posit_rstudio_desktop.png)
 
-3.  On this page, scroll down and select `RStudio Desktop`.
+3.  This leads you to the page where you can install *R* as a first step and RStudio as a second step. Since we installed *R* already, we can click on `DOWNLOAD RSTUDIO DESKTOP FOR WINDOWS` (or for Mac if you are not using a PC).
 
-    ![](images/chapter_03_img/rstudio/03_rstudio_select_version.png)
+    ![](images/chapter_03_img/rstudio/03_posit_installer.png)
 
-4.  Select the `Open Source Edition` option by clicking on `Download RStudio Desktop`.
+4.  If for some reason the version for your operating system is not showing up correctly, you can scroll down and find other version ready to be installed.
 
-    ![](images/chapter_03_img/rstudio/04_rstudio_select_edition.png)
+    ![](images/chapter_03_img/rstudio/04_other_installers.png)
 
-5.  As a last step, scroll down where it shows you a download button for your operating system. The website will automatically detect this. You also get a nice reminder to install *R* first, in case you have not done so yet.
-
-    ![](images/chapter_03_img/rstudio/05_rstudio_download.png)
-
-6.  Open the downloaded file and follow the installation instructions. Again, keep it to the default settings as much as possible.
+5.  Open the downloaded file and follow the installation instructions. Again, keep it to the default settings as much as possible.
 
 Congratulations, you are all set up to learn *R*. From now on you only need to start RStudio and not *R*. Of course, if you are the curious type, nothing shall stop you to try *R* without RStudio.
 
