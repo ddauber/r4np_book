@@ -254,7 +254,7 @@ Considering the revised plot, we likely can predict what the statistical test wi
 | Non-parametric | Wilcoxon Signed Rank Test | `wilcox_test(paired = TRUE)` | Wilcoxon r  | `wilcoxonPairedR()` |
 +----------------+---------------------------+------------------------------+-------------+---------------------+
 
-: (#tab:comparing-two-groups-paired)Comparing two unpaired groups (effect size functions from package `effectsize`, except for `wilcoxonPairedR()` from `rcompanion`)
+: (#tab:comparing-two-groups-paired)Comparing two paired groups (effect size functions from package `effectsize`, except for `wilcoxonPairedR()` from `rcompanion`)
 
 Let's apply these functions to find out whether the differences we can see in our plots matter.
 
@@ -596,7 +596,7 @@ wvs_waves %>%
 
 We first look at the sphericity assumption which we did not violate, i.e. $p > 0.05$. Thus, using the ANOVA test is appropriate. Next, we inspect the ANOVA test results and find that the differences are significant as well, i.e. $p < 0.05$. Still, the effect size `ges` is small.
 
-From our plot, we know that some of the waves are fairly similar, and we need to determine which pair of waves are significantly different from each other. Therefore, we need a post-hoc test that allows us to perform pairwise comparisons. By now, this should sound familiar (see also Table \@ref(tab:post-hoc-tests).
+From our plot, we know that some of the waves are fairly similar, and we need to determine which pair of waves are significantly different from each other. Therefore, we need a post-hoc test that allows us to perform pairwise comparisons. By now, this should sound familiar (see also Table \@ref(tab:post-hoc-tests)).
 
 Since we assume our data is parametric and the groups are equally large for each wave ($n = 300$), we can use T-Tests with a Bonferroni correction.
 

@@ -86,11 +86,11 @@ logical_ops <- hux(
                ">", "<=", "<",
                "a | b", "a & b", "!a"),
   Description = c("is equal to",
+                  "is not equal to",
                   "is bigger or equal to",
                   "is bigger than",
-                  "is small or equal to",
+                  "is smaller or equal to",
                   "is smaller than",
-                  "is not equal to",
                   "a or b",
                   "a and b",
                   "is not a")

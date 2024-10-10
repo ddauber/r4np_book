@@ -66,7 +66,7 @@ Congratulations, you are all set up to learn *R*. From now on you only need to s
 
 Before you start programming away, you might want to make some tweaks to your settings right away to have a better experience (in my humble opinion). To open the Rstudio settings you have to click on
 
--   `RStudio > Preferences` or press `⌘ + ,` if you are on a Mac.
+-   `RStudio > Tools > Global Options` or press `⌘ + ,` if you are on a Mac.
 
 -   `RStudio > Tools > Global Options` or press `Ctrl + ,` if you work on a Windows computer.
 

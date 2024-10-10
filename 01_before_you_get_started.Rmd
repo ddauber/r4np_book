@@ -20,7 +20,12 @@ The learning approach of this book is twofold: Convey knowledge and offer opport
 
 Once you worked through Chapter \@ref(setting-up-r-and-rstudio) you can easily download the package `r4np` using the following code snippet in your console (see Chapter \@ref(the-console-window)):
 
-```{r Installing r4np from github, echo=TRUE, results='hide', message=FALSE}
+```{r}
+#| label:  installing-r4np-from-github
+#| echo: true
+#| results: false
+#| message: false
+
 devtools::install_github("ddauber/r4np")
 ```
 
@@ -32,7 +37,10 @@ As you likely know, every language has its flavours in the form of dialects. Thi
 
 The formatting of this book carries special meaning. For example, you will find actual *R* code in boxes like these.
 
-```{r Example of R code with output, echo=TRUE}
+```{r}
+#| label: example-r-code-with-output
+#| echo: true
+
 name <- "Daniel"
 food <- "Apfelstrudel"
 
