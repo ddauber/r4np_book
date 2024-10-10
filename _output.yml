@@ -1,6 +1,8 @@
 bookdown::gitbook:
   includes:
     in_header: ["ga_script.html", "header.html"]
+    before_body: ["banner.html"]
+    
   config:
     toc:
       collapse: section
