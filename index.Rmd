@@ -16,6 +16,14 @@ always_allow_html: true
 cover-image: "images/cover_art_icons/cover_art_book.png"
 ---
 
+```{r, echo=FALSE}
+cat('
+<script>
+window.location.replace("https://r4np.com");
+</script>
+', sep="\n")
+```
+
 # Welcome {#welcome .unnumbered}
 
 ::: {style="float:right;position: relative; top: 0px;"}
